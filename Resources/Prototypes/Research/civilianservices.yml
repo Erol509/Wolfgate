@@ -148,7 +148,9 @@
 - type: technology
   id: BiochemicalStasis
   name: research-technology-biochemical-stasis
-  entityIcon: StasisBed
+  icon:
+    sprite: _Impstation/Structures/Machines/stasis_bed.rsi # Imp
+    state: icon
   discipline: CivilianServices
   tier: 2
   cost: 10000

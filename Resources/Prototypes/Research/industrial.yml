@@ -144,7 +144,9 @@
 - type: technology
   id: AtmosphericTech
   name: research-technology-atmospheric-tech
-  entityIcon: GasThermoMachineFreezerEnabled
+  icon:
+    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi # Imp
+    state: freezerOff
   discipline: Industrial
   tier: 1
   cost: 8500
