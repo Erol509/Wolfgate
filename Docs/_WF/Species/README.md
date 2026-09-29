@@ -32,6 +32,7 @@ states so Avali wear Avali hardsuits. The creator UI is in Humanoid.
 - [`Resources/Prototypes/_WF/Species/Entities/Mobs/Customization/Markings/harpy.yml`](../../../Resources/Prototypes/_WF/Species/Entities/Mobs/Customization/Markings/harpy.yml)
 - [`Resources/Prototypes/_WF/Species/Entities/Mobs/Customization/Markings/reptilian.yml`](../../../Resources/Prototypes/_WF/Species/Entities/Mobs/Customization/Markings/reptilian.yml)
 - [`Resources/Prototypes/_WF/Species/Entities/Mobs/Customization/Markings/scars.yml`](../../../Resources/Prototypes/_WF/Species/Entities/Mobs/Customization/Markings/scars.yml)
+- [`Resources/Prototypes/_WF/Species/Entities/Mobs/Customization/Markings/synthliz.yml`](../../../Resources/Prototypes/_WF/Species/Entities/Mobs/Customization/Markings/synthliz.yml)
 - [`Resources/Prototypes/_WF/Species/Entities/Mobs/Customization/Markings/tattoos.yml`](../../../Resources/Prototypes/_WF/Species/Entities/Mobs/Customization/Markings/tattoos.yml)
 - [`Resources/Prototypes/_WF/Species/Entities/Mobs/Species/canine.yml`](../../../Resources/Prototypes/_WF/Species/Entities/Mobs/Species/canine.yml)
 - [`Resources/Prototypes/_WF/Species/Entities/Objects/Consumable/Food/meat.yml`](../../../Resources/Prototypes/_WF/Species/Entities/Objects/Consumable/Food/meat.yml)
@@ -58,6 +59,7 @@ states so Avali wear Avali hardsuits. The creator UI is in Humanoid.
 - [`Resources/Locale/en-US/_WF/Species/markings/reptilian.ftl`](../../../Resources/Locale/en-US/_WF/Species/markings/reptilian.ftl)
 - [`Resources/Locale/en-US/_WF/Species/markings/rodentia.ftl`](../../../Resources/Locale/en-US/_WF/Species/markings/rodentia.ftl)
 - [`Resources/Locale/en-US/_WF/Species/markings/scars.ftl`](../../../Resources/Locale/en-US/_WF/Species/markings/scars.ftl)
+- [`Resources/Locale/en-US/_WF/Species/markings/synthliz.ftl`](../../../Resources/Locale/en-US/_WF/Species/markings/synthliz.ftl)
 - [`Resources/Locale/en-US/_WF/Species/markings/tattoos.ftl`](../../../Resources/Locale/en-US/_WF/Species/markings/tattoos.ftl)
 - [`Resources/Locale/en-US/_WF/Species/markings/vox.ftl`](../../../Resources/Locale/en-US/_WF/Species/markings/vox.ftl)
 - [`Resources/Locale/en-US/_WF/Species/markings/vulpkanin.ftl`](../../../Resources/Locale/en-US/_WF/Species/markings/vulpkanin.ftl)
@@ -69,6 +71,7 @@ states so Avali wear Avali hardsuits. The creator UI is in Humanoid.
 
 ### Textures
 
+- [`Resources/Textures/_WF/Species/Mobs/Customization/synthliz.rsi/`](../../../Resources/Textures/_WF/Species/Mobs/Customization/synthliz.rsi/)
 - [`Resources/Textures/_WF/Species/Mobs/Species/Canine/parts.rsi/`](../../../Resources/Textures/_WF/Species/Mobs/Species/Canine/parts.rsi/)
 - [`Resources/Textures/_WF/Species/Objects/Specific/Medical/avalipen.rsi/`](../../../Resources/Textures/_WF/Species/Objects/Specific/Medical/avalipen.rsi/)
 
