@@ -1,8 +1,10 @@
+<!-- WOLFGATE(Traits): add the trait editor namespace to the character creator. -->
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid"
          xmlns:wfh="clr-namespace:Content.Client._WF.Humanoid"
          xmlns:wfg="clr-namespace:Content.Client._WF.Genitals.UI"
+         xmlns:traits="clr-namespace:Content.Client._DV.Traits.UI"
          HorizontalExpand="True"
          SeparationOverride="0">
     <!-- WOLFGATE(Stylesheets) START: creator rebuilt as cards with a preview column (also covers the root tag above, which
@@ -130,9 +132,9 @@
             </BoxContainer>
             <!-- Traits -->
             <BoxContainer Orientation="Vertical" Margin="8">
-                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
-                    <BoxContainer Name="TraitsList" Orientation="Vertical" />
-                </ScrollContainer>
+                <!-- WOLFGATE(Traits) START: use the upstream condition-aware trait editor. -->
+                <traits:TraitsTab Name="Traits" />
+                <!-- WOLFGATE END -->
             </BoxContainer>
             <!-- Company (Monolith) -->
             <BoxContainer Orientation="Vertical" Margin="8">

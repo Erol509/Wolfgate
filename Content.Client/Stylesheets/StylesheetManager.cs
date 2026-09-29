@@ -1,4 +1,5 @@
 using System.Linq; // WOLFGATE(Stylesheets)
+using Content.Client._DV.Traits.UI; // WOLFGATE(Traits)
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration; // WOLFGATE(Stylesheets)
@@ -18,6 +19,8 @@ namespace Content.Client.Stylesheets
 
         public Stylesheet SheetNano { get; private set; } = default!;
         public Stylesheet SheetSpace { get; private set; } = default!;
+        // WOLFGATE(Traits): trait controls layer their styles over the active interface theme.
+        public Stylesheet SheetTraits { get; private set; } = default!;
 
         public void Initialize()
         {
@@ -41,6 +44,7 @@ namespace Content.Client.Stylesheets
             var wolfgate = new StyleWolfgate(_resourceCache, skin);
             SheetNano = wolfgate.Apply(new StyleNano(_resourceCache).Stylesheet);
             SheetSpace = wolfgate.Apply(new StyleSpace(_resourceCache).Stylesheet);
+            SheetTraits = new StyleTraits(_resourceCache, SheetNano).Stylesheet;
             _userInterfaceManager.Stylesheet = SheetNano;
 
             // Follow with the matching HUD theme unless the player picked a theme that is not one of ours

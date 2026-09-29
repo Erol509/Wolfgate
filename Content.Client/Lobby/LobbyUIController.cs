@@ -162,10 +162,12 @@ public sealed partial class LobbyUIController : UIController, IOnStateEntered<Lo
                 _profileEditor.RefreshSpecies();
             }
 
-            if (obj.WasModified<TraitPrototype>())
-            {
-                _profileEditor.RefreshTraits();
-            }
+            // WOLFGATE(Traits) START: the trait tab refreshes itself on prototype reload.
+            // if (obj.WasModified<TraitPrototype>()) // DeltaV - Refreshed in TraitsTab
+            // {
+            //     _profileEditor.RefreshTraits();
+            // }
+            // WOLFGATE END
         }
     }
 

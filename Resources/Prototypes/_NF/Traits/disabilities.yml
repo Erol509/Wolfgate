@@ -1,9 +1,12 @@
+# WOLFGATE(Traits): keep the previously removed Stinky trait out of the migrated set.
 - type: trait
   id: Clumsy
   name: trait-clumsy-name
   description: trait-clumsy-desc
   category: Disabilities
-  components:
+  effects:
+  - !type:AddCompsEffect
+    components:
     - type: Clumsy
       gunShootFailDamage:
         types:
@@ -18,18 +21,9 @@
   name: trait-wheelchair-bound-name
   description: trait-wheelchair-bound-desc
   category: Disabilities
-  blacklist:
+  effects:
+  - !type:AddCompsEffect
     components:
-      - BorgChassis
-  components:
     - type: BuckleOnMapInit
       prototype: VehicleWheelchair
     - type: LegsParalyzed
-
-- type: trait
-  id: Uncloneable
-  name: trait-uncloneable-name
-  description: trait-uncloneable-desc
-  category: Disabilities
-  components:
-    - type: Uncloneable

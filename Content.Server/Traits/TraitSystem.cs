@@ -1,3 +1,5 @@
+// WOLFGATE(Traits) START: trait application moved to the condition/effect system in _DV.
+#if false
 using Content.Server._EinsteinEngines.Language;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
@@ -21,6 +23,8 @@ public sealed partial class TraitSystem : EntitySystem
 
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
     }
+    #endif
+    // WOLFGATE END
 
     // When the player is spawned in, add all trait components selected during character creation
     private void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent args)

@@ -8,6 +8,27 @@ external:
       - Content.*/Symphony/**
       - "**/*.Symphony.cs"
       - Resources/Locale/en-US/symphony/**
+  Traits:
+    readme: Content.Server/_DV/Traits/README.md
+    paths:
+      - Content.Client/_DV/Traits/**
+      - Content.Server/_DV/Traits/**
+      - Content.Shared/_DV/Traits/**
+      - Content.Shared/_DV/CCVars/DCCVars.cs
+      - Content.Shared/_Mono/Traits/Conditions/InCompanyCondition.cs
+      - Content.Server/_Mono/Traits/Effects/LanguageTraitEffects.cs
+      - Content.IntegrationTests/Tests/_DV/TraitSystemTest.cs
+      - Resources/Locale/en-US/_DV/traits/**
+      - Resources/Locale/en-US/_Mono/traits/traits-ui.ftl
+      - Resources/Prototypes/_DV/Traits/**
+      - Resources/Prototypes/_Mono/Traits/physical.yml
+      - Resources/Prototypes/_Mono/Traits/speech.yml
+      - Resources/Prototypes/_EinsteinEngines/Traits/categories.yml
+      - Resources/Prototypes/_EinsteinEngines/Traits/languages.yml
+      - Resources/Prototypes/_NF/Traits/categories.yml
+      - Resources/Prototypes/_NF/Traits/disabilities.yml
+      - Resources/Prototypes/_NF/Traits/quirks.yml
+      - Resources/Prototypes/_NF/Traits/speech.yml
 
 # Edits outside _WF that can't hold a WOLFGATE marker: JSON, images, audio, rich-text .txt and map files.
 # Each entry has a path (a file, a folder or a glob), the module it serves (null for a standalone edit) and a reason.
