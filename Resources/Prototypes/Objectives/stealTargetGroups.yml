@@ -297,7 +297,7 @@
   id: FreezerHeater
   name: steal-target-groups-freezer-heater
   sprite:
-    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi # WOLFGATE: Imp Sprite Ports
+    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
     state: heaterOff
 
 - type: stealTargetGroup

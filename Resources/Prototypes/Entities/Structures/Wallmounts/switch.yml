@@ -198,7 +198,7 @@
     - type: InteractionOutline
     - type: Sprite
       drawdepth: HighFloorObjects
-      sprite: _Impstation/Structures/conveyor.rsi # WOLFGATE: Imp Sprite Ports
+      sprite: _Impstation/Structures/conveyor.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
       layers:
         - state: switch-off
           map: ["enabled", "enum.TwoWayLeverState.Middle"]

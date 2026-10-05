@@ -12,7 +12,7 @@
   - type: Transform
     anchored: true
   - type: Sprite
-    sprite: _Impstation/Structures/conveyor.rsi # WOLFGATE: Imp Sprite Ports
+    sprite: _Impstation/Structures/conveyor.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
     state: conveyor_stopped_cw
     drawdepth: HighFloorObjects
   - type: ApcPowerReceiver

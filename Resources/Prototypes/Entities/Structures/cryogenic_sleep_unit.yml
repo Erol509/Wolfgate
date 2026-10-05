@@ -10,11 +10,11 @@
   - type: Rotatable
   - type: Sprite
     noRot: true
-    sprite: _Impstation/Structures/cryostorage.rsi # WOLFGATE: Imp Sprite Ports
+    sprite: _Impstation/Structures/cryostorage.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
     layers:
     - state: sleeper_0
       map: ["base"]
-    - state: sleeper_0-overlay # WOLFGATE: Imp Sprite Ports
+    - state: sleeper_0-overlay # WOLFGATE(Respritev1): Imp Sprite Ports
       shader: unshaded
       map: ["overlay"]
   - type: UserInterface
@@ -50,7 +50,7 @@
         base:
           True: { state: sleeper_1 }
           False: { state: sleeper_0 }
-        overlay: # WOLFGATE: Imp Sprite Ports
+        overlay: # WOLFGATE(Respritev1): Imp Sprite Ports
           True: { state: sleeper_1-overlay }
           False: { state: sleeper_0-overlay }
 

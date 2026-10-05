@@ -20,26 +20,26 @@
   - type: Pullable
   - type: Sprite
     layers:
-      - sprite: _Impstation/Structures/Hydroponics/containers.rsi # WOLFGATE: Imp Sprite Ports
-        state: hydrotray # WOLFGATE: Imp Sprite Ports hydrotray3<hydrotray
-      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # WOLFGATE: Imp Sprite Ports
-        state: lowhealth # WOLFGATE: Imp Sprite Ports lowhealth3<lowhealth
+      - sprite: _Impstation/Structures/Hydroponics/containers.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
+        state: hydrotray # WOLFGATE(Respritev1): Imp Sprite Ports hydrotray3<hydrotray
+      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
+        state: lowhealth # WOLFGATE(Respritev1): Imp Sprite Ports lowhealth3<lowhealth
         map: [ "health_alert" ]
         visible: false
-      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # WOLFGATE: Imp Sprite Ports
-        state: lowwater # WOLFGATE: Imp Sprite Ports lowwater3<lowwater
+      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
+        state: lowwater # WOLFGATE(Respritev1): Imp Sprite Ports lowwater3<lowwater
         map: [ "water_alert" ]
         visible: false
-      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # WOLFGATE: Imp Sprite Ports
-        state: lownutri # WOLFGATE: Imp Sprite Ports lownutri3<lownutri
+      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
+        state: lownutri # WOLFGATE(Respritev1): Imp Sprite Ports lownutri3<lownutri
         map: [ "nutri_alert" ]
         visible: false
-      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # WOLFGATE: Imp Sprite Ports
-        state: alert # WOLFGATE: Imp Sprite Ports alert3<alert
+      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
+        state: alert # WOLFGATE(Respritev1): Imp Sprite Ports alert3<alert
         map: [ "undefined_alert" ]
         visible: false
-      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # WOLFGATE: Imp Sprite Ports
-        state: harvest # WOLFGATE: Imp Sprite Ports harvest3<harvest
+      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
+        state: harvest # WOLFGATE(Respritev1): Imp Sprite Ports harvest3<harvest
         map: [ "harvest_alert" ]
         visible: false
   - type: Appearance

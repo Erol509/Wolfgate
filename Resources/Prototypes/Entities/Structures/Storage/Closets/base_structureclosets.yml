@@ -243,7 +243,7 @@
     noRot: true
   - type: Sprite
     noRot: true
-    sprite: _Impstation/Structures/Storage/suit_storage.rsi # WOLFGATE: Imp Sprite Ports
+    sprite: _Impstation/Structures/Storage/suit_storage.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
     layers:
     - state: base
     - state: door
