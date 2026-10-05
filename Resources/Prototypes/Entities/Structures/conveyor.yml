@@ -84,7 +84,7 @@
     tags:
     - ConveyorAssembly
   - type: Sprite
-    sprite: _Impstation/Structures/conveyor.rsi # Impstation
+    sprite: _Impstation/Structures/conveyor.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
     state: conveyor_loose
   - type: Construction
     graph: ConveyorGraph

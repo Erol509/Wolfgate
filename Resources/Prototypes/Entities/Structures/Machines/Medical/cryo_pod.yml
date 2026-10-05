@@ -123,7 +123,7 @@
   description: A cryo pod that has seen better days. It's entirely inoperable; not good for anything but scrap.
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Machines/Medical/cryopod.rsi # IMP
+    sprite: _Impstation/Structures/Machines/Medical/cryopod.rsi # WOLFGATE(Respritev1): Imp Sprite Ports
     drawdepth: Mobs
     noRot: true
     offset: 0, 0.5
