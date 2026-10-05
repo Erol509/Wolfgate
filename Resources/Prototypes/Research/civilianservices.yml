@@ -149,7 +149,7 @@
   id: BiochemicalStasis
   name: research-technology-biochemical-stasis
   icon:
-    sprite: _Impstation/Structures/Machines/stasis_bed.rsi # Imp
+    sprite: _Impstation/Structures/Machines/stasis_bed.rsi # WOLFGATE: Imp Sprite Ports
     state: icon
   discipline: CivilianServices
   tier: 2
