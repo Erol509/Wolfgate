@@ -50,7 +50,7 @@
         base:
           True: { state: sleeper_1 }
           False: { state: sleeper_0 }
-        overlay: # imp
+        overlay: # WOLFGATE: Imp Sprite Ports
           True: { state: sleeper_1-overlay }
           False: { state: sleeper_0-overlay }
 
