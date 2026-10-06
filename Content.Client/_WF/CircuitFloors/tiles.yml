@@ -1,0 +1,36 @@
+# Circuits
+- type: tile
+  id: FloorGreenCircuitModern
+  name: tiles-green-circuit-floor-modern
+  sprite: /Textures/_WF/CircuitFloors/circuit_floors/gcircuitanim.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemGCircuit
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorBlueCircuitModern
+  name: tiles-blue-circuit-floor-modern
+  sprite: /Textures/_WF/CircuitFloors/circuit_floors/bcircuit.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemBCircuit
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorRedCircuitModern
+  name: tiles-red-circuit-floor-modern
+  sprite: /Textures/_WF/CircuitFloors/circuit_floors/rcircuitanim.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemRCircuit
+  heatCapacity: 10000
