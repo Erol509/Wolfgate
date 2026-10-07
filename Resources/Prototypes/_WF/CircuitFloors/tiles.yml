@@ -10,7 +10,6 @@
     collection: FootstepHull
   itemDrop: FloorTileItemGCircuit
   heatCapacity: 10000
-  components:
 
 - type: tile
   id: FloorBlueCircuitModern
