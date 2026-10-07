@@ -2,7 +2,7 @@
 - type: tile
   id: FloorGreenCircuitModern
   name: tiles-green-circuit-floor-modern
-  sprite: /Textures/_WF/CircuitFloors/circuit_floors/gcircuit.png
+  sprite: /Textures/_WF/CircuitFloors/circuit_floors.rsi/gcircuit.png
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -15,7 +15,7 @@
 - type: tile
   id: FloorBlueCircuitModern
   name: tiles-blue-circuit-floor-modern
-  sprite: /Textures/_WF/CircuitFloors/circuit_floors/bcircuit.png
+  sprite: /Textures/_WF/CircuitFloors/circuit_floors.rsi/bcircuit.png
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -27,7 +27,7 @@
 - type: tile
   id: FloorRedCircuitModern
   name: tiles-red-circuit-floor-modern
-  sprite: /Textures/_WF/CircuitFloors/circuit_floors/rcircuit.png
+  sprite: /Textures/_WF/CircuitFloors/circuit_floors.rsi/rcircuit.png
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
