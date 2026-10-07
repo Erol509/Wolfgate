@@ -11,7 +11,10 @@ Adds sprites for circuit floors, while also keeping old sprites.
 
 - [`Resources/Prototypes/_WF/CircuitFloors/README.md`](../../../Resources/Prototypes/_WF/CircuitFloors/README.md)
 - [`Resources/Prototypes/_WF/CircuitFloors/tiles.yml`](../../../Resources/Prototypes/_WF/CircuitFloors/tiles.yml)
-- [`Resources/Prototypes/_WF/CircuitFloors/turfs.yml`](../../../Resources/Prototypes/_WF/CircuitFloors/turfs.yml)
+
+### Localization
+
+- [`Resources/Locale/en-US/_WF/CircuitFloors/circuitfloors.ftl`](../../../Resources/Locale/en-US/_WF/CircuitFloors/circuitfloors.ftl)
 
 ### Textures
 
