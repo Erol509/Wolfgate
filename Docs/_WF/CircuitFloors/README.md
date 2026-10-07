@@ -9,7 +9,6 @@ Adds sprites for circuit floors, while also keeping old sprites.
 
 ### Prototypes
 
-- [`Resources/Prototypes/_WF/CircuitFloors/README.md`](../../../Resources/Prototypes/_WF/CircuitFloors/README.md)
 - [`Resources/Prototypes/_WF/CircuitFloors/tiles.yml`](../../../Resources/Prototypes/_WF/CircuitFloors/tiles.yml)
 
 ### Localization
