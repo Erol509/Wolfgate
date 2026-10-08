@@ -22,8 +22,20 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Sprite # WOLFGATE(AvaliAddons): Avali organ sprites
-    sprite: _WF\Mobs\Species\Avali\organs.rsi
+    sprite: _WF/Mobs/Species/Avali/organs.rsi
     state: stomach
+
+- type: entity
+  id: OrganAvaliBrain
+  parent: OrganHumanBrain
+  name: avali brain
+  suffix: Avali
+  description: "Where Avali think evil thoughts."
+  components:
+  - type: Sprite
+    sprite: _WF/Mobs/Species/Avali/organs.rsi
+    state: brain
+
 
 - type: entity
   id: OrganAvaliHeart
@@ -39,7 +51,7 @@
     - id: Poison
     - id: Narcotic
   - type: Sprite # WOLFGATE(AvaliAddons): Avali organ sprites
-    sprite: _WF\Mobs\Species\Avali\organs.rsi
+    sprite: _WF/Mobs/Species/Avali/organs.rsi
     state: heart-on
 
 - type: entity
@@ -55,7 +67,7 @@
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
   - type: Sprite # WOLFGATE(AvaliAddons): Avali organ sprites
-    sprite: _WF\Mobs\Species\Avali\organs.rsi
+    sprite: _WF/Mobs/Species/Avali/organs.rsi
     state: liver
 
 - type: entity
@@ -65,7 +77,7 @@
   description: "The kidneys of an avali."
   components:
   - type: Sprite # WOLFGATE(AvaliAddons): Avali organ sprites
-    sprite: _WF\Mobs\Species\Avali\organs.rsi
+    sprite: _WF/Mobs/Species/Avali/organs.rsi
     layers:
       - state: kidney-l
       - state: kidney-r
@@ -85,7 +97,7 @@
     - id: Gas
       rateModifier: 100.0
   - type: Sprite # WOLFGATE(AvaliAddons): Avali organ sprites
-    sprite: _WF\Mobs\Species\Avali\organs.rsi
+    sprite: _WF/Mobs/Species/Avali/organs.rsi
     layers:
       - state: lung-l
       - state: lung-r

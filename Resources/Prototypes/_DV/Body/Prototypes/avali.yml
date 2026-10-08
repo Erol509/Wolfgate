@@ -9,7 +9,7 @@
       connections:
       - torso
       organs:
-        brain: OrganHumanBrain
+        brain: OrganAvaliBrain
         eyes: OrganHumanEyes
     torso:
       part: TorsoAvali
