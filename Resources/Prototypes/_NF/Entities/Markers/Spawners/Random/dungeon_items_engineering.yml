@@ -223,9 +223,9 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Structures/Storage/SuitStorage/suit_storage.rsi
+      - sprite: Structures/Storage/suit_storage.rsi
         state: base
-      - sprite: Structures/Storage/SuitStorage/suit_storage.rsi
+      - sprite: Structures/Storage/suit_storage.rsi
         state: door
       - sprite: _NF/Markers/general.rsi
         state: questionmark
