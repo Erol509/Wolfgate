@@ -1,4 +1,4 @@
-# WOLFGATE(AvaliAddons): Bio-synthetic Avali body parts
+# WOLFGATE(AvaliAddons) START: Bio-synthetic Avali body parts
 - type: latheRecipe
   id: SynthHeadAvaliEmpty
   result: BioSynthAvaliHeadEmpty

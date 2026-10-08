@@ -286,6 +286,3 @@ unmarked:
   - path: Resources/Textures/_Impstation/Structures/
     module: Resprites
     reason: Impstation structure resprites (thermomachines, cryo pod, cryosleep, hydro tray, conveyor, fax, stasis bed, suit storage).
-  - path: Resources/Textures/_WF/Mobs/Species/Avali/organs.rsi
-    module: AvaliAddons
-    reason: Avali organ sprites, ported from Starlight.
