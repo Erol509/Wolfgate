@@ -7,11 +7,11 @@
   components:
   - type: Sprite
     sprite: _NF/Structures/Storage/closet.rsi
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: o2n2
-    stateDoorOpen: o2n2_open
-    stateDoorClosed: o2n2_door
+#  - type: Appearance # WOLFAGATE(Resprites): Chances Frontier lockers so linters pass
+#  - type: EntityStorageVisuals
+#    stateBaseClosed: o2n2
+#    stateDoorOpen: o2n2_open
+#    stateDoorClosed: o2n2_door
 
 - type: entity
   id: ClosetFsbEva
@@ -21,8 +21,8 @@
   components:
   - type: Sprite
     sprite: _NF/Structures/Storage/closet.rsi
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: fsb
-    stateDoorOpen: fsb_open
-    stateDoorClosed: fsb_door
+#  - type: Appearance # WOLFAGATE(Resprites): Chances Frontier lockers so linters pass
+#  - type: EntityStorageVisuals
+#    stateBaseClosed: fsb
+#    stateDoorOpen: fsb_open
+#    stateDoorClosed: fsb_door

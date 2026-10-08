@@ -162,6 +162,12 @@
     },
     {
       "name": "door-decal-null"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "closed"
     }
   ]
 }
