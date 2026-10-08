@@ -66,14 +66,14 @@
   id: FloorSteelVerticalSlatsBordered
   name: tiles-steel-floor-vertical-slats-bordered
   sprite: /Textures/Tiles/Basic/Gray/gray-vertical-slats.png
-  itemDrop: FloorTileItemSteelVerticalSlatsBordered
+#  itemDrop: FloorTileItemSteelVerticalSlatsBordered
 
 - type: tile
   parent: BaseStationTile
   id: FloorSteelHorizontalSlatsBordered
   name: tiles-steel-floor-horizontal-slats-bordered
   sprite: /Textures/Tiles/Basic/Gray/gray-horizontal-slats.png
-  itemDrop: FloorTileItemSteelHorizontalSlatsBordered
+#  itemDrop: FloorTileItemSteelHorizontalSlatsBordered
 
 - type: tile
   id: FloorTechMaint2
@@ -90,7 +90,7 @@
   parent: BaseStationTile
   name: tiles-plastic-floor
   sprite: /Textures/Tiles/Basic/Gray/gray-plastic.png
-  itemDrop: FloorTileItemPlastic
+  itemDrop: FloorTileItemSteel
   flammability: 3
 
 - type: tile
@@ -133,14 +133,14 @@
   id: FloorWhiteVerticalSlatsBordered
   name: tiles-white-floor-vertical-slats-bordered
   sprite: /Textures/Tiles/Basic/White/white-vertical-slats.png
-  itemDrop: FloorTileItemWhiteVerticalSlatsBordered
+#  itemDrop: FloorTileItemWhiteVerticalSlatsBordered
 
 - type: tile
   parent: BaseStationTile
   id: FloorWhiteHorizontalSlatsBordered
   name: tiles-white-floor-horizontal-slats-bordered
   sprite: /Textures/Tiles/Basic/White/white-horizontal-slats.png
-  itemDrop: FloorTileItemWhiteHorizontalSlatsBordered
+#  itemDrop: FloorTileItemWhiteHorizontalSlatsBordered
 
 - type: tile
   id: FloorWhitePavement
@@ -189,7 +189,7 @@
   sprite: /Textures/Tiles/Basic/White/white-plastic.png
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemWhitePlastic
+  itemDrop: FloorTileItemWhite
   flammability: 3
 
 ### DARK
@@ -218,14 +218,14 @@
   id: FloorDarkVerticalSlatsBordered
   name: tiles-dark-floor-vertical-slats-bordered
   sprite: /Textures/Tiles/Basic/Dark/dark-vertical-slats.png
-  itemDrop: FloorTileItemDarkVerticalSlatsBordered
+  #itemDrop: FloorTileItemDarkVerticalSlatsBordered
 
 - type: tile
   parent: BaseStationTile
   id: FloorDarkHorizontalSlatsBordered
   name: tiles-dark-floor-horizontal-slats-bordered
   sprite: /Textures/Tiles/Basic/Dark/dark-horizontal-slats.png
-  itemDrop: FloorTileItemDarkHorizontalSlatsBordered
+  #itemDrop: FloorTileItemDarkHorizontalSlatsBordered
 
 - type: tile
   id: FloorDarkPavement
@@ -274,7 +274,7 @@
   sprite: /Textures/Tiles/Basic/Dark/dark-plastic.png
   footstepSounds:
     collection: FootstepTile
-  itemDrop: FloorTileItemDarkPlastic
+  itemDrop: FloorTileItemDark
   flammability: 3
 
 - type: tile
