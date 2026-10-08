@@ -14,7 +14,16 @@
       "name": "door"
     },
     {
+      "name": "unlocked"
+    },
+    {
+      "name": "locked"
+    },
+    {
       "name": "panel"
+    },
+    {
+      "name": "welded"
     }
   ]
 }
