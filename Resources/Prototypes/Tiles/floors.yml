@@ -1546,13 +1546,8 @@
 - type: tile
   id: FloorGlass
   name: tiles-glass-floor
-  sprite: /Textures/Tiles/glass.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  sprite: /Textures/Tiles/Glass/glass.png
+  variants: 1
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1568,13 +1563,8 @@
 - type: tile
   id: FloorRGlass
   name: tiles-reinforced-glass-floor
-  sprite: /Textures/Tiles/rglass.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  sprite: /Textures/Tiles/Glass/glass-reinf.png
+  variants: 1
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1609,7 +1599,11 @@
 - type: tile
   id: FloorGreenCircuit
   name: tiles-green-circuit-floor
-  sprite: /Textures/Tiles/green_circuit.png
+  sprite: /Textures/Tiles/Circuit/circuit-green.png
+  variants: 2
+  placementVariants:
+    - 1.0
+    - 1.0
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1624,7 +1618,11 @@
 - type: tile
   id: FloorBlueCircuit
   name: tiles-blue-circuit-floor
-  sprite: /Textures/Tiles/blue_circuit.png
+  sprite: /Textures/Tiles/Circuit/circuit-blue.png
+  variants: 2
+  placementVariants:
+    - 1.0
+    - 1.0
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1639,7 +1637,11 @@
 - type: tile
   id: FloorRedCircuit
   name: tiles-red-circuit-floor
-  sprite: /Textures/Tiles/red_circuit.png
+  sprite: /Textures/Tiles/Circuit/circuit-red.png
+  variants: 2
+  placementVariants:
+      - 1.0
+      - 1.0
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1718,8 +1720,26 @@
 - type: tile
   id: FloorGrassJungle
   name: tiles-jungle-grass-floor
-  sprite: /Textures/Tiles/grassjungle.png
+  sprite: /Textures/Tiles/GrassJungle/grass.png
   baseTurf: FloorDirt
+  variants: 6
+  placementVariants:
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/Tiles/GrassJungle/single_edge_SE.png
+    NorthEast: /Textures/Tiles/GrassJungle/single_edge_NE.png
+    NorthWest: /Textures/Tiles/GrassJungle/single_edge_NW.png
+    SouthWest: /Textures/Tiles/GrassJungle/single_edge_SW.png
+    South: /Textures/Tiles/GrassJungle/double_edge_S.png
+    East: /Textures/Tiles/GrassJungle/double_edge_E.png
+    North: /Textures/Tiles/GrassJungle/double_edge_N.png
+    West: /Textures/Tiles/GrassJungle/double_edge_W.png
   #canCrowbar: false # Come back
   # canShovel: true # Delta V # Frontier
   deconstructTools: [ Digging ] # Frontier
@@ -1736,23 +1756,25 @@
 - type: tile
   id: FloorGrassDark
   name: tiles-dark-grass-floor
-  sprite: /Textures/_RMC14/Tiles/planet/grass1/grass.png
-  variants: 4
+  sprite: /Textures/Tiles/GrassDark/grass.png
+  variants: 6
   placementVariants:
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
   - 1.0
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/_RMC14/Tiles/planet/grass1/single_edge.png
-    NorthEast: /Textures/_RMC14/Tiles/planet/grass1/single_edge.png
-    NorthWest: /Textures/_RMC14/Tiles/planet/grass1/single_edge.png
-    SouthWest: /Textures/_RMC14/Tiles/planet/grass1/single_edge.png
-    South: /Textures/_RMC14/Tiles/planet/grass1/double_edge.png
-    East: /Textures/_RMC14/Tiles/planet/grass1/double_edge.png
-    North: /Textures/_RMC14/Tiles/planet/grass1/double_edge.png
-    West: /Textures/_RMC14/Tiles/planet/grass1/double_edge.png
+    SouthEast: /Textures/Tiles/GrassDark/single_edge_SE.png
+    NorthEast: /Textures/Tiles/GrassDark/single_edge_NE.png
+    NorthWest: /Textures/Tiles/GrassDark/single_edge_NW.png
+    SouthWest: /Textures/Tiles/GrassDark/single_edge_SW.png
+    South: /Textures/Tiles/GrassDark/double_edge_S.png
+    East: /Textures/Tiles/GrassDark/double_edge_E.png
+    North: /Textures/Tiles/GrassDark/double_edge_N.png
+    West: /Textures/Tiles/GrassDark/double_edge_W.png
   baseTurf: FloorDirt
   #canCrowbar: false # Come back
   # canShovel: true # Delta V # Frontier
@@ -1770,7 +1792,7 @@
 - type: tile
   id: FloorGrassLight
   name: tiles-light-grass-floor
-  sprite: /Textures/_CE/Tiles/GrassLight/grass.png
+  sprite: /Textures/Tiles/GrassLight/grass.png
   variants: 6
   placementVariants:
   - 1.0
@@ -1781,14 +1803,14 @@
   - 1.0
   edgeSpritePriority: 2
   edgeSprites:
-    SouthEast: /Textures/_CE/Tiles/GrassLight/single_edge_SE.png
-    NorthEast: /Textures/_CE/Tiles/GrassLight/single_edge_NE.png
-    NorthWest: /Textures/_CE/Tiles/GrassLight/single_edge_NW.png
-    SouthWest: /Textures/_CE/Tiles/GrassLight/single_edge_SW.png
-    South: /Textures/_CE/Tiles/GrassLight/double_edge_S.png
-    East: /Textures/_CE/Tiles/GrassLight/double_edge_E.png
-    North: /Textures/_CE/Tiles/GrassLight/double_edge_N.png
-    West: /Textures/_CE/Tiles/GrassLight/double_edge_W.png
+    SouthEast: /Textures//Tiles/GrassLight/single_edge_SE.png
+    NorthEast: /Textures//Tiles/GrassLight/single_edge_NE.png
+    NorthWest: /Textures//Tiles/GrassLight/single_edge_NW.png
+    SouthWest: /Textures//Tiles/GrassLight/single_edge_SW.png
+    South: /Textures//Tiles/GrassLight/double_edge_S.png
+    East: /Textures/Tiles/GrassLight/double_edge_E.png
+    North: /Textures/Tiles/GrassLight/double_edge_N.png
+    West: /Textures/Tiles/GrassLight/double_edge_W.png
   baseTurf: FloorDirt
   #canCrowbar: false # Come back
   # canShovel: true # Delta V # Frontier
@@ -1807,13 +1829,24 @@
 - type: tile
   id: FloorDirt
   name: tiles-dirt-floor
-  sprite: /Textures/Tiles/dirt.png
-  variants: 4
+  sprite: /Textures/Tiles/Dirt/dirt.png
+  variants: 5
   placementVariants:
   - 1.0
   - 1.0
   - 1.0
   - 1.0
+  - 1.0
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Dirt/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Dirt/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Dirt/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Dirt/single_edge_SW.png
+    South: /Textures/Tiles/Dirt/double_edge_S.png
+    East: /Textures/Tiles/Dirt/double_edge_E.png
+    North: /Textures/Tiles/Dirt/double_edge_N.png
+    West: /Textures/Tiles/Dirt/double_edge_W.png
   baseTurf: FloorBedrock # Delta V
   #canCrowbar: false # Come back
   # canShovel: true # Delta V # Frontier
@@ -1823,7 +1856,6 @@
   itemDrop: FloorTileItemDirt # Delta V
   heatCapacity: 10000
   weather: true
-  iconSmoothSprite: /Textures/_CE/Tiles/Edges/dirt.rsi
   # ES START
   flammability: 0.2
   # ES END
@@ -1974,16 +2006,18 @@
 - type: tile
   id: FloorCave
   name: tiles-cave
-  sprite: /Textures/Tiles/cave.png
-  variants: 7
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  sprite: /Textures/Tiles/Cave/cave.png
+  variants: 1
+  edgeSpritePriority: 1
+  edgeSprites:
+      SouthEast: /Textures/Tiles/Cave/single_edge_SE.png
+      NorthEast: /Textures/Tiles/Cave/single_edge_NE.png
+      NorthWest: /Textures/Tiles/Cave/single_edge_NW.png
+      SouthWest: /Textures/Tiles/Cave/single_edge_SW.png
+      South: /Textures/Tiles/Cave/double_edge_S.png
+      East: /Textures/Tiles/Cave/double_edge_E.png
+      North: /Textures/Tiles/Cave/double_edge_N.png
+      West: /Textures/Tiles/Cave/double_edge_W.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
@@ -2141,16 +2175,18 @@
 - type: tile
   id: FloorChromite
   name: tiles-chromite
-  sprite: /Textures/Tiles/chromite.png
-  variants: 7
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  sprite: /Textures/Tiles/Chromite/chromite.png
+  variants: 1
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Chromite/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Chromite/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Chromite/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Chromite/single_edge_SW.png
+    South: /Textures/Tiles/Chromite/double_edge_S.png
+    East: /Textures/Tiles/Chromite/double_edge_E.png
+    North: /Textures/Tiles/Chromite/double_edge_N.png
+    West: /Textures/Tiles/Chromite/double_edge_W.png
   baseTurf: Space
   isSubfloor: true
   weather: true # Mono
@@ -2259,7 +2295,8 @@
 - type: tile
   id: FloorAstroIce
   name: tiles-astro-ice
-  sprite: /Textures/Tiles/Planet/Snow/ice.png
+  sprite: /Textures/Tiles/Ice/ice.png
+  variants: 4
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
