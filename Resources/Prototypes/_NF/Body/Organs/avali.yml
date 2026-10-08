@@ -21,6 +21,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: Sprite # WOLFGATE(AvaliAddons): Avali organ sprites
+    sprite: _WF\Mobs\Species\Avali\organs.rsi
+    state: stomach
 
 - type: entity
   id: OrganAvaliHeart
@@ -35,6 +38,9 @@
     - id: Medicine
     - id: Poison
     - id: Narcotic
+  - type: Sprite # WOLFGATE(AvaliAddons): Avali organ sprites
+    sprite: _WF\Mobs\Species\Avali\organs.rsi
+    state: heart-on
 
 - type: entity
   id: OrganAvaliLiver
@@ -48,13 +54,38 @@
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+  - type: Sprite # WOLFGATE(AvaliAddons): Avali organ sprites
+    sprite: _WF\Mobs\Species\Avali\organs.rsi
+    state: liver
 
 - type: entity
   id: OrganAvaliKidneys
   parent: OrganHumanKidneys
-  categories: [ HideSpawnMenu ]
+  suffix: Avali
+  description: "The kidneys of an avali."
+  components:
+  - type: Sprite # WOLFGATE(AvaliAddons): Avali organ sprites
+    sprite: _WF\Mobs\Species\Avali\organs.rsi
+    layers:
+      - state: kidney-l
+      - state: kidney-r
 
 - type: entity
   id: OrganAvaliLungs
   parent: OrganHumanLungs
-  categories: [ HideSpawnMenu ]
+  suffix: Avali
+  description: "The lungs of an avali."
+  components:
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Resomi, Human ] #They get both so they can still breathe oxygen without us needing to add Resomi everywhere Human is listed
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: Sprite # WOLFGATE(AvaliAddons): Avali organ sprites
+    sprite: _WF\Mobs\Species\Avali\organs.rsi
+    layers:
+      - state: lung-l
+      - state: lung-r

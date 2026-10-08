@@ -57,6 +57,10 @@ or gun accuracy changes removed before the upstream PR was merged.
 
 - [`Resources/Textures/_WF/Avali/feather.rsi/`](../../../Resources/Textures/_WF/Avali/feather.rsi/)
 
+### Docs
+
+- [`Docs/_WF/Avali/AvaliAdditions/README.md`](../../../Docs/_WF/Avali/AvaliAdditions/README.md)
+
 ## Non-modular edits
 
 - [`Resources/Prototypes/_StarLight/Entities/Mobs/Species/avali.yml`](../../../Resources/Prototypes/_StarLight/Entities/Mobs/Species/avali.yml): enable feather preening and regrowth for Avali

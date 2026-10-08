@@ -294,6 +294,16 @@
         - !type:OrganType
           type: Vox
         factor: -4
+    # WOLFGATE(AvaliAddons) START: ammonia quenches Avali thirst
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 8
+        conditions:
+        - !type:OrganType
+          type: Avali
+          shouldHave: true
+    # WOLFGATE(AvaliAddons) END
 
 
 - type: reagent

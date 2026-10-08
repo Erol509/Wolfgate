@@ -1,0 +1,62 @@
+- type: latheRecipe
+  id: SynthHeadAvaliEmpty
+  result: BioSynthAvaliHeadEmpty
+  completetime: 10
+  materials:
+    Biomass: 5
+
+- type: latheRecipe
+  id: SynthAvaliLeftArm
+  result: BioSynthAvaliLeftArm
+  completetime: 5
+  materials:
+    Biomass: 7
+
+- type: latheRecipe
+  id: SynthAvaliLeftHand
+  result: BioSynthAvaliLeftHand
+  completetime: 5
+  materials:
+    Biomass: 3
+
+- type: latheRecipe
+  id: SynthAvaliRightArm
+  result: BioSynthAvaliRightArm
+  completetime: 5
+  materials:
+    Biomass: 7
+
+- type: latheRecipe
+  id: SynthAvaliRightHand
+  result: BioSynthAvaliRightHand
+  completetime: 5
+  materials:
+    Biomass: 3
+
+- type: latheRecipe
+  id: SynthAvaliLeftLeg
+  result: BioSynthAvaliLeftLeg
+  completetime: 5
+  materials:
+    Biomass: 7
+
+- type: latheRecipe
+  id: SynthAvaliRightLeg
+  result: BioSynthAvaliRightLeg
+  completetime: 5
+  materials:
+    Biomass: 7
+
+- type: latheRecipe
+  id: SynthAvaliLeftFoot
+  result: BioSynthAvaliLeftFoot
+  completetime: 5
+  materials:
+    Biomass: 3
+
+- type: latheRecipe
+  id: SynthAvaliRightFoot
+  result: BioSynthAvaliRightFoot
+  completetime: 5
+  materials:
+    Biomass: 3
