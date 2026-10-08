@@ -26,7 +26,6 @@
   parent: BaseWallCloset
   id: ClosetWallFire
   name: fire-safety wall closet
-  parent: BaseWallCloset
   description: It's a storage unit for fire-fighting supplies.
   components:
   - type: Sprite
@@ -142,7 +141,7 @@
 #    access: [["Engineering"]]
 
 - type: entity
-  parent: [ GenpopBase , BaseWallLocker ]
+  parent: [ BaseWallLocker ]
   id: LockerWallBasePrisoner
   name: prisoner wall closet
   description: It's a secure locker for an inmate's personal belongings during their time in prison.

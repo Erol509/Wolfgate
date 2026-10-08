@@ -1416,6 +1416,16 @@
   - 0.0166
   - 0.0166
   - 0.0166
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Asteroid/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Asteroid/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Asteroid/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Asteroid/single_edge_SW.png
+    South: /Textures/Tiles/Asteroid/double_edge_S.png
+    East: /Textures/Tiles/Asteroid/double_edge_E.png
+    North: /Textures/Tiles/Asteroid/double_edge_N.png
+    West: /Textures/Tiles/Asteroid/double_edge_W.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds:

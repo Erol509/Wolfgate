@@ -249,14 +249,14 @@
   baseTurf: Space
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/_Mono/Tiles/planet/Asteroid/sand_single_edge.png
-    NorthEast: /Textures/_Mono/Tiles/planet/Asteroid/sand_single_edge.png
-    NorthWest: /Textures/_Mono/Tiles/planet/Asteroid/sand_single_edge.png
-    SouthWest: /Textures/_Mono/Tiles/planet/Asteroid/sand_single_edge.png
-    South: /Textures/_Mono/Tiles/planet/Asteroid/sand_double_edge.png
-    East: /Textures/_Mono/Tiles/planet/Asteroid/sand_double_edge.png
-    North: /Textures/_Mono/Tiles/planet/Asteroid/sand_double_edge.png
-    West: /Textures/_Mono/Tiles/planet/Asteroid/sand_double_edge.png
+    SouthEast: /Textures/Tiles/Asteroid/single_edge_SE.png
+    NorthEast: /Textures/Tiles/Asteroid/single_edge_NE.png
+    NorthWest: /Textures/Tiles/Asteroid/single_edge_NW.png
+    SouthWest: /Textures/Tiles/Asteroid/single_edge_SW.png
+    South: /Textures/Tiles/Asteroid/double_edge_S.png
+    East: /Textures/Tiles/Asteroid/double_edge_E.png
+    North: /Textures/Tiles/Asteroid/double_edge_N.png
+    West: /Textures/Tiles/Asteroid/double_edge_W.png
   deconstructTools: [ Digging ]
   deconstructTimeMultiplier: 1
   itemDrop: DesertSand1

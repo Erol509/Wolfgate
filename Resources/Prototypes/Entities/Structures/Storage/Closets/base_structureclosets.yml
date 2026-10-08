@@ -231,8 +231,10 @@
         enum.LockVisualLayers.Lock:
           True: { state: locked }
           False: { state: unlocked }
-  - type: Paintable
-    group: WallLocker
+  # WOLFGATE(Resprites) START: This fork does not register Paintable.
+  # - type: Paintable
+  #   group: WallLocker
+  # WOLFGATE END
 
 #Base suit storage unit
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.

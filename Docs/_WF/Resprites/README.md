@@ -20,7 +20,9 @@ None.
 - [`Resources/Prototypes/Entities/Structures/Machines/Medical/cryo_pod.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/Medical/cryo_pod.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Entities/Structures/Machines/stasisbed.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/stasisbed.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Entities/Structures/Piping/Atmospherics/unary.yml`](../../../Resources/Prototypes/Entities/Structures/Piping/Atmospherics/unary.yml): Imp Sprite Ports
-- [`Resources/Prototypes/Entities/Structures/Storage/Closets/base_structureclosets.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/base_structureclosets.yml): Imp Sprite Ports
+- [`Resources/Prototypes/Entities/Structures/Storage/Closets/base_structureclosets.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/base_structureclosets.yml)
+  - This fork does not register Paintable.
+  - Imp Sprite Ports
 - [`Resources/Prototypes/Entities/Structures/Wallmounts/switch.yml`](../../../Resources/Prototypes/Entities/Structures/Wallmounts/switch.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Objectives/stealTargetGroups.yml`](../../../Resources/Prototypes/Objectives/stealTargetGroups.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Recipes/Construction/Graphs/structures/conveyor.yml`](../../../Resources/Prototypes/Recipes/Construction/Graphs/structures/conveyor.yml): Imp Sprite Ports

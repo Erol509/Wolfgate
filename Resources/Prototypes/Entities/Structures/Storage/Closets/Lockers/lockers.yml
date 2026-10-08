@@ -36,24 +36,9 @@
   parent: LockerBaseSecure
   name: secure closet
 
-# Cargo
-- type: entity
-  id: LockerQuarterMaster
-  parent: LockerBaseSecure
-  name: quartermaster's locker
-  components:
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: qm
-    stateDoorOpen: qm_open
-    stateDoorClosed: qm_door
-  - type: AccessReader
-#    access: [["Quartermaster"]] # Frontier
-
 - type: entity
   parent: LockerBase
   id: LockerSalvageSpecialist
-  parent: LockerBase
   name: salvage specialist's equipment
   description: Nevermind the pickaxe.
   components:
@@ -105,7 +90,7 @@
   - type: Sprite
     sprite: Structures/Storage/Closets/command-secure-cargo.rsi
   - type: AccessReader
-    access: [ [ "Quartermaster" ] ]
+#    access: [ [ "Quartermaster" ] ]
 
 # Electrical supplies
 - type: entity
@@ -459,10 +444,6 @@
     sprite: Structures/Storage/Closets/service-secure-mime.rsi
   - type: AccessReader
 #    access: [["Theatre"]] # Frontier
-  - type: EntityStorageVisuals
-    stateBaseClosed: mime
-    stateDoorOpen: mime_open
-    stateDoorClosed: mime_door
 
 # Representative
 - type: entity
@@ -473,7 +454,5 @@
   - type: AccessReader
 #    access: [["Command"]]
     access: [["HeadOfPersonnel"]] # Frontier
-  - type: EntityStorageVisuals
-    stateBaseClosed: hop
-    stateDoorOpen: hop_open
-    stateDoorClosed: representative_door
+  - type: Sprite
+    sprite: Structures/Storage/Closets/command-secure-service.rsi
