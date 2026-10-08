@@ -1,4 +1,5 @@
-- type: entity # Mono - Works now
+# WOLFGATE(AvaliAddons): Bio-synthetic Avali body parts
+- type: entity
   parent: HeadAvali
   id: BioSynthAvaliHeadEmpty
   name: bio-synthetic hollow avali head
@@ -83,3 +84,4 @@
   id: BioSynthAvaliRightFoot
   name: bio-synthetic avali right foot
   description: This right foot can be transplanted into any living organism and it will adapt to its recipient.
+# WOLFGATE END
