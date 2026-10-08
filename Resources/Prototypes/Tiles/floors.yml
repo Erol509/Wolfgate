@@ -816,12 +816,6 @@
   id: FloorSteelLime
   name: tiles-lime-floor
   sprite: /Textures/Tiles/lime.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1840,7 +1834,7 @@
   id: FloorAsteroidSand
   name: tiles-asteroid-sand
   sprite: /Textures/Tiles/Asteroid/asteroid.png
-  variants: 13
+  variants: 7
   placementVariants:
   - 0.8
   - 0.0166 #Should be roughly 20%.... I think??? I don't know dude, I'm just a YAML monkey.
@@ -1849,12 +1843,6 @@
   - 0.0166
   - 0.0166
   - 0.0166
-  - 0.0166
-  - 0.0166
-  - 0.0166
-  - 0.0166
-  - 0.0116
-  - 0.0116
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
@@ -2032,10 +2020,8 @@
   id: FloorFlesh
   name: tiles-flesh-floor
   sprite: /Textures/Tiles/meat.png
-  variants: 4
+  variants: 2
   placementVariants:
-  - 1.0
-  - 1.0
   - 1.0
   - 1.0
   baseTurf: Plating

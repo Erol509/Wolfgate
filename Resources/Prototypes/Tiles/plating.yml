@@ -109,6 +109,11 @@
   deconstructTools: [ Cutting ]
   deconstructTimeMultiplier: 1 # Goobstation
   weather: true
+  variants: 3
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
   footstepSounds:
     collection: FootstepCatwalk
   friction: 1.5

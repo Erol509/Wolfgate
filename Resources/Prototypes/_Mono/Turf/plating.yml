@@ -10,6 +10,7 @@
   parent: Lattice
   name: NE lattice
   sprite: /Textures/_Mono/Tiles/lattice/ne.png
+  variants: 1
   vertices: ["1, 0", "1, 1", "0, 1"]
 
 - type: tile
@@ -17,6 +18,7 @@
   parent: Lattice
   name: NW lattice
   sprite: /Textures/_Mono/Tiles/lattice/nw.png
+  variants: 1
   vertices: ["0, 0", "1, 1", "0, 1"]
 
 - type: tile
@@ -24,6 +26,7 @@
   parent: Lattice
   name: SE lattice
   sprite: /Textures/_Mono/Tiles/lattice/se.png
+  variants: 1
   vertices: ["0, 0", "1, 0", "1, 1"]
 
 - type: tile
@@ -31,6 +34,7 @@
   parent: Lattice
   name: SW lattice
   sprite: /Textures/_Mono/Tiles/lattice/sw.png
+  variants: 1
   vertices: ["0, 0", "1, 0", "0, 1"]
 
 - type: tile
@@ -38,6 +42,7 @@
   parent: PlatingSpace
   name: NE plating
   sprite: /Textures/_Mono/Tiles/plating/ne.png
+  variants: 1
   vertices: ["1, 0", "1, 1", "0, 1"]
 
 - type: tile
@@ -45,6 +50,7 @@
   parent: PlatingSpace
   name: NW plating
   sprite: /Textures/_Mono/Tiles/plating/nw.png
+  variants: 1
   vertices: ["0, 0", "1, 1", "0, 1"]
 
 - type: tile
@@ -52,6 +58,7 @@
   parent: PlatingSpace
   name: SE plating
   sprite: /Textures/_Mono/Tiles/plating/se.png
+  variants: 1
   vertices: ["0, 0", "1, 0", "1, 1"]
 
 - type: tile
@@ -59,4 +66,5 @@
   parent: PlatingSpace
   name: SW plating
   sprite: /Textures/_Mono/Tiles/plating/sw.png
+  variants: 1
   vertices: ["0, 0", "1, 0", "0, 1"]

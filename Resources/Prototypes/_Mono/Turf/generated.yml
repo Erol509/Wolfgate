@@ -3,6 +3,7 @@
   parent: Lattice
   name: V half-lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/half_v.png
+  variants: 1
   vertices: ['0.25, 0', '0.75, 0', '0.75, 1', '0.25, 1']
 
 - type: tile
@@ -10,6 +11,7 @@
   parent: Lattice
   name: H half-lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/half_h.png
+  variants: 1
   vertices: ['0, 0.25', '0, 0.75', '1, 0.75', '1, 0.25']
 
 - type: tile
@@ -17,6 +19,7 @@
   parent: Lattice
   name: north wedge lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/wedge_n.png
+  variants: 1
   vertices: ['0, 1', '1, 1', '0.5, 0.5']
 
 - type: tile
@@ -24,6 +27,7 @@
   parent: Lattice
   name: east wedge lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/wedge_e.png
+  variants: 1
   vertices: ['1, 1', '1, 0', '0.5, 0.5']
 
 - type: tile
@@ -31,6 +35,7 @@
   parent: Lattice
   name: south wedge lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/wedge_s.png
+  variants: 1
   vertices: ['1, 0', '0, 0', '0.5, 0.5']
 
 - type: tile
@@ -38,6 +43,7 @@
   parent: Lattice
   name: west wedge lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/wedge_w.png
+  variants: 1
   vertices: ['0, 0', '0, 1', '0.5, 0.5']
 
 - type: tile
@@ -45,6 +51,7 @@
   parent: Lattice
   name: NE-S lower half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_ne_s_l.png
+  variants: 1
   vertices: ['0, 1', '1, 1', '1, 0', '0.5, 0']
 
 - type: tile
@@ -52,6 +59,7 @@
   parent: Lattice
   name: SE-W lower half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_se_w_l.png
+  variants: 1
   vertices: ['1, 1', '1, 0', '0, 0', '0, 0.5']
 
 - type: tile
@@ -59,6 +67,7 @@
   parent: Lattice
   name: SW-N lower half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_sw_n_l.png
+  variants: 1
   vertices: ['1, 0', '0, 0', '0, 1', '0.5, 1']
 
 - type: tile
@@ -66,6 +75,7 @@
   parent: Lattice
   name: NW-E lower half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_nw_e_l.png
+  variants: 1
   vertices: ['0, 0', '0, 1', '1, 1', '1, 0.5']
 
 - type: tile
@@ -73,6 +83,7 @@
   parent: Lattice
   name: NE-S upper half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_ne_s_u.png
+  variants: 1
   vertices: ['0.5, 1', '1, 1', '1, 0']
 
 - type: tile
@@ -80,6 +91,7 @@
   parent: Lattice
   name: SE-W upper half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_se_w_u.png
+  variants: 1
   vertices: ['1, 0.5', '1, 0', '0, 0']
 
 - type: tile
@@ -87,6 +99,7 @@
   parent: Lattice
   name: SW-N upper half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_sw_n_u.png
+  variants: 1
   vertices: ['0.5, 0', '0, 0', '0, 1']
 
 - type: tile
@@ -94,6 +107,7 @@
   parent: Lattice
   name: NW-E upper half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_nw_e_u.png
+  variants: 1
   vertices: ['0, 0.5', '0, 1', '1, 1']
 
 - type: tile
@@ -101,6 +115,7 @@
   parent: Lattice
   name: NE-W lower half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_ne_w_l.png
+  variants: 1
   vertices: ['0, 1', '1, 1', '1, 0', '0, 0.5']
 
 - type: tile
@@ -108,6 +123,7 @@
   parent: Lattice
   name: SE-N lower half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_se_n_l.png
+  variants: 1
   vertices: ['1, 1', '1, 0', '0, 0', '0.5, 1']
 
 - type: tile
@@ -115,6 +131,7 @@
   parent: Lattice
   name: SW-E lower half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_sw_e_l.png
+  variants: 1
   vertices: ['1, 0', '0, 0', '0, 1', '1, 0.5']
 
 - type: tile
@@ -122,6 +139,7 @@
   parent: Lattice
   name: NW-S lower half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_nw_s_l.png
+  variants: 1
   vertices: ['0, 0', '0, 1', '1, 1', '0.5, 0']
 
 - type: tile
@@ -129,6 +147,7 @@
   parent: Lattice
   name: NE-W upper half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_ne_w_u.png
+  variants: 1
   vertices: ['0, 1', '1, 1', '1, 0.5']
 
 - type: tile
@@ -136,6 +155,7 @@
   parent: Lattice
   name: SE-N upper half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_se_n_u.png
+  variants: 1
   vertices: ['1, 1', '1, 0', '0.5, 0']
 
 - type: tile
@@ -143,6 +163,7 @@
   parent: Lattice
   name: SW-E upper half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_sw_e_u.png
+  variants: 1
   vertices: ['1, 0', '0, 0', '0, 0.5']
 
 - type: tile
@@ -150,6 +171,7 @@
   parent: Lattice
   name: NW-S upper half-tilt lattice
   sprite: /Textures/_Mono/Tiles/lattice/script/halftilt_nw_s_u.png
+  variants: 1
   vertices: ['0, 0', '0, 1', '0.5, 1']
 
 - type: tile
@@ -157,6 +179,7 @@
   parent: PlatingSpace
   name: V half-plating
   sprite: /Textures/_Mono/Tiles/plating/script/half_v.png
+  variants: 1
   vertices: ['0.25, 0', '0.75, 0', '0.75, 1', '0.25, 1']
 
 - type: tile
@@ -164,6 +187,7 @@
   parent: PlatingSpace
   name: H half-plating
   sprite: /Textures/_Mono/Tiles/plating/script/half_h.png
+  variants: 1
   vertices: ['0, 0.25', '0, 0.75', '1, 0.75', '1, 0.25']
 
 - type: tile
@@ -171,6 +195,7 @@
   parent: PlatingSpace
   name: north wedge plating
   sprite: /Textures/_Mono/Tiles/plating/script/wedge_n.png
+  variants: 1
   vertices: ['0, 1', '1, 1', '0.5, 0.5']
 
 - type: tile
@@ -178,6 +203,7 @@
   parent: PlatingSpace
   name: east wedge plating
   sprite: /Textures/_Mono/Tiles/plating/script/wedge_e.png
+  variants: 1
   vertices: ['1, 1', '1, 0', '0.5, 0.5']
 
 - type: tile
@@ -185,6 +211,7 @@
   parent: PlatingSpace
   name: south wedge plating
   sprite: /Textures/_Mono/Tiles/plating/script/wedge_s.png
+  variants: 1
   vertices: ['1, 0', '0, 0', '0.5, 0.5']
 
 - type: tile
@@ -192,6 +219,7 @@
   parent: PlatingSpace
   name: west wedge plating
   sprite: /Textures/_Mono/Tiles/plating/script/wedge_w.png
+  variants: 1
   vertices: ['0, 0', '0, 1', '0.5, 0.5']
 
 - type: tile
@@ -199,6 +227,7 @@
   parent: PlatingSpace
   name: NE-S lower half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_ne_s_l.png
+  variants: 1
   vertices: ['0, 1', '1, 1', '1, 0', '0.5, 0']
 
 - type: tile
@@ -206,6 +235,7 @@
   parent: PlatingSpace
   name: SE-W lower half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_se_w_l.png
+  variants: 1
   vertices: ['1, 1', '1, 0', '0, 0', '0, 0.5']
 
 - type: tile
@@ -213,6 +243,7 @@
   parent: PlatingSpace
   name: SW-N lower half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_sw_n_l.png
+  variants: 1
   vertices: ['1, 0', '0, 0', '0, 1', '0.5, 1']
 
 - type: tile
@@ -220,6 +251,7 @@
   parent: PlatingSpace
   name: NW-E lower half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_nw_e_l.png
+  variants: 1
   vertices: ['0, 0', '0, 1', '1, 1', '1, 0.5']
 
 - type: tile
@@ -227,6 +259,7 @@
   parent: PlatingSpace
   name: NE-S upper half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_ne_s_u.png
+  variants: 1
   vertices: ['0.5, 1', '1, 1', '1, 0']
 
 - type: tile
@@ -234,6 +267,7 @@
   parent: PlatingSpace
   name: SE-W upper half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_se_w_u.png
+  variants: 1
   vertices: ['1, 0.5', '1, 0', '0, 0']
 
 - type: tile
@@ -241,6 +275,7 @@
   parent: PlatingSpace
   name: SW-N upper half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_sw_n_u.png
+  variants: 1
   vertices: ['0.5, 0', '0, 0', '0, 1']
 
 - type: tile
@@ -248,6 +283,7 @@
   parent: PlatingSpace
   name: NW-E upper half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_nw_e_u.png
+  variants: 1
   vertices: ['0, 0.5', '0, 1', '1, 1']
 
 - type: tile
@@ -255,6 +291,7 @@
   parent: PlatingSpace
   name: NE-W lower half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_ne_w_l.png
+  variants: 1
   vertices: ['0, 1', '1, 1', '1, 0', '0, 0.5']
 
 - type: tile
@@ -262,6 +299,7 @@
   parent: PlatingSpace
   name: SE-N lower half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_se_n_l.png
+  variants: 1
   vertices: ['1, 1', '1, 0', '0, 0', '0.5, 1']
 
 - type: tile
@@ -269,6 +307,7 @@
   parent: PlatingSpace
   name: SW-E lower half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_sw_e_l.png
+  variants: 1
   vertices: ['1, 0', '0, 0', '0, 1', '1, 0.5']
 
 - type: tile
@@ -276,6 +315,7 @@
   parent: PlatingSpace
   name: NW-S lower half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_nw_s_l.png
+  variants: 1
   vertices: ['0, 0', '0, 1', '1, 1', '0.5, 0']
 
 - type: tile
@@ -283,6 +323,7 @@
   parent: PlatingSpace
   name: NE-W upper half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_ne_w_u.png
+  variants: 1
   vertices: ['0, 1', '1, 1', '1, 0.5']
 
 - type: tile
@@ -290,6 +331,7 @@
   parent: PlatingSpace
   name: SE-N upper half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_se_n_u.png
+  variants: 1
   vertices: ['1, 1', '1, 0', '0.5, 0']
 
 - type: tile
@@ -297,6 +339,7 @@
   parent: PlatingSpace
   name: SW-E upper half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_sw_e_u.png
+  variants: 1
   vertices: ['1, 0', '0, 0', '0, 0.5']
 
 - type: tile
@@ -304,4 +347,5 @@
   parent: PlatingSpace
   name: NW-S upper half-tilt plating
   sprite: /Textures/_Mono/Tiles/plating/script/halftilt_nw_s_u.png
+  variants: 1
   vertices: ['0, 0', '0, 1', '0.5, 1']
