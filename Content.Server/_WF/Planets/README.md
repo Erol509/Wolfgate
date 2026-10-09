@@ -480,7 +480,6 @@ ground overhead is a ceiling (the Caverns `WfSealedAbove`). `WFAtmosphericJetpac
   - only a planet's untouched biome ground takes lattice directly.
 - [`Resources/ConfigPresets/Build/development.toml`](../../../Resources/ConfigPresets/Build/development.toml): planet networks are on in development builds.
 - [`Resources/Prototypes/_DV/Entities/Mobs/Species/harpy.yml`](../../../Resources/Prototypes/_DV/Entities/Mobs/Species/harpy.yml): z-level flight is back on, which Monolith#4812 turned off
-- [`Resources/Prototypes/_FarHorizons/Space/stars.yml`](../../../Resources/Prototypes/_FarHorizons/Space/stars.yml): give Kyphrus behind Caelestinus Central a deep blue hue.
 - [`Resources/Prototypes/_FarHorizons/Space/systems.yml`](../../../Resources/Prototypes/_FarHorizons/Space/systems.yml)
   - orbit well kept out of lock-on range of Monolith's drone belt.
   - orbit well moved out of Monolith's drone belt, a hazard world at its edge.
