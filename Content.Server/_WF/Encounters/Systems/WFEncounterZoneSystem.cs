@@ -70,7 +70,7 @@ public sealed partial class WFEncounterZoneSystem : EntitySystem
         var query = EntityQueryEnumerator<WFEncounterComponent>();
         while (query.MoveNext(out _, out var encounter))
         {
-            if (encounter.Resolution != null)
+            if (Stood(encounter))
                 continue;
 
             foreach (var ship in encounter.Ships.Values)
@@ -92,6 +92,15 @@ public sealed partial class WFEncounterZoneSystem : EntitySystem
     }
 
     /// <summary>
+    /// Whether an encounter's zones have stood down. A resolved encounter's have, except a battle's: whoever won a
+    /// decided fight holds the field, and its zones stand until its ships are cleaned up.
+    /// </summary>
+    private static bool Stood(WFEncounterComponent encounter)
+    {
+        return encounter.Resolution is { } resolution && resolution != WFEncounterResolution.Decided;
+    }
+
+    /// <summary>
     /// Encounter ships answer each other's zones too: one that comes inside another's zone, and is a ship that zone
     /// minds, is taken for an enemy, and takes the zone's owner for one in turn.
     /// </summary>
@@ -101,7 +110,7 @@ public sealed partial class WFEncounterZoneSystem : EntitySystem
         var encounters = EntityQueryEnumerator<WFEncounterComponent>();
         while (encounters.MoveNext(out var uid, out var encounter))
         {
-            if (encounter.Resolution != null)
+            if (Stood(encounter))
                 continue;
 
             foreach (var ship in encounter.Ships.Values)

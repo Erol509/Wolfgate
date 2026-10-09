@@ -41,6 +41,9 @@ public sealed partial class WFEncounterComponent : Component
     public WFEncounterCategory Category;
 
     [DataField]
+    public WFEncounterIcon Icon;
+
+    [DataField]
     public int Cost;
 
     [DataField]
@@ -53,6 +56,10 @@ public sealed partial class WFEncounterComponent : Component
     /// <summary>Whether it is kept off the sector markers.</summary>
     [DataField]
     public bool Hidden;
+
+    /// <summary>Started by an admin: it stays, ships and all, with no clock on it, until an admin ends it.</summary>
+    [DataField]
+    public bool Pinned;
 
     /// <summary>The stations its placement chose, in the order a route calls at them.</summary>
     [DataField]
@@ -131,6 +138,10 @@ public sealed partial class WFEncounterShipState
     /// <summary>Its radar colour, when the encounter gave it one.</summary>
     [DataField]
     public Color? Color;
+
+    /// <summary>Its own radar glyph; Category for the encounter's.</summary>
+    [DataField]
+    public WFEncounterIcon Icon;
 
     /// <summary>How it arrived stranded, if it did.</summary>
     [DataField]

@@ -38,20 +38,30 @@
     undockSpeed: 7
     attackRange: 300
 
+# Raiders fly flat out, at the ceiling the travel budgets allow, and the docking run is quick and forgiving, to board a
+# ship that is trying to shake them off. The run in is braked along a curve from cruise to the approach speed, so the
+# approach speed here is what the last stretch is flown at, and the creep speed what the port is closed at.
 - type: wfCrewNavigation
   id: WFCrewNavigationRaider
   name: wf-crew-navigation-raider
   settings:
-    cruiseSpeed: 27
+    cruiseSpeed: 30
     followSpeed: 30
-    loiterSpeed: 18
-    circleSpeed: 14
-    attackSpeed: 20
-    nearTargetSpeed: 8
-    maximumTurnRate: 0.5
+    loiterSpeed: 20
+    circleSpeed: 16
+    attackSpeed: 30
+    nearTargetSpeed: 10
+    maximumTurnRate: 0.7
     thrustMultiplier: 1
     angularThrustMultiplier: 1
-    dockApproachSpeed: 14
-    dockCreepSpeed: 3.5
-    undockSpeed: 10
+    dockApproachSpeed: 16
+    dockCreepSpeed: 3
+    undockSpeed: 14
+    dockStandoff: 30
+    dockAlignmentRange: 100
+    dockCreepRange: 0.4
+    dockSettleSpeed: 0.8
+    dockSettleTurnRate: 0.12
+    dockSettleTimeout: 15
+    dockCreepTimeout: 45
     attackRange: 250

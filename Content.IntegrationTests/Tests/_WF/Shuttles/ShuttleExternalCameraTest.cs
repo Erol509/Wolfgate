@@ -9,6 +9,7 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared._WF.Shuttles;
 using Content.Shared.Movement.Components;
+using Content.Shared.Polymorph.Components;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Verbs;
@@ -23,11 +24,12 @@ namespace Content.IntegrationTests.Tests._WF.Shuttles;
 
 /// <summary>
 /// A pilot's external view: where its anchor sits, how panning and zooming move it, that it keeps its
-/// place as the hull changes, when the view is refused, and what the pilot's client makes of it.
+/// place as the hull changes, when the view is refused, what the pilot's client makes of it, and that
+/// it draws nobody.
 /// </summary>
 public sealed class ShuttleExternalCameraTest : InteractionTest
 {
-    // The stock test mob has no zoom of its own to set.
+    // The stock test mob has no zoom of its own to set, and nothing for the view to stop drawing.
     [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
@@ -35,6 +37,8 @@ public sealed class ShuttleExternalCameraTest : InteractionTest
   id: ShuttleExternalCameraTestMob
   components:
   - type: ContentEye
+  - type: MobState
+  - type: Sprite
 ";
 
     protected override string PlayerPrototype => "ShuttleExternalCameraTestMob";
@@ -738,6 +742,82 @@ public sealed class ShuttleExternalCameraTest : InteractionTest
         await ZoomShouldBe(2f, "Two notches that cancel should leave the zoom where it was.");
 
         await LeaveHelm();
+    }
+
+    [Test]
+    public async Task MobsAreHiddenFromTheView()
+    {
+        await TakeHelm();
+
+        // Off the hull's side, with no roof to be under.
+        var outside = new EntityCoordinates(_grid.Owner, new Vector2(-1.5f, 1.5f));
+        EntityUid crew = default;
+
+        await Server.WaitPost(() => crew = SEntMan.SpawnEntity(PlayerPrototype, outside));
+        await RunTicks(5);
+
+        await Client.WaitAssertion(() =>
+            Assert.That(IsDrawn(ToClient(crew)), "Someone outside is drawn while the pilot looks from the helm."));
+
+        await SetCamera(ShuttleCameraView.External, 2f);
+        await RunTicks(5);
+
+        // Jetpacks leave their trails on the client alone.
+        EntityUid trail = default;
+
+        await Client.WaitPost(() =>
+            trail = CEntMan.SpawnEntity("JetpackEffect", CEntMan.GetCoordinates(SEntMan.GetNetCoordinates(outside))));
+        await RunTicks(2);
+
+        await Client.WaitAssertion(() =>
+        {
+            var system = CEntMan.System<ShuttleExternalCameraSystem>();
+            var clientCrew = ToClient(crew);
+
+            AssertClientView(true, "The client should be showing the view.");
+            Assert.That(IsDrawn(clientCrew), Is.False, "Nobody outside the hull should be drawn in the view.");
+            Assert.That(system.IsHidden(clientCrew), "Whatever draws by a mob's position should hear that it's hidden.");
+            Assert.That(IsDrawn(trail), Is.False, "A jetpack's trail would give away whoever is wearing it.");
+            Assert.That(IsDrawn(CPlayer), "The pilot's own sprite is left alone.");
+            Assert.That(system.IsHidden(CPlayer), Is.False);
+
+            // A disguise notes how its user looked as it goes on, and puts that back as it comes off.
+            var disguise = CEntMan.AddComponent<ChameleonDisguisedComponent>(clientCrew);
+            Assert.That(disguise.WasVisible, "A disguise shouldn't take the view's hiding for how its user looks.");
+            Assert.That(IsDrawn(clientCrew), Is.False);
+
+            CEntMan.RemoveComponent<ChameleonDisguisedComponent>(clientCrew);
+            Assert.That(IsDrawn(clientCrew), "A disguise coming off should leave its user as it found them.");
+        });
+
+        await RunTicks(2);
+
+        await Client.WaitAssertion(() =>
+            Assert.That(IsDrawn(ToClient(crew)), Is.False, "The view should hide someone again once they're showing."));
+
+        await SetCamera(ShuttleCameraView.Front, 2f);
+        await RunTicks(5);
+
+        await Client.WaitAssertion(() =>
+        {
+            var system = CEntMan.System<ShuttleExternalCameraSystem>();
+
+            AssertClientView(false, "A hull camera is looked through with FOV.");
+            Assert.That(IsDrawn(ToClient(crew)), "Leaving the view should put back everyone it hid.");
+            Assert.That(system.IsHidden(ToClient(crew)), Is.False);
+            Assert.That(CEntMan.EntityExists(trail), "The trail should outlast the view to be put back.");
+            Assert.That(IsDrawn(trail), "Leaving the view should put jetpack trails back too.");
+        });
+
+        await LeaveHelm();
+    }
+
+    /// <summary>
+    /// Whether an entity's sprite is set to be drawn. Client thread only.
+    /// </summary>
+    private bool IsDrawn(EntityUid uid)
+    {
+        return CEntMan.GetComponent<Robust.Client.GameObjects.SpriteComponent>(uid).Visible;
     }
 
     /// <summary>

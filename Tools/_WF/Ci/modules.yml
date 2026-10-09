@@ -385,3 +385,9 @@ unmarked:
   - path: Resources/Textures/_Impstation/Structures/
     module: Resprites
     reason: Impstation structure resprites (thermomachines, cryo pod, cryosleep, hydro tray, conveyor, fax, stasis bed, suit storage).
+  - path: Resources/Audio/_Goobstation/RadioStation/
+    module: null
+    reason: Radio host tracks (Monolith#4833) re-encoded to mono Vorbis q0 to cut download size.
+  - path: Resources/Audio/_Mono/RadioStation/
+    module: null
+    reason: Nulb vinyl tracks (Monolith#4835) re-encoded to mono Vorbis q0 to cut download size.

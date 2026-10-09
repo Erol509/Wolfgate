@@ -226,16 +226,17 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
 
     /// <summary>
     /// Starts an encounter for an admin. Open-space encounters go where asked; the others are placed beside
-    /// stations on that map as usual, because their orders are aimed at those stations.
+    /// stations on that map as usual, because their orders are aimed at those stations. Pinned, it stays until an
+    /// admin ends it; otherwise it jumps out and is cleaned up like a scheduled one.
     /// </summary>
-    public bool TryStartAt(WFEncounterPrototype prototype, MapCoordinates near, out EntityUid encounter, EntityUid? spawner)
+    public bool TryStartAt(WFEncounterPrototype prototype, MapCoordinates near, out EntityUid encounter, EntityUid? spawner, bool pinned = true)
     {
         encounter = default;
         if (prototype.Placement == WFEncounterPlacement.OpenSpace)
-            return _encounters.TrySpawn(prototype, near, out encounter, spawner);
+            return _encounters.TrySpawn(prototype, near, out encounter, spawner, pinned: pinned);
 
         return TryPlaceAtStations(prototype, near.MapId, out var origin, out var stops)
-            && _encounters.TrySpawn(prototype, origin, out encounter, spawner, stops);
+            && _encounters.TrySpawn(prototype, origin, out encounter, spawner, stops, pinned);
     }
 
     private bool TryStart(WFEncounterPrototype prototype, out EntityUid encounter)

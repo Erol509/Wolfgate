@@ -57,6 +57,52 @@
       - EncryptionKeyTraffic
       - WFEncryptionKeyCrewIntercom
 
+# The navies' crews wear their own services' headsets, with the faction channel's key beside the common ones.
+- type: entity
+  parent: ClothingHeadsetTsfmc
+  id: WFCrewHeadsetTsf
+  suffix: NPC crew
+  components:
+  - type: WFCrewRadio
+  - type: TelecomExempt
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyTraffic
+      - EncryptionKeyNfsd
+      - WFEncryptionKeyCrewIntercom
+
+- type: entity
+  parent: ClothingHeadsetFreelance
+  id: WFCrewHeadsetPdv
+  suffix: NPC crew
+  components:
+  - type: WFCrewRadio
+  - type: TelecomExempt
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyTraffic
+      - EncryptionKeyFreelance
+      - WFEncryptionKeyCrewIntercom
+
+- type: entity
+  parent: ClothingHeadsetUSSP
+  id: WFCrewHeadsetUssp
+  suffix: NPC crew
+  components:
+  - type: WFCrewRadio
+  - type: TelecomExempt
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyTraffic
+      - EncryptionKeyUssp
+      - WFEncryptionKeyCrewIntercom
+
 # The crews' own channel, for what they tell each other. Short ranged, and no player kit carries its key.
 - type: radioChannel
   id: WFCrewIntercom

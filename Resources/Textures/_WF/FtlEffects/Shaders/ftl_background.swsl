@@ -1,0 +1,7 @@
+light_mode unshaded;
+
+uniform sampler2D background;
+
+void fragment() {
+    COLOR = zTextureSpec(background, FRAGCOORD.xy * SCREEN_PIXEL_SIZE);
+}
