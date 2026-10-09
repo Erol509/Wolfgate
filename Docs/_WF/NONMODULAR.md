@@ -87,6 +87,8 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Shared/Projectiles/SharedProjectileSystem.cs`](../../Content.Shared/Projectiles/SharedProjectileSystem.cs): the client replays a thrown embed's collision in prediction, and the projectile is already in
 - [`Content.Shared/Weapons/Ranged/Systems/SharedGunSystem.Revolver.cs`](../../Content.Shared/Weapons/Ranged/Systems/SharedGunSystem.Revolver.cs): C# % keeps the sign, index 0 gave -1 and crashed the server
 - [`README.md`](../../README.md): reworded for Wolfgate build differences
+- [`Resources/Audio/_Goobstation/RadioStation/`](../../Resources/Audio/_Goobstation/RadioStation/): Radio host tracks (Monolith#4833) re-encoded to mono Vorbis q0 to cut download size.
+- [`Resources/Audio/_Mono/RadioStation/`](../../Resources/Audio/_Mono/RadioStation/): Nulb vinyl tracks (Monolith#4835) re-encoded to mono Vorbis q0 to cut download size.
 - [`Resources/Locale/en-US/_Mono/guidebook/guides.ftl`](../../Resources/Locale/en-US/_Mono/guidebook/guides.ftl): was Monolith Rules
 - [`Resources/Locale/en-US/_Mono/poi/stations.ftl`](../../Resources/Locale/en-US/_Mono/poi/stations.ftl)
   - keeps [bold]; upstream's [color=bold] tag is unbalanced

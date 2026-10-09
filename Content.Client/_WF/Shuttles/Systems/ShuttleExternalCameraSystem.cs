@@ -7,8 +7,10 @@ using Content.Client.Viewport;
 using Content.Shared._WF.Shuttles;
 using Content.Shared.Camera;
 using Content.Shared.Maps;
+using Content.Shared.Polymorph.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Verbs;
+using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -27,7 +29,7 @@ namespace Content.Client._WF.Shuttles.Systems;
 /// Runs the local pilot's external view. The eye rides an anchor the server keeps near the look point
 /// for PVS, and this offsets it onto the exact point each frame, pans that point with a middle-mouse
 /// drag, zooms with the wheel and stops the eye drawing FOV. Hulls are roofed over by
-/// <see cref="ShuttleHullRoofOverlay"/> instead.
+/// <see cref="ShuttleHullRoofOverlay"/> instead, and mobs aren't drawn at all.
 /// </summary>
 public sealed partial class ShuttleExternalCameraSystem : EntitySystem
 {
@@ -135,6 +137,7 @@ public sealed partial class ShuttleExternalCameraSystem : EntitySystem
 
         SubscribeLocalEvent<ShuttleCameraComponent, GetEyeOffsetEvent>(OnGetEyeOffset);
         SubscribeLocalEvent<ShuttleCameraComponent, MenuVisibilityEvent>(OnMenuVisibility);
+        SubscribeLocalEvent<ChameleonDisguisedComponent, ComponentInit>(OnDisguiseInit);
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
@@ -144,6 +147,9 @@ public sealed partial class ShuttleExternalCameraSystem : EntitySystem
         UpdatesAfter.Add(typeof(EyeLerpingSystem));
         UpdatesAfter.Add(typeof(EyeSystem));
         UpdatesAfter.Add(typeof(ContentEyeSystem));
+
+        // A sprite hidden once its tree has been brought up to date is drawn for one more frame.
+        UpdatesBefore.Add(typeof(SpriteTreeSystem));
 
         _roof = new ShuttleHullRoofOverlay();
         _overlay.AddOverlay(_roof);
@@ -251,6 +257,11 @@ public sealed partial class ShuttleExternalCameraSystem : EntitySystem
         // An eye that isn't over the flown grid's map keeps it, whatever map that is.
         view.DrawFov = !onMap && eye.DrawFov;
         _contentEye.UpdateEyeOffset((player, eye));
+
+        if (onMap)
+            HideMobs(player);
+        else
+            ShowHidden();
 
         if (!live || !TryComp<PilotComponent>(player, out var pilot) || pilot.Console is not { } console)
             return;
@@ -399,6 +410,7 @@ public sealed partial class ShuttleExternalCameraSystem : EntitySystem
         _sentZoom = null;
         _wheel = 0f;
         EndDrag();
+        ShowHidden();
 
         if (TerminatingOrDeleted(pilot) || !TryComp<EyeComponent>(pilot, out var eye))
             return;

@@ -60,7 +60,7 @@ public sealed partial class WFCrewAlertSystem : EntitySystem
         var ships = new List<EntityUid>();
         foreach (var (ship, until) in alert.Vessels)
         {
-            if (now < until && ValidShip(grid, ship, true))
+            if (now < until && ValidShip(grid, ship, true, !alert.Zone.Contains(ship)))
                 ships.Add(ship);
         }
         foreach (var ship in alert.DockingVessels)
@@ -81,13 +81,18 @@ public sealed partial class WFCrewAlertSystem : EntitySystem
         if (!attacked && (!alert.DockingVessels.Contains(target)
                 || !EntityManager.System<WFCrewSecuritySystem>().IsHostileDockingTarget(grid, group, target)))
             return false;
-        return ValidShip(grid, target, attacked);
+        return ValidShip(grid, target, attacked, attacked && !alert.Zone.Contains(target));
     }
 
-    /// <summary>A formation partner stays an ally unless it fired on this ship within the attack window.</summary>
-    private bool ValidShip(EntityUid grid, EntityUid ship, bool attacked)
+    /// <summary>
+    /// A formation partner stays an ally unless it fired on this ship within the attack window. A vessel that has
+    /// <paramref name="fired"/> on the ship is a target however far off it is: a crew that only deters attackers still
+    /// answers one shooting at it from beyond its reach, and lets it go once its fire stops. Zone intruders and docking
+    /// threats keep the disengage range.
+    /// </summary>
+    private bool ValidShip(EntityUid grid, EntityUid ship, bool attacked, bool fired = false)
     {
-        return !TerminatingOrDeleted(ship) && !_status.ShouldDisengage(grid, ship)
+        return !TerminatingOrDeleted(ship) && !_status.ShouldDisengage(grid, ship, range: !fired)
             && Transform(ship).MapID == Transform(grid).MapID && (attacked || !_escorts.AreInFormation(grid, ship));
     }
 

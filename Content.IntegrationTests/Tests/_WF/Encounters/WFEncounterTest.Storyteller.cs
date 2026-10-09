@@ -44,6 +44,17 @@ public sealed partial class WFEncounterTest
     roles: [ WFCrewPilot, WFCrewGunner ]
 
 - type: wfEncounter
+  id: WFTestStoryUnion
+  name: wf-encounter-name-convoy
+  start: Manual
+  ships:
+  - key: ship
+    vessel: WFDredger
+    company: USSP
+    faction: USSP
+    profile: WFCrewProfileUssp
+
+- type: wfEncounter
   id: WFTestStoryIff
   name: wf-encounter-name-convoy
   start: Manual
@@ -501,6 +512,46 @@ public sealed partial class WFEncounterTest
             var generators = Server.System<Content.Server.Power.Generator.GeneratorSystem>();
             Assert.That(generators.GetFuel(generator), Is.GreaterThan(0f), "The generator is topped up by itself.");
             Assert.That(SEntMan.GetComponent<Content.Shared.Power.Generator.FuelGeneratorComponent>(generator).On, Is.True);
+            Server.System<WFEncounterSystem>().End(encounter);
+        });
+        await RunTicks(10);
+    }
+
+    /// <summary>A faction's crew carry its names and its accent: a Union crew are Russians with Russian names.</summary>
+    [Test]
+    public async Task FactionCrewCarryItsNamesAndAccent()
+    {
+        EntityUid encounter = default, ship = default;
+        await Server.WaitAssertion(() =>
+        {
+            var prototypes = Server.ResolveDependency<IPrototypeManager>();
+            var prototype = prototypes.Index<WFEncounterPrototype>("WFTestStoryUnion");
+            Assert.That(Server.System<WFEncounterSystem>().TrySpawn(prototype, new MapCoordinates(new Vector2(-37000, -37000), MapData.MapId), out encounter), Is.True);
+            ship = SEntMan.GetComponent<WFEncounterComponent>(encounter).Ships["ship"].Grid;
+            var surnames = prototypes.Index<Content.Shared.Dataset.DatasetPrototype>("WFNamesUsspLast").Values;
+
+            var crew = 0;
+            var members = SEntMan.EntityQueryEnumerator<WFCrewComponent, TransformComponent>();
+            while (members.MoveNext(out var uid, out _, out var xform))
+            {
+                if (xform.GridUid != ship)
+                    continue;
+                crew++;
+                Assert.That(SEntMan.HasComponent<Content.Server.Speech.Components.RussianAccentComponent>(uid), Is.True, "A Union crewman speaks with a Russian accent.");
+                var name = SEntMan.GetComponent<MetaDataComponent>(uid).EntityName;
+                Assert.That(surnames.Any(surname => name.EndsWith(surname)), Is.True, $"A Union crewman has a Russian surname: {name}");
+
+                var inventory = Server.System<Content.Shared.Inventory.InventorySystem>();
+                Assert.That(inventory.TryGetSlotEntity(uid, "ears", out var headset) && SEntMan.GetComponent<MetaDataComponent>(headset.Value).EntityPrototype?.ID == "WFCrewHeadsetUssp",
+                    Is.True, "A Union crewman wears a Union headset.");
+                Assert.That(inventory.TryGetSlotEntity(uid, "id", out var card), Is.True, "And carries a card.");
+                var id = SEntMan.GetComponent<Content.Shared.Access.Components.IdCardComponent>(card!.Value);
+                Assert.That(SEntMan.GetComponent<MetaDataComponent>(card.Value).EntityPrototype?.ID, Does.StartWith("USSP"), "A Union service card.");
+                Assert.That(id.FullName, Is.Not.Null.And.Not.Empty);
+                Assert.That(name, Does.EndWith(id.FullName!), "The card carries his name without the title.");
+                Assert.That(id.LocalizedJobTitle, Is.Not.Null.And.Not.Empty, "And his post.");
+            }
+            Assert.That(crew, Is.GreaterThan(0));
             Server.System<WFEncounterSystem>().End(encounter);
         });
         await RunTicks(10);

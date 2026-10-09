@@ -5,7 +5,8 @@ power), a collision warning (TCAS) that sweeps a piloted ship's path and warns b
 pilot can look through with a low-light feed, and nav map data for ships that were never registered as a station. The
 cameras' EXTERNAL view shows the ship from outside with every hull plated over: a middle-mouse drag pans it, the scroll
 wheel zooms it, and the client `ShuttleExternalCameraSystem` and `ShuttleHullRoofOverlay` run it. It is refused on a
-planet's surface, and sound and speech bubbles are taken from the point it looks at rather than from the helm.
+planet's surface, and sound and speech bubbles are taken from the point it looks at rather than from the helm. It draws
+no mobs, jetpack trails or do-after bars, so it can't be used to spot people outside a hull.
 
 Entry points: the server `ShipStatusSystem`, `CollisionWarningSystem`, `ShuttleCameraSystem` and
 `ShuttleNavMapSystem`; the client `ShipScreen`, `ShipViewControl`, `CollisionWarningBanner` and `ShuttleCameraBar`,
@@ -50,6 +51,7 @@ even with a grid parked nearby. The fix it guards is a standalone edit listed in
 - [`Content.Client/_WF/Shuttles/Systems/ShuttleCameraSystem.cs`](../../../Content.Client/_WF/Shuttles/Systems/ShuttleCameraSystem.cs)
 - [`Content.Client/_WF/Shuttles/Systems/ShuttleCameraZoomPredictionSystem.cs`](../../../Content.Client/_WF/Shuttles/Systems/ShuttleCameraZoomPredictionSystem.cs)
 - [`Content.Client/_WF/Shuttles/Systems/ShuttleExternalCameraSystem.cs`](../../../Content.Client/_WF/Shuttles/Systems/ShuttleExternalCameraSystem.cs)
+- [`Content.Client/_WF/Shuttles/Systems/ShuttleExternalCameraSystem.Hidden.cs`](../../../Content.Client/_WF/Shuttles/Systems/ShuttleExternalCameraSystem.Hidden.cs)
 - [`Content.Client/_WF/Shuttles/UI/CollisionWarningBanner.xaml`](../../../Content.Client/_WF/Shuttles/UI/CollisionWarningBanner.xaml)
 - [`Content.Client/_WF/Shuttles/UI/CollisionWarningBanner.xaml.cs`](../../../Content.Client/_WF/Shuttles/UI/CollisionWarningBanner.xaml.cs)
 - [`Content.Client/_WF/Shuttles/UI/ShipScreen.xaml`](../../../Content.Client/_WF/Shuttles/UI/ShipScreen.xaml)
@@ -93,6 +95,7 @@ even with a grid parked nearby. The fix it guards is a standalone edit listed in
 
 ## Non-modular edits
 
+- [`Content.Client/DoAfter/DoAfterOverlay.cs`](../../../Content.Client/DoAfter/DoAfterOverlay.cs): a progress bar would give away a mob the external pilot view hides
 - [`Content.Client/Parallax/ParallaxOverlay.cs`](../../../Content.Client/Parallax/ParallaxOverlay.cs): the external view pans away from where its eye sits
 - [`Content.Client/Shuttles/BUI/ShuttleConsoleBoundUserInterface.cs`](../../../Content.Client/Shuttles/BUI/ShuttleConsoleBoundUserInterface.cs)
 - [`Content.Client/Shuttles/UI/ShuttleConsoleWindow.xaml`](../../../Content.Client/Shuttles/UI/ShuttleConsoleWindow.xaml)

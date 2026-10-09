@@ -172,7 +172,6 @@ markings. `MarkingSet` caps undergarments at one top and one bottom per characte
 - [`Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_Goobstation/Mobs/Customization/Tajaran/leopard_tail.rsi/`](../../../Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_Goobstation/Mobs/Customization/Tajaran/leopard_tail.rsi/)
 - [`Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_Goobstation/Mobs/Customization/Tajaran/tail_markings.rsi/`](../../../Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_Goobstation/Mobs/Customization/Tajaran/tail_markings.rsi/)
 - [`Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_Goobstation/Mobs/Customization/Tajaran/tails.rsi/`](../../../Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_Goobstation/Mobs/Customization/Tajaran/tails.rsi/)
-- [`Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_HL/Mobs/Customization/Reptilian/naga.rsi/`](../../../Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_HL/Mobs/Customization/Reptilian/naga.rsi/)
 - [`Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_HL/Mobs/Customization/Reptilian/xeno_tails.rsi/`](../../../Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_HL/Mobs/Customization/Reptilian/xeno_tails.rsi/)
 - [`Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_HL/Mobs/Customization/Shadekin/shadekintails64x32.rsi/`](../../../Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_HL/Mobs/Customization/Shadekin/shadekintails64x32.rsi/)
 - [`Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_HL/Mobs/Customization/Synth/Orchids/tail.rsi/`](../../../Resources/Textures/_WF/Genitals/Mobs/Customization/TailSplit/_HL/Mobs/Customization/Synth/Orchids/tail.rsi/)
@@ -332,7 +331,7 @@ markings. `MarkingSet` caps undergarments at one top and one bottom per characte
 - [`Content.Shared/Humanoid/Markings/MarkingsSet.cs`](../../../Content.Shared/Humanoid/Markings/MarkingsSet.cs)
   - one undergarment top and one bottom per character
   - collect removals per category
-  - keep saved colours when a marking gains colour-linked sprites
+  - keep saved colours when a marking gains colour-linked sprites or loses them again
   - remove from the back so earlier indices stay valid
   - pads missing colours from their colorLinks parents
 - [`Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs`](../../../Content.Shared/Humanoid/SharedHumanoidAppearanceSystem.cs): pass profile
@@ -498,11 +497,8 @@ markings. `MarkingSet` caps undergarments at one top and one bottom per characte
   - underwear/genital layers ported from HardLight
   - split tail layers ported from HardLight/Floof
 - [`Resources/Prototypes/_HL/Entities/Mobs/Customization/Markings/reptilian.yml`](../../../Resources/Prototypes/_HL/Entities/Mobs/Customization/Markings/reptilian.yml)
-  - the anatomy zone of the south frame draws behind the body, so the tail never covers anatomy
-  - both halves of a tail share one colour
-  - split art, anatomy zone only
-  - anatomy zone of the south frame on TailBehind
   - the south frame draws behind the body, so the tail never covers anatomy
+  - both halves of a tail share one colour
   - split art
   - south frame on TailBehind
 - [`Resources/Prototypes/_HL/Entities/Mobs/Customization/Markings/shadekin.yml`](../../../Resources/Prototypes/_HL/Entities/Mobs/Customization/Markings/shadekin.yml)

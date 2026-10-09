@@ -12,3 +12,8 @@
 - type: wfStanding
   id: TSFHighComm
   atWar: [ PDV, PDVCivilian, PDVHighComm, RedSailCorsairs ]
+
+# The encounter pirates: at war with both navies and their civilians.
+- type: wfStanding
+  id: WFAshfallReavers
+  atWar: [ TSF, TSFCivilian, TSFHighComm, PDV, PDVCivilian, PDVHighComm ]

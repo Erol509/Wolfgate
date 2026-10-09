@@ -1296,3 +1296,37 @@ Entries:
   id: 100098
   time: '2026-10-09T05:36:26.0000000+00:00'
   url: https://github.com/VanguardControl/Wolfgate/pull/181
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: Naga tails now draw over legs properly.
+  id: 100099
+  time: '2026-10-09T15:05:17.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/194
+- author: Happyowl93
+  changes:
+    - type: Add
+      message: Adds ASF faction
+  id: 100100
+  time: '2026-10-09T15:45:20.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/168
+- author: Gandalf2k15
+  changes:
+    - type: Add
+      message: >-
+        Added a wide, rounded hyperspace distortion cone with compact white
+        particles around departing and arriving ships.
+    - type: Tweak
+      message: >-
+        Ships now visually rush into and out of hyperspace for outside
+        observers.
+  id: 100101
+  time: '2026-10-09T16:30:16.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/195
+- author: Gandalf2k15
+  changes:
+    - type: Tweak
+      message: Players an NPC's are no longer visible in ship pan view.
+  id: 100102
+  time: '2026-10-09T17:06:45.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/196

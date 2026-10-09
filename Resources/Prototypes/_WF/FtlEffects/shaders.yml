@@ -1,0 +1,14 @@
+- type: shader
+  id: WFFtlDeparture
+  kind: source
+  path: "/Textures/_WF/FtlEffects/Shaders/ftl_departure.swsl"
+
+- type: shader
+  id: WFFtlMotion
+  kind: source
+  path: "/Textures/_WF/FtlEffects/Shaders/ftl_motion.swsl"
+
+- type: shader
+  id: WFFtlBackground
+  kind: source
+  path: "/Textures/_WF/FtlEffects/Shaders/ftl_background.swsl"

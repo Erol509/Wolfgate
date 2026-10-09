@@ -1,3 +1,6 @@
+using Content.Shared._WF.Encounters;
+using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 using System.Numerics;
 using Content.Client._WF.Encounters;
 using Robust.Client.Graphics;
@@ -10,7 +13,22 @@ public partial class ShuttleNavControl
     private readonly List<Box2> _encounterLabels = new();
 
     /// <summary>The ships of one side of one encounter, gathered for a frame.</summary>
-    private readonly Dictionary<(NetEntity Encounter, string Side), (Vector2 Sum, int Count, bool Named, bool OnScope, Color Color)> _encounterGroups = new();
+    private readonly Dictionary<(NetEntity Encounter, string Side), (Vector2 Sum, int Count, bool Named, bool OnScope, Color Color, WFEncounterIcon Icon, WFEncounterCategory Category)> _encounterGroups = new();
+
+    private static readonly ResPath MarkerGlyphs = new("/Textures/_WF/Encounters/markers.rsi");
+    private readonly Dictionary<WFEncounterIcon, Texture> _encounterGlyphs = new();
+
+    /// <summary>The texture for a glyph, loaded once.</summary>
+    private Texture EncounterGlyph(WFEncounterIcon icon)
+    {
+        if (!_encounterGlyphs.TryGetValue(icon, out var texture))
+        {
+            texture = EntManager.System<SpriteSystem>().Frame0(new SpriteSpecifier.Rsi(MarkerGlyphs, icon.ToString().ToLowerInvariant()));
+            _encounterGlyphs[icon] = texture;
+        }
+
+        return texture;
+    }
 
     /// <summary>
     /// Marks the visible encounters in the sector. A ship on the scope gets a diamond and its zones; the ships of one
@@ -36,7 +54,7 @@ public partial class ShuttleNavControl
             var key = (marker.Encounter, marker.Side);
             var color = marker.Color ?? WFEncounterColors.Category(marker.Category);
             if (!_encounterGroups.TryGetValue(key, out var group))
-                group = (Vector2.Zero, 0, false, false, color);
+                group = (Vector2.Zero, 0, false, false, color, WFEncounterIcon.Category, marker.Category);
 
             var point = Vector2.Transform(system.GetPosition(marker), worldToView);
             var onScope = (point - centre).Length() <= rim;
@@ -57,7 +75,9 @@ public partial class ShuttleNavControl
                 }
             }
 
-            _encounterGroups[key] = (group.Sum + point, group.Count + 1, group.Named || onScope, group.OnScope || onScope, color);
+            // Any ship of the side with a glyph of its own names the side's; the category's glyph is only a fallback at drawing.
+            var icon = group.Icon != WFEncounterIcon.Category ? group.Icon : marker.Icon;
+            _encounterGroups[key] = (group.Sum + point, group.Count + 1, group.Named || onScope, group.OnScope || onScope, color, icon, group.Category);
         }
 
         foreach (var group in _encounterGroups.Values)
@@ -76,7 +96,24 @@ public partial class ShuttleNavControl
             handle.DrawLine(tip, back + side * size, group.Color);
             handle.DrawLine(tip, back - side * size, group.Color);
             handle.DrawLine(back + side * size, back - side * size, group.Color);
+            // The side's glyph just inside the arrow, so a skull at the rim is a raider and a crate a freighter.
+            var glyph = 16f * UIScale;
+            var glyphCentre = back - direction * (glyph * 0.5f + 2f * UIScale);
+            var icon = group.Icon != WFEncounterIcon.Category ? group.Icon : EncounterGlyphFor(group.Category);
+            handle.DrawTextureRect(EncounterGlyph(icon), UIBox2.FromDimensions(glyphCentre - new Vector2(glyph / 2f), new Vector2(glyph)), group.Color);
         }
+    }
+
+    /// <summary>A category's own glyph.</summary>
+    private static WFEncounterIcon EncounterGlyphFor(WFEncounterCategory category)
+    {
+        return category switch
+        {
+            WFEncounterCategory.Patrol => WFEncounterIcon.Shield,
+            WFEncounterCategory.Threat => WFEncounterIcon.Skull,
+            WFEncounterCategory.Distress => WFEncounterIcon.Cross,
+            _ => WFEncounterIcon.Crate,
+        };
     }
 
     /// <summary>Moves a label down until it clears the ones already placed, and records where it ends up.</summary>
