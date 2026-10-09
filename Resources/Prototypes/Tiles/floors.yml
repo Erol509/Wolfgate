@@ -259,20 +259,20 @@
   flammability: 2
   # ES END
 
-- type: tile
-  id: FloorTechMaintDark
-  name: tiles-techmaint-floor-dark
-  sprite: /Textures/Tiles/tech_maint_dark.png
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepHull
-  itemDrop: FloorTileItemTechmaintDark
-  heatCapacity: 10000
-  # ES START
-  flammability: 2
-  # ES END
+#- type: tile #WOLFGATE(Resprites): Moved to basic.yml
+#  id: FloorTechMaintDark
+#  name: tiles-techmaint-floor-dark
+#  sprite: /Textures/Tiles/tech_maint_dark.png
+#  baseTurf: Plating
+#  isSubfloor: false
+#  deconstructTools: [ Prying ]
+#  footstepSounds:
+#    collection: FootstepHull
+#  itemDrop: FloorTileItemTechmaintDark
+#  heatCapacity: 10000
+#  # ES START
+#  flammability: 2
+#  # ES END
 
 - type: tile
   id: FloorReinforced
@@ -1646,20 +1646,20 @@
   # ES END
 # WOLFGATE END
 
-- type: tile
-  id: FloorTechMaint2
-  name: tiles-techmaint2-floor
-  sprite: /Textures/Tiles/steel_maint.png
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepHull
-  itemDrop: FloorTileItemSteelMaint
-  heatCapacity: 10000
-  # ES START
-  flammability: 2
-  # ES END
+#- type: tile #WOLFGATE(Resprites) Moved to basic.yml
+#  id: FloorTechMaint2
+#  name: tiles-techmaint2-floor
+#  sprite: /Textures/Tiles/steel_maint.png
+#  baseTurf: Plating
+#  isSubfloor: false
+#  deconstructTools: [ Prying ]
+#  footstepSounds:
+#    collection: FootstepHull
+#  itemDrop: FloorTileItemSteelMaint
+#  heatCapacity: 10000
+#  # ES START
+#  flammability: 2
+#  # ES END
 
 - type: tile
   id: FloorTechMaint3

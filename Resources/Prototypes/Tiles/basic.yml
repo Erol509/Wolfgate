@@ -80,10 +80,16 @@
   parent: BaseStationTile
   name: tiles-techmaint2-floor
   sprite: /Textures/Tiles/Basic/Gray/gray-maint.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemSteelMaint
-  flammability: 0.5
+  heatCapacity: 10000
+  # ES START
+  flammability: 2
+  # ES END
 
 - type: tile
   id: FloorPlastic
@@ -282,8 +288,14 @@
   parent: BaseStationTile
   name: tiles-techmaint-floor-dark
   sprite: /Textures/Tiles/Basic/Dark/dark-maint.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepHull
   itemDrop: FloorTileItemTechmaintDark
-  flammability: 0.5
+  heatCapacity: 10000
+  # ES START
+  flammability: 2
+  # ES END
 # WOLFGATE END
