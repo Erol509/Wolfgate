@@ -1,4 +1,4 @@
-# WOLFGATE START: Define redesigned Gray, White, and Dark floor prototypes.
+# WOLFGATE(Resprites) START: Port redesigned Gray, White, and Dark floor sprites.
 #### STEEL / GRAY
 - type: tile
   abstract: true

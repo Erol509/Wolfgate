@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Repath Frontier closet prototypes for the new closet sprites.
 #Frontier specific for new closets without needing to touch upstream entities.
 - type: entity
   id: ClosetO2N2
@@ -26,3 +27,4 @@
 #    stateBaseClosed: fsb
 #    stateDoorOpen: fsb_open
 #    stateDoorClosed: fsb_door
+# WOLFGATE END

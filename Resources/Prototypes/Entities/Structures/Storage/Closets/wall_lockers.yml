@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port closet sprite mappings from upstream respritening batches.
 - type: entity
   id: ClosetWall
   parent: BaseWallCloset
@@ -217,3 +218,4 @@
     sprite: Structures/Storage/ClosetsWallmounted/antag-secure-syndicate.rsi
   - type: AccessReader
     access: [["SyndicateAgent"]]
+# WOLFGATE END

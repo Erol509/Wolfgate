@@ -1,4 +1,4 @@
-# WOLFGATE: Replaced duplicate basic floor definitions with the prototypes in Tiles/basic.yml.
+# WOLFGATE(Resprites): Use redesigned floor prototypes from Tiles/basic.yml.
 - type: tile
   id: FloorSteelCheckerLight
   name: tiles-steel-floor-checker-light

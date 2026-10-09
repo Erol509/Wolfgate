@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port closet and wall-locker sprite layers from upstream respritening batches.
 - type: entity
   id: ClosetBase
   parent: BaseStructureDynamic
@@ -231,10 +232,11 @@
         enum.LockVisualLayers.Lock:
           True: { state: locked }
           False: { state: unlocked }
-  # WOLFGATE(Resprites) START: This fork does not register Paintable.
+  # This fork does not register Paintable.
   # - type: Paintable
   #   group: WallLocker
-  # WOLFGATE END
+
+# WOLFGATE END
 
 #Base suit storage unit
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.

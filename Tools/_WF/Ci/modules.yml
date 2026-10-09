@@ -286,6 +286,27 @@ unmarked:
   - path: Resources/Textures/Mobs/Effects/onfire.rsi/
     module: BetterFire
     reason: Generic_mob_burning and Standing replaced with TauCeti fire sprites; Standing_underlay added.
+  - path: Resources/Textures/Tiles/TileEntities/chasm.rsi/
+    module: Resprites
+    reason: Chasm tile-entity sprites ported with the floor resprites.
+  - path: Resources/Textures/Tiles/TileEntities/liquid-lava.rsi/
+    module: Resprites
+    reason: Lava tile-entity sprites ported with the floor resprites.
+  - path: Resources/Textures/Tiles/TileEntities/liquid-phoron.rsi/
+    module: Resprites
+    reason: Phoron tile-entity sprites ported with the floor resprites.
+  - path: Resources/Textures/Tiles/TileEntities/liquid-water.rsi/
+    module: Resprites
+    reason: Water tile-entity sprites ported with the floor resprites.
+  - path: Resources/Textures/Tiles/TileEntities/swimming-pool.rsi/
+    module: Resprites
+    reason: Pool tile-entity sprites ported with the floor resprites.
+  - path: Resources/Textures/_NF/Structures/Storage/closet.rsi/
+    module: Resprites
+    reason: Frontier closet sprites updated for the resprited prototype states.
+  - path: Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/
+    module: Resprites
+    reason: Frontier wall-locker sprites updated for the resprited prototype states.
   - path: Resources/Textures/_Impstation/Structures/
     module: Resprites
     reason: Impstation structure resprites (thermomachines, cryo pod, cryosleep, hydro tray, conveyor, fax, stasis bed, suit storage).

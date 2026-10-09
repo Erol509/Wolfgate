@@ -1,6 +1,6 @@
 # Resprites
 
-Ports various sprites from Impstation, that change and fit our sci fi esque setting abit more. Changed sprites are freezers and heaters (hellfire included), cryo pods, cryosleep units, hydroponics trays, conveyors, fax machines, stasis beds and suit storage units. Freezers and heaters also glow when powered.
+Ports visual updates and matching prototypes for closets, lockers, wardrobes, wall-mounted storage, suit storage, and Gray/White/Dark floors, alongside Impstation structure sprites. Closet and floor prototype mappings live under `Resources/Prototypes/Entities/Structures/Storage/Closets/` and `Resources/Prototypes/Tiles/`.
 
 
 <!-- WOLFGATE-GENERATED START -->
@@ -12,7 +12,12 @@ None.
 
 ## Non-modular edits
 
+- [`Resources/Prototypes/_Mono/Turf/generated.yml`](../../../Resources/Prototypes/_Mono/Turf/generated.yml): Port floor sprite updates from upstream respritening batches.
+- [`Resources/Prototypes/_Mono/Turf/plating.yml`](../../../Resources/Prototypes/_Mono/Turf/plating.yml): Port floor sprite updates from upstream respritening batches.
+- [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/closets.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/closets.yml): Repath Frontier closet prototypes for the new closet sprites.
+- [`Resources/Prototypes/Catalog/Cargo/cargo_security.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_security.yml): Port closet sprite mappings from upstream respritening batches.
 - [`Resources/Prototypes/Catalog/Cargo/cargo_service.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_service.yml): Imp Sprite Ports
+- [`Resources/Prototypes/Entities/Objects/Weapons/Guns/Projectiles/magic.yml`](../../../Resources/Prototypes/Entities/Objects/Weapons/Guns/Projectiles/magic.yml): Port closet sprite mappings from upstream respritening batches.
 - [`Resources/Prototypes/Entities/Structures/conveyor.yml`](../../../Resources/Prototypes/Entities/Structures/conveyor.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Entities/Structures/cryogenic_sleep_unit.yml`](../../../Resources/Prototypes/Entities/Structures/cryogenic_sleep_unit.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Entities/Structures/hydro_tray.yml`](../../../Resources/Prototypes/Entities/Structures/hydro_tray.yml): Imp Sprite Ports
@@ -21,8 +26,14 @@ None.
 - [`Resources/Prototypes/Entities/Structures/Machines/stasisbed.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/stasisbed.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Entities/Structures/Piping/Atmospherics/unary.yml`](../../../Resources/Prototypes/Entities/Structures/Piping/Atmospherics/unary.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Entities/Structures/Storage/Closets/base_structureclosets.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/base_structureclosets.yml)
-  - This fork does not register Paintable.
+  - Port closet and wall-locker sprite layers from upstream respritening batches.
   - Imp Sprite Ports
+- [`Resources/Prototypes/Entities/Structures/Storage/Closets/big_boxes.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/big_boxes.yml): Port closet sprite mappings from upstream respritening batches.
+- [`Resources/Prototypes/Entities/Structures/Storage/Closets/closets.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/closets.yml): Port closet sprite mappings from upstream respritening batches.
+- [`Resources/Prototypes/Entities/Structures/Storage/Closets/Lockers/base_structurelockers.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/Lockers/base_structurelockers.yml): Port closet sprite mappings from upstream respritening batches.
+- [`Resources/Prototypes/Entities/Structures/Storage/Closets/Lockers/lockers.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/Lockers/lockers.yml): Port closet sprite mappings from upstream respritening batches.
+- [`Resources/Prototypes/Entities/Structures/Storage/Closets/wall_lockers.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/wall_lockers.yml): Port closet sprite mappings from upstream respritening batches.
+- [`Resources/Prototypes/Entities/Structures/Storage/Closets/wardrobe.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/wardrobe.yml): Port closet sprite mappings from upstream respritening batches.
 - [`Resources/Prototypes/Entities/Structures/Wallmounts/switch.yml`](../../../Resources/Prototypes/Entities/Structures/Wallmounts/switch.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Objectives/stealTargetGroups.yml`](../../../Resources/Prototypes/Objectives/stealTargetGroups.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Recipes/Construction/Graphs/structures/conveyor.yml`](../../../Resources/Prototypes/Recipes/Construction/Graphs/structures/conveyor.yml): Imp Sprite Ports
@@ -30,6 +41,17 @@ None.
 - [`Resources/Prototypes/Recipes/Construction/structures.yml`](../../../Resources/Prototypes/Recipes/Construction/structures.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Research/civilianservices.yml`](../../../Resources/Prototypes/Research/civilianservices.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Research/industrial.yml`](../../../Resources/Prototypes/Research/industrial.yml): Imp Sprite Ports
+- [`Resources/Prototypes/Tiles/basic.yml`](../../../Resources/Prototypes/Tiles/basic.yml): Port redesigned Gray, White, and Dark floor sprites.
+- [`Resources/Prototypes/Tiles/floors.yml`](../../../Resources/Prototypes/Tiles/floors.yml): Use redesigned floor prototypes from Tiles/basic.yml.
+- [`Resources/Prototypes/Tiles/planet.yml`](../../../Resources/Prototypes/Tiles/planet.yml): Port floor sprite updates from upstream respritening batches.
+- [`Resources/Prototypes/Tiles/plating.yml`](../../../Resources/Prototypes/Tiles/plating.yml): Port floor sprite updates from upstream respritening batches.
 - [`Resources/Textures/_Impstation/Structures/`](../../../Resources/Textures/_Impstation/Structures/): Impstation structure resprites (thermomachines, cryo pod, cryosleep, hydro tray, conveyor, fax, stasis bed, suit storage).
+- [`Resources/Textures/_NF/Structures/Storage/closet.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/closet.rsi/): Frontier closet sprites updated for the resprited prototype states.
+- [`Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/): Frontier wall-locker sprites updated for the resprited prototype states.
+- [`Resources/Textures/Tiles/TileEntities/chasm.rsi/`](../../../Resources/Textures/Tiles/TileEntities/chasm.rsi/): Chasm tile-entity sprites ported with the floor resprites.
+- [`Resources/Textures/Tiles/TileEntities/liquid-lava.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-lava.rsi/): Lava tile-entity sprites ported with the floor resprites.
+- [`Resources/Textures/Tiles/TileEntities/liquid-phoron.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-phoron.rsi/): Phoron tile-entity sprites ported with the floor resprites.
+- [`Resources/Textures/Tiles/TileEntities/liquid-water.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-water.rsi/): Water tile-entity sprites ported with the floor resprites.
+- [`Resources/Textures/Tiles/TileEntities/swimming-pool.rsi/`](../../../Resources/Textures/Tiles/TileEntities/swimming-pool.rsi/): Pool tile-entity sprites ported with the floor resprites.
 
 <!-- WOLFGATE-GENERATED END -->

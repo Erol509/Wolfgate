@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port floor sprite updates from upstream respritening batches.
 - type: tile
   id: Plating
   name: tiles-plating
@@ -148,3 +149,4 @@
   # already shouldnt be spreading here bc airtight, but yknow
   flammability: -99999
   # ES END
+# WOLFGATE END

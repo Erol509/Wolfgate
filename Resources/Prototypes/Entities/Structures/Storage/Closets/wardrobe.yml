@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port closet sprite mappings from upstream respritening batches.
 # Base
 - type: entity
   id: WardrobeBase
@@ -234,3 +235,4 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Closets/service-wardrobe-botany.rsi
+# WOLFGATE END

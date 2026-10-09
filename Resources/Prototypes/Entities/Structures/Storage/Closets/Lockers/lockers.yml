@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port closet sprite mappings from upstream respritening batches.
 - type: entity
   id: LockerBooze
   parent: LockerBase
@@ -456,3 +457,4 @@
     access: [["HeadOfPersonnel"]] # Frontier
   - type: Sprite
     sprite: Structures/Storage/Closets/command-secure-service.rsi
+# WOLFGATE END

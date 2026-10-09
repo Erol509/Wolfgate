@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port closet sprite mappings from upstream respritening batches.
 - type: entity
   id: LockerBase
   parent: ClosetBase
@@ -90,3 +91,4 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+# WOLFGATE END

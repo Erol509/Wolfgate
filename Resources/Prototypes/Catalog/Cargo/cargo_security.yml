@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port closet sprite mappings from upstream respritening batches.
 - type: cargoProduct
   id: SecurityArmor
   abstract: true # Frontier
@@ -76,3 +77,4 @@
   group: market
 
 
+# WOLFGATE END

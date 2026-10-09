@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port closet sprite mappings from upstream respritening batches.
 - type: entity
   id: ProjectileFireball
   name: fireball
@@ -316,3 +317,4 @@
     whitelist:
       components:
       - Body
+# WOLFGATE END

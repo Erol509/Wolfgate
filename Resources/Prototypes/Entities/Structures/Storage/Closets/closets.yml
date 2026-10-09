@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port closet sprite mappings from upstream respritening batches.
 # Tool closet
 - type: entity
   id: ClosetTool
@@ -176,3 +177,4 @@
         bluespaceEffectOnTeleportSource: true
         destroyAfterUses: 2
         destroyType: DeleteComponent
+# WOLFGATE END

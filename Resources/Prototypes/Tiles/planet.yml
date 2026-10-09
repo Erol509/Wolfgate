@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port floor sprite updates from upstream respritening batches.
 - type: tile
   id: FloorPlanetDirt
   name: tiles-dirt-floor
@@ -404,3 +405,4 @@
   # ES END
 
 # Wasteland
+# WOLFGATE END

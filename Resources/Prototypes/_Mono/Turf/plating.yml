@@ -1,3 +1,4 @@
+# WOLFGATE(Resprites) START: Port floor sprite updates from upstream respritening batches.
 - type: tile
   id: DebugLatticeRadarHalfWidth
   parent: Lattice
@@ -68,3 +69,4 @@
   sprite: /Textures/_Mono/Tiles/plating/sw.png
   variants: 1
   vertices: ["0, 0", "1, 0", "0, 1"]
+# WOLFGATE END
