@@ -286,6 +286,66 @@ unmarked:
   - path: Resources/Textures/Mobs/Effects/onfire.rsi/
     module: BetterFire
     reason: Generic_mob_burning and Standing replaced with TauCeti fire sprites; Standing_underlay added.
+  - path: Resources/Textures/Tiles/Asteroid/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited asteroid floor assets.
+  - path: Resources/Textures/Tiles/Basic/Dark/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited dark floor assets.
+  - path: Resources/Textures/Tiles/Basic/Gray/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited gray floor assets.
+  - path: Resources/Textures/Tiles/Basic/White/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited white floor assets.
+  - path: Resources/Textures/Tiles/Cave/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited cave floor assets.
+  - path: Resources/Textures/Tiles/Checker/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited checker floor assets.
+  - path: Resources/Textures/Tiles/Chromite/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited chromite floor assets.
+  - path: Resources/Textures/Tiles/Circuit/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited circuit floor assets.
+  - path: Resources/Textures/Tiles/Concrete/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited concrete floor assets.
+  - path: Resources/Textures/Tiles/Desert/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited desert floor assets.
+  - path: Resources/Textures/Tiles/Dirt/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited dirt floor assets.
+  - path: Resources/Textures/Tiles/Exo/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited exoborg floor assets.
+  - path: Resources/Textures/Tiles/Glass/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited glass floor assets.
+  - path: Resources/Textures/Tiles/Grass/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited grass floor assets.
+  - path: Resources/Textures/Tiles/GrassDark/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited dark grass floor assets.
+  - path: Resources/Textures/Tiles/GrassJungle/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited jungle grass floor assets.
+  - path: Resources/Textures/Tiles/GrassLight/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited light grass floor assets.
+  - path: Resources/Textures/Tiles/Ice/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited ice floor assets.
+  - path: Resources/Textures/Tiles/Ironsand/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited ironsand floor assets.
+  - path: Resources/Textures/Tiles/Marble/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited marble floor assets.
   - path: Resources/Textures/Tiles/TileEntities/chasm.rsi/
     module: Resprites
     reason: Chasm tile-entity sprites ported with the floor resprites.

@@ -57,6 +57,26 @@ None.
 - [`Resources/Textures/_Impstation/Structures/`](../../../Resources/Textures/_Impstation/Structures/): Impstation structure resprites (thermomachines, cryo pod, cryosleep, hydro tray, conveyor, fax, stasis bed, suit storage).
 - [`Resources/Textures/_NF/Structures/Storage/closet.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/closet.rsi/): Frontier closet sprites updated for the resprited prototype states.
 - [`Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/): Frontier wall-locker sprites updated for the resprited prototype states.
+- [`Resources/Textures/Tiles/Asteroid/attribution.yml`](../../../Resources/Textures/Tiles/Asteroid/attribution.yml): Record attributions for resprited asteroid floor assets.
+- [`Resources/Textures/Tiles/Basic/Dark/attributions.yml`](../../../Resources/Textures/Tiles/Basic/Dark/attributions.yml): Record attributions for resprited dark floor assets.
+- [`Resources/Textures/Tiles/Basic/Gray/attributions.yml`](../../../Resources/Textures/Tiles/Basic/Gray/attributions.yml): Record attributions for resprited gray floor assets.
+- [`Resources/Textures/Tiles/Basic/White/attributions.yml`](../../../Resources/Textures/Tiles/Basic/White/attributions.yml): Record attributions for resprited white floor assets.
+- [`Resources/Textures/Tiles/Cave/attributions.yml`](../../../Resources/Textures/Tiles/Cave/attributions.yml): Record attributions for resprited cave floor assets.
+- [`Resources/Textures/Tiles/Checker/attributions.yml`](../../../Resources/Textures/Tiles/Checker/attributions.yml): Record attributions for resprited checker floor assets.
+- [`Resources/Textures/Tiles/Chromite/attributions.yml`](../../../Resources/Textures/Tiles/Chromite/attributions.yml): Record attributions for resprited chromite floor assets.
+- [`Resources/Textures/Tiles/Circuit/attributions.yml`](../../../Resources/Textures/Tiles/Circuit/attributions.yml): Record attributions for resprited circuit floor assets.
+- [`Resources/Textures/Tiles/Concrete/attribution.yml`](../../../Resources/Textures/Tiles/Concrete/attribution.yml): Record attributions for resprited concrete floor assets.
+- [`Resources/Textures/Tiles/Desert/attribution.yml`](../../../Resources/Textures/Tiles/Desert/attribution.yml): Record attributions for resprited desert floor assets.
+- [`Resources/Textures/Tiles/Dirt/attributions.yml`](../../../Resources/Textures/Tiles/Dirt/attributions.yml): Record attributions for resprited dirt floor assets.
+- [`Resources/Textures/Tiles/Exo/attribution.yml`](../../../Resources/Textures/Tiles/Exo/attribution.yml): Record attributions for resprited exoborg floor assets.
+- [`Resources/Textures/Tiles/Glass/attribution.yml`](../../../Resources/Textures/Tiles/Glass/attribution.yml): Record attributions for resprited glass floor assets.
+- [`Resources/Textures/Tiles/Grass/attribution.yml`](../../../Resources/Textures/Tiles/Grass/attribution.yml): Record attributions for resprited grass floor assets.
+- [`Resources/Textures/Tiles/GrassDark/attribution.yml`](../../../Resources/Textures/Tiles/GrassDark/attribution.yml): Record attributions for resprited dark grass floor assets.
+- [`Resources/Textures/Tiles/GrassJungle/attribution.yml`](../../../Resources/Textures/Tiles/GrassJungle/attribution.yml): Record attributions for resprited jungle grass floor assets.
+- [`Resources/Textures/Tiles/GrassLight/attribution.yml`](../../../Resources/Textures/Tiles/GrassLight/attribution.yml): Record attributions for resprited light grass floor assets.
+- [`Resources/Textures/Tiles/Ice/attributions.yml`](../../../Resources/Textures/Tiles/Ice/attributions.yml): Record attributions for resprited ice floor assets.
+- [`Resources/Textures/Tiles/Ironsand/attribution.yml`](../../../Resources/Textures/Tiles/Ironsand/attribution.yml): Record attributions for resprited ironsand floor assets.
+- [`Resources/Textures/Tiles/Marble/attributions.yml`](../../../Resources/Textures/Tiles/Marble/attributions.yml): Record attributions for resprited marble floor assets.
 - [`Resources/Textures/Tiles/TileEntities/chasm.rsi/`](../../../Resources/Textures/Tiles/TileEntities/chasm.rsi/): Chasm tile-entity sprites ported with the floor resprites.
 - [`Resources/Textures/Tiles/TileEntities/liquid-lava.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-lava.rsi/): Lava tile-entity sprites ported with the floor resprites.
 - [`Resources/Textures/Tiles/TileEntities/liquid-phoron.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-phoron.rsi/): Phoron tile-entity sprites ported with the floor resprites.
