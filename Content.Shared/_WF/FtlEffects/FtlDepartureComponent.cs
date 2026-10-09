@@ -22,4 +22,8 @@ public sealed partial class FtlDepartureComponent : Component
     /// <summary>Whether this is the snap out of hyperspace at the destination.</summary>
     [DataField, AutoNetworkedField]
     public bool Arriving;
+
+    /// <summary>The jumping ship this docked grid rides with; null on that ship itself.</summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? Lead;
 }

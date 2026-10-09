@@ -22,4 +22,12 @@ public static class FtlConeGeometry
             * Matrix3x2.CreateScale(1f, stretch)
             * Matrix3x2.CreateTranslation(hull.Center + new Vector2(0f, motion * distance));
     }
+
+    /// <summary>Carries a docked grid through the lead ship's rush, so a convoy moves and stretches as one.</summary>
+    public static Matrix3x2 FollowerTransform(Box2 leadHull, float motion, Matrix3x2 follower, Matrix3x2 lead)
+    {
+        if (!Matrix3x2.Invert(lead, out var inverse))
+            return follower;
+        return follower * inverse * MotionTransform(leadHull, motion) * lead;
+    }
 }

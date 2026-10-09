@@ -22,6 +22,30 @@ public sealed class FtlDepartureTimingTest
             Is.EqualTo(expected).Within(0.0001));
     }
 
+    [TestCase(-0.1, false, false, false)]
+    [TestCase(0, false, false, false)]
+    [TestCase(0.02, false, false, true)]
+    [TestCase(0.5, false, false, true)]
+    [TestCase(1, false, false, false)]
+    [TestCase(0.02, true, false, false)]
+    [TestCase(0.02, true, true, false)]
+    public void LaunchedHullStaysHiddenUntilItsGridLeaves(double seconds, bool entered, bool arriving, bool expected)
+    {
+        Assert.That(FtlDepartureTiming.Gone(TimeSpan.FromSeconds(seconds), TimeSpan.Zero, entered, arriving),
+            Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void LaunchedHullNeverReturnsToRestBeforeItsGridLeaves()
+    {
+        for (var hundredths = -23; hundredths < FtlDepartureTiming.HoldDuration * 100; hundredths++)
+        {
+            var now = TimeSpan.FromSeconds(hundredths / 100.0);
+            Assert.That(FtlDepartureTiming.Motion(now, TimeSpan.Zero, false, false) > 0f
+                || FtlDepartureTiming.Gone(now, TimeSpan.Zero, false, false), Is.True, $"At rest at {hundredths} cs.");
+        }
+    }
+
     [TestCase(0, 0)]
     [TestCase(25, 0)]
     [TestCase(26, 0)]
