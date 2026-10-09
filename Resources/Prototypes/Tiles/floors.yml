@@ -1099,10 +1099,11 @@
   flammability: 0.2
   # ES END
 
+# WOLFGATE(Resprites) START: Repath the glass floor sprites.
 - type: tile
   id: FloorGlass
   name: tiles-glass-floor
-  sprite: /Textures/Tiles/Glass/glass.png
+  sprite: /Textures/Tiles/Glass/glass.png # WOLFGATE(Resprites): Repathed
   variants: 1
   baseTurf: Plating
   isSubfloor: false
@@ -1119,7 +1120,7 @@
 - type: tile
   id: FloorRGlass
   name: tiles-reinforced-glass-floor
-  sprite: /Textures/Tiles/Glass/glass-reinf.png
+  sprite: /Textures/Tiles/Glass/glass-reinf.png # WOLFGATE(Resprites): Repathed
   variants: 1
   baseTurf: Plating
   isSubfloor: false
@@ -1132,6 +1133,7 @@
   flammability: 0.2
   # ES END
   transparent: true
+# WOLFGATE END
 
 - type: tile
   id: FloorMetalFoam
@@ -1152,10 +1154,11 @@
   # ES END
 
 # Circuits
+# WOLFGATE(Resprites) START: Repath circuit floors and use their new sprite variants.
 - type: tile
   id: FloorGreenCircuit
   name: tiles-green-circuit-floor
-  sprite: /Textures/Tiles/Circuit/circuit-green.png
+  sprite: /Textures/Tiles/Circuit/circuit-green.png # WOLFGATE(Resprites): Repathed
   variants: 2
   placementVariants:
     - 1.0
@@ -1174,7 +1177,7 @@
 - type: tile
   id: FloorBlueCircuit
   name: tiles-blue-circuit-floor
-  sprite: /Textures/Tiles/Circuit/circuit-blue.png
+  sprite: /Textures/Tiles/Circuit/circuit-blue.png # WOLFGATE(Resprites): Repathed
   variants: 2
   placementVariants:
     - 1.0
@@ -1193,7 +1196,7 @@
 - type: tile
   id: FloorRedCircuit
   name: tiles-red-circuit-floor
-  sprite: /Textures/Tiles/Circuit/circuit-red.png
+  sprite: /Textures/Tiles/Circuit/circuit-red.png # WOLFGATE(Resprites): Repathed
   variants: 2
   placementVariants:
       - 1.0
@@ -1208,6 +1211,7 @@
   # ES START
   flammability: 2
   # ES END
+# WOLFGATE END
 
 # Terrain
 - type: tile
@@ -1273,6 +1277,7 @@
   flammability: 2
   # ES END
 
+# WOLFGATE(Resprites) START: Repath grass, dirt, and asteroid floor sprites and variants.
 - type: tile
   id: FloorGrassJungle
   name: tiles-jungle-grass-floor
@@ -1450,6 +1455,7 @@
   # ES START
   flammability: 0.2
   # ES END
+# WOLFGATE END
 
 - type: tile
   id: FloorAsteroidSandDug
@@ -1569,6 +1575,7 @@
   # ES END
 
 # Caves
+# WOLFGATE(Resprites) START: Repath the cave floor sprite and edge textures.
 - type: tile
   id: FloorCave
   name: tiles-cave
@@ -1592,6 +1599,7 @@
   # ES START
   flammability: 0.2
   # ES END
+# WOLFGATE END
 
 - type: tile
   id: FloorCaveDrought
@@ -1616,6 +1624,7 @@
   flammability: 0.2
   # ES END
 
+# WOLFGATE(Resprites) START: Update flesh floor variant count and placement weights.
 - type: tile
   id: FloorFlesh
   name: tiles-flesh-floor
@@ -1635,6 +1644,7 @@
   # ES START
   flammability: 4
   # ES END
+# WOLFGATE END
 
 - type: tile
   id: FloorTechMaint2
@@ -1738,6 +1748,7 @@
   flammability: 2
   # ES END
 
+# WOLFGATE(Resprites) START: Repath the chromite floor sprite and edge textures.
 - type: tile
   id: FloorChromite
   name: tiles-chromite
@@ -1762,6 +1773,7 @@
   # ES START
   flammability: 2
   # ES END
+# WOLFGATE END
 
 #Hull tiles
 - type: tile
@@ -1858,6 +1870,7 @@
   # ES END
 
 # Ice
+# WOLFGATE(Resprites) START: Repath the astro ice floor sprite.
 - type: tile
   id: FloorAstroIce
   name: tiles-astro-ice
@@ -1874,6 +1887,7 @@
   # ES START
   flammability: 0.2
   # ES END
+# WOLFGATE END
 
 - type: tile
   id: FloorAstroSnow

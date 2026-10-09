@@ -42,7 +42,16 @@ None.
 - [`Resources/Prototypes/Research/civilianservices.yml`](../../../Resources/Prototypes/Research/civilianservices.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Research/industrial.yml`](../../../Resources/Prototypes/Research/industrial.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Tiles/basic.yml`](../../../Resources/Prototypes/Tiles/basic.yml): Port redesigned Gray, White, and Dark floor sprites.
-- [`Resources/Prototypes/Tiles/floors.yml`](../../../Resources/Prototypes/Tiles/floors.yml): Use redesigned floor prototypes from Tiles/basic.yml.
+- [`Resources/Prototypes/Tiles/floors.yml`](../../../Resources/Prototypes/Tiles/floors.yml)
+  - Use redesigned floor prototypes from Tiles/basic.yml.
+  - Repath the glass floor sprites.
+  - Repathed
+  - Repath circuit floors and use their new sprite variants.
+  - Repath grass, dirt, and asteroid floor sprites and variants.
+  - Repath the cave floor sprite and edge textures.
+  - Update flesh floor variant count and placement weights.
+  - Repath the chromite floor sprite and edge textures.
+  - Repath the astro ice floor sprite.
 - [`Resources/Prototypes/Tiles/planet.yml`](../../../Resources/Prototypes/Tiles/planet.yml): Port floor sprite updates from upstream respritening batches.
 - [`Resources/Prototypes/Tiles/plating.yml`](../../../Resources/Prototypes/Tiles/plating.yml): Port floor sprite updates from upstream respritening batches.
 - [`Resources/Textures/_Impstation/Structures/`](../../../Resources/Textures/_Impstation/Structures/): Impstation structure resprites (thermomachines, cryo pod, cryosleep, hydro tray, conveyor, fax, stasis bed, suit storage).
