@@ -58,6 +58,7 @@ None.
 - [`Resources/Textures/_NF/Structures/Storage/closet.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/closet.rsi/): Frontier closet sprites updated for the resprited prototype states.
 - [`Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/): Frontier wall-locker sprites updated for the resprited prototype states.
 - [`Resources/Textures/Tiles/Asteroid/attribution.yml`](../../../Resources/Textures/Tiles/Asteroid/attribution.yml): Record attributions for resprited asteroid floor assets.
+- [`Resources/Textures/Tiles/attributions.yml`](../../../Resources/Textures/Tiles/attributions.yml): Record attributions for resprited root-level tile textures.
 - [`Resources/Textures/Tiles/Basic/Dark/attributions.yml`](../../../Resources/Textures/Tiles/Basic/Dark/attributions.yml): Record attributions for resprited dark floor assets.
 - [`Resources/Textures/Tiles/Basic/Gray/attributions.yml`](../../../Resources/Textures/Tiles/Basic/Gray/attributions.yml): Record attributions for resprited gray floor assets.
 - [`Resources/Textures/Tiles/Basic/White/attributions.yml`](../../../Resources/Textures/Tiles/Basic/White/attributions.yml): Record attributions for resprited white floor assets.
@@ -77,10 +78,14 @@ None.
 - [`Resources/Textures/Tiles/Ice/attributions.yml`](../../../Resources/Textures/Tiles/Ice/attributions.yml): Record attributions for resprited ice floor assets.
 - [`Resources/Textures/Tiles/Ironsand/attribution.yml`](../../../Resources/Textures/Tiles/Ironsand/attribution.yml): Record attributions for resprited ironsand floor assets.
 - [`Resources/Textures/Tiles/Marble/attributions.yml`](../../../Resources/Textures/Tiles/Marble/attributions.yml): Record attributions for resprited marble floor assets.
+- [`Resources/Textures/Tiles/Planet/attributions.yml`](../../../Resources/Textures/Tiles/Planet/attributions.yml): Record attributions for resprited planetary floor assets.
+- [`Resources/Textures/Tiles/Shuttle/attributions.yml`](../../../Resources/Textures/Tiles/Shuttle/attributions.yml): Record attributions for resprited shuttle floor assets.
+- [`Resources/Textures/Tiles/Snow/attribution.yml`](../../../Resources/Textures/Tiles/Snow/attribution.yml): Record attributions for resprited snow floor assets.
 - [`Resources/Textures/Tiles/TileEntities/chasm.rsi/`](../../../Resources/Textures/Tiles/TileEntities/chasm.rsi/): Chasm tile-entity sprites ported with the floor resprites.
 - [`Resources/Textures/Tiles/TileEntities/liquid-lava.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-lava.rsi/): Lava tile-entity sprites ported with the floor resprites.
 - [`Resources/Textures/Tiles/TileEntities/liquid-phoron.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-phoron.rsi/): Phoron tile-entity sprites ported with the floor resprites.
 - [`Resources/Textures/Tiles/TileEntities/liquid-water.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-water.rsi/): Water tile-entity sprites ported with the floor resprites.
 - [`Resources/Textures/Tiles/TileEntities/swimming-pool.rsi/`](../../../Resources/Textures/Tiles/TileEntities/swimming-pool.rsi/): Pool tile-entity sprites ported with the floor resprites.
+- [`Resources/Textures/Tiles/Wood/attributions.yml`](../../../Resources/Textures/Tiles/Wood/attributions.yml): Record attributions for resprited wood floor assets.
 
 <!-- WOLFGATE-GENERATED END -->
