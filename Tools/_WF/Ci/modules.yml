@@ -346,6 +346,21 @@ unmarked:
   - path: Resources/Textures/Tiles/Marble/attributions.yml
     module: Resprites
     reason: Record attributions for resprited marble floor assets.
+  - path: Resources/Textures/Tiles/Planet/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited planetary floor assets.
+  - path: Resources/Textures/Tiles/Shuttle/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited shuttle floor assets.
+  - path: Resources/Textures/Tiles/Snow/attribution.yml
+    module: Resprites
+    reason: Record attributions for resprited snow floor assets.
+  - path: Resources/Textures/Tiles/Wood/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited wood floor assets.
+  - path: Resources/Textures/Tiles/attributions.yml
+    module: Resprites
+    reason: Record attributions for resprited root-level tile textures.
   - path: Resources/Textures/Tiles/TileEntities/chasm.rsi/
     module: Resprites
     reason: Chasm tile-entity sprites ported with the floor resprites.
