@@ -169,6 +169,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
         targetHumanoid.MismatchedParts = sourceHumanoid.MismatchedParts; // WOLFGATE(Species): copies keep drawing mismatched hair
+        targetHumanoid.CustomMarkings = new(sourceHumanoid.CustomMarkings); // WOLFGATE(CustomMarkings): copies wear the same custom markings
         targetHumanoid.LegStyle = sourceHumanoid.LegStyle; // WOLFGATE(LegStyle): copies keep the clothing fit of the copied legs
 
         targetHumanoid.Gender = sourceHumanoid.Gender;
@@ -471,6 +472,7 @@ public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         EnsureDefaultMarkings(uid, humanoid);
+        humanoid.CustomMarkings = ProfileCustomMarkings(profile); // WOLFGATE(CustomMarkings): the profile's custom markings
 
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))

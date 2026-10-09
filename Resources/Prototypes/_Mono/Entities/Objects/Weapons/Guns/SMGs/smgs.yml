@@ -318,7 +318,7 @@
 #weaker typewriter for libvend
 - type: entity
   name: PA Keyboard (.45 ACP)
-  parent: WeaponSubMachineGunTypewriter
+  parent: WFBaseWeaponSubMachineGunTypewriter # WOLFGATE: was WeaponSubMachineGunTypewriter, class-3 contraband since Monolith#4816
   id: WeaponSubMachineGunTypewriterPMC
   description: A modern take on the classic design used by mobsters throughout space and time. This one is an offbrand mercenary version of the typewritter nicknamed the "keyboard", its barrel heat rapidly which reduce accuracy. Uses .45 ACP ammo.
   components:

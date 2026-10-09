@@ -67,6 +67,7 @@ clone.
 - [`Content.IntegrationTests/Tests/_WF/Species/MismatchedPartsBodyTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/MismatchedPartsBodyTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Species/MismatchedPartsTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/MismatchedPartsTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Species/ShadekinNightVisionTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/ShadekinNightVisionTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Species/SpeciesLoadoutTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/SpeciesLoadoutTest.cs)
 
 ### Prototypes
 
@@ -285,6 +286,9 @@ clone.
   - ported from HardLight
   - ported from HardLight, unrestricted skin colour
 - [`Content.Shared/Preferences/HumanoidCharacterProfile.cs`](../../Preferences/HumanoidCharacterProfile.cs): the option widens the hair check
+- [`Content.Shared/Preferences/Loadouts/RoleLoadout.cs`](../../Preferences/Loadouts/RoleLoadout.cs)
+  - a loadout is held once, and a saved profile may carry the repeats the defaults used to add
+  - a default already held is not added again
 - [`Content.Shared/Teleportation/Components/PortalComponent.cs`](../../Teleportation/Components/PortalComponent.cs): ported from HardLight/Starlight - lets systems veto a portal teleport
 - [`Content.Shared/Teleportation/Systems/SharedPortalSystem.cs`](../../Teleportation/Systems/SharedPortalSystem.cs): lets a portal refuse a subject (the Shadekin dark portal)
 - [`Resources/Audio/_DEN/`](../../../Resources/Audio/_DEN/): The Den species voice sounds, ported in

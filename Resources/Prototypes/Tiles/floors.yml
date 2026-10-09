@@ -256,7 +256,22 @@
   itemDrop: FloorTileItemTechmaint
   heatCapacity: 10000
   # ES START
-  flammability: 0.5
+  flammability: 2
+  # ES END
+
+- type: tile
+  id: FloorTechMaintDark
+  name: tiles-techmaint-floor-dark
+  sprite: /Textures/Tiles/tech_maint_dark.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemTechmaintDark
+  heatCapacity: 10000
+  # ES START
+  flammability: 2
   # ES END
 
 - type: tile
@@ -270,7 +285,7 @@
     collection: FootstepHull
   itemDrop: PartRodMetal1
   heatCapacity: 10000
-  flammability: 0.1
+  flammability: 0.2
 # ES End
 
 - type: tile
@@ -330,7 +345,7 @@
   itemDrop: FloorTileItemElevatorShaft
   heatCapacity: 10000
   # ES START
-  flammability: 0.4
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -345,7 +360,7 @@
   itemDrop: FloorTileItemMetalDiamond
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -402,7 +417,7 @@
   itemDrop: FloorTileItemMining
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -417,7 +432,7 @@
   itemDrop: FloorTileItemMiningDark
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -432,7 +447,7 @@
   itemDrop: FloorTileItemMiningLight
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 # Departamental
@@ -448,7 +463,7 @@
   itemDrop: FloorTileItemFreezer
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -581,7 +596,7 @@
   itemDrop: FloorTileItemConcrete
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -602,7 +617,7 @@
   itemDrop: FloorTileItemConcreteMono
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -623,7 +638,7 @@
   itemDrop: FloorTileItemConcreteSmooth
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -644,7 +659,7 @@
   itemDrop: FloorTileItemGrayConcrete
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -665,7 +680,7 @@
   itemDrop: FloorTileItemGrayConcreteMono
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -686,7 +701,7 @@
   itemDrop: FloorTileItemGrayConcreteSmooth
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -707,7 +722,7 @@
   itemDrop: FloorTileItemOldConcrete
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -728,7 +743,7 @@
   itemDrop: FloorTileItemOldConcreteMono
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -749,7 +764,7 @@
   itemDrop: FloorTileItemOldConcreteSmooth
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 # Carpets (non smoothing)
@@ -1097,7 +1112,7 @@
   itemDrop: SheetGlass1
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
   transparent: true
 
@@ -1114,7 +1129,7 @@
   itemDrop: SheetRGlass1
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
   transparent: true
 
@@ -1153,7 +1168,7 @@
   itemDrop: FloorTileItemGCircuit
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -1172,7 +1187,7 @@
   itemDrop: FloorTileItemBCircuit
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -1191,7 +1206,7 @@
   itemDrop: FloorTileItemRCircuit
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 # Terrain
@@ -1218,7 +1233,7 @@
   heatCapacity: 10000
   weather: true
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -1575,7 +1590,7 @@
     collection: FootstepAsteroid
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -1598,7 +1613,7 @@
     collection: FootstepAsteroid
   heatCapacity: 10000
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -1622,6 +1637,21 @@
   # ES END
 
 - type: tile
+  id: FloorTechMaint2
+  name: tiles-techmaint2-floor
+  sprite: /Textures/Tiles/steel_maint.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemSteelMaint
+  heatCapacity: 10000
+  # ES START
+  flammability: 2
+  # ES END
+
+- type: tile
   id: FloorTechMaint3
   name: tiles-techmaint3-floor
   sprite: /Textures/Tiles/grating_maint.png
@@ -1639,7 +1669,7 @@
   itemDrop: FloorTileItemGratingMaint
   heatCapacity: 10000
   # ES START
-  flammability: 0.5
+  flammability: 2
   # ES END
 
 - type: tile
@@ -1705,7 +1735,7 @@
   itemDrop: FloorTileItemWeb
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -1730,7 +1760,7 @@
     collection: FootstepAsteroid
   heatCapacity: 10000
   # ES START
-  flammability: 0.5
+  flammability: 2
   # ES END
 
 #Hull tiles
@@ -1745,7 +1775,7 @@
   itemDrop: FloorTileItemSteel #probably should not be normally obtainable, but the game shits itself and dies when you try to put null here
   heatCapacity: 10000
   # ES START
-  flammability: 0
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -1759,7 +1789,7 @@
   itemDrop: FloorTileItemSteel
   heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -1772,7 +1802,7 @@
     collection: FootstepHull
   itemDrop: PartRodMetal1 #same case as FloorHull
   # ES START
-  flammability: 0
+  flammability: 0.2
   # ES END
 
 # Faux sci tiles
@@ -1842,7 +1872,7 @@
   mobAcceleration: 0.1
   itemDrop: FloorTileItemAstroIce
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 - type: tile
@@ -1854,7 +1884,7 @@
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroSnow
   # ES START
-  flammability: 0.1
+  flammability: 0.2
   # ES END
 
 # Asteroid Sand
@@ -1868,7 +1898,7 @@
   itemDrop: FloorTileItemAstroAsteroidSand
   weather: false
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -1907,7 +1937,7 @@
   itemDrop: FloorTileItemXenoborg
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -1922,7 +1952,7 @@
   itemDrop: FloorTileItemXeno
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -1938,7 +1968,7 @@
   heatCapacity: 10000
   allowRotationMirror: true
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -1954,7 +1984,7 @@
   heatCapacity: 10000
   allowRotationMirror: true
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -1976,7 +2006,7 @@
   heatCapacity: 10000
   allowRotationMirror: true
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END
 
 - type: tile
@@ -1991,5 +2021,5 @@
   itemDrop: FloorTileItemXenoMaint
   heatCapacity: 10000
   # ES START
-  flammability: 1
+  flammability: 2
   # ES END

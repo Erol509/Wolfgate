@@ -12,6 +12,7 @@ using Content.Server.Power.EntitySystems; // Mono
 using Content.Server.Shuttles.Components; // Mono
 using Content.Server.Storage.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared.Body.Part; // WOLFGATE(Wolfmed)
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -194,6 +195,10 @@ public sealed partial class NPCUtilitySystem : EntitySystem
             case FoodValueCon:
             {
                 if (!TryComp<FoodComponent>(targetUid, out var food))
+                    return 0f;
+
+                // WOLFGATE(Wolfmed): animals leave severed limbs alone so they can be reattached
+                if (HasComp<BodyPartComponent>(targetUid))
                     return 0f;
 
                 // mice can't eat unpeeled bananas, need monkey's help

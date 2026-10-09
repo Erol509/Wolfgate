@@ -1,12 +1,14 @@
 # Flight profiles. The crew setup default is deliberately cautious (10 m/s); a ship flown for a purpose picks one of
 # these. Thruster power and the engine's speed limit still cap what a hull can actually do.
+# Cruise and follow speeds stay at or under 30 m/s: thrust falls off past the shuttle's 20 m/s soft cap
+# (ShuttleComponent.BaseMaxLinearVelocity), and a travel order's time budget assumes the hull reaches its cruise speed.
 
 - type: wfCrewNavigation
   id: WFCrewNavigationFreight
   name: wf-crew-navigation-freight
   settings:
-    cruiseSpeed: 24
-    followSpeed: 26
+    cruiseSpeed: 17
+    followSpeed: 19
     loiterSpeed: 10
     circleSpeed: 8
     attackSpeed: 10
@@ -22,8 +24,8 @@
   id: WFCrewNavigationWarship
   name: wf-crew-navigation-warship
   settings:
-    cruiseSpeed: 32
-    followSpeed: 36
+    cruiseSpeed: 23
+    followSpeed: 26
     loiterSpeed: 14
     circleSpeed: 12
     attackSpeed: 16
@@ -40,8 +42,8 @@
   id: WFCrewNavigationRaider
   name: wf-crew-navigation-raider
   settings:
-    cruiseSpeed: 38
-    followSpeed: 42
+    cruiseSpeed: 27
+    followSpeed: 30
     loiterSpeed: 18
     circleSpeed: 14
     attackSpeed: 20

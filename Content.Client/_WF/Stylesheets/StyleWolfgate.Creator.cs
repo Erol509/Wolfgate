@@ -31,6 +31,13 @@ public sealed partial class StyleWolfgate
     /// <summary>Card title: the heading font at card scale, keeping the accent colour.</summary>
     public const string StyleClassCreatorCardTitle = "CreatorCardTitle";
 
+    /// <summary>Square button holding one icon: the button face without its text padding.</summary>
+    public const string StyleClassCreatorIconButton = "CreatorIconButton";
+
+    /// <summary>Icon inside a creator button, tinted like its text; the disabled form dims with the button.</summary>
+    public const string StyleClassCreatorIcon = "CreatorIcon";
+    public const string StyleClassCreatorIconDisabled = "CreatorIconDisabled";
+
     /// <summary>Sex selector glyphs. The texture comes from the skin, the tint from the on/off class.</summary>
     public const string StyleClassSexIconMale = "SexIconMale";
     public const string StyleClassSexIconFemale = "SexIconFemale";
@@ -84,6 +91,12 @@ public sealed partial class StyleWolfgate
             BorderThickness = new Thickness(1),
         };
         groupBox.SetContentMarginOverride(StyleBox.Margin.All, 10);
+
+        // Icon button: the button face with the text padding taken off, leaving 7px around the icon.
+        var iconButton = new StyleBoxTexture { Texture = Tex("button.png") };
+        iconButton.SetPatchMargin(StyleBox.Margin.All, 10);
+        iconButton.SetPadding(StyleBox.Margin.All, 1);
+        iconButton.SetContentMarginOverride(StyleBox.Margin.All, 6);
 
         return new StyleRule[]
         {
@@ -176,6 +189,12 @@ public sealed partial class StyleWolfgate
             Element<Label>().Class(StyleClassCreatorCardTitle)
                 .Prop(Label.StylePropertyFont, Display(13))
                 .Prop(Label.StylePropertyFontColor, Accent),
+            Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(StyleClassCreatorIconButton)
+                .Prop(ContainerButton.StylePropertyStyleBox, iconButton),
+            Element<TextureRect>().Class(StyleClassCreatorIcon)
+                .Prop(Control.StylePropertyModulateSelf, Text),
+            Element<TextureRect>().Class(StyleClassCreatorIconDisabled)
+                .Prop(Control.StylePropertyModulateSelf, TextDisabled),
 
             // Sex selector glyphs: texture per sex, tint per selection state. A child TextureRect does not
             // inherit the button's pressed modulate, so the selector swaps the on/off class in code.

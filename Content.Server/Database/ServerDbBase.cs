@@ -14,6 +14,7 @@ using Content.Server.Administration.Managers;
 using Content.Shared._Common.Consent; // WOLFGATE(Genitals)
 using Content.Shared._Mono.Company;
 using Content.Shared._WF.EmoteVoices; // WOLFGATE(EmoteVoices)
+using Content.Shared._WF.CustomMarkings; // WOLFGATE(CustomMarkings)
 using Content.Shared._WF.Genitals; // WOLFGATE(Genitals)
 using Content.Shared._WF.Genitals.Profile; // WOLFGATE(Genitals)
 using Content.Shared._WF.LegStyle; // WOLFGATE(LegStyle)
@@ -35,7 +36,8 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
-    public abstract class ServerDbBase
+    // WOLFGATE(CustomMarkings): partial, so the module's queries sit in its own folder
+    public abstract partial class ServerDbBase
     {
         private readonly ISawmill _opsLog;
 
@@ -326,6 +328,7 @@ namespace Content.Server.Database
             {
                 HeadshotUrl = profile.HeadshotUrl ?? string.Empty, // WOLFGATE(Headshot)
                 MismatchedParts = profile.MismatchedParts, // WOLFGATE(Species)
+                CustomMarkings = CustomMarkingRules.FromStored(profile.CustomMarkings), // WOLFGATE(CustomMarkings)
                 LegStance = (LegStance) profile.LegStance, // WOLFGATE(LegStyle)
             };
         }
@@ -365,6 +368,7 @@ namespace Content.Server.Database
             profile.CustomSpeciesName = humanoid.CustomSpeciesName; // WOLFGATE(Humanoid)
             profile.HeadshotUrl = humanoid.HeadshotUrl; // WOLFGATE(Headshot)
             profile.MismatchedParts = humanoid.MismatchedParts; // WOLFGATE(Species)
+            profile.CustomMarkings = CustomMarkingRules.ToStored(humanoid.CustomMarkings); // WOLFGATE(CustomMarkings)
             profile.LegStance = (int) humanoid.LegStance; // WOLFGATE(LegStyle)
             profile.ScreamVoice = EmoteVoiceRules.ToStored(humanoid.ScreamVoice); // WOLFGATE(EmoteVoices)
             profile.LaughVoice = EmoteVoiceRules.ToStored(humanoid.LaughVoice); // WOLFGATE(EmoteVoices)
