@@ -1344,3 +1344,16 @@ Entries:
   id: 100104
   time: '2026-10-09T20:56:53.0000000+00:00'
   url: https://github.com/VanguardControl/Wolfgate/pull/199
+- author: Gandalf2k15
+  changes:
+    - type: Tweak
+      message: >-
+        Kyphrus is now a black hole with a flowing accretion disk, photon ring
+        and gravitational lensing.
+    - type: Fix
+      message: >-
+        Caelestinus Central now starts facing world north so its default view
+        aligns with the sector backdrop.
+  id: 100105
+  time: '2026-10-09T23:08:13.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/201
