@@ -212,6 +212,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         DebugTools.Assert(IsClientSide(uid));
 
         humanoid.MarkingSet = markings;
+        humanoid.CustomMarkings = ProfileCustomMarkings(profile); // WOLFGATE(CustomMarkings): the doll wears the profile's custom markings
         humanoid.PermanentlyHidden = new HashSet<HumanoidVisualLayers>();
         humanoid.HiddenLayers = new Dictionary<HumanoidVisualLayers, SlotFlags>();
         humanoid.CustomBaseLayers = customBaseLayers;

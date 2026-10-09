@@ -452,6 +452,11 @@ namespace Content.Server.NPC.Pathfinding
         {
             var flags = PathFlags.None;
 
+            // WOLFGATE(NpcCrew) START: opt-in NPCs try their access before prying doors.
+            if (blackboard.TryGetValue<bool>("NavAccess", out var access, EntityManager) && access)
+                flags |= PathFlags.Access;
+            // WOLFGATE END
+
             if (blackboard.TryGetValue<bool>(NPCBlackboard.NavPry, out var pry, EntityManager) && pry)
             {
                 flags |= PathFlags.Prying;

@@ -16,6 +16,6 @@ public sealed class WFShipShieldHitscanDamageSystem : EntitySystem
 
     private void OnImpact(Entity<WFShipShieldVisualsComponent> ent, ref WFShipShieldHitscanImpactEvent args)
     {
-        _shields.ApplyWolfgateHitscanImpact(ent.Owner, args.Hitscan, args.Position, args.Strength);
+        _shields.ApplyWolfgateHitscanImpact(ent.Owner, args.Hitscan, args.Position, args.Strength, args.Gun, args.Shooter);
     }
 }

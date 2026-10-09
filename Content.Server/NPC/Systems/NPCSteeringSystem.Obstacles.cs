@@ -80,6 +80,11 @@ public sealed partial class NPCSteeringSystem
             var isAccessRequired = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
             var isClimbable = (poly.Data.Flags & PathfindingBreadcrumbFlag.Climb) != 0x0;
 
+            // WOLFGATE(NpcCrew) START: open authorized doors through normal interaction before considering prying.
+            if (isDoor && TryOpenCrewAccessDoor(uid, component, obstacleEnts))
+                return SteeringObstacleStatus.Continuing;
+            // WOLFGATE END
+
             // Just walk into it stupid
             if (isDoor && !isAccessRequired)
             {

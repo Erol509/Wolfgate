@@ -521,6 +521,7 @@ public sealed partial class FireControlSystem : EntitySystem
         // Try to get a gun component and fire the weapon
         if (_gunQuery.TryComp(weapon, out var gun))
         {
+            TrackCrewWeaponFire(weapon, user); // WOLFGATE(NpcCrew): distinguish NPC bursts from later manual fire.
             _gun.AttemptShots(user, weapon, gun, coords, TimeSpan.FromSeconds(0.2));
             return true;
         }

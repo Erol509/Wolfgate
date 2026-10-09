@@ -175,8 +175,13 @@ namespace Content.Client.Verbs
         /// </summary>
         public SortedSet<Verb> GetVerbs(NetEntity target, EntityUid user, List<Type> verbTypes, out List<VerbCategory> extraCategories, bool force = false)
         {
+            // WOLFGATE(NpcCrew) START: opt-in traces distinguish missing UI replies from stale player attachments.
             if (!target.IsClientSide())
+            {
+                EntityManager.System<Content.Client._WF.NpcCrew.WFCrewUiDiagnosticsSystem>().Request("verbs", target);
                 RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes, adminRequest: force));
+            }
+            // WOLFGATE END
 
             // Some admin menu interactions will try get verbs for entities that have not yet been sent to the player.
             if (!TryGetEntity(target, out var local))
@@ -231,6 +236,7 @@ namespace Content.Client.Verbs
         private void HandleVerbResponse(VerbsResponseEvent msg)
         {
             OnVerbsResponse?.Invoke(msg);
+            EntityManager.System<Content.Client._WF.NpcCrew.WFCrewUiDiagnosticsSystem>().Reply("verbs", msg.Verbs?.Count ?? -1, msg.Entity); // WOLFGATE(NpcCrew): trace the response after the active menu handles it.
         }
     }
 }

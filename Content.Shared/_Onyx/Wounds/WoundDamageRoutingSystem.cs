@@ -42,6 +42,8 @@ public sealed partial class WoundDamageRoutingSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototypes = default!;
 
     private readonly HashSet<EntityUid> _routing = new();
+
+    public bool IsRouting(EntityUid body) => _routing.Contains(body); // WOLFGATE(NpcCrew): Lets crew damage scaling skip the routed inner passes.
     private readonly Dictionary<EntityUid, EntityUid> _requestedParts = new();
     private readonly HashSet<EntityUid> _applied = new();
     private readonly HashSet<EntityUid> _skipWoundHealing = new();

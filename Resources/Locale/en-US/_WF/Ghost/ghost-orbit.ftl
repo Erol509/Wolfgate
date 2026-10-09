@@ -4,6 +4,9 @@ wf-ghost-orbit-refresh = Refresh
 wf-ghost-orbit-auto-refresh = Live
 wf-ghost-orbit-summary = {$players} playing · {$ssd} SSD · {$dead} dead · {$ghosts} ghosts · {$npcs} NPCs
 
+wf-ghost-orbit-encounter-detail = {$encounter} · {$side}
+wf-ghost-orbit-encounter-detail-hidden = {$encounter} · {$side} · hidden
+
 wf-ghost-orbit-category-interest = Points of Interest
 wf-ghost-orbit-category-antagonist = Antagonists
 wf-ghost-orbit-category-critical = Critical
@@ -13,6 +16,7 @@ wf-ghost-orbit-category-dead = Dead
 wf-ghost-orbit-category-ghost = Ghosts
 wf-ghost-orbit-category-location = Locations
 wf-ghost-orbit-category-ship = Ships
+wf-ghost-orbit-category-encounter = Encounters
 wf-ghost-orbit-category-npc = NPCs
 
 wf-ghost-orbit-followers-badge = ({$count})

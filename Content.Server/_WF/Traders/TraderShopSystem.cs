@@ -12,6 +12,7 @@ using Content.Shared.Stacks;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server._WF.Traders;
 
@@ -30,6 +31,11 @@ public sealed class TraderShopSystem : EntitySystem
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private VendingMachinePurchaseSystem _purchase = default!;
 
+    [Dependency] private Robust.Shared.Random.IRobustRandom _random = default!;
+
+    /// <summary>Pack counts below this are real stock; a machine's "infinite" is far above it.</summary>
+    private const uint FiniteAmount = 1000;
+
     private float _refreshAccumulator;
 
     public override void Initialize()
@@ -38,6 +44,37 @@ public sealed class TraderShopSystem : EntitySystem
 
         SubscribeLocalEvent<TraderShopComponent, TraderActionEvent>(OnAction);
         SubscribeLocalEvent<TraderShopComponent, TraderShopCheckoutMessage>(OnCheckout);
+        SubscribeLocalEvent<TraderShopComponent, Content.Shared.Mobs.MobStateChangedEvent>(OnMobState);
+    }
+
+    /// <summary>A killed trader leaves a box with a few of the things it still had for sale; the rest is lost.</summary>
+    private void OnMobState(Entity<TraderShopComponent> ent, ref Content.Shared.Mobs.MobStateChangedEvent args)
+    {
+        if (args.NewMobState != Content.Shared.Mobs.MobState.Dead || ent.Comp.LootDropped
+            || ent.Comp.RandomStock <= 0 || ent.Comp.LootItems <= 0)
+            return;
+
+        ent.Comp.LootDropped = true;
+        GetStock(ent);
+        if (ent.Comp.Limited is not { } stock)
+            return;
+
+        var left = new List<string>();
+        foreach (var (item, count) in stock)
+        {
+            if (count > 0)
+                left.Add(item);
+        }
+
+        stock.Clear();
+        if (left.Count == 0)
+            return;
+
+        var crate = Spawn(ent.Comp.LootCrate, Transform(ent).Coordinates);
+        for (var i = 0; i < ent.Comp.LootItems && left.Count > 0; i++)
+        {
+            SpawnInContainerOrDrop(_random.PickAndTake(left), crate, "entity_storage");
+        }
     }
 
     private void OnAction(Entity<TraderShopComponent> ent, ref TraderActionEvent args)
@@ -99,6 +136,8 @@ public sealed class TraderShopSystem : EntitySystem
             }
 
             shares[line.Vendor] = shares.GetValueOrDefault(line.Vendor) + line.Price * line.Count;
+            if (ent.Comp.Limited != null)
+                ent.Comp.Limited[line.Item] = ent.Comp.Limited.GetValueOrDefault(line.Item) - line.Count;
         }
 
         // Every machine taxes only what was bought off its own shelf.
@@ -138,6 +177,10 @@ public sealed class TraderShopSystem : EntitySystem
                 continue;
 
             if (count < 1 || count > TraderShopComponent.MaxPerLine)
+                return false;
+
+            // No more than the trader has left.
+            if (ent.Comp.Limited != null && count > ent.Comp.Limited.GetValueOrDefault(entry.Item))
                 return false;
 
             lines.Add(new TraderShopLine(entry.Item, count, entry.Price, entry.Vendor));
@@ -221,6 +264,9 @@ public sealed class TraderShopSystem : EntitySystem
     {
         var entries = new List<TraderStockEntry>();
         var seen = new HashSet<string>();
+        var discount = MathF.Max(0f, ent.Comp.PriceMultiplier);
+        // A travelling trader never gives an item away because the machine it mirrors does.
+        var travelling = ent.Comp.RandomStock > 0;
 
         foreach (var vendor in ent.Comp.Vendors)
         {
@@ -240,13 +286,39 @@ public sealed class TraderShopSystem : EntitySystem
                 if (!_proto.TryIndex<EntityPrototype>(id, out var itemProto))
                     continue;
 
-                block.Add(new TraderStockEntry(id, GetPrice(itemProto, vend, modifier), vendor));
+                var price = GetPrice(itemProto, vend, modifier, vend.RequiresCash || travelling);
+                if (travelling && price <= 0)
+                    continue;
+
+                // A station machine that gives something away still gives it away.
+                block.Add(new TraderStockEntry(id, discount == 1f || price <= 0 ? price : Math.Max(1, (int) (price * discount)), vendor, amount));
             }
 
             block.Sort((a, b) => string.Compare(GetItemName(a.Item), GetItemName(b.Item), StringComparison.CurrentCulture));
             entries.AddRange(block);
         }
 
+        if (ent.Comp.RandomStock <= 0)
+            return entries;
+
+        // A travelling stock: rolled once, the first time anyone looks, and sold until it is gone.
+        if (ent.Comp.Limited == null)
+        {
+            ent.Comp.Limited = new Dictionary<string, int>();
+            var pool = new List<TraderStockEntry>(entries);
+            for (var i = 0; i < ent.Comp.RandomStock && pool.Count > 0; i++)
+            {
+                var pick = _random.PickAndTake(pool);
+                var most = Math.Max(ent.Comp.StockMin, ent.Comp.StockMax);
+                // A pack that lists only a few of an item caps the roll; an infinite machine count does not.
+                if (pick.Amount < FiniteAmount)
+                    most = Math.Max(ent.Comp.StockMin, Math.Min(most, (int) pick.Amount));
+
+                ent.Comp.Limited[pick.Item] = _random.Next(ent.Comp.StockMin, most + 1);
+            }
+        }
+
+        entries.RemoveAll(entry => ent.Comp.Limited.GetValueOrDefault(entry.Item) <= 0);
         return entries;
     }
 
@@ -255,6 +327,14 @@ public sealed class TraderShopSystem : EntitySystem
     /// </summary>
     public int GetPrice(EntityPrototype proto, VendingMachineComponent vend, MarketModifierComponent? modifier)
     {
+        return GetPrice(proto, vend, modifier, vend.RequiresCash);
+    }
+
+    /// <summary>
+    /// The same price, with <paramref name="requiresCash"/> pricing a free machine's lines as if it took cash.
+    /// </summary>
+    public int GetPrice(EntityPrototype proto, VendingMachineComponent vend, MarketModifierComponent? modifier, bool requiresCash)
+    {
         var price = _pricing.GetEstimatedPrice(proto);
         if (price == 0)
             price = 20;
@@ -262,10 +342,10 @@ public sealed class TraderShopSystem : EntitySystem
         if (modifier != null)
             price *= modifier.Mod;
 
-        var total = vend.RequiresCash ? (int) price : 0;
+        var total = requiresCash ? (int) price : 0;
 
         var vendPrice = _pricing.GetEstimatedVendPrice(proto);
-        if (vendPrice > 0.0 && vend.RequiresCash)
+        if (vendPrice > 0.0 && requiresCash)
             total = (int) vendPrice;
 
         return total;
@@ -315,7 +395,7 @@ public sealed class TraderShopSystem : EntitySystem
 
         var catalogue = new List<TraderShopEntry>();
         foreach (var entry in GetStock(ent))
-            catalogue.Add(new TraderShopEntry(entry.Item, entry.Price));
+            catalogue.Add(new TraderShopEntry(entry.Item, entry.Price, ent.Comp.Limited?.GetValueOrDefault(entry.Item) ?? -1));
 
         _ui.SetUiState(ent.Owner, TraderUiKey.Shop,
             new TraderShopState(catalogue, cash, idName, balance));
@@ -376,9 +456,9 @@ public sealed class TraderShopSystem : EntitySystem
 }
 
 /// <summary>
-/// One catalogue line: an item, its price, and which mirrored machine set it.
+/// One catalogue line: an item, its price, which mirrored machine set it, and how many the machine's pack lists.
 /// </summary>
-public record struct TraderStockEntry(string Item, int Price, EntProtoId Vendor);
+public record struct TraderStockEntry(string Item, int Price, EntProtoId Vendor, uint Amount = 0);
 
 /// <summary>
 /// One priced basket line: an item, how many of it, what one costs and whose shelf it came off.

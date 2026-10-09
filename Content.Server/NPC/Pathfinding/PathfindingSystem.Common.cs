@@ -61,7 +61,11 @@ public sealed partial class PathfindingSystem
 
             // TODO: Handling power + door prying
             // Door we should be able to open
-            if (isDoor && !isAccess && (request.Flags & PathFlags.Interact) != 0x0)
+            // WOLFGATE(NpcCrew) START: access-aware NPCs may plan through readers and check permission at the door.
+            // if (isDoor && !isAccess && (request.Flags & PathFlags.Interact) != 0x0)
+            if (isDoor && (!isAccess || (request.Flags & PathFlags.Access) != 0x0)
+                && (request.Flags & PathFlags.Interact) != 0x0)
+            // WOLFGATE END
             {
                 modifier += 0.5f;
             }

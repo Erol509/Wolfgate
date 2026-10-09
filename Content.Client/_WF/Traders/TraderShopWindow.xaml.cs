@@ -78,7 +78,7 @@ public sealed partial class TraderShopWindow : FancyWindow
 
         for (var i = 0; i < entries.Count; i++)
         {
-            if (entries[i].Item != _entries[i].Item || entries[i].Price != _entries[i].Price)
+            if (entries[i].Item != _entries[i].Item || entries[i].Price != _entries[i].Price || entries[i].Stock != _entries[i].Stock)
                 return false;
         }
 
@@ -139,6 +139,13 @@ public sealed partial class TraderShopWindow : FancyWindow
         else if (count >= TraderShopComponent.MaxPerLine)
         {
             return;
+        }
+
+        // A limited stock can't be over-ordered.
+        foreach (var entry in _entries)
+        {
+            if (entry.Item == item && entry.Stock >= 0 && count >= entry.Stock)
+                return;
         }
 
         _basket[item] = count + 1;
@@ -236,7 +243,9 @@ public sealed partial class TraderShopWindow : FancyWindow
         contents.AddChild(view);
         contents.AddChild(new Label
         {
-            Text = GetItemName(entry.Item),
+            Text = entry.Stock >= 0
+                ? Loc.GetString("trader-shop-stock-left", ("name", GetItemName(entry.Item)), ("count", entry.Stock))
+                : GetItemName(entry.Item),
             HorizontalExpand = true,
             ClipText = true,
             VerticalAlignment = Control.VAlignment.Center,

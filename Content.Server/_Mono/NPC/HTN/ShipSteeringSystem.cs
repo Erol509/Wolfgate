@@ -108,6 +108,7 @@ public sealed partial class ShipSteeringSystem : EntitySystem
             return;
 
         Angle? targetAngle = inRange && ent.Comp.InRangeRotation is { } rot ? rot : (ent.Comp.AlwaysFaceTarget ? toTargetVec.ToWorldAngle() : null);
+        targetAngle = CrewHeading(ent) ?? targetAngle; // WOLFGATE(NpcCrew): Escorts hold the leader's heading instead of the bearing to a nearby slot.
 
         var config = new SteeringConfig
         {
@@ -136,6 +137,7 @@ public sealed partial class ShipSteeringSystem : EntitySystem
         };
         var context = new SteeringContext
         {
+            PilotUid = ent.Owner, // WOLFGATE(NpcCrew): Keep destination-hull avoidance scoped to crew pilots.
             ShipUid = shipUid.Value,
             ShipXform = shipXform,
             ShipBody = shipBody,
@@ -334,7 +336,11 @@ public sealed partial class ShipSteeringSystem : EntitySystem
         foreach (var (ent, isGrid) in _avoidPotentialEnts)
         {
             // don't avoid ourselves or the target
-            if (ent == ctx.ShipUid || ent == ctx.TargetUid || ent == ctx.TargetGridUid || !_physQuery.TryComp(ent, out var obstacleBody))
+            // WOLFGATE(NpcCrew) START: Crewed ships avoid their orbit and escort targets as physical obstacles.
+            // if (ent == ctx.ShipUid || ent == ctx.TargetUid || ent == ctx.TargetGridUid || !_physQuery.TryComp(ent, out var obstacleBody))
+            if (ent == ctx.ShipUid || (ent == ctx.TargetUid || ent == ctx.TargetGridUid) && !CrewAvoidsTarget(ctx.PilotUid)
+                || !_physQuery.TryComp(ent, out var obstacleBody))
+            // WOLFGATE END
                 continue;
 
             var otherXform = Transform(ent);
@@ -731,6 +737,7 @@ public sealed partial class ShipSteeringSystem : EntitySystem
 
     private ref struct SteeringContext
     {
+        public EntityUid? PilotUid; // WOLFGATE(NpcCrew): Identifies crew steering without changing other NPC navigation.
         // ship
         public EntityUid ShipUid;
         public TransformComponent ShipXform;

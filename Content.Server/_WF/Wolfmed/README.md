@@ -391,6 +391,7 @@ Skipped ("dirty-disposed").
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedDebugCrateTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedDebugCrateTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedDownedTransitionTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedDownedTransitionTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedDyingLevelTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedDyingLevelTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedEdibleLimbTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedEdibleLimbTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedEmpTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedEmpTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedEviscerationTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedEviscerationTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedExecutionTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedExecutionTest.cs)
@@ -559,6 +560,7 @@ Skipped ("dirty-disposed").
 - [`Resources/Locale/en-US/_WF/Wolfmed/repair.ftl`](../../../Resources/Locale/en-US/_WF/Wolfmed/repair.ftl)
 - [`Resources/Locale/en-US/_WF/Wolfmed/revival.ftl`](../../../Resources/Locale/en-US/_WF/Wolfmed/revival.ftl)
 - [`Resources/Locale/en-US/_WF/Wolfmed/species.ftl`](../../../Resources/Locale/en-US/_WF/Wolfmed/species.ftl)
+- [`Resources/Locale/en-US/_WF/Wolfmed/stasis.ftl`](../../../Resources/Locale/en-US/_WF/Wolfmed/stasis.ftl)
 - [`Resources/Locale/en-US/_WF/Wolfmed/surgery-popup.ftl`](../../../Resources/Locale/en-US/_WF/Wolfmed/surgery-popup.ftl)
 - [`Resources/Locale/en-US/_WF/Wolfmed/synthetic-hud.ftl`](../../../Resources/Locale/en-US/_WF/Wolfmed/synthetic-hud.ftl)
 - [`Resources/Locale/en-US/_WF/Wolfmed/treatment-advice.ftl`](../../../Resources/Locale/en-US/_WF/Wolfmed/treatment-advice.ftl)
@@ -1199,6 +1201,10 @@ Skipped ("dirty-disposed").
   - W0, on a wound host the refusal is about the selected part, not the whole patient.
   - HOOK 8, the do-after carries the part the heal resolved.
 - [`Content.Server/Medical/HealthAnalyzerSystem.cs`](../../Medical/HealthAnalyzerSystem.cs): HOOK 23
+- [`Content.Server/NPC/Systems/NPCUtilitySystem.cs`](../../NPC/Systems/NPCUtilitySystem.cs): animals leave severed limbs alone so they can be reattached
+- [`Content.Server/Nutrition/EntitySystems/FoodSystem.cs`](../../Nutrition/EntitySystems/FoodSystem.cs)
+  - using a severed limb in hand does not eat it
+  - clicking a severed limb on someone does not force-feed it to them
 - [`Content.Shared/_EinsteinEngines/Silicon/Components/SiliconComponent.cs`](../../../Content.Shared/_EinsteinEngines/Silicon/Components/SiliconComponent.cs)
   - playtest 1: ChargeState networked
   - playtest 1: the client predicts the low-power crawl from it; it sat at 10 there
@@ -1594,6 +1600,7 @@ Skipped ("dirty-disposed").
   - P5-D8: 110 -> 190, MajorLimb parity
   - P5-D8: 150 -> 210, MajorLimb parity
   - EVISC: torso damage cap, see _WF/Wolfmed/Body/species_parts.yml
+  - metallic edible profile
 - [`Resources/Prototypes/_EinsteinEngines/Entities/Mobs/Player/ipc.yml`](../../../Resources/Prototypes/_EinsteinEngines/Entities/Mobs/Player/ipc.yml)
   - P5-1/P5-2, PROTO Q: IPCs become wound hosts.
   - P5-D10/U1: IPCs get pain shock, as Onyx's do.
@@ -1631,6 +1638,7 @@ Skipped ("dirty-disposed").
 - [`Resources/Prototypes/_HL/Body/Parts/synth.yml`](../../../Resources/Prototypes/_HL/Body/Parts/synth.yml)
   - M4: OD16 Synth is mechanical, chassis wound profile; WFWolfmedPartIpc must stay FIRST (RT first-parent-wins)
   - playtest 5, the IPC part container (as PartIPCBase), so the welder and the applicator repair a synth
+  - metallic edible profile
 - [`Resources/Prototypes/_HL/Damage/modifier_sets.yml`](../../../Resources/Prototypes/_HL/Damage/modifier_sets.yml): Wolfmed: OD16, a Synth is mechanical and takes no poison, like the IPC set
 - [`Resources/Prototypes/_HL/Entities/Mobs/Species/protogen_subspecies.yml`](../../../Resources/Prototypes/_HL/Entities/Mobs/Species/protogen_subspecies.yml)
   - M4, OD16: a wound host, so Wolfmed decides its state (plan 9.2 group D). Not reparented to
@@ -1664,6 +1672,7 @@ Skipped ("dirty-disposed").
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/trauma.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/trauma.yml): P6, P3-D6: locational armour coverage
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/tsfmc.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/tsfmc.yml): P6, P3-D6: locational armour coverage
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/ui.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/ui.yml): P6, P3-D6: locational armour coverage
+- [`Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/underground.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/underground.yml): P6, P3-D6: locational armour coverage
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/unsa.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/unsa.yml): P6, P3-D6: locational armour coverage
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/ussp.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/ussp.yml): P6, P3-D6: locational armour coverage
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/viper_group.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Head/Hardsuits/viper_group.yml): P6, P3-D6: locational armour coverage

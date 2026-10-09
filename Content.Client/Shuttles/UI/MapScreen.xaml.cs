@@ -431,6 +431,8 @@ public sealed partial class MapScreen : BoxContainer
                 _pendingMapObjects.Add((mapComp.MapId, beacon));
             }
 
+            WfAddEncounters(mapComp.MapId, mapUid); // WOLFGATE(Encounters): list encounters among the sector objects
+
             HyperspaceDestinations.AddChild(mapButton);
 
             // Zoom in to our map

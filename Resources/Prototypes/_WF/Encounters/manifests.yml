@@ -1,0 +1,199 @@
+# What a freight run may be carrying. One is picked per run; the captain names it and the hold is filled from it.
+# A crate listed twice is twice as likely. Most crates sell for about a thousand to fifteen hundred spesos at a
+# pallet, with a rare dearer one; the crates that no catalog has are in crates.yml.
+
+- type: wfEncounterManifest
+  id: WFManifestGeneral
+  name: wf-encounter-cargo-general
+  crates:
+  - WFCrateLotTools
+  - WFCrateLotTools
+  - WFCrateLotSurvival
+  - WFCrateLotSurvival
+  - WFCrateLotMedical
+  - WFCrateLotParts
+  - WFCrateLotLuxury
+  - WFCrateLotSalvage
+  - CrateMaterialPlastic
+  - CrateMaterialGlass
+  - CrateAirlockKit
+  - CrateEngineeringGear
+  - CrateEmergencyInternalsLarge
+  - CrateServiceSmokeables
+  - CrateFunInstrumentsVariety
+  - CrateMaterialTextiles
+  - CrateVendingMachineRestockClothesFilled
+  - CrateEngineeringSolar
+
+- type: wfEncounterManifest
+  id: WFManifestFood
+  name: wf-encounter-cargo-food
+  crates:
+  - CrateFoodMRE
+  - WFCrateFoodRations
+  - WFCrateFoodRations
+  - CrateVendingMachineRestockChefvendFilled
+  - CrateVendingMachineRestockCondimentStationFilled
+  - CrateVendingMachineRestockBoozeFilled
+  - CrateVendingMachineRestockDinnerwareFilled
+  - CrateVendingMachineRestockSeedsFilled
+  - CrateHydroponicsSeeds
+  - CrateVendingMachineRestockDonutFilled
+
+- type: wfEncounterManifest
+  id: WFManifestMedical
+  name: wf-encounter-cargo-medical
+  crates:
+  - WFCrateLotMedical
+  - WFCrateLotMedical
+  - WFCrateLotMedical
+  - WFCrateLotMedical
+  - WFCrateLotMedical
+  - WFCrateLotMedical
+  - CrateMedicalSupplies
+  - CrateMedicalSecureMedicine
+  - CrateMedicalSecureMedicinePierce
+  - CrateMedicalSecureDoctor
+  - CrateServiceKitMedbay
+  - CrateEmergencyBruteKit
+  - CrateEmergencyBurnKit
+  - CrateEmergencyO2Kit
+  - CrateEmergencyToxinKit
+  - CrateEmergencyRadiationKit
+  - CrateMedicalSurgery
+  - CrateMedicalRollerBeds
+  - CrateVendingMachineRestockMedicalFilled
+
+- type: wfEncounterManifest
+  id: WFManifestIndustrial
+  name: wf-encounter-cargo-industrial
+  crates:
+  - WFCrateLotTools
+  - WFCrateLotTools
+  - WFCrateLotTools
+  - WFCrateLotParts
+  - WFCrateLotParts
+  - CrateMaterialSteel
+  - CrateMaterialSteel
+  - CrateMaterialGlass
+  - CrateMaterialPlastic
+  - CrateMaterialBrass
+  - CrateMaterialMetalRods
+  - CrateMaterialPlasma
+  - CrateMaterialPlasteel
+  - CrateMaterialWood
+  - CrateMaterialUranium
+
+- type: wfEncounterManifest
+  id: WFManifestParts
+  name: wf-encounter-cargo-parts
+  crates:
+  - WFCrateLotParts
+  - WFCrateLotParts
+  - WFCrateLotParts
+  - WFCrateLotParts
+  - WFCrateLotParts
+  - WFCrateLotTools
+  - WFCrateLotTools
+  - CrateEngineeringThruster
+  - CrateEngineeringThruster
+  - CrateEngineeringSmallThruster
+  - WFCrateShipSystems
+  - CrateEngineeringKitFabrication
+  - CrateEngineeringSolar
+  - CrateEngineeringElectricalSupplies
+  - CrateAirlockKit
+  - CrateEngineeringFoamGrenade
+  - CrateEngineeringAMEJar
+  - CrateEngineeringGyroscope
+
+- type: wfEncounterManifest
+  id: WFManifestLuxury
+  name: wf-encounter-cargo-luxury
+  crates:
+  - WFCrateLotLuxury
+  - WFCrateLotLuxury
+  - WFCrateLotLuxury
+  - WFCrateLotLuxury
+  - WFCrateLotLuxury
+  - WFCrateLuxuryBullion
+  - CrateFunInstrumentsString
+  - CrateFunInstrumentsBrass
+  - CrateFunInstrumentsWoodwind
+  - CrateFunInstrumentsKeyedPercussion
+  - CrateMaterialBrass
+  - CrateMaterialTextiles
+  - CrateServiceSmokeables
+  - CrateMaterialPlasma
+
+- type: wfEncounterManifest
+  id: WFManifestSalvage
+  name: wf-encounter-cargo-salvage
+  crates:
+  - WFCrateLotSalvage
+  - WFCrateLotSalvage
+  - WFCrateLotSalvage
+  - WFCrateLotSalvage
+  - WFCrateLotSalvage
+  - WFCrateLotSurvival
+  - CrateSalvageEquipment
+  - WFCrateOreCommon
+  - WFCrateOreCommon
+  - WFCrateOrePrecious
+  - WFCrateSalvageSorted
+  - WFCrateSalvageSorted
+  - CrateMaterialMetalRods
+  - CrateVendingMachineRestockSalvageEquipmentFilled
+  - CrateMaterialSteel
+  - CrateEngineerHardsuit
+
+# Arms and armor for independent haulers: armory-locked, unbranded, and no TSF-issue rifles. Mostly small lots.
+- type: wfEncounterManifest
+  id: WFManifestArms
+  name: wf-encounter-cargo-arms
+  crates:
+  - WFCrateLotArms
+  - WFCrateLotArms
+  - WFCrateLotArms
+  - WFCrateLotArms
+  - CrateArmorySMG
+  - CrateArmoryLaser
+  - CrateArmoryShotgun
+  - CrateSecurityRiot
+  - CrateArmoryRifleNovaliteC1Expedition
+  - CrateSecurityArmor
+  - CrateSecurityArmor
+  - CrateSecurityArmor
+
+# A smuggler's hold, announced as general cargo so nobody knows until they board.
+- type: wfEncounterManifest
+  id: WFManifestContraband
+  name: wf-encounter-cargo-general
+  crates:
+  - WFCrateLotContraband
+  - WFCrateLotContraband
+  - WFCrateLotContraband
+  - WFCrateLotContraband
+  - WFCrateLotContraband
+  - WFCrateContrabandHeavyArms
+  - WFCrateLuxuryBullion
+  - WFCrateLuxuryBullion
+  - WFCrateOrePrecious
+  - WFCrateOrePrecious
+  - CrateArmorySMGExpedition
+  - CrateArmoryRifleNovaliteC1Expedition
+
+# TSF stock only: it has the TSF-issue rifles and their ammunition.
+- type: wfEncounterManifest
+  id: WFManifestMunitions
+  name: wf-encounter-cargo-munitions
+  crates:
+  - CrateArmorySMGNfsd
+  - WFCrateArmsTsfRifles
+  - WFCrateArmsVault
+  - CrateArmoryShotgunNfsd
+  - CrateSecurityRiot
+  - CrateSecurityArmor
+  - CrateSecurityArmor
+  - WFCrateArmsSupplies
+  - WFCrateArmsSupplies

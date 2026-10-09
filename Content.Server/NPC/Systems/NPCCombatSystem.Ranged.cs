@@ -240,6 +240,7 @@ public sealed partial class NPCCombatSystem
             }
 
             _gun.SetTarget(gun, comp.Target); // Frontier - This ensures that the bullet won't fly over the target if it's downed
+            targetCordinates = CrewAim(uid, targetCordinates); // WOLFGATE(NpcCrew): Crew miss by their skill level.
             _gun.AttemptShoot(uid, gunUid, gun, targetCordinates);
         }
     }

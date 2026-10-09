@@ -40,6 +40,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nyanotrasen.Item.PseudoItem;
 using Content.Shared.Paper;
 using Content.Shared.Placeable;
+using Content.Shared.Popups;
 using Content.Shared.SSDIndicator;
 using Content.Shared.Stacks;
 using Content.Shared.Strip.Components;
@@ -76,6 +77,7 @@ public sealed class TraderSystem : EntitySystem
     [Dependency] private SharedGodmodeSystem _godmode = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
@@ -121,11 +123,14 @@ public sealed class TraderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Strips everything that would let a player move, drag, strip or starve the trader.
+    /// Strips everything that would let a player move, drag, strip or starve the trader. A killable
+    /// trader keeps its working body: wounds only kill through blood, breath and the organs, and it
+    /// has to be able to run.
     /// </summary>
     private void MakeInert(Entity<TraderComponent> ent)
     {
-        _godmode.EnableGodmode(ent);
+        if (!ent.Comp.Killable)
+            _godmode.EnableGodmode(ent);
 
         RemComp<PullableComponent>(ent);
         RemComp<StrippableComponent>(ent);
@@ -137,10 +142,14 @@ public sealed class TraderSystem : EntitySystem
         RemComp<SSDIndicatorComponent>(ent);
         RemComp<CarriableComponent>(ent);
         RemComp<PseudoItemComponent>(ent);
-        RemComp<InputMoverComponent>(ent);
-        RemComp<MobMoverComponent>(ent);
         RemComp<InteractionPopupComponent>(ent);
         RemComp<ClimbingComponent>(ent); // no dragging them onto their own table
+
+        if (ent.Comp.Killable)
+            return;
+
+        RemComp<InputMoverComponent>(ent);
+        RemComp<MobMoverComponent>(ent);
 
         // Nothing that ticks: no breathing, blood, metabolism, temperature, pressure, fire, rot,
         // chemistry, stamina or lag compensation on a body that never moves or takes damage.
@@ -444,6 +453,16 @@ public sealed class TraderSystem : EntitySystem
     {
         if (!_proto.TryIndex(ent.Comp.Dialogue, out var dialogue))
             return false;
+
+        if (ent.Comp.Killable && _mobState.IsIncapacitated(ent))
+            return false;
+
+        // Whoever hurt the trader is not served again.
+        if (TryComp<TraderFleeComponent>(ent, out var fled) && fled.Attackers.Contains(customer))
+        {
+            _popup.PopupEntity(Loc.GetString("trader-wont-trade"), ent.Owner, customer);
+            return false;
+        }
 
         if (ent.Comp.Customer is { } current && current != customer)
         {
@@ -839,7 +858,8 @@ public sealed class TraderSystem : EntitySystem
     {
         stack = default!;
 
-        if (!HasComp<CashComponent>(uid))
+        // Cash already taken this tick lies on the table until the tick ends.
+        if (EntityManager.IsQueuedForDeletion(uid) || !HasComp<CashComponent>(uid))
             return false;
 
         if (!TryComp(uid, out StackComponent? stackComp) || stackComp.StackTypeId != CashStackType.Id)
@@ -990,6 +1010,15 @@ public sealed class TraderSystem : EntitySystem
         }
 
         return total;
+    }
+
+    /// <summary>
+    /// Takes an amount the cash in the barter zone covers and hands the rest back as change. Never
+    /// touches the bank; false, with nothing taken, when the cash falls short.
+    /// </summary>
+    public bool TryTakeZoneCash(Entity<TraderComponent> ent, EntityUid customer, int amount)
+    {
+        return amount <= 0 || GetZoneCash(ent) >= amount && TryTakePayment(ent, customer, amount);
     }
 
     /// <summary>

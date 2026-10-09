@@ -32,6 +32,12 @@ public sealed partial class TraderComponent : Component
     public float TableReachBonus = 1f;
 
     /// <summary>
+    /// A killable trader is not made invulnerable. Dead, it trades with nobody.
+    /// </summary>
+    [DataField]
+    public bool Killable;
+
+    /// <summary>
     /// Table the trader trades over, if any. Networked so reach is predicted.
     /// </summary>
     [ViewVariables, AutoNetworkedField]

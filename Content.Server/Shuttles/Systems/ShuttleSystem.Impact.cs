@@ -192,6 +192,9 @@ public sealed partial class ShuttleSystem
             if (ourTiles == 0 || otherTiles == 0)
                 continue;
 
+            var wfCollision = new Content.Server._WF.NpcCrew.WFShipCollisionEvent(args.OurEntity, args.OtherEntity, ourVelocity.Length(), otherVelocity.Length(), jungleDiff); // WOLFGATE(NpcCrew): crews take a ramming for an attack
+            RaiseLocalEvent(ref wfCollision); // WOLFGATE(NpcCrew)
+
             Log.Info($"Shuttle impact of {ToPrettyString(args.OurEntity)} with {ToPrettyString(args.OtherEntity)}; our mass: {ourMass}, other: {otherMass}, velocity {jungleDiff}, impact point {worldPoint}");
 
             // E = MV^2/2

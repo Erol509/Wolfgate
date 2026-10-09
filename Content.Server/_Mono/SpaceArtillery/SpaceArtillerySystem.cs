@@ -168,6 +168,9 @@ public sealed partial class SpaceArtillerySystem : EntitySystem
 
     private void OnProjectileHit(EntityUid uid, ShipWeaponProjectileComponent component, ProjectileHitEvent hitEvent)
     {
+        // WOLFGATE(NpcCrew): notify crew of damaging impacts from other ships.
+        ReportCrewHullHit(uid, hitEvent);
+
         var grid = Transform(hitEvent.Target).GridUid;
         if (grid == null)
             return;

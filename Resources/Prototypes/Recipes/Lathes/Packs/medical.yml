@@ -106,19 +106,17 @@
   - SynthRightArm
   - SynthLeftHand
   - SynthRightHand
-  # WOLFGATE(AvaliAddons) START: Avali parts
-  - SynthHeadAvaliEmpty
-  - SynthAvaliLeftArm
-  - SynthAvaliRightArm
-  - SynthAvaliLeftHand
-  - SynthAvaliRightHand
-  - SynthAvaliLeftLeg
-  - SynthAvaliRightLeg
-  - SynthAvaliLeftFoot
-  - SynthAvaliRightFoot
+  # WOLFGATE(Avali) START: Avali limbs
+  - WFSynthAvaliHeadEmpty
+  - WFSynthAvaliLeftArm
+  - WFSynthAvaliRightArm
+  - WFSynthAvaliLeftHand
+  - WFSynthAvaliRightHand
+  - WFSynthAvaliLeftLeg
+  - WFSynthAvaliRightLeg
+  - WFSynthAvaliLeftFoot
+  - WFSynthAvaliRightFoot
   # WOLFGATE END
-
-
 
 # Shitmed
 - type: latheRecipePack

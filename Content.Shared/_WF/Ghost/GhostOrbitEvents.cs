@@ -1,3 +1,4 @@
+using Content.Shared._WF.Encounters;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -19,6 +20,7 @@ public enum GhostOrbitCategory : byte
     Ghost,
     Location,
     Ship,
+    Encounter,
     Npc,
 }
 
@@ -54,15 +56,44 @@ public record struct GhostOrbitTarget
 }
 
 /// <summary>
+/// One ship of a running encounter, for the Encounters section. Orbiting it follows its grid.
+/// </summary>
+[Serializable, NetSerializable]
+public record struct GhostOrbitEncounterShip
+{
+    public NetEntity Grid;
+    public string Ship;
+    public string Encounter;
+
+    /// <summary>The encounter's entity, to count encounters rather than ships.</summary>
+    public NetEntity EncounterId;
+
+    public string Side;
+    public WFEncounterCategory Category;
+
+    /// <summary>The colour the ship has on the sector markers; null draws by category.</summary>
+    public Color? Color;
+
+    /// <summary>Kept off the sector markers; only ghosts and admins see it.</summary>
+    public bool Hidden;
+
+    /// <summary>Ghosts currently following the ship, admins excluded for non-admin viewers.</summary>
+    public int Followers;
+}
+
+/// <summary>
 /// Client asks for everything it can orbit. Answered with <see cref="GhostOrbitTargetsEvent"/>.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class GhostOrbitRequestEvent : EntityEventArgs;
 
 [Serializable, NetSerializable]
-public sealed class GhostOrbitTargetsEvent(List<GhostOrbitTarget> targets) : EntityEventArgs
+public sealed class GhostOrbitTargetsEvent(List<GhostOrbitTarget> targets, List<GhostOrbitEncounterShip>? encounters = null) : EntityEventArgs
 {
     public List<GhostOrbitTarget> Targets = targets;
+
+    /// <summary>The ships of every unresolved encounter, hidden ones included.</summary>
+    public List<GhostOrbitEncounterShip> Encounters = encounters ?? new List<GhostOrbitEncounterShip>();
 }
 
 /// <summary>

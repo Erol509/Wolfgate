@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client._WF.Encounters;
 using Content.Client._WF.Stylesheets;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
@@ -37,6 +38,7 @@ public sealed partial class GhostOrbitWindow : FancyWindow
 
     private readonly List<Section> _sections = new();
     private List<GhostOrbitTarget> _targets = new();
+    private List<GhostOrbitEncounterShip> _encounters = new();
     private string _search = string.Empty;
     private TimeSpan _nextRefresh;
 
@@ -100,11 +102,13 @@ public sealed partial class GhostOrbitWindow : FancyWindow
 
     private void OnTargetsReceived(GhostOrbitTargetsEvent ev)
     {
+        _entMan.System<Content.Client._WF.NpcCrew.WFCrewUiDiagnosticsSystem>().DisplayGhost(ev.Targets.Count, IsOpen);
         // Live refresh would otherwise rebuild every tile and drop the hovered tooltip for nothing.
-        if (_targets.SequenceEqual(ev.Targets))
+        if (_targets.SequenceEqual(ev.Targets) && _encounters.SequenceEqual(ev.Encounters))
             return;
 
         _targets = ev.Targets;
+        _encounters = ev.Encounters;
         Rebuild();
     }
 
@@ -116,15 +120,39 @@ public sealed partial class GhostOrbitWindow : FancyWindow
         var skin = WolfgateSkins.Get(_cfg.GetCVar(WolfgateCVars.UiStyle));
         var sprite = _entMan.System<SpriteSystem>();
 
-        foreach (var group in _targets.GroupBy(t => t.Category).OrderBy(g => g.Key))
+        // Encounter ships sit in a section of their own among the rest, each in its side's colour.
+        var colors = new Dictionary<NetEntity, Color>();
+        var all = new List<GhostOrbitTarget>(_targets);
+        foreach (var ship in _encounters
+                     .OrderBy(s => s.Encounter, StringComparer.CurrentCultureIgnoreCase)
+                     .ThenBy(s => s.Ship, StringComparer.CurrentCultureIgnoreCase))
+        {
+            colors[ship.Grid] = ship.Color ?? WFEncounterColors.Category(ship.Category);
+            all.Add(new GhostOrbitTarget
+            {
+                Entity = ship.Grid,
+                Name = ship.Ship,
+                Category = GhostOrbitCategory.Encounter,
+                Detail = Loc.GetString(ship.Hidden ? "wf-ghost-orbit-encounter-detail-hidden" : "wf-ghost-orbit-encounter-detail",
+                    ("encounter", ship.Encounter), ("side", ship.Side)),
+                Followers = ship.Followers,
+            });
+        }
+
+        foreach (var group in all.GroupBy(t => t.Category).OrderBy(g => g.Key))
         {
             var accent = CategoryColor(group.Key, skin);
             var section = new Section(group.Key, accent, skin);
             section.Header.OnPressed += _ => ToggleSection(section);
 
-            foreach (var target in group.OrderBy(t => t.Name, StringComparer.CurrentCultureIgnoreCase))
+            // Encounter ships keep the order they were given: by encounter, then by ship.
+            var ordered = group.Key == GhostOrbitCategory.Encounter
+                ? group.AsEnumerable()
+                : group.OrderBy(t => t.Name, StringComparer.CurrentCultureIgnoreCase);
+            foreach (var target in ordered)
             {
-                var tile = new GhostOrbitTile(target, GetIcon(target, sprite), accent, skin);
+                var color = group.Key == GhostOrbitCategory.Encounter && colors.TryGetValue(target.Entity, out var side) ? side : accent;
+                var tile = new GhostOrbitTile(target, GetIcon(target, sprite), color, skin);
                 tile.OnPressed += _ => Orbit(target.Entity);
                 section.Tiles.Add(tile);
                 section.Body.AddChild(tile);
@@ -215,7 +243,7 @@ public sealed partial class GhostOrbitWindow : FancyWindow
 
         return target.Category switch
         {
-            GhostOrbitCategory.Ship => sprite.Frame0(ShipIcon),
+            GhostOrbitCategory.Ship or GhostOrbitCategory.Encounter => sprite.Frame0(ShipIcon),
             GhostOrbitCategory.Location => sprite.Frame0(LocationIcon),
             _ => null,
         };
@@ -234,6 +262,7 @@ public sealed partial class GhostOrbitWindow : FancyWindow
             GhostOrbitCategory.Ghost => Color.FromHex("#BFD3FF"),
             GhostOrbitCategory.Location => skin.Caution,
             GhostOrbitCategory.Ship => Color.FromHex("#5FA8FF"),
+            GhostOrbitCategory.Encounter => Color.FromHex("#FFAE3D"),
             GhostOrbitCategory.Npc => Color.FromHex("#C8B27A"),
             _ => skin.Text,
         };

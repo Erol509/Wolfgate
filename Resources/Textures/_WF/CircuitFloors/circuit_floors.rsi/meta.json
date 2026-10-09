@@ -1,0 +1,71 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Bubberstation repo at: github.com/Bubberstation/Bubberstation/blob/master/modular_zubbers/icons/turf/floors/floors.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "rsic": false,
+    "states": [
+        {
+            "name": "gcircuit"
+        },
+        {
+            "name": "gcircuitanim",
+            "delays": [
+                [
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "gcircuitoff"
+        },
+        {
+            "name": "rcircuit"
+        },
+        {
+            "name": "rcircuitanim",
+            "directions": 4,
+            "delays": [
+                [
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.2
+                ],
+                [
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.2
+                ],
+                [
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.2
+                ],
+                [
+                    0.3,
+                    0.2,
+                    0.3,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "rcircuitoff"
+        },
+        {
+            "name": "bcircuit"
+        },
+        {
+            "name": "bcircuitoff"
+        }
+    ]
+}

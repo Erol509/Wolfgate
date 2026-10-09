@@ -542,6 +542,12 @@ public sealed partial class PricingSystem : EntitySystem
             }
         }
 
+        // WOLFGATE(Encounters) START: a claimed hulk is worth a fraction of its parts
+        var wfAppraised = new Content.Server._WF.Encounters.Systems.WFGridAppraisedEvent(grid, price);
+        RaiseLocalEvent(grid, ref wfAppraised);
+        price = wfAppraised.Price;
+        // WOLFGATE END
+
         return price;
     }
 }

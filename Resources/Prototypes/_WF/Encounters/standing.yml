@@ -1,0 +1,14 @@
+# Faction standing: who is at war with whom. War is mutual, so each pair is listed once. A faction's patrols warn
+# off and fire on ships of the companies it is at war with, and leave everyone else alone.
+
+- type: wfStanding
+  id: TSF
+  atWar: [ PDV, PDVCivilian, PDVHighComm, RedSailCorsairs ]
+
+- type: wfStanding
+  id: TSFCivilian
+  atWar: [ PDV, PDVHighComm, RedSailCorsairs ]
+
+- type: wfStanding
+  id: TSFHighComm
+  atWar: [ PDV, PDVCivilian, PDVHighComm, RedSailCorsairs ]

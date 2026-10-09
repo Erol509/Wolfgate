@@ -15,4 +15,5 @@ public record struct WFShipShieldHitscanTraceEvent(EntityUid Hitscan, HitscanRay
 
 /// <summary>Reports an intercepted beam at its shield-local contact point.</summary>
 [ByRefEvent]
-public record struct WFShipShieldHitscanImpactEvent(EntityUid Hitscan, Vector2 Position, float Strength);
+public record struct WFShipShieldHitscanImpactEvent(EntityUid Hitscan, Vector2 Position, float Strength,
+    EntityUid? Gun = null, EntityUid? Shooter = null);

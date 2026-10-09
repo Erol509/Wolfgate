@@ -23,6 +23,7 @@ public sealed class GhostOrbitSystem : EntitySystem
 
     public void RequestTargets()
     {
+        EntityManager.System<Content.Client._WF.NpcCrew.WFCrewUiDiagnosticsSystem>().Request("ghost");
         RaiseNetworkEvent(new GhostOrbitRequestEvent());
     }
 

@@ -1,4 +1,6 @@
 using System.Numerics;
+using Content.Server._WF.Encounters.Components;
+using Content.Server._WF.Encounters.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Dragon;
@@ -26,6 +28,7 @@ using Content.Shared.StatusIcon;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -44,6 +47,7 @@ public sealed class GhostOrbitSystem : EntitySystem
     [Dependency] private FollowerSystem _follower = default!;
     [Dependency] private JobSystem _jobs = default!;
     [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private WFEncounterMarkerSystem _markers = default!;
     [Dependency] private MobThresholdSystem _thresholds = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedRoleSystem _roles = default!;
@@ -75,7 +79,11 @@ public sealed class GhostOrbitSystem : EntitySystem
         AddSessions(targets, seen, isAdmin);
         AddWarpPoints(targets, seen, isAdmin);
 
-        RaiseNetworkEvent(new GhostOrbitTargetsEvent(targets), args.SenderSession.Channel);
+        var encounters = new List<GhostOrbitEncounterShip>();
+        AddEncounters(encounters, isAdmin);
+
+        EntityManager.System<Content.Server._WF.NpcCrew.Systems.WFCrewUiDiagnosticsSystem>().Reply("ghost", args.SenderSession, targets.Count);
+        RaiseNetworkEvent(new GhostOrbitTargetsEvent(targets, encounters), args.SenderSession.Channel);
     }
 
     private void OnWarp(GhostOrbitWarpEvent msg, EntitySessionEventArgs args)
@@ -100,6 +108,10 @@ public sealed class GhostOrbitSystem : EntitySystem
         if (warp is not { Follow: false })
         {
             _follower.StartFollowingEntity(ghost, target);
+
+            // A grid's origin can lie off its hull; sit the ghost in the middle of it.
+            if (TryComp<MapGridComponent>(target, out var grid) && Transform(ghost).ParentUid == target)
+                _transform.SetLocalPosition(ghost, grid.LocalAABB.Center);
             return;
         }
 
@@ -243,6 +255,43 @@ public sealed class GhostOrbitSystem : EntitySystem
                 Followers = CountFollowers(attached, isAdmin),
                 AdminOnly = adminGhost,
             });
+        }
+    }
+
+    /// <summary>
+    /// One entry per ship of every unresolved encounter, hidden ones included, for the Encounters tab.
+    /// </summary>
+    private void AddEncounters(List<GhostOrbitEncounterShip> ships, bool isAdmin)
+    {
+        var query = EntityQueryEnumerator<WFEncounterComponent>();
+        while (query.MoveNext(out var uid, out var encounter))
+        {
+            if (encounter.Resolution != null)
+                continue;
+
+            var id = GetNetEntity(uid);
+            foreach (var (key, ship) in encounter.Ships)
+            {
+                if (TerminatingOrDeleted(ship.Grid))
+                    continue;
+
+                var meta = MetaData(ship.Grid);
+                if (!Listable(ship.Grid, Transform(ship.Grid), meta))
+                    continue;
+
+                ships.Add(new GhostOrbitEncounterShip
+                {
+                    Grid = GetNetEntity(ship.Grid),
+                    Ship = meta.EntityName.Length > 0 ? meta.EntityName : key,
+                    Encounter = encounter.Name,
+                    EncounterId = id,
+                    Side = ship.Side,
+                    Category = encounter.Category,
+                    Color = _markers.ShipColor(encounter, ship),
+                    Hidden = encounter.Hidden,
+                    Followers = CountFollowers(ship.Grid, isAdmin),
+                });
+            }
         }
     }
 

@@ -47,6 +47,10 @@ public sealed class WFShipShieldHitscanSystem : EntitySystem
                     trace.DistanceTried, CompOrNull<WFShipShieldShuntComponent>(uid),
                     out var distance, out var impact, out var multiplier))
                 continue;
+            var attempt = new WFShipShieldInterceptAttemptEvent(visuals.Grid.Value, args.Hitscan, trace.Gun, trace.Shooter);
+            RaiseLocalEvent(ref attempt);
+            if (attempt.Cancelled)
+                continue;
             trace.DistanceTried = distance;
             nearest = uid;
             position = impact;
@@ -66,7 +70,7 @@ public sealed class WFShipShieldHitscanSystem : EntitySystem
         args.Trace = trace;
         if (!_net.IsClient && !args.ProbeOnly)
         {
-            var impact = new WFShipShieldHitscanImpactEvent(args.Hitscan, position, strength);
+            var impact = new WFShipShieldHitscanImpactEvent(args.Hitscan, position, strength, trace.Gun, trace.Shooter);
             RaiseLocalEvent(shield, ref impact);
         }
     }

@@ -128,7 +128,7 @@ public sealed class TraderTextMessage : BoundUserInterfaceMessage
 /// One line of a trader's shop stock.
 /// </summary>
 [Serializable, NetSerializable]
-public record struct TraderShopEntry(string Item, int Price);
+public record struct TraderShopEntry(string Item, int Price, int Stock = -1);
 
 /// <summary>
 /// The customer asked to buy a used ship off the lot.

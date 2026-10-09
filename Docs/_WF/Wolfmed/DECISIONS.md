@@ -4499,6 +4499,12 @@ the owner's call; left as it plays.
   `WoundFractureComponent` outright. `WolfmedStasisTest` pins the hold, the half hit against a control, the topical
   close, the stored-damage thinning, the untouched fracture (same wound, grade, severity, no treatment) and the bleed's
   return after exit.
+- **Avali stasis cut down (owner, 2026-10-08): "MAJORLY nerfed".** The numbers are ours: the Avali prototype mends
+  0.5 a second of each type (was 2) and rests 600 s (was 300), `wolfmed.stasis_damage_factor` ships at 1 (a hit in
+  stasis lands whole, was half), and `wolfmed.stasis_max_seconds` (60, 0 for no limit) ends a hold by itself with a
+  popup, counted on `WolfmedStasisHoldComponent`. The bleed hold and the rule on bones are unchanged. A closing still
+  stabilises the cut it works on, which stops that cut's bleed for good, one wound at a time.
+  `WolfmedStasisTest` pins the knob at a half, the whole hit as shipped and the hold ending on its limit.
 - **A coagulant reaches the wounds (2026-09-29).** "Medicines don't do what they're advertised to, tranexamic acid in
   particular." `ModifyBleedAmount` wrote the bloodstream's bleed figure, which on a wound host is only the wounds'
   projection and refuses every other writer (GUARD E3). Tranexamic acid, bicaridine, inaprovaline, polypyrylium,

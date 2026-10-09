@@ -68,7 +68,12 @@ public sealed partial class NPCSteeringSystem
 
             foreach (var intersecting in ents)
             {
-                if (!_physics.IsCurrentlyHardCollidable((uid, fixtures, physics), intersecting))
+                // WOLFGATE(NpcCrew) START: compare both bodies for crew while the engine helper reads the first fixtures twice.
+                // if (!_physics.IsCurrentlyHardCollidable((uid, fixtures, physics), intersecting))
+                if (!((steering.Flags & PathFlags.Access) != 0x0
+                        ? IsCrewObstacleCollidable(uid, intersecting)
+                        : _physics.IsCurrentlyHardCollidable((uid, fixtures, physics), intersecting)))
+                // WOLFGATE END
                 {
                     continue;
                 }
@@ -223,6 +228,11 @@ public sealed partial class NPCSteeringSystem
                 // Ignore stuck while handling obstacles.
                 ResetStuck(steering, ourCoordinates);
                 SteeringObstacleStatus status;
+
+                // WOLFGATE(NpcCrew) START: stop blended input while access-aware crew settle at an obstacle.
+                if ((steering.Flags & PathFlags.Access) != 0x0)
+                    moveMultiplier = 0f;
+                // WOLFGATE END
 
                 // Breaking behaviours and the likes.
                 lock (_obstacles)

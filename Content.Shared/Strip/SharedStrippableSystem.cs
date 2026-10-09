@@ -617,6 +617,8 @@ public abstract partial class SharedStrippableSystem : EntitySystem
         RaiseLocalEvent(user, ref userEv);
         var targetEv = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
         RaiseLocalEvent(targetPlayer, ref targetEv);
+        var wfStripped = new Content.Shared._WF.NpcCrew.WFStripAttemptEvent(user, targetEv.Stealth); // WOLFGATE(NpcCrew): the one being stripped learns who is doing it
+        RaiseLocalEvent(targetPlayer, ref wfStripped); // WOLFGATE(NpcCrew)
         return (targetEv.Time, targetEv.Stealth);
     }
 

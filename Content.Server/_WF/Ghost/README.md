@@ -2,7 +2,8 @@
 
 The ghost orbit menu, in place of the upstream ghost warp window: a categorised, searchable list of everything a ghost
 can follow or warp to (players by status, ghosts, warp points, ships, NPCs and points of interest). For ghosts, chat
-and radio messages also carry a link that orbits their sender.
+and radio messages also carry a link that orbits their sender. A second tab lists every unresolved encounter's ships,
+hidden ones too, and takes the ghost to the one picked (it follows the ship's grid, centred on the hull).
 
 Entry points: `GhostOrbitWindow` and the client `GhostOrbitSystem` (the menu and the chat links), the server
 `GhostOrbitSystem` (target list and orbit requests), and `GhostInterestComponent`, which lists any entity under Points
@@ -29,6 +30,10 @@ of Interest; singularities, tesla balls, nukes, the disk, rifts and anomalies ar
 - [`Content.Client/_WF/Ghost/GhostOrbitTile.cs`](../../../Content.Client/_WF/Ghost/GhostOrbitTile.cs)
 - [`Content.Client/_WF/Ghost/GhostOrbitWindow.xaml`](../../../Content.Client/_WF/Ghost/GhostOrbitWindow.xaml)
 - [`Content.Client/_WF/Ghost/GhostOrbitWindow.xaml.cs`](../../../Content.Client/_WF/Ghost/GhostOrbitWindow.xaml.cs)
+
+### Integration tests
+
+- [`Content.IntegrationTests/Tests/_WF/Ghost/GhostOrbitWindowTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Ghost/GhostOrbitWindowTest.cs)
 
 ### Localization
 

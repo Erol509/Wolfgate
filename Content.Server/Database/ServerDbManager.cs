@@ -28,7 +28,8 @@ using Content.Server._Mono.Company; // Mono
 
 namespace Content.Server.Database
 {
-    public interface IServerDbManager
+    // WOLFGATE(CustomMarkings): partial, so the module's queries sit in its own folder
+    public partial interface IServerDbManager
     {
         void Init();
 

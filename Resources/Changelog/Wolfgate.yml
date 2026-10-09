@@ -1212,3 +1212,87 @@ Entries:
   id: 100090
   time: '2026-10-07T06:05:25.0000000+00:00'
   url: https://github.com/VanguardControl/Wolfgate/pull/175
+- author: Gandalf2k15
+  changes:
+    - type: Add
+      message: >-
+        NPC-crewed ships: patrols, freighters, pirates, traders and fleet
+        battles now roam the sector as random encounters.
+    - type: Add
+      message: >-
+        Faction patrols warn ships of enemy companies off their zones and fire
+        on those that come too close or shoot at them.
+    - type: Add
+      message: >-
+        Derelict hulks held by space dwellers can be cleared and claimed as your
+        own ship.
+    - type: Add
+      message: Wandering traders with randomised stock.
+  id: 100091
+  time: '2026-10-07T19:49:45.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/155
+- author: Erol509
+  changes:
+    - type: Add
+      message: 'Mapping only circuit floors with a much more modern look. '
+  id: 100092
+  time: '2026-10-07T19:53:03.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/172
+- author: Gandalf2k15
+  changes:
+    - type: Add
+      message: Engineer NPC.
+    - type: Fix
+      message: USSP now patrols properly
+    - type: Fix
+      message: Things should despawn less.
+  id: 100093
+  time: '2026-10-07T22:31:26.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/178
+- author: Gandalf2k15
+  changes:
+    - type: Add
+      message: >-
+        You can now make custom animated markings to your character, abuse of
+        the system will lead to your removal.
+  id: 100094
+  time: '2026-10-08T20:45:50.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/179
+- author: Gandalf2k15
+  changes:
+    - type: Add
+      message: A camera pan view!
+  id: 100095
+  time: '2026-10-09T00:52:23.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/183
+- author: Balls2zawall
+  changes:
+    - type: Add
+      message: >-
+        Added Felinids back to the character creator species roster, rejoice!
+        or... meow or something.
+  id: 100096
+  time: '2026-10-09T04:23:00.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/189
+- author: Gandalf2k15
+  changes:
+    - type: Tweak
+      message: Avali stasis has been nerfed hard.
+    - type: Tweak
+      message: Avali only start with 1 pen now.
+    - type: Tweak
+      message: Avali can fly like moffs.
+  id: 100097
+  time: '2026-10-09T04:40:37.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/191
+- author: Erol509
+  changes:
+    - type: Add
+      message: Avali has new organ sprites, and they are now uniqure
+    - type: Add
+      message: Avali limbs can now be printed at the biogenerator
+    - type: Add
+      message: Avali can now get hydration from drinking ammonia.
+  id: 100098
+  time: '2026-10-09T05:36:26.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/181

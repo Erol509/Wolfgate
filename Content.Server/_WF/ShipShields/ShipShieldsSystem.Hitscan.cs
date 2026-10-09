@@ -12,7 +12,8 @@ public sealed partial class ShipShieldsSystem
     [Dependency] private DamageableSystem _wfHitscanDamage = default!;
 
     /// <summary>Uses ordinary shield capacity, allocation and impact effects for intercepted beams.</summary>
-    public void ApplyWolfgateHitscanImpact(EntityUid shield, EntityUid hitscan, Vector2 position, float strength)
+    public void ApplyWolfgateHitscanImpact(EntityUid shield, EntityUid hitscan, Vector2 position, float strength,
+        EntityUid? gun = null, EntityUid? shooter = null)
     {
         if (strength <= 0f || !TryComp<ShipShieldComponent>(shield, out var component))
             return;
@@ -30,6 +31,7 @@ public sealed partial class ShipShieldsSystem
         }
         if (impactStrength <= 0f)
             return;
+        ReportWolfgateShieldAttack(component, actualDamage, null, gun, shooter);
         PlayWolfgateShieldImpact(shield, position);
         RaiseNetworkEvent(new WFShipShieldImpactEvent(GetNetEntity(shield), position, impactStrength), Filter.Broadcast());
     }
