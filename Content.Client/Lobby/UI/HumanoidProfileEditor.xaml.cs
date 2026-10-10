@@ -44,6 +44,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
 using Content.Client._Mono.Company;
+using LoadoutWindow = Content.Client._WF.Loadouts.WolfgateLoadoutWindow; // WOLFGATE(Loadouts): the editor opens the Wolfgate loadout window in place of the stock one
 
 namespace Content.Client.Lobby.UI
 {

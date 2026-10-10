@@ -66,10 +66,11 @@ public sealed partial class FtlMotionOverlay : Overlay
         while (query.MoveNext(out var uid, out var effect, out var grid, out var xform))
         {
             var motion = _system.Motion(uid, effect);
-            if (xform.MapID != args.MapId || MathF.Abs(motion) < 0.0001f)
+            var gone = _system.Gone(uid, effect);
+            if (xform.MapID != args.MapId || MathF.Abs(motion) < 0.0001f && !gone)
                 continue;
             var matrix = _transforms.GetWorldMatrix(xform);
-            var moved = FtlConeGeometry.MotionTransform(grid.LocalAABB, motion) * matrix;
+            var moved = _system.Moved(effect, grid, xform, matrix, motion);
             if (!args.WorldAABB.Intersects(matrix.TransformBox(grid.LocalAABB.Enlarged(0.5f))) &&
                 !args.WorldAABB.Intersects(moved.TransformBox(grid.LocalAABB.Enlarged(0.5f))))
                 continue;
@@ -86,7 +87,11 @@ public sealed partial class FtlMotionOverlay : Overlay
             handle.SetTransform(matrix);
             DrawHull(handle, hull.Vertices);
 
-            var origin = args.Viewport.WorldToLocal(Vector2.Transform(Vector2.Zero, matrix));
+            // The ship has jumped; its grid stays on this map until the server's next state moves it.
+            if (gone)
+                continue;
+
+            var origin =args.Viewport.WorldToLocal(Vector2.Transform(Vector2.Zero, matrix));
             var right = args.Viewport.WorldToLocal(Vector2.Transform(Vector2.UnitX, matrix)) - origin;
             var forward = args.Viewport.WorldToLocal(Vector2.Transform(Vector2.UnitY, matrix)) - origin;
             origin.Y = args.Viewport.Size.Y - origin.Y;
