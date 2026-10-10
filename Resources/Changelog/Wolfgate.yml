@@ -1357,3 +1357,31 @@ Entries:
   id: 100105
   time: '2026-10-09T23:08:13.0000000+00:00'
   url: https://github.com/VanguardControl/Wolfgate/pull/201
+- author: Gandalf2k15
+  changes:
+    - type: Tweak
+      message: >-
+        Lizards no longer collapse, pass out or die from room-temperature air.
+        They still get slow, woozy and drowsy when chilly, and only cold that
+        would hurt a human hurts them.
+    - type: Tweak
+      message: >-
+        Scarves now keep you warm, enough for a lizard to be comfortable in
+        station air.
+    - type: Fix
+      message: >-
+        The tails section of the marking picker no longer runs off the right
+        edge.
+    - type: Tweak
+      message: >-
+        Slimes, IPCs and slime protogens can now pick their own hair colour
+        instead of it matching their body.
+    - type: Fix
+      message: Custom markings now show on IPCs.
+    - type: Fix
+      message: >-
+        Putting an NPC crew body into a biomass reclaimer no longer deconstructs
+        the reclaimer.
+  id: 100106
+  time: '2026-10-10T00:57:39.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/204
