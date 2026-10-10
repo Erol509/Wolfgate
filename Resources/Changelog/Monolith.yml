@@ -26092,3 +26092,38 @@ Entries:
   id: 2817
   time: '2026-10-09T22:35:44.0000000+00:00'
   url: https://github.com/Monolith-Station/Monolith/pull/4840
+- author: SuperGDPWYL
+  changes:
+    - type: Fix
+      message: Fixed the durability of the MEDUSA suit.
+    - type: Fix
+      message: Fixed a few incorrect airlocks on the Underground Black Market.
+  id: 2818
+  time: '2026-10-10T01:30:44.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/4841
+- author: kasature90
+  changes:
+    - type: Tweak
+      message: >-
+        CROCUS - Added telecomms servers out of bounds. Bandaid fix until
+        telecomms works across z-levels.
+    - type: Tweak
+      message: CROCUS - Added invulnerable laser turrets to both spawns, I hate you.
+    - type: Tweak
+      message: >-
+        CROCUS - Both sides only get medium bulletproof vests to prevent
+        noobtraps.
+    - type: Tweak
+      message: CROCUS - TSF always gets the beacon objective now.
+  id: 2819
+  time: '2026-10-10T03:25:47.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/4846
+- author: kasature90
+  changes:
+    - type: Tweak
+      message: >-
+        Removed self/repeat-harvest mutation from the botany pool. It's really
+        fucking funny but it's way too laggy. I'm sorry.
+  id: 2820
+  time: '2026-10-10T05:00:43.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/4847
