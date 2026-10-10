@@ -35,10 +35,14 @@ public sealed class WolfgateMarkingIcon : Control
 
     private readonly IReadOnlyList<SpriteSpecifier> _sprites;
     private readonly List<TextureRect> _layers = new();
+    private readonly float _scale;
+    private readonly float _size;
 
     public WolfgateMarkingIcon(IReadOnlyList<SpriteSpecifier>? sprites, Direction direction, float scale = 2f, float size = 64f)
     {
         _sprites = sprites ?? Array.Empty<SpriteSpecifier>();
+        _scale = scale;
+        _size = size;
         MinSize = new Vector2(size, size);
         HorizontalAlignment = HAlignment.Center;
 
@@ -80,7 +84,13 @@ public sealed class WolfgateMarkingIcon : Control
     {
         var shown = VisibleDirection(_sprites, direction);
         for (var i = 0; i < _layers.Count; i++)
-            _layers[i].Texture = FrameFor(_sprites[i], shown);
+        {
+            var texture = FrameFor(_sprites[i], shown);
+            // A sprite wider than the usual 32 px, such as a naga tail, is scaled down to stay inside the icon.
+            var fit = MathF.Min(_scale, _size / MathF.Max(1f, MathF.Max(texture.Width, texture.Height)));
+            _layers[i].TextureScale = new Vector2(fit, fit);
+            _layers[i].Texture = texture;
+        }
     }
 
     /// <summary>
