@@ -299,9 +299,5 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
 - [`Resources/Prototypes/Tiles/planet.yml`](../../../Resources/Prototypes/Tiles/planet.yml): Port floor sprite updates from upstream respritening batches.
 - [`Resources/Prototypes/Tiles/plating.yml`](../../../Resources/Prototypes/Tiles/plating.yml): Added variants
 - [`Resources/Textures/_Impstation/Structures/`](../../../Resources/Textures/_Impstation/Structures/): Impstation structure resprites (thermomachines, cryo pod, cryosleep, hydro tray, conveyor, fax, stasis bed, suit storage).
-- [`Resources/Textures/_NF/Structures/Storage/closet.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/closet.rsi/): Frontier closet sprites updated for the resprited prototype states.
-- [`Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/): Frontier wall-locker sprites updated for the resprited prototype states.
-- [`Resources/Textures/Tiles/attributions.yml`](../../../Resources/Textures/Tiles/attributions.yml): Record attributions for resprited root-level tile textures.
-- [`Resources/Textures/Tiles/Planet/attributions.yml`](../../../Resources/Textures/Tiles/Planet/attributions.yml): Record attributions for resprited planetary floor assets.
 
 <!-- WOLFGATE-GENERATED END -->
