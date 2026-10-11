@@ -1,6 +1,6 @@
 - type: entity
   id: BaseStructureComputerWallmount
-  parent: [BaseStructureWallmount, BaseStructure]
+  parent: [BaseStructureWallmountOld, BaseStructure]
   suffix: Wallmount
   abstract: true
   components:
