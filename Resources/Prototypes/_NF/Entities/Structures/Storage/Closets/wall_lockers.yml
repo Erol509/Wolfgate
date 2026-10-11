@@ -275,7 +275,7 @@
 # Other: Chemistry wall locker
 - type: entity
   id: LockerWallChemistry
-  parent: [BaseStructureWallmount, LockerWallMedical]
+  parent: [BaseStructureWallmountOld, LockerWallMedical]
   name: chemistry wall locker
   components:
   - type: Sprite
