@@ -1773,8 +1773,8 @@
   flammability: 4
   # ES END
 # WOLFGATE END
-
-#- type: tile #WOLFGATE(Resprites) Moved to basic.yml
+#WOLFGATE(Resprites) START: Moved to basic.yml
+#- type: tile
 #  id: FloorTechMaint2
 #  name: tiles-techmaint2-floor
 #  sprite: /Textures/Tiles/steel_maint.png
@@ -1787,7 +1787,7 @@
 #  heatCapacity: 10000
 #  # ES START
 #  flammability: 2
-#  # ES END
+#  # ES END #WOLFGATE END
 
 - type: tile
   id: FloorTechMaint3
