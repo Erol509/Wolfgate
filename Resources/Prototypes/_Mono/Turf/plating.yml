@@ -3,7 +3,7 @@
   id: DebugLatticeRadarHalfWidth
   parent: Lattice
   name: debug radar half width lattice
-  sprite: /Textures/Tiles/lattice.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/lattice.png
   vertices: ["0.25, 0", "0.75, 0", "0.75, 1", "0.25, 1"]
 
 - type: tile

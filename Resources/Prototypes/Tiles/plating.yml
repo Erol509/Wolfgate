@@ -1,4 +1,3 @@
-# WOLFGATE(Resprites) START: Port floor sprite updates from upstream respritening batches.
 - type: tile
   id: Plating
   name: tiles-plating
@@ -104,17 +103,17 @@
 - type: tile
   id: Lattice
   name: tiles-lattice
-  sprite: /Textures/Tiles/lattice.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/lattice.png
   baseTurf: Space
   isSubfloor: true
   deconstructTools: [ Cutting ]
   deconstructTimeMultiplier: 1 # Goobstation
   weather: true
-  variants: 3
+  variants: 3 #WOLFGATE(Resprites) START: Added variants
   placementVariants:
   - 1.0
   - 1.0
-  - 1.0
+  - 1.0 #WOLFGATE END
   footstepSounds:
     collection: FootstepCatwalk
   friction: 1.5
@@ -149,4 +148,4 @@
   # already shouldnt be spreading here bc airtight, but yknow
   flammability: -99999
   # ES END
-# WOLFGATE END
+

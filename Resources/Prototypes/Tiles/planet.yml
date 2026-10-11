@@ -236,7 +236,7 @@
 - type: tile
   id: FloorAsteroidSandPlanet
   name: tiles-asteroid-sand
-  sprite: /Textures/Tiles/Asteroid/asteroid.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid.png
   variants: 7
   placementVariants:
   - 0.8
@@ -250,14 +250,14 @@
   baseTurf: Space
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/Tiles/Asteroid/single_edge_SE.png
-    NorthEast: /Textures/Tiles/Asteroid/single_edge_NE.png
-    NorthWest: /Textures/Tiles/Asteroid/single_edge_NW.png
-    SouthWest: /Textures/Tiles/Asteroid/single_edge_SW.png
-    South: /Textures/Tiles/Asteroid/double_edge_S.png
-    East: /Textures/Tiles/Asteroid/double_edge_E.png
-    North: /Textures/Tiles/Asteroid/double_edge_N.png
-    West: /Textures/Tiles/Asteroid/double_edge_W.png
+    SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_SE.png
+    NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_NE.png
+    NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_NW.png
+    SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_SW.png
+    South: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_S.png
+    East: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_E.png
+    North: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_N.png
+    West: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_W.png
   deconstructTools: [ Digging ]
   deconstructTimeMultiplier: 1
   itemDrop: DesertSand1
@@ -331,7 +331,7 @@
 - type: tile
   id: FloorSnow
   name: tiles-snow
-  sprite: /Textures/Tiles/Snow/snow.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Snow/snow.png
   variants: 6
   placementVariants:
   - 1.0
@@ -342,14 +342,14 @@
   - 1.0
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/Tiles/Snow/single_edge_SE.png
-    NorthEast: /Textures/Tiles/Snow/single_edge_NE.png
-    NorthWest: /Textures/Tiles/Snow/single_edge_NW.png
-    SouthWest: /Textures/Tiles/Snow/single_edge_SW.png
-    South: /Textures/Tiles/Snow/double_edge_S.png
-    East: /Textures/Tiles/Snow/double_edge_E.png
-    North: /Textures/Tiles/Snow/double_edge_N.png
-    West: /Textures/Tiles/Snow/double_edge_W.png
+    SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_SE.png
+    NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_NE.png
+    NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_NW.png
+    SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_SW.png
+    South: /Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_S.png
+    East: /Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_E.png
+    North: /Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_N.png
+    West: /Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_W.png
   baseTurf: FloorDirt
   itemDrop: FloorTileItemSnow # Delta V
   deconstructTools: [ Digging ] # Frontier

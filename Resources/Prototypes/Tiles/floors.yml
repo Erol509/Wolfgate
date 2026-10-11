@@ -1,4 +1,21 @@
-# WOLFGATE(Resprites): Use redesigned floor prototypes from Tiles/basic.yml.
+#- type: tile
+#  id: FloorSteel
+#  name: tiles-steel-floor
+#  sprite: /Textures/Tiles/steel.png
+#  variants: 4
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  baseTurf: Plating
+#  isSubfloor: false
+#  deconstructTools: [ Prying ]
+#  footstepSounds:
+#    collection: FootstepFloor
+#  itemDrop: FloorTileItemSteel
+#  heatCapacity: 10000
+
 - type: tile
   id: FloorSteelCheckerLight
   name: tiles-steel-floor-checker-light
@@ -35,10 +52,76 @@
   itemDrop: FloorTileItemSteelCheckerDark
   heatCapacity: 10000
 
+#- type: tile
+#  id: FloorSteelMini
+#  name: tiles-steel-floor-mini
+#  sprite: /Textures/Tiles/steel_mini.png
+#  variants: 4
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  baseTurf: Plating
+#  isSubfloor: false
+#  deconstructTools: [ Prying ]
+#  footstepSounds:
+#    collection: FootstepFloor
+#  itemDrop: FloorTileItemSteelMini
+#  heatCapacity: 10000
+
+#- type: tile
+#  id: FloorSteelPavement
+#  name: tiles-steel-floor-pavement
+#  sprite: /Textures/Tiles/steel_pavement.png
+#  variants: 4
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  baseTurf: Plating
+#  isSubfloor: false
+#  deconstructTools: [ Prying ]
+#  footstepSounds:
+#    collection: FootstepFloor
+#  itemDrop: FloorTileItemSteelPavement
+#  heatCapacity: 10000
+
+#- type: tile
+#  id: FloorSteelDiagonal
+#  name: tiles-steel-floor-diagonal
+#  sprite: /Textures/Tiles/steel_diagonal.png
+#  variants: 4
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  baseTurf: Plating
+#  isSubfloor: false
+#  deconstructTools: [ Prying ]
+#  footstepSounds:
+#    collection: FootstepFloor
+#  itemDrop: FloorTileItemSteelDiagonal
+#  heatCapacity: 10000
+
+#- type: tile
+#  id: FloorSteelOffset
+#  name: tiles-steel-floor-offset
+#  sprite: /Textures/Tiles/steel_offset.png
+#  baseTurf: Plating
+#  isSubfloor: false
+#  deconstructTools: [ Prying ]
+#  footstepSounds:
+#    collection: FootstepFloor
+#  itemDrop: FloorTileItemSteelOffset
+#  heatCapacity: 10000
+
 - type: tile
-  id: FloorSteelDiagonal
-  name: tiles-steel-floor-diagonal
-  sprite: /Textures/Tiles/steel_diagonal.png
+  id: FloorSteelMono
+  name: tiles-steel-floor-mono
+  sprite: /Textures/Tiles/steel_mono.png
   variants: 4
   placementVariants:
   - 1.0
@@ -49,20 +132,44 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
-    collection: FootstepFloor
-  itemDrop: FloorTileItemSteelDiagonal
+    collection: FootstepTile
+  itemDrop: FloorTileItemSteelMono
   heatCapacity: 10000
 
 - type: tile
-  id: FloorSteelOffset
-  name: tiles-steel-floor-offset
-  sprite: /Textures/Tiles/steel_offset.png
+  id: FloorSteelPavementVertical
+  name: tiles-steel-floor-pavement-vertical
+  sprite: /Textures/Tiles/steel_pavement_vertical.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
-    collection: FootstepFloor
-  itemDrop: FloorTileItemSteelOffset
+    collection: FootstepTile
+  itemDrop: FloorTileItemSteelPavementVertical
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorSteelHerringbone
+  name: tiles-steel-floor-herringbone
+  sprite: /Textures/Tiles/steel_herringbone.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemSteelHerringbone
   heatCapacity: 10000
 
 - type: tile
@@ -106,6 +213,27 @@
     collection: FootstepHull
   itemDrop: FloorTileItemBrassReebe
   heatCapacity: 10000
+
+#- type: tile
+#  id: FloorPlastic
+#  name: tiles-plastic-floor
+#  sprite: /Textures/Tiles/plastic.png
+#  variants: 4
+#  placementVariants:
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  - 1.0
+#  baseTurf: Plating
+#  isSubfloor: false
+#  deconstructTools: [ Prying ]
+#  footstepSounds:
+#    collection: FootstepFloor
+#  itemDrop: FloorTileItemSteel
+#  heatCapacity: 10000
+#  # ES START
+#  flammability: 3
+#  # ES END
 
 - type: tile
   id: FloorWood
@@ -351,7 +479,7 @@
 - type: tile
   id: FloorMetalDiamond
   name: tiles-diamond-plate-floor
-  sprite: /Textures/Tiles/metaldiamond.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/metaldiamond.png
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -378,7 +506,7 @@
 - type: tile
   id: FloorBlue
   name: tiles-blue-tile
-  sprite: /Textures/Tiles/blue.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/blue.png
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -393,7 +521,7 @@
 - type: tile
   id: FloorSteelLime
   name: tiles-lime-floor
-  sprite: /Textures/Tiles/lime.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/lime.png
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1103,7 +1231,7 @@
 - type: tile
   id: FloorGlass
   name: tiles-glass-floor
-  sprite: /Textures/Tiles/Glass/glass.png # WOLFGATE(Resprites): Repathed
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Glass/glass.png # WOLFGATE(Resprites): Repathed
   variants: 1
   baseTurf: Plating
   isSubfloor: false
@@ -1120,7 +1248,7 @@
 - type: tile
   id: FloorRGlass
   name: tiles-reinforced-glass-floor
-  sprite: /Textures/Tiles/Glass/glass-reinf.png # WOLFGATE(Resprites): Repathed
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Glass/glass-reinf.png # WOLFGATE(Resprites): Repathed
   variants: 1
   baseTurf: Plating
   isSubfloor: false
@@ -1158,7 +1286,7 @@
 - type: tile
   id: FloorGreenCircuit
   name: tiles-green-circuit-floor
-  sprite: /Textures/Tiles/Circuit/circuit-green.png # WOLFGATE(Resprites): Repathed
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-green.png # WOLFGATE(Resprites): Repathed
   variants: 2
   placementVariants:
     - 1.0
@@ -1177,7 +1305,7 @@
 - type: tile
   id: FloorBlueCircuit
   name: tiles-blue-circuit-floor
-  sprite: /Textures/Tiles/Circuit/circuit-blue.png # WOLFGATE(Resprites): Repathed
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-blue.png # WOLFGATE(Resprites): Repathed
   variants: 2
   placementVariants:
     - 1.0
@@ -1196,7 +1324,7 @@
 - type: tile
   id: FloorRedCircuit
   name: tiles-red-circuit-floor
-  sprite: /Textures/Tiles/Circuit/circuit-red.png # WOLFGATE(Resprites): Repathed
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-red.png # WOLFGATE(Resprites): Repathed
   variants: 2
   placementVariants:
       - 1.0
@@ -1281,7 +1409,7 @@
 - type: tile
   id: FloorGrassJungle
   name: tiles-jungle-grass-floor
-  sprite: /Textures/Tiles/GrassJungle/grass.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/grass.png
   baseTurf: FloorDirt
   variants: 6
   placementVariants:
@@ -1293,14 +1421,14 @@
     - 1.0
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/Tiles/GrassJungle/single_edge_SE.png
-    NorthEast: /Textures/Tiles/GrassJungle/single_edge_NE.png
-    NorthWest: /Textures/Tiles/GrassJungle/single_edge_NW.png
-    SouthWest: /Textures/Tiles/GrassJungle/single_edge_SW.png
-    South: /Textures/Tiles/GrassJungle/double_edge_S.png
-    East: /Textures/Tiles/GrassJungle/double_edge_E.png
-    North: /Textures/Tiles/GrassJungle/double_edge_N.png
-    West: /Textures/Tiles/GrassJungle/double_edge_W.png
+    SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_SE.png
+    NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_NE.png
+    NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_NW.png
+    SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_SW.png
+    South: /Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_S.png
+    East: /Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_E.png
+    North: /Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_N.png
+    West: /Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_W.png
   #canCrowbar: false # Come back
   # canShovel: true # Delta V # Frontier
   deconstructTools: [ Digging ] # Frontier
@@ -1317,7 +1445,7 @@
 - type: tile
   id: FloorGrassDark
   name: tiles-dark-grass-floor
-  sprite: /Textures/Tiles/GrassDark/grass.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/GrassDark/grass.png
   variants: 6
   placementVariants:
   - 1.0
@@ -1328,14 +1456,14 @@
   - 1.0
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/Tiles/GrassDark/single_edge_SE.png
-    NorthEast: /Textures/Tiles/GrassDark/single_edge_NE.png
-    NorthWest: /Textures/Tiles/GrassDark/single_edge_NW.png
-    SouthWest: /Textures/Tiles/GrassDark/single_edge_SW.png
-    South: /Textures/Tiles/GrassDark/double_edge_S.png
-    East: /Textures/Tiles/GrassDark/double_edge_E.png
-    North: /Textures/Tiles/GrassDark/double_edge_N.png
-    West: /Textures/Tiles/GrassDark/double_edge_W.png
+    SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_SE.png
+    NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_NE.png
+    NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_NW.png
+    SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_SW.png
+    South: /Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_S.png
+    East: /Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_E.png
+    North: /Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_N.png
+    West: /Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_W.png
   baseTurf: FloorDirt
   #canCrowbar: false # Come back
   # canShovel: true # Delta V # Frontier
@@ -1353,7 +1481,7 @@
 - type: tile
   id: FloorGrassLight
   name: tiles-light-grass-floor
-  sprite: /Textures/Tiles/GrassLight/grass.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/GrassLight/grass.png
   variants: 6
   placementVariants:
   - 1.0
@@ -1364,14 +1492,14 @@
   - 1.0
   edgeSpritePriority: 2
   edgeSprites:
-    SouthEast: /Textures//Tiles/GrassLight/single_edge_SE.png
-    NorthEast: /Textures//Tiles/GrassLight/single_edge_NE.png
-    NorthWest: /Textures//Tiles/GrassLight/single_edge_NW.png
-    SouthWest: /Textures//Tiles/GrassLight/single_edge_SW.png
-    South: /Textures//Tiles/GrassLight/double_edge_S.png
-    East: /Textures/Tiles/GrassLight/double_edge_E.png
-    North: /Textures/Tiles/GrassLight/double_edge_N.png
-    West: /Textures/Tiles/GrassLight/double_edge_W.png
+    SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_SE.png
+    NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_NE.png
+    NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_NW.png
+    SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_SW.png
+    South: /Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_S.png
+    East: /Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_E.png
+    North: /Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_N.png
+    West: /Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_W.png
   baseTurf: FloorDirt
   #canCrowbar: false # Come back
   # canShovel: true # Delta V # Frontier
@@ -1390,7 +1518,7 @@
 - type: tile
   id: FloorDirt
   name: tiles-dirt-floor
-  sprite: /Textures/Tiles/Dirt/dirt.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Dirt/dirt.png
   variants: 5
   placementVariants:
   - 1.0
@@ -1400,14 +1528,14 @@
   - 1.0
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/Tiles/Dirt/single_edge_SE.png
-    NorthEast: /Textures/Tiles/Dirt/single_edge_NE.png
-    NorthWest: /Textures/Tiles/Dirt/single_edge_NW.png
-    SouthWest: /Textures/Tiles/Dirt/single_edge_SW.png
-    South: /Textures/Tiles/Dirt/double_edge_S.png
-    East: /Textures/Tiles/Dirt/double_edge_E.png
-    North: /Textures/Tiles/Dirt/double_edge_N.png
-    West: /Textures/Tiles/Dirt/double_edge_W.png
+    SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_SE.png
+    NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_NE.png
+    NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_NW.png
+    SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_SW.png
+    South: /Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_S.png
+    East: /Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_E.png
+    North: /Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_N.png
+    West: /Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_W.png
   baseTurf: FloorBedrock # Delta V
   #canCrowbar: false # Come back
   # canShovel: true # Delta V # Frontier
@@ -1426,7 +1554,7 @@
 - type: tile
   id: FloorAsteroidSand
   name: tiles-asteroid-sand
-  sprite: /Textures/Tiles/Asteroid/asteroid.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid.png
   variants: 7
   placementVariants:
   - 0.8
@@ -1438,14 +1566,14 @@
   - 0.0166
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/Tiles/Asteroid/single_edge_SE.png
-    NorthEast: /Textures/Tiles/Asteroid/single_edge_NE.png
-    NorthWest: /Textures/Tiles/Asteroid/single_edge_NW.png
-    SouthWest: /Textures/Tiles/Asteroid/single_edge_SW.png
-    South: /Textures/Tiles/Asteroid/double_edge_S.png
-    East: /Textures/Tiles/Asteroid/double_edge_E.png
-    North: /Textures/Tiles/Asteroid/double_edge_N.png
-    West: /Textures/Tiles/Asteroid/double_edge_W.png
+    SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_SE.png
+    NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_NE.png
+    NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_NW.png
+    SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_SW.png
+    South: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_S.png
+    East: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_E.png
+    North: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_N.png
+    West: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_W.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
@@ -1579,18 +1707,18 @@
 - type: tile
   id: FloorCave
   name: tiles-cave
-  sprite: /Textures/Tiles/Cave/cave.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Cave/cave.png
   variants: 1
   edgeSpritePriority: 1
   edgeSprites:
-      SouthEast: /Textures/Tiles/Cave/single_edge_SE.png
-      NorthEast: /Textures/Tiles/Cave/single_edge_NE.png
-      NorthWest: /Textures/Tiles/Cave/single_edge_NW.png
-      SouthWest: /Textures/Tiles/Cave/single_edge_SW.png
-      South: /Textures/Tiles/Cave/double_edge_S.png
-      East: /Textures/Tiles/Cave/double_edge_E.png
-      North: /Textures/Tiles/Cave/double_edge_N.png
-      West: /Textures/Tiles/Cave/double_edge_W.png
+      SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_SE.png
+      NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_NE.png
+      NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_NW.png
+      SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_SW.png
+      South: /Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_S.png
+      East: /Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_E.png
+      North: /Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_N.png
+      West: /Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_W.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
@@ -1628,7 +1756,7 @@
 - type: tile
   id: FloorFlesh
   name: tiles-flesh-floor
-  sprite: /Textures/Tiles/meat.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/meat.png
   variants: 2
   placementVariants:
   - 1.0
@@ -1752,18 +1880,18 @@
 - type: tile
   id: FloorChromite
   name: tiles-chromite
-  sprite: /Textures/Tiles/Chromite/chromite.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Chromite/chromite.png
   variants: 1
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/Tiles/Chromite/single_edge_SE.png
-    NorthEast: /Textures/Tiles/Chromite/single_edge_NE.png
-    NorthWest: /Textures/Tiles/Chromite/single_edge_NW.png
-    SouthWest: /Textures/Tiles/Chromite/single_edge_SW.png
-    South: /Textures/Tiles/Chromite/double_edge_S.png
-    East: /Textures/Tiles/Chromite/double_edge_E.png
-    North: /Textures/Tiles/Chromite/double_edge_N.png
-    West: /Textures/Tiles/Chromite/double_edge_W.png
+    SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_SE.png
+    NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_NE.png
+    NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_NW.png
+    SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_SW.png
+    South: /Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_S.png
+    East: /Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_E.png
+    North: /Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_N.png
+    West: /Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_W.png
   baseTurf: Space
   isSubfloor: true
   weather: true # Mono
@@ -1874,7 +2002,7 @@
 - type: tile
   id: FloorAstroIce
   name: tiles-astro-ice
-  sprite: /Textures/Tiles/Ice/ice.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Ice/ice.png
   variants: 4
   baseTurf: Plating
   isSubfloor: false
