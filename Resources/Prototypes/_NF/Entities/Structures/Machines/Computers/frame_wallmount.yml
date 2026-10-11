@@ -66,7 +66,7 @@
           monitorUnsecured: { state: computer_monitor_unscrewed }
 
 - type: entity
-  parent: [BaseStructureWallmount, ComputerBroken]
+  parent: [BaseStructureWallmountOld, ComputerBroken]
   id: ComputerWallmountBroken
   suffix: Wallmount
   components:
