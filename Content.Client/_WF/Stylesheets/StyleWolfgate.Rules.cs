@@ -564,6 +564,6 @@ public sealed partial class StyleWolfgate
                 .Prop(Control.StylePropertyModulateSelf, ContextPressed),
         };
 
-        return rules.Concat(LobbyRules()).Concat(CreatorRules()).ToArray();
+        return rules.Concat(LobbyRules()).Concat(CreatorRules()).Concat(LoadoutRules()).ToArray();
     }
 }

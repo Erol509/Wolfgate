@@ -64,6 +64,7 @@ clone.
 - [`Content.IntegrationTests/Tests/_WF/Species/AvaliChemistryTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/AvaliChemistryTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Species/AvaliClothingTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/AvaliClothingTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Species/EyeMarkingsTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/EyeMarkingsTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Species/HairColourTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/HairColourTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Species/MismatchedPartsBodyTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/MismatchedPartsBodyTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Species/MismatchedPartsTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/MismatchedPartsTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Species/ShadekinNightVisionTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Species/ShadekinNightVisionTest.cs)
@@ -406,6 +407,7 @@ clone.
 - [`Resources/Prototypes/_DV/Voice/speech_emotes.yml`](../../../Resources/Prototypes/_DV/Voice/speech_emotes.yml): was the default scream icon
 - [`Resources/Prototypes/_EE/Entities/Mobs/Customization/bishop.yml`](../../../Resources/Prototypes/_EE/Entities/Mobs/Customization/bishop.yml): added Canine
 - [`Resources/Prototypes/_EE/Entities/Mobs/Customization/hephiastos.yml`](../../../Resources/Prototypes/_EE/Entities/Mobs/Customization/hephiastos.yml): added Canine
+- [`Resources/Prototypes/_EinsteinEngines/Species/ipc.yml`](../../../Resources/Prototypes/_EinsteinEngines/Species/ipc.yml): was MobHumanoidMarkingMatchSkin; hair colour is the player's pick
 - [`Resources/Prototypes/_EinsteinEngines/Voice/speech_emotes.yml`](../../../Resources/Prototypes/_EinsteinEngines/Voice/speech_emotes.yml): was the default scream icon
 - [`Resources/Prototypes/_FarHorizons/Body/Organs/protogen.yml`](../../../Resources/Prototypes/_FarHorizons/Body/Organs/protogen.yml)
   - ported from HardLight - Protogen subspecies.
@@ -430,6 +432,7 @@ clone.
   - the 14 Protogen subspecies, ported from HardLight.
   - groups it under Protogen in the creator
   - blank, LED face markings replace eyes
+  - was MobSlimeMarkingFollowSkin; hair colour is the player's pick
 - [`Resources/Prototypes/_FarHorizons/Voices/protogen_speech_emotes_sounds.yml`](../../../Resources/Prototypes/_FarHorizons/Voices/protogen_speech_emotes_sounds.yml)
   - _Mono protogen mobs use this emote
   - Whine collection does not exist here
@@ -646,6 +649,8 @@ clone.
   - was 0, reptilians can wear facial hair
 - [`Resources/Prototypes/Species/slime.yml`](../../../Resources/Prototypes/Species/slime.yml)
   - Anycolor skin support for slimes
+  - was MobSlimeMarkingFollowSkin; hair colour is the player's pick
+  - was MobSlimeMarkingFollowSkin; facial hair colour is the player's pick
   - ported from HardLight, slimes take the head and tail marking slots of other species
 - [`Resources/Prototypes/Species/species_weights.yml`](../../../Resources/Prototypes/Species/species_weights.yml)
   - ported from HardLight/Starlight

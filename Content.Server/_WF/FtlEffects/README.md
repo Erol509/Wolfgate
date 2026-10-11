@@ -17,6 +17,19 @@ entity transforms or collision bodies. Its mask covers occupied tiles and their 
 This only reproduces hull pixels present in the viewport; it cannot invent an offscreen portion of the ship.
 Crew aboard keep a steady camera and see the cone. The shader bends scene pixels throughout the cone.
 
+Grids are not predicted, so the client times every effect on the server state it is showing
+(`FtlDepartureSystem.Now`), not its predicted clock, which runs a few ticks ahead. The jump lands on the first
+tick after the scheduled time, so a launched hull stays painted over with the saved background until its grid
+leaves the map (`FtlDepartureTiming.Gone`, capped at one second).
+
+Grids docked to the jumping ship get the same component with `Lead` set. They rush, hide and arrive in the lead
+ship's frame and get no cone of their own; crew anywhere in the convoy keep a steady camera.
+
+Only a ship's grid is always known to every client; its contents enter view at the PVS entity budget. During
+the arrival countdown the server therefore adds PVS session overrides for the convoy to players within 48 metres
+of the hull's reach at the destination, so the whole ship is on their client before it drops out. The overrides
+stay within the entity budget and are removed on arrival.
+
 Existing upstream arrival tiles and hyperspace parallax remain in place. No upstream hooks or engine edits
 are needed. `FtlConeGeometryTest`, `FtlDepartureTimingTest` and `FtlDepartureTest` cover the shape, rush and lifecycle.
 

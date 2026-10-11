@@ -48,4 +48,34 @@ public sealed class FtlConeGeometryTest
         Assert.That(moved.Width, Is.EqualTo(hull.Width));
         Assert.That(moved.Height, Is.GreaterThan(hull.Height * 2f));
     }
+
+    [Test]
+    public void DockedGridAtRestIsNeverDisplaced()
+    {
+        var lead = Matrix3x2.CreateRotation(0.7f) * Matrix3x2.CreateTranslation(40f, -15f);
+        var follower = Matrix3x2.CreateRotation(-1.2f) * Matrix3x2.CreateTranslation(52f, -9f);
+        var transform = FtlConeGeometry.FollowerTransform(new Box2(-4, -10, 4, 10), 0f, follower, lead);
+        var point = new Vector2(3f, -2f);
+        Assert.That(Vector2.Distance(Vector2.Transform(point, transform), Vector2.Transform(point, follower)),
+            Is.LessThan(0.001f));
+    }
+
+    [TestCase(1f)]
+    [TestCase(-0.4f)]
+    public void DockedGridRidesTheLeadShipsRush(float motion)
+    {
+        var hull = new Box2(-4, -10, 4, 10);
+        var lead = Matrix3x2.CreateRotation(0.7f) * Matrix3x2.CreateTranslation(40f, -15f);
+        var follower = Matrix3x2.CreateRotation(-1.2f) * Matrix3x2.CreateTranslation(52f, -9f);
+        Assert.That(Matrix3x2.Invert(lead, out var leadInverse), Is.True);
+        Assert.That(Matrix3x2.Invert(follower, out var followerInverse), Is.True);
+
+        // A point of space shared by both grids must land in the same place whichever grid draws it.
+        var world = new Vector2(47f, -11f);
+        var viaLead = Vector2.Transform(Vector2.Transform(world, leadInverse), FtlConeGeometry.MotionTransform(hull, motion) * lead);
+        var viaFollower = Vector2.Transform(Vector2.Transform(world, followerInverse),
+            FtlConeGeometry.FollowerTransform(hull, motion, follower, lead));
+        Assert.That(Vector2.Distance(viaLead, viaFollower), Is.LessThan(0.01f));
+        Assert.That(Vector2.Distance(viaLead, world), Is.GreaterThan(5f));
+    }
 }

@@ -5,7 +5,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.Graphics;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client._WF.FtlEffects;
 
@@ -15,7 +14,6 @@ public sealed partial class FtlDepartureOverlay : Overlay
     private static readonly ProtoId<ShaderPrototype> Shader = "WFFtlDeparture";
     [Dependency] private IEntityManager _entities = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
-    [Dependency] private IGameTiming _timing = default!;
 
     private readonly FtlDepartureSystem _system;
     private readonly SharedTransformSystem _transforms;
@@ -53,13 +51,15 @@ public sealed partial class FtlDepartureOverlay : Overlay
         if (args.Viewport.Eye == null)
             return false;
 
+        var now = _system.Now;
         var query = _entities.EntityQueryEnumerator<FtlDepartureComponent, MapGridComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var effect, out var grid, out var xform))
         {
             if (xform.MapID != args.MapId || grid.LocalAABB.Width <= 0f || grid.LocalAABB.Height <= 0f)
                 continue;
-            var intensity = FtlDepartureTiming.Intensity(_timing.CurTime, effect.Started, effect.Departure, effect.Entered);
-            if (intensity <= 0f)
+            var intensity = FtlDepartureTiming.Intensity(now, effect.Started, effect.Departure, effect.Entered);
+            // Docked grids ride inside the lead ship's field and get no cone of their own.
+            if (intensity <= 0f || effect.Lead != null || _system.Gone(uid, effect))
                 continue;
             var bounds = FtlConeGeometry.Bounds(grid.LocalAABB);
             var matrix = FtlConeGeometry.MotionTransform(grid.LocalAABB, _system.Motion(uid, effect))
@@ -69,8 +69,8 @@ public sealed partial class FtlDepartureOverlay : Overlay
 
             if (!_shaders.ContainsKey(uid))
                 _shaders.Add(uid, _prototypes.Index(Shader).Instance().Duplicate());
-            var phase = (float) (_timing.CurTime - effect.Started).TotalSeconds;
-            var distance = MathF.Abs((float) (_timing.CurTime - effect.Departure).TotalSeconds);
+            var phase = (float) (now - effect.Started).TotalSeconds;
+            var distance = MathF.Abs((float) (now - effect.Departure).TotalSeconds);
             var burst = Math.Clamp(1f - distance / 0.18f, 0f, 1f);
             _visible.Add((uid, bounds, intensity, phase, burst * burst, matrix));
         }

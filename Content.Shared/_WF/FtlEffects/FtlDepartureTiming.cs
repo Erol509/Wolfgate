@@ -12,6 +12,18 @@ public static class FtlDepartureTiming
     /// <summary>Seconds occupied by the visible launch or arrival rush.</summary>
     public const float MotionDuration = 0.24f;
 
+    /// <summary>Longest a launched hull stays hidden while the server is late moving its grid.</summary>
+    public const float HoldDuration = 1f;
+
+    /// <summary>Whether a launched ship is past its departure with its grid still on the observer's map.</summary>
+    public static bool Gone(TimeSpan now, TimeSpan departure, bool entered, bool arriving)
+    {
+        if (entered || arriving)
+            return false;
+        var seconds = (float) (now - departure).TotalSeconds;
+        return seconds > 0f && seconds < HoldDuration;
+    }
+
     /// <summary>Signed visual travel fraction; arrivals brake sharply and departures accelerate.</summary>
     public static float Motion(TimeSpan now, TimeSpan departure, bool entered, bool arriving)
     {
