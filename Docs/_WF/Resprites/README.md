@@ -8,13 +8,257 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
 
 ## Files
 
-None.
+### Textures
+
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/arcadeblue.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/arcadeblue.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/arcadeblue2.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/arcadeblue2.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/arcadered.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/arcadered.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid-plating.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid-plating.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid-tile.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid-tile.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-herringbone.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-herringbone.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-horizontal-slats.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-horizontal-slats.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-maint.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-maint.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-mini.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-mini.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-mono.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-mono.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-pavement-vertical.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-pavement-vertical.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-pavement.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-pavement.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-plastic.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-plastic.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-vertical-slats.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-vertical-slats.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-damaged.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-damaged.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-herringbone.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-herringbone.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-horizontal-slats.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-horizontal-slats.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-maint.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-maint.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-mini.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-mini.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-mono.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-mono.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-pavement-vertical.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-pavement-vertical.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-pavement.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-pavement.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-plastic.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-plastic.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-vertical-slats.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-vertical-slats.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-herringbone.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-herringbone.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-horizontal-slats.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-horizontal-slats.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-mini.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-mini.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-mono.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-mono.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-pavement-vertical.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-pavement-vertical.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-pavement.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-pavement.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-plastic.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-plastic.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-vertical-slats.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-vertical-slats.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/blue.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/blue.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/boxing.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/boxing.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/carpetclown.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/carpetclown.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/carpetoffice.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/carpetoffice.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/cave.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/cave.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Cave/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-bar.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-bar.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-clown.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-clown.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-dark.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-dark.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-kitchen.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-kitchen.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-laundry.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-laundry.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-light.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-light.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-mime.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Checker/checker-mime.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/chromite.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/chromite.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Chromite/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Circuit/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Circuit/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-blue.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-blue.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-green.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-green.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-red.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-red.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Concrete/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Concrete/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Concrete/concrete-mono.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Concrete/concrete-mono.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Concrete/concrete-smooth.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Concrete/concrete-smooth.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Concrete/concrete.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Concrete/concrete.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/cropped_parallax.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/cropped_parallax.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/debug-indestructible.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/debug-indestructible.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/desert.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/desert.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/dirt.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/dirt.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Dirt/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/eighties.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/eighties.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-borg.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-borg.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-horizontal.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-horizontal.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-hull.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-hull.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-maint.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-maint.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-vertical.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-vertical.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-viscera.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Exo/exo-viscera.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/foammetal.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/foammetal.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/freezer.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/freezer.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/glass-plasma.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/glass-plasma.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/glass-plastitanium.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/glass-plastitanium.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/glass-reinf.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/glass-reinf.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/glass-uranium.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/glass-uranium.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/glass.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Glass/glass.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/gold.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/gold.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/grass.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/grass.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Grass/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/grass.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/grass.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassDark/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/grass.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/grass.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassJungle/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/grass.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/grass.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/GrassLight/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/grating-maint.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/grating-maint.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/gym.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/gym.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/hull.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/hull.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ice/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ice/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ice/ice.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ice/ice.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/ironsand.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/ironsand.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/lattice.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/lattice.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/lime.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/lime.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/lino.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/lino.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Marble/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Marble/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Marble/dark-marble-mono.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Marble/dark-marble-mono.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Marble/dark-marble.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Marble/dark-marble.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Marble/white-marble-mono.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Marble/white-marble-mono.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Marble/white-marble.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Marble/white-marble.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/meat.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/meat.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/metaldiamond.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/metaldiamond.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Misc/floortrap.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Misc/floortrap.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/basalt.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/basalt.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/Chasms/basalt_chasm.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/Chasms/basalt_chasm.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/Chasms/chromite_chasm.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/Chasms/chromite_chasm.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/Chasms/desert_chasm.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/Chasms/desert_chasm.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/Chasms/snow_chasm.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/Chasms/snow_chasm.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/lava.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/lava.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/liquid_plasma.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/liquid_plasma.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/shadowbasalt.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Planet/shadowbasalt.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/plating-damaged.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/plating-damaged.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/plating.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/plating.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/reinforced.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/reinforced.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-black.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-black.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-blue.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-blue.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-gray.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-gray.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-orange.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-orange.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-purple.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-purple.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-red.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-red.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-white.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Shuttle/shuttle-white.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/silver.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/silver.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/attribution.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/attribution.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_E.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_E.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_N.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_N.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_S.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_S.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_W.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/double_edge_W.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_NE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_NE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_NW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_NW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_SE.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_SE.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_SW.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/single_edge_SW.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/snow-plating.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/snow-plating.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/snow.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Snow/snow.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/super_reinforced.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/super_reinforced.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/TileEntities/chasm.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/TileEntities/chasm.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/TileEntities/liquid-lava.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/TileEntities/liquid-lava.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/TileEntities/liquid-phoron.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/TileEntities/liquid-phoron.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/TileEntities/liquid-water.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/TileEntities/liquid-water.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/TileEntities/swimming-pool.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/TileEntities/swimming-pool.rsi/)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/web.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/web.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Wood/attributions.yml`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Wood/attributions.yml)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Wood/wood-broken.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Wood/wood-broken.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Wood/wood-large.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Wood/wood-large.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Wood/wood-tile.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Wood/wood-tile.png)
+- [`Resources/Textures/_WF/Resprites/Wizden/Tiles/Wood/wood.png`](../../../Resources/Textures/_WF/Resprites/Wizden/Tiles/Wood/wood.png)
 
 ## Non-modular edits
 
 - [`Resources/Prototypes/_Mono/Turf/generated.yml`](../../../Resources/Prototypes/_Mono/Turf/generated.yml): Port floor sprite updates from upstream respritening batches.
 - [`Resources/Prototypes/_Mono/Turf/plating.yml`](../../../Resources/Prototypes/_Mono/Turf/plating.yml): Port floor sprite updates from upstream respritening batches.
 - [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/closets.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/closets.yml): Repath Frontier closet prototypes for the new closet sprites.
+- [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/Lockers/lockers.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/Lockers/lockers.yml): Comments out old rendering code
 - [`Resources/Prototypes/Catalog/Cargo/cargo_security.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_security.yml): Port closet sprite mappings from upstream respritening batches.
 - [`Resources/Prototypes/Catalog/Cargo/cargo_service.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_service.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Entities/Objects/Weapons/Guns/Projectiles/magic.yml`](../../../Resources/Prototypes/Entities/Objects/Weapons/Guns/Projectiles/magic.yml): Port closet sprite mappings from upstream respritening batches.
@@ -43,7 +287,7 @@ None.
 - [`Resources/Prototypes/Research/industrial.yml`](../../../Resources/Prototypes/Research/industrial.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Tiles/basic.yml`](../../../Resources/Prototypes/Tiles/basic.yml): Port redesigned Gray, White, and Dark floor sprites.
 - [`Resources/Prototypes/Tiles/floors.yml`](../../../Resources/Prototypes/Tiles/floors.yml)
-  - Use redesigned floor prototypes from Tiles/basic.yml.
+  - Moved to basic.yml
   - Repath the glass floor sprites.
   - Repathed
   - Repath circuit floors and use their new sprite variants.
@@ -53,39 +297,11 @@ None.
   - Repath the chromite floor sprite and edge textures.
   - Repath the astro ice floor sprite.
 - [`Resources/Prototypes/Tiles/planet.yml`](../../../Resources/Prototypes/Tiles/planet.yml): Port floor sprite updates from upstream respritening batches.
-- [`Resources/Prototypes/Tiles/plating.yml`](../../../Resources/Prototypes/Tiles/plating.yml): Port floor sprite updates from upstream respritening batches.
+- [`Resources/Prototypes/Tiles/plating.yml`](../../../Resources/Prototypes/Tiles/plating.yml): Added variants
 - [`Resources/Textures/_Impstation/Structures/`](../../../Resources/Textures/_Impstation/Structures/): Impstation structure resprites (thermomachines, cryo pod, cryosleep, hydro tray, conveyor, fax, stasis bed, suit storage).
 - [`Resources/Textures/_NF/Structures/Storage/closet.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/closet.rsi/): Frontier closet sprites updated for the resprited prototype states.
 - [`Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/): Frontier wall-locker sprites updated for the resprited prototype states.
-- [`Resources/Textures/Tiles/Asteroid/attribution.yml`](../../../Resources/Textures/Tiles/Asteroid/attribution.yml): Record attributions for resprited asteroid floor assets.
 - [`Resources/Textures/Tiles/attributions.yml`](../../../Resources/Textures/Tiles/attributions.yml): Record attributions for resprited root-level tile textures.
-- [`Resources/Textures/Tiles/Basic/Dark/attributions.yml`](../../../Resources/Textures/Tiles/Basic/Dark/attributions.yml): Record attributions for resprited dark floor assets.
-- [`Resources/Textures/Tiles/Basic/Gray/attributions.yml`](../../../Resources/Textures/Tiles/Basic/Gray/attributions.yml): Record attributions for resprited gray floor assets.
-- [`Resources/Textures/Tiles/Basic/White/attributions.yml`](../../../Resources/Textures/Tiles/Basic/White/attributions.yml): Record attributions for resprited white floor assets.
-- [`Resources/Textures/Tiles/Cave/attributions.yml`](../../../Resources/Textures/Tiles/Cave/attributions.yml): Record attributions for resprited cave floor assets.
-- [`Resources/Textures/Tiles/Checker/attributions.yml`](../../../Resources/Textures/Tiles/Checker/attributions.yml): Record attributions for resprited checker floor assets.
-- [`Resources/Textures/Tiles/Chromite/attributions.yml`](../../../Resources/Textures/Tiles/Chromite/attributions.yml): Record attributions for resprited chromite floor assets.
-- [`Resources/Textures/Tiles/Circuit/attributions.yml`](../../../Resources/Textures/Tiles/Circuit/attributions.yml): Record attributions for resprited circuit floor assets.
-- [`Resources/Textures/Tiles/Concrete/attribution.yml`](../../../Resources/Textures/Tiles/Concrete/attribution.yml): Record attributions for resprited concrete floor assets.
-- [`Resources/Textures/Tiles/Desert/attribution.yml`](../../../Resources/Textures/Tiles/Desert/attribution.yml): Record attributions for resprited desert floor assets.
-- [`Resources/Textures/Tiles/Dirt/attributions.yml`](../../../Resources/Textures/Tiles/Dirt/attributions.yml): Record attributions for resprited dirt floor assets.
-- [`Resources/Textures/Tiles/Exo/attribution.yml`](../../../Resources/Textures/Tiles/Exo/attribution.yml): Record attributions for resprited exoborg floor assets.
-- [`Resources/Textures/Tiles/Glass/attribution.yml`](../../../Resources/Textures/Tiles/Glass/attribution.yml): Record attributions for resprited glass floor assets.
-- [`Resources/Textures/Tiles/Grass/attribution.yml`](../../../Resources/Textures/Tiles/Grass/attribution.yml): Record attributions for resprited grass floor assets.
-- [`Resources/Textures/Tiles/GrassDark/attribution.yml`](../../../Resources/Textures/Tiles/GrassDark/attribution.yml): Record attributions for resprited dark grass floor assets.
-- [`Resources/Textures/Tiles/GrassJungle/attribution.yml`](../../../Resources/Textures/Tiles/GrassJungle/attribution.yml): Record attributions for resprited jungle grass floor assets.
-- [`Resources/Textures/Tiles/GrassLight/attribution.yml`](../../../Resources/Textures/Tiles/GrassLight/attribution.yml): Record attributions for resprited light grass floor assets.
-- [`Resources/Textures/Tiles/Ice/attributions.yml`](../../../Resources/Textures/Tiles/Ice/attributions.yml): Record attributions for resprited ice floor assets.
-- [`Resources/Textures/Tiles/Ironsand/attribution.yml`](../../../Resources/Textures/Tiles/Ironsand/attribution.yml): Record attributions for resprited ironsand floor assets.
-- [`Resources/Textures/Tiles/Marble/attributions.yml`](../../../Resources/Textures/Tiles/Marble/attributions.yml): Record attributions for resprited marble floor assets.
 - [`Resources/Textures/Tiles/Planet/attributions.yml`](../../../Resources/Textures/Tiles/Planet/attributions.yml): Record attributions for resprited planetary floor assets.
-- [`Resources/Textures/Tiles/Shuttle/attributions.yml`](../../../Resources/Textures/Tiles/Shuttle/attributions.yml): Record attributions for resprited shuttle floor assets.
-- [`Resources/Textures/Tiles/Snow/attribution.yml`](../../../Resources/Textures/Tiles/Snow/attribution.yml): Record attributions for resprited snow floor assets.
-- [`Resources/Textures/Tiles/TileEntities/chasm.rsi/`](../../../Resources/Textures/Tiles/TileEntities/chasm.rsi/): Chasm tile-entity sprites ported with the floor resprites.
-- [`Resources/Textures/Tiles/TileEntities/liquid-lava.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-lava.rsi/): Lava tile-entity sprites ported with the floor resprites.
-- [`Resources/Textures/Tiles/TileEntities/liquid-phoron.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-phoron.rsi/): Phoron tile-entity sprites ported with the floor resprites.
-- [`Resources/Textures/Tiles/TileEntities/liquid-water.rsi/`](../../../Resources/Textures/Tiles/TileEntities/liquid-water.rsi/): Water tile-entity sprites ported with the floor resprites.
-- [`Resources/Textures/Tiles/TileEntities/swimming-pool.rsi/`](../../../Resources/Textures/Tiles/TileEntities/swimming-pool.rsi/): Pool tile-entity sprites ported with the floor resprites.
-- [`Resources/Textures/Tiles/Wood/attributions.yml`](../../../Resources/Textures/Tiles/Wood/attributions.yml): Record attributions for resprited wood floor assets.
 
 <!-- WOLFGATE-GENERATED END -->
