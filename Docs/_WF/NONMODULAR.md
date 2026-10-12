@@ -43,6 +43,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - tells an instant do-after from a running one
   - an instant do-after has already ended, so nothing would ever delete the effect
 - [`Content.Server/_NF/PublicTransit/PublicTransitSystem.cs`](../../Content.Server/_NF/PublicTransit/PublicTransitSystem.cs): announce the departure, as FTLToDock now flies and OnShuttleArrival announces the stop
+- [`Content.Server/Anomaly/Effects/ProjectileAnomalySystem.cs`](../../Content.Server/Anomaly/Effects/ProjectileAnomalySystem.cs): with nothing in range Pick threw, so a supercritical never ended and retried every tick
 - [`Content.Server/Body/Systems/RespiratorSystem.cs`](../../Content.Server/Body/Systems/RespiratorSystem.cs): entities without a respirator cannot metabolize inhaled gases; absence is valid.
 - [`Content.Server/Cargo/Systems/CargoSystem.Shuttle.cs`](../../Content.Server/Cargo/Systems/CargoSystem.Shuttle.cs)
   - sums the bounty hand-in value
@@ -59,6 +60,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - start a real jump, as an ensured FTLComponent stayed Available and was removed
   - pick the dock without teleporting the shuttle there before the jump
 - [`Content.Server/VendingMachines/VendingMachineSystem.cs`](../../Content.Server/VendingMachines/VendingMachineSystem.cs): a free vend skips the cash payment, which logs a zero amount as invalid
+- [`Content.Shared/_FinalHorizon/Guns/AlternateGun/AlternateGunSystem.cs`](../../Content.Shared/_FinalHorizon/Guns/AlternateGun/AlternateGunSystem.cs): the client picks the gun to fire from this
 - [`Content.Shared/_Goobstation/StationRadio/Systems/StationRadioReceiverSystem.cs`](../../Content.Shared/_Goobstation/StationRadio/Systems/StationRadioReceiverSystem.cs)
   - the track's audio entity despawns when it ends, and a volume is not a gain
   - one place that mutes or restores the playing track
@@ -85,6 +87,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - removed - Appearance hashed by reference, broke equal profiles hashing alike
   - the company is part of the hash
 - [`Content.Shared/Projectiles/SharedProjectileSystem.cs`](../../Content.Shared/Projectiles/SharedProjectileSystem.cs): the client replays a thrown embed's collision in prediction, and the projectile is already in
+- [`Content.Shared/Weapons/Ranged/Systems/SharedGunSystem.cs`](../../Content.Shared/Weapons/Ranged/Systems/SharedGunSystem.cs): the gun is the mech's equipment, upstream passes the mech itself
 - [`Content.Shared/Weapons/Ranged/Systems/SharedGunSystem.Revolver.cs`](../../Content.Shared/Weapons/Ranged/Systems/SharedGunSystem.Revolver.cs): C# % keeps the sign, index 0 gave -1 and crashed the server
 - [`README.md`](../../README.md): reworded for Wolfgate build differences
 - [`Resources/Audio/_Goobstation/RadioStation/`](../../Resources/Audio/_Goobstation/RadioStation/): Radio host tracks (Monolith#4833) re-encoded to mono Vorbis q0 to cut download size.
@@ -95,19 +98,17 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - the map has one UndergroundVend, not four
 - [`Resources/Locale/en-US/_Mono/prototypes/access/accesses.ftl`](../../Resources/Locale/en-US/_Mono/prototypes/access/accesses.ftl): Monolith#4816 shipped the Underground access levels without names
 - [`Resources/migration.yml`](../../Resources/migration.yml): Monolith#4816 renamed the WL-01 suit and helmet without a migration
-- [`Resources/Prototypes/_DV/Entities/Objects/Weapons/Guns/SMGs/smgs.yml`](../../Resources/Prototypes/_DV/Entities/Objects/Weapons/Guns/SMGs/smgs.yml)
-  - a legal base, so the PA Keyboard and expedition variants don't inherit the black-market contraband parent
-  - the black-market Typewriter keeps its id and its contraband parent
 - [`Resources/Prototypes/_Mono/Catalogs/Bounties/MMC/production_bounties.yml`](../../Resources/Prototypes/_Mono/Catalogs/Bounties/MMC/production_bounties.yml): the camera bounty asked for optical sensors (OpticsEconomy1)
 - [`Resources/Prototypes/_Mono/Catalogs/Bounties/MMC/value_bounties.yml`](../../Resources/Prototypes/_Mono/Catalogs/Bounties/MMC/value_bounties.yml): MMC cash bounties pay 0.9x their value so cash-to-MIC-to-cash can't loop for profit
 - [`Resources/Prototypes/_Mono/Catalogs/VendingMachines/Inventories/ussp.yml`](../../Resources/Prototypes/_Mono/Catalogs/VendingMachines/Inventories/ussp.yml): the loaded magazine is class-3 contraband worth 10 FMC since Monolith#4816
 - [`Resources/Prototypes/_Mono/Entities/Markers/Spawners/Random/scrap_processor.yml`](../../Resources/Prototypes/_Mono/Entities/Markers/Spawners/Random/scrap_processor.yml): plastitanium moved into the rare materials group so scrap doesn't undercut the crystallizer
 - [`Resources/Prototypes/_Mono/Entities/Objects/Economy/components.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Economy/components.yml): Monolith#4805 commented the price out with the flash, leaving 300 for a good made from 1800
-- [`Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/SMGs/smgs.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/SMGs/smgs.yml): was WeaponSubMachineGunTypewriter, class-3 contraband since Monolith#4816
 - [`Resources/Prototypes/_Mono/Guidebook/rules.yml`](../../Resources/Prototypes/_Mono/Guidebook/rules.yml)
   - erotic roleplay rule removed, PR #27
   - erotic roleplay rule entry removed, PR #27
 - [`Resources/Prototypes/_Mono/Loadouts/MedicalDispatch/universal_groups.yml`](../../Resources/Prototypes/_Mono/Loadouts/MedicalDispatch/universal_groups.yml): the ER PDAs, was MedicalDoctorPDA and ContractorSeniorPhysicianPDA, whose ID resets to medical doctor access
+- [`Resources/Prototypes/_Mono/Roles/Jobs/Medical/medic.yml`](../../Resources/Prototypes/_Mono/Roles/Jobs/Medical/medic.yml): responders start with advanced jaws of life
+- [`Resources/Prototypes/_NF/Catalog/VendingMachines/Inventories/engivend.yml`](../../Resources/Prototypes/_NF/Catalog/VendingMachines/Inventories/engivend.yml): radiation suits buyable from the EngiVend
 - [`Resources/Prototypes/_NF/Entities/Objects/Weapons/Guns/expedition_guns.yml`](../../Resources/Prototypes/_NF/Entities/Objects/Weapons/Guns/expedition_guns.yml): was WeaponSubMachineGunTypewriter, class-3 contraband since Monolith#4816
 - [`Resources/Prototypes/_NF/Entities/Structures/Machines/Computers/computers_tabletop.yml`](../../Resources/Prototypes/_NF/Entities/Structures/Machines/Computers/computers_tabletop.yml): Medical Dispatch staff are Colonial since Monolith#4807
 - [`Resources/Prototypes/_NF/Events/events.yml`](../../Resources/Prototypes/_NF/Events/events.yml)
@@ -115,6 +116,11 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - vent clog event disabled
 - [`Resources/Prototypes/_NF/Roles/Jobs/Medical/doc.yml`](../../Resources/Prototypes/_NF/Roles/Jobs/Medical/doc.yml): the Medical department has no roles since Monolith#4807, so count medic time instead
 - [`Resources/Prototypes/_Obelisk/Species/hydrakin.yml`](../../Resources/Prototypes/_Obelisk/Species/hydrakin.yml): hydrakin is not selectable in character creation
+- [`Resources/Prototypes/Catalog/VendingMachines/Inventories/engivend.yml`](../../Resources/Prototypes/Catalog/VendingMachines/Inventories/engivend.yml): radiation suits buyable from the EngiVend
+- [`Resources/Prototypes/Entities/Clothing/Head/hoods.yml`](../../Resources/Prototypes/Entities/Clothing/Head/hoods.yml): radiation hood blocks more radiation (was 0.65)
+- [`Resources/Prototypes/Entities/Clothing/OuterClothing/suits.yml`](../../Resources/Prototypes/Entities/Clothing/OuterClothing/suits.yml)
+  - radiation suit blocks more radiation (was 0.1)
+  - vend price for the EngiVend, instead of its scrap value
 - [`Resources/Prototypes/Entities/Objects/Misc/identification_cards.yml`](../../Resources/Prototypes/Entities/Objects/Misc/identification_cards.yml): the universal card opens the Underground Black Market too
 - [`Resources/Prototypes/Entities/Objects/Tools/access_configurator.yml`](../../Resources/Prototypes/Entities/Objects/Tools/access_configurator.yml): Monolith#4816 added the level without a way to hand it out
 - [`Resources/Prototypes/Entities/Objects/Weapons/Guns/Turrets/turrets_ballistic.yml`](../../Resources/Prototypes/Entities/Objects/Weapons/Guns/Turrets/turrets_ballistic.yml)
