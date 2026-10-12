@@ -278,15 +278,15 @@
   parent: [BaseStructureWallmount, LockerWallMedical]
   name: chemistry wall locker
   components:
-#  - type: Sprite #WOLFGATE(Resprites): Fixes shit NF lockers
+#  - type: Sprite #WOLFGATE(Resprites) START: Fixes shit NF lockers
 #    sprite: _NF/Structures/Storage/wall_locker.rsi
 #  - type: Appearance
 #  - type: EntityStorageVisuals
 #    stateBaseClosed: med
 #    stateDoorOpen: med_open
-#    stateDoorClosed: chem_door
+#    stateDoorClosed: chem_door #WOLFGATE END
   - type: Sprite
-    sprite: Structures/Storage/ClosetsWallmounted/medical-secure.rsi
+    sprite: Structures/Storage/ClosetsWallmounted/medical-secure.rsi #WOLFGATE(Resprites): Repath
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container

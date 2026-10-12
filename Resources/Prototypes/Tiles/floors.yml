@@ -681,7 +681,7 @@
   flammability: 2
   # ES END
 
-#- type: tile #WOLFGATE(Resprites): Moved to basic.yml
+#- type: tile #WOLFGATE(Resprites) START: Moved to basic.yml
 #  id: FloorTechMaintDark
 #  name: tiles-techmaint-floor-dark
 #  sprite: /Textures/Tiles/tech_maint_dark.png
@@ -694,7 +694,7 @@
 #  heatCapacity: 10000
 #  # ES START
 #  flammability: 2
-#  # ES END
+#  # ES END #WOLFGATE END
 
 - type: tile
   id: FloorReinforced
@@ -773,7 +773,7 @@
 - type: tile
   id: FloorMetalDiamond
   name: tiles-diamond-plate-floor
-  sprite: /Textures/_WF/Resprites/Wizden/Tiles/metaldiamond.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/metaldiamond.png #WOLFGATE(Resprites): Repathed
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -800,7 +800,7 @@
 - type: tile
   id: FloorBlue
   name: tiles-blue-tile
-  sprite: /Textures/_WF/Resprites/Wizden/Tiles/blue.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/blue.png #WOLFGATE(Resprites): Repathed
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -815,7 +815,14 @@
 - type: tile
   id: FloorSteelLime
   name: tiles-lime-floor
-  sprite: /Textures/_WF/Resprites/Wizden/Tiles/lime.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/lime.png #WOLFGATE(Resprites) START: Repathed and made to not crash
+  #sprite: /Textures/Tiles/lime.png
+  #variants: 4
+  #placementVariants:
+  #- 1.0
+  #- 1.0
+  #- 1.0
+  #- 1.0 #WOLFGATE END
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]

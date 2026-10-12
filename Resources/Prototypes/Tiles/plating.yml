@@ -1,7 +1,7 @@
 - type: tile
   id: Plating
   name: tiles-plating
-  sprite: /Textures/_WF/Resprites/Wizden/Tiles/plating.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/plating.png #WOLFGATE(Resprites): Repathed
   baseTurf: Lattice
   isSubfloor: true
   deconstructTools: [ Axing ] # DeltaV - The return of fireaxe prying
@@ -103,7 +103,7 @@
 - type: tile
   id: Lattice
   name: tiles-lattice
-  sprite: /Textures/_WF/Resprites/Wizden/Tiles/lattice.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/lattice.png #WOLFGATE(Resprites): Repathed
   baseTurf: Space
   isSubfloor: true
   deconstructTools: [ Cutting ]
@@ -148,4 +148,3 @@
   # already shouldnt be spreading here bc airtight, but yknow
   flammability: -99999
   # ES END
-

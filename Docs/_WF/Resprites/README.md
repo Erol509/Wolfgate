@@ -256,12 +256,17 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
 ## Non-modular edits
 
 - [`Resources/Prototypes/_Mono/Turf/generated.yml`](../../../Resources/Prototypes/_Mono/Turf/generated.yml): Port floor sprite updates from upstream respritening batches.
-- [`Resources/Prototypes/_Mono/Turf/plating.yml`](../../../Resources/Prototypes/_Mono/Turf/plating.yml): Port floor sprite updates from upstream respritening batches.
+- [`Resources/Prototypes/_Mono/Turf/plating.yml`](../../../Resources/Prototypes/_Mono/Turf/plating.yml)
+  - Repathed
+  - Needed to not crash
 - [`Resources/Prototypes/_NF/Entities/Structures/base_structure.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/base_structure.yml): Fixes shit NF lockers
+- [`Resources/Prototypes/_NF/Entities/Structures/Machines/Computers/frame_wallmount.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Machines/Computers/frame_wallmount.yml): Needed
 - [`Resources/Prototypes/_NF/Entities/Structures/Machines/jukebox.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Machines/jukebox.yml): Needed
 - [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/closets.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/closets.yml): Repath Frontier closet prototypes for the new closet sprites.
 - [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/Lockers/lockers.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/Lockers/lockers.yml): Comments out old rendering code
-- [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/wall_lockers.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/wall_lockers.yml): Fixes shit NF lockers
+- [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/wall_lockers.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/wall_lockers.yml)
+  - Fixes shit NF lockers
+  - Repath
 - [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/wardrobe.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/wardrobe.yml): Repathed
 - [`Resources/Prototypes/Catalog/Cargo/cargo_service.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_service.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Entities/Objects/Weapons/Guns/Projectiles/magic.yml`](../../../Resources/Prototypes/Entities/Objects/Weapons/Guns/Projectiles/magic.yml): Port closet sprite mappings from upstream respritening batches.
@@ -291,15 +296,18 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
 - [`Resources/Prototypes/Tiles/basic.yml`](../../../Resources/Prototypes/Tiles/basic.yml): Port redesigned Gray, White, and Dark floor sprites.
 - [`Resources/Prototypes/Tiles/floors.yml`](../../../Resources/Prototypes/Tiles/floors.yml)
   - Moved to basic.yml
-  - Repath the glass floor sprites.
   - Repathed
+  - Repathed and made to not crash
+  - Repath the glass floor sprites.
   - Repath grass, dirt, and asteroid floor sprites and variants.
   - Repath the cave floor sprite and edge textures.
   - Update flesh floor variant count and placement weights.
   - Repath the chromite floor sprite and edge textures.
   - Repath the astro ice floor sprite.
 - [`Resources/Prototypes/Tiles/planet.yml`](../../../Resources/Prototypes/Tiles/planet.yml): Port floor sprite updates from upstream respritening batches.
-- [`Resources/Prototypes/Tiles/plating.yml`](../../../Resources/Prototypes/Tiles/plating.yml): Added variants
+- [`Resources/Prototypes/Tiles/plating.yml`](../../../Resources/Prototypes/Tiles/plating.yml)
+  - Repathed
+  - Added variants
 - [`Resources/Textures/_Impstation/Structures/`](../../../Resources/Textures/_Impstation/Structures/): Impstation structure resprites (thermomachines, cryo pod, cryosleep, hydro tray, conveyor, fax, stasis bed, suit storage).
 - [`Resources/Textures/_NF/Structures/Storage/closet.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/closet.rsi/): Temp, pending moving lockers to module
 - [`Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/`](../../../Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/): Temp, pending moving lockers to module
