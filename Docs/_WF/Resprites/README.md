@@ -281,7 +281,9 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
   - Port closet and wall-locker sprite layers from upstream respritening batches.
   - Imp Sprite Ports
 - [`Resources/Prototypes/Entities/Structures/Storage/Closets/big_boxes.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/big_boxes.yml): Port closet sprite mappings from upstream respritening batches.
-- [`Resources/Prototypes/Entities/Structures/Storage/Closets/closets.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/closets.yml): Port closet sprite mappings from upstream respritening batches.
+- [`Resources/Prototypes/Entities/Structures/Storage/Closets/closets.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/closets.yml)
+  - Port closet sprite mappings from upstream respritening batches.
+  - Mono fuckup, which makes global build fail.
 - [`Resources/Prototypes/Entities/Structures/Storage/Closets/Lockers/base_structurelockers.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/Lockers/base_structurelockers.yml): Port closet sprite mappings from upstream respritening batches.
 - [`Resources/Prototypes/Entities/Structures/Storage/Closets/Lockers/lockers.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/Lockers/lockers.yml): Port closet sprite mappings from upstream respritening batches.
 - [`Resources/Prototypes/Entities/Structures/Storage/Closets/wall_lockers.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/wall_lockers.yml): Port closet sprite mappings from upstream respritening batches.
