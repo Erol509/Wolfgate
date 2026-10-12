@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     #sprite: _NF/Structures/Storage/closet.rsi #WOLFGATE(Resprites): Comments out old rendering code
-    sprite: Structures/Storage/Closets/antag-syndicate.rsi
+    sprite: Structures/Storage/Closets/generic-secure.rsi
 
 # Mail
 - type: entity

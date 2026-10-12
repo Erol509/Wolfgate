@@ -296,329 +296,329 @@ unmarked:
     module: null
     reason: Nulb vinyl tracks (Monolith#4835) re-encoded to mono Vorbis q0 to cut download size.
   - path: Resources/Textures/Structures/Storage/Closets/antag-secure-syndicate.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/antag-syndicate.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/armory-secure-gunsafe.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/biohazard-janitor.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/biohazard-science.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/biohazard-security.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/biohazard-virology.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/biohazard.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/bomb.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/cargo-secure-salvage.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/cargo-wardrobe-salvage.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/cargo-wardrobe.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/closet-effects.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/command-secure-captain.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/command-secure-cargo.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/command-secure-engineering.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/command-secure-medical.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/command-secure-science.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/command-secure-security.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/command-secure-service.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/emergency-fire.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/emergency-nitrogen.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/emergency-oxygen.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/engineering-radiation.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/engineering-secure-atmos.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/engineering-secure-electrical.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/engineering-secure-engineer.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/engineering-secure-shuttlerepair.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/engineering-secure-welding.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/engineering-tools.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/engineering-wardrobe-atmos.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/engineering-wardrobe.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-secure.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-wardrobe-black.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-wardrobe-blue.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-wardrobe-green.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-wardrobe-mixed.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-wardrobe-pink.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-wardrobe-purple.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-wardrobe-red.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-wardrobe-white.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-wardrobe-yellow.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic-wardrobe.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/generic.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/medical-secure-chemistry.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/medical-secure-doctor.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/medical-secure-medicine.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/medical-secure-paramedic.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/medical-wardrobe-chemistry.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/medical-wardrobe-doctor.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/misc-cardboard-box.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/misc-secure-brigmedic.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/misc-wardrobe-genetics.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/misc-wardrobe-robotics.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/misc-wardrobe-virology.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/prisoner-secure-1.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/prisoner-secure-2.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/prisoner-secure-3.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/prisoner-secure-4.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/prisoner-secure-5.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/prisoner-secure-6.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/prisoner-secure-7.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/prisoner-secure-8.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/prisoner-wardrobe.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/science-secure-scientist.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/science-wardrobe.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/security-secure-officer.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/security-secure-warden.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/security-wardrobe.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/service-secure-botany.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/service-secure-cabinet.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/service-secure-clown.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/service-secure-freezer.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/service-secure-mime.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/service-wardrobe-botany.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/service-wardrobe-chapel.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/service-wardrobe-kitchen.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/Closets/service-wardrobe-legal.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/antag-secure-syndicate.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/closet-effects.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/emergency-fire.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/emergency-nitrogen.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/emergency-oxygen.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/engineering-secure-shuttlerepair.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/engineering-wardrobe-atmos.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-secure.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-wardrobe-black.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-wardrobe-blue.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-wardrobe-green.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-wardrobe-mixed.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-wardrobe-pink.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-wardrobe-purple.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-wardrobe-red.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-wardrobe-white.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-wardrobe-yellow.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic-wardrobe.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/generic.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/medical-secure.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/prisoner-secure-1.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/prisoner-secure-2.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/prisoner-secure-3.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/prisoner-secure-4.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/prisoner-secure-5.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/prisoner-secure-6.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/prisoner-secure-7.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/prisoner-secure-8.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/Structures/Storage/ClosetsWallmounted/prisoner-wardrobe.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/_NF/Structures/Storage/closet.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
   - path: Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/
-    modules: Resprites
+    module: Resprites
     reason: Temp, pending moving lockers to module
