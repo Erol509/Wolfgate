@@ -1,4 +1,4 @@
-#- type: tile
+#- type: tile #WOLFGATE(Resprites) START: Moved to basic.yml
 #  id: FloorSteel
 #  name: tiles-steel-floor
 #  sprite: /Textures/Tiles/steel.png
@@ -14,7 +14,7 @@
 #  footstepSounds:
 #    collection: FootstepFloor
 #  itemDrop: FloorTileItemSteel
-#  heatCapacity: 10000
+#  heatCapacity: 10000 #WOLFGATE END
 
 - type: tile
   id: FloorSteelCheckerLight
@@ -86,7 +86,7 @@
 #  footstepSounds:
 #    collection: FootstepFloor
 #  itemDrop: FloorTileItemSteelPavement
-#  heatCapacity: 10000
+#  heatCapacity: 10000 #WOLFGATE END
 
 - type: tile
   id: FloorSteelDiagonal
@@ -118,7 +118,7 @@
   itemDrop: FloorTileItemSteelOffset
   heatCapacity: 10000
 
-#- type: tile
+#- type: tile #WOLFGATE(Resprites) START: Moved to basic.yml
 #  id: FloorSteelMono
 #  name: tiles-steel-floor-mono
 #  sprite: /Textures/Tiles/steel_mono.png
