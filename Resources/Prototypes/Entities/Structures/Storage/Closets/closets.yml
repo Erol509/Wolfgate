@@ -62,7 +62,7 @@
 # Janitorial bomb suit closet
 - type: entity
   id: ClosetJanitorBomb
-  categories: [ DoNotMap ]
+  #categories: [ DoNotMap ] #WOLFGATE(Resprites): Mono fuckup, which makes global build fail.
   name: janitorial bomb suit closet
   parent: ClosetSteelBase
   description: It's a storage unit for janitorial explosion-protective suits.
