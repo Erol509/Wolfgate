@@ -27,7 +27,7 @@
   parent: NFLockerBaseSecure
   name: mercenary locker
   components:
-#  - type: EntityStorageVisuals
+#  - type: EntityStorageVisuals #WOLFGATE(Resprites): Comments out old rendering code
 #    stateBaseClosed: mercenary
 #    stateDoorOpen: mercenary_open
 #    stateDoorClosed: mercenary_door
@@ -195,7 +195,7 @@
   id: LockerStationRepresentative
   parent: [BaseStructureIndestructible, BaseStructureLockImmuneToEmag, BaseStructureAccessReaderImmuneToEmag, NFLockerBaseSecure, LockerHeadOfPersonnel]
   name: overseer's locker
-#  components:
+#  components: #WOLFGATE(Resprites): Comments out old rendering code
 #  - type: EntityStorageVisuals
 #    stateBaseClosed: sr
 #    stateDoorOpen: sr_open
