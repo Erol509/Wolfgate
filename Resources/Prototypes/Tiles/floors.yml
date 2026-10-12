@@ -258,6 +258,69 @@
   flammability: 8
   # ES END
 
+# - type: tile #WOLFGATE(Resprites) START: Moved to basic.yml
+#   id: FloorWhite
+#   name: tiles-white-floor
+#   sprite: /Textures/Tiles/white.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemWhite
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END
+
+# - type: tile
+#   id: FloorWhiteMini
+#   name: tiles-white-floor-mini
+#   sprite: /Textures/Tiles/white_mini.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemWhiteMini
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END
+
+# - type: tile
+#   id: FloorWhitePavement
+#   name: tiles-white-floor-pavement
+#   sprite: /Textures/Tiles/white_pavement.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemWhitePavement
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END #WOLFGATE END
+
 - type: tile
   id: FloorWhiteDiagonal
   name: tiles-white-floor-diagonal
@@ -294,6 +357,69 @@
   flammability: 2
   # ES END
 
+# - type: tile #WOLFGATE(Resprites) START: Moved to basic.yml
+#   id: FloorWhiteMono
+#   name: tiles-white-floor-mono
+#   sprite: /Textures/Tiles/white_mono.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemWhiteMono
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END
+
+# - type: tile
+#   id: FloorWhitePavementVertical
+#   name: tiles-white-floor-pavement-vertical
+#   sprite: /Textures/Tiles/white_pavement_vertical.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemWhitePavementVertical
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END
+
+# - type: tile
+#   id: FloorWhiteHerringbone
+#   name: tiles-white-floor-herringbone
+#   sprite: /Textures/Tiles/white_herringbone.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemWhiteHerringbone
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END #WOLFGATE END
+
 - type: tile
   id: FloorWhiteDiagonalMini
   name: tiles-white-floor-diagonal-mini
@@ -314,6 +440,90 @@
   # ES START
   flammability: 2
   # ES END
+
+# - type: tile #WOLFGATE(Resprites) START: Moved to basic.yml
+#   id: FloorWhitePlastic
+#   name: tiles-plastic-white-floor
+#   sprite: /Textures/Tiles/white_plastic.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemWhite
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 3
+#   # ES END
+
+# - type: tile
+#   id: FloorDark
+#   name: tiles-dark-floor
+#   sprite: /Textures/Tiles/dark.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemDark
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END
+
+# - type: tile
+#   id: FloorDarkMini
+#   name: tiles-dark-floor-mini
+#   sprite: /Textures/Tiles/dark_mini.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemDarkMini
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END
+
+# - type: tile
+#   id: FloorDarkPavement
+#   name: tiles-dark-floor-pavement
+#   sprite: /Textures/Tiles/dark_pavement.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemDarkPavement
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END #WOLFGATE END
 
 - type: tile
   id: FloorDarkDiagonal
@@ -351,6 +561,69 @@
   flammability: 2
   # ES END
 
+# - type: tile #WOLFGATE(Resprites) START: Moved to basic.yml
+#   id: FloorDarkMono
+#   name: tiles-dark-floor-mono
+#   sprite: /Textures/Tiles/dark_mono.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemDarkMono
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END
+
+# - type: tile
+#   id: FloorDarkPavementVertical
+#   name: tiles-dark-floor-pavement-vertical
+#   sprite: /Textures/Tiles/dark_pavement_vertical.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemDarkPavementVertical
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END
+
+# - type: tile
+#   id: FloorDarkHerringbone
+#   name: tiles-dark-floor-herringbone
+#   sprite: /Textures/Tiles/dark_herringbone.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemDarkHerringbone
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END #WOLFGATE END
+
 - type: tile
   id: FloorDarkDiagonalMini
   name: tiles-dark-floor-diagonal-mini
@@ -371,6 +644,27 @@
   # ES START
   flammability: 2
   # ES END
+
+# - type: tile #WOLFGATE(Resprites) START: Moved to basic.yml
+#   id: FloorDarkPlastic
+#   name: tiles-plastic-dark-floor
+#   sprite: /Textures/Tiles/dark_plastic.png
+#   variants: 4
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepTile
+#   itemDrop: FloorTileItemDark
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 3
+#   # ES END #WOLFGATE END
 
 - type: tile
   id: FloorTechMaint
@@ -704,6 +998,28 @@
   # ES START
   flammability: 2
   # ES END
+
+# - type: tile #WOLFGATE(Resprites) START: Moved to basic.yml
+#   id: FloorSteelDamaged
+#   name: tiles-steel-floor
+#   sprite: /Textures/Tiles/steel_damaged.png
+#   variants: 5
+#   placementVariants:
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   - 1.0
+#   baseTurf: Plating
+#   isSubfloor: false
+#   deconstructTools: [ Prying ]
+#   footstepSounds:
+#     collection: FootstepFloor
+#   itemDrop: FloorTileItemSteel #This should probably be made null when it becomes possible to make it such, in SS13 prying destroyed tiles wouldn't give you anything.
+#   heatCapacity: 10000
+#   # ES START
+#   flammability: 2
+#   # ES END #WOLFGATE END
 
 # Concrete
 - type: tile
@@ -1282,15 +1598,14 @@
   # ES END
 
 # Circuits
-# WOLFGATE(Resprites) START: Repath circuit floors and use their new sprite variants.
 - type: tile
   id: FloorGreenCircuit
   name: tiles-green-circuit-floor
-  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-green.png # WOLFGATE(Resprites): Repathed
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-green.png # WOLFGATE(Resprites) START: Repathed
   variants: 2
   placementVariants:
     - 1.0
-    - 1.0
+    - 1.0 #WOLFGATE END
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1305,11 +1620,11 @@
 - type: tile
   id: FloorBlueCircuit
   name: tiles-blue-circuit-floor
-  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-blue.png # WOLFGATE(Resprites): Repathed
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-blue.png # WOLFGATE(Resprites) START: Repathed
   variants: 2
   placementVariants:
     - 1.0
-    - 1.0
+    - 1.0 #WOLFGATE END
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1324,11 +1639,11 @@
 - type: tile
   id: FloorRedCircuit
   name: tiles-red-circuit-floor
-  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-red.png # WOLFGATE(Resprites): Repathed
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Circuit/circuit-red.png # WOLFGATE(Resprites) START: Repathed
   variants: 2
   placementVariants:
       - 1.0
-      - 1.0
+      - 1.0 #WOLFGATE END
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1339,7 +1654,6 @@
   # ES START
   flammability: 2
   # ES END
-# WOLFGATE END
 
 # Terrain
 - type: tile
