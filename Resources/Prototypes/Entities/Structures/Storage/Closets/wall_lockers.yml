@@ -4,6 +4,12 @@
   parent: BaseWallCloset
   name: maintenance wall closet
   description: It's a storage unit.
+#  components:
+#  - type: Appearance
+#  - type: EntityStorageVisuals
+#    stateBaseClosed: generic
+#    stateDoorOpen: generic_open
+#    stateDoorClosed: generic_door
 
 - type: entity
   id: ClosetWallEmergency

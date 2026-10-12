@@ -258,6 +258,7 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
 - [`Resources/Prototypes/_Mono/Turf/generated.yml`](../../../Resources/Prototypes/_Mono/Turf/generated.yml): Port floor sprite updates from upstream respritening batches.
 - [`Resources/Prototypes/_Mono/Turf/plating.yml`](../../../Resources/Prototypes/_Mono/Turf/plating.yml): Port floor sprite updates from upstream respritening batches.
 - [`Resources/Prototypes/_NF/Entities/Structures/base_structure.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/base_structure.yml): Fixes shit NF lockers
+- [`Resources/Prototypes/_NF/Entities/Structures/Machines/jukebox.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Machines/jukebox.yml): Needed
 - [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/closets.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/closets.yml): Repath Frontier closet prototypes for the new closet sprites.
 - [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/Lockers/lockers.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/Lockers/lockers.yml): Comments out old rendering code
 - [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/wall_lockers.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/wall_lockers.yml): Fixes shit NF lockers
