@@ -20,9 +20,6 @@
     { "name": "n2_door" },
     { "name": "o2n2" },
     { "name": "o2n2_open" },
-    { "name": "o2n2_door" },
-    { "name": "open"},
-    { "name": "closed"}
-
+    { "name": "o2n2_door" }
   ]
 }
