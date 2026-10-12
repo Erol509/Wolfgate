@@ -275,16 +275,18 @@
 # Other: Chemistry wall locker
 - type: entity
   id: LockerWallChemistry
-  parent: [BaseStructureWallmountOld, LockerWallMedical]
+  parent: [BaseStructureWallmount, LockerWallMedical]
   name: chemistry wall locker
   components:
+#  - type: Sprite
+#    sprite: _NF/Structures/Storage/wall_locker.rsi
+#  - type: Appearance
+#  - type: EntityStorageVisuals
+#    stateBaseClosed: med
+#    stateDoorOpen: med_open
+#    stateDoorClosed: chem_door
   - type: Sprite
-    sprite: _NF/Structures/Storage/wall_locker.rsi
-  - type: Appearance
-  - type: EntityStorageVisuals
-    stateBaseClosed: med
-    stateDoorOpen: med_open
-    stateDoorClosed: chem_door
+    sprite: Structures/Storage/ClosetsWallmounted/medical-secure.rsi
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
