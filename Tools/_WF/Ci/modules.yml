@@ -622,3 +622,60 @@ unmarked:
   - path: Resources/Textures/_NF/Structures/Storage/wall_locker.rsi/
     module: Resprites
     reason: Temp, pending moving lockers to module
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/MotleyAnne/inertia.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/MotleyAnne/mock.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/MotleyAnne/snakelet.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/bazalt.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/europa.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/gadfly.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/kortik_em.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/kortik_r.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/kresta.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/kynda.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/layak.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/motleyanne.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/neptune.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/ontos.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/osa.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/saturn.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/scorpion.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/PDV/tethys.yml
+    module: ShipArmor
+    reason: PDV hull refit from plastitanium to adamantite walls.
+  - path: Resources/SharedMaps/_Mono/Shuttles/Civilian/caracara.yml
+    module: null
+    reason: PDV pack, top-left thruster was mapped disabled.
