@@ -19,7 +19,7 @@
   name: tiles-steel-floor
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -32,7 +32,7 @@
   name: tiles-steel-floor-mini
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-mini.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -45,7 +45,7 @@
   name: tiles-steel-floor-pavement
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-pavement.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -58,7 +58,7 @@
   name: tiles-steel-floor-mono
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-mono.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -73,7 +73,7 @@
   name: tiles-steel-floor-pavement-vertical
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-pavement-vertical.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -88,7 +88,7 @@
   name: tiles-steel-floor-herringbone
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-herringbone.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -103,7 +103,7 @@
   name: tiles-steel-floor-vertical-slats-bordered
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-vertical-slats.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -116,7 +116,7 @@
   name: tiles-steel-floor-horizontal-slats-bordered
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-horizontal-slats.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -129,7 +129,7 @@
   name: tiles-techmaint2-floor
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-maint.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -151,7 +151,7 @@
   name: tiles-plastic-floor
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Gray/gray-plastic.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -181,7 +181,7 @@
   name: tiles-white-floor
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -197,7 +197,7 @@
   name: tiles-white-floor-mini
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-mini.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -213,7 +213,7 @@
   name: tiles-white-floor-vertical-slats-bordered
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-vertical-slats.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -226,7 +226,7 @@
   name: tiles-white-floor-horizontal-slats-bordered
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-horizontal-slats.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -239,7 +239,7 @@
   name: tiles-white-floor-pavement
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-pavement.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -255,7 +255,7 @@
   name: tiles-white-floor-mono
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-mono.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -271,7 +271,7 @@
   name: tiles-white-floor-pavement-vertical
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-pavement-vertical.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -287,7 +287,7 @@
   name: tiles-white-floor-herringbone
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-herringbone.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -303,7 +303,7 @@
   name: tiles-plastic-white-floor
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/White/white-plastic.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -320,7 +320,7 @@
   name: tiles-dark-floor
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -336,7 +336,7 @@
   name: tiles-dark-floor-mini
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-mini.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -352,7 +352,7 @@
   name: tiles-dark-floor-vertical-slats-bordered
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-vertical-slats.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -365,7 +365,7 @@
   name: tiles-dark-floor-horizontal-slats-bordered
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-horizontal-slats.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -378,7 +378,7 @@
   name: tiles-dark-floor-pavement
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-pavement.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -394,7 +394,7 @@
   name: tiles-dark-floor-mono
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-mono.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -410,7 +410,7 @@
   name: tiles-dark-floor-pavement-vertical
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-pavement-vertical.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -426,7 +426,7 @@
   name: tiles-dark-floor-herringbone
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-herringbone.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -442,7 +442,7 @@
   name: tiles-plastic-dark-floor
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-plastic.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
@@ -458,7 +458,7 @@
   name: tiles-techmaint-floor-dark
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Basic/Dark/dark-maint.png
   variants: 4
-  PlacementVariants:
+  placementVariants:
   - 1.0
   - 1.0
   - 1.0
