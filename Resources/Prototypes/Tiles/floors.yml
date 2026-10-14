@@ -1555,7 +1555,12 @@
   id: FloorGlass
   name: tiles-glass-floor
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Glass/glass.png # WOLFGATE(Resprites): Repathed
-  variants: 1
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1572,7 +1577,12 @@
   id: FloorRGlass
   name: tiles-reinforced-glass-floor
   sprite: /Textures/_WF/Resprites/Wizden/Tiles/Glass/glass-reinf.png # WOLFGATE(Resprites): Repathed
-  variants: 1
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
