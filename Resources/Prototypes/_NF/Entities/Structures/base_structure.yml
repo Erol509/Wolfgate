@@ -74,7 +74,7 @@
         damage: 0
 
 - type: entity
-  parent: [BaseStructureDisableAnchoring] #WOLFGATE(Resprites): Fixes shit NF lockers
+  parent: BaseStructureDisableAnchoring
   id: BaseStructureWallmount
   abstract: true
   placement:
