@@ -275,7 +275,7 @@
 # Other: Chemistry wall locker
 - type: entity
   id: LockerWallChemistry
-  parent: [BaseStructureWallmountOld, LockerWallMedical] #WOLFGATE(Resprites): Fixes shit NF lockers
+  parent: [BaseStructureWallmountOld, LockerWallMedicalOld] #WOLFGATE(Resprites): Fixes shit NF lockers
   name: chemistry wall locker
   components:
   - type: Sprite

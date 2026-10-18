@@ -319,3 +319,16 @@
     node: done
     containers:
     - entity_storage
+
+- type: entity
+  id: LockerWallMedicalOld
+  parent: BaseWallLockerOld
+  name: medical wall locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: med
+    stateDoorOpen: med_open
+    stateDoorClosed: med_door
+  - type: AccessReader
+#    access: [["Medical"]]
