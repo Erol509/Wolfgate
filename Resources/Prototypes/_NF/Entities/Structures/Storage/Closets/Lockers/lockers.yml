@@ -1,12 +1,11 @@
 # Basic
 - type: entity
   id: NFLockerBaseSecure
-  parent: LockerBaseSecure
+  parent: LockerBaseSecureOld
   abstract: true
   components:
   - type: Sprite
-    #sprite: _NF/Structures/Storage/closet.rsi #WOLFGATE(Resprites): Comments out old rendering code
-    sprite: Structures/Storage/Closets/generic-secure.rsi
+    sprite: _NF/Structures/Storage/closet.rsi
 
 # Mail
 - type: entity
@@ -14,10 +13,10 @@
   parent: NFLockerBaseSecure
   name: mail carrier's locker
   components:
-#  - type: EntityStorageVisuals #WOLFGATE(Resprites): Comments out old rendering code
-#    stateBaseClosed: mail
-#    stateDoorOpen: mail_open
-#    stateDoorClosed: mail_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: mail
+    stateDoorOpen: mail_open
+    stateDoorClosed: mail_door
   - type: AccessReader
     access: [["Mail"]]
 
@@ -27,10 +26,10 @@
   parent: NFLockerBaseSecure
   name: mercenary locker
   components:
-#  - type: EntityStorageVisuals #WOLFGATE(Resprites): Comments out old rendering code
-#    stateBaseClosed: mercenary
-#    stateDoorOpen: mercenary_open
-#    stateDoorClosed: mercenary_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: mercenary
+    stateDoorOpen: mercenary_open
+    stateDoorClosed: mercenary_door
   - type: AccessReader
     access: [["Captain"], ["Mercenary"]]
 
@@ -39,58 +38,58 @@
   id: LockerJanitor
   parent: NFLockerBaseSecure
   name: janitor locker
-#  components:
-#  - type: EntityStorageVisuals #WOLFGATE(Resprites): Comments out old rendering code
-#    stateBaseClosed: janitor
-#    stateDoorOpen: janitor_open
-#    stateDoorClosed: janitor_door
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: janitor
+    stateDoorOpen: janitor_open
+    stateDoorClosed: janitor_door
 
 # Pilot
 - type: entity
   id: LockerPilot
   parent: NFLockerBaseSecure
   name: pilot's locker
-#  components:
-#  - type: Appearance #WOLFGATE(Resprites): Comments out old rendering code
-#  - type: EntityStorageVisuals
-#    stateBaseClosed: pilot
-#    stateDoorOpen: pilot_open
-#    stateDoorClosed: pilot_door
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: pilot
+    stateDoorOpen: pilot_open
+    stateDoorClosed: pilot_door
 
 # Materials
 - type: entity
   id: LockerMaterials
   parent: NFLockerBaseSecure
   name: materials locker
-#  components:
-#  - type: Appearance #WOLFGATE(Resprites): Comments out old rendering code
-#  - type: EntityStorageVisuals
-#    stateBaseClosed: secure
-#    stateDoorOpen: secure_open
-#    stateDoorClosed: secure_door
-#  - type: GenericVisualizer
-#    visuals:
-#      enum.StorageVisuals.Open:
-#        decal1:
-#          True: { visible: false }
-#          False: { visible: true }
-#        decal2:
-#          True: { visible: false }
-#          False: { visible: true }
-#  - type: Sprite
-#    layers:
-#    - state: secure
-#      map: ["enum.StorageVisualLayers.Base"]
-#    - state: secure_door
-#      map: ["enum.StorageVisualLayers.Door"]
-#    - state: door-decal-engi-01
-#      map: [ decal1 ]
-#      color: "#ad8c27"
-#    - state: welded
-#      visible: false
-#      map: ["enum.WeldableLayers.BaseWelded"]
-#    - state: locked
-#      map: ["enum.LockVisualLayers.Lock"]
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: secure
+    stateDoorOpen: secure_open
+    stateDoorClosed: secure_door
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        decal1:
+          True: { visible: false }
+          False: { visible: true }
+        decal2:
+          True: { visible: false }
+          False: { visible: true }
+  - type: Sprite
+    layers:
+    - state: secure
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: secure_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: door-decal-engi-01
+      map: [ decal1 ]
+      color: "#ad8c27"
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
 
 # Wooden Cabinet
 - type: entity
@@ -110,11 +109,11 @@
   id: LockerNfsdEvidence
   parent: [NFLockerBaseSecure, LockerSecurity]
   name: TSFMC evidence locker
-#  components:
-#  - type: EntityStorageVisuals #WOLFGATE(Resprites): Comments out old rendering code
-#    stateBaseClosed: nfsd
-#    stateDoorOpen: nfsd_open
-#    stateDoorClosed: nfsd_door
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: nfsd
+    stateDoorOpen: nfsd_open
+    stateDoorClosed: nfsd_door
 
 # NFSD Copper
 - type: entity
@@ -122,11 +121,11 @@
   parent: [NFLockerBaseSecure, LockerSecurity]
   name: TSFMC locker
   suffix: Copper
-#  components:
-#  - type: EntityStorageVisuals #WOLFGATE(Resprites): Comments out old rendering code
-#    stateBaseClosed: nfsd_copper
-#    stateDoorOpen: nfsd_copper_open
-#    stateDoorClosed: nfsd_copper_door
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: nfsd_copper
+    stateDoorOpen: nfsd_copper_open
+    stateDoorClosed: nfsd_copper_door
 
 # NFSD Silver
 - type: entity
@@ -134,11 +133,11 @@
   parent: [NFLockerBaseSecure, LockerSecurity]
   name: TSFMC locker
   suffix: Marine
-#  components: #WOLFGATE(Resprites): Comments out old rendering code
-#  - type: EntityStorageVisuals
-#    stateBaseClosed: nfsd_silver
-#    stateDoorOpen: nfsd_silver_open
-#    stateDoorClosed: nfsd_silver_door
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: nfsd_silver
+    stateDoorOpen: nfsd_silver_open
+    stateDoorClosed: nfsd_silver_door
 
 # NFSD Brigmedic
 - type: entity
@@ -146,11 +145,11 @@
   parent: [NFLockerBaseSecure, LockerSecurity]
   name: TSFMC locker
   suffix: Corpsman
-#  components: #WOLFGATE(Resprites): Comments out old rendering code
-#  - type: EntityStorageVisuals
-#    stateBaseClosed: nfsd_brigmed
-#    stateDoorOpen: nfsd_brigmed_open
-#    stateDoorClosed: nfsd_brigmed_door
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: nfsd_brigmed
+    stateDoorOpen: nfsd_brigmed_open
+    stateDoorClosed: nfsd_brigmed_door
 
 # NFSD Gold - Sergeant
 - type: entity
@@ -159,10 +158,10 @@
   name: TSFMC locker
   suffix: Fireteam Leader
   components:
-#  - type: EntityStorageVisuals #WOLFGATE(Resprites): Comments out old rendering code
-#    stateBaseClosed: nfsd_gold
-#    stateDoorOpen: nfsd_gold_open
-#    stateDoorClosed: nfsd_gold_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: nfsd_gold
+    stateDoorOpen: nfsd_gold_open
+    stateDoorClosed: nfsd_gold_door
   - type: AccessReader
     access: [["Sergeant"]]
 
@@ -183,10 +182,10 @@
   name: TSFMC locker
   suffix: Colonel
   components:
-#  - type: EntityStorageVisuals #WOLFGATE(Resprites): Comments out old rendering code
-#    stateBaseClosed: nfsd_sheriff
-#    stateDoorOpen: nfsd_sheriff_open
-#    stateDoorClosed: nfsd_sheriff_door
+  - type: EntityStorageVisuals
+    stateBaseClosed: nfsd_sheriff
+    stateDoorOpen: nfsd_sheriff_open
+    stateDoorClosed: nfsd_sheriff_door
   - type: AccessReader
     access: [["HeadOfSecurity"]]
 
@@ -195,9 +194,9 @@
   id: LockerStationRepresentative
   parent: [BaseStructureIndestructible, BaseStructureLockImmuneToEmag, BaseStructureAccessReaderImmuneToEmag, NFLockerBaseSecure, LockerHeadOfPersonnel]
   name: overseer's locker
-#  components: #WOLFGATE(Resprites): Comments out old rendering code
-#  - type: EntityStorageVisuals
-#    stateBaseClosed: sr
-#    stateDoorOpen: sr_open
-#    stateDoorClosed: sr_door
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: sr
+    stateDoorOpen: sr_open
+    stateDoorClosed: sr_door
 

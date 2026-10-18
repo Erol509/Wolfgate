@@ -370,7 +370,6 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
 - [`Resources/Prototypes/_NF/Entities/Structures/Machines/Computers/frame_wallmount.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Machines/Computers/frame_wallmount.yml): Needed
 - [`Resources/Prototypes/_NF/Entities/Structures/Machines/jukebox.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Machines/jukebox.yml): Needed
 - [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/closets.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/closets.yml): Repath Frontier closet prototypes for the new closet sprites.
-- [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/Lockers/lockers.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/Lockers/lockers.yml): Comments out old rendering code
 - [`Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/wall_lockers.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Storage/Closets/wall_lockers.yml)
   - Fixes shit NF lockers
   - Repath
