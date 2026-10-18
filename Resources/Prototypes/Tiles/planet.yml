@@ -154,15 +154,24 @@
 - type: tile
   id: FloorLowDesert
   name: tiles-low-desert-floor
-  sprite: /Textures/_RMC14/Tiles/planet/desert/desert.png
-  variants: 6
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Desert/desert.png
+  variants: 5
   placementVariants:
   - 0.95
   - 0.65
   - 0.3
   - 0.25
   - 0.5
-  - 0.05
+  edgeSpritePriority: 1
+  edgeSprites:
+      SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_SE.png
+      NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_NE.png
+      NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_NW.png
+      SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/Desert/single_edge_SW.png
+      South: /Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_S.png
+      East: /Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_E.png
+      North: /Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_N.png
+      West: /Textures/_WF/Resprites/Wizden/Tiles/Desert/double_edge_W.png
   isSubfloor: true
   deconstructTools: [ Digging ]
   deconstructTimeMultiplier: 2

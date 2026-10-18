@@ -2238,7 +2238,7 @@
 - type: tile
   id: FloorHull
   name: tiles-hull
-  sprite: /Textures/Tiles/hull.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/hull.png # WOLFGATE(Resprites): Repathed
   baseTurf: Plating
   isSubfloor: false
   footstepSounds:
@@ -2266,7 +2266,7 @@
 - type: tile
   id: FloorReinforcedHardened
   name: tiles-super-reinforced-floor
-  sprite: /Textures/Tiles/super_reinforced.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/super_reinforced.png # WOLFGATE(Resprites): Repathed
   baseTurf: Plating
   isSubfloor: false
   footstepSounds:
