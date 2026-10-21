@@ -410,7 +410,9 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
   - Update flesh floor variant count and placement weights.
   - Repath the chromite floor sprite and edge textures.
   - Repath the astro ice floor sprite.
-- [`Resources/Prototypes/Tiles/planet.yml`](../../../Resources/Prototypes/Tiles/planet.yml): Port floor sprite updates from upstream respritening batches.
+- [`Resources/Prototypes/Tiles/planet.yml`](../../../Resources/Prototypes/Tiles/planet.yml)
+  - Port floor sprite updates from upstream respritening batches.
+  - Repathed
 - [`Resources/Prototypes/Tiles/plating.yml`](../../../Resources/Prototypes/Tiles/plating.yml)
   - Repathed
   - Added variants

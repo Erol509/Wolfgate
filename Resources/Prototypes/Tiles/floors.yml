@@ -1885,8 +1885,8 @@
 - type: tile
   id: FloorAsteroidSand
   name: tiles-asteroid-sand
-  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid.png
-  variants: 7
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid.png # WOLFGATE(Resprites): Repathed
+  variants: 13
   placementVariants:
   - 0.8
   - 0.0166 #Should be roughly 20%.... I think??? I don't know dude, I'm just a YAML monkey.
@@ -1895,6 +1895,12 @@
   - 0.0166
   - 0.0166
   - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0116
+  - 0.0116
   edgeSpritePriority: 1
   edgeSprites:
     SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/single_edge_SE.png
@@ -1962,7 +1968,13 @@
 - type: tile
   id: FloorAsteroidTile
   name: tiles-asteroid-tile
-  sprite: /Textures/Tiles/Asteroid/asteroid_tile.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Asteroid/asteroid-tile.png # WOLFGATE(Resprites) START: Repathed
+  variants: 4
+  placementVariants:
+    - 0.8
+    - 0.8
+    - 0.8
+    - 0.8 # WOLFGATE END
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1977,7 +1989,7 @@
 - type: tile
   id: FloorAsteroidIronsand
   name: tiles-asteroid-ironsand
-  sprite: /Textures/Tiles/Asteroid/ironsand.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/ironsand.png # WOLFGATE(Resprites): Repathed
   variants: 15
   placementVariants:
   - 1.0
@@ -1995,6 +2007,16 @@
   - 1.0
   - 1.0
   - 1.0
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_SE.png
+    NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_NE.png
+    NorthWest: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_NW.png
+    SouthWest: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_SW.png
+    South: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_S.png
+    East: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_E.png
+    North: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_N.png
+    West: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_W.png
   baseTurf: Space
   isSubfloor: true
   footstepSounds:
