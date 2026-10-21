@@ -2007,7 +2007,7 @@
   - 1.0
   - 1.0
   - 1.0
-  edgeSpritePriority: 1
+  edgeSpritePriority: 1 # WOLFGATE(Resprites) START: Repathed
   edgeSprites:
     SouthEast: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_SE.png
     NorthEast: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/single_edge_NE.png
@@ -2016,7 +2016,7 @@
     South: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_S.png
     East: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_E.png
     North: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_N.png
-    West: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_W.png
+    West: /Textures/_WF/Resprites/Wizden/Tiles/Ironsand/double_edge_W.png #WOLFGATE END
   baseTurf: Space
   isSubfloor: true
   footstepSounds:

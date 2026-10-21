@@ -385,7 +385,8 @@
 - type: tile
   id: FloorIce
   name: tiles-ice
-  sprite: /Textures/Tiles/Planet/Snow/ice.png
+  sprite: /Textures/_WF/Resprites/Wizden/Tiles/Ice/ice.png # WOLFGATE(Resprites): Repathed
+  variants: 4 # WOLFGATE(Resprites): Repathed
   isSubfloor: true
   friction: 0.05
   heatCapacity: 10000
