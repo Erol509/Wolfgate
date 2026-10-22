@@ -393,6 +393,22 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
 - [`Resources/Prototypes/Entities/Structures/Storage/Closets/wall_lockers.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/wall_lockers.yml): Port closet sprite mappings from upstream respritening batches.
 - [`Resources/Prototypes/Entities/Structures/Storage/Closets/wardrobe.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/wardrobe.yml): Port closet sprite mappings from upstream respritening batches.
 - [`Resources/Prototypes/Entities/Structures/Wallmounts/switch.yml`](../../../Resources/Prototypes/Entities/Structures/Wallmounts/switch.yml): Imp Sprite Ports
+- [`Resources/Prototypes/Entities/Tiles/lava.yml`](../../../Resources/Prototypes/Entities/Tiles/lava.yml)
+  - Changed from "Tiles/Planet/lava.rsi" to "_WF/Resprites/Wizden/Tiles/TileEntities/liquid-lava.rsi" to match the new sprite.
+  - Changed from "floor" to "lava" to match the new sprite.
+  - Changed from "lava" to "water" to match the new sprite.
+  - Added this component to ensure the tile overlay is replaced when this entity is placed.
+- [`Resources/Prototypes/Entities/Tiles/liquid_plasma.yml`](../../../Resources/Prototypes/Entities/Tiles/liquid_plasma.yml)
+  - Changed from "#ff00ff" to "#c906f3" to match the new sprite color.
+  - Changed from "Tiles/Planet/liquid_plasma.rsi" to "_WF/Resprites/Wizden/Tiles/TileEntities/liquid-phoron.rsi" to match the new sprite.
+  - Changed from "floor" to "phoron" to match the new sprite.
+  - Changed from "lava" to "water" to match the new sprite.
+  - Added this component to ensure the tile overlay is replaced when this entity is placed.
+- [`Resources/Prototypes/Entities/Tiles/water.yml`](../../../Resources/Prototypes/Entities/Tiles/water.yml)
+  - Changed from "-0.5,-0.5,0.5,0.5" to "-0.25, -0.25, 0.25, 0.25" to match the new sprite.
+  - Changed from "Tiles/Planet/water.rsi" to "_WF/Resprites/Wizden/Tiles/TileEntities/liquid-water.rsi" to match the new sprite.
+  - Changed from "lava" to "floor" to match the new sprite.
+  - Changed from "phoron" to "water" to match the new sprite.
 - [`Resources/Prototypes/Objectives/stealTargetGroups.yml`](../../../Resources/Prototypes/Objectives/stealTargetGroups.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Recipes/Construction/Graphs/structures/conveyor.yml`](../../../Resources/Prototypes/Recipes/Construction/Graphs/structures/conveyor.yml): Imp Sprite Ports
 - [`Resources/Prototypes/Recipes/Construction/machines.yml`](../../../Resources/Prototypes/Recipes/Construction/machines.yml): Imp Sprite Ports
