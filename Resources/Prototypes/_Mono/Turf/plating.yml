@@ -45,7 +45,7 @@
   id: PlatingCornerNE
   parent: PlatingSpace
   name: NE plating
-  sprite: /Textures/_Mono/Tiles/plating/ne.png
+  sprite: /Textures/_WF/Resprites/_WF/Tiles/ne.png #WOLFGATE(Resprites): Repathed
   variants: 1 #WOLFGATE(Resprites): Needed to not crash
   vertices: ["1, 0", "1, 1", "0, 1"]
 
@@ -53,7 +53,7 @@
   id: PlatingCornerNW
   parent: PlatingSpace
   name: NW plating
-  sprite: /Textures/_Mono/Tiles/plating/nw.png
+  sprite: /Textures/_WF/Resprites/_WF/Tiles/nw.png #WOLFGATE(Resprites): Repathed
   variants: 1 #WOLFGATE(Resprites): Needed to not crash
   vertices: ["0, 0", "1, 1", "0, 1"]
 
@@ -61,7 +61,7 @@
   id: PlatingCornerSE
   parent: PlatingSpace
   name: SE plating
-  sprite: /Textures/_Mono/Tiles/plating/se.png
+  sprite: /Textures/_WF/Resprites/_WF/Tiles/se.png #WOLFGATE(Resprites): Repathed
   variants: 1 #WOLFGATE(Resprites): Needed to not crash
   vertices: ["0, 0", "1, 0", "1, 1"]
 
@@ -69,6 +69,6 @@
   id: PlatingCornerSW
   parent: PlatingSpace
   name: SW plating
-  sprite: /Textures/_Mono/Tiles/plating/sw.png
+  sprite: /Textures/_WF/Resprites/_WF/Tiles/sw.png #WOLFGATE(Resprites): Repathed
   variants: 1 #WOLFGATE(Resprites): Needed to not crash
   vertices: ["0, 0", "1, 0", "0, 1"]

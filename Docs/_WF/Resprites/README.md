@@ -10,6 +10,32 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
 
 ### Textures
 
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/half_h.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/half_h.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/half_v.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/half_v.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_ne_s_l.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_ne_s_l.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_ne_s_u.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_ne_s_u.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_ne_w_l.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_ne_w_l.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_ne_w_u.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_ne_w_u.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_nw_e_l.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_nw_e_l.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_nw_e_u.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_nw_e_u.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_nw_s_l.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_nw_s_l.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_nw_s_u.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_nw_s_u.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_se_n_l.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_se_n_l.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_se_n_u.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_se_n_u.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_se_w_l.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_se_w_l.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_se_w_u.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_se_w_u.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_sw_e_l.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_sw_e_l.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_sw_e_u.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_sw_e_u.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_sw_n_l.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_sw_n_l.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_sw_n_u.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/halftilt_sw_n_u.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/ne.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/ne.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/nw.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/nw.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/se.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/se.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/sw.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/sw.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/wedge_e.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/wedge_e.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/wedge_n.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/wedge_n.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/wedge_s.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/wedge_s.png)
+- [`Resources/Textures/_WF/Resprites/_WF/Tiles/wedge_w.png`](../../../Resources/Textures/_WF/Resprites/_WF/Tiles/wedge_w.png)
 - [`Resources/Textures/_WF/Resprites/Wizden/Storage/Closets/antag-secure-syndicate.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Storage/Closets/antag-secure-syndicate.rsi/)
 - [`Resources/Textures/_WF/Resprites/Wizden/Storage/Closets/antag-syndicate.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Storage/Closets/antag-syndicate.rsi/)
 - [`Resources/Textures/_WF/Resprites/Wizden/Storage/Closets/armory-secure-gunsafe.rsi/`](../../../Resources/Textures/_WF/Resprites/Wizden/Storage/Closets/armory-secure-gunsafe.rsi/)
@@ -362,7 +388,9 @@ Ports visual updates and matching prototypes for closets, lockers, wardrobes, wa
 
 ## Non-modular edits
 
-- [`Resources/Prototypes/_Mono/Turf/generated.yml`](../../../Resources/Prototypes/_Mono/Turf/generated.yml): Port floor sprite updates from upstream respritening batches.
+- [`Resources/Prototypes/_Mono/Turf/generated.yml`](../../../Resources/Prototypes/_Mono/Turf/generated.yml)
+  - Port floor sprite updates from upstream respritening batches.
+  - Repathed
 - [`Resources/Prototypes/_Mono/Turf/plating.yml`](../../../Resources/Prototypes/_Mono/Turf/plating.yml)
   - Repathed
   - Needed to not crash
