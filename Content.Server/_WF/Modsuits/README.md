@@ -5,6 +5,10 @@ seals them, and runs a catalogue of insertable modules. The control unit stores 
 wires panel; the module UI installs, removes, pins and toggles them. Modules spend the core's charge and add up
 to the theme's complexity cap.
 
+The core is a secured unit behind the panel, not an ejectable cell: remove it with the remove-core verb, and
+swap the power cell inside it by hand while the panel is open. Suit activation and powered modules check the
+cell's charge, and the ion jetpack module draws on it instead of a gas tank.
+
 Entry points: `ModSuitComponent` (theme, parts, core slot, module container), `ModModuleComponent` (type,
 complexity, power, cooldown, incompatibilities), `ModThemePrototype` (complexity cap, drain, inbuilt modules),
 `ModSuitSystem` (deployment, sealing, power, module installation), the module systems under
@@ -22,7 +26,7 @@ icon is present in `mod_modules.rsi`. `Behaviour` is what runs in game, not just
 | /tg/ module | Prototype | Sprite | Behaviour | Reused system or new behaviour | Test |
 |---|---|---|---|---|---|
 | energy_shield | ModsuitModuleEnergyShield | yes | yes | new energy shield | manual |
-| energy_shield/wizard | — | yes | no | wizard-only variant not ported | — |
+| energy_shield/wizard | - | yes | no | wizard-only variant not ported | - |
 | anti_magic | — | yes | no | needs magic-nullification infrastructure | — |
 | anti_magic/wizard | — | yes | no | wizard-only variant not ported | — |
 | insignia | — | yes | no | cosmetic insignia system absent | — |
@@ -34,7 +38,7 @@ icon is present in `mod_modules.rsi`. `Behaviour` is what runs in game, not just
 | demoralizer | — | yes | no | psi/voice system absent | — |
 | infiltrator | ModsuitModuleInfiltrator | yes | yes | new core program grants | manual |
 | medbeam | — | yes | no | no medical beam gun prototype or system | — |
-| stealth/wraith | — | yes | no | wraith-only cloak variant not ported | — |
+| stealth/wraith | - | yes | no | wraith-only variant not ported | - |
 | welding | ModsuitModuleWelding | yes | yes | existing EyeProtection | manual |
 | welding/syndicate | ModsuitModuleSyndicateWelding | yes | yes | existing EyeProtection and FlashImmunity | manual |
 | t_ray | ModsuitModuleTRay | yes | yes | existing TrayScanner | manual |
@@ -42,7 +46,7 @@ icon is present in `mod_modules.rsi`. `Behaviour` is what runs in game, not just
 | magboot/advanced | ModsuitModuleMagbootsAdvanced | yes | yes | existing Magboots | manual |
 | tether | ModsuitModuleTether | yes | yes | new tether device | manual |
 | rad_protection | ModsuitModuleRadProtection | yes | yes | existing radiation protection | manual |
-| constructor | — | yes | no | no construction/RCD module ported | — |
+| constructor | ModsuitModuleConstructor | yes | yes | existing RCD | manual |
 | headprotector | ModsuitModuleHeadProtector | yes | yes | existing head protection | manual |
 | mister | ModsuitModuleMister | yes | yes | existing spray | manual |
 | mister/atmos | ModsuitModuleResinMister | yes | yes | existing spray | manual |
@@ -66,7 +70,7 @@ icon is present in `mod_modules.rsi`. `Behaviour` is what runs in game, not just
 | dna_lock | ModsuitModuleDnaLock | yes | yes | new suit access check | manual |
 | plasma_stabilizer | ModsuitModulePlasmaStabilizer | yes | no | no gas-ignition system for plasmamen | — |
 | hat_stabilizer | ModsuitModuleHatStabilizer | yes | yes | existing item slots | manual |
-| hat_stabilizer/syndicate | — | yes | no | elite variant not ported | — |
+| hat_stabilizer/syndicate | ModsuitModuleHatStabilizerElite | yes | yes | existing hat stabilizer | manual |
 | signlang_radio | ModsuitModuleGloveTranslator | yes | yes | existing language translator | manual |
 | joint_torsion | ModsuitModuleJointTorsion | yes | yes | existing movement and battery | manual |
 | recycler | ModsuitModuleRecycler | yes | yes | existing storage and spawning | manual |
@@ -92,12 +96,12 @@ icon is present in `mod_modules.rsi`. `Behaviour` is what runs in game, not just
 | thread_ripper | ModsuitModuleThreadRipper | yes | no | clothing-ignoring surgery system absent | — |
 | surgical_processor | — | yes | no | Shitmed surgery processor adapter absent | — |
 | stealth | ModsuitModuleCloak | yes | yes | existing stealth | manual |
-| stealth/ninja | — | yes | no | ninja-only cloak variant not ported | — |
+| stealth/ninja | - | yes | no | ninja-only variant not ported | - |
 | welding/camera_vision | — | yes | no | camera vision system absent | — |
 | dispenser/ninja | — | yes | no | ninja-only dispenser variant not ported | — |
-| hacker | ModsuitModuleHacker | yes | yes | existing Emag and charges | manual |
-| weapon_recall | ModsuitModuleWeaponRecall | yes | yes | existing ItemRecall | manual |
-| dna_lock/reinforced | — | yes | no | reinforced ninja variant not ported | — |
+| hacker | - | yes | no | ninja-only variant not ported | - |
+| weapon_recall | - | yes | no | ninja-only variant not ported | - |
+| dna_lock/reinforced | - | yes | no | ninja-only variant not ported | - |
 | emp_shield/pulse | ModsuitModuleEmpPulse | yes | yes | existing EMP pulse | manual |
 | status_readout/ninja | — | yes | no | ninja-only variant not ported | — |
 | energy_net | — | yes | no | energy net structure absent | — |
@@ -116,7 +120,7 @@ icon is present in `mod_modules.rsi`. `Behaviour` is what runs in game, not just
 | active_sonar | — | yes | no | sonar overlay absent | — |
 | shooting_assistant | ModsuitModuleShootingAssistant | yes | yes | existing gun modifiers | manual |
 | shove_blocker | ModsuitModuleBulwark | yes | yes | existing disarm events | manual |
-| shove_blocker/locked | — | yes | no | superglued variant not ported | — |
+| shove_blocker/locked | ModsuitModuleBulwarkLocked | yes | yes | existing bulwark | manual |
 | quick_cuff | ModsuitModuleRestraintAssist | yes | partial | cuff duration hook absent | — |
 | bikehorn | ModsuitModuleBikeHorn | yes | yes | existing sound | manual |
 | balloon/advanced | ModsuitModuleAdvancedBalloonBlower | yes | yes | existing spawning | manual |
@@ -149,9 +153,9 @@ icon is present in `mod_modules.rsi`. `Behaviour` is what runs in game, not just
 | visor/night | ModsuitModuleNightVisor | yes | yes | existing night vision | manual |
 | storage/holding | ModsuitModuleStorageHolding | yes | yes | existing bag of holding | manual |
 | kinesis | ModsuitModuleKinesis | yes | yes | new kinesis controller | manual |
-| kinesis/prototype | — | yes | no | kinesis variant not ported | — |
-| kinesis/plus | — | yes | no | kinesis variant not ported | — |
-| kinesis/admin | — | yes | no | admin kinesis variant not ported | — |
+| kinesis/prototype | - | yes | no | ninja variant not ported | - |
+| kinesis/plus | - | yes | no | admin variant not ported | - |
+| kinesis/admin | - | yes | no | admin variant not ported | - |
 | pathfinder | — | yes | no | pathfinder pod system absent | — |
 
 Variants that share one prototype are listed separately because the /tg/ catalogue does; the prototype column names
@@ -259,6 +263,7 @@ the shared item. "partial" rows have the prototype and some effect, but the cite
 - [`Resources/Prototypes/_WF/Modsuits/mod_modules.yml`](../../../Resources/Prototypes/_WF/Modsuits/mod_modules.yml)
 - [`Resources/Prototypes/_WF/Modsuits/modsuit_parts.yml`](../../../Resources/Prototypes/_WF/Modsuits/modsuit_parts.yml)
 - [`Resources/Prototypes/_WF/Modsuits/modules_extra.yml`](../../../Resources/Prototypes/_WF/Modsuits/modules_extra.yml)
+- [`Resources/Prototypes/_WF/Modsuits/shaders.yml`](../../../Resources/Prototypes/_WF/Modsuits/shaders.yml)
 - [`Resources/Prototypes/_WF/Modsuits/tags.yml`](../../../Resources/Prototypes/_WF/Modsuits/tags.yml)
 - [`Resources/Prototypes/_WF/Modsuits/themes.yml`](../../../Resources/Prototypes/_WF/Modsuits/themes.yml)
 
@@ -270,11 +275,14 @@ the shared item. "partial" rows have the prototype and some effect, but the cite
 
 - [`Resources/Textures/_WF/Modsuits/balloons.rsi/`](../../../Resources/Textures/_WF/Modsuits/balloons.rsi/)
 - [`Resources/Textures/_WF/Modsuits/mod_modules.rsi/`](../../../Resources/Textures/_WF/Modsuits/mod_modules.rsi/)
+- [`Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl)
+- [`Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl)
 
 ### Audio
 
 - [`Resources/Audio/_WF/Modsuits/attributions.yml`](../../../Resources/Audio/_WF/Modsuits/attributions.yml)
 - [`Resources/Audio/_WF/Modsuits/ballin.ogg`](../../../Resources/Audio/_WF/Modsuits/ballin.ogg)
+- [`Resources/Audio/_WF/Modsuits/balloon_pop.ogg`](../../../Resources/Audio/_WF/Modsuits/balloon_pop.ogg)
 - [`Resources/Audio/_WF/Modsuits/ballout.ogg`](../../../Resources/Audio/_WF/Modsuits/ballout.ogg)
 - [`Resources/Audio/_WF/Modsuits/ErrorBeep2.wav`](../../../Resources/Audio/_WF/Modsuits/ErrorBeep2.wav)
 - [`Resources/Audio/_WF/Modsuits/gravhit.ogg`](../../../Resources/Audio/_WF/Modsuits/gravhit.ogg)
@@ -286,6 +294,7 @@ the shared item. "partial" rows have the prototype and some effect, but the cite
 
 ## Non-modular edits
 
+- [`Content.Server/Movement/Systems/JetpackSystem.cs`](../../Movement/Systems/JetpackSystem.cs): the ion jetpack module burns the suit core, not a gas tank
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/Back/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Back/modsuit.yml)
   - module and part containers
   - the module UI replaces the toggleable clothing UI

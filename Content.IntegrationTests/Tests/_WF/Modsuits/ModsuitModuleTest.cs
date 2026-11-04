@@ -1,6 +1,9 @@
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._WF.Modsuits.Systems;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Inventory;
+using Content.Shared.Movement.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Storage;
 using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
@@ -23,10 +26,13 @@ public sealed class ModsuitModuleTest
         var modSuit = entMan.System<ModSuitSystem>();
         var inventory = entMan.System<InventorySystem>();
         var wires = entMan.System<SharedWiresSystem>();
+        var batteries = entMan.System<SharedBatterySystem>();
 
         EntityUid human = default;
         EntityUid suit = default;
         EntityUid module = default;
+        EntityUid flashlight = default;
+        EntityUid jetpack = default;
 
         await server.WaitAssertion(() =>
         {
@@ -37,6 +43,8 @@ public sealed class ModsuitModuleTest
             human = entMan.SpawnEntity("MobHuman", coords);
             suit = entMan.SpawnEntity("ClothingModsuitStandartPowerCell", coords);
             module = entMan.SpawnEntity("ModsuitModuleStorageCompact", coords);
+            flashlight = entMan.SpawnEntity("ModsuitModuleFlashlight", coords);
+            jetpack = entMan.SpawnEntity("ModsuitModuleJetpack", coords);
 
             Assert.That(inventory.TryEquip(human, suit, "back", silent: true, force: true));
         });
@@ -49,13 +57,25 @@ public sealed class ModsuitModuleTest
             var comp = entMan.GetComponent<ModSuitComponent>(suit);
             Assert.That(comp.Parts, Has.Count.EqualTo(4), $"the prototype should name four parts, got {comp.Parts.Count}");
             Assert.That(comp.PartEntities, Has.Count.EqualTo(4), $"the suit should spawn its four parts, got {comp.PartEntities.Count}");
+            var battery = modSuit.GetBattery((suit, comp));
+            Assert.That(battery, Is.Not.Null, "the standard core should carry a power cell");
+            Assert.That(modSuit.GetCharge(battery!.Value), Is.GreaterThan(0f), "the core cell should start charged");
+            var core = modSuit.GetCore((suit, comp));
+            Assert.That(core, Is.Not.Null);
+            Assert.That(entMan.System<ItemSlotsSystem>().TryGetSlot(suit, comp.CoreSlotId, out var coreSlot), Is.True);
+            var eject = new ItemSlotEjectAttemptEvent(suit, core!.Value, human, coreSlot);
+            entMan.EventBus.RaiseLocalEvent(suit, ref eject);
+            Assert.That(eject.Cancelled, Is.True, "the core must not be ejectable like a cell");
 
             var panel = entMan.GetComponent<WiresPanelComponent>(suit);
             Assert.That(wires.TogglePanel(suit, panel, true, human));
 
             Assert.That(modSuit.TryInstallModule((suit, comp), module, human), "a compact storage module should install");
+            Assert.That(modSuit.TryInstallModule((suit, comp), flashlight, human), "a flashlight module should install");
+            Assert.That(modSuit.TryInstallModule((suit, comp), jetpack, human), "a jetpack module should install");
+            Assert.That(entMan.GetComponent<ModModuleComponent>(flashlight).ActionEntity, Is.Not.Null, "the flashlight action should exist");
             Assert.That(comp.ModulesContainer.ContainedEntities, Does.Contain(module));
-            Assert.That(modSuit.GetComplexity((suit, comp)), Is.EqualTo(1));
+            Assert.That(modSuit.GetComplexity((suit, comp)), Is.EqualTo(5));
             Assert.That(entMan.GetComponent<ModModuleComponent>(module).Active, Is.True, "the compact storage module should be active on install");
             var storage = entMan.GetComponent<StorageComponent>(suit);
             Assert.That(storage.Grid, Has.Count.EqualTo(1), "the compact module should replace the satchel grid");
@@ -82,6 +102,12 @@ public sealed class ModsuitModuleTest
         {
             var comp = entMan.GetComponent<ModSuitComponent>(suit);
             Assert.That(comp.State, Is.EqualTo(ModSuitState.Active), "the suit should finish sealing");
+            Assert.That(modSuit.TryUseModule(jetpack, human), "the ion jetpack should switch on in weightless space");
+            Assert.That(entMan.HasComponent<ActiveJetpackComponent>(jetpack), "the jetpack should be active");
+            Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null);
+            var coreBattery = modSuit.GetBattery((suit, comp))!.Value;
+            batteries.ChangeCharge(coreBattery.Owner, -100000f);
+            Assert.That(modSuit.TryUseModule(flashlight, human), Is.False, "a powered module must not run on an empty core");
             foreach (var part in comp.PartEntities.Values)
             {
                 Assert.That(entMan.GetComponent<ModPartComponent>(part).Sealed,
@@ -99,9 +125,14 @@ public sealed class ModsuitModuleTest
         var server = pair.Server;
         var prototypes = server.ResolveDependency<IPrototypeManager>();
         var factory = server.ResolveDependency<IComponentFactory>();
+        var entMan = server.EntMan;
 
         await server.WaitAssertion(() =>
         {
+            var maps = entMan.System<SharedMapSystem>();
+            maps.CreateMap(out var mapId);
+            var coords = new MapCoordinates(0, 0, mapId);
+
             foreach (var proto in prototypes.EnumeratePrototypes<EntityPrototype>())
             {
                 if (proto.Abstract || !proto.ID.StartsWith("ModsuitModule", StringComparison.Ordinal))
@@ -109,6 +140,8 @@ public sealed class ModsuitModuleTest
 
                 Assert.That(proto.TryComp<ModModuleComponent>(out _, factory), Is.True,
                     $"{proto.ID} is a module prototype but has no ModModule component");
+                Assert.DoesNotThrow(() => entMan.SpawnEntity(proto.ID, coords),
+                    $"{proto.ID} should initialise");
             }
         });
 

@@ -84,6 +84,8 @@ public sealed partial class ModSuitSystem : EntitySystem
         SubscribeLocalEvent<ModSuitComponent, ModSuitToggleDoAfterEvent>(OnOtherUserToggleDoAfter);
         SubscribeLocalEvent<ModSuitComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
         SubscribeLocalEvent<ModSuitComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<ModSuitComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<ModSuitComponent, ItemSlotEjectAttemptEvent>(OnCoreEjectAttempt);
         SubscribeLocalEvent<ModSuitComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ModSuitComponent, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnSpeedRefresh);
         SubscribeLocalEvent<ModSuitComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
@@ -284,6 +286,22 @@ public sealed partial class ModSuitSystem : EntitySystem
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => _ui.OpenUi(ent.Owner, ModSuitUiKey.Key, user),
         });
+
+        if (HasOpenPanel(ent) && GetCore(ent) is { } core && _itemSlots.TryGetSlot(ent, ent.Comp.CoreSlotId, out var slot))
+        {
+            args.Verbs.Add(new AlternativeVerb
+            {
+                Text = Loc.GetString("modsuit-verb-remove-core"),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
+                Priority = 4,
+                Act = () =>
+                {
+                    ent.Comp.CoreEjectAllowed = true;
+                    _itemSlots.TryEject(ent, slot, user, out _);
+                    ent.Comp.CoreEjectAllowed = false;
+                },
+            });
+        }
     }
 
     private void StartOtherUserToggle(Entity<ModSuitComponent> ent, EntityUid user, EntityUid wearer)
@@ -319,6 +337,25 @@ public sealed partial class ModSuitSystem : EntitySystem
 
         args.Cancelled = true;
     }
+    private void OnInteractHand(Entity<ModSuitComponent> ent, ref InteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (GetCore(ent) is { } core)
+            RaiseLocalEvent(core, args);
+    }
+
+    private void OnCoreEjectAttempt(Entity<ModSuitComponent> ent, ref ItemSlotEjectAttemptEvent args)
+    {
+        if (args.Slot.ID != ent.Comp.CoreSlotId || ent.Comp.CoreEjectAllowed)
+            return;
+
+        args.Cancelled = true;
+        if (args.User is { } user)
+            _popup.PopupClient(Loc.GetString("modsuit-core-locked"), ent, user);
+    }
+
     private void OnInteractUsing(Entity<ModSuitComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)

@@ -157,7 +157,11 @@ public sealed partial class ModGunModulesSystem : VirtualController
         if (!_actionContainer.EnsureAction(ent, ref ent.Comp.CycleActionEntity, ent.Comp.CycleAction))
             return;
 
-        _actions.SetEntityIcon(ent.Comp.CycleActionEntity.Value, ent.Owner);
+        if (_actions.TryGetActionData(ent.Comp.CycleActionEntity, out var action, false))
+        {
+            action.EntityIcon = ent.Owner;
+            Dirty(ent.Comp.CycleActionEntity.Value, action);
+        }
         Dirty(ent);
     }
     private void OnAssistantWearerChanged(Entity<ModShootingAssistantModuleComponent> ent, ref ModSuitWearerChangedEvent args)

@@ -14,3 +14,22 @@
   - type: Contraband
     severity: Restricted
     allowedDepartments: [ Security ]
+
+- type: entity
+  parent: BaseItem
+  id: WFCandelaBeacon
+  name: Candela beacon
+  description: A compact beacon spool compatible with the MOD "Candela" module.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/station_beacon.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - MarkerBeacon
+  - type: ItemToggle
+  - type: Anchorable
+  - type: Physics
+    bodyType: Dynamic

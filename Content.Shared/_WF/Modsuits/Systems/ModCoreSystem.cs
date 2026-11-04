@@ -9,6 +9,7 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Wires;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -23,6 +24,8 @@ public sealed partial class ModCoreSystem : EntitySystem
         SubscribeLocalEvent<ModCoreComponent, PowerCellChangedEvent>(OnPowerCellChanged);
         SubscribeLocalEvent<ModCoreComponent, EmpAttemptEvent>(OnEmpAttempt);
         SubscribeLocalEvent<ModCoreRefuelableComponent, InteractUsingEvent>(OnRefuel);
+        SubscribeLocalEvent<ModCoreComponent, InteractUsingEvent>(OnInsertCell);
+        SubscribeLocalEvent<ModCoreComponent, InteractHandEvent>(OnRemoveCell);
     }
 
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -33,6 +36,49 @@ public sealed partial class ModCoreSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private SharedWiresSystem _wires = default!;
+
+    private bool TryGetSuitCore(EntityUid core, out EntityUid suit)
+    {
+        suit = default;
+        return _container.TryGetContainingContainer((core, null, null), out var container)
+               && HasComp<ModSuitComponent>(container.Owner)
+               && (suit = container.Owner).Valid;
+    }
+
+    private bool PanelOpen(EntityUid suit)
+    {
+        return TryComp<WiresPanelComponent>(suit, out var panel) && _wires.IsPanelOpen((suit, panel));
+    }
+
+    private void OnInsertCell(Entity<ModCoreComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled
+            || !TryComp<PowerCellSlotComponent>(ent, out var cellSlot)
+            || !TryGetSuitCore(ent, out var suit)
+            || !PanelOpen(suit)
+            || !_itemSlots.TryGetSlot(ent, cellSlot.CellSlotId, out var slot)
+            || slot.Item != null)
+            return;
+
+        if (!HasComp<BatteryComponent>(args.Used) && !HasComp<PowerCellComponent>(args.Used))
+            return;
+
+        args.Handled = _itemSlots.TryInsert(ent, slot, args.Used, args.User);
+    }
+
+    private void OnRemoveCell(Entity<ModCoreComponent> ent, ref InteractHandEvent args)
+    {
+        if (args.Handled
+            || !TryComp<PowerCellSlotComponent>(ent, out var cellSlot)
+            || !TryGetSuitCore(ent, out var suit)
+            || !PanelOpen(suit)
+            || !_itemSlots.TryGetSlot(ent, cellSlot.CellSlotId, out var slot)
+            || slot.Item == null)
+            return;
+
+        args.Handled = _itemSlots.TryEject(ent, slot, args.User, out _);
+    }
 
     private bool TryGetBattery(EntityUid core, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out Entity<BatteryComponent>? battery)
     {

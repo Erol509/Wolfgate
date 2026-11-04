@@ -49,7 +49,12 @@ public sealed partial class ModRecyclerSystem : VirtualController
         if (!_actionContainer.EnsureAction(ent, ref ent.Comp.UnloadActionEntity, ent.Comp.UnloadAction))
             return;
 
-        _actions.SetEntityIcon(ent.Comp.UnloadActionEntity.Value, ent.Owner);
+        if (_actions.TryGetActionData(ent.Comp.UnloadActionEntity, out var action, false))
+        {
+            action.EntityIcon = ent.Owner;
+            Dirty(ent.Comp.UnloadActionEntity.Value, action);
+        }
+
         Dirty(ent);
     }
     private void OnWearerChanged(Entity<ModRecyclerModuleComponent> ent, ref ModSuitWearerChangedEvent args)

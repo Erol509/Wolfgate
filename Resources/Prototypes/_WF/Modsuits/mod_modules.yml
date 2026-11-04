@@ -466,8 +466,8 @@
     slot: head
     components:
     - type: NightVision
-      isEquipment: true
-      isActive: true
+      relayOverlay: true
+      enabled: true
 
 
 - type: entity
@@ -1186,7 +1186,6 @@
         Quantity: 5
   - type: UseDelay
   - type: Spray
-    solution: spray
     transferAmount: 10
     pushbackAmount: 60
     spraySound:
@@ -1227,7 +1226,6 @@
         Quantity: 5
   - type: UseDelay
   - type: Spray
-    solution: spray
     transferAmount: 10
     sprayVelocity: 2
     spraySound:
@@ -2327,7 +2325,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/_Goobstation/BalloonEffect/balloon_pop.ogg
+          path: /Audio/_WF/Modsuits/balloon_pop.ogg
           params:
             variation: 0.125
             volume: -4
@@ -2349,7 +2347,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/_Goobstation/BalloonEffect/balloon_pop.ogg
+          path: /Audio/_WF/Modsuits/balloon_pop.ogg
           params:
             variation: 0.125
             volume: -4
@@ -2371,7 +2369,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/_Goobstation/BalloonEffect/balloon_pop.ogg
+          path: /Audio/_WF/Modsuits/balloon_pop.ogg
           params:
             variation: 0.125
             volume: -4

@@ -1,5 +1,6 @@
 # WOLFGATE(Modsuits): additional tgstation MODsuit modules adapted to Wolfgate systems.
 
+
 - type: entity
   parent: BaseModsuitModule
   id: ModsuitModuleLongfall
@@ -22,49 +23,6 @@
     - ModsuitModule
     - ModsuitModuleLongfall
 
-- type: entity
-  parent: BaseModsuitModule
-  id: ModsuitModuleWeaponRecall
-  name: MOD weapon recall module
-  description: The cornerstone of a clanmember's life as a blademaster, and a module symbolizing their eternal bond with their weapon. This hooks to the micro bluespace drive inside an energy katana's handle, capable of recalling it to the user's skilled hands wherever they are. However, those that make such a bond with their weapon are cursed to fusing their existence with acts of combat, with a singular purpose; Cutting Down Their Opponent. Their hand a hand that is cutting, their body a body that is cutting, their mind, a mind that is cutting. Ranged weapons are forbidden.
-  components:
-  - type: Sprite
-    state: recall
-  - type: ModModule
-    complexity: 3
-    idlePower: 0.4
-    removable: false
-    requiredParts:
-    - gloves
-    action: null
-  - type: ModGrantComponentsModule
-    target: Wearer
-    components:
-    - type: ItemRecall
-
-- type: entity
-  parent: BaseModsuitModule
-  id: ModsuitModuleHacker
-  name: MOD hacker module
-  description: Built for one purpose, electronic warfare, this module is built into the hands. Using near-field communication alongside precise electro-stimulation of the wires in machines, this decker's dream is normally used to pass through doors like a phantom. It's also capable of non-precise electro-stimulation of an assassin-saboteur's opponents on disarming attacks.
-  components:
-  - type: Sprite
-    state: hacker
-  - type: ModModule
-    moduleType: Active
-    complexity: 3
-    activePower: 0.5
-    removable: false
-    requiredParts:
-    - gloves
-  - type: ModGrantComponentsModule
-    target: Wearer
-    components:
-    - type: Emag
-    - type: LimitedCharges
-      maxCharges: 5
-      charges: 5
-  - type: ModHackerModule
 
 - type: entity
   parent: ModsuitModuleDefibrillator
@@ -78,6 +36,7 @@
     activePower: 1.8
     requiredParts:
     - gloves
+
 
 - type: entity
   parent: ModsuitModuleDonkRecycler
@@ -94,6 +53,7 @@
     requiredParts:
     - outerClothing
 
+
 - type: entity
   parent: ModsuitModuleBalloonBlower
   id: ModsuitModuleAdvancedBalloonBlower
@@ -107,6 +67,7 @@
     cooldown: 20
     requiredParts:
     - head
+
 
 - type: entity
   parent: ModsuitModuleWelding
@@ -124,6 +85,7 @@
     components:
     - type: EyeProtection
     - type: FlashImmunity
+
 
 - type: entity
   parent: BaseModsuitModule
@@ -143,8 +105,9 @@
     slot: head
     components:
     - type: NightVision
-      isEquipment: true
-      isActive: true
+      relayOverlay: true
+      enabled: true
+
 
 - type: entity
   parent: BaseModsuitModule
@@ -164,3 +127,30 @@
   - type: ModSpawnModule
     toHand: true
     prototype: RCD
+
+- type: entity
+  parent: ModsuitModuleHatStabilizer
+  id: ModsuitModuleHatStabilizerElite
+  name: MOD elite hat stabilizer module
+  description: A simple set of deployable stands, directly atop one's head; these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. You still need to take the hat off your head while the helmet deploys, though. This is a must-have for Syndicate Operatives and Agents alike, enabling them to continue to style on the opposition even while in their MODsuit.
+  components:
+  - type: ModModule
+    complexity: 0
+    allowFlags: Inactive
+    removable: false
+    requiredParts:
+    - head
+
+
+- type: entity
+  parent: ModsuitModuleBulwark
+  id: ModsuitModuleBulwarkLocked
+  name: superglued MOD bulwark module
+  description: Layers upon layers of shock dampening plates, just to stop you from getting shoved into a wall by an angry mob. Good luck removing this one.
+  components:
+  - type: ModModule
+    complexity: 0
+    idlePower: 0.2
+    removable: false
+    requiredParts:
+    - shoes

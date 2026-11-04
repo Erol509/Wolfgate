@@ -17,3 +17,20 @@
 
 - type: Tag
   id: ModsuitModuleLongfall
+
+- type: Tag
+  id: MarkerBeacon
+- type: Tag
+  id: ModsuitPlatingMining
+
+- type: Tag
+  id: ModsuitPlatingLoader
+
+- type: Tag
+  id: ModsuitPlatingBrigMed
+
+- type: Tag
+  id: ModsuitPlatingPraetorian
+
+- type: Tag
+  id: SheetPlasma

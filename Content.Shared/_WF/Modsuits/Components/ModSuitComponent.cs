@@ -70,6 +70,10 @@ public sealed partial class ModSuitComponent : Component
     [DataField, AutoNetworkedField]
     public bool Powered;
 
+    /// <summary>Set briefly while the core removal verb runs, so the slot may eject it.</summary>
+    [ViewVariables]
+    public bool CoreEjectAllowed;
+
     [DataField]
     public SlotFlags RequiredSlot = SlotFlags.BACK;
 

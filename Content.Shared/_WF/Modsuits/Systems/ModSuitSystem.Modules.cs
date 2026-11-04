@@ -270,12 +270,17 @@ public sealed partial class ModSuitSystem
                 if (!CanUseModule(suit, module, user))
                     return false;
 
+                if (!TryUseCharge(suit, moduleComp.UsePower))
+                {
+                    PopupFail(suit, user, "modsuit-no-power");
+                    return false;
+                }
+
                 var used = new ModModuleUsedEvent(suitUid, user);
                 RaiseLocalEvent(moduleUid, ref used);
                 if (!used.Handled)
                     return false;
 
-                TryUseCharge(suit, moduleComp.UsePower);
                 StartCooldown(module);
                 return true;
             default:
@@ -297,10 +302,15 @@ public sealed partial class ModSuitSystem
                     return false;
                 }
 
+                if (!TryUseCharge(suit, moduleComp.UsePower))
+                {
+                    PopupFail(suit, user, "modsuit-no-power");
+                    return false;
+                }
+
                 if (moduleComp.Type == ModModuleType.Active)
                     DeselectActiveModules(suit, moduleUid);
 
-                TryUseCharge(suit, moduleComp.UsePower);
                 StartCooldown(module);
                 SetModuleActive(suit, module, true);
                 return true;
@@ -333,7 +343,8 @@ public sealed partial class ModSuitSystem
         }
 
         var needsPower = module.Comp.UsePower > 0f || module.Comp.ActivePower > 0f;
-        if (needsPower && (!suit.Comp.Powered || !HasCharge(suit, module.Comp.UsePower)))
+        var cost = MathF.Max(module.Comp.UsePower, module.Comp.ActivePower > 0f ? 0.01f : 0f);
+        if (needsPower && (!suit.Comp.Powered || !HasCharge(suit, cost)))
         {
             PopupFail(suit, user, "modsuit-no-power");
             return false;
@@ -494,7 +505,11 @@ public sealed partial class ModSuitSystem
         var action = module.Comp.ActionEntity.Value;
         _metaData.SetEntityName(action, Name(module));
         _metaData.SetEntityDescription(action, Description(module));
-        _actions.SetEntityIcon(action, module.Owner);
+        if (_actions.TryGetActionData(action, out var actionComp, false))
+        {
+            actionComp.EntityIcon = module.Owner;
+            Dirty(action, actionComp);
+        }
         Dirty(module);
     }
 

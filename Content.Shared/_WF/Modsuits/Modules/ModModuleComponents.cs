@@ -96,7 +96,12 @@ public sealed partial class ModDeviceItemComponent : Component
 }
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ModJetpackModuleComponent : Component;
+public sealed partial class ModJetpackModuleComponent : Component
+{
+    /// <summary>Suit charge spent per second of active thrust.</summary>
+    [DataField]
+    public float ChargePerSecond = 10f;
+}
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ModEmpShieldModuleComponent : Component

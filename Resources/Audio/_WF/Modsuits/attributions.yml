@@ -17,3 +17,8 @@
   license: "CC0-1.0"
   copyright: "MaxTempAlert by CompleteMelody at freesound.org - MaxTempAlertCut is minor edit"
   source: "https://freesound.org/s/742645/"
+
+- files: ["balloon_pop.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation at https://github.com/tgstation/tgstation/blob/master/sound/items/balloon_pop.ogg."
+  source: "https://github.com/tgstation/tgstation"

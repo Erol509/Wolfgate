@@ -144,3 +144,6 @@ modsuit-capture-not-restrained = They need to be restrained first!
 modsuit-shooting-mode-off = Shooting assistant off.
 modsuit-shooting-mode-stormtrooper = Stormtrooper mode enabled.
 modsuit-shooting-mode-sharpshooter = Sharpshooter mode enabled.
+
+modsuit-core-locked = The MOD core is secured behind the panel; use the removal verb.
+modsuit-verb-remove-core = Remove MOD core

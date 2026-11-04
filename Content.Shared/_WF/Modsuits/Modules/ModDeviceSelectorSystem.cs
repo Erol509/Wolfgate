@@ -58,7 +58,11 @@ public sealed partial class ModDeviceSelectorSystem : EntitySystem
         if (!_actionContainer.EnsureAction(ent, ref ent.Comp.SelectActionEntity, ent.Comp.SelectAction))
             return;
 
-        _actions.SetEntityIcon(ent.Comp.SelectActionEntity.Value, ent.Owner);
+        if (_actions.TryGetActionData(ent.Comp.SelectActionEntity, out var action, false))
+        {
+            action.EntityIcon = ent.Owner;
+            Dirty(ent.Comp.SelectActionEntity.Value, action);
+        }
         ApplySelection(ent);
         Dirty(ent);
     }

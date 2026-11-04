@@ -181,11 +181,18 @@ public sealed partial class ModSuitSystem
         if (_net.IsClient || GetBattery(ent) is not { } battery)
             return;
 
+        var charge = GetCharge(battery);
+        if (charge <= 0f)
+        {
+            SetPowered(ent, false);
+            return;
+        }
+
         var drain = GetTotalDrain(ent);
-        if (drain <= 0f || GetCharge(battery) <= 0f)
+        if (drain <= 0f)
             return;
 
-        if (!_battery.TryUseCharge(battery.AsNullable(), drain))
+        if (!_battery.TryUseCharge(battery.AsNullable(), drain) || GetCharge(battery) <= 0f)
             SetPowered(ent, false);
     }
 

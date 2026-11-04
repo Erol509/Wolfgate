@@ -189,10 +189,12 @@
   - type: Battery
     maxCharge: 720
     startingCharge: 720
+  # WOLFGATE(Modsuits): Wolfgate sheets carry no plasma-specific tag; accept any material sheet
   - type: ModCoreRefuelable
     fuel:
       tags:
-      - SheetPlasma
+      - Sheet
+      requireAll: true
     chargePerFuel: 180
   - type: PhysicalComposition
     materialComposition:
