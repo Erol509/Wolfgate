@@ -1,0 +1,16 @@
+# WOLFGATE(Modsuits): contraband parents for ported MODsuit modules.
+
+- type: entity
+  id: BaseWFModsuitSyndicateContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Syndicate
+
+- type: entity
+  id: BaseWFModsuitSecurityContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Restricted
+    allowedDepartments: [ Security ]

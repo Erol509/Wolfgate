@@ -31,7 +31,7 @@
   - type: SealableClothing
     sealUpPopup: sealable-clothing-seal-up-gauntlets
     sealDownPopup: sealable-clothing-seal-down-gauntlets
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       gloves:
@@ -92,7 +92,7 @@
   - type: SealableClothing
     sealUpPopup: sealable-clothing-seal-up-gauntlets
     sealDownPopup: sealable-clothing-seal-down-gauntlets
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       gloves:
@@ -117,7 +117,7 @@
       groups:
         Burn: -4
         Brute: -3
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       gloves:
@@ -168,7 +168,7 @@
   - type: SealableClothing
     sealUpPopup: sealable-clothing-seal-up-gauntlets
     sealDownPopup: sealable-clothing-seal-down-gauntlets
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       gloves:
@@ -186,7 +186,7 @@
   - type: Sprite
     sprite: _Goobstation/Clothing/Hands/Modsuits/engineer.rsi
   - type: Clothing
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       gloves:
@@ -204,7 +204,7 @@
   - type: Sprite
     sprite: _Goobstation/Clothing/Hands/Modsuits/atmostech.rsi
   - type: Clothing
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       gloves:
@@ -222,7 +222,7 @@
   - type: Sprite
     sprite: _Goobstation/Clothing/Hands/Modsuits/researchdirector.rsi
   - type: Clothing
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       gloves:
@@ -245,7 +245,7 @@
         - state: equipped-HAND
         hands-vox:
         - state: equipped-HAND-vox
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       gloves:

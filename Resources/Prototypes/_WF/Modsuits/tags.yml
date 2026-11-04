@@ -1,0 +1,19 @@
+# WOLFGATE(Modsuits): tags used by the ported MODsuit modules.
+
+- type: Tag
+  id: ModsuitModule
+
+- type: Tag
+  id: ModsuitModuleStorage
+
+- type: Tag
+  id: ModsuitModuleVisor
+
+- type: Tag
+  id: ModsuitModuleGravity
+
+- type: Tag
+  id: ModsuitModuleJetpack
+
+- type: Tag
+  id: ModsuitModuleLongfall

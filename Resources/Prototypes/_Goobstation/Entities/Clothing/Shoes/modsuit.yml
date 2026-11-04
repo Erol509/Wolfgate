@@ -37,7 +37,7 @@
     - type: NoSlip
   - type: Magboots
     enabledPrefix: null
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       shoes:
@@ -62,7 +62,7 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Shoes/Modsuits/security.rsi
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       shoes:
@@ -117,7 +117,7 @@
   - type: ItemActionGrant
     actions:
     - ActionGravityJump
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       shoes:
@@ -136,7 +136,7 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Shoes/Modsuits/paramedic.rsi
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       shoes:
@@ -153,7 +153,7 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Shoes/Modsuits/engineer.rsi
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       shoes:
@@ -170,7 +170,7 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Shoes/Modsuits/atmostech.rsi
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       shoes:
@@ -187,7 +187,7 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Shoes/Modsuits/researchdirector.rsi
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       shoes:
@@ -204,7 +204,7 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Shoes/Modsuits/captain.rsi
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       shoes:

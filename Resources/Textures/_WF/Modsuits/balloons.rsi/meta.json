@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/master/icons/obj/toys/balloons.dmi (states balloon_red, balloon_blue, balloon_green).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "red"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "blue"
+    }
+  ]
+}

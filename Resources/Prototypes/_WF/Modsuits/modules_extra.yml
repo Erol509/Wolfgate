@@ -1,0 +1,166 @@
+# WOLFGATE(Modsuits): additional tgstation MODsuit modules adapted to Wolfgate systems.
+
+- type: entity
+  parent: BaseModsuitModule
+  id: ModsuitModuleLongfall
+  name: MOD longfall module
+  description: Useful for protecting both the suit and the wearer, utilizing commonplace systems to convert the possible damage from a fall into kinetic charge, as well as internal gyroscopes to ensure the user's safe falling. Useful for mining, monorail tracks, or even skydiving!
+  components:
+  - type: Sprite
+    state: longfall
+  - type: ModModule
+    complexity: 1
+    idlePower: 0.2
+    requiredParts:
+    - shoes
+    incompatible:
+      tags:
+      - ModsuitModuleLongfall
+  - type: ModLongfallModule
+  - type: Tag
+    tags:
+    - ModsuitModule
+    - ModsuitModuleLongfall
+
+- type: entity
+  parent: BaseModsuitModule
+  id: ModsuitModuleWeaponRecall
+  name: MOD weapon recall module
+  description: The cornerstone of a clanmember's life as a blademaster, and a module symbolizing their eternal bond with their weapon. This hooks to the micro bluespace drive inside an energy katana's handle, capable of recalling it to the user's skilled hands wherever they are. However, those that make such a bond with their weapon are cursed to fusing their existence with acts of combat, with a singular purpose; Cutting Down Their Opponent. Their hand a hand that is cutting, their body a body that is cutting, their mind, a mind that is cutting. Ranged weapons are forbidden.
+  components:
+  - type: Sprite
+    state: recall
+  - type: ModModule
+    complexity: 3
+    idlePower: 0.4
+    removable: false
+    requiredParts:
+    - gloves
+    action: null
+  - type: ModGrantComponentsModule
+    target: Wearer
+    components:
+    - type: ItemRecall
+
+- type: entity
+  parent: BaseModsuitModule
+  id: ModsuitModuleHacker
+  name: MOD hacker module
+  description: Built for one purpose, electronic warfare, this module is built into the hands. Using near-field communication alongside precise electro-stimulation of the wires in machines, this decker's dream is normally used to pass through doors like a phantom. It's also capable of non-precise electro-stimulation of an assassin-saboteur's opponents on disarming attacks.
+  components:
+  - type: Sprite
+    state: hacker
+  - type: ModModule
+    moduleType: Active
+    complexity: 3
+    activePower: 0.5
+    removable: false
+    requiredParts:
+    - gloves
+  - type: ModGrantComponentsModule
+    target: Wearer
+    components:
+    - type: Emag
+    - type: LimitedCharges
+      maxCharges: 5
+      charges: 5
+  - type: ModHackerModule
+
+- type: entity
+  parent: ModsuitModuleDefibrillator
+  id: ModsuitModuleCombatDefibrillator
+  name: MOD combat defibrillator module
+  description: A module built into the gauntlets of the suit; commonly known as the 'Healing Hands' by medical professionals. The user places their palms above the patient. Onboard computers in the suit calculate the necessary voltage, and a modded targeting computer determines the best position for the user to push. Twenty five pounds of force are applied to the patient's skin. Shocks travel from the suit's gloves and counter-shock the heart, and the wearer returns to Medical a hero. Interdyne Pharmaceutics marketed the domestic version of the Healing Hands as foolproof and unusable as a weapon. But when it came time to provide their operatives with usable medical equipment, they didn't hesitate to remove those in-built safeties. Operatives in the field can benefit from what they dub as 'Stun Gloves', able to apply shocks straight to a victims heart to disable them, or maybe even outright stop their heart with enough power.
+  components:
+  - type: ModModule
+    moduleType: Active
+    complexity: 3
+    activePower: 1.8
+    requiredParts:
+    - gloves
+
+- type: entity
+  parent: ModsuitModuleDonkRecycler
+  id: ModsuitModuleDonkSafeRecycler
+  name: MOD foam dart recycler module
+  description: A mod module that collects and repackages fired foam darts into half-sized ammo boxes. Activate on a nearby turf or storage to unload stored ammo boxes.
+  components:
+  - type: Sprite
+    state: donk_safe_recycler
+  - type: ModModule
+    moduleType: Toggle
+    complexity: 1
+    activePower: 0.4
+    requiredParts:
+    - outerClothing
+
+- type: entity
+  parent: ModsuitModuleBalloonBlower
+  id: ModsuitModuleAdvancedBalloonBlower
+  name: MOD advanced balloon blower module
+  description: A relatively new piece of technology developed by finest clown engineers to make long balloons and balloon animals at party-appropriate rate.
+  components:
+  - type: ModModule
+    moduleType: Usable
+    complexity: 2
+    usePower: 3
+    cooldown: 20
+    requiredParts:
+    - head
+
+- type: entity
+  parent: ModsuitModuleWelding
+  id: ModsuitModuleSyndicateWelding
+  name: MODsuit flash-protected optical suite
+  description: A syndicate optical suite that protects against welding arcs, solar glare and flashbangs alike.
+  components:
+  - type: ModModule
+    complexity: 0
+    removable: false
+    requiredParts:
+    - head
+  - type: ModGrantComponentsModule
+    slot: head
+    components:
+    - type: EyeProtection
+    - type: FlashImmunity
+
+- type: entity
+  parent: BaseModsuitModule
+  id: ModsuitModuleNight
+  name: MOD night vision module
+  description: A night vision package that can be fitted alongside a visor module, brightening the world into a spooky green glow.
+  components:
+  - type: Sprite
+    state: night_visor
+  - type: ModModule
+    moduleType: Toggle
+    complexity: 2
+    activePower: 0.4
+    requiredParts:
+    - head
+  - type: ModGrantComponentsModule
+    slot: head
+    components:
+    - type: NightVision
+      isEquipment: true
+      isActive: true
+
+- type: entity
+  parent: BaseModsuitModule
+  id: ModsuitModuleConstructor
+  name: MOD constructor module
+  description: A wrist-mounted rapid construction device, letting the wearer build and dismantle station structures without drawing a tool.
+  components:
+  - type: Sprite
+    state: constructor
+  - type: ModModule
+    moduleType: Usable
+    complexity: 3
+    usePower: 1
+    cooldown: 1
+    requiredParts:
+    - gloves
+  - type: ModSpawnModule
+    toHand: true
+    prototype: RCD

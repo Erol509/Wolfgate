@@ -35,45 +35,68 @@
         ents: []
       toggleable-clothing: !type:Container
       cell_slot: !type:ContainerSlot
+      # WOLFGATE(Modsuits) START: module and part containers
+      mod-parts: !type:Container
+        ents: []
+      mod-modules: !type:Container
+        ents: []
+      # WOLFGATE END
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
-      enum.ToggleClothingUiKey.Key:
-        type: ToggleableClothingBoundUserInterface
+      # WOLFGATE(Modsuits) START: the module UI replaces the toggleable clothing UI
+      # enum.ToggleClothingUiKey.Key:
+      #   type: ToggleableClothingBoundUserInterface
+      enum.ModSuitUiKey.Key:
+        type: ModSuitBoundUserInterface
+      # WOLFGATE END
   - type: UseDelay
     delay: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.9
-  - type: ToggleableClothing
-    requiredSlot: back
-    blockUnequipWhenAttached: true
-    replaceCurrentClothing: true
-  - type: WiresPanel
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        whitelist:
-          components:
-            - PowerCell
-  - type: ItemSlotsRequirePanel
-    slots:
-      cell_slot: true
-  - type: PowerCellDraw
-    drawRate: 0.1 # Sealed draw rate
-    useRate: 0.5 # Draw rate for sealing
-  - type: PowerCellSlot
-    cellSlotId: cell_slot
-    fitsInCharger: false
-  - type: DoAfter
-  - type: SealableClothingControl
-  - type: SealableClothingRequiresPower
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system spawns and seals the suit parts
+  # - type: ToggleableClothing
+  #   requiredSlot: back
+  #   blockUnequipWhenAttached: true
+  #   replaceCurrentClothing: true
+  - type: ModSuit
+    theme: ModThemeStandard
+    coreSlotId: cell_slot
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       back:
       - state: equipped-BACKPACK-sealed
+  # WOLFGATE END
+  - type: WiresPanel
+  # WOLFGATE(Modsuits) START: the core slot replaces the power cell slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: modsuit-core-slot-name
+        startingItem: ModsuitCoreStandard
+        whitelist:
+          components:
+            - ModCore
+  - type: ItemSlotsRequirePanel
+    slots:
+      cell_slot: true
+  # - type: PowerCellDraw
+  #   drawRate: 0.1 # Sealed draw rate
+  #   useRate: 0.5 # Draw rate for sealing
+  # - type: PowerCellSlot
+  #   cellSlotId: cell_slot
+  #   fitsInCharger: false
+  - type: DoAfter
+  # - type: SealableClothingControl
+  # - type: SealableClothingRequiresPower
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     back:
+  #     - state: equipped-BACKPACK-sealed
+  # WOLFGATE END
 
 - type: entity
   parent: ClothingModsuitBase
@@ -83,12 +106,15 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Back/Modsuits/standard.rsi
-  - type: ToggleableClothing
-    clothingPrototypes:
+  # WOLFGATE(Modsuits) START: the module system owns the suit parts
+  - type: ModSuit
+    theme: ModThemeStandard
+    parts:
       head: ClothingModsuitHelmetStandard
       gloves: ClothingModsuitGauntletsStandard
       outerClothing: ClothingModsuitChestplateStandard
       shoes: ClothingModsuitBootsStandard
+  # WOLFGATE END
   - type: Construction
     graph: Modsuit
     node: standard
@@ -102,10 +128,11 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        # WOLFGATE(Modsuits): a MOD core replaces the power cell
+        startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
           components:
-            - PowerCell
+            - ModCore # WOLFGATE(Modsuits)
 
 - type: entity
   parent: ClothingModsuitBase
@@ -139,22 +166,35 @@
         ents: []
       toggleable-clothing: !type:Container
       cell_slot: !type:ContainerSlot
+      # WOLFGATE(Modsuits) START: module and part containers
+      mod-parts: !type:Container
+        ents: []
+      mod-modules: !type:Container
+        ents: []
+      # WOLFGATE END
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
-      enum.ToggleClothingUiKey.Key:
-        type: ToggleableClothingBoundUserInterface
+      # WOLFGATE(Modsuits) START: the module UI replaces the toggleable clothing UI
+      # enum.ToggleClothingUiKey.Key:
+      #   type: ToggleableClothingBoundUserInterface
+      enum.ModSuitUiKey.Key:
+        type: ModSuitBoundUserInterface
+      # WOLFGATE END
   - type: UseDelay
     delay: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.9
-  - type: ToggleableClothing
-    clothingPrototypes:
+  # WOLFGATE(Modsuits) START: the module system owns the suit parts
+  - type: ModSuit
+    theme: ModThemeSecurity
+    parts:
       head: ClothingModsuitHelmetSecurity
       gloves: ClothingModsuitGauntletsSecurity
       outerClothing: ClothingModsuitChestplateSecurity
       shoes: ClothingModsuitBootsSecurity
+  # WOLFGATE END
   - type: Construction
     graph: Modsuit
     node: security
@@ -168,10 +208,11 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        # WOLFGATE(Modsuits): a MOD core replaces the power cell
+        startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
           components:
-            - PowerCell
+            - ModCore # WOLFGATE(Modsuits)
 
 - type: entity
   parent: ClothingModsuitBase
@@ -190,13 +231,16 @@
       - state: equipped-BACKPACK
       back-resomi:
       - state: equipped-BACKPACK-resomi
-  - type: ToggleableClothing
-    clothingPrototypes:
+  # WOLFGATE(Modsuits) START: the module system owns the suit parts
+  - type: ModSuit
+    theme: ModThemeSafeguard
+    parts:
       head: ClothingModsuitHelmetHeadOfSecurity
       gloves: ClothingModsuitGauntletsHeadOfSecurity
       outerClothing: ClothingModsuitChestplateHeadOfSecurity
       shoes: ClothingModsuitBootsHeadOfSecurity
-  - type: SealableClothingVisuals
+  # WOLFGATE END
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       back:
@@ -216,10 +260,11 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        # WOLFGATE(Modsuits): a MOD core replaces the power cell
+        startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
           components:
-            - PowerCell
+            - ModCore # WOLFGATE(Modsuits)
 
 - type: entity
   parent: ClothingModsuitBase
@@ -233,12 +278,15 @@
     quickEquip: false
     slots:
     - back
-  - type: ToggleableClothing
-    clothingPrototypes:
+  # WOLFGATE(Modsuits) START: the module system owns the suit parts
+  - type: ModSuit
+    theme: ModThemeMedical
+    parts:
       head: ClothingModsuitHelmetParamedic
       gloves: ClothingModsuitGauntletsParamedic
       outerClothing: ClothingModsuitChestplateParamedic
       shoes: ClothingModsuitBootsParamedic
+  # WOLFGATE END
   - type: Construction
     graph: Modsuit
     node: paramedic
@@ -252,10 +300,11 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        # WOLFGATE(Modsuits): a MOD core replaces the power cell
+        startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
           components:
-            - PowerCell
+            - ModCore # WOLFGATE(Modsuits)
 
 - type: entity
   parent: ClothingModsuitBase
@@ -265,13 +314,16 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Back/Modsuits/engineer.rsi
-  - type: ToggleableClothing
-    clothingPrototypes:
+  # WOLFGATE(Modsuits) START: the module system owns the suit parts
+  - type: ModSuit
+    theme: ModThemeEngineering
+    parts:
       head: ClothingModsuitHelmetEngineer
       gloves: ClothingModsuitGauntletsEngineer
       outerClothing: ClothingModsuitChestplateEngineer
       shoes: ClothingModsuitBootsEngineer
-  - type: SealableClothingVisuals
+  # WOLFGATE END
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       back:
@@ -291,10 +343,11 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        # WOLFGATE(Modsuits): a MOD core replaces the power cell
+        startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
           components:
-            - PowerCell
+            - ModCore # WOLFGATE(Modsuits)
 
 - type: entity
   parent: ClothingModsuitBase
@@ -304,13 +357,16 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Back/Modsuits/atmostech.rsi
-  - type: ToggleableClothing
-    clothingPrototypes:
+  # WOLFGATE(Modsuits) START: the module system owns the suit parts
+  - type: ModSuit
+    theme: ModThemeAtmospheric
+    parts:
       head: ClothingModsuitHelmetAtmostech
       gloves: ClothingModsuitGauntletsAtmostech
       outerClothing: ClothingModsuitChestplateAtmostech
       shoes: ClothingModsuitBootsAtmostech
-  - type: SealableClothingVisuals
+  # WOLFGATE END
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       back:
@@ -330,10 +386,11 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        # WOLFGATE(Modsuits): a MOD core replaces the power cell
+        startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
           components:
-            - PowerCell
+            - ModCore # WOLFGATE(Modsuits)
 
 - type: entity
   parent: ClothingModsuitBase
@@ -343,12 +400,15 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Back/Modsuits/researchdirector.rsi
-  - type: ToggleableClothing
-    clothingPrototypes:
+  # WOLFGATE(Modsuits) START: the module system owns the suit parts
+  - type: ModSuit
+    theme: ModThemeResearch
+    parts:
       head: ClothingModsuitHelmetResearchDirector
       gloves: ClothingModsuitGauntletsResearchDirector
       outerClothing: ClothingModsuitChestplateResearchDirector
       shoes: ClothingModsuitBootsResearchDirector
+  # WOLFGATE END
   - type: Construction
     graph: Modsuit
     node: rd
@@ -364,10 +424,11 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        # WOLFGATE(Modsuits): a MOD core replaces the power cell
+        startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
           components:
-            - PowerCell
+            - ModCore # WOLFGATE(Modsuits)
 
 - type: entity
   parent: ClothingModsuitBase
@@ -377,13 +438,16 @@
   components:
   - type: Sprite
     sprite: _Goobstation/Clothing/Back/Modsuits/captain.rsi
-  - type: ToggleableClothing
-    clothingPrototypes:
+  # WOLFGATE(Modsuits) START: the module system owns the suit parts
+  - type: ModSuit
+    theme: ModThemeMagnate
+    parts:
       head: ClothingModsuitHelmetCaptain
       gloves: ClothingModsuitGauntletsCaptain
       outerClothing: ClothingModsuitChestplateCaptain
       shoes: ClothingModsuitBootsCaptain
-  - type: SealableClothingVisuals
+  # WOLFGATE END
+  - type: ModSuitSealedVisuals # WOLFGATE(Modsuits)
     spriteLayer: sealed
     clothingVisuals:
       back:
@@ -403,7 +467,8 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        # WOLFGATE(Modsuits): a MOD core replaces the power cell
+        startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
           components:
-            - PowerCell
+            - ModCore # WOLFGATE(Modsuits)
