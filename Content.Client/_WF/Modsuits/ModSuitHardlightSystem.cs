@@ -4,13 +4,11 @@ using Content.Shared._WF.Modsuits;
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._Goobstation.Clothing.Components;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Markings;
 using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client._WF.Modsuits;
 
@@ -25,7 +23,6 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
 
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private MarkingManager _markings = default!;
     [Dependency] private SpriteSystem _sprite = default!;
     [Dependency] private InventorySystem _inventory = default!;
 
@@ -178,22 +175,11 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
                 applied++;
         }
 
-        // Markings (hair, ears, tails, horns, spines, …) live on their own generated layers.
-        foreach (var markingList in humanoid.MarkingSet.Markings.Values)
+        // Markings (hair, ears, tails, wings, horns, spines, …) live on their own generated layers.
+        foreach (var layer in humanoid.ClientMarkingLayers)
         {
-            foreach (var marking in markingList)
-            {
-                if (!_markings.TryGetMarking(marking, out var prototype)
-                    || !HardlightLayers.Contains(prototype.BodyPart))
-                    continue;
-
-                foreach (var spriteSpecifier in prototype.Sprites)
-                {
-                    if (spriteSpecifier is SpriteSpecifier.Rsi rsi
-                        && ApplyLayer(sprite, state, $"{prototype.ID}-{rsi.RsiState}"))
-                        applied++;
-                }
-            }
+            if (ApplyLayer(sprite, state, layer))
+                applied++;
         }
 
         if (applied == 0)

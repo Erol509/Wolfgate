@@ -7,27 +7,26 @@ uniform highp float intensity;
 uniform highp float gridScale;
 uniform highp float t;
 
-// Procedural reproduction of the Skyrat MOD mask sheet's 4-shade diagonal checker.
-// No sampler, array or engine change is involved, so the pattern cannot silently fail.
-highp float maskAt(highp vec2 uv) {
-    highp vec2 cells = floor(uv * 8.0);
+// Screen-space reproduction of the Skyrat MOD mask sheet's 4-shade diagonal checker.
+// Screen space is used because sprite-layer UVs are atlas-relative, which made a UV
+// checker collapse into a flat film. No sampler, array or engine change is involved.
+highp float maskAt(highp vec2 screen) {
+    highp vec2 cells = floor(screen / 8.0);
     highp float coarse = mod(cells.x + cells.y, 4.0) / 3.0;
-    highp float fine = mod(floor(uv.x * 16.0) + floor(uv.y * 16.0), 2.0);
+    highp float fine = mod(floor(screen.x / 4.0) + floor(screen.y / 4.0), 2.0);
     return mix(coarse, fine, 0.2);
 }
 
 void fragment() {
     highp vec4 base = texture2D(TEXTURE, UV);
 
-    highp vec2 uv = UV * (gridScale / 32.0);
-    uv.x += sin((UV.y * 6.0 - t * 2.0)) * 0.035;
-    uv.y += sin((UV.x * 5.0 + t * 1.5)) * 0.015;
-    uv = clamp(uv, 0.0, 1.0);
+    highp vec2 screen = FRAGCOORD.xy;
+    screen.x += sin(screen.y * 0.08 - t * 40.0) * 2.0;
 
-    highp float maskPattern = maskAt(uv);
+    highp float maskPattern = maskAt(screen);
 
-    highp float scan = 0.82 + 0.18 * sin((UV.y + t * 0.5) * 42.0);
-    highp float travel = fract(UV.y - t * 0.25);
+    highp float scan = 0.82 + 0.18 * sin((SCREEN_UV.y + t * 0.5) * 420.0);
+    highp float travel = fract(SCREEN_UV.y - t * 0.25);
     highp float band = smoothstep(0.0, 0.12, travel) * (1.0 - smoothstep(0.12, 0.3, travel));
 
     highp vec3 tint = mix(color2, color, maskPattern) * (0.95 + 0.35 * band) * intensity;
