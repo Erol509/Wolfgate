@@ -164,16 +164,18 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
             || !TryComp<SpriteComponent>(state.Wearer, out var sprite))
             return;
 
+        var applied = 0;
+
         foreach (var layer in humanoid.BaseLayers.Keys)
         {
-            if (HardlightLayers.Contains(layer))
-                ApplyLayer(sprite, state, layer);
+            if (HardlightLayers.Contains(layer) && ApplyLayer(sprite, state, layer))
+                applied++;
         }
 
         foreach (var layer in humanoid.CustomBaseLayers.Keys)
         {
-            if (HardlightLayers.Contains(layer))
-                ApplyLayer(sprite, state, layer);
+            if (HardlightLayers.Contains(layer) && ApplyLayer(sprite, state, layer))
+                applied++;
         }
 
         // Markings (hair, ears, tails, horns, spines, …) live on their own generated layers.
@@ -187,20 +189,24 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
 
                 foreach (var spriteSpecifier in prototype.Sprites)
                 {
-                    if (spriteSpecifier is SpriteSpecifier.Rsi rsi)
-                        ApplyLayer(sprite, state, $"{prototype.ID}-{rsi.RsiState}");
+                    if (spriteSpecifier is SpriteSpecifier.Rsi rsi
+                        && ApplyLayer(sprite, state, $"{prototype.ID}-{rsi.RsiState}"))
+                        applied++;
                 }
             }
         }
+
+        if (applied == 0)
+            Log.Warning($"MOD hardlight found no applicable sprite layers on {ToPrettyString(state.Wearer)}.");
     }
 
-    private void ApplyLayer(SpriteComponent sprite, HardlightState state, object key)
+    private bool ApplyLayer(SpriteComponent sprite, HardlightState state, object key)
     {
         var id = key is HumanoidVisualLayers layer ? $"enum:{layer}" : $"layer:{key}";
 
         if (!sprite.LayerMapTryGet(key, out var index)
             || !sprite.TryGetLayer(index, out var spriteLayer))
-            return;
+            return false;
 
         if (!state.Layers.TryGetValue(id, out var original))
         {
@@ -219,6 +225,8 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
 
         if (spriteLayer.Color != Color.White)
             _sprite.LayerSetColor((state.Wearer, sprite), index, Color.White);
+
+        return true;
     }
 
     private void Clear(EntityUid suit)
