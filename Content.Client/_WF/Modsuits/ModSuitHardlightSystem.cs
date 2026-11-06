@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Numerics;
-using Content.Client.Inventory;
 using Content.Shared._WF.Modsuits;
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._Goobstation.Clothing.Components;
@@ -14,8 +13,8 @@ using Robust.Shared.Timing;
 namespace Content.Client._WF.Modsuits;
 
 /// <summary>
-/// Projects the suit theme's hardlight mesh over every wearer sprite layer except the modsuit itself.
-/// The suit's clothing sprites draw on top, leaving only the parts outside its silhouette visible.
+/// Projects the suit theme's hardlight mesh over the wearer's body and marking layers while the suit is active.
+/// Clothing layers are never touched, so the effect cannot show through the suit's armour.
 /// </summary>
 public sealed partial class ModSuitHardlightSystem : EntitySystem
 {
@@ -23,7 +22,7 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
     private static readonly TimeSpan RefreshInterval = TimeSpan.FromSeconds(0.25);
     private static readonly string[] SuitSlots = { "head", "outerClothing", "gloves", "shoes", "back" };
 
-    private static readonly HumanoidVisualLayers[] ExcludedLayers =
+    private static readonly HashSet<HumanoidVisualLayers> ExcludedLayers = new()
     {
         HumanoidVisualLayers.Handcuffs,
         HumanoidVisualLayers.Ensnare,
@@ -144,75 +143,55 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
         if (!TryComp<SpriteComponent>(state.Wearer, out var sprite))
             return;
 
-        var skip = new HashSet<int>();
-
-        foreach (var layer in ExcludedLayers)
-        {
-            if (sprite.LayerMapTryGet(layer, out var index))
-                skip.Add(index);
-        }
-
-        if (TryComp<InventorySlotsComponent>(state.Wearer, out var slots))
-        {
-            foreach (var slot in SuitSlots)
-            {
-                if (!_inventory.TryGetSlotEntity(state.Wearer, slot, out var item)
-                    || !IsSuitItem(item.Value, slot)
-                    || !slots.VisualLayerKeys.TryGetValue(slot, out var keys))
-                    continue;
-
-                foreach (var key in keys)
-                {
-                    if (sprite.LayerMapTryGet(key, out var index))
-                        skip.Add(index);
-                }
-            }
-        }
-
         var applied = 0;
-        var count = sprite.AllLayers.Count();
-        for (var i = 0; i < count; i++)
+
+        // Body layers are keyed by the enum on the sprite. The client's copy of BaseLayers is not
+        // networked and stays empty, so the enum is the only reliable source for base layers.
+        foreach (var layer in Enum.GetValues<HumanoidVisualLayers>())
         {
-            if (skip.Contains(i))
+            if (ExcludedLayers.Contains(layer))
                 continue;
 
-            if (ApplyLayer(sprite, state, i))
+            if (ApplyLayer(sprite, state, layer))
                 applied++;
+        }
+
+        // Markings (hair, ears, tails, wings, horns, spines, …) live on their own generated layers.
+        if (TryComp<HumanoidAppearanceComponent>(state.Wearer, out var humanoid))
+        {
+            foreach (var layer in humanoid.ClientMarkingLayers)
+            {
+                if (ApplyLayer(sprite, state, layer))
+                    applied++;
+            }
         }
 
         if (applied == 0)
             Log.Warning($"MOD hardlight found no applicable sprite layers on {ToPrettyString(state.Wearer)}.");
     }
 
-    private bool IsSuitItem(EntityUid item, string slot)
+    private bool ApplyLayer(SpriteComponent sprite, HardlightState state, object key)
     {
-        if (HasComp<ModSuitComponent>(item) || HasComp<ModPartComponent>(item))
-            return true;
-
-        // Legacy suits use SealableClothing parts, but a back item in that slot may just be wings.
-        return slot != "back" && HasComp<SealableClothingComponent>(item);
-    }
-
-    private bool ApplyLayer(SpriteComponent sprite, HardlightState state, int index)
-    {
-        if (!sprite.TryGetLayer(index, out var layer))
+        if (!sprite.LayerMapTryGet(key, out var index)
+            || !sprite.TryGetLayer(index, out var spriteLayer))
             return false;
 
-        if (!state.Layers.TryGetValue(layer, out var original))
+        if (!state.Layers.TryGetValue(spriteLayer, out var original))
         {
-            original = new LayerState(layer, layer.Shader, layer.ShaderPrototype?.Id, layer.Color);
-            state.Layers[layer] = original;
+            original = new LayerState(spriteLayer, spriteLayer.Shader, spriteLayer.ShaderPrototype?.Id, spriteLayer.Color);
+            state.Layers[spriteLayer] = original;
         }
-        else if (layer.Color != Color.White && layer.Color != original.Color)
+        else if (spriteLayer.Color != Color.White && spriteLayer.Color != original.Color)
         {
-            original = original with { Color = layer.Color };
-            state.Layers[layer] = original;
+            // The appearance system recoloured a marking or body layer while we were active.
+            original = original with { Color = spriteLayer.Color };
+            state.Layers[spriteLayer] = original;
         }
 
-        if (layer.Shader != state.Shader)
+        if (spriteLayer.Shader != state.Shader)
             sprite.LayerSetShader(index, state.Shader, ShaderId);
 
-        if (layer.Color != Color.White)
+        if (spriteLayer.Color != Color.White)
             _sprite.LayerSetColor((state.Wearer, sprite), index, Color.White);
 
         return true;
