@@ -204,25 +204,8 @@ public sealed partial class ModSpawnModuleComponent : Component
     public bool ToHand;
 }
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class ModQuickCarryComponent : Component
-{
-    [DataField, AutoNetworkedField]
-    public float Multiplier = 0.5f;
-}
-
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class ModQuickCuffComponent : Component
-{
-    [DataField, AutoNetworkedField]
-    public float Multiplier = 0.5f;
-}
-
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ModShoveBlockerComponent : Component;
-
-[RegisterComponent, NetworkedComponent]
-public sealed partial class ModAntiGravityComponent : Component;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ModClampComponent : Component

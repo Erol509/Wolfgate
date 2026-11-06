@@ -48,9 +48,6 @@ public sealed partial class ModJointTorsionModuleComponent : Component
 }
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ModPlasmaStabilizerModuleComponent : Component;
-
-[RegisterComponent, NetworkedComponent]
 public sealed partial class ModHatStabilizerModuleComponent : Component
 {
     [DataField]

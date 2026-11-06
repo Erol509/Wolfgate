@@ -549,20 +549,6 @@
 
 - type: entity
   parent: BaseModsuitModuleBuiltin
-  id: ModsuitModuleBuiltinAutoInjector
-  name: integrated auto-injector
-  description: An emergency auto-injector built into the chestplate. It doses the wearer with combat medicine when they fall into critical condition.
-  components:
-  - type: Sprite
-    state: injector
-  - type: ModModule
-    requiredParts:
-    - outerClothing
-  # WOLFGATE(Modsuits): no clothing auto-injector in this codebase
-
-
-- type: entity
-  parent: BaseModsuitModuleBuiltin
   id: ModsuitModuleBuiltinChameleon
   name: chameleon projector
   description: A holographic projector that lets the control unit disguise itself as another backpack.
@@ -591,40 +577,6 @@
   - type: ModOpenUiModule
     key: enum.InstrumentUiKey.Key
     slot: head
-
-
-- type: entity
-  parent: BaseModsuitModuleBuiltin
-  id: ModsuitModuleBuiltinGrip
-  name: reinforced grip
-  description: Servos in the gauntlets give the wearer an iron grip when grabbing others.
-  components:
-  - type: Sprite
-    state: clamp
-  - type: ModModule
-    requiredParts:
-    - gloves
-  # WOLFGATE(Modsuits): no grab-stage system in this codebase
-
-
-- type: entity
-  parent: BaseModsuitModule
-  id: ModsuitModuleQuickCarry
-  name: MOD quick carry module
-  description: A suite of advanced servos, redirecting power from the suit's arms to help carry the wounded; or simply for fun. However, Nanotrasen has locked the module's ability to assist in hand-to-hand combat.
-  components:
-  - type: Sprite
-    state: carry
-  - type: ModModule
-    complexity: 1
-    idlePower: 0.1
-    requiredParts:
-    - gloves
-  - type: ModGrantComponentsModule
-    target: Wearer
-    components:
-    - type: ModQuickCarry
-      multiplier: 0.4
 
 
 - type: entity
@@ -680,22 +632,6 @@
   - type: ModDeviceModule
     device: ModsuitDevicePatientTransport
 
-
-- type: entity
-  parent: BaseModsuitModule
-  id: ModsuitModuleThreadRipper
-  name: MOD thread ripper module
-  description: A module that rips open and rethreads the fabric of a patient's clothing as needed, letting the wearer operate without undressing them first.
-  components:
-  - type: Sprite
-    state: thread_ripper
-  - type: ModModule
-    moduleType: Toggle
-    complexity: 2
-    activePower: 0.4
-    requiredParts:
-    - gloves
-  # WOLFGATE(Modsuits): no clothing-ignoring surgery system in this codebase
 
 - type: entity
   parent: BaseModsuitModule
@@ -870,25 +806,6 @@
 
 - type: entity
   parent: BaseModsuitModule
-  id: ModsuitModuleRestraintAssist
-  name: MOD restraint assist module
-  description: Enhanced gauntlet grip pads that help with placing individuals in restraints more quickly.
-  components:
-  - type: Sprite
-    state: module
-  - type: ModModule
-    complexity: 1
-    requiredParts:
-    - gloves
-  - type: ModGrantComponentsModule
-    target: Wearer
-    components:
-    - type: ModQuickCuff
-      multiplier: 0.5
-
-
-- type: entity
-  parent: BaseModsuitModule
   id: ModsuitModuleBulwark
   name: MOD bulwark module
   description: Layers of hydraulic stabilizers in the suit's legs keep the wearer firmly planted, making them impossible to shove around.
@@ -1000,31 +917,6 @@
     slot: head
     components:
     - type: SolutionScanner
-
-
-- type: entity
-  parent: BaseModsuitModule
-  id: ModsuitModuleAntiGravity
-  name: MOD anti-gravity module
-  description: A module that uses a gravitational core to make the user completely weightless, letting them float freely even with gravity on.
-  components:
-  - type: Sprite
-    state: antigrav
-  - type: ModModule
-    moduleType: Toggle
-    complexity: 2
-    activePower: 1.2
-    incompatible:
-      tags:
-      - ModsuitModuleGravity
-  - type: ModGrantComponentsModule
-    target: Wearer
-    components:
-    - type: ModAntiGravity
-  - type: Tag
-    tags:
-    - ModsuitModule
-    - ModsuitModuleGravity
 
 
 - type: entity
@@ -1944,26 +1836,6 @@
 
 - type: entity
   parent: BaseModsuitModule
-  id: ModsuitModuleQuickCarryAdvanced
-  name: "MOD advanced quick carry module"
-  description: "A suite of advanced servos, redirecting power from the suit's arms to help carry the wounded; or simply for fun. However, Nanotrasen has locked the module's ability to assist in hand-to-hand combat."
-  components:
-  - type: Sprite
-    state: carry
-  - type: ModModule
-    complexity: 2
-    idlePower: 0.2
-    requiredParts:
-    - gloves
-  - type: ModGrantComponentsModule
-    target: Wearer
-    components:
-    - type: ModQuickCarry
-      multiplier: 0.15
-
-
-- type: entity
-  parent: BaseModsuitModule
   id: ModsuitModuleShockAbsorber
   name: "MOD shock absorption module"
   description: "A module that makes the user resistant to the knockdown and CNS disruption inflicted by Stun Batons."
@@ -2187,23 +2059,6 @@
 
 - type: entity
   parent: BaseModsuitModule
-  id: ModsuitModulePlasmaStabilizer
-  name: "MOD plasma stabilizer module"
-  description: "This system essentially forms an atmosphere of its own, within the suit, efficiently and quickly preventing oxygen from causing the user's head to burst into flame. This allows plasmamen to safely remove their helmet, allowing for easier equipping of any MODsuit-related equipment, or otherwise. The purple glass of the visor seems to be constructed for nostalgic purposes."
-  components:
-  - type: Sprite
-    state: plasma_stabilizer
-  - type: ModModule
-    complexity: 1
-    idlePower: 0.2
-    allowFlags: Inactive
-    requiredParts:
-    - head
-  - type: ModPlasmaStabilizerModule
-
-
-- type: entity
-  parent: BaseModsuitModule
   id: ModsuitModuleHatStabilizer
   name: "MOD hat stabilizer module"
   description: "A simple set of deployable stands, directly atop one's head; these will deploy under a hat to keep it from falling off, allowing them to be worn atop the sealed helmet. You still need to take the hat off your head while the helmet deploys, though. This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
@@ -2412,7 +2267,6 @@
     requiredParts:
     - outerClothing
   - type: ModProjectileDampenerModule
-
 
 
 - type: entity
