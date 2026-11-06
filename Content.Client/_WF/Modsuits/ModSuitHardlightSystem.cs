@@ -2,8 +2,10 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared._WF.Modsuits;
 using Content.Shared._WF.Modsuits.Components;
+using Content.Shared._Goobstation.Clothing.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
+using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
@@ -25,6 +27,7 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private MarkingManager _markings = default!;
     [Dependency] private SpriteSystem _sprite = default!;
+    [Dependency] private InventorySystem _inventory = default!;
 
     private readonly Dictionary<EntityUid, HardlightState> _states = new();
     private TimeSpan _nextRefresh;
@@ -91,16 +94,38 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
         }
     }
 
+    /// <summary>Legacy ToggleableClothing suits seal their parts instead of using ModSuitState.</summary>
+    private bool HasSealedPart(EntityUid wearer)
+    {
+        if (!HasComp<InventoryComponent>(wearer))
+            return false;
+
+        foreach (var slot in new[] { "head", "outerClothing", "gloves", "shoes" })
+        {
+            if (_inventory.TryGetSlotEntity(wearer, slot, out var item)
+                && TryComp<SealableClothingComponent>(item, out var seal)
+                && seal.IsSealed)
+                return true;
+        }
+
+        return false;
+    }
+
     private void Refresh(Entity<ModSuitComponent> suit)
     {
         var theme = _proto.Index(suit.Comp.Theme);
         var wearer = suit.Comp.Wearer;
 
         if (!theme.Hardlight
-            || suit.Comp.State == ModSuitState.Inactive
             || wearer is not { } target
             || !TryComp<HumanoidAppearanceComponent>(target, out _)
             || !TryComp<SpriteComponent>(target, out _))
+        {
+            Clear(suit.Owner);
+            return;
+        }
+
+        if (suit.Comp.State == ModSuitState.Inactive && !HasSealedPart(target))
         {
             Clear(suit.Owner);
             return;
