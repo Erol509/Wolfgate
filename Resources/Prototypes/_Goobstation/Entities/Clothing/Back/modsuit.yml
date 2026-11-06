@@ -63,6 +63,10 @@
   - type: ModSuit
     theme: ModThemeStandard
     coreSlotId: cell_slot
+    startingModules:
+    - ModsuitModuleStorageCompact
+    - ModsuitModuleFlashlight
+    - ModsuitModuleWelding
   - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:

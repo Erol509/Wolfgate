@@ -56,6 +56,7 @@ public sealed partial class ModSphereRollController : VirtualController
     {
         UpdatesAfter.Add(typeof(TileFrictionController));
         base.Initialize();
+        SubscribeLocalEvent<ModSphereFormComponent, PreventCollideEvent>(OnPreventCollide);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)

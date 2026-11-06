@@ -58,12 +58,7 @@
       coolingCoefficient: 0.01
     - type: IdentityBlocker
     - type: IngestionBlocker
-    - type: HideLayerClothing
-      slots:
-      - Hair
-      - Snout
-      - HeadTop
-      - HeadSide
+    # WOLFGATE(Modsuits): the hardlight shader replaces hiding the head layers
   # WOLFGATE(Modsuits) START: components granted while the native module system has the helmet sealed
   - type: ModSealedComponents
     components:
@@ -76,12 +71,7 @@
       coolingCoefficient: 0.01
     - type: IdentityBlocker
     - type: IngestionBlocker
-    - type: HideLayerClothing
-      slots:
-      - Hair
-      - Snout
-      - HeadTop
-      - HeadSide
+    # WOLFGATE(Modsuits): head layers stay visible; the hardlight shader projects them over the sealed suit
   # WOLFGATE END
   - type: Battery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.

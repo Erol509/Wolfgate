@@ -62,7 +62,7 @@ public sealed partial class ModSuitComponent : Component
     public TimeSpan NextDeployStep;
 
     [DataField]
-    public TimeSpan DeployStepTime = TimeSpan.FromSeconds(0.5);
+    public TimeSpan DeployStepTime = TimeSpan.FromSeconds(0.05);
 
     [DataField, AutoNetworkedField]
     public EntityUid? Wearer;
@@ -70,7 +70,15 @@ public sealed partial class ModSuitComponent : Component
     [DataField, AutoNetworkedField]
     public bool Powered;
 
-    /// <summary>Set briefly while the core removal verb runs, so the slot may eject it.</summary>
+    /// <summary>Charge last sent to the client; the battery component itself is not networked.</summary>
+    [DataField, AutoNetworkedField]
+    public float Charge;
+
+    /// <summary>Capacity last sent to the client, used for the charge percentage.</summary>
+    [DataField, AutoNetworkedField]
+    public float MaxCharge = 1f;
+
+    /// <summary>Set briefly while the wrench do-after runs, so the slot may eject the core.</summary>
     [ViewVariables]
     public bool CoreEjectAllowed;
 

@@ -11,6 +11,10 @@ public sealed partial class ModSuitSystem
         if (_net.IsClient || ent.Comp.ModulesContainer.ContainedEntities.Count != 0)
             return;
 
+        // Legacy ToggleableClothing suits have no native parts and own their own storage.
+        if (ent.Comp.Parts.Count == 0)
+            return;
+
         var theme = _proto.Index(ent.Comp.Theme);
         var coords = Transform(ent).Coordinates;
 
@@ -31,9 +35,18 @@ public sealed partial class ModSuitSystem
         foreach (var proto in ent.Comp.StartingModules)
         {
             var module = PredictedSpawnAttachedTo(proto, coords);
-            if (!TryComp<ModModuleComponent>(module, out var moduleComp) || !CanInstallModule(ent, (module, moduleComp), out _, true))
+            if (!TryComp<ModModuleComponent>(module, out var moduleComp))
             {
-                Log.Warning($"Starting module {proto} could not be installed into {ToPrettyString(ent)}");
+                Log.Warning($"Starting module {proto} has no ModModule component");
+                PredictedQueueDel(module);
+                continue;
+            }
+
+            if (!CanInstallModule(ent, (module, moduleComp), out var reason, true))
+            {
+                // A theme without the needed part or cap simply skips that starting module.
+                if (reason != "modsuit-module-missing-part")
+                    Log.Warning($"Starting module {proto} could not be installed into {ToPrettyString(ent)}: {reason}");
                 PredictedQueueDel(module);
                 continue;
             }

@@ -18,7 +18,6 @@ public sealed class ModSuitBoundUserInterface : BoundUserInterface
         _window = this.CreateWindow<ModSuitWindow>();
         _window.SetSuit(Owner);
         _window.OnActivate += () => SendPredictedMessage(new ModSuitActivateMessage());
-        _window.OnToggleAllParts += () => SendPredictedMessage(new ModSuitToggleAllPartsMessage());
         _window.OnTogglePart += slot => SendPredictedMessage(new ModSuitTogglePartMessage(slot));
         _window.OnModuleToggle += module => SendPredictedMessage(new ModSuitModuleToggleMessage(module));
         _window.OnModulePin += module => SendPredictedMessage(new ModSuitModulePinMessage(module));

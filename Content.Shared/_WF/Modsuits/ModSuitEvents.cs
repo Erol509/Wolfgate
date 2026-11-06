@@ -13,6 +13,12 @@ public sealed partial class ModModuleActionEvent : InstantActionEvent;
 [Serializable, NetSerializable]
 public sealed partial class ModSuitToggleDoAfterEvent : SimpleDoAfterEvent;
 
+[Serializable, NetSerializable]
+public sealed partial class ModCoreRemoveDoAfterEvent : SimpleDoAfterEvent;
+
+[Serializable, NetSerializable]
+public sealed partial class ModCoreRemoveCellDoAfterEvent : SimpleDoAfterEvent;
+
 [ByRefEvent]
 public record struct ModModuleActivatedEvent(EntityUid Suit, EntityUid? Wearer);
 

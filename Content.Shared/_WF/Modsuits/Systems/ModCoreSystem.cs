@@ -1,5 +1,6 @@
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DoAfter;
 using Content.Shared.Emp;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -13,6 +14,7 @@ using Content.Shared.Wires;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 
 namespace Content.Shared._WF.Modsuits.Systems;
 
@@ -26,6 +28,7 @@ public sealed partial class ModCoreSystem : EntitySystem
         SubscribeLocalEvent<ModCoreRefuelableComponent, InteractUsingEvent>(OnRefuel);
         SubscribeLocalEvent<ModCoreComponent, InteractUsingEvent>(OnInsertCell);
         SubscribeLocalEvent<ModCoreComponent, InteractHandEvent>(OnRemoveCell);
+        SubscribeLocalEvent<ModCoreComponent, ModCoreRemoveCellDoAfterEvent>(OnRemoveCellDoAfter);
     }
 
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
@@ -36,7 +39,9 @@ public sealed partial class ModCoreSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedStackSystem _stack = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
     [Dependency] private SharedWiresSystem _wires = default!;
+    [Dependency] private INetManager _net = default!;
 
     private bool TryGetSuitCore(EntityUid core, out EntityUid suit)
     {
@@ -77,7 +82,34 @@ public sealed partial class ModCoreSystem : EntitySystem
             || slot.Item == null)
             return;
 
-        args.Handled = _itemSlots.TryEject(ent, slot, args.User, out _);
+        var doAfter = new DoAfterArgs(EntityManager, args.User, 1.5f, new ModCoreRemoveCellDoAfterEvent(), ent.Owner, target: suit)
+        {
+            BreakOnDamage = true,
+            BreakOnMove = true,
+        };
+
+        if (!_doAfter.TryStartDoAfter(doAfter))
+            return;
+
+        args.Handled = true;
+        _popup.PopupClient(Loc.GetString("modsuit-cell-removing"), suit, args.User);
+    }
+
+    private void OnRemoveCellDoAfter(Entity<ModCoreComponent> ent, ref ModCoreRemoveCellDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled
+            || !TryComp<PowerCellSlotComponent>(ent, out var cellSlot)
+            || !TryGetSuitCore(ent, out var suit)
+            || !PanelOpen(suit)
+            || !_itemSlots.TryGetSlot(ent, cellSlot.CellSlotId, out var slot)
+            || slot.Item == null)
+            return;
+
+        args.Handled = true;
+        if (!_itemSlots.TryEject(ent, slot, args.User, out _))
+            return;
+
+        _popup.PopupClient(Loc.GetString("modsuit-cell-removed"), suit, args.User);
     }
 
     private bool TryGetBattery(EntityUid core, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out Entity<BatteryComponent>? battery)
@@ -123,7 +155,7 @@ public sealed partial class ModCoreSystem : EntitySystem
     }
     private void OnRefuel(Entity<ModCoreRefuelableComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled || !_whitelist.IsValid(ent.Comp.Fuel, args.Used))
+        if (_net.IsClient || args.Handled || !_whitelist.IsValid(ent.Comp.Fuel, args.Used))
             return;
 
         args.Handled = true;

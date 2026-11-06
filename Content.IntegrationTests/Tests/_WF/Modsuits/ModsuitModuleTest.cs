@@ -1,6 +1,7 @@
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._WF.Modsuits.Systems;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Power.EntitySystems;
@@ -70,13 +71,32 @@ public sealed class ModsuitModuleTest
             var panel = entMan.GetComponent<WiresPanelComponent>(suit);
             Assert.That(wires.TogglePanel(suit, panel, true, human));
 
-            Assert.That(modSuit.TryInstallModule((suit, comp), module, human), "a compact storage module should install");
-            Assert.That(modSuit.TryInstallModule((suit, comp), flashlight, human), "a flashlight module should install");
+            Assert.That(modSuit.TryInstallModule((suit, comp), module, human), Is.False,
+                "a second storage module should be rejected as a duplicate");
+            Assert.That(modSuit.TryInstallModule((suit, comp), flashlight, human), Is.False,
+                "a second flashlight should be rejected as a duplicate");
             Assert.That(modSuit.TryInstallModule((suit, comp), jetpack, human), "a jetpack module should install");
-            Assert.That(entMan.GetComponent<ModModuleComponent>(flashlight).ActionEntity, Is.Not.Null, "the flashlight action should exist");
-            Assert.That(comp.ModulesContainer.ContainedEntities, Does.Contain(module));
-            Assert.That(modSuit.GetComplexity((suit, comp)), Is.EqualTo(5));
-            Assert.That(entMan.GetComponent<ModModuleComponent>(module).Active, Is.True, "the compact storage module should be active on install");
+
+            EntityUid? installedFlashlight = null;
+            EntityUid? installedStorage = null;
+            foreach (var installed in comp.ModulesContainer.ContainedEntities)
+            {
+                var id = entMan.GetComponent<MetaDataComponent>(installed).EntityPrototype?.ID;
+                if (id == "ModsuitModuleFlashlight")
+                    installedFlashlight = installed;
+                else if (id == "ModsuitModuleStorageCompact")
+                    installedStorage = installed;
+            }
+
+            Assert.That(installedFlashlight, Is.Not.Null, "the suit should start with a flashlight");
+            Assert.That(entMan.GetComponent<ModModuleComponent>(installedFlashlight!.Value).ActionEntity, Is.Not.Null,
+                "the starting flashlight action should exist");
+            Assert.That(comp.ModulesContainer.ContainedEntities, Does.Not.Contain(module),
+                "the rejected storage module should not be installed");
+            Assert.That(modSuit.GetComplexity((suit, comp)), Is.EqualTo(6));
+            Assert.That(installedStorage, Is.Not.Null, "the suit should start with a compact storage module");
+            Assert.That(entMan.GetComponent<ModModuleComponent>(installedStorage!.Value).Active, Is.True,
+                "the starting compact storage module should be active on install");
             var storage = entMan.GetComponent<StorageComponent>(suit);
             Assert.That(storage.Grid, Has.Count.EqualTo(1), "the compact module should replace the satchel grid");
             Assert.That(storage.Grid[0], Is.EqualTo(new Box2i(0, 0, 5, 3)), "the compact module grid should be applied");
@@ -107,12 +127,149 @@ public sealed class ModsuitModuleTest
             Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null);
             var coreBattery = modSuit.GetBattery((suit, comp))!.Value;
             batteries.ChangeCharge(coreBattery.Owner, -100000f);
-            Assert.That(modSuit.TryUseModule(flashlight, human), Is.False, "a powered module must not run on an empty core");
+
+            EntityUid? installedFlashlight = null;
+            foreach (var installed in comp.ModulesContainer.ContainedEntities)
+            {
+                if (entMan.GetComponent<MetaDataComponent>(installed).EntityPrototype?.ID == "ModsuitModuleFlashlight")
+                {
+                    installedFlashlight = installed;
+                    break;
+                }
+            }
+
+            Assert.That(installedFlashlight, Is.Not.Null);
+            Assert.That(modSuit.TryUseModule(installedFlashlight!.Value, human), Is.False,
+                "a powered module must not run on an empty core");
             foreach (var part in comp.PartEntities.Values)
             {
                 Assert.That(entMan.GetComponent<ModPartComponent>(part).Sealed,
                     $"every deployed part should be sealed; part {entMan.ToPrettyString(part)} failed");
             }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task StandardSuitShipsReadyToUse()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var modSuit = entMan.System<ModSuitSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var maps = entMan.System<SharedMapSystem>();
+            maps.CreateMap(out var mapId);
+
+            var suit = entMan.SpawnEntity("ClothingModsuitStandard", new MapCoordinates(0, 0, mapId));
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+
+            var battery = modSuit.GetBattery((suit, comp));
+            Assert.That(battery, Is.Not.Null, "the standard core should ship with a power cell");
+            Assert.That(modSuit.GetCharge(battery!.Value), Is.GreaterThan(0f), "the shipped cell should be charged");
+            Assert.That(comp.ModulesContainer.ContainedEntities, Has.Count.EqualTo(3),
+                "the suit should ship with its three basic modules");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task CoreIsUnboltedWithAWrench()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var modSuit = entMan.System<ModSuitSystem>();
+        var wires = entMan.System<SharedWiresSystem>();
+
+        EntityUid human = default;
+        EntityUid suit = default;
+        EntityUid wrench = default;
+
+        await server.WaitAssertion(() =>
+        {
+            var maps = entMan.System<SharedMapSystem>();
+            maps.CreateMap(out var mapId);
+            var coords = new MapCoordinates(0, 0, mapId);
+
+            human = entMan.SpawnEntity("MobHuman", coords);
+            suit = entMan.SpawnEntity("ClothingModsuitStandard", coords);
+            wrench = entMan.SpawnEntity("Wrench", coords);
+
+            var panel = entMan.GetComponent<WiresPanelComponent>(suit);
+            Assert.That(wires.TogglePanel(suit, panel, true, human));
+
+            var ev = new InteractUsingEvent(human, wrench, suit, entMan.GetComponent<TransformComponent>(suit).Coordinates);
+            entMan.EventBus.RaiseLocalEvent(suit, ev, true);
+
+            Assert.That(ev.Handled, Is.True, "a wrench on the open panel should start the unbolting do-after");
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(modSuit.GetCore((suit, comp)), Is.Not.Null, "the core should only leave after the wrench do-after");
+        });
+
+        await server.WaitRunTicks(240);
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(modSuit.GetCore((suit, comp)), Is.Null, "the core should be unbolted after the wrench do-after");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task PowerCellIsRemovedWithAnEmptyHandAfterADoAfter()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var modSuit = entMan.System<ModSuitSystem>();
+        var wires = entMan.System<SharedWiresSystem>();
+
+        EntityUid human = default;
+        EntityUid suit = default;
+
+        await server.WaitAssertion(() =>
+        {
+            var maps = entMan.System<SharedMapSystem>();
+            maps.CreateMap(out var mapId);
+            var coords = new MapCoordinates(0, 0, mapId);
+
+            human = entMan.SpawnEntity("MobHuman", coords);
+            suit = entMan.SpawnEntity("ClothingModsuitStandard", coords);
+
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null, "the standard suit should ship with a cell");
+
+            var panel = entMan.GetComponent<WiresPanelComponent>(suit);
+            Assert.That(wires.TogglePanel(suit, panel, true, human));
+
+            var ev = new InteractHandEvent(human, suit);
+            entMan.EventBus.RaiseLocalEvent(suit, ev, true);
+
+            Assert.That(ev.Handled, Is.True, "an empty hand on the open panel should start the cell removal do-after");
+            Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null, "the cell should not pop out on the first click");
+        });
+
+        await server.WaitRunTicks(30);
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null, "the cell should still be present early in the do-after");
+        });
+
+        await server.WaitRunTicks(90);
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(modSuit.GetBattery((suit, comp)), Is.Null, "the cell should be removed after the do-after");
         });
 
         await pair.CleanReturnAsync();

@@ -1,0 +1,8 @@
+MOD hardlight masks
+===================
+
+Source: Skyrat-SS13/Skyrat-tg PR #17372 "MOD Hardlight"
+https://github.com/Skyrat-SS13/Skyrat-tg/pull/17372
+
+The per-theme 32x32 masks were cropped from the PR's MOD_mask.dmi.
+Asset license: CC-BY-SA-3.0.

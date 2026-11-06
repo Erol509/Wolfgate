@@ -1,5 +1,7 @@
 using Content.Shared.Whitelist;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._WF.Modsuits;
 
@@ -29,4 +31,31 @@ public sealed partial class ModThemePrototype : IPrototype
 
     [DataField]
     public EntityWhitelist? BlacklistedModules;
+
+    /// <summary>Whether a sealed suit projects its hardlight mesh over uncovered body parts.</summary>
+    [DataField]
+    public bool Hardlight = true;
+
+    [DataField]
+    public Color HardlightColor = Color.FromHex("#57C8FF");
+
+    [DataField]
+    public Color HardlightColor2 = Color.FromHex("#175A7A");
+
+    /// <summary>Texture sampled for the hardlight pattern; its colours are themed too.</summary>
+    [DataField]
+    public ResPath HardlightMask = new("/Textures/_WF/Modsuits/Hardlight/standard_blue.png");
+
+    [DataField]
+    public float HardlightAlpha = 0.7f;
+
+    [DataField]
+    public float HardlightIntensity = 1.1f;
+
+    /// <summary>Grid cells across the wearer's sprite.</summary>
+    [DataField]
+    public float HardlightGridScale = 32f;
+
+    [DataField]
+    public float HardlightScrollRate = 0.15f;
 }

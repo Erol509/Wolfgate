@@ -47,6 +47,9 @@ public sealed partial class ModSuitSystem
 
     public bool HasCharge(Entity<ModSuitComponent> ent, float amount)
     {
+        if (_net.IsClient)
+            return ent.Comp.Charge >= amount;
+
         return GetBattery(ent) is { } battery && GetCharge(battery) >= amount;
     }
 
@@ -55,7 +58,32 @@ public sealed partial class ModSuitSystem
         if (amount <= 0f)
             return true;
 
+        if (_net.IsClient)
+            return ent.Comp.Charge >= amount;
+
         return GetBattery(ent) is { } battery && _battery.TryUseCharge(battery.AsNullable(), amount);
+    }
+
+    /// <summary>Copies the battery's charge into networked fields so the client can display it.</summary>
+    private void SyncCharge(Entity<ModSuitComponent> ent)
+    {
+        if (_net.IsClient)
+            return;
+
+        var charge = 0f;
+        var max = 1f;
+        if (GetBattery(ent) is { } battery)
+        {
+            charge = GetCharge(battery);
+            max = MathF.Max(1f, battery.Comp.MaxCharge);
+        }
+
+        if (MathF.Abs(ent.Comp.Charge - charge) < 0.01f && MathF.Abs(ent.Comp.MaxCharge - max) < 0.01f)
+            return;
+
+        ent.Comp.Charge = charge;
+        ent.Comp.MaxCharge = max;
+        Dirty(ent);
     }
 
     public float GetThemeDrain(Entity<ModSuitComponent> ent)
@@ -95,6 +123,7 @@ public sealed partial class ModSuitSystem
             return;
 
         RaiseUpdated(ent);
+        SyncCharge(ent);
         SetPowered(ent, !args.Ejected && HasCharge(ent, 0.01f));
         UpdatePowerAlert(ent);
     }
@@ -104,6 +133,7 @@ public sealed partial class ModSuitSystem
             return;
 
         RaiseUpdated(ent);
+        SyncCharge(ent);
 
         if (args.Container.ID != ent.Comp.CoreSlotId || _timing.ApplyingState)
             return;
@@ -117,6 +147,7 @@ public sealed partial class ModSuitSystem
             return;
 
         RaiseUpdated(ent);
+        SyncCharge(ent);
 
         if (args.Container.ID != ent.Comp.CoreSlotId || _timing.ApplyingState)
             return;
@@ -154,6 +185,7 @@ public sealed partial class ModSuitSystem
 
         RefreshDrain(ent);
         RefreshSpeed(ent);
+        SyncCharge(ent);
         UpdatePowerAlert(ent);
     }
 
@@ -167,10 +199,19 @@ public sealed partial class ModSuitSystem
         var query = EntityQueryEnumerator<ModSuitComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.Wearer != null && comp.State != ModSuitState.Inactive && ShouldStep(comp))
+            if (!ShouldStep(comp))
+                continue;
+
+            var ent = (uid, comp);
+            if (comp.Wearer != null && comp.State != ModSuitState.Inactive)
             {
-                UpdatePowerDrain((uid, comp));
-                UpdatePowerAlert((uid, comp));
+                UpdatePowerDrain(ent);
+                SyncCharge(ent);
+                UpdatePowerAlert(ent);
+            }
+            else
+            {
+                SyncCharge(ent);
             }
         }
     }
@@ -201,14 +242,13 @@ public sealed partial class ModSuitSystem
         if (_timing.ApplyingState || ent.Comp.Wearer is not { } wearer)
             return;
 
-        if (ent.Comp.State == ModSuitState.Inactive || GetBattery(ent) is not { } battery)
+        if (ent.Comp.State == ModSuitState.Inactive || GetCore(ent) == null)
         {
             _alerts.ClearAlert(wearer, ent.Comp.PowerAlert);
             return;
         }
 
-        var charge = GetCharge(battery);
-        var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, charge), battery.Comp.MaxCharge, 6);
+        var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, ent.Comp.Charge), MathF.Max(1f, ent.Comp.MaxCharge), 6);
         _alerts.ShowAlert(wearer, ent.Comp.PowerAlert, (short) severity);
     }
 }

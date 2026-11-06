@@ -1,0 +1,36 @@
+light_mode unshaded;
+
+uniform sampler2D mask;
+uniform highp vec3 color;
+uniform highp vec3 color2;
+uniform highp float alpha;
+uniform highp float intensity;
+uniform highp float gridScale;
+uniform highp float t;
+
+highp vec2 mirrorRepeat(highp vec2 uv) {
+    return abs(fract(uv * 0.5) * 2.0 - 1.0);
+}
+
+// The mask is the per-theme hardlight texture from the Skyrat MOD mask sheet. It scrolls
+// downward and is displaced by a horizontal wave, then lit with the theme's glow colour.
+void fragment() {
+    highp vec4 base = texture2D(TEXTURE, UV);
+
+    highp vec2 uv = UV * (gridScale / 32.0);
+    uv.x += sin((UV.y * 7.0 - t * 2.5)) * 0.02;
+    uv.y -= t * 0.18;
+    uv = mirrorRepeat(uv);
+
+    highp vec4 pattern = texture2D(mask, uv);
+    highp vec4 glow = texture2D(mask, mirrorRepeat(uv + vec2(0.015, 0.025)));
+
+    highp float scan = 0.72 + 0.28 * sin((UV.y + t * 0.5) * 42.0);
+    highp vec3 tint = mix(color2, pattern.rgb * intensity, 0.8);
+    tint += pattern.rgb * 0.25 * intensity;
+    tint += glow.rgb * 0.3 * scan;
+    tint += color * 0.15 * scan;
+
+    highp float shape = 0.4 + 0.6 * pattern.a;
+    COLOR = vec4(tint, base.a * alpha * shape * scan);
+}

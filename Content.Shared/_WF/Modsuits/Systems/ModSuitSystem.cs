@@ -20,6 +20,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Content.Shared.Wires;
@@ -57,6 +58,7 @@ public sealed partial class ModSuitSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private SharedWiresSystem _wires = default!;
     [Dependency] private ToggleableClothingSystem _toggleableClothing = default!;
@@ -83,6 +85,14 @@ public sealed partial class ModSuitSystem : EntitySystem
         SubscribeLocalEvent<ModSuitComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
         SubscribeLocalEvent<ModSuitComponent, ModSuitToggleDoAfterEvent>(OnOtherUserToggleDoAfter);
         SubscribeLocalEvent<ModSuitComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
+        SubscribeLocalEvent<ModSuitComponent, ModCoreRemoveDoAfterEvent>(OnCoreRemoveDoAfter);
+        SubscribeLocalEvent<ModSuitComponent, BoundUserInterfaceMessageAttempt>(OnUiMessageAttempt);
+        SubscribeLocalEvent<ModSuitComponent, ModSuitActivateMessage>(OnUiActivate);
+        SubscribeLocalEvent<ModSuitComponent, ModSuitTogglePartMessage>(OnUiTogglePart);
+        SubscribeLocalEvent<ModSuitComponent, ModSuitToggleAllPartsMessage>(OnUiToggleAllParts);
+        SubscribeLocalEvent<ModSuitComponent, ModSuitModuleToggleMessage>(OnUiModuleToggle);
+        SubscribeLocalEvent<ModSuitComponent, ModSuitModulePinMessage>(OnUiModulePin);
+        SubscribeLocalEvent<ModSuitComponent, ModSuitModuleRemoveMessage>(OnUiModuleRemove);
         SubscribeLocalEvent<ModSuitComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ModSuitComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<ModSuitComponent, ItemSlotEjectAttemptEvent>(OnCoreEjectAttempt);
@@ -131,6 +141,7 @@ public sealed partial class ModSuitSystem : EntitySystem
 
         SpawnParts(ent);
         SpawnStartingModules(ent);
+        SyncCharge(ent);
         Dirty(ent);
     }
     private void OnSuitShutdown(Entity<ModSuitComponent> ent, ref ComponentShutdown args)
@@ -203,6 +214,7 @@ public sealed partial class ModSuitSystem : EntitySystem
 
         if (wearer != null)
         {
+            SyncCharge(ent);
             GrantModuleActions(ent, wearer.Value);
             UpdatePowerAlert(ent);
         }
@@ -286,22 +298,6 @@ public sealed partial class ModSuitSystem : EntitySystem
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => _ui.OpenUi(ent.Owner, ModSuitUiKey.Key, user),
         });
-
-        if (HasOpenPanel(ent) && GetCore(ent) is { } core && _itemSlots.TryGetSlot(ent, ent.Comp.CoreSlotId, out var slot))
-        {
-            args.Verbs.Add(new AlternativeVerb
-            {
-                Text = Loc.GetString("modsuit-verb-remove-core"),
-                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
-                Priority = 4,
-                Act = () =>
-                {
-                    ent.Comp.CoreEjectAllowed = true;
-                    _itemSlots.TryEject(ent, slot, user, out _);
-                    ent.Comp.CoreEjectAllowed = false;
-                },
-            });
-        }
     }
 
     private void StartOtherUserToggle(Entity<ModSuitComponent> ent, EntityUid user, EntityUid wearer)
@@ -356,10 +352,45 @@ public sealed partial class ModSuitSystem : EntitySystem
             _popup.PopupClient(Loc.GetString("modsuit-core-locked"), ent, user);
     }
 
+    private void OnCoreRemoveDoAfter(Entity<ModSuitComponent> ent, ref ModCoreRemoveDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled || !HasOpenPanel(ent) || GetCore(ent) == null)
+            return;
+
+        if (!_itemSlots.TryGetSlot(ent, ent.Comp.CoreSlotId, out var slot))
+            return;
+
+        args.Handled = true;
+        ent.Comp.CoreEjectAllowed = true;
+        var ejected = _itemSlots.TryEject(ent, slot, args.User, out _);
+        ent.Comp.CoreEjectAllowed = false;
+
+        if (!ejected)
+            return;
+
+        _audio.PlayPredicted(ent.Comp.ModuleRemoveSound, ent, args.User);
+        _popup.PopupClient(Loc.GetString("modsuit-core-removed"), ent, args.User);
+    }
+
     private void OnInteractUsing(Entity<ModSuitComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
+
+        // The core is unbolted with a wrench, as on /tg/; the panel must already be open.
+        if (HasOpenPanel(ent) && _tool.HasQuality(args.Used, "Anchoring"))
+        {
+            args.Handled = true;
+
+            if (GetCore(ent) == null)
+            {
+                _popup.PopupClient(Loc.GetString("modsuit-core-missing"), ent, args.User);
+                return;
+            }
+
+            _tool.UseTool(args.Used, args.User, ent.Owner, 3f, "Anchoring", new ModCoreRemoveDoAfterEvent());
+            return;
+        }
 
         if (HasComp<ModModuleComponent>(args.Used))
         {
@@ -383,9 +414,9 @@ public sealed partial class ModSuitSystem : EntitySystem
                 ("current", GetComplexity(ent)),
                 ("max", theme.ComplexityMax)));
 
-            if (GetBattery(ent) is { } battery)
+            if (GetCore(ent) != null)
             {
-                var percent = (int) MathF.Round(GetCharge(battery) / MathF.Max(1f, battery.Comp.MaxCharge) * 100f);
+                var percent = (int) MathF.Round(ent.Comp.Charge / MathF.Max(1f, ent.Comp.MaxCharge) * 100f);
                 args.PushMarkup(Loc.GetString("modsuit-examine-charge", ("percent", percent)));
             }
             else

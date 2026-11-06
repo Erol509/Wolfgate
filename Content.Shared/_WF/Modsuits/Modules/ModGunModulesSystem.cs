@@ -33,6 +33,7 @@ public sealed partial class ModGunModulesSystem : VirtualController
         SubscribeLocalEvent<ModShootingAssistantModuleComponent, ModModuleDeactivatedEvent>(OnAssistantDeactivated);
         SubscribeLocalEvent<ModShootingAssistantModuleComponent, ModShootingModeActionEvent>(OnCycleMode);
         SubscribeLocalEvent<ModShootingAssistantComponent, RefreshMovementSpeedModifiersEvent>(OnAssistantSpeed);
+        SubscribeLocalEvent<GunComponent, GunRefreshModifiersEvent>(OnAssistantGunRefresh);
         SubscribeLocalEvent<ProjectileComponent, ComponentStartup>(OnProjectileStartup);
     }
 

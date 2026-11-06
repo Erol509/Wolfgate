@@ -40,11 +40,17 @@ public sealed partial class ModSuitSystem
     }
     private void OnUiModulePin(Entity<ModSuitComponent> ent, ref ModSuitModulePinMessage args)
     {
+        if (!CanUseInterface(ent, args.Actor))
+            return;
+
         if (TryGetInstalledModule(ent, args.Module, out var module) && TryComp<ModModuleComponent>(module, out var moduleComp))
             TogglePinned(ent, (module, moduleComp));
     }
     private void OnUiModuleRemove(Entity<ModSuitComponent> ent, ref ModSuitModuleRemoveMessage args)
     {
+        if (!CanUseInterface(ent, args.Actor))
+            return;
+
         if (TryGetInstalledModule(ent, args.Module, out var module))
             TryRemoveModule(ent, module, args.Actor);
     }

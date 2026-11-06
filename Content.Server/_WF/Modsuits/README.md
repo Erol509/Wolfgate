@@ -5,14 +5,20 @@ seals them, and runs a catalogue of insertable modules. The control unit stores 
 wires panel; the module UI installs, removes, pins and toggles them. Modules spend the core's charge and add up
 to the theme's complexity cap.
 
-The core is a secured unit behind the panel, not an ejectable cell: remove it with the remove-core verb, and
-swap the power cell inside it by hand while the panel is open. Suit activation and powered modules check the
-cell's charge, and the ion jetpack module draws on it instead of a gas tank.
+The core is bolted behind the panel, not an ejectable cell: unbolt it with a wrench, and swap the power cell
+inside it by hand while the panel is open. Native suits ship with a core, a charged cell and the compact
+storage, flashlight and welding modules. Part deployment is quick; sealing runs at the theme's activation step.
+Suit activation and powered modules check the cell's charge, and the ion jetpack module draws on it instead of a
+gas tank.
+
+While a suit is active it projects a theme-coloured hardlight mesh over the wearer's humanoid layers, so tails,
+ears, hair and markings that sit outside the suit sprite stay visible as hardlight instead of being hidden.
 
 Entry points: `ModSuitComponent` (theme, parts, core slot, module container), `ModModuleComponent` (type,
 complexity, power, cooldown, incompatibilities), `ModThemePrototype` (complexity cap, drain, inbuilt modules),
 `ModSuitSystem` (deployment, sealing, power, module installation), the module systems under
-`Content.Shared/_WF/Modsuits/Modules`, and `ModSuitWindow` on the client.
+`Content.Shared/_WF/Modsuits/Modules`, `ModSuitHardlightSystem` on the client for the sealed-suit mesh, and
+`ModSuitWindow` on the client.
 
 Original assets are the /tg/ MODsuit module icon set, copied to `Resources/Textures/_WF/Modsuits/mod_modules.rsi`
 with its CC-BY-SA-3.0 notice. Suit part sprites remain the existing `_Goobstation` modsuit RSIs. Additional
@@ -245,6 +251,7 @@ the shared item. "partial" rows have the prototype and some effect, but the cite
 - [`Content.Client/_WF/Modsuits/ModSphereVisualsComponent.cs`](../../../Content.Client/_WF/Modsuits/ModSphereVisualsComponent.cs)
 - [`Content.Client/_WF/Modsuits/ModSphereVisualsSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSphereVisualsSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitBoundUserInterface.cs`](../../../Content.Client/_WF/Modsuits/ModSuitBoundUserInterface.cs)
+- [`Content.Client/_WF/Modsuits/ModSuitHardlightSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitHardlightSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitSealedVisualsComponent.cs`](../../../Content.Client/_WF/Modsuits/ModSuitSealedVisualsComponent.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitUiSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitUiSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitVisualizerSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitVisualizerSystem.cs)
@@ -253,7 +260,9 @@ the shared item. "partial" rows have the prototype and some effect, but the cite
 
 ### Integration tests
 
+- [`Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitHardlightTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitHardlightTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Modsuits/ModsuitModuleTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModsuitModuleTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitWindowTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitWindowTest.cs)
 
 ### Prototypes
 
@@ -276,6 +285,7 @@ the shared item. "partial" rows have the prototype and some effect, but the cite
 - [`Resources/Textures/_WF/Modsuits/balloons.rsi/`](../../../Resources/Textures/_WF/Modsuits/balloons.rsi/)
 - [`Resources/Textures/_WF/Modsuits/mod_modules.rsi/`](../../../Resources/Textures/_WF/Modsuits/mod_modules.rsi/)
 - [`Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl)
+- [`Resources/Textures/_WF/Modsuits/Shaders/mod_hardlight.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_hardlight.swsl)
 - [`Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl)
 
 ### Audio
@@ -303,7 +313,10 @@ the shared item. "partial" rows have the prototype and some effect, but the cite
   - the module system owns the suit parts
   - a MOD core replaces the power cell
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/Hands/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Hands/modsuit.yml)
-- [`Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml): components granted while the native module system has the helmet sealed
+- [`Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml)
+  - the hardlight shader replaces hiding the head layers
+  - components granted while the native module system has the helmet sealed
+  - head layers stay visible; the hardlight shader projects them over the sealed suit
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/OuterClothing/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/OuterClothing/modsuit.yml): the native module system grants sealed components
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Shoes/modsuit.yml)
 - [`Resources/Prototypes/_Goobstation/Entities/Objects/Specific/Robotics/modsuit_parts.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Objects/Specific/Robotics/modsuit_parts.yml): the standard core holds a swappable power cell
