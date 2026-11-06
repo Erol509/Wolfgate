@@ -8,29 +8,38 @@ uniform highp float intensity;
 uniform highp float gridScale;
 uniform highp float t;
 
-highp vec2 mirrorRepeat(highp vec2 uv) {
-    return abs(fract(uv * 0.5) * 2.0 - 1.0);
-}
-
-// The mask is the per-theme hardlight texture from the Skyrat MOD mask sheet. It scrolls
-// downward and is displaced by a horizontal wave, then lit with the theme's glow colour.
+// The mask is the per-theme hardlight texture from the Skyrat MOD mask sheet. If the
+// sampler is unavailable, the same diagonal checker is generated procedurally.
 void fragment() {
     highp vec4 base = texture2D(TEXTURE, UV);
 
     highp vec2 uv = UV * (gridScale / 32.0);
-    uv.x += sin((UV.y * 7.0 - t * 2.5)) * 0.02;
-    uv.y -= t * 0.18;
-    uv = mirrorRepeat(uv);
+    uv.x += sin((UV.y * 6.0 - t * 2.0)) * 0.035;
+    uv.y += sin((UV.x * 5.0 + t * 1.5)) * 0.015;
+    uv = clamp(uv, 0.0, 1.0);
 
     highp vec4 pattern = texture2D(mask, uv);
-    highp vec4 glow = texture2D(mask, mirrorRepeat(uv + vec2(0.015, 0.025)));
+    highp float maskAlpha = pattern.a;
+    highp float lum = dot(pattern.rgb, vec3(0.299, 0.587, 0.114));
+
+    highp float maskPattern = smoothstep(0.40, 0.72, lum);
+
+    // An unbound sampler commonly reads as transparent black or opaque white.
+    if (maskAlpha < 0.01 || (maskAlpha > 0.99 && lum > 0.99)) {
+        highp float cell = floor(uv.x * 16.0) + floor(uv.y * 16.0);
+        highp float checker = mod(cell, 4.0) / 3.0;
+        highp float fine = mod(floor(uv.x * 32.0) + floor(uv.y * 32.0), 2.0);
+        maskPattern = mix(checker, fine, 0.3);
+        maskAlpha = 0.7;
+    }
 
     highp float scan = 0.72 + 0.28 * sin((UV.y + t * 0.5) * 42.0);
-    highp vec3 tint = mix(color2, pattern.rgb * intensity, 0.8);
-    tint += pattern.rgb * 0.25 * intensity;
-    tint += glow.rgb * 0.3 * scan;
-    tint += color * 0.15 * scan;
+    highp float travel = fract(UV.y - t * 0.25);
+    highp float band = smoothstep(0.0, 0.12, travel) * (1.0 - smoothstep(0.12, 0.3, travel));
 
-    highp float shape = 0.4 + 0.6 * pattern.a;
+    highp vec3 tint = mix(color2, color, maskPattern) * (0.95 + 0.35 * band) * intensity;
+    tint += color * 0.08 * band * scan;
+
+    highp float shape = 0.25 + 0.75 * maskAlpha;
     COLOR = vec4(tint, base.a * alpha * shape * scan);
 }

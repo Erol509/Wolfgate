@@ -223,16 +223,18 @@ public sealed class ModsuitModuleTest
     }
 
     [Test]
-    public async Task PowerCellIsRemovedWithAnEmptyHandAfterADoAfter()
+    public async Task PowerCellIsRemovedByTheVerbAfterADoAfter()
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
         var entMan = server.EntMan;
         var modSuit = entMan.System<ModSuitSystem>();
+        var modCore = entMan.System<ModCoreSystem>();
         var wires = entMan.System<SharedWiresSystem>();
 
         EntityUid human = default;
         EntityUid suit = default;
+        EntityUid core = default;
 
         await server.WaitAssertion(() =>
         {
@@ -245,15 +247,21 @@ public sealed class ModsuitModuleTest
 
             var comp = entMan.GetComponent<ModSuitComponent>(suit);
             Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null, "the standard suit should ship with a cell");
+            core = modSuit.GetCore((suit, comp))!.Value;
 
             var panel = entMan.GetComponent<WiresPanelComponent>(suit);
             Assert.That(wires.TogglePanel(suit, panel, true, human));
 
+            // Touching the suit must not eject the cell or the core.
             var ev = new InteractHandEvent(human, suit);
             entMan.EventBus.RaiseLocalEvent(suit, ev, true);
+            Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null, "a bare hand must not remove the cell");
+            Assert.That(modSuit.GetCore((suit, comp)), Is.Not.Null, "a bare hand must not remove the core");
 
-            Assert.That(ev.Handled, Is.True, "an empty hand on the open panel should start the cell removal do-after");
+            Assert.That(modCore.TryStartCellRemoval(core, suit, human), Is.True,
+                "the remove-cell verb should start the do-after");
             Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null, "the cell should not pop out on the first click");
+            Assert.That(modSuit.GetCore((suit, comp)), Is.Not.Null, "the core itself should not be ejected by the verb");
         });
 
         await server.WaitRunTicks(30);
@@ -262,6 +270,7 @@ public sealed class ModsuitModuleTest
         {
             var comp = entMan.GetComponent<ModSuitComponent>(suit);
             Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null, "the cell should still be present early in the do-after");
+            Assert.That(modSuit.GetCore((suit, comp)), Is.Not.Null, "the core should still be present early in the do-after");
         });
 
         await server.WaitRunTicks(90);
@@ -270,6 +279,7 @@ public sealed class ModsuitModuleTest
         {
             var comp = entMan.GetComponent<ModSuitComponent>(suit);
             Assert.That(modSuit.GetBattery((suit, comp)), Is.Null, "the cell should be removed after the do-after");
+            Assert.That(modSuit.GetCore((suit, comp)), Is.Not.Null, "the core should remain after removing the cell");
         });
 
         await pair.CleanReturnAsync();

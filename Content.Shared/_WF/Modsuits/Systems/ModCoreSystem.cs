@@ -27,7 +27,6 @@ public sealed partial class ModCoreSystem : EntitySystem
         SubscribeLocalEvent<ModCoreComponent, EmpAttemptEvent>(OnEmpAttempt);
         SubscribeLocalEvent<ModCoreRefuelableComponent, InteractUsingEvent>(OnRefuel);
         SubscribeLocalEvent<ModCoreComponent, InteractUsingEvent>(OnInsertCell);
-        SubscribeLocalEvent<ModCoreComponent, InteractHandEvent>(OnRemoveCell);
         SubscribeLocalEvent<ModCoreComponent, ModCoreRemoveCellDoAfterEvent>(OnRemoveCellDoAfter);
     }
 
@@ -72,27 +71,36 @@ public sealed partial class ModCoreSystem : EntitySystem
         args.Handled = _itemSlots.TryInsert(ent, slot, args.Used, args.User);
     }
 
-    private void OnRemoveCell(Entity<ModCoreComponent> ent, ref InteractHandEvent args)
+    /// <summary>Whether the installed core has a power cell that can be taken out.</summary>
+    public bool HasCell(EntityUid core)
     {
-        if (args.Handled
-            || !TryComp<PowerCellSlotComponent>(ent, out var cellSlot)
-            || !TryGetSuitCore(ent, out var suit)
-            || !PanelOpen(suit)
-            || !_itemSlots.TryGetSlot(ent, cellSlot.CellSlotId, out var slot)
-            || slot.Item == null)
-            return;
+        return TryComp<PowerCellSlotComponent>(core, out var cellSlot)
+               && _itemSlots.TryGetSlot(core, cellSlot.CellSlotId, out var slot)
+               && slot.Item != null;
+    }
 
-        var doAfter = new DoAfterArgs(EntityManager, args.User, 1.5f, new ModCoreRemoveCellDoAfterEvent(), ent.Owner, target: suit)
+    /// <summary>Starts the deliberate cell-removal do-after; used by the suit's verb.</summary>
+    public bool TryStartCellRemoval(EntityUid core, EntityUid suit, EntityUid user)
+    {
+        if (!HasCell(core)
+            || !TryGetSuitCore(core, out var actualSuit)
+            || actualSuit != suit
+            || !PanelOpen(suit)
+            || !TryComp<PowerCellSlotComponent>(core, out var cellSlot)
+            || !_itemSlots.TryGetSlot(core, cellSlot.CellSlotId, out _))
+            return false;
+
+        var doAfter = new DoAfterArgs(EntityManager, user, 1.5f, new ModCoreRemoveCellDoAfterEvent(), core, target: suit)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
         };
 
         if (!_doAfter.TryStartDoAfter(doAfter))
-            return;
+            return false;
 
-        args.Handled = true;
-        _popup.PopupClient(Loc.GetString("modsuit-cell-removing"), suit, args.User);
+        _popup.PopupClient(Loc.GetString("modsuit-cell-removing"), suit, user);
+        return true;
     }
 
     private void OnRemoveCellDoAfter(Entity<ModCoreComponent> ent, ref ModCoreRemoveCellDoAfterEvent args)

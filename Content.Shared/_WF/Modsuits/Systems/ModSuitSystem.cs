@@ -63,6 +63,7 @@ public sealed partial class ModSuitSystem : EntitySystem
     [Dependency] private SharedWiresSystem _wires = default!;
     [Dependency] private ToggleableClothingSystem _toggleableClothing = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private ModCoreSystem _modCore = default!;
 
     private readonly HashSet<EntityUid> _movingParts = new();
 
@@ -94,7 +95,6 @@ public sealed partial class ModSuitSystem : EntitySystem
         SubscribeLocalEvent<ModSuitComponent, ModSuitModulePinMessage>(OnUiModulePin);
         SubscribeLocalEvent<ModSuitComponent, ModSuitModuleRemoveMessage>(OnUiModuleRemove);
         SubscribeLocalEvent<ModSuitComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<ModSuitComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<ModSuitComponent, ItemSlotEjectAttemptEvent>(OnCoreEjectAttempt);
         SubscribeLocalEvent<ModSuitComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ModSuitComponent, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnSpeedRefresh);
@@ -298,6 +298,17 @@ public sealed partial class ModSuitSystem : EntitySystem
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => _ui.OpenUi(ent.Owner, ModSuitUiKey.Key, user),
         });
+
+        if (HasOpenPanel(ent) && GetCore(ent) is { } core && _modCore.HasCell(core))
+        {
+            args.Verbs.Add(new AlternativeVerb
+            {
+                Text = Loc.GetString("modsuit-verb-remove-cell"),
+                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
+                Priority = 4,
+                Act = () => _modCore.TryStartCellRemoval(core, ent.Owner, user),
+            });
+        }
     }
 
     private void StartOtherUserToggle(Entity<ModSuitComponent> ent, EntityUid user, EntityUid wearer)
@@ -333,15 +344,6 @@ public sealed partial class ModSuitSystem : EntitySystem
 
         args.Cancelled = true;
     }
-    private void OnInteractHand(Entity<ModSuitComponent> ent, ref InteractHandEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (GetCore(ent) is { } core)
-            RaiseLocalEvent(core, args);
-    }
-
     private void OnCoreEjectAttempt(Entity<ModSuitComponent> ent, ref ItemSlotEjectAttemptEvent args)
     {
         if (args.Slot.ID != ent.Comp.CoreSlotId || ent.Comp.CoreEjectAllowed)
@@ -388,7 +390,8 @@ public sealed partial class ModSuitSystem : EntitySystem
                 return;
             }
 
-            _tool.UseTool(args.Used, args.User, ent.Owner, 3f, "Anchoring", new ModCoreRemoveDoAfterEvent());
+            if (_tool.UseTool(args.Used, args.User, ent.Owner, 3f, "Anchoring", new ModCoreRemoveDoAfterEvent()))
+                _popup.PopupClient(Loc.GetString("modsuit-core-unbolting"), ent, args.User);
             return;
         }
 

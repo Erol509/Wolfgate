@@ -6,13 +6,14 @@ wires panel; the module UI installs, removes, pins and toggles them. Modules spe
 to the theme's complexity cap.
 
 The core is bolted behind the panel, not an ejectable cell: unbolt it with a wrench, and swap the power cell
-inside it by hand while the panel is open. Native suits ship with a core, a charged cell and the compact
-storage, flashlight and welding modules. Part deployment is quick; sealing runs at the theme's activation step.
-Suit activation and powered modules check the cell's charge, and the ion jetpack module draws on it instead of a
-gas tank.
+inside it with the panel's "Remove power cell" verb while the panel is open. Native suits ship with a core, a
+charged cell and the compact storage, flashlight and welding modules. Part deployment is quick; sealing runs
+at the theme's activation step. Suit activation and powered modules check the cell's charge, and the ion
+jetpack module draws on it instead of a gas tank.
 
 While a suit is active it projects a theme-coloured hardlight mesh over the wearer's humanoid layers, so tails,
-ears, hair and markings that sit outside the suit sprite stay visible as hardlight instead of being hidden.
+ears, hair and markings that sit outside the suit sprite stay visible as hardlight instead of being hidden. The
+mesh uses the per-theme masks from Skyrat's MOD hardlight sheet, scrolled and waved over the wearer.
 
 Entry points: `ModSuitComponent` (theme, parts, core slot, module container), `ModModuleComponent` (type,
 complexity, power, cooldown, incompatibilities), `ModThemePrototype` (complexity cap, drain, inbuilt modules),
@@ -283,6 +284,15 @@ the shared item. "partial" rows have the prototype and some effect, but the cite
 ### Textures
 
 - [`Resources/Textures/_WF/Modsuits/balloons.rsi/`](../../../Resources/Textures/_WF/Modsuits/balloons.rsi/)
+- [`Resources/Textures/_WF/Modsuits/Hardlight/alert_amber.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/alert_amber.png)
+- [`Resources/Textures/_WF/Modsuits/Hardlight/ATTRIBUTION.txt`](../../../Resources/Textures/_WF/Modsuits/Hardlight/ATTRIBUTION.txt)
+- [`Resources/Textures/_WF/Modsuits/Hardlight/contractor_red.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/contractor_red.png)
+- [`Resources/Textures/_WF/Modsuits/Hardlight/cosmic_blue.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/cosmic_blue.png)
+- [`Resources/Textures/_WF/Modsuits/Hardlight/evil_green.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/evil_green.png)
+- [`Resources/Textures/_WF/Modsuits/Hardlight/extrashield_green.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/extrashield_green.png)
+- [`Resources/Textures/_WF/Modsuits/Hardlight/hazard_orange.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/hazard_orange.png)
+- [`Resources/Textures/_WF/Modsuits/Hardlight/royal_purple.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/royal_purple.png)
+- [`Resources/Textures/_WF/Modsuits/Hardlight/standard_blue.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/standard_blue.png)
 - [`Resources/Textures/_WF/Modsuits/mod_modules.rsi/`](../../../Resources/Textures/_WF/Modsuits/mod_modules.rsi/)
 - [`Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl)
 - [`Resources/Textures/_WF/Modsuits/Shaders/mod_hardlight.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_hardlight.swsl)

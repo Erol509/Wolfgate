@@ -3,8 +3,10 @@ modsuit-core-full = The core is already fully charged!
 modsuit-core-refueled = You feed the core.
 modsuit-core-missing = There is no MOD core installed!
 modsuit-core-removed = You unbolt the MOD core.
+modsuit-core-unbolting = You start unbolting the MOD core...
 modsuit-cell-removing = You start removing the power cell...
 modsuit-cell-removed = You remove the power cell.
+modsuit-verb-remove-cell = Remove power cell
 
 modsuit-deactivate-first = Deactivate the suit first!
 modsuit-deploy-all-first = Deploy all parts first!
