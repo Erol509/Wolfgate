@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Inventory;
 using Content.Shared._WF.Modsuits;
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._Goobstation.Clothing.Components;
@@ -13,13 +14,22 @@ using Robust.Shared.Timing;
 namespace Content.Client._WF.Modsuits;
 
 /// <summary>
-/// Projects the suit theme's hardlight mesh over the wearer's humanoid layers while the suit is active.
-/// The modsuit's clothing sprites draw over the body, so only the parts outside its silhouette remain visible.
+/// Projects the suit theme's hardlight mesh over every wearer sprite layer except the modsuit itself.
+/// The suit's clothing sprites draw on top, leaving only the parts outside its silhouette visible.
 /// </summary>
 public sealed partial class ModSuitHardlightSystem : EntitySystem
 {
     private const string ShaderId = "ModsuitHardlight";
     private static readonly TimeSpan RefreshInterval = TimeSpan.FromSeconds(0.25);
+    private static readonly string[] SuitSlots = { "head", "outerClothing", "gloves", "shoes", "back" };
+
+    private static readonly HumanoidVisualLayers[] ExcludedLayers =
+    {
+        HumanoidVisualLayers.Handcuffs,
+        HumanoidVisualLayers.Ensnare,
+        HumanoidVisualLayers.Fire,
+        HumanoidVisualLayers.StencilMask,
+    };
 
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -28,26 +38,6 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
 
     private readonly Dictionary<EntityUid, HardlightState> _states = new();
     private TimeSpan _nextRefresh;
-
-    /// <summary>Layers that stick out of the suit; the rest of the body stays under the suit untouched.</summary>
-    private static readonly HashSet<HumanoidVisualLayers> HardlightLayers = new()
-    {
-        HumanoidVisualLayers.Special,
-        HumanoidVisualLayers.TailExtras,
-        HumanoidVisualLayers.Tail,
-        HumanoidVisualLayers.TailBehind,
-        HumanoidVisualLayers.TailOversuit,
-        HumanoidVisualLayers.Wings,
-        HumanoidVisualLayers.Hair,
-        HumanoidVisualLayers.FacialHair,
-        HumanoidVisualLayers.Chest,
-        HumanoidVisualLayers.Head,
-        HumanoidVisualLayers.Snout,
-        HumanoidVisualLayers.HeadSide,
-        HumanoidVisualLayers.HeadTop,
-        HumanoidVisualLayers.LArmExtension,
-        HumanoidVisualLayers.RArmExtension,
-    };
 
     public override void Shutdown()
     {
@@ -83,7 +73,6 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
             Refresh((uid, comp));
         }
 
-        // A suit can be deleted without a state change we can subscribe to.
         foreach (var suit in _states.Keys.ToArray())
         {
             if (!seen.Contains(suit))
@@ -94,10 +83,7 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
     /// <summary>Legacy ToggleableClothing suits seal their parts instead of using ModSuitState.</summary>
     private bool HasSealedPart(EntityUid wearer)
     {
-        if (!HasComp<InventoryComponent>(wearer))
-            return false;
-
-        foreach (var slot in new[] { "head", "outerClothing", "gloves", "shoes" })
+        foreach (var slot in SuitSlots)
         {
             if (_inventory.TryGetSlotEntity(wearer, slot, out var item)
                 && TryComp<SealableClothingComponent>(item, out var seal)
@@ -115,7 +101,6 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
 
         if (!theme.Hardlight
             || wearer is not { } target
-            || !TryComp<HumanoidAppearanceComponent>(target, out _)
             || !TryComp<SpriteComponent>(target, out _))
         {
             Clear(suit.Owner);
@@ -132,7 +117,6 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
         {
             if (existing.Wearer == target)
             {
-                // Markings can be added or rebuilt while the suit stays sealed.
                 ApplyLayers(existing);
                 return;
             }
@@ -152,33 +136,47 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
         _states[suit.Owner] = state;
         ApplyLayers(state);
 
-        Log.Info($"Applied MOD hardlight theme '{theme.ID}' to {ToPrettyString(target)} using {theme.HardlightMask}.");
+        Log.Info($"Applied MOD hardlight theme '{theme.ID}' to {ToPrettyString(target)}.");
     }
 
     private void ApplyLayers(HardlightState state)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(state.Wearer, out var humanoid)
-            || !TryComp<SpriteComponent>(state.Wearer, out var sprite))
+        if (!TryComp<SpriteComponent>(state.Wearer, out var sprite))
             return;
 
+        var skip = new HashSet<int>();
+
+        foreach (var layer in ExcludedLayers)
+        {
+            if (sprite.LayerMapTryGet(layer, out var index))
+                skip.Add(index);
+        }
+
+        if (TryComp<InventorySlotsComponent>(state.Wearer, out var slots))
+        {
+            foreach (var slot in SuitSlots)
+            {
+                if (!_inventory.TryGetSlotEntity(state.Wearer, slot, out var item)
+                    || !IsSuitItem(item.Value, slot)
+                    || !slots.VisualLayerKeys.TryGetValue(slot, out var keys))
+                    continue;
+
+                foreach (var key in keys)
+                {
+                    if (sprite.LayerMapTryGet(key, out var index))
+                        skip.Add(index);
+                }
+            }
+        }
+
         var applied = 0;
-
-        foreach (var layer in humanoid.BaseLayers.Keys)
+        var count = sprite.AllLayers.Count();
+        for (var i = 0; i < count; i++)
         {
-            if (HardlightLayers.Contains(layer) && ApplyLayer(sprite, state, layer))
-                applied++;
-        }
+            if (skip.Contains(i))
+                continue;
 
-        foreach (var layer in humanoid.CustomBaseLayers.Keys)
-        {
-            if (HardlightLayers.Contains(layer) && ApplyLayer(sprite, state, layer))
-                applied++;
-        }
-
-        // Markings (hair, ears, tails, wings, horns, spines, …) live on their own generated layers.
-        foreach (var layer in humanoid.ClientMarkingLayers)
-        {
-            if (ApplyLayer(sprite, state, layer))
+            if (ApplyLayer(sprite, state, i))
                 applied++;
         }
 
@@ -186,30 +184,35 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
             Log.Warning($"MOD hardlight found no applicable sprite layers on {ToPrettyString(state.Wearer)}.");
     }
 
-    private bool ApplyLayer(SpriteComponent sprite, HardlightState state, object key)
+    private bool IsSuitItem(EntityUid item, string slot)
     {
-        var id = key is HumanoidVisualLayers layer ? $"enum:{layer}" : $"layer:{key}";
+        if (HasComp<ModSuitComponent>(item) || HasComp<ModPartComponent>(item))
+            return true;
 
-        if (!sprite.LayerMapTryGet(key, out var index)
-            || !sprite.TryGetLayer(index, out var spriteLayer))
+        // Legacy suits use SealableClothing parts, but a back item in that slot may just be wings.
+        return slot != "back" && HasComp<SealableClothingComponent>(item);
+    }
+
+    private bool ApplyLayer(SpriteComponent sprite, HardlightState state, int index)
+    {
+        if (!sprite.TryGetLayer(index, out var layer))
             return false;
 
-        if (!state.Layers.TryGetValue(id, out var original))
+        if (!state.Layers.TryGetValue(layer, out var original))
         {
-            original = new LayerState(key, spriteLayer.Shader, spriteLayer.ShaderPrototype?.Id, spriteLayer.Color);
-            state.Layers[id] = original;
+            original = new LayerState(layer, layer.Shader, layer.ShaderPrototype?.Id, layer.Color);
+            state.Layers[layer] = original;
         }
-        else if (spriteLayer.Color != Color.White && spriteLayer.Color != original.Color)
+        else if (layer.Color != Color.White && layer.Color != original.Color)
         {
-            // The appearance system recoloured a marking or body layer while we were active.
-            original = original with { Color = spriteLayer.Color };
-            state.Layers[id] = original;
+            original = original with { Color = layer.Color };
+            state.Layers[layer] = original;
         }
 
-        if (spriteLayer.Shader != state.Shader)
+        if (layer.Shader != state.Shader)
             sprite.LayerSetShader(index, state.Shader, ShaderId);
 
-        if (spriteLayer.Color != Color.White)
+        if (layer.Color != Color.White)
             _sprite.LayerSetColor((state.Wearer, sprite), index, Color.White);
 
         return true;
@@ -222,18 +225,15 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
 
         if (TryComp<SpriteComponent>(state.Wearer, out var sprite))
         {
-            foreach (var original in state.Layers.Values)
+            var count = sprite.AllLayers.Count();
+            for (var i = 0; i < count; i++)
             {
-                if (!sprite.LayerMapTryGet(original.Key, out var index)
-                    || !sprite.TryGetLayer(index, out var spriteLayer))
+                if (!sprite.TryGetLayer(i, out var layer)
+                    || !state.Layers.TryGetValue(layer, out var original))
                     continue;
 
-                if (spriteLayer.Shader != original.Shader
-                    || spriteLayer.ShaderPrototype?.Id != original.Prototype)
-                    sprite.LayerSetShader(index, original.Shader, original.Prototype);
-
-                if (spriteLayer.Color != original.Color)
-                    _sprite.LayerSetColor((state.Wearer, sprite), index, original.Color);
+                sprite.LayerSetShader(i, original.Shader, original.Prototype);
+                _sprite.LayerSetColor((state.Wearer, sprite), i, original.Color);
             }
         }
 
@@ -250,8 +250,8 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
         public readonly EntityUid Wearer = wearer;
         public readonly ShaderInstance Shader = shader;
         public readonly float ScrollRate = scrollRate;
-        public readonly Dictionary<string, LayerState> Layers = new();
+        public readonly Dictionary<SpriteComponent.Layer, LayerState> Layers = new();
     }
 
-    private sealed record LayerState(object Key, ShaderInstance? Shader, string? Prototype, Color Color);
+    private sealed record LayerState(SpriteComponent.Layer Layer, ShaderInstance? Shader, string? Prototype, Color Color);
 }
