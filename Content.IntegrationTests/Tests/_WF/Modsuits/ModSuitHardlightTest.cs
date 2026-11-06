@@ -22,11 +22,8 @@ public sealed class ModSuitHardlightTest
             Assert.That(prototypes.TryIndex<ShaderPrototype>("ModsuitHardlight", out var shaderProto), Is.True,
                 "the MODsuit hardlight shader should be registered");
 
-            var standardMask = cache.GetResource<TextureResource>(
-                "/Textures/_WF/Modsuits/Hardlight/standard_blue.png");
             using (var shader = shaderProto!.InstanceUnique())
             {
-                shader.SetParameter("mask", standardMask.Texture);
                 shader.SetParameter("color", new Vector3(0.3f, 0.8f, 1f));
                 shader.SetParameter("color2", new Vector3(0.1f, 0.3f, 0.5f));
                 shader.SetParameter("alpha", 0.7f);

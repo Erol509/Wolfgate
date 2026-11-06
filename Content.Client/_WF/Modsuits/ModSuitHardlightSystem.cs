@@ -6,7 +6,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -24,7 +23,6 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
 
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private IResourceCache _resourceCache = default!;
     [Dependency] private MarkingManager _markings = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
@@ -121,7 +119,6 @@ public sealed partial class ModSuitHardlightSystem : EntitySystem
         }
 
         var shader = _proto.Index<ShaderPrototype>(ShaderId).InstanceUnique();
-        shader.SetParameter("mask", _resourceCache.GetResource<TextureResource>(theme.HardlightMask).Texture);
         shader.SetParameter("color", ToVector(theme.HardlightColor));
         shader.SetParameter("color2", ToVector(theme.HardlightColor2));
         shader.SetParameter("alpha", theme.HardlightAlpha);
