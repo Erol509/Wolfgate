@@ -7,13 +7,22 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Hands/Modsuits/ussp-varyag.rsi
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     gloves:
+  #     - state: equipped-HAND-sealed
+  #     gloves-vox:
+  #     - state: equipped-HAND-sealed-vox
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       gloves:
       - state: equipped-HAND-sealed
       gloves-vox:
       - state: equipped-HAND-sealed-vox
+  # WOLFGATE END
 
 - type: entity
   parent: ClothingModsuitGauntletsBase
@@ -24,13 +33,22 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Hands/Modsuits/ussp-zastavnik.rsi
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     gloves:
+  #     - state: equipped-HAND-sealed
+  #     gloves-vox:
+  #     - state: equipped-HAND-sealed-vox
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       gloves:
       - state: equipped-HAND-sealed
       gloves-vox:
       - state: equipped-HAND-sealed-vox
+  # WOLFGATE END
 
 - type: entity
   parent: ClothingModsuitGauntletsBase
@@ -41,13 +59,22 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Hands/Modsuits/rogue.rsi
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     gloves:
+  #     - state: equipped-HAND-sealed
+  #     gloves-vox:
+  #     - state: equipped-HAND-sealed-vox
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       gloves:
       - state: equipped-HAND-sealed
       gloves-vox:
       - state: equipped-HAND-sealed-vox
+  # WOLFGATE END
 
 # Volta
 # Uses exact same gloves as sapper ones, feel free to make them more unique
@@ -60,13 +87,22 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Hands/Modsuits/tsfmc-volta.rsi
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     gloves:
+  #     - state: equipped-HAND-sealed
+  #     gloves-vox:
+  #     - state: equipped-HAND-sealed-vox
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       gloves:
       - state: equipped-HAND-sealed
       gloves-vox:
       - state: equipped-HAND-sealed-vox
+  # WOLFGATE END
 # Gallóglach
 - type: entity
   parent: ClothingModsuitGauntletsBase
@@ -77,13 +113,22 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Hands/Modsuits/mercenary.rsi
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     gloves:
+  #     - state: equipped-HAND-sealed
+  #     gloves-vox:
+  #     - state: equipped-HAND-sealed-vox
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       gloves:
       - state: equipped-HAND-sealed
       gloves-vox:
       - state: equipped-HAND-sealed-vox
+  # WOLFGATE END
   - type: Gun
     fireRate: 2
     selectedMode: SemiAuto

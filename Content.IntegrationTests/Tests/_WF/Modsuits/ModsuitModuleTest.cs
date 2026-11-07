@@ -1,3 +1,4 @@
+using Content.Client._WF.Modsuits;
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._WF.Modsuits.Systems;
 using Content.Shared.Containers.ItemSlots;
@@ -280,6 +281,70 @@ public sealed class ModsuitModuleTest
             var comp = entMan.GetComponent<ModSuitComponent>(suit);
             Assert.That(modSuit.GetBattery((suit, comp)), Is.Null, "the cell should be removed after the do-after");
             Assert.That(modSuit.GetCore((suit, comp)), Is.Not.Null, "the core should remain after removing the cell");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task EveryModSuitNamesItsParts()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var client = pair.Client;
+
+        await client.WaitAssertion(() =>
+        {
+            var prototypes = client.ResolveDependency<IPrototypeManager>();
+            var factory = client.ResolveDependency<IComponentFactory>();
+
+            foreach (var proto in prototypes.EnumeratePrototypes<EntityPrototype>())
+            {
+                if (proto.Abstract || !proto.TryComp<ModSuitComponent>(out var suit, factory))
+                    continue;
+
+                Assert.That(suit.Parts, Has.Count.EqualTo(4),
+                    $"{proto.ID} should name four suit parts");
+
+                foreach (var (slot, partId) in suit.Parts)
+                {
+                    Assert.That(prototypes.TryIndex<EntityPrototype>(partId, out var part), Is.True,
+                        $"{proto.ID} names missing part {partId} for {slot}");
+                    Assert.That(part!.TryComp<ModSuitSealedVisualsComponent>(out var visuals, factory), Is.True,
+                        $"{partId} has no ModSuitSealedVisuals component for its deployed state");
+                    Assert.That(visuals!.ClothingVisuals.ContainsKey(slot), Is.True,
+                        $"{partId} has no sealed visual for the {slot} slot");
+                }
+            }
+        });
+
+        var server = pair.Server;
+        await server.WaitAssertion(() =>
+        {
+            var entMan = server.EntMan;
+            var modSuit = entMan.System<ModSuitSystem>();
+            var maps = entMan.System<SharedMapSystem>();
+            maps.CreateMap(out var mapId);
+            var coords = new MapCoordinates(0, 0, mapId);
+
+            foreach (var id in new[]
+                     {
+                         "ClothingModsuitUSSPVaryagPowerCell",
+                         "ClothingModsuitVoltaPowerCell",
+                         "ADTClothingModsuitBackClownPowerCell",
+                     })
+            {
+                var suit = entMan.SpawnEntity(id, coords);
+                var comp = entMan.GetComponent<ModSuitComponent>(suit);
+
+                Assert.That(comp.Parts, Has.Count.EqualTo(4), $"{id} should name four suit parts");
+                Assert.That(comp.PartEntities, Has.Count.EqualTo(4), $"{id} should spawn its four suit parts");
+
+                var core = modSuit.GetCore((suit, comp));
+                Assert.That(core, Is.Not.Null, $"{id} should ship with a core");
+                Assert.That(entMan.HasComponent<ModCoreComponent>(core!.Value), Is.True,
+                    $"{id} should use a MOD core");
+                Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null, $"{id} should ship with a charged cell");
+            }
         });
 
         await pair.CleanReturnAsync();

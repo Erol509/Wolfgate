@@ -357,6 +357,13 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/OuterClothing/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/OuterClothing/modsuit.yml): the native module system grants sealed components
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Shoes/modsuit.yml)
 - [`Resources/Prototypes/_Goobstation/Entities/Objects/Specific/Robotics/modsuit_parts.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Objects/Specific/Robotics/modsuit_parts.yml): the standard core holds a swappable power cell
+- [`Resources/Prototypes/_Mono/Entities/Clothing/Back/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Back/modsuit.yml)
+  - the native module system owns the suit parts
+  - a MOD core replaces the power cell
+  - the native module system sets its own sealed appearance
+- [`Resources/Prototypes/_Mono/Entities/Clothing/Hands/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Hands/modsuit.yml): the native module system sets its own sealed appearance
+- [`Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml): the native module system sets its own sealed appearance
+- [`Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml): the native module system sets its own sealed appearance
 - [`Resources/Prototypes/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/lathe.yml): module recipes
 
 <!-- WOLFGATE-GENERATED END -->

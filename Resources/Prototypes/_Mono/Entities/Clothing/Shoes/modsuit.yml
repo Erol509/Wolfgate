@@ -7,13 +7,22 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Shoes/Modsuits/ussp-varyag.rsi
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     shoes:
+  #     - state: equipped-FEET-sealed
+  #     shoes-vox:
+  #     - state: equipped-FEET-sealed-vox
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
       shoes-vox:
       - state: equipped-FEET-sealed-vox
+  # WOLFGATE END
   - type: ClothingSlowOnDamageModifier
     modifier: 0.75
 
@@ -26,13 +35,22 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Shoes/Modsuits/ussp-zastavnik.rsi
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     shoes:
+  #     - state: equipped-FEET-sealed
+  #     shoes-vox:
+  #     - state: equipped-FEET-sealed-vox
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
       shoes-vox:
       - state: equipped-FEET-sealed-vox
+  # WOLFGATE END
   - type: ClothingSlowOnDamageModifier
     modifier: 0.75
 
@@ -48,13 +66,22 @@
   - type: Magboots
     requiresGrid: false
     enabledPrefix: null
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     shoes:
+  #     - state: equipped-FEET-sealed
+  #     shoes-vox:
+  #     - state: equipped-FEET-sealed-vox
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
       shoes-vox:
       - state: equipped-FEET-sealed-vox
+  # WOLFGATE END
   - type: ClothingSlowOnDamageModifier
     modifier: 0.75
 
@@ -72,13 +99,22 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: NoSlip
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     shoes:
+  #     - state: equipped-FEET-sealed
+  #     shoes-vox:
+  #     - state: equipped-FEET-sealed-vox
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
       shoes-vox:
       - state: equipped-FEET-sealed-vox
+  # WOLFGATE END
   - type: ClothingSlowOnDamageModifier
     modifier: 0.75
 
@@ -105,10 +141,19 @@
     actions:
     - ActionGravityJump
     activeIfWorn: true
-  - type: SealableClothingVisuals
+  # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
+  # - type: SealableClothingVisuals
+  #   spriteLayer: sealed
+  #   clothingVisuals:
+  #     shoes:
+  #     - state: equipped-FEET-sealed
+  #     shoes-vox:
+  #     - state: equipped-FEET-sealed-vox
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       shoes:
       - state: equipped-FEET-sealed
       shoes-vox:
       - state: equipped-FEET-sealed-vox
+  # WOLFGATE END

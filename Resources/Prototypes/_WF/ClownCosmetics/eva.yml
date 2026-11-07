@@ -113,8 +113,10 @@
   components:
   - type: Sprite
     sprite: _WF/ClownCosmetics/Clothing/EVA/Modsuit/clown_control.rsi
-  - type: ToggleableClothing
-    clothingPrototypes:
+  # WOLFGATE(Modsuits): the native module system owns the suit parts
+  - type: ModSuit
+    theme: ModThemeStandard
+    parts:
       head: ADTClothingHeadHelmetModsuitClown
       gloves: ADTClothingHandsModsuitClown
       outerClothing: ADTClothingOuterModsuitBodyClown
@@ -127,11 +129,11 @@
   - type: ItemSlots
     slots:
       cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHigh
+        name: modsuit-core-slot-name
+        startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
           components:
-          - PowerCell
+          - ModCore
 
 - type: entity
   parent: ClothingModsuitHelmetStandard
@@ -153,7 +155,7 @@
       - state: equipped-HEAD
       head-vulpkanin:
       - state: equipped-HEAD
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       head:
@@ -209,7 +211,7 @@
   components:
   - type: Sprite
     sprite: _WF/ClownCosmetics/Clothing/EVA/Modsuit/clown_chestplate.rsi
-  - type: SealableClothingVisuals
+  - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
       outerClothing:
