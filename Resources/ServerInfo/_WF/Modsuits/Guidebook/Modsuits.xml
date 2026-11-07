@@ -1,0 +1,286 @@
+<Document>
+  # Modular Suits
+
+  MODsuits are back-mounted sealed suits that deploy a helmet, chestplate, gauntlets and boots. The suit parts
+  and the modules that go into it are made at the [bold]Exosuit Fabricator[/bold] and unlocked through
+  [bold]Experimental[/bold] research.
+
+  ## Assembling a MODsuit
+
+  1. Research [bold]Specialized Hardsuits[/bold], then print at an Exosuit Fabricator:
+     [bold]MOD shell[/bold], [bold]MOD core[/bold], [bold]MOD helmet[/bold], [bold]MOD chestplate[/bold],
+     [bold]MOD gauntlets[/bold], [bold]MOD boots[/bold] and [bold]MOD external plating[/bold].
+  2. Click the shell with the core to insert it, then [bold]screwdriver[/bold] the core in place.
+  3. Click the shell with the helmet, then the chestplate, then the gauntlets, then the boots.
+  4. [bold]Wrench[/bold] the assembly, then [bold]screwdriver[/bold] it.
+  5. Add the external plating, then wrench the finished unit. The plating's theme decides the suit's
+     appearance, armour and complexity cap.
+  6. Wear the finished control unit on your back.
+
+  ## Using the suit
+
+  - Use the [bold]MOD interface[/bold] verb (right-click the control unit) to see the parts, the installed
+    modules and the complexity budget. This works while worn and while the unit is on the ground.
+  - Use the [bold]Deploy MOD parts[/bold] action to deploy or retract all four parts, then the
+    [bold]Toggle MOD activation[/bold] action to seal the suit.
+  - The suit cannot be sealed unless all four parts are deployed, and modules cannot be installed or removed
+    while the suit is active. A module also cannot run while the parts it requires are retracted.
+  - Examine the control unit to see the used and maximum complexity. A module cannot be installed if it
+    would exceed the theme's cap.
+  - To install a module, open the wires panel with a [bold]screwdriver[/bold] and click the control unit with
+    the module in hand. Remove it from the MOD interface.
+  - The suit's own drain and every installed module's idle and active draw come out of the power cell in the
+    core. The tables below list charge per second, plus charge spent per use for usable modules.
+
+  ## Removing the cell or the core
+
+  - [bold]Power cell:[/bold] open the wires panel with a screwdriver. With the panel open, use the
+    [bold]Remove power cell[/bold] verb on the control unit and wait for the do-after.
+  - [bold]Core:[/bold] open the wires panel with a screwdriver, then hit the control unit with a
+    [bold]wrench[/bold]. After the do-after the whole core comes out, with the cell still inside it.
+  - Close the panel with the screwdriver when you are done.
+
+  ## Basic modules
+
+  These are unlocked by [bold]Modular Suit Modules[/bold] research.
+
+  <Table Columns="5">
+    <Box HorizontalAlignment="Left"> </Box>
+    <Box HorizontalAlignment="Left">[bold]Module[/bold]</Box>
+    <Box HorizontalAlignment="Left">[bold]Complexity[/bold]</Box>
+    <Box HorizontalAlignment="Left">[bold]Power draw[/bold]</Box>
+    <Box HorizontalAlignment="Left">[bold]Effect[/bold]</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleStorageCompact" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Compact storage module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">none</Box>
+    <Box HorizontalAlignment="Left">Adds a small storage compartment to the suit.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleFlashlight" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Flashlight module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.4/s active</Box>
+    <Box HorizontalAlignment="Left">A configurable helmet light; colour and range are set in the interface.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleTether" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Emergency tether module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">0.4/s active</Box>
+    <Box HorizontalAlignment="Left">A powered winch and grappling hook that reels you towards a target.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleWelding" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Welding protection module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.1/s idle</Box>
+    <Box HorizontalAlignment="Left">A polarised visor overlay that protects the eyes from welding arcs and flashes.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleLongfall" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Longfall module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s idle</Box>
+    <Box HorizontalAlignment="Left">Converts fall damage into charge, protecting you from long drops.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleThermalRegulator" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Thermal regulator module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">1.2/s active</Box>
+    <Box HorizontalAlignment="Left">Cools or heats the wearer to a temperature set in the interface.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleGloveTranslator" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Glove translator module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s idle</Box>
+    <Box HorizontalAlignment="Left">Lets you use sign language over the radio from the suit's gloves.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleStorageLarge" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Storage module[/bold]</Box>
+    <Box HorizontalAlignment="Left">3</Box>
+    <Box HorizontalAlignment="Left">none</Box>
+    <Box HorizontalAlignment="Left">A larger storage compartment than the compact version.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleClamp" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Hydraulic clamp module[/bold]</Box>
+    <Box HorizontalAlignment="Left">3</Box>
+    <Box HorizontalAlignment="Left">0.4/s active</Box>
+    <Box HorizontalAlignment="Left">Hydraulic arm actuators that lift and drag crates and other heavy objects.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleHeadProtector" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Safety-first head protection module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">none</Box>
+    <Box HorizontalAlignment="Left">Extra dampening plates inside the helmet that protect the head.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleMouthhole" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Eating apparatus module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">none</Box>
+    <Box HorizontalAlignment="Left">A nanotech barrier over the mouth, so you can eat and drink while sealed.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleJanitorMister" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Janitorial mister module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">0.4/s active</Box>
+    <Box HorizontalAlignment="Left">A built-in space cleaner mister for cleaning up messes.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleBikeHorn" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Bike horn module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">3 per use</Box>
+    <Box HorizontalAlignment="Left">A shoulder-mounted bike horn. Honk.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleWaddle" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Waddle module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.1/s idle</Box>
+    <Box HorizontalAlignment="Left">Makes the wearer waddle.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleVisorMedical" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Medical visor module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s active</Box>
+    <Box HorizontalAlignment="Left">A medical HUD in the helmet visor.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleVisorDiagnostic" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Diagnostic visor module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s active</Box>
+    <Box HorizontalAlignment="Left">A diagnostic HUD in the helmet visor.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleVisorSecurity" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Security visor module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s active</Box>
+    <Box HorizontalAlignment="Left">A security HUD in the helmet visor.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleHealthAnalyzer" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Health analyzer module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s active</Box>
+    <Box HorizontalAlignment="Left">Extends a health analyser from the glove.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleDrill" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Drill module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.4/s active</Box>
+    <Box HorizontalAlignment="Left">Extends a mining drill from the gauntlet.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleOreBag" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Ore bag module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s active</Box>
+    <Box HorizontalAlignment="Left">Magnetises nearby ore into built-in storage.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleGps" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Internal GPS module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s active</Box>
+    <Box HorizontalAlignment="Left">Shows your exact coordinates anywhere in space.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleCandelaSpool" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Candela beacon spool module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s active</Box>
+    <Box HorizontalAlignment="Left">Deploys and spools Candela beacon tethers.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleReagentScanner" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Reagent scanner module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s active</Box>
+    <Box HorizontalAlignment="Left">Shows the chemical contents of anything you examine.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleDnaLock" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]DNA lock module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">none</Box>
+    <Box HorizontalAlignment="Left">Locks the suit to your DNA, so nobody else can activate it.</Box>
+  </Table>
+
+  ## Advanced modules
+
+  These are unlocked by [bold]Advanced Modular Suit Modules[/bold] research.
+
+  <Table Columns="5">
+    <Box HorizontalAlignment="Left"> </Box>
+    <Box HorizontalAlignment="Left">[bold]Module[/bold]</Box>
+    <Box HorizontalAlignment="Left">[bold]Complexity[/bold]</Box>
+    <Box HorizontalAlignment="Left">[bold]Power draw[/bold]</Box>
+    <Box HorizontalAlignment="Left">[bold]Effect[/bold]</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleInjector" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Injector module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s active</Box>
+    <Box HorizontalAlignment="Left">Extends a high-capacity syringe from the wrist.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModulePatientTransport" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Patient transport module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">0.8/s active</Box>
+    <Box HorizontalAlignment="Left">A hardlight bag that carries a patient in stasis while you drag it.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleTRay" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]T-ray scan module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.4/s active</Box>
+    <Box HorizontalAlignment="Left">A T-ray pulse that reveals pipes and cables under the floor.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleMagboots" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Magnetic stability module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">0.4/s active</Box>
+    <Box HorizontalAlignment="Left">Magnetic boots that stop you slipping in zero gravity.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleConstructor" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Constructor module[/bold]</Box>
+    <Box HorizontalAlignment="Left">3</Box>
+    <Box HorizontalAlignment="Left">1 per use</Box>
+    <Box HorizontalAlignment="Left">Extends a rapid construction device from the gauntlet.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleResinMister" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Resin mister module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">0.8/s active</Box>
+    <Box HorizontalAlignment="Left">Sprays atmos resin to seal breaches.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleCloak" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Cloaking module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">1.6/s active</Box>
+    <Box HorizontalAlignment="Left">Projects a cloaking field around the wearer.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleMagneticHarness" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Magnetic harness module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">0.2/s idle</Box>
+    <Box HorizontalAlignment="Left">A magnetic harness that returns dropped guns to the wearer.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleHolster" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Holster module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">none</Box>
+    <Box HorizontalAlignment="Left">An internal holster that stores a firearm for extremely quick retrieval.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleProjectileDampener" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Projectile dampener module[/bold]</Box>
+    <Box HorizontalAlignment="Left">3</Box>
+    <Box HorizontalAlignment="Left">15/s active</Box>
+    <Box HorizontalAlignment="Left">Weakens all projectiles in a radius around the wearer.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleCriminalCapture" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Criminal capture module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">0.8/s active</Box>
+    <Box HorizontalAlignment="Left">Wraps a suspect in a hardlight bag that drags at full speed.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleDefibrillator" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Defibrillator module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">1.2/s active</Box>
+    <Box HorizontalAlignment="Left">Defibrillator pads built into the gauntlets.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleJetpack" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Ion jetpack module[/bold]</Box>
+    <Box HorizontalAlignment="Left">3</Box>
+    <Box HorizontalAlignment="Left">20/s active</Box>
+    <Box HorizontalAlignment="Left">Ion thrusters that let you fly in space using the suit's charge.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleRadProtection" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Radiation protection module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">0.2/s idle</Box>
+    <Box HorizontalAlignment="Left">Radiation shielding built into the suit.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleEmpShield" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]EMP shield module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">0.2/s idle</Box>
+    <Box HorizontalAlignment="Left">Protects the suit and its modules from electromagnetic pulses.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleStorageBluespace" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Bluespace storage module[/bold]</Box>
+    <Box HorizontalAlignment="Left">3</Box>
+    <Box HorizontalAlignment="Left">none</Box>
+    <Box HorizontalAlignment="Left">A storage compartment using miniaturised bluespace pockets.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleKinesis" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Kinesis module[/bold]</Box>
+    <Box HorizontalAlignment="Left">3</Box>
+    <Box HorizontalAlignment="Left">1.2/s active</Box>
+    <Box HorizontalAlignment="Left">Moves objects at a distance with a kinesis field.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleJointTorsion" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Joint torsion ratchet module[/bold]</Box>
+    <Box HorizontalAlignment="Left">1</Box>
+    <Box HorizontalAlignment="Left">none</Box>
+    <Box HorizontalAlignment="Left">Charges the suit's core as you walk.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleRecycler" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Recycler module[/bold]</Box>
+    <Box HorizontalAlignment="Left">2</Box>
+    <Box HorizontalAlignment="Left">0.4/s active</Box>
+    <Box HorizontalAlignment="Left">Collects trash and compacts it into usable material.</Box>
+    <Box HorizontalAlignment="Left"><GuideEntityEmbed Entity="ModsuitModuleShootingAssistant" Scale="1" Caption=""/></Box>
+    <Box HorizontalAlignment="Left">[bold]Shooting assistant module[/bold]</Box>
+    <Box HorizontalAlignment="Left">3</Box>
+    <Box HorizontalAlignment="Left">0.4/s idle</Box>
+    <Box HorizontalAlignment="Left">Recoil and accuracy assistance for ranged weapons.</Box>
+  </Table>
+</Document>

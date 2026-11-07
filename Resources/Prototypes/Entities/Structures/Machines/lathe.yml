@@ -413,6 +413,7 @@
     - SMCybernetics
     # Goob/Mono - modsuits
     - Modsuits
+    - ModsuitModules # WOLFGATE(Modsuits): module recipes
     # Mono - Mechs
     - ClarkeMechParts
     - DurandMechParts

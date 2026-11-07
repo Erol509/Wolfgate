@@ -1,0 +1,69 @@
+# WOLFGATE(Modsuits): MODsuit module research, split into basic and advanced modules.
+
+- type: technology
+  id: WFModsuitModules
+  name: research-technology-wf-modsuit-modules
+  entityIcon: ModsuitModuleStorageCompact
+  discipline: Experimental
+  tier: 2
+  cost: 17500
+  recipeUnlocks:
+  - ModsuitModuleStorageCompact
+  - ModsuitModuleFlashlight
+  - ModsuitModuleTether
+  - ModsuitModuleWelding
+  - ModsuitModuleLongfall
+  - ModsuitModuleThermalRegulator
+  - ModsuitModuleGloveTranslator
+  - ModsuitModuleStorageLarge
+  - ModsuitModuleClamp
+  - ModsuitModuleHeadProtector
+  - ModsuitModuleMouthhole
+  - ModsuitModuleJanitorMister
+  - ModsuitModuleBikeHorn
+  - ModsuitModuleWaddle
+  - ModsuitModuleVisorMedical
+  - ModsuitModuleVisorDiagnostic
+  - ModsuitModuleVisorSecurity
+  - ModsuitModuleHealthAnalyzer
+  - ModsuitModuleDrill
+  - ModsuitModuleOreBag
+  - ModsuitModuleGps
+  - ModsuitModuleCandelaSpool
+  - ModsuitModuleReagentScanner
+  - ModsuitModuleDnaLock
+  technologyPrerequisites:
+  - HardsuitsSpecialized
+  position: 2, 7
+
+- type: technology
+  id: WFModsuitModulesAdvanced
+  name: research-technology-wf-modsuit-modules-advanced
+  entityIcon: ModsuitModuleJetpack
+  discipline: Experimental
+  tier: 3
+  cost: 30000
+  recipeUnlocks:
+  - ModsuitModuleInjector
+  - ModsuitModulePatientTransport
+  - ModsuitModuleTRay
+  - ModsuitModuleMagboots
+  - ModsuitModuleConstructor
+  - ModsuitModuleResinMister
+  - ModsuitModuleCloak
+  - ModsuitModuleMagneticHarness
+  - ModsuitModuleHolster
+  - ModsuitModuleProjectileDampener
+  - ModsuitModuleCriminalCapture
+  - ModsuitModuleDefibrillator
+  - ModsuitModuleJetpack
+  - ModsuitModuleRadProtection
+  - ModsuitModuleEmpShield
+  - ModsuitModuleStorageBluespace
+  - ModsuitModuleKinesis
+  - ModsuitModuleJointTorsion
+  - ModsuitModuleRecycler
+  - ModsuitModuleShootingAssistant
+  technologyPrerequisites:
+  - WFModsuitModules
+  position: 2, 8

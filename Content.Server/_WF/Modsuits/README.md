@@ -24,8 +24,9 @@ complexity, power, cooldown, incompatibilities), `ModThemePrototype` (complexity
 `ModSuitWindow` on the client.
 
 Original assets are the /tg/ MODsuit module icon set, copied to `Resources/Textures/_WF/Modsuits/mod_modules.rsi`
-with its CC-BY-SA-3.0 notice. Suit part sprites remain the existing `_Goobstation` modsuit RSIs. Additional
-module sprites and sounds are attributed in their RSI/audio `meta.json` and `attributions.yml` files.
+with its CC-BY-SA-3.0 notice. Suit part sprites remain in the existing `_Goobstation`, `_Mono` and `_WF`
+modsuit RSIs. Additional module sprites and sounds are attributed in their RSI/audio `meta.json` and
+`attributions.yml` files.
 
 ## Module checklist
 
@@ -279,6 +280,7 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 ### Integration tests
 
 - [`Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitHardlightTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitHardlightTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Modsuits/ModsuitModulesContentTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModsuitModulesContentTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Modsuits/ModsuitModuleTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModsuitModuleTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitWindowTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitWindowTest.cs)
 
@@ -287,9 +289,12 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 - [`Resources/Prototypes/_WF/Modsuits/actions.yml`](../../../Resources/Prototypes/_WF/Modsuits/actions.yml)
 - [`Resources/Prototypes/_WF/Modsuits/balloons.yml`](../../../Resources/Prototypes/_WF/Modsuits/balloons.yml)
 - [`Resources/Prototypes/_WF/Modsuits/contraband.yml`](../../../Resources/Prototypes/_WF/Modsuits/contraband.yml)
+- [`Resources/Prototypes/_WF/Modsuits/guidebook.yml`](../../../Resources/Prototypes/_WF/Modsuits/guidebook.yml)
+- [`Resources/Prototypes/_WF/Modsuits/lathe.yml`](../../../Resources/Prototypes/_WF/Modsuits/lathe.yml)
 - [`Resources/Prototypes/_WF/Modsuits/mod_modules.yml`](../../../Resources/Prototypes/_WF/Modsuits/mod_modules.yml)
 - [`Resources/Prototypes/_WF/Modsuits/modsuit_parts.yml`](../../../Resources/Prototypes/_WF/Modsuits/modsuit_parts.yml)
 - [`Resources/Prototypes/_WF/Modsuits/modules_extra.yml`](../../../Resources/Prototypes/_WF/Modsuits/modules_extra.yml)
+- [`Resources/Prototypes/_WF/Modsuits/research.yml`](../../../Resources/Prototypes/_WF/Modsuits/research.yml)
 - [`Resources/Prototypes/_WF/Modsuits/shaders.yml`](../../../Resources/Prototypes/_WF/Modsuits/shaders.yml)
 - [`Resources/Prototypes/_WF/Modsuits/tags.yml`](../../../Resources/Prototypes/_WF/Modsuits/tags.yml)
 - [`Resources/Prototypes/_WF/Modsuits/themes.yml`](../../../Resources/Prototypes/_WF/Modsuits/themes.yml)
@@ -329,8 +334,13 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 - [`Resources/Audio/_WF/Modsuits/rolling_ball_loop.ogg`](../../../Resources/Audio/_WF/Modsuits/rolling_ball_loop.ogg)
 - [`Resources/Audio/_WF/Modsuits/sonic_jackhammer.ogg`](../../../Resources/Audio/_WF/Modsuits/sonic_jackhammer.ogg)
 
+### Guidebook
+
+- [`Resources/ServerInfo/_WF/Modsuits/Guidebook/Modsuits.xml`](../../../Resources/ServerInfo/_WF/Modsuits/Guidebook/Modsuits.xml)
+
 ## Non-modular edits
 
+- [`Content.Client/Movement/Systems/JetpackSystem.cs`](../../../Content.Client/Movement/Systems/JetpackSystem.cs): MOD jetpack modules keep their own module sprite, which has no jetpack icon states
 - [`Content.Server/Movement/Systems/JetpackSystem.cs`](../../Movement/Systems/JetpackSystem.cs): the ion jetpack module burns the suit core, not a gas tank
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/Back/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Back/modsuit.yml)
   - module and part containers
@@ -347,5 +357,6 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/OuterClothing/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/OuterClothing/modsuit.yml): the native module system grants sealed components
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Shoes/modsuit.yml)
 - [`Resources/Prototypes/_Goobstation/Entities/Objects/Specific/Robotics/modsuit_parts.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Objects/Specific/Robotics/modsuit_parts.yml): the standard core holds a swappable power cell
+- [`Resources/Prototypes/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/lathe.yml): module recipes
 
 <!-- WOLFGATE-GENERATED END -->
