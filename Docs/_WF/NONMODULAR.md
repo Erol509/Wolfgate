@@ -435,7 +435,6 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/_Mono/Catalogs/tsfmc_uplink_catalog.yml`](../../Resources/Prototypes/_Mono/Catalogs/tsfmc_uplink_catalog.yml): PDV pack, price 125->175
 - [`Resources/Prototypes/_Mono/Catalogs/VendingMachines/Inventories/ussp.yml`](../../Resources/Prototypes/_Mono/Catalogs/VendingMachines/Inventories/ussp.yml): the loaded magazine is class-3 contraband worth 10 FMC since Monolith#4816
 - [`Resources/Prototypes/_Mono/Claws/reptilian.yml`](../../Resources/Prototypes/_Mono/Claws/reptilian.yml): huge claws never stop a lizard shooting; they take the worst spread instead
-- [`Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml`](../../Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml): the rsi has no resomi state, so sealed Resomi drew an error sprite
 - [`Resources/Prototypes/_Mono/Entities/Mobs/NPCs/mothroaches.yml`](../../Resources/Prototypes/_Mono/Entities/Mobs/NPCs/mothroaches.yml): OwO accent removed
 - [`Resources/Prototypes/_Mono/Entities/Objects/Devices/Circuitboards/Machine/turrets.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Devices/Circuitboards/Machine/turrets.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/Objects/Devices/flatpack.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Devices/flatpack.yml): restore the licence header removed by Kill Spdx

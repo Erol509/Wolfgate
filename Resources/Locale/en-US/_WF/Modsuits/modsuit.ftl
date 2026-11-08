@@ -190,8 +190,6 @@ modsuit-shooting-mode-off = Shooting assistant off.
 modsuit-shooting-mode-stormtrooper = Stormtrooper mode enabled.
 modsuit-shooting-mode-sharpshooter = Sharpshooter mode enabled.
 
-modsuit-core-locked = The MOD core is bolted down; unbolt it with a wrench.
-
 research-technology-wf-modsuit-modules = Modular Suit Modules
 research-technology-wf-modsuit-modules-advanced = Advanced Modular Suit Modules
 guide-entry-wf-modsuits = Modular Suits

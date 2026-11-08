@@ -9,13 +9,15 @@ The core is bolted behind the panel, not an ejectable cell: unbolt it with a wre
 inside it with the panel's "Remove power cell" verb while the panel is open. Native suits ship with a core, a
 charged cell and the compact storage, flashlight and welding modules. Part deployment is quick; sealing runs
 at the theme's activation step. Suit activation and powered modules check the cell's charge, and the ion
-jetpack module draws on it instead of a gas tank.
+jetpack module draws on it instead of a gas tank. Storage exists only while a storage module is installed;
+removing the module drops everything inside and takes the storage away.
 
-While a suit is active it projects a theme-coloured hardlight mesh over the wearer's body and marking layers, so
+While a suit is active it projects a static theme-coloured hardlight over the wearer's body and marking layers, so
 tails, ears, hair and wings that sit outside the suit sprite stay visible as hardlight instead of being hidden.
-The mesh is a screen-space checker built in the shader; the per-theme Skyrat mask files are kept as source and
-attribution but are not sampled at run time. Clothing layers are never tinted, so the effect cannot show through
-the suit.
+The shader tiles the theme's Skyrat mask over each sprite and cuts it to that sprite's own alpha, with the
+sprite's shading keeping it wrapped around the body parts. Nothing scrolls, scans or flickers, and the effect is
+kept dim enough to read as a texture rather than a bright glow. Clothing layers are never tinted, so the effect
+cannot show through the suit.
 
 Entry points: `ModSuitComponent` (theme, parts, core slot, module container), `ModModuleComponent` (type,
 complexity, power, cooldown, incompatibilities), `ModThemePrototype` (complexity cap, drain, inbuilt modules),
@@ -343,6 +345,7 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 - [`Content.Client/Movement/Systems/JetpackSystem.cs`](../../../Content.Client/Movement/Systems/JetpackSystem.cs): MOD jetpack modules keep their own module sprite, which has no jetpack icon states
 - [`Content.Server/Movement/Systems/JetpackSystem.cs`](../../Movement/Systems/JetpackSystem.cs): the ion jetpack module burns the suit core, not a gas tank
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/Back/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Back/modsuit.yml)
+  - storage comes from an installed storage module
   - module and part containers
   - the module UI replaces the toggleable clothing UI
   - the native module system spawns and seals the suit parts
@@ -362,7 +365,9 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
   - a MOD core replaces the power cell
   - the native module system sets its own sealed appearance
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Hands/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Hands/modsuit.yml): the native module system sets its own sealed appearance
-- [`Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml): the native module system sets its own sealed appearance
+- [`Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml)
+  - the native module system sets its own sealed appearance
+  - the rsi has no resomi state, so sealed Resomi drew an error sprite
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml): the native module system sets its own sealed appearance
 - [`Resources/Prototypes/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/lathe.yml): module recipes
 

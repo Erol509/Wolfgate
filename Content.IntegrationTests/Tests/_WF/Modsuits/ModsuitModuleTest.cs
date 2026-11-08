@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Client._WF.Modsuits;
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._WF.Modsuits.Systems;
@@ -7,6 +8,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -281,6 +283,75 @@ public sealed class ModsuitModuleTest
             var comp = entMan.GetComponent<ModSuitComponent>(suit);
             Assert.That(modSuit.GetBattery((suit, comp)), Is.Null, "the cell should be removed after the do-after");
             Assert.That(modSuit.GetCore((suit, comp)), Is.Not.Null, "the core should remain after removing the cell");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task RemovingStorageModuleDropsContentsAndRemovesStorage()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var modSuit = entMan.System<ModSuitSystem>();
+        var storage = entMan.System<SharedStorageSystem>();
+        var wires = entMan.System<SharedWiresSystem>();
+
+        EntityUid human = default;
+        EntityUid suit = default;
+        EntityUid module = default;
+        var items = new List<EntityUid>();
+
+        await server.WaitAssertion(() =>
+        {
+            var maps = entMan.System<SharedMapSystem>();
+            maps.CreateMap(out var mapId);
+            var coords = new MapCoordinates(0, 0, mapId);
+
+            human = entMan.SpawnEntity("MobHuman", coords);
+            suit = entMan.SpawnEntity("ClothingModsuitStandard", coords);
+
+            var suitComp = entMan.GetComponent<ModSuitComponent>(suit);
+            var suitStorage = entMan.GetComponent<StorageComponent>(suit);
+
+            foreach (var proto in new[] { "Wrench", "Screwdriver" })
+            {
+                var item = entMan.SpawnEntity(proto, coords);
+                items.Add(item);
+                Assert.That(storage.Insert(suit, item, out _, user: human, storageComp: suitStorage, playSound: false),
+                    Is.True, $"{proto} should fit in the suit storage");
+            }
+
+            foreach (var contained in suitComp.ModulesContainer.ContainedEntities)
+            {
+                if (entMan.GetComponent<MetaDataComponent>(contained).EntityPrototype?.ID == "ModsuitModuleStorageCompact")
+                {
+                    module = contained;
+                    break;
+                }
+            }
+
+            Assert.That(module, Is.Not.EqualTo(default(EntityUid)), "the suit should start with a storage module");
+
+            var panel = entMan.GetComponent<WiresPanelComponent>(suit);
+            Assert.That(wires.TogglePanel(suit, panel, true, human));
+
+            Assert.That(modSuit.TryRemoveModule((suit, suitComp), module, human), Is.True,
+                "the storage module should be removable with the panel open");
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(entMan.HasComponent<StorageComponent>(suit), Is.False,
+                "removing the storage module should remove the suit's storage");
+
+            foreach (var item in items)
+            {
+                Assert.That(entMan.EntityExists(item), Is.True, "the stored item should still exist");
+                Assert.That(entMan.GetComponent<TransformComponent>(item).ParentUid,
+                    Is.Not.EqualTo(suit), "the stored item should be dropped out of the suit");
+            }
         });
 
         await pair.CleanReturnAsync();

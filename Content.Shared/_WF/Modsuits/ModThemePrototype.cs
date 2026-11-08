@@ -47,15 +47,8 @@ public sealed partial class ModThemePrototype : IPrototype
     public ResPath HardlightMask = new("/Textures/_WF/Modsuits/Hardlight/standard_blue.png");
 
     [DataField]
-    public float HardlightAlpha = 0.9f;
+    public float HardlightAlpha = 0.5f;
 
     [DataField]
-    public float HardlightIntensity = 1.2f;
-
-    /// <summary>Grid cells across the wearer's sprite.</summary>
-    [DataField]
-    public float HardlightGridScale = 32f;
-
-    [DataField]
-    public float HardlightScrollRate = 0.15f;
+    public float HardlightIntensity = 0.8f;
 }

@@ -44,14 +44,6 @@ public sealed partial class ModStorageModuleComponent : Component
     [DataField(required: true)]
     public ComponentRegistry Components = new();
 
-    /// <summary>Grid the suit had before this module expanded its built-in satchel.</summary>
-    [ViewVariables]
-    public List<Box2i>? SavedGrid;
-
-    /// <summary>Item size limit the suit had before this module expanded its built-in satchel.</summary>
-    [ViewVariables]
-    public ProtoId<ItemSizePrototype>? SavedMaxItemSize;
-
     [ViewVariables]
     public bool Upgraded;
 }

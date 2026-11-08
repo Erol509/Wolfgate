@@ -350,8 +350,6 @@ public sealed partial class ModSuitSystem : EntitySystem
             return;
 
         args.Cancelled = true;
-        if (args.User is { } user)
-            _popup.PopupClient(Loc.GetString("modsuit-core-locked"), ent, user);
     }
 
     private void OnCoreRemoveDoAfter(Entity<ModSuitComponent> ent, ref ModCoreRemoveDoAfterEvent args)

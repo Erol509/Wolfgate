@@ -1,4 +1,5 @@
 using Content.Shared._WF.Modsuits.Components;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Containers;
 
@@ -152,8 +153,11 @@ public sealed partial class ModSuitSystem
         var suitStorage = StashSuitStorage(wearer, slot);
         if (_inventory.TryGetSlotEntity(wearer, slot, out var current))
         {
+            // Attached hardsuit pieces refuse a normal unequip; force them off so the modsuit part can take the slot.
+            var force = HasComp<AttachedClothingComponent>(current.Value);
             if (partComp.StoredContainer.ContainedEntity != null
-                || !_inventory.TryUnequip(wearer, wearer, slot, out var removed, silent: true, predicted: true)
+                || !_inventory.TryUnequip(wearer, wearer, slot, out var removed, silent: true, force: force, predicted: true)
+                || removed == null
                 || !_container.Insert(removed.Value, partComp.StoredContainer))
             {
                 RestoreSuitStorage(wearer, suitStorage);

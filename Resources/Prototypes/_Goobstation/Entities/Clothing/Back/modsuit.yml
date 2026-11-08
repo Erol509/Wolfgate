@@ -23,12 +23,14 @@
     quickEquip: false
     slots:
     - back
-  - type: Storage # satchel
-    grid:
-    - 0,0,1,3
-    - 3,0,6,3
-    - 8,0,9,3
-    maxItemSize: Huge
+  # WOLFGATE(Modsuits) START: storage comes from an installed storage module
+  # - type: Storage # satchel
+  #   grid:
+  #   - 0,0,1,3
+  #   - 3,0,6,3
+  #   - 8,0,9,3
+  #   maxItemSize: Huge
+  # WOLFGATE END
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
