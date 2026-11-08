@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:modsuit="clr-namespace:Content.Client._WF.Modsuits"
     Title="{Loc modsuit-ui-title}"
     MinSize="600 540"
     SetSize="600 600">
@@ -31,7 +32,7 @@
                                            FontColorOverride="#FFFFFF"
                                            VerticalAlignment="Center"
                                            HorizontalExpand="True" />
-                                    <Button Name="ActivateButton" MinWidth="104" />
+                                    <modsuit:ModSuitIconButton Name="ActivateButton" MinWidth="104" />
                                 </BoxContainer>
                             </PanelContainer>
                             <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="6" SeparationOverride="3">
@@ -59,14 +60,14 @@
                                            FontColorOverride="#8091A6"
                                            MinWidth="96"
                                            VerticalAlignment="Center" />
-                                    <Button Name="IdLockButton" Disabled="True" Text="{Loc modsuit-ui-unlocked}" HorizontalExpand="True" />
+                                    <modsuit:ModSuitIconButton Name="IdLockButton" Disabled="True" Text="{Loc modsuit-ui-unlocked}" HorizontalExpand="True" />
                                 </BoxContainer>
                                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="4">
                                     <Label Text="{Loc modsuit-ui-modlink}"
                                            FontColorOverride="#8091A6"
                                            MinWidth="96"
                                            VerticalAlignment="Center" />
-                                    <Button Name="ModLinkButton" Disabled="True" Text="{Loc modsuit-ui-frequency-unset}" HorizontalExpand="True" />
+                                    <modsuit:ModSuitIconButton Name="ModLinkButton" Disabled="True" Text="{Loc modsuit-ui-frequency-unset}" HorizontalExpand="True" />
                                 </BoxContainer>
                                 <BoxContainer Name="CoverRow" Orientation="Horizontal" HorizontalExpand="True" SeparationOverride="4" Visible="False">
                                     <Label Text="{Loc modsuit-ui-cover}"

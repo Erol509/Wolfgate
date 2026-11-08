@@ -18,7 +18,8 @@ never tinted or replaced.
 Entry points: `ModSuitComponent` (theme, parts, core slot, module container), `ModModuleComponent` (type,
 complexity, power, cooldown, incompatibilities), `ModThemePrototype` (complexity cap, drain, inbuilt modules),
 `ModSuitSystem` (deployment, sealing, power, module installation), the module systems under
-`Content.Shared/_WF/Modsuits/Modules`, and `ModSuitWindow` on the client.
+`Content.Shared/_WF/Modsuits/Modules`, and `ModSuitWindow` on the client. The window's action icons are Font Awesome
+Free glyphs rendered from tgstation's TGUI webfonts into `icons.rsi`, attributed in its `meta.json`.
 
 Original assets are the /tg/ MODsuit module icon set, copied to `Resources/Textures/_WF/Modsuits/mod_modules.rsi`
 with its CC-BY-SA-3.0 notice. Suit part sprites remain in the existing `_Goobstation`, `_Mono` and `_WF`
@@ -267,6 +268,7 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 - [`Content.Client/_WF/Modsuits/ModSphereVisualsComponent.cs`](../../../Content.Client/_WF/Modsuits/ModSphereVisualsComponent.cs)
 - [`Content.Client/_WF/Modsuits/ModSphereVisualsSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSphereVisualsSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitBoundUserInterface.cs`](../../../Content.Client/_WF/Modsuits/ModSuitBoundUserInterface.cs)
+- [`Content.Client/_WF/Modsuits/ModSuitIconButton.cs`](../../../Content.Client/_WF/Modsuits/ModSuitIconButton.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitSealedVisualsComponent.cs`](../../../Content.Client/_WF/Modsuits/ModSuitSealedVisualsComponent.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitUiSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitUiSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitVisualizerSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitVisualizerSystem.cs)
@@ -301,6 +303,7 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 ### Textures
 
 - [`Resources/Textures/_WF/Modsuits/balloons.rsi/`](../../../Resources/Textures/_WF/Modsuits/balloons.rsi/)
+- [`Resources/Textures/_WF/Modsuits/icons.rsi/`](../../../Resources/Textures/_WF/Modsuits/icons.rsi/)
 - [`Resources/Textures/_WF/Modsuits/mod_modules.rsi/`](../../../Resources/Textures/_WF/Modsuits/mod_modules.rsi/)
 - [`Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl)
 - [`Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl)
