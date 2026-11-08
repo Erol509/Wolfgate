@@ -63,6 +63,8 @@ public sealed partial class WFEncounterSystem
                 break;
 
             case WFEncounterAdminOrder.Board:
+                if (ship.Abduct is { } abduct)
+                    return AbductAdminOrder(encounter, key, ship, abduct, mark);
                 if (!ship.Hunt || ship.Extort != null)
                     return Loc.GetString("wf-encounter-admin-order-not-hunter");
                 ship.Prey = mark;
@@ -92,6 +94,9 @@ public sealed partial class WFEncounterSystem
                     extorting.NextMark = _timing.CurTime + ExtortInterval(extorting.Config);
                 }
 
+                if (ship.Abduct is { } abducting)
+                    AbductAdminCancel(abducting);
+
                 ship.Prey = null;
                 var attack = order == WFEncounterAdminOrder.Attack;
                 if (!SetOrders(encounter.AsNullable(), key, new List<WFCrewObjective>
@@ -105,6 +110,12 @@ public sealed partial class WFEncounterSystem
                         new() { Kind = WFCrewObjectiveKind.Hold },
                     }))
                     return Loc.GetString("wf-encounter-admin-order-failed");
+                if (attack)
+                {
+                    var ordered = new WFEncounterAdminAttackEvent(encounter.Owner, key, ship.Grid, mark);
+                    RaiseLocalEvent(ref ordered);
+                }
+
                 break;
 
             case WFEncounterAdminOrder.ComeToMe:

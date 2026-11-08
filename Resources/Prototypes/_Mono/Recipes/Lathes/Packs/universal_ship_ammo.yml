@@ -1,3 +1,10 @@
+# WOLFGATE: restore the licence header removed by Kill Spdx
+# SPDX-FileCopyrightText: 2025 Onezero0
+# SPDX-FileCopyrightText: 2025 significant harassment
+# SPDX-FileCopyrightText: 2025 starch
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 # dont bloat up this file type for every ammo u add
 
 - type: latheRecipePack

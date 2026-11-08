@@ -1,3 +1,20 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2022 keronshb
+// SPDX-FileCopyrightText: 2023 AJCM-git
+// SPDX-FileCopyrightText: 2023 Leon Friedrich
+// SPDX-FileCopyrightText: 2023 Visne
+// SPDX-FileCopyrightText: 2024 Ed
+// SPDX-FileCopyrightText: 2024 Emisse
+// SPDX-FileCopyrightText: 2024 Kara
+// SPDX-FileCopyrightText: 2024 Mervill
+// SPDX-FileCopyrightText: 2024 TemporalOroboros
+// SPDX-FileCopyrightText: 2024 TinManTim
+// SPDX-FileCopyrightText: 2024 lzk
+// SPDX-FileCopyrightText: 2024 metalgearsloth
+// SPDX-FileCopyrightText: 2025 Ilya246
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 using System.Linq;
 using Content.Server.Beam;
 using Content.Server.Beam.Components;
@@ -57,7 +74,7 @@ public sealed partial class LightningSystem : SharedLightningSystem
         if (proto.TryGetComponent<LightningComponent>(out var lightningComp, EntityManager.ComponentFactory))
             spawnOnHit = lightningComp.SpawnOnHit;
 
-        ShootLightning(user, target, lightningPrototype, triggerLightningEvents);
+        ShootLightning(user, target, spawnOnHit, lightningPrototype, triggerLightningEvents); // WOLFGATE: call the private overload; the public one recursed forever
     }
 
     // Mono - for optimisation purposes

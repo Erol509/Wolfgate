@@ -174,6 +174,13 @@ public sealed partial class WFCargoLoadSystem : EntitySystem
         return grids.Sum(GetLoad);
     }
 
+    /// <summary>Share of thrust a ship keeps in space: the load past its free allowance counts against the hull.</summary>
+    public static float ThrustFactor(WFCargoLoadPrototype profile, float hull, float load)
+    {
+        var counted = load - hull * profile.FreeLoad;
+        return counted <= 0f ? 1f : Math.Max(profile.ThrustFloor, hull / Math.Max(0.001f, hull + counted));
+    }
+
     /// <summary>Share of thrust a grid's set keeps in space; 1 with no cargo.</summary>
     public float GetSpaceFactor(EntityUid grid)
     {
@@ -313,13 +320,21 @@ public sealed partial class WFCargoLoadSystem : EntitySystem
     private float SpoolFor(HashSet<EntityUid> jumping)
     {
         var load = 0f;
+        var hull = 0f;
         foreach (var member in jumping)
         {
             load += GetLoad(member);
+            hull += CompOrNull<PhysicsComponent>(member)?.FixturesMass ?? 0f;
         }
 
-        var profile = Profile;
-        return Math.Min(profile.SpoolCap, profile.SpoolPerTonne * load);
+        return SpoolSeconds(Profile, hull, load);
+    }
+
+    /// <summary>Spool seconds for a load on a hull: the thrust cut's share of the way to the floor, times the cap.</summary>
+    public static float SpoolSeconds(WFCargoLoadPrototype profile, float hull, float load)
+    {
+        var cut = 1f - ThrustFactor(profile, hull, load);
+        return profile.SpoolCap * Math.Clamp(cut / Math.Max(0.001f, 1f - profile.ThrustFloor), 0f, 1f);
     }
 
     private void OnLiftLoad(Entity<WFCargoLoadComponent> ent, ref WFGridLiftLoadEvent args)
@@ -397,7 +412,7 @@ public sealed partial class WFCargoLoadSystem : EntitySystem
                 stored += _stored.GetValueOrDefault(member);
             }
 
-            var factor = load <= 0f ? 1f : Math.Max(profile.ThrustFloor, hull / Math.Max(0.001f, hull + load));
+            var factor = ThrustFactor(profile, hull, load);
             foreach (var member in _set)
             {
                 if (!_touched.Add(member))
@@ -456,7 +471,7 @@ public sealed partial class WFCargoLoadSystem : EntitySystem
                 spool = SpoolFor(_jumping);
             }
 
-            var fullScale = cargo.SetHull * (1f / Math.Max(0.01f, profile.ThrustFloor) - 1f);
+            var fullScale = cargo.SetHull * (1f / Math.Max(0.01f, profile.ThrustFloor) - 1f + profile.FreeLoad);
             var readout = EnsureComp<WFCargoReadoutComponent>(uid);
             if (Near(readout.Load, cargo.SetLoad, 0.1f)
                 && Near(readout.Stored, cargo.SetStored, 0.1f)

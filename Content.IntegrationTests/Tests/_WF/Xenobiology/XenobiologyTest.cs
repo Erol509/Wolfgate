@@ -33,12 +33,65 @@ public sealed class XenobiologyTest
 
     private const string GreyPending = "MobSlimeXenobioBabyGrey";
 
+    /// <summary>Whether an entity is on the test's own map; other tests on a pooled server may leave slimes elsewhere.</summary>
+    private static bool OnMap(IEntityManager entities, EntityUid uid, Robust.Shared.Map.MapId map)
+    {
+        return entities.GetComponent<TransformComponent>(uid).MapID == map;
+    }
+
     private static EntityUid SpawnGrey(IEntityManager entities, Robust.Shared.Map.EntityCoordinates coords)
     {
         var before = entities.EntityQuery<SlimeComponent>().Select(s => s.Uid()).ToHashSet();
         var marker = entities.SpawnEntity(GreyPending, coords);
         entities.System<XenobiologySystem>().SpawnPending((marker, entities.GetComponent<PendingSlimeSpawnComponent>(marker)));
         return entities.EntityQuery<SlimeComponent>().Select(s => s.Uid()).Single(uid => !before.Contains(uid));
+    }
+
+    /// <summary>Report 400: monkeys are Passive, and a slime has to count them as prey to be fed one.</summary>
+    [Test]
+    public async Task SlimesHuntPassiveMobs()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var map = await pair.CreateTestMap();
+
+        await server.WaitAssertion(() =>
+        {
+            var slime = SpawnGrey(entities, map.GridCoords);
+            var monkey = entities.SpawnEntity("MobMonkey", map.GridCoords.Offset(new Vector2(1f, 0)));
+            var factions = entities.System<Content.Shared.NPC.Systems.NpcFactionSystem>();
+            Assert.That(factions.GetNearbyHostiles(slime, 5f), Does.Contain(monkey));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>Report 400: a split makes at least two slimes, however low the offspring roll, so it can't read as a colour change.</summary>
+    [Test]
+    public async Task MitosisAlwaysMakesAtLeastTwo()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var map = await pair.CreateTestMap();
+
+        await server.WaitAssertion(() =>
+        {
+            var slime = SpawnGrey(entities, map.GridCoords);
+            var comp = entities.GetComponent<SlimeComponent>(slime);
+            comp.MaxOffspring = 1;
+            entities.System<XenobiologySystem>().DoMitosis((slime, comp));
+
+            var children = entities.EntityQuery<SlimeComponent>().Where(s => s.Uid() != slime).Select(s => s.Uid()).ToList();
+            Assert.That(children, Has.Count.EqualTo(XenobiologySystem.MinOffspring));
+            foreach (var child in children)
+            {
+                entities.DeleteEntity(child);
+            }
+        });
+
+        await pair.CleanReturnAsync();
     }
 
     /// <summary>A latched slime sucked into a xenovac tank stays in the tank, not stuck unreachable on the tile.</summary>
@@ -111,7 +164,7 @@ public sealed class XenobiologyTest
             var mutations = comp.PotentialMutations.ToHashSet();
             entities.System<XenobiologySystem>().DoMitosis((slime, comp));
 
-            var children = entities.EntityQuery<SlimeComponent>().Where(s => s.Uid() != slime).ToList();
+            var children = entities.EntityQuery<SlimeComponent>().Where(s => s.Uid() != slime && OnMap(entities, s.Uid(), map.MapId)).ToList();
             Assert.That(children, Is.Not.Empty);
             Assert.That(children.Select(c => c.Breed), Is.All.Matches<ProtoId<Content.Shared._WF.Xenobiology.BreedPrototype>>(b => mutations.Contains(b)),
                 "At full mutation chance every child is one of the parent's mutations.");
@@ -152,7 +205,7 @@ public sealed class XenobiologyTest
         {
             var solutions = entities.System<SharedSolutionContainerSystem>();
             Assert.That(solutions.TryGetSolution(reagentExtract, "extract", out _, out var solution), Is.True);
-            var cubes = entities.EntityQuery<MetaDataComponent>().Count(m => m.EntityPrototype?.ID == "MonkeyCube");
+            var cubes = entities.EntityQuery<MetaDataComponent>().Count(m => m.EntityPrototype?.ID == "MonkeyCube" && OnMap(entities, m.Owner, map.MapId));
 
             Assert.Multiple(() =>
             {
@@ -205,8 +258,37 @@ public sealed class XenobiologyTest
         await server.WaitAssertion(() =>
         {
             var extracts = entities.EntityQuery<SlimeExtractComponent>()
-                .Count(e => entities.GetComponent<MetaDataComponent>(e.Uid()).EntityPrototype?.ID == "GreySlimeExtract");
+                .Count(e => entities.GetComponent<MetaDataComponent>(e.Uid()).EntityPrototype?.ID == "GreySlimeExtract" && OnMap(entities, e.Uid(), map.MapId));
             Assert.That(extracts, Is.EqualTo(produced), "The grinder makes the slime's extract count of its breed's extract.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>Report 652: a slime splitting mid-meal lets go, so the half-eaten mob can be fed on again.</summary>
+    [Test]
+    public async Task SplittingSlimeFreesItsMeal()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var entities = server.ResolveDependency<IEntityManager>();
+
+        EntityUid target = default;
+        await server.WaitPost(() =>
+        {
+            var slime = SpawnGrey(entities, map.GridCoords);
+            target = entities.SpawnEntity("MobMonkey", map.GridCoords.Offset(new Vector2(0.5f, 0)));
+            var comp = entities.GetComponent<SlimeComponent>(slime);
+            entities.System<SlimeLatchSystem>().Latch((slime, comp), target);
+            entities.System<XenobiologySystem>().DoMitosis((slime, comp));
+        });
+
+        await server.WaitRunTicks(60);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(entities.HasComponent<BeingLatchedComponent>(target), Is.False, "The monkey is still marked as being eaten.");
+            Assert.That(entities.HasComponent<SlimeDamageOvertimeComponent>(target), Is.False);
         });
 
         await pair.CleanReturnAsync();
@@ -313,7 +395,7 @@ public sealed class XenobiologyTest
         await server.WaitAssertion(() =>
         {
             var containers = entities.System<Robust.Shared.Containers.SharedContainerSystem>();
-            var slimes = entities.EntityQuery<SlimeComponent>().Select(s => s.Uid()).ToList();
+            var slimes = entities.EntityQuery<SlimeComponent>().Select(s => s.Uid()).Where(s => OnMap(entities, s, map.MapId)).ToList();
             Assert.That(slimes, Has.Count.EqualTo(2));
             Assert.That(slimes.All(s => containers.TryGetContainingContainer((s, null), out var c) && c.Owner == crate), Is.True,
                 "The starter slimes stay in the crate until it is opened.");

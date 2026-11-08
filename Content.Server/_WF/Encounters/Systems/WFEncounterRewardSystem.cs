@@ -397,6 +397,13 @@ public sealed partial class WFEncounterRewardSystem : EntitySystem
         }
 
         encounter.Allies.Clear();
+        // No side is left to win a blockade: whoever broke it shares the reward.
+        if (args.Resolution == WFEncounterResolution.Destroyed && encounter.Blockades)
+        {
+            PayBreakers(args.Encounter, encounter);
+            return;
+        }
+
         if (args.Resolution != WFEncounterResolution.Decided || !_prototypes.TryIndex(encounter.Prototype, out var prototype))
             return;
 
@@ -420,6 +427,17 @@ public sealed partial class WFEncounterRewardSystem : EntitySystem
                     break;
             }
         }
+    }
+
+    /// <summary>Pays a destroyed blockade's reward to the players who broke it.</summary>
+    private void PayBreakers(EntityUid uid, WFEncounterComponent encounter)
+    {
+        if (!_prototypes.TryIndex(encounter.Prototype, out var prototype) || prototype.Rewards.FirstOrDefault() is not { } reward)
+            return;
+
+        var breakers = GetHelpers(encounter, encounter.Ships.Values.Select(ship => ship.Side).ToHashSet());
+        if (breakers.Count > 0)
+            Pay(uid, encounter, reward, breakers, "breaking a blockade");
     }
 
     /// <summary>
@@ -468,14 +486,42 @@ public sealed partial class WFEncounterRewardSystem : EntitySystem
         return helpers;
     }
 
+    /// <summary>How many attacking ships carry a player <see cref="PayBounty"/> would pay.</summary>
+    public int PaidShips(Entity<WFEncounterComponent?> encounter)
+    {
+        if (!Resolve(encounter, ref encounter.Comp, false))
+            return 0;
+
+        var comp = encounter.Comp;
+        var attackers = comp.ShipHits.Keys.Select(key => key.Attacker).ToHashSet();
+        return GetHelpers(comp, comp.Ships.Values.Select(ship => ship.Side).ToHashSet())
+            .Select(helper => Transform(helper.Mob).GridUid)
+            .Where(grid => grid is { } ship && attackers.Contains(ship))
+            .Distinct()
+            .Count();
+    }
+
+    /// <summary>A bounty scaled up for each paid attacking ship past the first, so a bigger group doesn't thin every share.</summary>
+    public int ScaleForShips(EntityUid encounter, int bounty, float perShip, float maxScale)
+    {
+        return (int) (bounty * ShipScale(PaidShips(encounter), perShip, maxScale));
+    }
+
+    /// <summary>What a bounty is multiplied by for a number of paid attacking ships: never below one or above the cap.</summary>
+    public static float ShipScale(int ships, float perShip, float maxScale)
+    {
+        return Math.Clamp(1f + perShip * (ships - 1), 1f, Math.Max(1f, maxScale));
+    }
+
     /// <summary>
     /// Pays a bounty on a beaten encounter to its helpers, and a fifth to living players aboard supporters; returns how many were paid.
     /// <paramref name="extraCredits"/> are further rewards of which only the faction credits are handed out. Every
-    /// player the bounty is shared among is added to <paramref name="helperMobs"/>, paid or capped.
+    /// player the bounty is shared among is added to <paramref name="helperMobs"/>, paid or capped. An
+    /// <paramref name="uncapped"/> bounty, a once-a-round capstone, skips the hourly cap and doesn't count toward it.
     /// </summary>
     public int PayBounty(Entity<WFEncounterComponent?> encounter, WFEncounterReward reward, string deed,
         IReadOnlyList<EntityUid>? supporters = null, IReadOnlyList<WFEncounterReward>? extraCredits = null,
-        List<EntityUid>? helperMobs = null)
+        List<EntityUid>? helperMobs = null, bool uncapped = false)
     {
         if (!Resolve(encounter, ref encounter.Comp, false))
             return 0;
@@ -497,7 +543,12 @@ public sealed partial class WFEncounterRewardSystem : EntitySystem
         }
 
         if (helpers.Count == 0 && aids.Count == 0)
+        {
+            var hits = string.Join(", ", comp.Hits.Select(pair => $"{pair.Key}: {pair.Value.Values.Sum()}"));
+            _adminLog.Add(LogType.Action, LogImpact.Medium,
+                $"No helpers for {deed} {ToPrettyString(encounter):entity}. Hits by player: {hits}");
             return 0;
+        }
 
         var pool = aids.Count > 0 ? reward.Spesos / 5 : 0;
         var shares = new List<int>();
@@ -520,7 +571,7 @@ public sealed partial class WFEncounterRewardSystem : EntitySystem
 
         helpers.AddRange(aids);
         helperMobs?.AddRange(helpers.Select(helper => helper.Mob));
-        return Pay(encounter, comp, reward, helpers, deed, shares, extraCredits);
+        return Pay(encounter, comp, reward, helpers, deed, shares, extraCredits, uncapped);
     }
 
     /// <summary>
@@ -567,9 +618,9 @@ public sealed partial class WFEncounterRewardSystem : EntitySystem
     /// <summary>Pays a reward to the helpers within the hourly cap, equally unless shares are given, and returns how many received anything.</summary>
     private int Pay(EntityUid uid, WFEncounterComponent encounter, WFEncounterReward reward,
         List<(ICommonSession Session, EntityUid Mob)> helpers, string deed, List<int>? shares = null,
-        IReadOnlyList<WFEncounterReward>? extraCredits = null)
+        IReadOnlyList<WFEncounterReward>? extraCredits = null, bool uncapped = false)
     {
-        return Pay(encounter.Name, $"encounter {encounter.Prototype} ({ToPrettyString(uid):entity})", reward, helpers, deed, shares, extraCredits);
+        return Pay(encounter.Name, $"encounter {encounter.Prototype} ({ToPrettyString(uid):entity})", reward, helpers, deed, shares, extraCredits, uncapped);
     }
 
     /// <summary>
@@ -610,19 +661,28 @@ public sealed partial class WFEncounterRewardSystem : EntitySystem
 
     private int Pay(string name, string subject, WFEncounterReward reward,
         List<(ICommonSession Session, EntityUid Mob)> helpers, string deed, List<int>? shares = null,
-        IReadOnlyList<WFEncounterReward>? extraCredits = null)
+        IReadOnlyList<WFEncounterReward>? extraCredits = null, bool uncapped = false)
     {
         var received = 0;
         var cap = _config.GetCVar(EncountersCVars.PayoutHourlyCap);
         for (var i = 0; i < helpers.Count; i++)
         {
             var (session, mob) = helpers[i];
-            var paid = Capped(session.UserId, shares?[i] ?? reward.Spesos / helpers.Count, cap);
+            var share = shares?[i] ?? reward.Spesos / helpers.Count;
+            var paid = uncapped ? share : Capped(session.UserId, share, cap);
+            if (paid < share)
+            {
+                _chat.DispatchServerMessage(session, Loc.GetString("wf-encounter-reward-capped", ("name", name), ("cap", cap)));
+                _adminLog.Add(LogType.Action, LogImpact.Medium,
+                    $"{session.Name} hit the payout cap: {paid} of {share} spesos for {deed} {subject}");
+            }
+
             // A deposit that fails, with no bank account or deposits off, pays nothing and keeps the allowance.
             var cut = _companies.CutFor(session, paid);
             if (paid > 0 && !_bank.TryBankDeposit(mob, paid - cut, false))
             {
-                Refund(session.UserId, paid);
+                if (!uncapped)
+                    Refund(session.UserId, paid);
                 paid = 0;
             }
             else

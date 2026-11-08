@@ -55,6 +55,12 @@ public sealed partial class WFEncounterComponent : Component
     [DataField]
     public bool OffBudget;
 
+    /// <summary>A freight run, on its own schedule.</summary>
+    public bool Freight;
+
+    /// <summary>While it runs, its station counts as blockaded.</summary>
+    public bool Blockades;
+
     /// <summary>Whether it is kept off the sector markers.</summary>
     [DataField]
     public bool Hidden;
@@ -135,6 +141,9 @@ public sealed partial class WFEncounterComponent : Component
 
     /// <summary>The vessels each side has called its guns onto, and when it may call each again.</summary>
     public Dictionary<(string Side, EntityUid Intruder), TimeSpan> Called = new();
+
+    /// <summary>What each side has said to each vessel and holds against it.</summary>
+    public Dictionary<(string Side, EntityUid Intruder), Content.Server._WF.NpcDialogue.WFTalkState> Talk = new();
 
     /// <summary>The vessels its interrogating ships have asked, and when each may be asked again.</summary>
     public Dictionary<EntityUid, TimeSpan> Interrogated = new();
@@ -295,8 +304,15 @@ public sealed partial class WFEncounterShipState
     [DataField]
     public EntityUid? Prey;
 
+    /// <summary>Guns mounted at spawn to stop the ship it means to board.</summary>
+    [DataField]
+    public List<EntProtoId> Disablers = new();
+
     /// <summary>Set on an extorter: where it is in its round of tolls.</summary>
     public WFExtortState? Extort;
+
+    /// <summary>Set on an abductor: its run at a mark and whoever it holds.</summary>
+    public WFAbductState? Abduct;
 
     /// <summary>Whether it answers an attack by turning on the attacker.</summary>
     [DataField]
@@ -370,6 +386,45 @@ public sealed partial class WFEncounterShipState
 
     /// <summary>Vessels in its warning zone that an interrogating zone has no cause to fire on, as of its last look: those it asks.</summary>
     public HashSet<EntityUid> Strangers = new();
+
+    /// <summary>How it rates its chances; only worsens while it fights.</summary>
+    public Content.Server._WF.NpcDialogue.WFShipMood Mood;
+
+    /// <summary>The worst mood it has spoken of.</summary>
+    public Content.Server._WF.NpcDialogue.WFShipMood SpokenMood;
+
+    /// <summary>When it may next speak of its mood.</summary>
+    public TimeSpan NextMoodLine;
+
+    /// <summary>Whether its one roll to surrender has been made.</summary>
+    public bool SurrenderRolled;
+
+    /// <summary>Whether it has surrendered and stood its crew down.</summary>
+    public bool Surrendered;
+
+    /// <summary>The vessel it surrendered to.</summary>
+    public EntityUid? SurrenderedTo;
+
+    /// <summary>When it surrendered; fire landing shortly after is still in flight and forgiven.</summary>
+    public TimeSpan SurrenderedAt;
+
+    /// <summary>Whether its surrender was accepted over a hail.</summary>
+    public bool SurrenderAccepted;
+
+    /// <summary>The console its surrender hail goes through.</summary>
+    public EntityUid? SurrenderConsole;
+
+    /// <summary>When it closes the surrender hail.</summary>
+    public TimeSpan? SurrenderCloseAt;
+
+    /// <summary>When it next checks it is still holding still.</summary>
+    public TimeSpan NextSurrenderHold;
+
+    /// <summary>Its surrender was refused or fired on: it fights to the end and never offers again.</summary>
+    public bool LastStand;
+
+    /// <summary>Whether it has turned to run from its attackers.</summary>
+    public bool Retreating;
 }
 
 /// <summary>Marks a passenger an encounter put aboard one of its ships.</summary>

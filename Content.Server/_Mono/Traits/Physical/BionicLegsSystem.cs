@@ -1,3 +1,8 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2025 ark1368
+//
+// SPDX-License-Identifier: MPL-2.0
+
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
@@ -8,6 +13,8 @@ using System.Numerics;
 using Content.Shared._Mono.Traits.Physical;
 using Robust.Shared.Map;
 using Content.Shared.Standing;
+using Content.Server._WF.Augments; // WOLFGATE(Augments)
+using Content.Shared._WF.Augments; // WOLFGATE(Augments)
 
 namespace Content.Server._Mono.Traits.Physical;
 
@@ -17,6 +24,7 @@ public sealed partial class BionicLegsSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedContainerSystem _containerSystem = default!;
     [Dependency] private StandingStateSystem _standing = default!;
+    [Dependency] private WFAugmentSystem _wfAugments = default!; // WOLFGATE(Augments)
 
     public override void Initialize()
     {
@@ -64,6 +72,8 @@ public sealed partial class BionicLegsSystem : EntitySystem
                     SpawnAndReplace("SpeedRightLeg", torso, "right leg");
             }
         }
+
+        _wfAugments.StyleTraitLimbs(ent, WFAugmentSlot.LeftLeg, WFAugmentSlot.RightLeg); // WOLFGATE(Augments): drawn to the species' own leg shape
     }
 
     private void SpawnAndReplace(string partProtoId, EntityUid parentEntity, string slotId)
@@ -79,6 +89,15 @@ public sealed partial class BionicLegsSystem : EntitySystem
         if (_containerSystem.TryGetContainer(parentEntity, containerId, out var container))
         {
             var oldEntities = container.ContainedEntities.ToArray();
+
+            // WOLFGATE(Augments) START: cut the old leg loose like an augment swap, so the body keeps its leg markings
+            if (parentPart.Body is { } body)
+            {
+                foreach (var oldEntity in oldEntities)
+                    _bodySystem.WfCutLoose(body, oldEntity);
+                oldEntities = container.ContainedEntities.ToArray();
+            }
+            // WOLFGATE END
 
             foreach (var oldEntity in oldEntities)
             {

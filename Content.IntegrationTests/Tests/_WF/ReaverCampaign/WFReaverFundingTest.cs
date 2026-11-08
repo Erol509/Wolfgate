@@ -1,4 +1,5 @@
 #nullable enable
+using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Content.IntegrationTests.Tests._WF.TradeGoods;
@@ -78,19 +79,33 @@ public sealed class WFReaverFundingTest : WFReaverTestBase
             Assert.That((reinforcement - comp.NextReinforcement).TotalSeconds, Is.EqualTo(reinforcementCut.TotalSeconds).Within(1));
             Assert.That((spread - State().NextSpread!.Value).TotalSeconds, Is.EqualTo(spreadCut.TotalSeconds).Within(1));
 
-            // A sale that fills the chest pays out at once.
+            // A chest filled during the cooldown waits.
             for (var i = 0; i < campaign.FundingCrates; i++)
             {
                 market.Sell(chute, TradeTestWorld.Hauled(SEntMan, far, MapData.GridCoords, Contraband), seller);
             }
 
+            Assert.That(State().Funded, Is.EqualTo(1), "A payout landed inside the cooldown.");
+            Assert.That(State().Funding, Is.EqualTo(campaign.FundingCrates));
+            Assert.That((State().NextFunding - STiming.CurTime).TotalMinutes, Is.EqualTo(campaign.FundingCooldown.TotalMinutes).Within(0.5),
+                "The payout should start the campaign's cooldown.");
+
+            // The cooldown running out pays the waiting chest on the campaign's own tick, with no further sale.
+            State().NextFunding = STiming.CurTime;
+        });
+
+        await RunTicks(60);
+
+        await Server.WaitAssertion(() =>
+        {
+            var campaign = Server.System<WFReaverCampaignSystem>().Campaign!;
             Assert.That(State().Funded, Is.EqualTo(2));
             Assert.That(State().Funding, Is.Zero);
+            Assert.That((State().NextFunding - STiming.CurTime).TotalMinutes, Is.EqualTo(campaign.FundingCooldown.TotalMinutes).Within(0.5));
         });
 
         await RunTicks(30);
-        Assert.That(RadioLines(since, Funded), Is.EqualTo(2), "Each payout should be announced on the radio.");
-        Assert.That(Banners(since, Funded), Is.Zero, "A payout is a radio line, not a banner.");
+        Assert.That(ChatSince(since).Any(line => line.Contains(Funded)), Is.False, "A payout is not announced.");
     }
 
     /// <summary>Freight taken off NPC haulers funds the Reavers when fenced at the Underground, not when sold at a lawful chute.</summary>

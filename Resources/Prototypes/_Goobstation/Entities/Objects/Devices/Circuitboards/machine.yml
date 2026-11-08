@@ -1,3 +1,14 @@
+# WOLFGATE: restore the licence header removed by Kill Spdx
+# SPDX-FileCopyrightText: 2024 Aviu00
+# SPDX-FileCopyrightText: 2024 Piras314
+# SPDX-FileCopyrightText: 2025 Aiden
+# SPDX-FileCopyrightText: 2025 GoobBot
+# SPDX-FileCopyrightText: 2025 Ilya246
+# SPDX-FileCopyrightText: 2025 deltanedas
+# SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 - type: entity
   parent: BaseMachineCircuitboard
   id: RoboticArmCircuitboard
@@ -75,8 +86,10 @@
     state: service
   - type: MachineBoard
     prototype: VinylPlayer
-    stackRequirements:
+    # WOLFGATE: a machine part under stackRequirements can't be inserted; the frame reads parts from requirements
+    requirements:
       Manipulator: 1
+    stackRequirements:
       Steel: 5
       WoodPlank: 10 #Forge-Change
       Plastic: 5 #Forge-Change
@@ -91,8 +104,10 @@
     state: service
   - type: MachineBoard
     prototype: StationRadioServer
-    stackRequirements:
+    # WOLFGATE: a machine part under stackRequirements can't be inserted; the frame reads parts from requirements
+    requirements:
       Manipulator: 8 #Forge-Change
+    stackRequirements:
       Steel: 30 #Forge-Change
       Plastic: 10
       Plasma: 5
@@ -108,8 +123,10 @@
     state: service
   - type: MachineBoard
     prototype: StationRadioRig
-    stackRequirements:
+    # WOLFGATE: a machine part under stackRequirements can't be inserted; the frame reads parts from requirements
+    requirements:
       Manipulator: 10 #Forge-Change
+    stackRequirements:
       Steel: 20 #Forge-Change
       Glass: 20 #Forge-Change
       Plastic: 10 #Forge-Change

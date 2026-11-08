@@ -39,7 +39,7 @@
   randomRotation: false
   stations:
     TSFMCIndustry:
-      stationProto: StandardFrontierOutpost
+      stationProto: MarketFrontierOutpost # WOLFGATE: its cargo request computer needs an order database or it opens blank
       gridComponents:
       - type: VesselInfo
         description: "A colony ship from the Federation system, sent to the Colossus Radius for industrial expansion. Home to TSF civilians."

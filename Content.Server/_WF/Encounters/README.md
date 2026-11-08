@@ -121,6 +121,26 @@ four tiers of this with a warrant on the captain: petty (unarmed shuttle, pilot,
 guards, Regular), dangerous (corvette, hard crew, Veteran) and most wanted (pirate frigate, full crew, Elite, turns and
 fights when attacked).
 
+A ship with an `abduct:` block is an abductor (`WFEncounterSystem.Abduct.cs`, state in `WFAbductState`). Every few minutes it
+picks the ship with the fewest players aboard in `reach`, up to `maxCrew`, and docks with it under clamps. Its guards hold the
+port and its `grabbers` deckhands (`WFCrewGrabberSystem`, in `NpcCrew`) stun, cuff and drag someone to the `WFAbductCellChair`.
+It then casts off, bolts the cell (`WFAbductCellSystem`), adds `ransom` to its warrant, announces the abduction and comes out on
+the sector map. While it holds someone it shows magenta on the mass scanner with `HOSTAGE ABOARD` on its label
+(`WFHostageShipComponent`, read in `GetIFFLabel`). The prisoner pays from an alt verb on the chair and is sent home, as they are
+after `holdTime`. Anyone who hails it, or answers its hail, can pay there instead: it then holds still for 10 minutes (`Handover`)
+with the prisoner uncuffed, its crew standing down, no clamps and its door locks off, for someone to dock and walk them off. A
+prisoner still aboard at the end is sent home. With its crew dead the cell door stands open. Crew carry batons, not guns. Only
+hulls with the chair work, which `AbductorHullsHaveACell` checks.
+
+A ship with `disablers:` has those guns mounted on its hardpoints at spawn (`WFPirateRetrofitSystem.Mount`: the
+smallest that fits, an empty one first, else in place of the gun there) and stops a ship before it docks.
+`WFShipDisablerSystem` fires them itself, four times a second, with no gunner: the ion disruptor from 800 m until the
+target's engines are down, then the hacking harpoon from 200 m (or the harpoon regardless after 16 s of failed
+disruption), reloading the dart after a miss. The target is an abductor's mark from closing until the grab is over, or a
+hunter's or boarding extorter's prey while it docks and loots; when it is cleared the cable is let go. The abductors
+and extorters carry `[ WFIonDisruptor, WFHackHarpoonGunRaider ]`. While the cable is out, the raider's own guns are
+locked, as for any hacker.
+
 A ship with an `extort:` block is an extorter (`WFEncounterSystem.Extort.cs`, state in `WFExtortState`). It roams on
 its wander legs, flown about the nearest player ship it has no business with yet. Every few minutes (`markMin` to
 `markMax`) it picks the nearest ship with a player aboard inside `reach`, closes to `standoff` and keeps station, and
@@ -140,8 +160,8 @@ with nobody left aboard they are its crew and stay on it. Extorters share what t
 leaving alone, has as its mark or is boarding is not gone for by another. Extorter encounters are
 `lifetime: Persistent`: no clock, no jump out, no share of the budget, and the scheduler's one-of-a-kind rule keeps at
 most one of each prototype alive. `extorters.yml` has three tiers flying as the Reavers with a warrant on the crew: light
-(Hazel, Green, 6000 toll, 15000 base), medium (Metis or Mudskipper, Regular, 15000 toll, 40000 base) and heavy (Kalisto
-or Scallywag, Veteran, four guards, 40000 toll, 90000 base). The admin window and `wf_encounter list` show what each
+(Hazel, Green, 25000 toll, 15000 base), medium (Metis or Mudskipper, Regular, 60000 toll, 40000 base) and heavy (Kalisto
+or Scallywag, Veteran, four guards, 150000 toll, 90000 base). The admin window and `wf_encounter list` show what each
 extorter is doing (roaming, closing on a ship, hailing with the attempt, waiting for an answer, boarding) and what any
 warrant pays now.
 
@@ -177,6 +197,11 @@ ship, and `WFEncounterSystem.AdminOrder` has it extort or board that ship, attac
 resume its own orders, spawn its hull now, or send the encounter away. The Start and Scheduler tabs hold the rest. Other code calls `WFEncounterSystem.TrySpawn`, `Resolve`, `End` and
 `Reveal` and listens for `WFEncounterStartedEvent` and `WFEncounterResolvedEvent`.
 
+Freight runs (`freight: true`) keep their own schedule and cap (`wf.encounters.freight_interval_min`, `_max` and
+`freight_max_active`), outside the storyteller's, so they arrive steadily and never crowd out the sector's events. Several
+runs of one type can fly at once, and a run's `materials` are what its stops restock (TradeGoods). A
+`blockades` encounter counts its station as blockaded while it runs (TradeGoods). Its first reward pays whoever destroys it.
+
 Systems that run encounters of their own (the Reaver campaign, sector control) have more entry points. `TrySpawn(..., offBudget)`
 keeps a transient encounter out of the cap and budget. `SetOrders(encounter, key, queue)` gives one ship a fresh queue
 as its own orders. `WFEncounterRewardSystem.PayBounty` pays a beaten encounter's bounty to every player who hit its ships
@@ -204,6 +229,7 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 ### Server
 
 - [`Content.Server/_WF/Encounters/Commands/WFEncounterCommand.cs`](Commands/WFEncounterCommand.cs)
+- [`Content.Server/_WF/Encounters/Components/WFAbductState.cs`](Components/WFAbductState.cs)
 - [`Content.Server/_WF/Encounters/Components/WFCrewKillPaidComponent.cs`](Components/WFCrewKillPaidComponent.cs)
 - [`Content.Server/_WF/Encounters/Components/WFDockingClampComponent.cs`](Components/WFDockingClampComponent.cs)
 - [`Content.Server/_WF/Encounters/Components/WFEncounterBountyComponent.cs`](Components/WFEncounterBountyComponent.cs)
@@ -212,9 +238,11 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 - [`Content.Server/_WF/Encounters/Components/WFEncounterGridComponent.cs`](Components/WFEncounterGridComponent.cs)
 - [`Content.Server/_WF/Encounters/Components/WFExtortState.cs`](Components/WFExtortState.cs)
 - [`Content.Server/_WF/Encounters/Components/WFSalvageClaimComponent.cs`](Components/WFSalvageClaimComponent.cs)
+- [`Content.Server/_WF/Encounters/Components/WFShipDisablerComponent.cs`](Components/WFShipDisablerComponent.cs)
 - [`Content.Server/_WF/Encounters/Systems/BountyContractSystem.Warrants.cs`](Systems/BountyContractSystem.Warrants.cs)
 - [`Content.Server/_WF/Encounters/Systems/DockingSystem.Clamps.cs`](Systems/DockingSystem.Clamps.cs)
 - [`Content.Server/_WF/Encounters/Systems/ShuttleConsoleSystem.Clamps.cs`](Systems/ShuttleConsoleSystem.Clamps.cs)
+- [`Content.Server/_WF/Encounters/Systems/WFAbductCellSystem.cs`](Systems/WFAbductCellSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFDockingClampSystem.cs`](Systems/WFDockingClampSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterAdminSystem.cs`](Systems/WFEncounterAdminSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterBountySystem.cs`](Systems/WFEncounterBountySystem.cs)
@@ -224,6 +252,7 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterRewardSystem.cs`](Systems/WFEncounterRewardSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSchedulerSystem.cs`](Systems/WFEncounterSchedulerSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterStopSystem.cs`](Systems/WFEncounterStopSystem.cs)
+- [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Abduct.cs`](Systems/WFEncounterSystem.Abduct.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Admin.cs`](Systems/WFEncounterSystem.Admin.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Battle.cs`](Systems/WFEncounterSystem.Battle.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Build.cs`](Systems/WFEncounterSystem.Build.cs)
@@ -231,6 +260,7 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.cs`](Systems/WFEncounterSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Deed.cs`](Systems/WFEncounterSystem.Deed.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Derelict.cs`](Systems/WFEncounterSystem.Derelict.cs)
+- [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Disable.cs`](Systems/WFEncounterSystem.Disable.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Extort.cs`](Systems/WFEncounterSystem.Extort.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Fugitive.cs`](Systems/WFEncounterSystem.Fugitive.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Hunt.cs`](Systems/WFEncounterSystem.Hunt.cs)
@@ -242,15 +272,18 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterZoneSystem.cs`](Systems/WFEncounterZoneSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFPirateRetrofitSystem.cs`](Systems/WFPirateRetrofitSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFSalvageClaimSystem.cs`](Systems/WFSalvageClaimSystem.cs)
+- [`Content.Server/_WF/Encounters/Systems/WFShipDisablerSystem.cs`](Systems/WFShipDisablerSystem.cs)
 - [`Content.Server/_WF/Encounters/WFEncounterEvents.cs`](WFEncounterEvents.cs)
 
 ### Shared
 
+- [`Content.Shared/_WF/Encounters/WFAbductCellComponent.cs`](../../../Content.Shared/_WF/Encounters/WFAbductCellComponent.cs)
 - [`Content.Shared/_WF/Encounters/WFEncounterAdminMessages.cs`](../../../Content.Shared/_WF/Encounters/WFEncounterAdminMessages.cs)
 - [`Content.Shared/_WF/Encounters/WFEncounterManifestPrototype.cs`](../../../Content.Shared/_WF/Encounters/WFEncounterManifestPrototype.cs)
 - [`Content.Shared/_WF/Encounters/WFEncounterMarkers.cs`](../../../Content.Shared/_WF/Encounters/WFEncounterMarkers.cs)
 - [`Content.Shared/_WF/Encounters/WFEncounterPresetPrototype.cs`](../../../Content.Shared/_WF/Encounters/WFEncounterPresetPrototype.cs)
 - [`Content.Shared/_WF/Encounters/WFEncounterPrototype.cs`](../../../Content.Shared/_WF/Encounters/WFEncounterPrototype.cs)
+- [`Content.Shared/_WF/Encounters/WFHostageShipComponent.cs`](../../../Content.Shared/_WF/Encounters/WFHostageShipComponent.cs)
 - [`Content.Shared/_WF/Encounters/WFPirateRetrofitPrototype.cs`](../../../Content.Shared/_WF/Encounters/WFPirateRetrofitPrototype.cs)
 - [`Content.Shared/_WF/Encounters/WFStandingPrototype.cs`](../../../Content.Shared/_WF/Encounters/WFStandingPrototype.cs)
 
@@ -267,6 +300,7 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 
 ### Integration tests
 
+- [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Abduct.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Abduct.cs)
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.AdminOrders.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.AdminOrders.cs)
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.AuditLifecycle.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.AuditLifecycle.cs)
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.AuditZones.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.AuditZones.cs)
@@ -279,6 +313,7 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Conduct.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Conduct.cs)
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Deed.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Deed.cs)
+- [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Disable.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Disable.cs)
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Extort.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Extort.cs)
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.FriendlyFire.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.FriendlyFire.cs)
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Fuel.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.Fuel.cs)
@@ -299,8 +334,13 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.TraderHail.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterTest.TraderHail.cs)
 - [`Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterVehicleInteriorTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Encounters/WFEncounterVehicleInteriorTest.cs)
 
+### Unit tests
+
+- [`Content.Tests/_WF/Encounters/WFEncounterShipScaleTest.cs`](../../../Content.Tests/_WF/Encounters/WFEncounterShipScaleTest.cs)
+
 ### Prototypes
 
+- [`Resources/Prototypes/_WF/Encounters/abductors.yml`](../../../Resources/Prototypes/_WF/Encounters/abductors.yml)
 - [`Resources/Prototypes/_WF/Encounters/alerts.yml`](../../../Resources/Prototypes/_WF/Encounters/alerts.yml)
 - [`Resources/Prototypes/_WF/Encounters/crates.yml`](../../../Resources/Prototypes/_WF/Encounters/crates.yml)
 - [`Resources/Prototypes/_WF/Encounters/deed.yml`](../../../Resources/Prototypes/_WF/Encounters/deed.yml)
@@ -317,6 +357,7 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 
 ### Localization
 
+- [`Resources/Locale/en-US/_WF/Encounters/abductors.ftl`](../../../Resources/Locale/en-US/_WF/Encounters/abductors.ftl)
 - [`Resources/Locale/en-US/_WF/Encounters/bounties.ftl`](../../../Resources/Locale/en-US/_WF/Encounters/bounties.ftl)
 - [`Resources/Locale/en-US/_WF/Encounters/encounters.ftl`](../../../Resources/Locale/en-US/_WF/Encounters/encounters.ftl)
 - [`Resources/Locale/en-US/_WF/Encounters/extorters.ftl`](../../../Resources/Locale/en-US/_WF/Encounters/extorters.ftl)
@@ -350,6 +391,7 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 - [`Content.Server/Shuttles/Systems/DockingSystem.cs`](../../Shuttles/Systems/DockingSystem.cs): a raider's docking clamps hold the ship until released at its helm.
 - [`Content.Server/Shuttles/Systems/ShuttleConsoleSystem.cs`](../../Shuttles/Systems/ShuttleConsoleSystem.cs): docking screens show clamped ports.
 - [`Content.Shared/Shuttles/BUIStates/DockingPortState.cs`](../../../Content.Shared/Shuttles/BUIStates/DockingPortState.cs): the raider grid whose docking clamps hold this port's joint.
+- [`Content.Shared/Shuttles/Systems/SharedShuttleSystem.IFF.cs`](../../../Content.Shared/Shuttles/Systems/SharedShuttleSystem.IFF.cs): a ship holding someone says so on the scanner
 - [`Resources/Prototypes/_Goobstation/Entities/Objects/Devices/pda.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Objects/Devices/pda.yml): warrants reach every PDA
 - [`Resources/Prototypes/_Mono/Entities/Objects/Devices/pda.yml`](../../../Resources/Prototypes/_Mono/Entities/Objects/Devices/pda.yml): warrants reach every PDA
 - [`Resources/Prototypes/Entities/Objects/Devices/pda.yml`](../../../Resources/Prototypes/Entities/Objects/Devices/pda.yml): warrants reach every PDA

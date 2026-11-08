@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client._WF.BlackHole;
+using Content.Client._WF.Lattice;
 using Content.Shared._FarHorizons.StarSystem.Helpers;
 using Robust.Client.Graphics;
 
@@ -13,9 +14,12 @@ public sealed partial class StarOverlay
     /// <summary>Only black holes need a copy of the background for refraction.</summary>
     public override bool RequestScreenTexture => _star?.Shader == BlackHoleShader;
 
-    /// <summary>Culls only black holes, using the same footprint and parallax as the shader.</summary>
-    private static bool BlackHoleVisible(Star star, in OverlayDrawArgs args)
+    /// <summary>Culls only black holes, using the same footprint and parallax as the shader. After Tacet there is none.</summary>
+    private bool BlackHoleVisible(Star star, in OverlayDrawArgs args)
     {
+        if (star.Shader == BlackHoleShader && _entMan.System<WFLatticeViewSystem>().Collapsed())
+            return false;
+
         return star.Shader != BlackHoleShader || BlackHoleVisuals.IsVisible(star.Position, star.Radius,
             args.Viewport.Eye?.Position.Position ?? args.WorldAABB.Center, args.WorldAABB);
     }
@@ -30,6 +34,7 @@ public sealed partial class StarOverlay
         _shaderInstance.SetParameter("solarRadiusFactor", BlackHoleVisuals.SolarRadiusFactor);
         _shaderInstance.SetParameter("effectRadius", BlackHoleVisuals.EffectRadius);
         _shaderInstance.SetParameter("hasBackground", ScreenTexture != null);
+        _shaderInstance.SetParameter("unmooring", _entMan.System<WFLatticeViewSystem>().Unmooring());
         if (ScreenTexture == null)
             return;
 

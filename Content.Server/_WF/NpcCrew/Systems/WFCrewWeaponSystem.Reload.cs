@@ -11,6 +11,7 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
+using Content.Shared.NPC;
 using Content.Shared._WF.NpcCrew;
 using System.Linq;
 
@@ -49,18 +50,24 @@ public sealed partial class WFCrewWeaponSystem
     {
         base.Update(frameTime);
         _reloadTimer += frameTime;
-        if (_reloadTimer < 0.5f)
-            return;
-        _reloadTimer = 0;
-        foreach (var (mob, cached) in _threats)
+        if (_reloadTimer >= 0.5f)
         {
-            if (_timing.CurTime >= cached.Until)
-                _threats.Remove(mob);
+            _reloadTimer = 0;
+            foreach (var (mob, cached) in _threats)
+            {
+                if (_timing.CurTime >= cached.Until)
+                    _threats.Remove(mob);
+            }
+            PruneAdvance();
         }
-        PruneAdvance();
-        var query = EntityQueryEnumerator<WFCrewWeaponComponent>();
-        while (query.MoveNext(out var uid, out _))
+        // Only awake crew are swept, each on its own jittered schedule.
+        var now = _timing.CurTime;
+        var query = EntityQueryEnumerator<WFCrewWeaponComponent, ActiveNPCComponent>();
+        while (query.MoveNext(out var uid, out var weapon, out _))
         {
+            if (now < weapon.NextCheck)
+                continue;
+            weapon.NextCheck = now + TimeSpan.FromSeconds(0.5 * (1 + 0.5 * _random.NextFloat()));
             if (HasComp<ActorComponent>(uid) || !_mobs.IsAlive(uid))
                 continue;
             // Components made before the skill changed keep up; new ones start with it (OnRangedInit).
@@ -82,7 +89,8 @@ public sealed partial class WFCrewWeaponSystem
             }
             if (HasLiveThreat(uid))
                 TryReloadOrSwitch(uid);
-            else
+            // A grabber's baton is out for someone who isn't a threat; holstering it here also restarts its cooldown for good.
+            else if (!HasComp<WFCrewGrabberComponent>(uid))
             {
                 RemCompDeferred<NPCRangedCombatComponent>(uid);
                 RemCompDeferred<NPCMeleeCombatComponent>(uid);
@@ -138,6 +146,13 @@ public sealed partial class WFCrewWeaponSystem
     public bool CanEngage(EntityUid uid, EntityUid target)
     {
         if (TerminatingOrDeleted(target) || !_mobs.IsAlive(target) || Transform(uid).GridUid is not { } grid)
+            return false;
+
+        // Someone it has finished with, or a boarding party's mark that has not hit it (NpcIntents).
+        if (_factions.IsIgnored(uid, target) || EntityManager.System<Content.Server._WF.NpcIntents.WFNpcIntentSystem>().HoldsFireOn(uid, target))
+            return false;
+
+        if (HasComp<WFCrewNonLethalComponent>(uid) && CompOrNull<Content.Shared.Cuffs.Components.CuffableComponent>(target)?.CuffedHandCount > 0)
             return false;
 
         TryComp<WFCrewComponent>(uid, out var crew);

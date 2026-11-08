@@ -2,7 +2,7 @@
 
 Changes to Mono's chimera fleshbeasts. When a fleshbeast converted by Letoferol dies or is gibbed, the body the person
 had before the conversion falls out of it and takes back their mind, so they can be revived or cloned as themselves.
-The fleshbeast's corpse and anything it carried stay behind, renamed back to "chimera fleshbeast". The dropped body is
+The fleshbeast's corpse stays behind, renamed back to "chimera fleshbeast", and anything it wore, held or kept in its flesh pocket falls to the floor. The dropped body is
 purged of both kinds of Letoferol so it doesn't turn again; it keeps the damage it had when it turned.
 
 The dropped body can't be turned again for 3 minutes (`turnCooldown` on `DropOriginalBodyOnDeath`), so other
@@ -109,6 +109,7 @@ Entry points: `WFFleshPustuleSystem` (bursting and planting), `WFFleshPustuleTre
   - hivemind text from the channel selector has no + prefix, so it goes to the default mind
   - members hear a mind before they've spoken
 - [`Content.Shared/Chat/SharedChatSystem.cs`](../../../Content.Shared/Chat/SharedChatSystem.cs): with a default mind a key needs a space after it, so "+look" isn't sent as "ook"
+- [`Resources/Prototypes/_HL/Entities/Mobs/Species/synth.yml`](../../../Resources/Prototypes/_HL/Entities/Mobs/Species/synth.yml): every other playable species has it; Letoferol only turns Humanoid-tagged mobs
 - [`Resources/Prototypes/_Mono/Entities/Mobs/Chimera/chimera.yml`](../../../Resources/Prototypes/_Mono/Entities/Mobs/Chimera/chimera.yml): one-shot flesh tick nest, validated server-side against ChimeraFleshKudzu.
 - [`Resources/Prototypes/_Mono/Entities/Mobs/Chimera/chimera_base.yml`](../../../Resources/Prototypes/_Mono/Entities/Mobs/Chimera/chimera_base.yml)
   - claws turn armoured victims too; armour used to block every hit

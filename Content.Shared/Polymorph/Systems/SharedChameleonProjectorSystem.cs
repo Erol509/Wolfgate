@@ -4,6 +4,7 @@ using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Movement.Components; // WOLFGATE: unanchoring left the mob a Dynamic body
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
@@ -11,6 +12,9 @@ using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Physics; // WOLFGATE: unanchoring left the mob a Dynamic body
+using Robust.Shared.Physics.Components; // WOLFGATE: unanchoring left the mob a Dynamic body
+using Robust.Shared.Physics.Systems; // WOLFGATE: unanchoring left the mob a Dynamic body
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using System.Diagnostics.CodeAnalysis;
@@ -32,6 +36,7 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedContainerSystem _container = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!; // WOLFGATE: unanchoring left the mob a Dynamic body it could not walk
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedTransformSystem _xform = default!;
 
@@ -159,7 +164,7 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
 
         var xform = Transform(uid);
         if (xform.Anchored)
-            _xform.Unanchor(uid, xform);
+            WFUnanchorUser(uid, xform); // WOLFGATE: unanchoring left the mob a Dynamic body it could not walk
         else
             _xform.AnchorEntity((uid, xform));
 
@@ -254,12 +259,25 @@ public abstract partial class SharedChameleonProjectorSystem : EntitySystem
 
         var xform = Transform(ent);
         xform.NoLocalRotation = false;
-        _xform.Unanchor(ent, xform);
+        WFUnanchorUser(ent, xform); // WOLFGATE: unanchoring left the mob a Dynamic body it could not walk
 
         Del(ent.Comp.Disguise);
         RemComp<ChameleonDisguisedComponent>(ent);
         return true;
     }
+
+    // WOLFGATE START: unanchoring left the mob a Dynamic body it could not walk
+    /// <summary>
+    /// Unanchors the disguised user and gives a mob its walking body back. Going into a container unanchors
+    /// without touching the body, so this looks at the body and not the anchor.
+    /// </summary>
+    private void WFUnanchorUser(EntityUid uid, TransformComponent xform)
+    {
+        _xform.Unanchor(uid, xform, setPhysics: false);
+        if (CompOrNull<PhysicsComponent>(uid)?.BodyType == BodyType.Static)
+            _physics.TrySetBodyType(uid, HasComp<InputMoverComponent>(uid) ? BodyType.KinematicController : BodyType.Dynamic, xform: xform);
+    }
+    // WOLFGATE END
 
     /// <summary>
     /// Reveal a projector's user, if any.

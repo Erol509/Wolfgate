@@ -1,3 +1,13 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2022 keronshb
+// SPDX-FileCopyrightText: 2023 AJCM-git
+// SPDX-FileCopyrightText: 2023 DrSmugleaf
+// SPDX-FileCopyrightText: 2023 Ed
+// SPDX-FileCopyrightText: 2023 Leon Friedrich
+// SPDX-FileCopyrightText: 2025 Ilya246
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 using Content.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Content.Shared._WF.EngineCompat;

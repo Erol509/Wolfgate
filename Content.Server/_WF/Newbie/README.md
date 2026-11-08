@@ -2,7 +2,7 @@
 
 Marks new players so others can go easy on them. A player whose total playtime is under `wf.newbie.hours` (8 by
 default, 0 turns it off) gets a learner plate over their head and the examine line "They are new around here." on
-whatever body they control. A ship whose owner (`ShipOwnershipComponent`) is new has "(L)" after its name on radar
+whatever body they control. A ship whose owner (`ShipOwnershipComponent`) is new, or that a new player is piloting, has "(L)" after its name on radar
 and in the hail list and screen. A ship hiding its label shows no tag.
 
 Players can hide their own tag with "Show my newbie tag" in Options > Extra (`wf.newbie.show_tag`, a replicated client
@@ -50,6 +50,7 @@ the icon. `Tools/_WF/Newbie/gen_newbie_icon.py` draws the plate.
 - [`Content.Client/_WF/Newbie/WFNewbieCrewWindow.xaml`](../../../Content.Client/_WF/Newbie/WFNewbieCrewWindow.xaml)
 - [`Content.Client/_WF/Newbie/WFNewbieCrewWindow.xaml.cs`](../../../Content.Client/_WF/Newbie/WFNewbieCrewWindow.xaml.cs)
 - [`Content.Client/_WF/Newbie/WFNewbieIconSystem.cs`](../../../Content.Client/_WF/Newbie/WFNewbieIconSystem.cs)
+- [`Content.Client/_WF/Newbie/WFNewbieTraitRules.cs`](../../../Content.Client/_WF/Newbie/WFNewbieTraitRules.cs)
 - [`Content.Client/_WF/Newbie/WFNewbieWelcomeSystem.cs`](../../../Content.Client/_WF/Newbie/WFNewbieWelcomeSystem.cs)
 - [`Content.Client/_WF/Newbie/WFNewbieWelcomeWindow.xaml`](../../../Content.Client/_WF/Newbie/WFNewbieWelcomeWindow.xaml)
 - [`Content.Client/_WF/Newbie/WFNewbieWelcomeWindow.xaml.cs`](../../../Content.Client/_WF/Newbie/WFNewbieWelcomeWindow.xaml.cs)

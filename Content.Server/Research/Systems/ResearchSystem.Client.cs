@@ -19,7 +19,24 @@ public sealed partial class ResearchSystem
         SubscribeLocalEvent<ResearchClientComponent, ResearchClientServerSelectedMessage>(OnClientSelected);
         SubscribeLocalEvent<ResearchClientComponent, ResearchClientServerDeselectedMessage>(OnClientDeselected);
         SubscribeLocalEvent<ResearchClientComponent, ResearchRegistrationChangedEvent>(OnClientRegistrationChanged);
+        SubscribeLocalEvent<ResearchClientComponent, EntParentChangedMessage>(OnClientParentChanged); // WOLFGATE: a machine moved off its server's grid stayed linked
     }
+
+    // WOLFGATE START: a machine moved off its server's grid stayed linked
+    /// <summary>A client only stays on its server while they share a grid, and picks up a server on its new grid.</summary>
+    private void OnClientParentChanged(EntityUid uid, ResearchClientComponent component, ref EntParentChangedMessage args)
+    {
+        if (LifeStage(uid) < EntityLifeStage.MapInitialized)
+            return;
+
+        var grid = args.Transform.GridUid;
+        if (component.Server is { } server && Transform(server).GridUid != grid)
+            UnregisterClient(uid, component);
+
+        if (component.Server == null)
+            RegisterGridServers(uid, component, grid);
+    }
+    // WOLFGATE END
 
     #region UI
 
@@ -58,7 +75,12 @@ public sealed partial class ResearchSystem
 
     private void OnClientMapInit(EntityUid uid, ResearchClientComponent component, MapInitEvent args)
     {
-        var maybeGrid = Transform(uid).GridUid;
+        RegisterGridServers(uid, component, Transform(uid).GridUid); // WOLFGATE: shared with a client moved to a new grid
+    }
+
+    // WOLFGATE: shared with a client moved to a new grid
+    private void RegisterGridServers(EntityUid uid, ResearchClientComponent component, EntityUid? maybeGrid)
+    {
         if (maybeGrid is { } grid)
         {
             var servers = new HashSet<Entity<ResearchServerComponent>>();

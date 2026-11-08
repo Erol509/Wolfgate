@@ -12,6 +12,7 @@ public enum WFMappingBuildMode : byte
     Template,
     Pipe,
     Link,
+    Wrench,
 }
 
 /// <summary>What Erase mode removes.</summary>
@@ -68,4 +69,21 @@ public enum WFMappingLinkTool : byte
 
     /// <summary>The access levels a reader accepts.</summary>
     Access,
+
+    /// <summary>The alarm thresholds of vents, scrubbers and sensors, one at a time or through their air alarm.</summary>
+    Thresholds,
+}
+
+/// <summary>What Tool mode (key 0) does to the thing clicked.</summary>
+public enum WFMappingTool : byte
+{
+    /// <summary>Anchors or unanchors.</summary>
+    Wrench,
+
+    /// <summary>The rest match <see cref="Content.Shared._WF.MappingTools.MappingToggle"/>, one higher.</summary>
+    Bolts,
+    Weld,
+    Lock,
+    Panel,
+    Door,
 }

@@ -49,7 +49,12 @@ public sealed partial class AdminRadarWindow : FancyWindow
         MaximizeToggle.OnToggled += OnMaximizeToggled;
 
         TrueIffToggle.Pressed = _radar.TrueIff;
-        TrueIffToggle.OnToggled += args => _radar.TrueIff = args.Pressed;
+        TrueIffToggle.OnToggled += args =>
+        {
+            _radar.TrueIff = args.Pressed;
+            if (args.Pressed)
+                _radar.RequestSites(true);
+        };
 
         PlayersToggle.Pressed = _radar.ShowPlayers;
         PlayersToggle.OnToggled += args =>
@@ -58,6 +63,9 @@ public sealed partial class AdminRadarWindow : FancyWindow
             if (args.Pressed)
                 _radar.RequestPlayers(true);
         };
+
+        EncountersToggle.Pressed = RadarScreen.WfShowEncounters = _radar.ShowEncounters;
+        EncountersToggle.OnToggled += args => _radar.ShowEncounters = RadarScreen.WfShowEncounters = args.Pressed;
 
         JumpToggle.OnToggled += args => SetJumpOpen(args.Pressed);
         JumpSearch.OnTextChanged += _ => PopulateJumpList();

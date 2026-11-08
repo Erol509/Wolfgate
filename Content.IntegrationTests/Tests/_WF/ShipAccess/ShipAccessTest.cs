@@ -298,10 +298,11 @@ public sealed class ShipAccessTest
         var map = await pair.CreateTestMap();
         var grid = map.Grid.Owner;
 
-        EntityUid door = default, buyer = default;
+        EntityUid door = default, buyer = default, turbine = default;
         await server.WaitPost(() =>
         {
             door = entMan.SpawnEntity(DoorProto, map.GridCoords);
+            turbine = entMan.SpawnEntity("TurbineUnaffiliatedSmall", map.GridCoords);
             (buyer, _) = SpawnPersonWithCard(entMan, hands, map, "Ada Vance", 1);
             entMan.EnsureComponent<ShuttleDeedComponent>(grid);
             // Mono's own reader, as its purchase sweep leaves it; this module keeps it switched off.
@@ -356,6 +357,12 @@ public sealed class ShipAccessTest
             {
                 foreach (var uid in new[] { door, laterDoor, locker })
                     Assert.That(ReaderLocked(entMan, uid), Is.False, $"Unlocking must restore the reader on {entMan.ToPrettyString(uid)}.");
+
+                // Feedback report 372: a Captain-locked turbine admits the ship's owner on an unlocked ship.
+                var turbineReader = entMan.GetComponent<AccessReaderComponent>(turbine);
+                Assert.That(ReaderLocked(entMan, turbine), Is.False);
+                Assert.That(turbineReader.AccessLists.Single(), Does.Contain(new ProtoId<AccessLevelPrototype>("Captain")));
+                Assert.That(entMan.System<AccessReaderSystem>().IsAllowed(buyer, turbine), Is.True, "The owner's card must open the turbine's lock.");
             });
         });
 

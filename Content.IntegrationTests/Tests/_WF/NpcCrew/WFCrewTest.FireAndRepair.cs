@@ -82,11 +82,16 @@ public sealed partial class WFCrewTest
             var target = targeting.Target(crew, new EntityCoordinates(friendly, new Vector2(3.5f)))!;
             target.Cannons.Add(cannon);
             target.WeaponCheckAccum = 10;
-            targeting.Update(0.01f);
-            Assert.That(SEntMan.TryGetComponent<WFCrewShipFireComponent>(cannon, out var firing), Is.True,
-                "The powered anchored cannon should accept a shot within the projectile's lifetime.");
-            Assert.That(firing!.Crew, Is.EqualTo(crew),
-                "ShipTargeting must preserve the controller when requesting the automatic burst.");
+        });
+
+        // Ships aim every ShipTargetingSystem.WFAimPeriod ticks, so give it real ticks instead of one direct call.
+        await WaitUntil(() => SEntMan.HasComponent<WFCrewShipFireComponent>(cannon), 60,
+            () => "The powered anchored cannon should accept a shot within the projectile's lifetime.");
+        await Server.WaitAssertion(() =>
+        {
+            var targeting = Server.System<ShipTargetingSystem>();
+            Assert.That(SEntMan.GetComponent<WFCrewShipFireComponent>(cannon).Crew, Is.EqualTo(crew),
+                "ShipTargeting must preserve the controller when requesting automatic cannon fire.");
             targeting.Stop(crew);
         });
         await WaitUntil(() =>

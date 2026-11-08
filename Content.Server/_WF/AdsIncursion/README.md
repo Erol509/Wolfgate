@@ -7,8 +7,10 @@ disables what it fights and stops there, and the ADS never claims, contests or c
 (a claim-attempt veto enforces it), so stations stay safe harbours. A threat score (10 a node, 1 a held cell, up to 20
 for held space near the origin) sets a tier from Dormant to Overrun; the sector map shows held cells in purple and a
 legend line with the tier, nodes, cells and node bounty.
-The sector watch announces in three tiers: chimed banners for the big moments, at most one quiet banner per five minutes
-(the rest go on the radio) and routine lines on the Common channel only.
+The sector watch banners only capital moments: a rising tier, the first node and a wake from dormancy, the dreadnought
+and dormancy. Everything else is a line on the Common channel (a falling tier, later nodes and their fall, deployments,
+challenges, kills, retakes); sentinels joining and a challenge turning back say nothing, and an interdicted ship is
+warned aboard only.
 
 The first node, and a regrouped one after the last falls, appear far out (16 to 26 km, three cells from anyone else's
 space). Later ones fly out as deployments from the standing node nearest the chosen cell, the cell shown contested
@@ -17,7 +19,9 @@ Wyrm that flies in from the sector edge and circles it, up to a cap by tier; whe
 after the top attacker and come back three minutes after the last hit. Breaking a node (its lead out of the fight)
 frees its cells and pays `nodeBounty[tier]` times one plus half a sentinel alive, to those who hit it or its sentinels,
 with a fifth for the ships that stood by. A sweep or sentinel killed pays the sweep bounty, and a sweep frees the cell
-it died in. A crewed ship that stays `interdictDwell` in ADS space has the nearest sweep sent to hold beside it and
+it died in. Every spesos bounty is multiplied by the `population` bracket's `bountyScale` and grows by
+`shipBountyScale` for each paid attacking ship past the first, up to `maxShipBountyScale`; each helping ship gets the
+`nodeVoucher` (node, deployment, dreadnought) or `sweepVoucher` (anything else), unless it still holds one. A crewed ship that stays `interdictDwell` in ADS space has the nearest sweep sent to hold beside it and
 query it.
 
 Every ADS zone interrogates (`zoneTargets: Interrogate`, `WFEncounterInterrogationSystem` in `Encounters`): each crewed

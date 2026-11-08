@@ -52,6 +52,9 @@ public sealed partial class CEZLevelsSystem
             if (body.BodyType == BodyType.Static) // Stopped.
                 continue;
 
+            if (!body.Awake) // WOLFGATE(Performance): a sleeping hull has not moved since its last check
+                continue;
+
             if (xform.MapUid is not { } map
                 || !_zMapQuery.HasComp(map) // wall collision only applies on Z levels
                 || !_mapGridQuery.HasComp(map)) // only relevant if the map has a mapgrid
@@ -109,7 +112,12 @@ public sealed partial class CEZLevelsSystem
         }
 
         // Push away from whichever side carries a wall: a wall on +X shoves the hull in -X.
-        var displacement = new Vector2(wallNegX - wallPosX, wallNegY - wallPosY);
+        // WOLFGATE(Planets) START: pinned between walls an axis has no way out; pushing by the difference swaps the overlaps and shakes the hull forever.
+        // var displacement = new Vector2(wallNegX - wallPosX, wallNegY - wallPosY);
+        var displacement = new Vector2(
+            wallNegX > 0f && wallPosX > 0f ? 0f : wallNegX - wallPosX,
+            wallNegY > 0f && wallPosY > 0f ? 0f : wallNegY - wallPosY);
+        // WOLFGATE END
         if (displacement == Vector2.Zero)
             return;
 

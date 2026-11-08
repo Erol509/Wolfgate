@@ -19,6 +19,13 @@ public readonly record struct WFEncounterResolvedEvent(EntityUid Encounter, WFEn
 [ByRefEvent]
 public record struct WFEncounterStationWeightEvent(WFEncounterPrototype Prototype, EntityUid Station, float Weight);
 
+/// <summary>
+/// Raised, by ref and broadcast, for each manifest a run could carry; a subscriber may change the weight, such as to
+/// send what its stops lack.
+/// </summary>
+[ByRefEvent]
+public record struct WFEncounterManifestWeightEvent(WFEncounterManifestPrototype Manifest, IReadOnlyList<EntityUid> Stops, float Weight);
+
 /// <summary>Raised broadcast to ask what the trade cargo aboard a ship is worth; the market answers.</summary>
 [ByRefEvent]
 public record struct WFCargoValueQueryEvent(EntityUid Grid)
@@ -57,3 +64,7 @@ public readonly record struct WFEncounterSimulatedHitEvent(EntityUid Victim, Ent
 /// <summary>Raised, by ref and broadcast, before each marker update goes out; a subscriber may add markers of its own.</summary>
 [ByRefEvent]
 public readonly record struct WFEncounterCollectMarkersEvent(List<WFEncounterMarker> Markers);
+
+/// <summary>Raised when an admin orders an encounter ship to attack something.</summary>
+[ByRefEvent]
+public readonly record struct WFEncounterAdminAttackEvent(EntityUid Encounter, string Key, EntityUid Ship, EntityUid Target);

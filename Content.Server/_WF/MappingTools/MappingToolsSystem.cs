@@ -73,6 +73,9 @@ public sealed partial class MappingToolsSystem : EntitySystem
 
         InitializeHistory();
         InitializeLinks();
+        InitializeThresholds();
+        InitializeWrench();
+        InitializeToggles();
     }
 
     /// <summary>

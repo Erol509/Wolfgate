@@ -19,6 +19,11 @@
   wage: 5000
   account: Frontier
 
+- type: wfStationSalary
+  id: NFJanitor
+  wage: 4500
+  account: Frontier
+
 # Caelestinus medical, Medical account: 65K an hour.
 - type: wfStationSalary
   id: DirectorOfCare
@@ -90,6 +95,11 @@
 - type: wfStationSalary
   id: PDVDenasvar
   wage: 7000
+  account: BlackMarket
+
+- type: wfStationSalary
+  id: WFPdvJarrah
+  wage: 6000
   account: BlackMarket
 
 - type: wfStationSalary

@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 08/25/2026 22:27:38
-  entityCount: 10131
+  entityCount: 10133
 maps: []
 grids:
 - 1
@@ -46378,6 +46378,20 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 13.5,-4.5
       parent: 1
+- proto: WFVendingMachineTraderHalcyon
+  entities:
+  - uid: 10132
+    components:
+    - type: Transform
+      pos: -10.5,-7.5
+      parent: 1
+- proto: WFVendingMachineTsfOutfitter
+  entities:
+  - uid: 10133
+    components:
+    - type: Transform
+      parent: 1
+      pos: 14.5,4.5
 - proto: hydroponicsTray
   entities:
   - uid: 6916

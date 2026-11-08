@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server._NF.Bank;
+using Content.Server._WF.Planets.Flight;
+using Content.Server._WF.TradeGoods.Systems;
 using Content.Server.Cargo.Systems;
 using Content.Server.Destructible;
 using Content.Server.Popups;
@@ -40,6 +42,7 @@ public sealed partial class WFDrydockSystem : EntitySystem
     [Dependency] private IPrototypeManager _prototype = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private Lattice.WFLatticeSystem _lattice = default!;
     [Dependency] private BankSystem _bank = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private SharedMapSystem _map = default!;
@@ -54,6 +57,7 @@ public sealed partial class WFDrydockSystem : EntitySystem
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedMaterialStorageSystem _materials = default!;
     [Dependency] private DestructibleSystem _destructible = default!;
+    [Dependency] private WFTradeMarketSystem _tradeMarket = default!;
 
     /// <summary>Upper bound on ship tiles kept for ambient sparks.</summary>
     private const int MaxSparkTiles = 512;
@@ -73,6 +77,7 @@ public sealed partial class WFDrydockSystem : EntitySystem
         SubscribeLocalEvent<WFDrydockConsoleComponent, BoundUIOpenedEvent>(OnUiOpened);
         SubscribeLocalEvent<WFDrydockConsoleComponent, WFDrydockRepairMessage>(OnRepair);
         SubscribeLocalEvent<WFDrydockConsoleComponent, WFDrydockUpgradeMessage>(OnUpgrade);
+        SubscribeLocalEvent<WFDrydockConsoleComponent, WFDrydockCleanDriftMessage>(OnCleanDrift);
         SubscribeLocalEvent<WFDrydockCraneComponent, MapInitEvent>(OnCraneMapInit);
         SubscribeLocalEvent<WFDrydockCraneComponent, ComponentShutdown>(OnCraneShutdown);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(_ =>
@@ -349,7 +354,8 @@ public sealed partial class WFDrydockSystem : EntitySystem
                 continue;
 
             var total = ent.Comp.TotalDamage;
-            if (total <= FixedPoint2.Zero)
+            var faulted = HasComp<WFCrashApcFaultComponent>(ent);
+            if (total <= FixedPoint2.Zero && !faulted)
                 continue;
 
             // Patching a part costs its rebuild price times the share of its health lost, never more than rebuilding it.
@@ -434,20 +440,24 @@ public sealed partial class WFDrydockSystem : EntitySystem
 
         var entity = Spawn(data.EntityPalette[spec.ProtoIndex].Id, new EntityCoordinates(ship, spec.LocalPosition));
         _transform.SetLocalRotation(entity, spec.Rotation);
-        // Rebuilds spawn stock; reapply the ship's owned refits, which the quote charged for.
+        spec.OriginalEntity = GetNetEntity(entity);
+        Dirty(ship, data);
+        // Rebuilds spawn stock; reapply the ship's owned refits, which the quote charged for. A refit that replaces the
+        // entity, as hull plating does, repoints the spec itself.
         foreach (var (refit, owned) in _refits.Owned(ship))
         {
             _refits.Apply(refit, entity, owned.Tier);
         }
-        spec.OriginalEntity = GetNetEntity(entity);
-        Dirty(ship, data);
     }
 
     private void ApplyHeal(WFDrydockWorkItem item)
     {
-        if (!TryComp<DamageableComponent>(item.Target, out var damageable) ||
-            TerminatingOrDeleted(item.Target) ||
-            damageable.TotalDamage <= FixedPoint2.Zero)
+        if (!TryComp<DamageableComponent>(item.Target, out var damageable) || TerminatingOrDeleted(item.Target))
+            return;
+
+        // A crash-faulted APC has no damage; the repair clears the fault the way a multitool would.
+        RemComp<WFCrashApcFaultComponent>(item.Target);
+        if (damageable.TotalDamage <= FixedPoint2.Zero)
             return;
 
         _damageable.SetAllDamage(item.Target, damageable, FixedPoint2.Zero);
@@ -516,7 +526,7 @@ public sealed partial class WFDrydockSystem : EntitySystem
             $"{s.MissingTiles}/{s.MissingParts}/{s.DamagedParts}/{s.RepairPrice}",
             $"{s.Working}/{s.PowerRatio}/{s.CraneCount}/{s.BlockedCranes}/{s.Deploying}/{s.Progress}/{s.RemainingSeconds}",
             $"{s.Booking}/{s.BookedBerth}/{s.BookingSeconds}/{s.Notice}/{s.PaysWithMaterials}/{s.BerthLightsOn}",
-            $"{s.CanBreak}/{s.Breakable}/{s.Breaking}/{s.BreakOnly}/{s.BreakCash}/{s.BreakWarrant}/{s.BreakRefusal}",
+            $"{s.CanBreak}/{s.Breakable}/{s.Breaking}/{s.BreakOnly}/{s.BreakCash}/{s.BreakWarrant}/{s.BreakRefusal}/{s.CleanDriftPrice}",
             DictKey(s.BreakYield),
             $"{s.Station}/{s.BerthConsole}/{s.BerthLabel}/{s.BerthArea}/{s.Approach}/{s.Ship}/{s.Marks.Count}",
             DictKey(s.RepairMaterials),
@@ -593,9 +603,13 @@ public sealed partial class WFDrydockSystem : EntitySystem
                 }
                 else
                 {
-                    state.RepairPrice = WorkPrice(berthed, comp, null, items);
+                    state.RepairPrice = WorkPrice(console, berthed, comp, null, items);
                 }
             }
+
+            // Credit consoles also clean Drift soaked into a hull by the Coda.
+            if (job == null && chop == null && pay == null)
+                state.CleanDriftPrice = _lattice.CleanDriftQuote(berthed);
         }
 
         if (CanBreak(console, out var breaker))
@@ -694,6 +708,52 @@ public sealed partial class WFDrydockSystem : EntitySystem
             TryStartWork(uid, comp, berthed, args.Actor, args.Upgrade);
     }
 
+    /// <summary>Cleans the Drift soaked into the berthed hull, at once, for the quoted price.</summary>
+    private void OnCleanDrift(EntityUid uid, WFDrydockConsoleComponent comp, WFDrydockCleanDriftMessage args)
+    {
+        if (HasComp<WFDrydockChopShopComponent>(uid) || HasComp<WFDrydockMaterialPaymentComponent>(uid))
+            return;
+
+        // Cleaning needs no cranes and leaves any booking for the berthed ship in place.
+        if (GetBerthedShip(uid, comp) is not { } berthed)
+        {
+            Deny(uid, comp, args.Actor, Loc.GetString("drydock-console-no-ship"));
+            return;
+        }
+
+        if (HasComp<WFDrydockJobComponent>(uid))
+        {
+            Deny(uid, comp, args.Actor, Loc.GetString("drydock-console-busy"));
+            return;
+        }
+
+        if (TryComp<WFDrydockBookingComponent>(uid, out var booking) && booking.Ship != berthed)
+        {
+            Deny(uid, comp, args.Actor, Loc.GetString("drydock-console-reserved", ("berth", BerthLabel(uid, comp)), ("ship", Name(booking.Ship))));
+            return;
+        }
+
+        if (IsShipyardGrid(uid, comp, berthed))
+        {
+            Deny(uid, comp, args.Actor, Loc.GetString("drydock-console-own-grid"));
+            return;
+        }
+
+        var price = _lattice.CleanDriftQuote(berthed);
+        if (price <= 0)
+        {
+            Deny(uid, comp, args.Actor, Loc.GetString("drydock-console-no-drift"));
+            return;
+        }
+
+        if (!TryCharge(uid, comp, args.Actor, price))
+            return;
+
+        _lattice.CleanDrift(berthed);
+        _popup.PopupCursor(Loc.GetString("drydock-console-drift-cleaned", ("price", price.ToString("N0"))), args.Actor);
+        UpdateUi(uid, comp, true);
+    }
+
     /// <summary>Starts a repair on the ship in this berth, paid by the actor.</summary>
     public bool TryStartRepair(EntityUid console, WFDrydockConsoleComponent comp, EntityUid ship, EntityUid actor)
     {
@@ -734,7 +794,7 @@ public sealed partial class WFDrydockSystem : EntitySystem
         if (upgrade == null && TryStartVoucherRepair(console, comp, ship, actor, items))
             return true;
 
-        var price = WorkPrice(ship, comp, upgrade, items);
+        var price = WorkPrice(console, ship, comp, upgrade, items);
         if (!TryCharge(console, comp, actor, price))
             return false;
 

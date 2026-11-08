@@ -69,8 +69,8 @@ window and the Companies tab. A player whose selected character isn't in a compa
 to switch to it.
 
 **Hangar.** The owner buys fleet licences (up to 3) for civilian designs any character may fly, or for the company-only
-Mercenary and Mieyo designs, at 200x the shipyard
-price and at least 20,000,000, from the account; selling one refunds nothing. A member with Launch presses Launch on the
+Mercenary and Mieyo designs, at 35x the shipyard
+price and at least 2,000,000, from the account; selling one refunds nothing. A member with Launch presses Launch on the
 Hangar tab: that creates a Crew Setup ship crew for the design, flying under the company, with the design fixed and no
 crew payment. When the ship actually spawns, the account pays the registry fee (5%, 15% then 30% of the shipyard price
 by how many company ships are already out) and the launching character pays the owner's launch fee into the account;
@@ -78,6 +78,7 @@ a failed spawn refunds both. Each licence launches once per round. The ship gets
 the shipyard refuses to buy it back. The drydock and chop shop refuse to break it, and everything aboard at launch,
 contents included, gets `WFCompanyPropertyComponent` and appraises at nothing (anything put inside it later keeps its
 value), so a free ship each round can't be turned into cash. Server side: `WFCompanySystem.Hangar` and `WFRoundSetupSystem.Hangar`.
+Preview on a licence or beside the licence picker opens the `ShipPreview` window; it follows the picker while open.
 
 **Paying members.** Besides hourly wages, the owner can pay any online member from the Members tab, straight into that
 character's bank, with an optional note; the member gets a chat message and the ledger a Payment row.
@@ -213,6 +214,7 @@ tables via `ServerDbBase.Companies`); it reloads at each round restart once pend
 - [`Content.Server.Database/Model.cs`](../../../Content.Server.Database/Model.cs)
   - player-run companies, their ranks, members and ledger
   - names and tags are unique; a character's membership goes with the character
+  - a company's ship licences
 - [`Content.Server/_Mono/Company/CompanySystem.cs`](../../_Mono/Company/CompanySystem.cs): player companies replace the profile company; jobs still set factions
 - [`Content.Server/_NF/Shipyard/Systems/ShipyardSystem.Consoles.cs`](../../_NF/Shipyard/Systems/ShipyardSystem.Consoles.cs): a member's ship flies under their company
 - [`Content.Server/_NF/Shipyard/Systems/ShipyardSystem.cs`](../../_NF/Shipyard/Systems/ShipyardSystem.cs): company hangar ships belong to the company and can't be sold

@@ -6,8 +6,10 @@ its ring, spread one quiet frontier cell at a time toward the origin, send patro
 3, raids at player ships and stations. A threat score (10 a stronghold, 1 a held cell, up to 20 for held space near
 the origin) sets a tier from None to Overrun; a rise is announced at once, a fall only after ten minutes under the
 threshold. The sector map shows held cells and a legend line with the tier, strongholds, cells and current bounty.
-The sector watch announces in three tiers: chimed banners for the big moments, at most one quiet banner per five minutes
-(the rest go on the radio) and routine lines on the Common channel only.
+The sector watch banners only capital moments: a rising tier, the first stronghold and a regroup, the citadel setting out,
+raised and fallen, and the defeat. Everything else is a line on the Common channel (a falling tier, later strongholds and
+their fall, convoys, blockades, kills, retakes); reinforcements, growth, funding and response packs say nothing, and a
+ship a patrol or raid turns on is warned aboard only.
 A cell where a campaign ship and a crewed player ship meet is disputed: the map hatches it, and the stronghold's
 reinforcement clock, the convoy and reinforcement deadlines there hold until one side leaves or dies; spread skips it.
 Campaign crews fire on sight (`WFCrewOnSightComponent` on every campaign hull, set in `SpawnEncounter`): any faction
@@ -67,7 +69,8 @@ paid to everyone who hit it, with a fifth for the ships that stood by the assaul
 died in is freed and a smaller bounty paid; each navy's members also get its own faction credits, from the campaign's
 `credits` list, and each player ship that helped break a stronghold or convoy, or destroy a patrol or reinforcement,
 gets the campaign's `strongholdVoucher` or `patrolVoucher`, a `WFDrydockRepairVoucher` bound to that ship, unless it
-still holds one), and flying lanes: only quiet cells are taken, and a station's cell is
+still holds one; every spesos bounty grows by `shipBountyScale` for each paid attacking ship past the first, up to
+`maxShipBountyScale`, so a bigger group doesn't thin every share), and flying lanes: only quiet cells are taken, and a station's cell is
 contested for ten minutes, announced as a blockade, before it falls. Each storyteller preset has its own
 `wfReaverCampaign` (`Resources/Prototypes/_WF/ReaverCampaign/campaigns.yml`) with the pace, caps, tier ladder,
 bounties and encounter prototypes; a preset with none runs no campaign. It runs only while `wf.encounters.enabled`,
@@ -121,8 +124,9 @@ and counted for the round summary. `wf_reavers respond <q> <r>` sends one by han
 Smuggling funds the Reavers (`.Funding`). Each smuggling crate (the market's `contrabandGoods`) sold at an open chute,
 and each crate of NPC freight (a manifest seal) fenced at a `sealedOnlyChutes` chute (the Underground fence), banks
 toward a war chest; every `fundingCrates` (5) pays out, bringing every stronghold's next reinforcement and the next
-spread forward by `fundingShare` (a quarter) of their intervals, announced as a routine radio line. The chest holds one
-payout at most and spends it once a stronghold stands and the campaign isn't held; `wf_reavers status` shows it.
+spread forward by `fundingShare` (a quarter) of their intervals, unannounced. The chest holds one
+payout at most and spends it once a stronghold stands, the campaign isn't held and `fundingCooldown` (20 minutes) has
+passed since the last payout; `wf_reavers status` shows it.
 
 Ship raids favour laden ships (up to three times the weight for a hold worth 100,000, through
 `WFCargoValueQueryEvent`), and `RecentlyRaided` tells the market which stations a raid was just sent at.

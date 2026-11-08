@@ -60,8 +60,10 @@
     clothingVisuals:
       outerClothing:
       - state: equipped-OUTERCLOTHING-sealed
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-sealed-vox
+      # WOLFGATE START: the rsi has no sealed vox state, so sealed Vox drew an error sprite
+      # outerClothing-vox:
+      # - state: equipped-OUTERCLOTHING-sealed-vox
+      # WOLFGATE END
   - type: ComponentToggler
     components:
     - type: PressureProtection
@@ -92,8 +94,10 @@
     clothingVisuals:
       outerClothing:
       - state: equipped-OUTERCLOTHING-sealed
-      outerClothing-vox:
-      - state: equipped-OUTERCLOTHING-sealed-vox
+      # WOLFGATE START: the rsi has no sealed vox state, so sealed Vox drew an error sprite
+      # outerClothing-vox:
+      # - state: equipped-OUTERCLOTHING-sealed-vox
+      # WOLFGATE END
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1

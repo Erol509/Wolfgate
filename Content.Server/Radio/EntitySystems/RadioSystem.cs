@@ -161,6 +161,9 @@ public sealed partial class RadioSystem : EntitySystem
             ? FormattedMessage.EscapeText(message)
             : message;
 
+        // WOLFGATE(ChatFormatting): emphasis delimiters convert to BBCode after escape (so ~ replacement doesn't corrupt tags)
+        content = ChatSystem.ConvertCustomEmphasisToBBCode(content);
+
         // Frontier: append frequency if the channel requests it
         string channelText;
         if (channel.ShowFrequency)
@@ -193,6 +196,8 @@ public sealed partial class RadioSystem : EntitySystem
 
         // Einstein Engines - Language begin
         var obfuscated = _language.ObfuscateSpeech(content, language);
+        // WOLFGATE(ChatFormatting): emphasis delimiters convert to BBCode after obfuscation
+        obfuscated = ChatSystem.ConvertCustomEmphasisToBBCode(obfuscated);
         var obfuscatedWrapped = WrapRadioMessage(messageSource, channel, name, obfuscated, language);
         var notUdsMsg = new ChatMessage(ChatChannel.Radio, obfuscated, obfuscatedWrapped, NetEntity.Invalid, null);
         var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource);
@@ -211,7 +216,11 @@ public sealed partial class RadioSystem : EntitySystem
         var canSend = !sendAttemptEv.Cancelled;
 
         var sourceMapId = Transform(radioSource).MapID;
-        var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
+        // WOLFGATE(PlanetComms) START: planets have no telecom server; a working mass transceiver relays instead
+        // var hasActiveServer = HasActiveServer(sourceMapId, channel.ID);
+        var hasActiveServer = HasActiveServer(sourceMapId, channel.ID)
+            || EntityManager.System<Content.Server._WF.PlanetComms.WFPlanetCommsSystem>().RelaysTelecom(radioSource);
+        // WOLFGATE END
         var sourceServerExempt = _exemptQuery.HasComp(radioSource);
 
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();

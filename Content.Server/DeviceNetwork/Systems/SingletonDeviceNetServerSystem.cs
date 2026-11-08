@@ -28,7 +28,10 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
     /// </summary>
     public bool IsActiveServer(EntityUid serverId, SingletonDeviceNetServerComponent? serverComponent = default)
     {
-        return Resolve(serverId, ref serverComponent) && serverComponent.Active;
+        // WOLFGATE START: Active defaults to true, so every server built broadcast its list before it was ever chosen
+        // return Resolve(serverId, ref serverComponent) && serverComponent.Active;
+        return Resolve(serverId, ref serverComponent) && serverComponent.Active && _deviceNetworkSystem.IsDeviceConnected(serverId, null);
+        // WOLFGATE END
     }
 
     /// <summary>
@@ -56,8 +59,11 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
         {
             // Frontier PR 1053 QoL tweaks to displayed coordinates
             //if (!_stationSystem.GetOwningStation(uid)?.Equals(stationId) ?? true)
-            if (xform.MapID != map) //Frontier
-                continue;
+            // WOLFGATE START: one active server per server type, since a second map's broadcast overwrote every console's list
+            // Consoles have no range or map filter. A new server is only taken when none is active, from the asking map first.
+            // if (xform.MapID != map) //Frontier
+            //     continue;
+            // WOLFGATE END
 
             if (!server.Available)
             {
@@ -65,7 +71,11 @@ public sealed partial class SingletonDeviceNetServerSystem : EntitySystem
                 continue;
             }
 
-            last = (uid, server, device);
+            // WOLFGATE START: one active server per server type, from the asking map first
+            // last = (uid, server, device);
+            if (last == null || xform.MapID == map)
+                last = (uid, server, device);
+            // WOLFGATE END
 
             if (!server.Active || string.IsNullOrEmpty(device.Address))
                 continue;

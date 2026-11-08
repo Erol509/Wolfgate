@@ -141,6 +141,9 @@ public sealed partial class ShuttleConsoleSystem
         if (shuttleComp.Enabled == false)
             return;
 
+        if (WfRefuseDisruptedFtl(shuttleUid.Value, ent.Owner, wfActor)) // WOLFGATE(BoardingAction): CanFTL's reason never reaches the pilot, so a held ship says why here.
+            return;
+
         // Check shuttle can even FTL
         if (!_shuttle.CanFTL(shuttleUid.Value, out var reason))
         {
@@ -158,14 +161,20 @@ public sealed partial class ShuttleConsoleSystem
         var wfDrive = _shuttle.GetFtlDriveStatus(shuttleUid.Value);
         if (wfDrive != WFFtlDriveStatus.Ready)
         {
-            _popup.PopupEntity(Loc.GetString(wfDrive == WFFtlDriveStatus.Missing
-                ? "shuttle-console-no-powered-ftl-drive"
-                : "shuttle-console-ftl-drive-unpowered"), ent.Owner, wfActor, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString(wfDrive switch
+            {
+                WFFtlDriveStatus.Missing => "shuttle-console-no-powered-ftl-drive",
+                WFFtlDriveStatus.Unmoored => "wf-lattice-ftl-dead", // WOLFGATE(Lattice): drives don't work past the Lattice's hold
+                _ => "shuttle-console-ftl-drive-unpowered",
+            }), ent.Owner, wfActor, PopupType.Medium);
             return;
         }
         // WOLFGATE END
 
         targetCoordinates = _shuttle.ClampCoordinatesToFTLRange(shuttleUid.Value, targetCoordinates);
+
+        if (WfRefuseLatticeTarget(targetCoordinates, ent.Owner, wfActor)) // WOLFGATE(Lattice): no jumping into a band where drives die
+            return;
 
         List<ShuttleExclusionObject>? exclusions = null;
         GetExclusions(ref exclusions);

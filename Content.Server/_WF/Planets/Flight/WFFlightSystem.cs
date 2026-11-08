@@ -50,6 +50,9 @@ public sealed partial class WFFlightSystem : EntitySystem
     /// <summary>The bottom gap, last seconds; the one callout that repeats.</summary>
     public const string AlertPullUp = "WFAlertPullUp";
 
+    /// <summary>Smallest lift-ratio change worth networking.</summary>
+    private const float LiftRatioStep = 0.02f;
+
     /// <summary>Fraction of planar speed a gliding hull gains per layer fallen, compounded.</summary>
     public const float GlideGainPerLayer = 0.25f;
 
@@ -67,6 +70,16 @@ public sealed partial class WFFlightSystem : EntitySystem
 
     /// <summary>Lift-lost alarm volume (dB), kept under the callouts.</summary>
     public const float AlarmVolume = -6f;
+
+    /// <summary>Takeoff volume (dB); the clip is mastered at -14 LUFS.</summary>
+    public const float TakeoffVolume = 0f;
+
+    /// <summary>Hard-landing thud volume (dB) aboard the hull.</summary>
+    public const float HardLandingVolume = 0f;
+
+    /// <summary>Volume (dB) of the rock-contact impacts and the grind loop while a hull skids.</summary>
+    public const float SkidImpactVolume = -3f;
+    public const float SkidGrindVolume = -4f;
 
     /// <summary>Caution alarm looped while lift is lost.</summary>
     public static readonly SoundSpecifier LiftLostLoop =
@@ -149,8 +162,7 @@ public sealed partial class WFFlightSystem : EntitySystem
 
         if (TryComp<WFLiftLostComponent>(grid, out var existing))
         {
-            existing.Ratio = ratio;
-            Dirty(grid, existing);
+            SetLiftRatio(grid, existing, ratio);
             return;
         }
 
@@ -215,7 +227,8 @@ public sealed partial class WFFlightSystem : EntitySystem
 
         var centre = _transform.ToMapCoordinates(new EntityCoordinates(grid, hull.LocalAABB.Center));
         var radius = hull.LocalAABB.Size.Length() * 0.5f + 32f;
-        _audio.PlayGlobal(TakeoffSound, _audience.Aboard(grid).AddInRange(centre, radius), true);
+        _audio.PlayGlobal(TakeoffSound, _audience.Aboard(grid).AddInRange(centre, radius), true,
+            AudioParams.Default.WithVolume(TakeoffVolume));
     }
 
     /// <summary>Starts a hard-landing skid; <paramref name="thud"/> is false after a crash.</summary>
@@ -233,10 +246,20 @@ public sealed partial class WFFlightSystem : EntitySystem
             var centre = _transform.ToMapCoordinates(new EntityCoordinates(grid, hull.LocalAABB.Center));
             var radius = hull.LocalAABB.Size.Length() * 0.5f + 32f;
             _audio.PlayGlobal(HardLandingSound, _audience.Aboard(grid).AddInRange(centre, radius),
-                true, AudioParams.Default.WithVolume(8f));
+                true, AudioParams.Default.WithVolume(HardLandingVolume));
         }
 
         // The grind loop is started per section by the moving-ground sweep.
+    }
+
+    /// <summary>Stores the ratio and networks it only when it moved by a visible step, so a hull falling steadily is not dirtied every tick.</summary>
+    private void SetLiftRatio(EntityUid grid, WFLiftLostComponent comp, float ratio)
+    {
+        if (comp.Ratio.Equals(ratio) || MathF.Abs(comp.Ratio - ratio) < LiftRatioStep)
+            return;
+
+        comp.Ratio = ratio;
+        Dirty(grid, comp);
     }
 
     /// <summary>Advances callouts and glide for falling hulls and ends lift-lost on recovery or arrival.</summary>
@@ -257,8 +280,7 @@ public sealed partial class WFFlightSystem : EntitySystem
 
             if (_zLevels.WfTryGetLiftRatio(grid, out var ratio))
             {
-                comp.Ratio = ratio;
-                Dirty(grid, comp);
+                SetLiftRatio(grid, comp, ratio);
 
                 if (ratio >= CEZLevelsSystem.WFFullLiftRatio)
                 {

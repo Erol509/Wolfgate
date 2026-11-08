@@ -28,6 +28,9 @@
         description: "The closest thing to civilization in this sector. You almost feel safe."
       - type: DeleteNearbyDrones
         distance: 4000
+      # WOLFGATE(TradeGoods): names the station for its role in the sector economy
+      - type: WFTradeStation
+        id: Frontier
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Caelestinus Central'
@@ -55,7 +58,7 @@
             #StationTrafficController: [ 2, 2 ]
             SecurityGuard: [ 3, 3 ]
             CCServiceWorker: [ 4, 4 ]
-            #NFJanitor: [ 2, 2 ]
+            NFJanitor: [ 2, 2 ] # WOLFGATE(Janitorial): janitors are back on Caelestinus
             #MailCarrier: [ 2, 2 ]
             DirectorOfCare: [ 1, 1 ]
             MdMedic: [ -1, -1 ]

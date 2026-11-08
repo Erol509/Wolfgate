@@ -47,6 +47,11 @@ public sealed partial class ShuttleConsoleWindow
     public event Action<ShipPaPlaylistAction, int>? ShipPlaylistRequested;
 
     /// <summary>
+    /// The pilot set the PA volume, as a fraction of full volume.
+    /// </summary>
+    public event Action<float>? ShipVolumeRequested;
+
+    /// <summary>
     /// The pilot switched the collision warning on or off.
     /// </summary>
     public event Action<bool>? ShipCollisionAlertRequested;
@@ -64,6 +69,7 @@ public sealed partial class ShuttleConsoleWindow
 
     private void WfInitialize()
     {
+        NavContainer.WfEnableWaypoints();
         ShipContainer.CodeRequested += code => ShipCodeRequested?.Invoke(code);
         ShipContainer.GeneralQuartersRequested += active => ShipGeneralQuartersRequested?.Invoke(active);
         ShipContainer.DistressRequested += active => ShipDistressRequested?.Invoke(active);
@@ -71,6 +77,7 @@ public sealed partial class ShuttleConsoleWindow
         ShipContainer.SoundRequested += url => ShipSoundRequested?.Invoke(url);
         ShipContainer.SoundStopRequested += () => ShipSoundStopRequested?.Invoke();
         ShipContainer.PlaylistRequested += (action, id) => ShipPlaylistRequested?.Invoke(action, id);
+        ShipContainer.VolumeRequested += volume => ShipVolumeRequested?.Invoke(volume);
         ShipContainer.CollisionAlertRequested += enabled => ShipCollisionAlertRequested?.Invoke(enabled);
         CameraBar.CameraRequested += (view, zoom, lowLight) => ShipCameraRequested?.Invoke(view, zoom, lowLight);
 

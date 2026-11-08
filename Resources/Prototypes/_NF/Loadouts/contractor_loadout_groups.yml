@@ -1241,6 +1241,7 @@
   - ContractorClothingEyesHudDiagnostic
   - ContractorClothingEyesGlassesMeson
   - ContractorClothingEyesHudMedical
+  - ContractorClothingEyesPGlassesMedical # Mono
   - ContractorClothingEyesPunkGoggles # Punkish (Randomized visuals)
   - ContractorClothingEyesPunkInfoShades # Punkish (Randomized visuals)
   - ContractorClothingEyesEyepatchHudDiag
@@ -1289,6 +1290,7 @@
   - ContractorHarmonicaInstrument
   - ContractorSaxophoneInstrument
   - ContractorAcousticGuitarInstrument
+  - WFBoombox # WOLFGATE(Boombox): portable internet speaker.
   - ContractorCane
   - ContractorLGBTQHandyFlag
   #- ContractorNTHandyFlag

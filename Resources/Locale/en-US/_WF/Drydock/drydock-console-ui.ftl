@@ -99,7 +99,13 @@ drydock-upgrade-power = Power systems
 drydock-upgrade-landing-thrusters = Atmospheric thrusters
 drydock-upgrade-landing-thrusters-mark = for atmosphere
 drydock-upgrade-landing-thrusters-lamp = ATMO
+drydock-upgrade-durasteel = Durasteel plating
+drydock-upgrade-durasteel-mark = with durasteel
+drydock-upgrade-durasteel-lamp = DURA
 
 drydock-console-materials-none = none
 drydock-console-material-amount = { $name } { $sheets }
 drydock-console-part-amount = { $name } ×{ $count }
+drydock-ui-clean-drift = Clean Drift ({$price} thlr)
+drydock-console-no-drift = No Drift has soaked into this hull.
+drydock-console-drift-cleaned = Hull scrubbed clean of Drift for {$price} thlr.

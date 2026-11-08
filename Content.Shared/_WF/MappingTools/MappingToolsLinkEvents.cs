@@ -12,6 +12,41 @@ public sealed class MappingToolsLinkEvent(NetEntity source, NetEntity sink, List
     public readonly List<(string Source, string Sink)> Links = links;
 }
 
+/// <summary>Anchors or unanchors an entity, as a wrench would.</summary>
+[Serializable, NetSerializable]
+public sealed class MappingToolsWrenchEvent(NetEntity target) : EntityEventArgs
+{
+    public readonly NetEntity Target = target;
+}
+
+/// <summary>A state Tool mode flips on an entity, as the tool would without the wait.</summary>
+[Serializable, NetSerializable]
+public enum MappingToggle : byte
+{
+    /// <summary>A door's bolts.</summary>
+    Bolts,
+
+    /// <summary>A door, vent, scrubber or locker welded shut.</summary>
+    Weld,
+
+    /// <summary>A locker, crate or machine lock.</summary>
+    Lock,
+
+    /// <summary>A maintenance panel.</summary>
+    Panel,
+
+    /// <summary>A door open or closed.</summary>
+    Door,
+}
+
+/// <summary>Flips one <see cref="MappingToggle"/> state on an entity.</summary>
+[Serializable, NetSerializable]
+public sealed class MappingToolsToggleEvent(NetEntity target, MappingToggle toggle) : EntityEventArgs
+{
+    public readonly NetEntity Target = target;
+    public readonly MappingToggle Toggle = toggle;
+}
+
 /// <summary>Asks for the ports of a source and a sink and the links between them.</summary>
 [Serializable, NetSerializable]
 public sealed class MappingToolsLinkPortsRequestEvent(NetEntity source, NetEntity sink) : EntityEventArgs

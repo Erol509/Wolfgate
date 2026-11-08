@@ -72,7 +72,7 @@ public abstract partial class SharedLayingDownSystem : EntitySystem
             return;
         }
 
-        RaiseNetworkEvent(new CheckAutoGetUpEvent(GetNetEntity(uid)));
+        RaiseNetworkEvent(new CheckAutoGetUpEvent(GetNetEntity(uid)), Filter.Pvs(uid, entityManager: EntityManager)); // WOLFGATE(Performance): only viewers of the body need it
 
         if (HasComp<KnockedDownComponent>(uid) || !_mobState.IsAlive(uid))
             return;
@@ -173,7 +173,10 @@ public abstract partial class SharedLayingDownSystem : EntitySystem
     // Mono
     private bool CanLieDown(EntityUid uid)
     {
-        return _gravity.EntityOnGravitySupportingGridOrMap(uid);
+        // WOLFGATE(Wolfmed) START: surgery needs the patient down, and a ship that lost gravity still has casualties
+        // return _gravity.EntityOnGravitySupportingGridOrMap(uid);
+        return true;
+        // WOLFGATE END
     }
 }
 

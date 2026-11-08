@@ -54,13 +54,13 @@ public sealed class CargoReadoutTest
     }
 
     /// <summary>Tonnes that leave a grid of this hull with <paramref name="factor"/> of its thrust.</summary>
-    private static float LoadFor(IEntityManager entMan, EntityUid grid, float factor)
+    private static float LoadFor(IEntityManager entMan, WFCargoLoadPrototype profile, EntityUid grid, float factor)
     {
         var hull = entMan.GetComponent<PhysicsComponent>(grid).FixturesMass;
-        return hull * (1f - factor) / factor;
+        return hull * (1f - factor) / factor + hull * profile.FreeLoad;
     }
 
-    /// <summary>Cargo adds SpoolPerTonne seconds a tonne up to SpoolCap, and nothing to a drive mass doesn't affect.</summary>
+    /// <summary>Cargo spools FTL in step with its thrust cut, up to SpoolCap, and adds nothing to a drive mass doesn't affect.</summary>
     [Test]
     public async Task SpoolPenaltyScalesWithLoadUpToCap()
     {
@@ -86,9 +86,14 @@ public sealed class CargoReadoutTest
         await server.WaitAssertion(() =>
         {
             Assert.That(cargo.GetLoad(ship), Is.EqualTo(tonnes).Within(0.01f));
-            Assert.That(profile.SpoolPerTonne * tonnes, Is.LessThan(profile.SpoolCap), "The test load should sit under the cap.");
-            Assert.That(cargo.SpoolPenalty(ship, new FTLDriveComponent()),
-                Is.EqualTo(System.Math.Min(profile.SpoolCap, profile.SpoolPerTonne * tonnes)).Within(0.001f));
+            var hull = entMan.GetComponent<PhysicsComponent>(ship).FixturesMass;
+            var spool = WFCargoLoadSystem.SpoolSeconds(profile, hull, tonnes);
+            Assert.That(spool, Is.GreaterThan(0f).And.LessThan(profile.SpoolCap), "The test load should sit under the cap.");
+            Assert.That(cargo.SpoolPenalty(ship, new FTLDriveComponent()), Is.EqualTo(spool).Within(0.001f));
+            Assert.That(WFCargoLoadSystem.SpoolSeconds(profile, hull, hull * profile.FreeLoad), Is.EqualTo(0f),
+                "The free allowance adds no spool.");
+            Assert.That(WFCargoLoadSystem.SpoolSeconds(profile, hull * 10f, tonnes), Is.LessThan(spool),
+                "The same load spools a bigger hull less.");
             Assert.That(cargo.SpoolPenalty(ship, new FTLDriveComponent { MassAffectedDrive = false }), Is.EqualTo(0f),
                 "A drive mass doesn't affect gets no cargo spool.");
 
@@ -145,7 +150,7 @@ public sealed class CargoReadoutTest
         // Moves the ship to a factor, sweeps, and checks the bands told.
         async Task Step(float factor, int[] told, string because)
         {
-            await server.WaitPost(() => SetTonnes(entMan, profile, ballast, LoadFor(entMan, ship, factor)));
+            await server.WaitPost(() => SetTonnes(entMan, profile, ballast, LoadFor(entMan, profile, ship, factor)));
             await pair.RunTicksSync(90);
             await server.WaitAssertion(() =>
             {
@@ -331,14 +336,14 @@ public sealed class CargoReadoutTest
         await Step(() =>
         {
             ballast = entMan.SpawnEntity(Ballast, new EntityCoordinates(ship, 2.5f, 2.5f));
-            SetTonnes(entMan, profile, ballast, LoadFor(entMan, ship, below));
+            SetTonnes(entMan, profile, ballast, LoadFor(entMan, profile, ship, below));
         }, 1, 0, "Crossing every band in one sweep warns once.");
 
         await server.WaitPost(() => consoles.RemovePilot(pilot));
         await pair.RunTicksSync(90);
         await Step(Board, 1, 0, "Taking a loaded helm gives the standing warning once.");
 
-        await Step(() => SetTonnes(entMan, profile, ballast, LoadFor(entMan, ship, clear)), 0, 1,
+        await Step(() => SetTonnes(entMan, profile, ballast, LoadFor(entMan, profile, ship, clear)), 0, 1,
             "Climbing back past every band in one sweep tells the pilot once.");
 
         await server.WaitPost(() =>
@@ -388,7 +393,7 @@ public sealed class CargoReadoutTest
             Assert.That(empty, Is.GreaterThan(0f));
 
             var ballast = entMan.SpawnEntity(Ballast, new EntityCoordinates(ship, 2.5f, 2.5f));
-            SetTonnes(entMan, profile, ballast, LoadFor(entMan, ship, 0.7f));
+            SetTonnes(entMan, profile, ballast, LoadFor(entMan, profile, ship, 0.7f));
         });
 
         await pair.RunTicksSync(90);

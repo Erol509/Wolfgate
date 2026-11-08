@@ -74,8 +74,12 @@ public sealed partial class WoundBleedingSystem
             bleeding.BleedingSeverity = FixedPoint2.Max(FixedPoint2.Zero, bleeding.BleedingSeverity - wanted);
             modified = true;
 
+            if (WFRemoveStoppedSystemicBleed((uid, core), bleeding))
+            {
+                remaining -= before;
+            }
             // Stopped with nothing on it, the bleed goes, as clotting leaves it; a dressed one keeps its dressing.
-            if (bleeding.BleedingSeverity == FixedPoint2.Zero && bleeding.Treatment == BleedingTreatment.None)
+            else if (bleeding.BleedingSeverity == FixedPoint2.Zero && bleeding.Treatment == BleedingTreatment.None)
             {
                 RemComp<WoundBleedingComponent>(uid);
                 RefreshBodyForPart(core.HoldingPart);
@@ -93,6 +97,19 @@ public sealed partial class WoundBleedingSystem
 
         return modified;
     }
+
+    /// <summary>
+    /// A systemic bleed is nothing but its bleeding: it has no damage to heal and no rate for the surgery to find,
+    /// so once the blood stops the wound goes with it.
+    /// </summary>
+    private bool WFRemoveStoppedSystemicBleed(Entity<WoundComponent> wound, WoundBleedingComponent bleeding) =>
+        wound.Comp.Prototype == SystemicBleedingWound && bleeding.BleedingSeverity == FixedPoint2.Zero &&
+        _wounds.RemoveWound((wound.Owner, wound.Comp));
+
+    /// <summary>The same for a systemic bleed that automatic clotting has stopped.</summary>
+    private bool WFRemoveClottedSystemicBleed(EntityUid uid, WoundBleedingComponent bleeding, WoundComponent wound) =>
+        wound.Prototype == SystemicBleedingWound && bleeding.NaturalClotting > 0f &&
+        bleeding.NaturalClotting >= bleeding.BaseRate && _wounds.RemoveWound((uid, wound));
 
     /// <summary>Whether a topical's bloodloss modifier is allowed to eat this wound's bleeding severity.</summary>
     private bool AllowsTopicalBleedReduction(Entity<WoundComponent> wound) =>

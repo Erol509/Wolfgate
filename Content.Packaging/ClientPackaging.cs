@@ -78,7 +78,25 @@ public static class ClientPackaging
             new[] { "Content.Client", "Content.Shared", "Content.Shared.Database" },
             cancel: cancel);
 
-        await RobustClientPackaging.WriteClientResources(contentDir, inputPass, cancel);
+        // WOLFGATE(GameHub): game data under GameData reaches players through the in-game download
+        await RobustClientPackaging.WriteClientResources(contentDir, inputPass, new HashSet<string> { "GameData" }, cancel);
+
+        // WOLFGATE START: ship the licence texts and legal notes in the client zip
+        foreach (var licenseFile in new[]
+                 {
+                     "LICENSES/AGPL-3.0-or-later.txt",
+                     "LICENSES/LicenseRef-Starlight.txt",
+                     "LICENSES/MIT.txt",
+                     "LICENSES/MPL-2.0.txt",
+                     "LEGAL.md",
+                     "README.md",
+                 })
+        {
+            var fullPath = Path.Combine(contentDir, licenseFile);
+            if (File.Exists(fullPath))
+                inputPass.InjectFileFromDisk(licenseFile, fullPath);
+        }
+        // WOLFGATE END
 
         inputPass.InjectFinished();
     }

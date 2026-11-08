@@ -1,3 +1,14 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2024 Checkraze
+// SPDX-FileCopyrightText: 2024 Whatstone
+// SPDX-FileCopyrightText: 2024 checkraze
+// SPDX-FileCopyrightText: 2025 Ark
+// SPDX-FileCopyrightText: 2025 Dvir
+// SPDX-FileCopyrightText: 2025 Redrover1760
+// SPDX-FileCopyrightText: 2025 ark1368
+//
+// SPDX-License-Identifier: MPL-2.0
+
 using System.Threading;
 using Content.Server._Mono.MonoCoins;
 using Content.Server.Database;
@@ -265,6 +276,7 @@ public sealed partial class BankSystem : SharedBankSystem
             return false;
         }
         _prefsManager.SetProfile(session.UserId, index, newProfile);
+        _prefsManager.ResendPreferences(session.UserId); // WOLFGATE(Feedback): the in-round creator shows the deposit; withdrawals are too frequent to push
         // Update any active admin UI with new balance
         RaiseLocalEvent(new BalanceChangedEvent(session, newBalance.Value));
         return true;

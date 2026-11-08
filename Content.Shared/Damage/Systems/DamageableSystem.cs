@@ -1,3 +1,37 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2021 20kdc
+// SPDX-FileCopyrightText: 2021 Acruid
+// SPDX-FileCopyrightText: 2021 DrSmugleaf
+// SPDX-FileCopyrightText: 2021 Javier Guardia Fernández
+// SPDX-FileCopyrightText: 2021 Vera Aguilera Puerto
+// SPDX-FileCopyrightText: 2022 Alex Evgrashin
+// SPDX-FileCopyrightText: 2022 CommieFlowers
+// SPDX-FileCopyrightText: 2022 EmoGarbage404
+// SPDX-FileCopyrightText: 2022 Flipp Syder
+// SPDX-FileCopyrightText: 2022 Paul Ritter
+// SPDX-FileCopyrightText: 2022 Rane
+// SPDX-FileCopyrightText: 2022 ShadowCommander
+// SPDX-FileCopyrightText: 2022 Visne
+// SPDX-FileCopyrightText: 2022 mirrorcult
+// SPDX-FileCopyrightText: 2022 rolfero
+// SPDX-FileCopyrightText: 2022 wrexbe
+// SPDX-FileCopyrightText: 2023 Jezithyr
+// SPDX-FileCopyrightText: 2023 Kara
+// SPDX-FileCopyrightText: 2023 Leon Friedrich
+// SPDX-FileCopyrightText: 2023 Nemanja
+// SPDX-FileCopyrightText: 2023 PixelTK
+// SPDX-FileCopyrightText: 2023 Slava0135
+// SPDX-FileCopyrightText: 2023 deltanedas
+// SPDX-FileCopyrightText: 2023 metalgearsloth
+// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers
+// SPDX-FileCopyrightText: 2025 ActiveMammmoth
+// SPDX-FileCopyrightText: 2025 Ark
+// SPDX-FileCopyrightText: 2025 SlamBamActionman
+// SPDX-FileCopyrightText: 2025 ark1368
+// SPDX-FileCopyrightText: 2025 starch
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 using Content.Shared._FarHorizons.Damage; // WOLFGATE(Species)
 using Content.Shared._Shitmed.Targeting;
 // Shitmed Change
@@ -112,6 +146,15 @@ namespace Content.Shared.Damage
             {
                 // Initialize damage dictionary, using the types and groups from the damage
                 // container prototype
+                // WOLFGATE(Performance) START: size the dictionary once instead of growing it from empty on every spawn
+                var wfCapacity = damageContainerPrototype.SupportedTypes.Count;
+                foreach (var groupId in damageContainerPrototype.SupportedGroups)
+                {
+                    wfCapacity += _prototypeManager.Index<DamageGroupPrototype>(groupId).DamageTypes.Count;
+                }
+
+                component.Damage.DamageDict.EnsureCapacity(wfCapacity);
+                // WOLFGATE END
                 foreach (var type in damageContainerPrototype.SupportedTypes)
                 {
                     component.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
@@ -129,6 +172,7 @@ namespace Content.Shared.Damage
             else
             {
                 // No DamageContainerPrototype was given. So we will allow the container to support all damage types
+                component.Damage.DamageDict.EnsureCapacity(_prototypeManager.Count<DamageTypePrototype>()); // WOLFGATE(Performance): size once
                 foreach (var type in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
                 {
                     component.Damage.DamageDict.TryAdd(type.ID, FixedPoint2.Zero);

@@ -98,6 +98,14 @@ public sealed partial class WFReaverCampaignPrototype : IPrototype
     [DataField]
     public int PatrolBounty = 20000;
 
+    /// <summary>What a bounty grows by for each paid attacking ship past the first.</summary>
+    [DataField]
+    public float ShipBountyScale = 0.5f;
+
+    /// <summary>The most the ship count may multiply a bounty by.</summary>
+    [DataField]
+    public float MaxShipBountyScale = 2.5f;
+
     /// <summary>The repair voucher each ship that helps break a stronghold or convoy gets, bound to that ship.</summary>
     [DataField]
     public EntProtoId? StrongholdVoucher;
@@ -133,6 +141,10 @@ public sealed partial class WFReaverCampaignPrototype : IPrototype
     /// <summary>Share of the reinforcement and spread intervals a funding payout takes off every stronghold's next reinforcement and the next spread.</summary>
     [DataField]
     public float FundingShare = 0.25f;
+
+    /// <summary>Shortest time between funding payouts; crates sold meanwhile wait in the full war chest.</summary>
+    [DataField]
+    public TimeSpan FundingCooldown = TimeSpan.FromMinutes(20);
 
     /// <summary>The highest stronghold level reinforcements bring it to, by tier.</summary>
     [DataField]

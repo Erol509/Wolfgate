@@ -81,6 +81,9 @@ namespace Content.Server.Construction
                     if (!containerSlot.ContainedEntity.HasValue)
                         continue;
 
+                    if (containerSlot.ID == "jumpsuit") // WOLFGATE(Wolfmed): crafting tore the jumpsuit off the crafter's back
+                        continue;
+
                     if (EntityManager.TryGetComponent(containerSlot.ContainedEntity.Value, out StorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.Container.ContainedEntities)
@@ -99,6 +102,8 @@ namespace Content.Server.Construction
             foreach (var near in _lookupSystem.GetEntitiesInRange(pos, ConstructGrabRange, LookupFlags.Contained | LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate))
             {
                 if (near == user)
+                    continue;
+                if (_inventorySystem.TryGetSlotEntity(user, "jumpsuit", out var wornJumpsuit) && near == wornJumpsuit) // WOLFGATE(Wolfmed): crafting tore the jumpsuit off the crafter's back
                     continue;
                 if (_interactionSystem.InRangeUnobstructed(pos, near, ConstructGrabRange) && _container.IsInSameOrParentContainer(user, near))
                     yield return near;

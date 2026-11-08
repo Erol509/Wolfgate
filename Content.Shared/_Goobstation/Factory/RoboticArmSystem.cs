@@ -1,3 +1,10 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+// SPDX-FileCopyrightText: 2025 deltanedas <39013340+deltanedas@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 using Content.Shared._Goobstation.Factory.Filters;
 using Content.Shared._Goobstation.Factory.Slots;
 using Content.Shared.Containers.ItemSlots;
@@ -63,10 +70,16 @@ public sealed partial class RoboticArmSystem : EntitySystem
         base.Update(frameTime);
 
         var now = _timing.CurTime;
-        if (_nextUpdate < now)
+        // WOLFGATE(Performance) START: the check was inverted, so the arms never ran
+        // if (_nextUpdate < now)
+        //     return;
+        //
+        // _nextUpdate += _updateDelay;
+        if (now < _nextUpdate)
             return;
 
-        _nextUpdate += _updateDelay;
+        _nextUpdate = now + _updateDelay;
+        // WOLFGATE END
 
         var query = EntityQueryEnumerator<RoboticArmComponent>();
         while (query.MoveNext(out var uid, out var comp))

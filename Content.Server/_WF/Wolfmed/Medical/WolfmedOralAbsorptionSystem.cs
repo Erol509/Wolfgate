@@ -1,7 +1,10 @@
 using Content.Server.Body.Components;
 using Content.Shared._WF.Wolfmed.CCVar;
 using Content.Shared._WF.Wolfmed.Reagents;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
@@ -17,7 +20,34 @@ public sealed partial class WolfmedOralAbsorptionSystem : EntitySystem
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
 
+    /// <summary>Salt and water stay food in a body: the saline they would form is lethal to Avali.</summary>
+    private const string SalineReaction = "Saline";
+
     private readonly Dictionary<string, bool> _painkillers = new();
+
+    /// <summary>Whether a reaction is refused inside a stomach or a bloodstream.</summary>
+    public static bool BlockedInBody(ReactionPrototype reaction) => reaction.ID == SalineReaction;
+
+    /// <summary>
+    /// Queues whatever the stomach holds with no delta, such as a reaction's product, which would otherwise
+    /// never reach the blood and would fill the stomach for good.
+    /// </summary>
+    public void TrackUntracked(StomachComponent stomach, Solution contents)
+    {
+        var deltas = stomach.ReagentDeltas;
+        foreach (var reagent in contents.Contents)
+        {
+            var tracked = FixedPoint2.Zero;
+            foreach (var delta in deltas)
+            {
+                if (delta.ReagentQuantity.Reagent == reagent.Reagent)
+                    tracked += delta.ReagentQuantity.Quantity;
+            }
+
+            if (reagent.Quantity > tracked)
+                deltas.Add(new StomachComponent.ReagentDelta(new ReagentQuantity(reagent.Reagent, reagent.Quantity - tracked)));
+        }
+    }
 
     public override void Initialize()
     {

@@ -155,6 +155,9 @@ public sealed partial class WoundBleedingSystem : EntitySystem
         var query = EntityQueryEnumerator<WoundBleedingComponent, WoundComponent>();
         while (query.MoveNext(out var uid, out var bleeding, out var wound))
         {
+            if (WFRemoveClottedSystemicBleed(uid, bleeding, wound)) // WOLFGATE(Wolfmed): a clotted systemic bleed left an untreatable wound
+                continue;
+
             if (bleeding.AutomaticClottingAt is not { } deadline || _timing.CurTime < deadline)
                 continue;
 
@@ -184,6 +187,9 @@ public sealed partial class WoundBleedingSystem : EntitySystem
             return false;
 
         bleeding.BleedingSeverity = FixedPoint2.Max(FixedPoint2.Zero, bleeding.BleedingSeverity - amount);
+        if (WFRemoveStoppedSystemicBleed((wound.Owner, wound.Comp), bleeding)) // WOLFGATE(Wolfmed): a stopped systemic bleed left an untreatable wound
+            return true;
+
         // WOLFGATE(Wolfmed): gauze that stops a bleed stays on the wound as a dressing. Removing the component here let the
         // next severity change re-roll the bleed at full strength, and left nothing for the limb overlay to show.
         if (dressing)
@@ -441,6 +447,11 @@ public sealed partial class WoundBleedingSystem : EntitySystem
             return false;
 
         multiplier = profile.BleedingMultiplier;
+        // WOLFGATE(MeridianTraits) START: a hemophage's thin blood runs faster
+        if (TryGetBody(part, out var wfBody) &&
+            TryComp(wfBody, out Content.Shared._WF.MeridianTraits.Hemophage.WFHemophageComponent? wfHemophage))
+            multiplier *= wfHemophage.BleedMultiplier;
+        // WOLFGATE END
         return true;
     }
 

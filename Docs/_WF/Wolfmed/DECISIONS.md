@@ -4572,9 +4572,8 @@ the owner's call; left as it plays.
   makeshift tourniquet on the right leg is knocked loose!". Slipping was chosen over holding a smaller share of the
   bleed because a partial clamp would read as a working tourniquet on the analyzer while the patient kept bleeding;
   a slip is visible and its answer (tie another, or fetch a real one) is obvious. Crafting takes a jumpsuit in hand
-  first, but upstream's crafting also takes worn items, and the jumpsuit slot comes before the backpack, so with none in
-  hand it tears the one being worn (the banana clown suit and ID card recipes behave the same); the recipe and the
-  guidebook say to hold the one to tear. Fixed in passing: loosening a strap released only the strapped part, so a
+  first. Upstream's crafting also took worn items, so with none in hand it tore the one being worn, until feedback
+  report 360 (2026-11-01): crafting now skips the jumpsuit slot (`EnumerateNearby`), for every recipe. Fixed in passing: loosening a strap released only the strapped part, so a
   leg's strap left the foot's bleed clamped with nothing holding it; loosen, slip and the necrosis clock now cover the
   parts below it (`TiedParts`), as applying one always did. The guidebook and the arterial and bleeding advice name
   the makeshift strap. `WolfmedMakeshiftTourniquetTest`: the held jumpsuit is torn, not the worn one, in 3 s; the strap

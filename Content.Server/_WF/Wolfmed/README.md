@@ -64,6 +64,7 @@ Skipped ("dirty-disposed").
 - [`Content.Server/_WF/Wolfmed/Consciousness/WolfmedPainAlertSystem.cs`](Consciousness/WolfmedPainAlertSystem.cs)
 - [`Content.Server/_WF/Wolfmed/Consciousness/WolfmedSedationWarningSystem.cs`](Consciousness/WolfmedSedationWarningSystem.cs)
 - [`Content.Server/_WF/Wolfmed/Damage/WolfmedDegradationVisualsSystem.cs`](Damage/WolfmedDegradationVisualsSystem.cs)
+- [`Content.Server/_WF/Wolfmed/Damage/WolfmedHealCheck.cs`](Damage/WolfmedHealCheck.cs)
 - [`Content.Server/_WF/Wolfmed/Damage/WolfmedTreatmentVisualsSystem.cs`](Damage/WolfmedTreatmentVisualsSystem.cs)
 - [`Content.Server/_WF/Wolfmed/Damage/WolfmedWoundOverlaySystem.cs`](Damage/WolfmedWoundOverlaySystem.cs)
 - [`Content.Server/_WF/Wolfmed/Emp/WolfmedEmpSystem.cs`](Emp/WolfmedEmpSystem.cs)
@@ -168,6 +169,7 @@ Skipped ("dirty-disposed").
 - [`Content.Shared/_WF/Wolfmed/Autodoc/WolfmedAutodocAtmosphereComponent.cs`](../../../Content.Shared/_WF/Wolfmed/Autodoc/WolfmedAutodocAtmosphereComponent.cs)
 - [`Content.Shared/_WF/Wolfmed/Autodoc/WolfmedAutodocBloodComponent.cs`](../../../Content.Shared/_WF/Wolfmed/Autodoc/WolfmedAutodocBloodComponent.cs)
 - [`Content.Shared/_WF/Wolfmed/Autodoc/WolfmedAutodocOccupantComponent.cs`](../../../Content.Shared/_WF/Wolfmed/Autodoc/WolfmedAutodocOccupantComponent.cs)
+- [`Content.Shared/_WF/Wolfmed/Body/WFKidneysComponent.cs`](../../../Content.Shared/_WF/Wolfmed/Body/WFKidneysComponent.cs)
 - [`Content.Shared/_WF/Wolfmed/Body/WolfmedBodyPartComponent.cs`](../../../Content.Shared/_WF/Wolfmed/Body/WolfmedBodyPartComponent.cs)
 - [`Content.Shared/_WF/Wolfmed/Body/WolfmedBodyPartSystem.cs`](../../../Content.Shared/_WF/Wolfmed/Body/WolfmedBodyPartSystem.cs)
 - [`Content.Shared/_WF/Wolfmed/Body/WolfmedOrganComponent.cs`](../../../Content.Shared/_WF/Wolfmed/Body/WolfmedOrganComponent.cs)
@@ -372,6 +374,7 @@ Skipped ("dirty-disposed").
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedPlaytestThreeTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedPlaytestThreeTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedPlaytestTwoTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedPlaytestTwoTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedPodWeldsChassisTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedPodWeldsChassisTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedRadiationHelmTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedRadiationHelmTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedRemainingCausesTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedRemainingCausesTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedRevivalStopwatchTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedRevivalStopwatchTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedRevivalTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/Scenarios/WolfmedRevivalTest.cs)
@@ -406,6 +409,7 @@ Skipped ("dirty-disposed").
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedBrainTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedBrainTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedBurnWoundTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedBurnWoundTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedChoiceWindowLayoutTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedChoiceWindowLayoutTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedConcussionHandlessTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedConcussionHandlessTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedConsciousnessTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedConsciousnessTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedCorpseSpawnTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedCorpseSpawnTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedCritHeartbeatTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Wolfmed/WolfmedCritHeartbeatTest.cs)
@@ -1144,7 +1148,9 @@ Skipped ("dirty-disposed").
   - the body or its gear may refuse a deeper bleed.
   - playtest 4: a tourniquet stays tied whatever the wound does under it (the strap's own
   - playtest 1: once per cooldown, not every vacuum tick
+  - a clotted systemic bleed left an untreatable wound
   - dressing
+  - a stopped systemic bleed left an untreatable wound
   - gauze that stops a bleed stays on the wound as a dressing. Removing the component here let the
   - W2: an arterial bleed does not give up severity to a dressing.
   - BRAIN: cardiac arrest drops passive bleeding to a trickle. Applied to the body's
@@ -1183,8 +1189,12 @@ Skipped ("dirty-disposed").
   - Wolfmed wound hosts own their own bleeding.
   - CONSC
   - M3
+  - salted food and water must not form saline
   - M3: an impaired heart regenerates at its band's factor (plan §8); 1 everywhere else.
   - CONSC: blood volume is a consciousness input and the bloodstream raises no event
+  - skip the damage pipeline when there is no bloodloss to heal.
+  - was BloodlossHealDamage * bloodPercentage, computed above.
+  - nothing to remove when low blood added no drunk or stutter time.
   - GUARD E, wound hosts get their bleeding from WoundBleedingSystem instead.
   - the body or its gear refused the bleed; cautery still works.
   - GUARD E2 — Onyx's HealthExaminable covers pallor per-part for wound hosts
@@ -1192,14 +1202,25 @@ Skipped ("dirty-disposed").
   - GUARD E3
   - GUARD E3, sole write path for Wolfmed's WoundBleedingSystem once wounds own bleeding.
   - GUARD E3. This also silently no-ops the passive-decay call in Update(); that is deliberate.
+- [`Content.Server/Body/Systems/MetabolizerSystem.cs`](../../Body/Systems/MetabolizerSystem.cs)
+  - reused due list
+  - reuse one list and buffer only the metabolizers that are due.
+  - the loop below skips these anyway.
 - [`Content.Server/Body/Systems/RespiratorSystem.cs`](../../Body/Systems/RespiratorSystem.cs)
   - M1a
   - M2
   - M1a: a wound host breathes while unconscious; only arrest and death stop it there.
   - ARREST: a body whose heart has stopped looks dead, so it does not gasp. It still
   - M2: "Can't breathe: no air" on a wound host
+  - the lung alert is only shown at the threshold, so a breathing body skips the walk.
+  - skip the damage pipeline when there is no suffocation damage to recover.
 - [`Content.Server/Body/Systems/StomachSystem.cs`](../../Body/Systems/StomachSystem.cs)
+  - spreads first updates
   - playtest 1
+  - salted food and water must not form saline
+  - a random first update spreads stomachs spawned together over the interval.
+  - an empty stomach with nothing digesting has nothing to move.
+  - reaction products were stuck in the stomach for good
   - playtest 1: painkillers absorb fast
 - [`Content.Server/Chat/EmoteOnDamageComponent.cs`](../../Chat/EmoteOnDamageComponent.cs)
   - HOOK 17, ProtoId\<> for the Wolfmed pain-sound thresholds.
@@ -1209,6 +1230,7 @@ Skipped ("dirty-disposed").
   - M2: OD17, damage totals do not kill a wound host; its suicide is brain 0 then death.
 - [`Content.Server/Chat/Systems/ChatSystem.Emote.cs`](../../Chat/Systems/ChatSystem.Emote.cs): HOOK 6, overrides SharedChatSystem's shared entry point (D25).
 - [`Content.Server/Chat/Systems/EmoteOnDamageSystem.cs`](../../Chat/Systems/EmoteOnDamageSystem.cs): HOOK 18, Wolfmed pain sounds (\<Onyx-PainSounds>); never a second subscription.
+- [`Content.Server/Construction/ConstructionSystem.Initial.cs`](../../Construction/ConstructionSystem.Initial.cs): crafting tore the jumpsuit off the crafter's back
 - [`Content.Server/Damage/Commands/HurtCommand.cs`](../../Damage/Commands/HurtCommand.cs)
   - P6, optional 5th arg is a body part.
   - P6, the uid stays args[3] when a body part follows it.
@@ -1384,6 +1406,8 @@ Skipped ("dirty-disposed").
   - playtest 5, the floor settles
   - M1a: OD5, pain never moved
   - M1a: OD5, adrenaline no longer takes 30% off every reading; it no longer stands anyone up.
+  - closing paren moved below.
+  - no suppression means no share to walk the body for.
   - M1a: P13, the share is of the sum of the parts, not of the capped body value, so the
   - M1a: P13, a body's pain is min(soft cap, sum of its parts) after every change, direct
   - playtest 5, a floor that has not risen for a while settles toward wolfmed.pain_floor_rest
@@ -1420,6 +1444,9 @@ Skipped ("dirty-disposed").
   - the body's damage event names who hit the part, for kill credit.
   - Shitmed's BodyPartComponent has no Parent field; walk the slot containers instead.
   - origin, for kill credit.
+  - snapshot the old layers so an unchanged refresh can skip SetDamage and Dirty.
+  - a refresh that changes neither the total nor the layers is a no-op.
+  - no-op refresh check.
   - D19 - InjurableComponent is not ported. Wolfgate parts already carry
   - V3: public so the degradation overlay maps parts to layers the same way instead of forking it.
   - D9
@@ -1520,8 +1547,11 @@ Skipped ("dirty-disposed").
 - [`Content.Shared/_Shitmed/Body/Systems/SharedBodySystem.PartAppearance.cs`](../../../Content.Shared/_Shitmed/Body/Systems/SharedBodySystem.PartAppearance.cs): only this layer's markings go on the part.
 - [`Content.Shared/_Shitmed/Body/Systems/SharedBodySystem.Targeting.cs`](../../../Content.Shared/_Shitmed/Body/Systems/SharedBodySystem.Targeting.cs)
   - Wolfmed owns part damage for wound hosts (D2/D18).
+  - part self-heal scan cadence.
   - GUARD C, Wolfmed's WoundHealingSystem owns part recovery.
-  - GUARD C, do not burn the job queue on wound hosts.
+  - scan parts once per second with the accumulated time, skipping parts that never heal.
+  - only Targeting bodies that are not wound hosts self-heal parts.
+  - GUARD C, do not burn the job queue on wound hosts or dead bodies.
   - GUARD A, Wolfmed routes part damage itself for wound hosts. Component-gated, never IsServer-gated.
   - GUARD B, Wolfmed owns dismemberment for wound hosts.
   - playtest 2: burns never switch a wound host's limb off; its wounds slow it instead.
@@ -1544,12 +1574,14 @@ Skipped ("dirty-disposed").
   - AUTODOC4: HOOK 26, a wound host's tend step runs until the part's wounds are closed.
 - [`Content.Shared/_Shitmed/Surgery/Tools/SurgeryToolConditionsSystem.cs`](../../../Content.Shared/_Shitmed/Surgery/Tools/SurgeryToolConditionsSystem.cs): the take-ammo event was never raised, so every gun read as empty
 - [`Content.Shared/_Shitmed/Targeting/SharedTargetingSystem.cs`](../../../Content.Shared/_Shitmed/Targeting/SharedTargetingSystem.cs): Wolfmed snapshot/targeting needs a single-bit check; copied from Onyx's SharedTargetingSystem.
+- [`Content.Shared/_White/Standing/SharedLayingDownSystem.cs`](../../../Content.Shared/_White/Standing/SharedLayingDownSystem.cs): surgery needs the patient down, and a ship that lost gravity still has casualties
 - [`Content.Shared/Armor/SharedArmorSystem.cs`](../../../Content.Shared/Armor/SharedArmorSystem.cs): HOOK 10
 - [`Content.Shared/Bed/Sleep/SleepingSystem.cs`](../../../Content.Shared/Bed/Sleep/SleepingSystem.cs): playtest 5, a body that died asleep stayed stunned and knocked down once revived.
 - [`Content.Shared/Body/Part/BodyPartComponent.cs`](../../../Content.Shared/Body/Part/BodyPartComponent.cs): HOOK 21 - P3-4 Option B needs AfterAutoHandleStateEvent on detached parts.
 - [`Content.Shared/Body/Systems/SharedBodySystem.Parts.cs`](../../../Content.Shared/Body/Systems/SharedBodySystem.Parts.cs)
   - playtest 2, a wound host with no working leg drags itself on its arms.
   - playtest 2
+- [`Content.Shared/Damage/Components/DamageableComponent.cs`](../../../Content.Shared/Damage/Components/DamageableComponent.cs): one shared default instead of a list and a dictionary on every damageable entity.
 - [`Content.Shared/Damage/Systems/DamageableSystem.cs`](../../../Content.Shared/Damage/Systems/DamageableSystem.cs)
   - Wolfmed routing seam event (DamageDealtEvent).
   - Wolfmed routing seam gate (WoundHostComponent).

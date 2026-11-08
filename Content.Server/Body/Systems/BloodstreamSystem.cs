@@ -33,6 +33,7 @@ namespace Content.Server.Body.Systems;
 public sealed partial class BloodstreamSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private Content.Server._WF.Dormancy.WFDormancySystem _wfDormancy = default!; // WOLFGATE(Dormancy): skips NPC bodies nobody is near
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IRobustRandom _robustRandom = default!;
     [Dependency] private Content.Shared._WF.Wolfmed.Wounds.WolfmedBleedGateSystem _wfBleedGate = default!; // WOLFGATE(Wolfmed)
@@ -82,6 +83,14 @@ public sealed partial class BloodstreamSystem : EntitySystem
         if (args.Cancelled)
             return;
 
+        // WOLFGATE(Wolfmed) START: salted food and water must not form saline
+        if (Content.Server._WF.Wolfmed.Medical.WolfmedOralAbsorptionSystem.BlockedInBody(args.Reaction))
+        {
+            args.Cancelled = true;
+            return;
+        }
+        // WOLFGATE END
+
         foreach (var effect in args.Reaction.Effects)
         {
             switch (effect)
@@ -125,12 +134,15 @@ public sealed partial class BloodstreamSystem : EntitySystem
                 continue;
 
             bloodstream.NextUpdate += bloodstream.UpdateInterval;
+            if (_wfDormancy.BodySleeps(uid)) continue; // WOLFGATE(Dormancy): an NPC body no player is near on a planet skips its upkeep
 
             if (!_solutionContainerSystem.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 continue;
 
             // Adds blood to their blood level if it is below the maximum; Blood regeneration. Must be alive.
-            if (bloodSolution.Volume < bloodSolution.MaxVolume && !_mobStateSystem.IsDead(uid))
+            // WOLFGATE(MeridianTraits): a hemophage's blood only comes back by feeding
+            if (bloodSolution.Volume < bloodSolution.MaxVolume && !_mobStateSystem.IsDead(uid)
+                && !HasComp<Content.Shared._WF.MeridianTraits.Hemophage.WFHemophageComponent>(uid))
             {
                 // WOLFGATE(Wolfmed): M3: an impaired heart regenerates at its band's factor (plan §8); 1 everywhere else.
                 TryModifyBloodLevel(uid, bloodstream.BloodRefreshAmount * _wolfmedLife.BloodRegenFactor(uid), bloodstream);
@@ -175,16 +187,25 @@ public sealed partial class BloodstreamSystem : EntitySystem
             else if (!_mobStateSystem.IsDead(uid))
             {
                 // If they're healthy, we'll try and heal some bloodloss instead.
+                // WOLFGATE(Wolfmed) START: skip the damage pipeline when there is no bloodloss to heal.
+                var wfBloodHeal = bloodstream.BloodlossHealDamage * bloodPercentage;
+                if (Content.Server._WF.Wolfmed.Damage.WolfmedHealCheck.WouldHeal(CompOrNull<DamageableComponent>(uid), wfBloodHeal))
+                // WOLFGATE END
                 _damageableSystem.TryChangeDamage(
                     uid,
-                    bloodstream.BloodlossHealDamage * bloodPercentage,
+                    wfBloodHeal, // WOLFGATE(Wolfmed): was BloodlossHealDamage * bloodPercentage, computed above.
                     ignoreResistances: true, interruptsDoAfters: false);
 
+                // WOLFGATE(Wolfmed) START: nothing to remove when low blood added no drunk or stutter time.
+                if (bloodstream.StatusTime > TimeSpan.Zero)
+                {
+                // WOLFGATE END
                 // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
                 _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime.TotalSeconds);
                 _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StatusTime.TotalSeconds);
                 // Reset the drunk and stutter time to zero
                 bloodstream.StatusTime = TimeSpan.Zero;
+                } // WOLFGATE(Wolfmed)
             }
         }
     }

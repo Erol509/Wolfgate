@@ -1,3 +1,14 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2025 Ark
+// SPDX-FileCopyrightText: 2025 Redrover1760
+// SPDX-FileCopyrightText: 2025 RikuTheKiller
+// SPDX-FileCopyrightText: 2025 ScyronX
+// SPDX-FileCopyrightText: 2025 ark1368
+// SPDX-FileCopyrightText: 2025 sleepyyapril
+// SPDX-FileCopyrightText: 2025 starch
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 // Copyright Rane (elijahrane@gmail.com) 2025
 // All rights reserved. Relicensed under AGPL with permission
 
@@ -389,6 +400,7 @@ public sealed partial class FireControlSystem : EntitySystem
     {
         if (TerminatingOrDeleted(grid)
             || HasComp<FTLComponent>(grid)
+            || HasComp<Content.Server._WF.Planets.Hop.WFPlanetHopComponent>(grid) // WOLFGATE(Planets): no firing mid-hop
             || HasComp<SpaceArtilleryDisabledGridComponent>(grid)
         )
             return false;
@@ -579,6 +591,7 @@ public sealed partial class FireControlSystem : EntitySystem
         // Calculate distance to target (capped at maximum distance)
         var targetDistance = Vector2.Distance(weaponPos, targetPos);
         var rayDistance = Math.Min(targetDistance, maxDistance);
+        rayDistance = Math.Min(rayDistance, WfGridReach(weaponTransform)); // WOLFGATE(Performance): only the weapon's own grid can block, so the ray ends where it does
 
         // Initialize ray collision
         var ray = new CollisionRay(weaponPos, direction, collisionMask: (int)(CollisionGroup.Opaque | CollisionGroup.Impassable));
@@ -610,10 +623,10 @@ public sealed partial class FireControlSystem : EntitySystem
             IgnoreEntityNotOnSameGrid,
             rayDistance,
             returnOnFirstHit: true // We only need to know if there's ANY obstacle
-        ).ToList();
+        ); // WOLFGATE(Performance): no .ToList(), the result is only tested for emptiness
 
         // Has line of sight if there are no obstacles in the path
-        return raycastResults.Count == 0;
+        return !raycastResults.Any(); // WOLFGATE(Performance): was raycastResults.Count == 0
     }
 
     /// <summary>

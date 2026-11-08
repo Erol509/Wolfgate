@@ -216,6 +216,12 @@ uplink-pirate-magazine-box-357_magnum-desc = A box containing 4 .357 magnum spee
 uplink-pirate-light-rifle-magazine-box-big-name = Ammunition box (7.62x39mm FMJ)
 uplink-pirate-light-rifle-magazine-box-big-desc = A box containing 200 7.62x39mm catridges.
 
+# WOLFGATE: the uplink had no 5.56 for the Vympel it sells
+uplink-pirate-5-56x45mm-magazine-name = 5.56x45mm magazine
+uplink-pirate-5-56x45mm-magazine-desc = A rifle magazine for the Vympel.
+uplink-pirate-5-56x45mm-box-big-name = Ammunition box (5.56x45mm FMJ)
+uplink-pirate-5-56x45mm-box-big-desc = A box containing 210 5.56x45mm cartridges.
+
 uplink-pirate-shell-box-lethal-name = 12 gauge shell box (lethal)
 uplink-pirate-shell-box-lethal-desc = A box containing 32 12 gauge shotgun shells.
 

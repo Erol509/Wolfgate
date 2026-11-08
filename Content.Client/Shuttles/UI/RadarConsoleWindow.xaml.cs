@@ -15,6 +15,7 @@ public sealed partial class RadarConsoleWindow : FancyWindow,
     public RadarConsoleWindow()
     {
         RobustXamlLoader.Load(this);
+        Content.Client._WF.Branding.WFWindowBranding.Apply(this); // WOLFGATE(Branding): Wolfgate title bar
 
     // Mono
         IFFToggle.OnToggled += OnIFFTogglePressed;
@@ -24,6 +25,7 @@ public sealed partial class RadarConsoleWindow : FancyWindow,
         IFFDetailedToggle.Pressed = RadarScreen.ShowIFFDetailed;
         RadarScreen.WfPinDocks();
         // WOLFGATE END
+        RadarScreen.WfEnableWaypoints(RadarConsoleUiKey.Key, canFly: false); // WOLFGATE(Waypoints): a mass scanner can mark waypoints but has no autopilot.
     }
 
     public void UpdateState(NavInterfaceState scc)

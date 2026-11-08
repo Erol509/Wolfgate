@@ -3,7 +3,8 @@ using Robust.Shared.Audio;
 namespace Content.Server._FarHorizons.Power.Generation.FissionGenerator;
 
 // Ported and modified from goonstation by Jhrushbe.
-// CC-BY-NC-SA-3.0
+// WOLFGATE: relabelled MIT as in HardLight b602e8d485
+// MIT
 // https://github.com/goonstation/goonstation/blob/ff86b044/code/obj/nuclearreactor/centrifuge.dm
 
 [RegisterComponent]

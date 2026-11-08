@@ -1,3 +1,4 @@
+using Content.Client._WF.Branding;
 using System.Linq;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
@@ -27,6 +28,7 @@ public sealed partial class WFCompanyWindow : DefaultWindow
     {
         IoCManager.InjectDependencies(this);
         Title = Text("title");
+        WFWindowBranding.Apply(this);
         MinSize = new Vector2(560, 420);
         SetSize = new Vector2(860, 680);
         _system = _entities.System<WFCompanyClientSystem>();
@@ -42,6 +44,7 @@ public sealed partial class WFCompanyWindow : DefaultWindow
         {
             _system.Received -= Receive;
             _system.LogosChanged -= OnLogos;
+            _shipPreview?.Close();
         };
         if (_system.State is { } state)
             Receive(state);

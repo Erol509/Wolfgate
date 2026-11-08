@@ -158,6 +158,19 @@ public sealed partial class WFGunnerDutySystem : EntitySystem
             _occupants.Remove(console);
     }
 
+    /// <summary>
+    /// Drops the kept target choice of a crew's gunners, so a changed security policy is acted on next tick rather
+    /// than when their quarter-second selection comes round.
+    /// </summary>
+    public void Reselect(EntityUid grid, string group)
+    {
+        foreach (var uid in _selections.Keys.ToArray())
+        {
+            if (TryComp<WFCrewComponent>(uid, out var crew) && crew.Group == group && Transform(uid).GridUid == grid)
+                _selections.Remove(uid);
+        }
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -395,6 +408,8 @@ public sealed partial class WFGunnerDutySystem : EntitySystem
             return null;
         // A cloaked ship is not seen, even one the crew was sent after.
         if (EntityManager.System<WFCrewStealthSystem>().ShipUnseen(ship))
+            return null;
+        if (_spared.HoldsFireOn(grid, ship))
             return null;
         // A player vessel of the crew's faction is fired on only once its own fire has made it an attacker.
         if (_spared.Spared(grid, ship) && !_alerts.FiredShipGuns(grid, crew.Group, ship))

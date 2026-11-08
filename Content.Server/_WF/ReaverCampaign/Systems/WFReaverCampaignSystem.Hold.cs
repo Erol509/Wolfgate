@@ -84,12 +84,13 @@ public sealed partial class WFReaverCampaignSystem
     {
         state.BelowSince += span;
         state.TierAnnounced += span;
-        state.LastQuietBanner += span;
         state.LastFounded += span;
         state.NoStrongholdSince += span;
         state.NextSpread += span;
         state.NextRaid += span;
         state.OverrunSince += span;
+        if (state.NextFunding != TimeSpan.Zero)
+            state.NextFunding += span;
         Shift(state.Raided, span);
         Shift(state.InsideSince, span);
         Shift(state.InterceptCooldowns, span);

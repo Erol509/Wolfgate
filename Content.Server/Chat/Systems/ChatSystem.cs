@@ -382,6 +382,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
         var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
+        // WOLFGATE(PlanetComms) START: sessions on a world with no mass transceiver up miss it
+        if (WFDispatchGlobalReachable(message, sender, wrappedMessage, playSound, announcementSound, colorOverride))
+            return;
+        // WOLFGATE END
         _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, default, false, true, colorOverride);
         if (playSound)
         {
@@ -410,6 +414,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         Color? colorOverride = null)
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
+        filter = _wfPlanetComms.Reachable(filter, source); // WOLFGATE(PlanetComms): off-world sources miss dark worlds
 
         var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source ?? default, false, true, colorOverride);
@@ -450,6 +455,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
 
         var filter = _stationSystem.GetInStation(stationDataComp);
+        filter = _wfPlanetComms.Reachable(filter, source); // WOLFGATE(PlanetComms): off-world sources miss dark worlds
 
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source, false, true, colorOverride);
 
@@ -598,8 +604,12 @@ public sealed partial class ChatSystem : SharedChatSystem
         var obfuscated = SanitizeInGameICMessage(source, _language.ObfuscateSpeech(message, language), out var emoteStr, true, _configurationManager.GetCVar(CCVars.ChatPunctuation),
             (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
             || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en"));
+        // WOLFGATE(ChatFormatting): emphasis delimiters convert to BBCode after obfuscation (so ~ replacement doesn't corrupt tags)
+        obfuscated = ConvertCustomEmphasisToBBCode(obfuscated);
         // The language-obfuscated message wrapped in a "x says y" string.
         var wrappedObfuscated = WrapPublicMessage(source, name, obfuscated, language: language, speechVerb: speechVerb); // WOLFGATE: speech style
+        // WOLFGATE(ChatFormatting): also convert the non-obfuscated wrap so listeners who understand the language get BBCode
+        wrappedMessage = ConvertCustomEmphasisToBBCode(wrappedMessage);
         // Einstein Engines - Language end
 
         // WOLFGATE: the speech style reaches a deaf listener's wrap too
@@ -698,18 +708,24 @@ public sealed partial class ChatSystem : SharedChatSystem
             {
                 // Scenario 1: the listener can clearly understand the message
                 result = perceivedMessage;
+                // WOLFGATE(ChatFormatting): emphasis delimiters convert to BBCode after obfuscation
+                result = ConvertCustomEmphasisToBBCode(result);
                 wrappedMessage = WrapWhisperMessage(source, "chat-manager-entity-whisper-wrap-message", name, result, language, speechVerb); // WOLFGATE: speech style
             }
             else if (_examineSystem.InRangeUnOccluded(source, listener, WhisperMuffledRange)) // UNEDIT FROM Einstein Engines - Language // They are out of date, this has been reverted to current ChatSystem
             {
                 // Scenario 2: if the listener is too far, they only hear fragments of the message
                 result = ObfuscateMessageReadability(perceivedMessage);
+                // WOLFGATE(ChatFormatting): emphasis delimiters convert to BBCode after obfuscation
+                result = ConvertCustomEmphasisToBBCode(result);
                 wrappedMessage = WrapWhisperMessage(source, "chat-manager-entity-whisper-wrap-message", nameIdentity, result, language, speechVerb); // WOLFGATE: speech style
             }
             else
             {
                 // Scenario 3: If listener is too far and has no line of sight, they can't identify the whisperer's identity
                 result = ObfuscateMessageReadability(perceivedMessage);
+                // WOLFGATE(ChatFormatting): emphasis delimiters convert to BBCode after obfuscation
+                result = ConvertCustomEmphasisToBBCode(result);
                 wrappedMessage = WrapWhisperMessage(source, "chat-manager-entity-whisper-unknown-wrap-message", string.Empty, result, language, speechVerb); // WOLFGATE: speech style
             }
 
@@ -839,10 +855,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         // WOLFGATE END
 
         // Emotes use Identity.Name, since it doesn't actually involve your voice at all.
+        var cleanAction = FormattedMessage.RemoveMarkupOrThrow(action);
+        // WOLFGATE(ChatFormatting): emphasis delimiters convert to BBCode
+        cleanAction = ConvertCustomEmphasisToBBCode(cleanAction);
         var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",
             ("entityName", name),
             ("entity", ent),
-            ("message", FormattedMessage.RemoveMarkupOrThrow(action)));
+            ("message", cleanAction));
 
         if (checkEmote)
             TryEmoteChatInput(source, typedAction); // WOLFGATE(Emotes): match the trigger on what was typed
@@ -1163,6 +1182,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ? Loc.GetString("chat-manager-language-prefix", ("language", language.ChatName))
             : "";
 
+        // WOLFGATE(ChatFormatting): message may contain BBCode from emphasis conversion; pass through unescaped
         return Loc.GetString(wrapId,
             ("color", color),
             ("entityName", entityName),

@@ -137,6 +137,11 @@ public sealed partial class WFMappingPropertiesPanel : BoxContainer
         LinkSignalsButton.OnPressed += _ => _link.SetTool(WFMappingLinkTool.Signals);
         LinkDevicesButton.OnPressed += _ => _link.SetTool(WFMappingLinkTool.Devices);
         LinkAccessButton.OnPressed += _ => _link.SetTool(WFMappingLinkTool.Access);
+        LinkThresholdsButton.OnPressed += _ => _link.SetTool(WFMappingLinkTool.Thresholds);
+        foreach (var (button, tool) in ToolButtons())
+        {
+            button.OnPressed += _ => _modes.SetTool(tool);
+        }
         LinkClearButton.OnPressed += _ => _link.ClearSelection();
 
         QuickSelectButton.OnPressed += _ =>
@@ -281,6 +286,7 @@ public sealed partial class WFMappingPropertiesPanel : BoxContainer
         ShapeRow.Visible = mode == WFMappingBuildMode.Shape;
         PipeBox.Visible = mode == WFMappingBuildMode.Pipe;
         LinkBox.Visible = mode == WFMappingBuildMode.Link;
+        ToolBox.Visible = mode == WFMappingBuildMode.Wrench;
         UpdateShapeFill();
     }
 
@@ -297,6 +303,7 @@ public sealed partial class WFMappingPropertiesPanel : BoxContainer
         ShapeKindMenu.TrySelectId((int) _modes.ShapeKind);
         UpdateShapeFill();
         UpdatePipe();
+        UpdateTools();
         PlacementModeMenu.TrySelectId(_modes.PlacementModeIndex);
         UpdateRotation();
     }
@@ -364,11 +371,33 @@ public sealed partial class WFMappingPropertiesPanel : BoxContainer
             : prototype.Name;
     }
 
+    private (Button Button, WFMappingTool Tool)[] ToolButtons()
+    {
+        return
+        [
+            (ToolWrenchButton, WFMappingTool.Wrench),
+            (ToolBoltsButton, WFMappingTool.Bolts),
+            (ToolWeldButton, WFMappingTool.Weld),
+            (ToolLockButton, WFMappingTool.Lock),
+            (ToolPanelButton, WFMappingTool.Panel),
+            (ToolDoorButton, WFMappingTool.Door),
+        ];
+    }
+
+    private void UpdateTools()
+    {
+        foreach (var (button, tool) in ToolButtons())
+        {
+            button.Pressed = _modes.Tool == tool;
+        }
+    }
+
     private void UpdateLink()
     {
         LinkSignalsButton.Pressed = _link.Tool == WFMappingLinkTool.Signals;
         LinkDevicesButton.Pressed = _link.Tool == WFMappingLinkTool.Devices;
         LinkAccessButton.Pressed = _link.Tool == WFMappingLinkTool.Access;
+        LinkThresholdsButton.Pressed = _link.Tool == WFMappingLinkTool.Thresholds;
 
         var selected = _link.Source ?? _link.Holder;
         LinkClearButton.Disabled = selected == null;

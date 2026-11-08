@@ -80,6 +80,10 @@ binds:
 - function: ShuttleDescend
   type: State
   key: F
+# WOLFGATE(LandingGuide): landing guide toggle while piloting
+- function: WFToggleLandingGuide
+  type: State
+  key: J
 - function: CameraRotateLeft
   type: State
   key: NumpadNum7
@@ -737,6 +741,10 @@ binds:
 - function: WFMappingMode9
   type: State
   key: Num9
+  priority: 1
+- function: WFMappingMode10
+  type: State
+  key: Num0
   priority: 1
 - function: WFMappingModePrimary
   type: State

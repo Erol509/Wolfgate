@@ -1,3 +1,13 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2023 Vordenburg
+// SPDX-FileCopyrightText: 2023 metalgearsloth
+// SPDX-FileCopyrightText: 2024 Nemanja
+// SPDX-FileCopyrightText: 2024 Whatstone
+// SPDX-FileCopyrightText: 2025 NazrinNya
+// SPDX-FileCopyrightText: 2025 beck-thompson
+//
+// SPDX-License-Identifier: MPL-2.0
+
 using Content.Server._Mono.Spawning;
 using Content.Server.Gatherable;
 using Content.Shared.Destructible;

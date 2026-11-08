@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Content.Shared._WF.ShipShields;
 using Content.Client._Mono.FireControl.UI;
 using Content.Client._WF.Cockpit;
 using Content.IntegrationTests.Pair;
@@ -61,12 +62,16 @@ public sealed class AsteroidMiningTest
     }
 
     /// <summary>Rocks on their own asteroid grids, leaving out boulders.</summary>
-    private static List<WFAsteroidComponent> GridRocks(IEntityManager em)
+    /// <summary>The rocks that are their own asteroid grid; on one map only, given one, since a dirty pair keeps other tests' rocks.</summary>
+    private static List<WFAsteroidComponent> GridRocks(IEntityManager em, MapId? map = null)
     {
         var rocks = new List<WFAsteroidComponent>();
         var query = em.EntityQueryEnumerator<WFAsteroidComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var comp, out var xform))
         {
+            if (map != null && xform.MapID != map)
+                continue;
+
             if (xform.GridUid is { } grid && em.TryGetComponent(grid, out WFAsteroidGridComponent? builder) &&
                 builder.RockUid == uid)
                 rocks.Add(comp);
@@ -156,7 +161,7 @@ public sealed class AsteroidMiningTest
 
         await server.WaitAssertion(() =>
         {
-            var fragments = GridRocks(em);
+            var fragments = GridRocks(em, map.MapId);
             Assert.That(em.Deleted(passenger), Is.False, "Things left on a cracked asteroid should stay behind in space.");
             var boulders = Boulders(em);
             Assert.Multiple(() =>
@@ -265,7 +270,7 @@ public sealed class AsteroidMiningTest
         {
             Assert.Multiple(() =>
             {
-                Assert.That(GridRocks(em), Has.Count.EqualTo(2), "The rock should split into two fragments.");
+                Assert.That(GridRocks(em, map.MapId), Has.Count.EqualTo(2), "The rock should split into two fragments.");
                 Assert.That(AllMatch(), Is.True, "Each fragment's grid should carry the look it inherited.");
             });
         });
@@ -409,7 +414,7 @@ public sealed class AsteroidMiningTest
 
         await server.WaitAssertion(() =>
         {
-            var rocks = GridRocks(em);
+            var rocks = GridRocks(em, map.MapId);
             Assert.Multiple(() =>
             {
                 Assert.That(em.Deleted(marker), Is.True, "The marker should remove itself once it has spawned its rocks.");
@@ -515,7 +520,7 @@ public sealed class AsteroidMiningTest
 
         await server.WaitAssertion(() =>
         {
-            var rocks = GridRocks(em);
+            var rocks = GridRocks(em, map.MapId);
             Assert.Multiple(() =>
             {
                 Assert.That(rocks, Is.Not.Empty, "The cluster should spawn rocks.");
@@ -1077,6 +1082,43 @@ public sealed class AsteroidMiningTest
 
             gunnery.WfUpdateMining(new WFMiningBeamGunneryState(0, 0f, 0f, null));
             Assert.That(panel.Visible, Is.False, "Losing the lasers takes the panel away again.");
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>Report 406: scanning a rock grows the panel downward, so the power steps don't jump under a shield panel.</summary>
+    [Test]
+    public async Task MiningPowerStaysPutWhenARockIsScanned()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        await pair.Client.WaitAssertion(() =>
+        {
+            using var gunnery = new FireControlWindow();
+            var panel = WFCockpitLease.Descendants(gunnery).Single(control => control.Name == "WfGunneryMining");
+            gunnery.WfUpdateShields(new WFShipShieldShuntState(true, true, 0.8f, MathF.PI / 2f, 0.25f, MathF.PI / 2f));
+
+            float PanelTop(WFMiningBeamTargetEntry? target)
+            {
+                gunnery.WfUpdateMining(new WFMiningBeamGunneryState(1, 0.7f, 0f, target));
+                // Outside the UI tree nothing passes a change up to the window.
+                foreach (var control in WFCockpitLease.Descendants(gunnery))
+                {
+                    control.InvalidateMeasure();
+                }
+
+                var size = gunnery.MinSize;
+                gunnery.Measure(size);
+                gunnery.Arrange(UIBox2.FromDimensions(Vector2.Zero, size));
+                return panel.GlobalPosition.Y;
+            }
+
+            var rock = new WFMiningBeamTargetEntry("medium asteroid", 34f,
+                new[] { new WFMiningBeamOreEntry("iron ore", 0.4f, Color.Brown) }, 0.2f, 0.4f, 0.6f, 0.5f, 0.3f, 0f, 0.9f);
+            var idle = PanelTop(null);
+            var idleHeight = panel.DesiredSize.Y;
+            var scanned = PanelTop(rock);
+            Assert.That(panel.DesiredSize.Y, Is.GreaterThan(idleHeight), "The scan should make the panel taller.");
+            Assert.That(scanned, Is.EqualTo(idle).Within(1f), "The mining panel moved when a rock was scanned.");
         });
         await pair.CleanReturnAsync();
     }

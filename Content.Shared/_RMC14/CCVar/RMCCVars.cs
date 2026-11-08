@@ -1,3 +1,12 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2024 Aiden
+// SPDX-FileCopyrightText: 2025 Ark
+// SPDX-FileCopyrightText: 2025 DrSmugleaf
+// SPDX-FileCopyrightText: 2025 Toaster
+// SPDX-FileCopyrightText: 2025 ark1368
+//
+// SPDX-License-Identifier: MIT
+
 using Robust.Shared;
 using Robust.Shared.Configuration;
 

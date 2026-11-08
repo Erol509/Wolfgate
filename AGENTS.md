@@ -18,6 +18,7 @@ PascalCase name is its folder name in every area:
 | Ship grids (a vessel's `shuttlePath`) | `Resources/SharedMaps/_WF/<Module>` |
 | Other maps (stations, POIs) | `Resources/Maps/_WF/<Module>` |
 | Guidebook pages | `Resources/ServerInfo/_WF/<Module>` |
+| Data clients download on demand, not shipped | `Resources/GameData/_WF/<Module>` |
 | Scripts and generators | `Tools/_WF/<Module>` |
 | Design docs | `Docs/_WF/<Module>` |
 
@@ -114,7 +115,8 @@ reason; `--check` fails until both are filled in.
 
 ## Engine traps
 
-- Never edit `RobustToolbox`. It is a submodule; engine changes need a separate discussion.
+- Don't edit `RobustToolbox` from a content branch. It is the Lupine submodule (`Docs/_WF/Engine`): engine changes are
+  server-only patches on its `wolfgate/v291` branch, filed in the engine docket first, and the gitlink moves with a PR.
 - Client and Shared code is checked against `RobustToolbox/Robust.Shared/ContentPack/Sandbox.yml` at client
   load, and the compiler won't catch a violation. Not allowed: `BinaryWriter`, `EndOfStreamException`,
   `ConditionalWeakTable`, `System.Diagnostics.Process`, a collection expression assigned to a `List<T>`, and
@@ -137,6 +139,9 @@ reason; `--check` fails until both are filled in.
 - Logic: add an NUnit test under `Content.IntegrationTests/Tests/_WF` (or `Content.Tests/_WF` for pure logic
   with no server). Never use `PoolSettings { Destructive =
   true }`; each one permanently costs CI about 1.9 GB and the runner is near its limit.
+- Run tests with `Tools/_WF/Testing/test.ps1` (`-Test <Fixture>` for one fixture in about 30 s, no arguments for the
+  whole suite in about 12 min). It builds once, then runs from `bin/` with server GC and 8 workers; plain
+  `dotnet test` takes 3 times as long. Its README in `Docs/_WF/Testing` has the measurements.
 - Client or Shared changes: start a real client and grep its log for `Sandbox violation`. Integration tests
   don't run the sandbox check.
 - Report failures with their output. Don't call something working unless you ran it.

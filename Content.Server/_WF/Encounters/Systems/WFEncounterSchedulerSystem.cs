@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server._Mono.AlertLevel;
+using Content.Server._WF.Lattice;
 using Content.Server._NF.GameTicking.Events;
 using Content.Server.GameTicking;
 using Content.Shared._NF.Shipyard.Components;
@@ -30,6 +31,7 @@ namespace Content.Server._WF.Encounters.Systems;
 public sealed partial class WFEncounterSchedulerSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private WFLatticeSystem _lattice = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
     [Dependency] private IConfigurationManager _config = default!;
@@ -62,8 +64,12 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
     private float _intervalMin;
     private float _intervalMax;
     private int _maxActive;
+    private float _freightIntervalMin;
+    private float _freightIntervalMax;
+    private int _freightMaxActive;
     private string _presetId = string.Empty;
     private TimeSpan? _next;
+    private TimeSpan? _nextFreight;
     private bool _roundStartDue;
     private int _roundStartTries;
     private int _roundStartPlaced;
@@ -88,6 +94,9 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
         Subs.CVar(_config, EncountersCVars.IntervalMin, value => _intervalMin = value, true);
         Subs.CVar(_config, EncountersCVars.IntervalMax, value => _intervalMax = value, true);
         Subs.CVar(_config, EncountersCVars.MaxActive, value => _maxActive = value, true);
+        Subs.CVar(_config, EncountersCVars.FreightIntervalMin, value => _freightIntervalMin = value, true);
+        Subs.CVar(_config, EncountersCVars.FreightIntervalMax, value => _freightIntervalMax = value, true);
+        Subs.CVar(_config, EncountersCVars.FreightMaxActive, value => _freightMaxActive = value, true);
         Subs.CVar(_config, EncountersCVars.Preset, value => _presetId = value, true);
         Subs.CVar(_config, EncountersCVars.HiddenStations, value =>
         {
@@ -108,6 +117,7 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
         _lastStarted.Clear();
         _startedAtRoundStart.Clear();
         _next = null;
+        _nextFreight = null;
         _roundStartDue = false;
         _roundStartPlaced = 0;
     }
@@ -159,6 +169,7 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
         if (!_enabled || Paused || _ticker.RunLevel != GameRunLevel.InRound)
         {
             _next = null;
+            _nextFreight = null;
             return;
         }
 
@@ -175,6 +186,8 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
                 _roundStartDue = false;
         }
 
+        UpdateFreight();
+
         _next ??= _timing.CurTime + Interval();
         if (_timing.CurTime < _next)
             return;
@@ -189,6 +202,47 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
     {
         var scale = MathF.Max(0.1f, Preset?.IntervalScale ?? 1f);
         return TimeSpan.FromSeconds(_random.NextFloat(_intervalMin, MathF.Max(_intervalMin, _intervalMax)) * scale);
+    }
+
+    /// <summary>Starts freight runs on their own clock, so they neither wait for the storyteller nor take its slots.</summary>
+    private void UpdateFreight()
+    {
+        _nextFreight ??= _timing.CurTime + FreightInterval();
+        if (_timing.CurTime < _nextFreight)
+            return;
+
+        _nextFreight = _timing.CurTime + FreightInterval();
+        // A run that couldn't be placed tries again soon; a full cap waits the whole interval.
+        if (!TryScheduleFreight(out _) && _encounters.ActiveFreight() < _freightMaxActive)
+            _nextFreight = _timing.CurTime + RetryDelay;
+    }
+
+    private TimeSpan FreightInterval()
+    {
+        return TimeSpan.FromSeconds(_random.NextFloat(_freightIntervalMin, MathF.Max(_freightIntervalMin, _freightIntervalMax)));
+    }
+
+    /// <summary>Picks and starts one freight run now, if its cap, a candidate and a route allow it.</summary>
+    public bool TryScheduleFreight(out EntityUid encounter)
+    {
+        encounter = default;
+        if (_encounters.ActiveFreight() >= _freightMaxActive)
+            return false;
+
+        var unplaceable = new HashSet<string>();
+        while (Pick(WFEncounterStart.Scheduled, unplaceable, freight: true) is { } prototype)
+        {
+            if (!TryStart(prototype, out encounter))
+            {
+                unplaceable.Add(prototype.ID);
+                continue;
+            }
+
+            _lastStarted[prototype.ID] = _timing.CurTime;
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>The budget for running encounters: the preset's, grown by the player count.</summary>
@@ -257,7 +311,7 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
     }
 
     /// <summary>A weighted pick among the prototypes of a start kind that fit right now.</summary>
-    private WFEncounterPrototype? Pick(WFEncounterStart start, HashSet<string> skip)
+    private WFEncounterPrototype? Pick(WFEncounterStart start, HashSet<string> skip, bool freight = false)
     {
         var players = _playerManager.PlayerCount;
         var preset = Preset;
@@ -269,21 +323,22 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
         {
             // Mid-round the storyteller may also bring a replaceable round-start encounter that is gone, or that
             // round start never placed once it has stopped trying.
-            var fits = prototype.Start == start
-                || start == WFEncounterStart.Scheduled && prototype.Start == WFEncounterStart.RoundStart
-                    && prototype.Replaceable && (!_roundStartDue || _startedAtRoundStart.Contains(prototype.ID));
+            var fits = prototype.Freight == freight
+                && (prototype.Start == start
+                    || start == WFEncounterStart.Scheduled && prototype.Start == WFEncounterStart.RoundStart
+                    && prototype.Replaceable && (!_roundStartDue || _startedAtRoundStart.Contains(prototype.ID)));
             var weight = prototype.Weight * (preset != null && preset.Weights.TryGetValue(prototype.Category, out var scale) ? scale : 1f);
             var weighed = new WFEncounterWeightEvent(prototype, weight);
             RaiseLocalEvent(ref weighed);
             weight = weighed.Weight;
             // A round-start or round-long encounter takes nothing from the budget, so it needs no room in it.
-            var cost = prototype.Lifetime == WFEncounterLifetime.Persistent || prototype.Start == WFEncounterStart.RoundStart
+            var cost = prototype.Lifetime == WFEncounterLifetime.Persistent || prototype.Start == WFEncounterStart.RoundStart || prototype.Freight
                 ? 0
                 : prototype.Cost;
-            // One of a kind at a time: an encounter that is still running is not picked again.
+            // One of a kind at a time: an encounter that is still running is not picked again. Freight has its own cap.
             if (!fits || weight <= 0f || players < prototype.MinPlayers || cost > Math.Max(0, room) || skip.Contains(prototype.ID)
                 || prototype.RequiresWar && !atWar
-                || _encounters.IsRunning(prototype.ID)
+                || !prototype.Freight && _encounters.IsRunning(prototype.ID)
                 || _lastStarted.TryGetValue(prototype.ID, out var last)
                     && _timing.CurTime - last < TimeSpan.FromSeconds(prototype.Cooldown))
                 continue;
@@ -611,6 +666,7 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
     private bool IsSector(MapId map, EntityUid? mapUid)
     {
         if (mapUid is not { } uid || HasComp<Content.Shared.Shuttles.Components.FTLMapComponent>(uid)
+            || HasComp<Content.Shared._WF.Planets.WFPlanetHopMapComponent>(uid)
             || HasComp<Content.Shared._WF.Vehicles.Core.VehicleInteriorLinkComponent>(uid)
             || HasComp<Content.Server.Salvage.Expeditions.SalvageExpeditionComponent>(uid)
             || EntityManager.System<Content.Server._NF.Shipyard.Systems.ShipyardSystem>().ShipyardMap == map)
@@ -676,8 +732,13 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
     {
         origin = MapCoordinates.Nullspace;
         var anchors = new List<MapCoordinates>();
+        // A band-bound encounter measures from the Lattice's centre; with no Lattice, from players as usual.
+        if (prototype.LatticeBand > 0)
+            _lattice.GetCentres(anchors);
+
+        var fromCentre = anchors.Count > 0;
         var players = EntityQueryEnumerator<ActorComponent, TransformComponent>();
-        while (players.MoveNext(out var uid, out _, out var xform))
+        while (!fromCentre && players.MoveNext(out var uid, out _, out var xform))
         {
             if (HasComp<GhostComponent>(uid) || _mobs.IsDead(uid) || _mobs.IsCritical(uid))
                 continue;
@@ -708,7 +769,8 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
             _nearby.Clear();
             _maps.FindGridsIntersecting(anchor.MapId, Box2.CenteredAround(point, new Vector2(Clearance * 2f)), ref _nearby, approx: true, includeMap: false);
             if (_nearby.Count > 0 || NearStation(prototype.StationClearance, point, anchor.MapId) || InGravityWell(point, anchor.MapId)
-                || NearHiddenStation(point, anchor.MapId))
+                || NearHiddenStation(point, anchor.MapId)
+                || fromCentre && _lattice.Locate(_maps.GetMapOrInvalid(anchor.MapId), point).Band < prototype.LatticeBand)
                 continue;
 
             origin = new MapCoordinates(point, anchor.MapId);

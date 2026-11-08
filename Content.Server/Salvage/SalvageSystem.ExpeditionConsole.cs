@@ -15,6 +15,7 @@ using Content.Shared.IdentityManagement; // Frontier
 using Content.Shared.NPC; // Frontier
 using Content.Server._NF.Salvage; // Frontier
 using Content.Server.Shuttles.Components;
+using Content.Server._WF.BoardingAction.Components; // WOLFGATE(BoardingAction)
 
 namespace Content.Server.Salvage;
 
@@ -52,6 +53,11 @@ public sealed partial class SalvageSystem
         if (!data.Missions.TryGetValue(args.Index, out var missionparams))
             return;
 
+        // WOLFGATE(PlanetExpeditions) START: a site mission is claimed in place, with no jump
+        if (WfTryClaimPlanetMission(uid, component, station.Value, data, missionparams))
+            return;
+        // WOLFGATE END
+
         // Frontier: FTL travel is currently restricted to expeditions and such, and so we need to put this here
         // until FTL changes for us in some way.
         if (!component.Debug) // Skip the test
@@ -71,6 +77,26 @@ public sealed partial class SalvageSystem
                 UpdateConsoles(station.Value, data); // Sure, why not?
                 return;
             }
+
+            // WOLFGATE(BoardingAction) START: a held ship can't leave on an expedition, and must hear so before one is generated.
+            if (HasComp<WFFtlDisruptedComponent>(grid))
+            {
+                PlayDenySound(uid, component);
+                _popupSystem.PopupEntity(Loc.GetString("wf-boarding-ftl-disrupted"), uid, PopupType.MediumCaution);
+                UpdateConsoles(station.Value, data);
+                return;
+            }
+            // WOLFGATE END
+
+            // WOLFGATE(PlanetExpeditions) START: a ship that can't leave a planet would build the map and never arrive, stuck claimed
+            if (_shuttle.WfRefusesFtlDeparture(grid))
+            {
+                PlayDenySound(uid, component);
+                _popupSystem.PopupEntity(Loc.GetString("wf-expedition-leave-planet"), uid, PopupType.MediumCaution);
+                UpdateConsoles(station.Value, data);
+                return;
+            }
+            // WOLFGATE END
 
             var xform = Transform(grid);
             var bounds = xform.WorldMatrix.TransformBox(gridComp.LocalAABB).Enlarged(ShuttleFTLRange);
@@ -156,6 +182,11 @@ public sealed partial class SalvageSystem
         var station = _station.GetOwningStation(entity);
         if (!TryComp<SalvageExpeditionDataComponent>(station, out var data) || !data.CanFinish)
             return;
+
+        // WOLFGATE(PlanetExpeditions) START: finishing a site mission gives it up
+        if (WfTryFinishPlanetMission(station.Value, data))
+            return;
+        // WOLFGATE END
 
         // Based on SalvageSystem.Runner:OnConsoleFTLAttempt
         if (!TryComp(entity, out TransformComponent? xform)) // Get the console's grid (if you move it, rip you)

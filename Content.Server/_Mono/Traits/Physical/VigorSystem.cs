@@ -1,3 +1,8 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2025 ark1368
+//
+// SPDX-License-Identifier: MPL-2.0
+
 using Content.Shared._Mono.Traits.Physical;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Timing;

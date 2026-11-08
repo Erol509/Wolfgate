@@ -1,3 +1,41 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2022 Alex Evgrashin
+// SPDX-FileCopyrightText: 2022 Andreas Kämper
+// SPDX-FileCopyrightText: 2022 EmoGarbage404
+// SPDX-FileCopyrightText: 2022 Fishfish458
+// SPDX-FileCopyrightText: 2022 Flipp Syder
+// SPDX-FileCopyrightText: 2022 Rane
+// SPDX-FileCopyrightText: 2022 Visne
+// SPDX-FileCopyrightText: 2022 fishfish458 <fishfish458>
+// SPDX-FileCopyrightText: 2023 Cheackraze
+// SPDX-FileCopyrightText: 2023 DrSmugleaf
+// SPDX-FileCopyrightText: 2023 Leon Friedrich
+// SPDX-FileCopyrightText: 2023 Nemanja
+// SPDX-FileCopyrightText: 2023 Slava0135
+// SPDX-FileCopyrightText: 2023 Vordenburg
+// SPDX-FileCopyrightText: 2023 deltanedas
+// SPDX-FileCopyrightText: 2023 keronshb
+// SPDX-FileCopyrightText: 2024 Checkraze
+// SPDX-FileCopyrightText: 2024 Dvir
+// SPDX-FileCopyrightText: 2024 Ed
+// SPDX-FileCopyrightText: 2024 GreaseMonk
+// SPDX-FileCopyrightText: 2024 LordCarve
+// SPDX-FileCopyrightText: 2024 Niels Huylebroeck
+// SPDX-FileCopyrightText: 2024 Pieter-Jan Briers
+// SPDX-FileCopyrightText: 2024 Repo
+// SPDX-FileCopyrightText: 2024 Robert V
+// SPDX-FileCopyrightText: 2024 Tayrtahn
+// SPDX-FileCopyrightText: 2024 checkraze
+// SPDX-FileCopyrightText: 2024 goet
+// SPDX-FileCopyrightText: 2024 lzk
+// SPDX-FileCopyrightText: 2024 metalgearsloth
+// SPDX-FileCopyrightText: 2025 Ark
+// SPDX-FileCopyrightText: 2025 ScarKy0
+// SPDX-FileCopyrightText: 2025 Whatstone
+// SPDX-FileCopyrightText: 2025 ark1368
+//
+// SPDX-License-Identifier: MPL-2.0
+
 using System.Linq;
 using Content.Server._NF.Bank;
 using System.Numerics;
@@ -35,6 +73,8 @@ using Content.Shared._NF.Bank.BUI; // Frontier
 using Content.Server._Mono.VendingMachine;
 using Content.Shared._Mono.Traits.Physical;
 using Content.Shared._Mono.Economy; // Mono - Seperation of cash payment from VendingMachineComp
+// WOLFGATE(Gags): validate and apply vending recolours
+using Content.Shared._WF.Gags;
 
 namespace Content.Server.VendingMachines
 {
@@ -57,6 +97,10 @@ namespace Content.Server.VendingMachines
         [Dependency] private IAdminLogManager _adminLogger = default!; // Frontier
         [Dependency] private VendingMachinePurchaseSystem _vendingPurchase = default!; // Mono
         [Dependency] private SharedCreditReceiverSystem _cash = default!; // Mono - Pwease chwose two pway wiw cawsh ow cwedit
+        // WOLFGATE(Gags) START: hold colours only until the selected item is dispensed
+        [Dependency] private SharedWFGagsSystem _gags = default!;
+        private readonly Dictionary<EntityUid, List<Color>> _pendingColors = new();
+        // WOLFGATE END
 
         private const float WallVendEjectDistanceFromWall = 1f;
 
@@ -132,7 +176,8 @@ namespace Content.Server.VendingMachines
             if (component.Ejecting)
                 return;
 
-            AuthorizedVend(uid, entity, args.Type, args.ID, component);
+            // WOLFGATE(Gags): pass colour options through the normal purchase checks
+            AuthorizedVend(uid, entity, args.Type, args.ID, component, args.Colors);
         }
 
         private void OnPowerChanged(EntityUid uid, VendingMachineComponent component, ref PowerChangedEvent args)
@@ -329,7 +374,9 @@ namespace Content.Server.VendingMachines
         /// <param name="type">The type of inventory the item is from</param>
         /// <param name="itemId">The prototype ID of the item</param>
         /// <param name="component"></param>
-        public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
+        // WOLFGATE(Gags) START: keep recolouring behind the regular price, stock and access checks
+        public void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId,
+            VendingMachineComponent component, List<Color>? colors = null)
         {
             if (!_prototypeManager.TryIndex<EntityPrototype>(itemId, out var proto))
                 return;
@@ -375,6 +422,13 @@ namespace Content.Server.VendingMachines
 
                 if (TryEjectVendorItem(uid, type, itemId, component.CanShoot, component))
                 {
+                    if (component.CanRecolor &&
+                        _gags.DefaultColors(new EntProtoId(itemId)) != null &&
+                        WFGagsColors.Sanitize(colors) is { } safeColors)
+                    {
+                        _pendingColors[uid] = safeColors;
+                    }
+
                     // WOLFGATE: a free vend skips the cash payment, which logs a zero amount as invalid
                     paidFully = totalPrice > 0 && _cash.TryCashPayment(uid, totalPrice, out var _, true); // Mono - Attempt to pay with cash before credit
 
@@ -402,6 +456,7 @@ namespace Content.Server.VendingMachines
             }
             // End Frontier
         }
+        // WOLFGATE END
 
         /// <summary>
         /// Tries to update the visuals of the component based on its current state.
@@ -530,6 +585,11 @@ namespace Content.Server.VendingMachines
             }
 
             var ent = Spawn(vendComponent.NextItemToEject, spawnCoordinates);
+
+            // WOLFGATE(Gags) START: apply colours only to the item whose purchase passed server validation
+            if (_pendingColors.Remove(uid, out var colors))
+                _gags.SetColors(ent, colors);
+            // WOLFGATE END
 
             // Mono: Track vending machine purchases for pricing modifications
             // Only track if this was a paid purchase (not a random eject or force eject)

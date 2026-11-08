@@ -11,7 +11,46 @@ public sealed partial class ResearchSystem
         SubscribeLocalEvent<ResearchServerComponent, ComponentStartup>(OnServerStartup);
         SubscribeLocalEvent<ResearchServerComponent, ComponentShutdown>(OnServerShutdown);
         SubscribeLocalEvent<ResearchServerComponent, TechnologyDatabaseModifiedEvent>(OnServerDatabaseModified);
+        SubscribeLocalEvent<ResearchServerComponent, MapInitEvent>(OnServerMapInit); // WOLFGATE: a server's clients follow its grid
+        SubscribeLocalEvent<ResearchServerComponent, EntParentChangedMessage>(OnServerParentChanged); // WOLFGATE: a server's clients follow its grid
     }
+
+    // WOLFGATE START: a server's clients follow its grid
+    private void OnServerMapInit(EntityUid uid, ResearchServerComponent component, MapInitEvent args)
+    {
+        LinkGridClients(uid, component);
+    }
+
+    /// <summary>A moved server drops the clients it left behind and takes any unlinked ones on its new grid.</summary>
+    private void OnServerParentChanged(EntityUid uid, ResearchServerComponent component, ref EntParentChangedMessage args)
+    {
+        if (LifeStage(uid) < EntityLifeStage.MapInitialized)
+            return;
+
+        var grid = args.Transform.GridUid;
+        foreach (var client in new List<EntityUid>(component.Clients))
+        {
+            if (Transform(client).GridUid != grid)
+                UnregisterClient(client, uid, serverComponent: component);
+        }
+
+        LinkGridClients(uid, component);
+    }
+
+    private void LinkGridClients(EntityUid uid, ResearchServerComponent component)
+    {
+        if (Transform(uid).GridUid is not { } grid)
+            return;
+
+        var clients = new HashSet<Entity<ResearchClientComponent>>();
+        _lookup.GetChildEntities(grid, clients);
+        foreach (var client in clients)
+        {
+            if (client.Comp.Server == null)
+                RegisterClient(client, uid, client.Comp, component);
+        }
+    }
+    // WOLFGATE END
 
     private void OnServerStartup(EntityUid uid, ResearchServerComponent component, ComponentStartup args)
     {

@@ -41,6 +41,7 @@ wf-encounter-name-trader = Wandering trader {$designation}
 wf-encounter-name-backup = TSF patrol {$designation} under attack
 wf-encounter-announce-backup = Any vessel, any vessel, this is {$name}. We are engaged by pirate raiders and outgunned. Requesting immediate backup. The Federation pays its debts.
 wf-encounter-kill-bounty-paid = {$amount} thalers paid into your account for killing one of the {$company}.
+wf-encounter-reward-capped = You hit the {$cap} thaler hourly payout cap, so your share for {$name} was cut.
 wf-encounter-reward-paid = For your help with {$name}, {$amount} { $amount ->
         [one] thaler has
        *[other] thalers have
@@ -53,6 +54,12 @@ wf-encounter-reward-thanks-tsf = All vessels that answered our call: the Federat
 wf-encounter-reward-thanks-hauler = Whoever that was, thank you. We've sent what we can spare.
 wf-encounter-announce-trader = {$name} is passing through the sector, open for business to anyone who comes alongside. Small stock, low prices, no refunds.
 wf-encounter-name-ambush = Hauler {$designation} under attack
+wf-encounter-name-station-blockade = Raider blockade {$designation}
+wf-encounter-announce-station-blockade = All traffic: raiders are holding the approaches to {$origin}. Supply lines are cut and freighters are turning back. Any armed vessel able to drive them off will be paid for it.
+wf-encounter-blockade-zone-warn-1 = {$intruder}, you are {$distance} metres off our line. Nothing goes in or out of this station. Turn back.
+wf-encounter-blockade-zone-warn-2 = {$intruder}, this lane is closed. Come about now.
+wf-encounter-blockade-zone-warn-3 = Last warning, {$intruder}. Nobody runs this blockade.
+wf-encounter-blockade-zone-attack = {$intruder}, you wanted to run it. Open fire.
 wf-encounter-sender-traffic = Sector traffic control
 wf-encounter-announce-freighter = {$name} is entering the sector at {$origin}, inbound to {$destination} with general cargo.
 wf-encounter-announce-ambush = Mayday, mayday, mayday. {$name}. Raiders have jumped us and we can't outrun them. Any vessel in range, we need guns out here. Please hurry.
@@ -354,3 +361,4 @@ wf-encounter-trader-hail-leave = Never mind.
 wf-encounter-trader-hail-stopping = Understood. Holding position for {$minutes} minutes. Dock when ready.
 wf-encounter-trader-hail-cannot = Sorry, we can't stop here.
 wf-encounter-trader-hail-farewell = Safe travels.
+wf-encounter-admin-target-anchor = reality anchor

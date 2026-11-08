@@ -1,3 +1,10 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2023 Nemanja
+// SPDX-FileCopyrightText: 2025 Ilya246
+// SPDX-FileCopyrightText: 2025 shab00m
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MachineLinking;

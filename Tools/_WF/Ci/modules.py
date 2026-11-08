@@ -46,6 +46,7 @@ ROOTS = (
     "Resources/Maps/_WF",
     "Resources/SharedMaps/_WF",
     "Resources/ServerInfo/_WF",
+    "Resources/GameData/_WF",
     "Tools/_WF",
     "Docs/_WF",
 )
@@ -66,6 +67,7 @@ AREAS = (
     ("Resources/Maps/", "Maps"),
     ("Resources/SharedMaps/", "Shared maps"),
     ("Resources/ServerInfo/", "Guidebook"),
+    ("Resources/GameData/", "Game data"),
     ("Tools/", "Tools"),
     ("Docs/", "Docs"),
 )

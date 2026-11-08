@@ -32,10 +32,6 @@ public sealed partial class WFReaverCampaignComponent : Component
     [ViewVariables]
     public TimeSpan? TierAnnounced;
 
-    /// <summary>When a quiet banner was last sent.</summary>
-    [ViewVariables]
-    public TimeSpan? LastQuietBanner;
-
     /// <summary>When the last stronghold was founded; a convoy counts when it arrives.</summary>
     [ViewVariables]
     public TimeSpan? LastFounded;
@@ -57,6 +53,10 @@ public sealed partial class WFReaverCampaignComponent : Component
     /// <summary>Funding payouts the Reavers have spent this round.</summary>
     [ViewVariables]
     public int Funded;
+
+    /// <summary>When the next funding payout may land.</summary>
+    [ViewVariables]
+    public TimeSpan NextFunding;
 
     /// <summary>Raids launched this round; every third goes for a station.</summary>
     [ViewVariables]

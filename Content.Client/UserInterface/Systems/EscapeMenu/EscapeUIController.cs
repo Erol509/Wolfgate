@@ -1,10 +1,12 @@
 ﻿using Content.Client.Gameplay;
 using Content.Client._WF.Feedback; // WOLFGATE(Feedback)
+using Content.Client._WF.Census; // WOLFGATE(Census)
 using Content.Client._WF.RoundSetup; // WOLFGATE(RoundSetup)
 using Content.Client._WF.MappingMode; // WOLFGATE(MappingMode)
 using Content.Client.Lobby; // WOLFGATE(InRoundCreator)
 using Content.Client._WF.Roadmap; // WOLFGATE(Roadmap)
 using Content.Client._WF.SectorControl; // WOLFGATE(SectorControl)
+using Content.Client._WF.LoreBook; // WOLFGATE(LoreBook)
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
@@ -88,6 +90,22 @@ public sealed partial class EscapeUIController : UIController, IOnStateEntered<G
         {
             CloseEscapeWindow();
             UIManager.GetUIController<FeedbackUIController>().ToggleWindow();
+        };
+        // WOLFGATE END
+
+        // WOLFGATE(Census) START: census list in the game menu
+        _escapeWindow.CensusButton.OnPressed += _ =>
+        {
+            CloseEscapeWindow();
+            UIManager.GetUIController<CensusUIController>().ToggleWindow();
+        };
+        // WOLFGATE END
+
+        // WOLFGATE(LoreBook) START: lore book entry in the game menu
+        _escapeWindow.LoreBookButton.OnPressed += _ =>
+        {
+            CloseEscapeWindow();
+            UIManager.GetUIController<WFLoreBookUIController>().Open();
         };
         // WOLFGATE END
 

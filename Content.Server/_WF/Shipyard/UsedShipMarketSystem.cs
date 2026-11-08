@@ -1,4 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.IO.Compression;
+using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server._NF.Shipyard.Systems;
@@ -73,8 +76,43 @@ public sealed class UsedShipListing
     /// </summary>
     public string Data
     {
-        get => _data ??= Writing?.GetAwaiter().GetResult() ?? string.Empty;
+        get => _packed != null ? Unpack(_packed) : _data ??= Writing?.GetAwaiter().GetResult() ?? string.Empty;
         set => _data = value;
+    }
+
+    private byte[]? _packed;
+
+    /// <summary>
+    /// Replaces the written YAML with its gzip bytes, so a long round does not hold every sold ship as a large string.
+    /// </summary>
+    public bool Pack()
+    {
+        if (_packed != null || Writing is not { IsCompletedSuccessfully: true })
+            return false;
+
+        var text = Writing.GetAwaiter().GetResult();
+        if (text == null)
+            return false;
+
+        using var output = new MemoryStream();
+        using (var gzip = new GZipStream(output, CompressionLevel.Fastest))
+        {
+            var bytes = Encoding.UTF8.GetBytes(text);
+            gzip.Write(bytes, 0, bytes.Length);
+        }
+
+        _packed = output.ToArray();
+        _data = null;
+        Writing = null;
+        return true;
+    }
+
+    private static string Unpack(byte[] packed)
+    {
+        using var input = new MemoryStream(packed);
+        using var gzip = new GZipStream(input, CompressionMode.Decompress);
+        using var reader = new StreamReader(gzip, Encoding.UTF8);
+        return reader.ReadToEnd();
     }
 
     /// <summary>
@@ -96,9 +134,9 @@ public record struct UsedShipListedEvent(UsedShipListing Listing);
 public sealed partial class UsedShipMarketSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
-    [Dependency] private DockingSystem _docking = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ShipyardSystem _shipyard = default!;
+    [Dependency] private WFHullRetireSystem _retire = default!;
     [Dependency] private StationSystem _station = default!;
     [Dependency] private UsedShipReinitSystem _reinit = default!;
 
@@ -109,6 +147,11 @@ public sealed partial class UsedShipMarketSystem : EntitySystem
     /// Markup on what the seller was paid, used when a sale does not come from a salesman.
     /// </summary>
     public const float DefaultMarkup = 0.05f;
+
+    /// <summary>
+    /// Most ships kept on the lot at once; the oldest listing goes when another is sold.
+    /// </summary>
+    public const int MaxListings = 50;
 
     /// <summary>
     /// How long a ship waits before it goes on the lot, when a sale does not come from a salesman.
@@ -187,8 +230,8 @@ public sealed partial class UsedShipMarketSystem : EntitySystem
     }
 
     /// <summary>
-    /// Copies a ship that has just been sold and puts it out back. The live grid is left alone so its
-    /// own deletion still runs every cleanup bound to the old owner; the copy is stripped when it is loaded.
+    /// Copies a ship that has just been sold and puts it out back, over the ticks after the sale. The live grid is only
+    /// parked, so its own deletion still runs every cleanup bound to the old owner; the copy is stripped when it is loaded.
     /// </summary>
     public bool TryCapture(EntityUid shuttle,
         EntityUid console,
@@ -225,14 +268,8 @@ public sealed partial class UsedShipMarketSystem : EntitySystem
             Log.Info($"Copying {ToPrettyString(shuttle)} for resale with {carry.Count} crew or machines aboard.");
 
         // A docked hull's joints and docks point at the station; the copy cannot carry them and a
-        // dangling reference makes the whole load fail. The hull is about to be deleted regardless.
-        _docking.UndockDocks(shuttle);
-
-        if (!_shipyard.TrySaveShipDeferred(shuttle, carry, out var writing))
-        {
-            Log.Error($"Could not copy {shipName} for the used lot; it is lost.");
-            return false;
-        }
+        // dangling reference makes the whole load fail. Retiring undocks it first.
+        var writing = _retire.RetireWithCopy(shuttle, carry);
 
         var saleValue = _shipyard.GetPostSaleRateBill(console, appraisal);
         var now = _timing.CurTime;
@@ -250,6 +287,12 @@ public sealed partial class UsedShipMarketSystem : EntitySystem
             AvailableAt = now + relistDelay,
             Writing = writing,
         };
+
+        while (_listings.Count >= MaxListings)
+        {
+            Log.Info($"Used lot is full; dropped {_listings[0].ShipName}.");
+            _listings.RemoveAt(0);
+        }
 
         _listings.Add(listing);
         Log.Info($"Captured {shipName} ({designName}) for the used lot at {listing.Price}, available at {listing.AvailableAt}.");
@@ -362,6 +405,12 @@ public sealed partial class UsedShipMarketSystem : EntitySystem
 
             Log.Warning($"Dropped {_listings[i].ShipName} from the used lot; its copy could not be written.");
             _listings.RemoveAt(i);
+        }
+
+        foreach (var listing in _listings)
+        {
+            if (listing.Pack())
+                break;
         }
 
         var now = _timing.CurTime;

@@ -1,3 +1,8 @@
+// WOLFGATE: restore the licence header removed by Kill Spdx
+// SPDX-FileCopyrightText: 2025 deltanedas <@deltanedas:kde.org>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 

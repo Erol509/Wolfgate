@@ -82,5 +82,5 @@ Some assets are licensed under the non-commercial [CC-BY-NC-SA 3.0](https://crea
 <!-- WOLFGATE START: credit the Starlight licence and the Goonstation-derived reactor -->
 Code under `_Starlight` folders, and the Starlight-derived parts of `_FarHorizons`, was contributed to Starlight between 2024-11-04 and 2026-02-28 and is under the Starlight License (Wolfgate's own edits there are marked `WOLFGATE` and are under the AGPL), a modified MIT license that requires attributing the Starlight project as its source: https://github.com/ss14Starlight/space-station-14. See `LICENSES/LicenseRef-Starlight.txt`.
 
-The nuclear reactor code under `_FarHorizons/Power/Generation/FissionGenerator` is ported from Goonstation and is under [CC-BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/), as are assets whose metadata names Goonstation as their source.
+The nuclear reactor code under `_FarHorizons/Power/Generation/FissionGenerator` is ported from Goonstation and is labelled MIT, following HardLight commit b602e8d485, which records permission from jhrushbe, rottenheadphones and taydeo. Assets whose metadata names Goonstation as their source are under [CC-BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/).
 <!-- WOLFGATE END -->
