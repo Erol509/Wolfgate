@@ -5,91 +5,58 @@
 - type: modTheme
   id: ModThemeEngineering
   name: modsuit-theme-engineering
-  hardlightColor: "#7CFF7C"
-  hardlightColor2: "#1E7A3A"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/extrashield_green.png
 
 - type: modTheme
   id: ModThemeAtmospheric
   name: modsuit-theme-atmospheric
-  hardlightColor: "#7CFF7C"
-  hardlightColor2: "#1E7A3A"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/extrashield_green.png
 
 - type: modTheme
   id: ModThemeMedical
   name: modsuit-theme-medical
   activationStepTime: 0.75
-  hardlightColor: "#8BE9FF"
-  hardlightColor2: "#006D77"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/cosmic_blue.png
 
 - type: modTheme
   id: ModThemeSecurity
   name: modsuit-theme-security
   activationStepTime: 0.75
-  hardlightColor: "#FFC857"
-  hardlightColor2: "#B26A00"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/alert_amber.png
 
 - type: modTheme
   id: ModThemeSafeguard
   name: modsuit-theme-safeguard
   activationStepTime: 0.75
-  hardlightColor: "#FFC857"
-  hardlightColor2: "#B26A00"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/alert_amber.png
 
 - type: modTheme
   id: ModThemeBrigMed
   name: modsuit-theme-brigmed
   activationStepTime: 0.75
-  hardlightColor: "#FFC857"
-  hardlightColor2: "#B26A00"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/alert_amber.png
 
 - type: modTheme
   id: ModThemeResearch
   name: modsuit-theme-research
   complexityMax: 20
-  hardlightColor: "#D9A6FF"
-  hardlightColor2: "#5A2A82"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/royal_purple.png
 
 - type: modTheme
   id: ModThemeMagnate
   name: modsuit-theme-magnate
   complexityMax: 20
   chargeDrain: 1.2
-  hardlightColor: "#D9A6FF"
-  hardlightColor2: "#5A2A82"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/royal_purple.png
 
 - type: modTheme
   id: ModThemeContractor
   name: modsuit-theme-contractor
   activationStepTime: 0.5
-  hardlightColor: "#FF6B6B"
-  hardlightColor2: "#8B1E1E"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/contractor_red.png
 
 - type: modTheme
   id: ModThemeCorporate
   name: modsuit-theme-corporate
   complexityMax: 20
   activationStepTime: 0.5
-  hardlightColor: "#D9A6FF"
-  hardlightColor2: "#5A2A82"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/royal_purple.png
 
 - type: modTheme
   id: ModThemeResponsory
   name: modsuit-theme-responsory
   complexityMax: 20
   activationStepTime: 0.5
-  hardlightColor: "#D9A6FF"
-  hardlightColor2: "#5A2A82"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/royal_purple.png
 
 - type: modTheme
   id: ModThemeApocryphal
@@ -97,17 +64,11 @@
   complexityMax: 25
   chargeDrain: 1.2
   activationStepTime: 0.5
-  hardlightColor: "#FFB74D"
-  hardlightColor2: "#E65100"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/hazard_orange.png
 
 - type: modTheme
   id: ModThemePraetorian
   name: modsuit-theme-praetorian
   activationStepTime: 0.75
-  hardlightColor: "#FFC857"
-  hardlightColor2: "#B26A00"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/alert_amber.png
 
 - type: modTheme
   id: ModThemeMining
@@ -122,7 +83,6 @@
   id: ModThemeLoader
   name: modsuit-theme-loader
   complexityMax: 10
-  hardlight: false
   inbuiltModules:
   - ModsuitModuleBuiltinHydraulicArms
   - ModsuitModuleBuiltinLoaderClamp
@@ -133,9 +93,6 @@
   name: modsuit-theme-syndicate
   complexityMax: 20
   activationStepTime: 0.5
-  hardlightColor: "#8AFF6A"
-  hardlightColor2: "#1B5E20"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/evil_green.png
   inbuiltModules:
   - ModsuitModuleBuiltinFlashProtection
   - ModsuitModuleBuiltinNightVision
@@ -146,9 +103,6 @@
   name: modsuit-theme-elite
   complexityMax: 19
   activationStepTime: 0.5
-  hardlightColor: "#8AFF6A"
-  hardlightColor2: "#1B5E20"
-  hardlightMask: /Textures/_WF/Modsuits/Hardlight/evil_green.png
   inbuiltModules:
   - ModsuitModuleBuiltinFlashProtection
   - ModsuitModuleBuiltinNightVision

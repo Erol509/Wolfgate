@@ -9,8 +9,3 @@
   id: ModDampenerField
   kind: source
   path: /Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl
-
-- type: shader
-  id: ModsuitHardlight
-  kind: source
-  path: /Textures/_WF/Modsuits/Shaders/mod_hardlight.swsl

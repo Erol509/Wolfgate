@@ -12,18 +12,13 @@ at the theme's activation step. Suit activation and powered modules check the ce
 jetpack module draws on it instead of a gas tank. Storage exists only while a storage module is installed;
 removing the module drops everything inside and takes the storage away.
 
-While a suit is active it projects a static theme-coloured hardlight over the wearer's body and marking layers, so
-tails, ears, hair and wings that sit outside the suit sprite stay visible as hardlight instead of being hidden.
-The shader tiles the theme's Skyrat mask over each sprite and cuts it to that sprite's own alpha, with the
-sprite's shading keeping it wrapped around the body parts. Nothing scrolls, scans or flickers, and the effect is
-kept dim enough to read as a texture rather than a bright glow. Clothing layers are never tinted, so the effect
-cannot show through the suit.
+While a suit is active it seals its parts and runs the installed modules. Clothing and the suit's own sprites are
+never tinted or replaced.
 
 Entry points: `ModSuitComponent` (theme, parts, core slot, module container), `ModModuleComponent` (type,
 complexity, power, cooldown, incompatibilities), `ModThemePrototype` (complexity cap, drain, inbuilt modules),
 `ModSuitSystem` (deployment, sealing, power, module installation), the module systems under
-`Content.Shared/_WF/Modsuits/Modules`, `ModSuitHardlightSystem` on the client for the sealed-suit mesh, and
-`ModSuitWindow` on the client.
+`Content.Shared/_WF/Modsuits/Modules`, and `ModSuitWindow` on the client.
 
 Original assets are the /tg/ MODsuit module icon set, copied to `Resources/Textures/_WF/Modsuits/mod_modules.rsi`
 with its CC-BY-SA-3.0 notice. Suit part sprites remain in the existing `_Goobstation`, `_Mono` and `_WF`
@@ -272,7 +267,6 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 - [`Content.Client/_WF/Modsuits/ModSphereVisualsComponent.cs`](../../../Content.Client/_WF/Modsuits/ModSphereVisualsComponent.cs)
 - [`Content.Client/_WF/Modsuits/ModSphereVisualsSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSphereVisualsSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitBoundUserInterface.cs`](../../../Content.Client/_WF/Modsuits/ModSuitBoundUserInterface.cs)
-- [`Content.Client/_WF/Modsuits/ModSuitHardlightSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitHardlightSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitSealedVisualsComponent.cs`](../../../Content.Client/_WF/Modsuits/ModSuitSealedVisualsComponent.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitUiSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitUiSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitVisualizerSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitVisualizerSystem.cs)
@@ -281,7 +275,6 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 
 ### Integration tests
 
-- [`Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitHardlightTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitHardlightTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Modsuits/ModsuitModulesContentTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModsuitModulesContentTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Modsuits/ModsuitModuleTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModsuitModuleTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitWindowTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Modsuits/ModSuitWindowTest.cs)
@@ -308,18 +301,8 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 ### Textures
 
 - [`Resources/Textures/_WF/Modsuits/balloons.rsi/`](../../../Resources/Textures/_WF/Modsuits/balloons.rsi/)
-- [`Resources/Textures/_WF/Modsuits/Hardlight/alert_amber.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/alert_amber.png)
-- [`Resources/Textures/_WF/Modsuits/Hardlight/ATTRIBUTION.txt`](../../../Resources/Textures/_WF/Modsuits/Hardlight/ATTRIBUTION.txt)
-- [`Resources/Textures/_WF/Modsuits/Hardlight/contractor_red.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/contractor_red.png)
-- [`Resources/Textures/_WF/Modsuits/Hardlight/cosmic_blue.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/cosmic_blue.png)
-- [`Resources/Textures/_WF/Modsuits/Hardlight/evil_green.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/evil_green.png)
-- [`Resources/Textures/_WF/Modsuits/Hardlight/extrashield_green.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/extrashield_green.png)
-- [`Resources/Textures/_WF/Modsuits/Hardlight/hazard_orange.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/hazard_orange.png)
-- [`Resources/Textures/_WF/Modsuits/Hardlight/royal_purple.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/royal_purple.png)
-- [`Resources/Textures/_WF/Modsuits/Hardlight/standard_blue.png`](../../../Resources/Textures/_WF/Modsuits/Hardlight/standard_blue.png)
 - [`Resources/Textures/_WF/Modsuits/mod_modules.rsi/`](../../../Resources/Textures/_WF/Modsuits/mod_modules.rsi/)
 - [`Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl)
-- [`Resources/Textures/_WF/Modsuits/Shaders/mod_hardlight.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_hardlight.swsl)
 - [`Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl)
 
 ### Audio
@@ -353,10 +336,7 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
   - the module system owns the suit parts
   - a MOD core replaces the power cell
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/Hands/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Hands/modsuit.yml)
-- [`Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml)
-  - the hardlight shader replaces hiding the head layers
-  - components granted while the native module system has the helmet sealed
-  - head layers stay visible; the hardlight shader projects them over the sealed suit
+- [`Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml): components granted while the native module system has the helmet sealed
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/OuterClothing/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/OuterClothing/modsuit.yml): the native module system grants sealed components
 - [`Resources/Prototypes/_Goobstation/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Shoes/modsuit.yml)
 - [`Resources/Prototypes/_Goobstation/Entities/Objects/Specific/Robotics/modsuit_parts.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Objects/Specific/Robotics/modsuit_parts.yml): the standard core holds a swappable power cell

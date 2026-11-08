@@ -56,8 +56,8 @@ public sealed class ModsuitHiddenLayersTest
 
         await server.WaitAssertion(() =>
         {
-            // Some helmets cover the head while sealed, others leave it to the hardlight shader; the retraction
-            // below is what this test guards.
+            // Some helmets cover the head while sealed, others leave it visible; the retraction below is what this
+            // test guards.
             var comp = entMan.GetComponent<ModSuitComponent>(suit);
             Assert.That(modSuit.TryToggleActivation((suit, comp), mob));
         });
