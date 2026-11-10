@@ -69,7 +69,7 @@ public sealed partial class ModMagnetModuleComponent : Component
     public float LaunchSpeed = 12f;
 
     [DataField]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/_WF/Modsuits/gravhit.ogg");
+    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/_Goobstation/Items/Modsuit/gravhit.ogg");
 }
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

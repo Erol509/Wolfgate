@@ -69,10 +69,10 @@ public sealed partial class ModSphereTransformModuleComponent : Component
     public float ExplosionCoefficient = 0.8f;
 
     [DataField]
-    public SoundSpecifier ActivateSound = new SoundPathSpecifier("/Audio/_WF/Modsuits/ballin.ogg");
+    public SoundSpecifier ActivateSound = new SoundPathSpecifier("/Audio/_Goobstation/Items/Modsuit/ballin.ogg");
 
     [DataField]
-    public SoundSpecifier DeactivateSound = new SoundPathSpecifier("/Audio/_WF/Modsuits/ballout.ogg");
+    public SoundSpecifier DeactivateSound = new SoundPathSpecifier("/Audio/_Goobstation/Items/Modsuit/ballout.ogg");
 
     [DataField]
     public SoundSpecifier ImpactSound = new SoundCollectionSpecifier("MetalThud", AudioParams.Default.WithVariation(0.1f).WithVolume(-2f));
@@ -152,7 +152,7 @@ public sealed partial class ModSphereDrillComponent : Component
     public EntityWhitelist? Whitelist;
 
     [DataField]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/_WF/Modsuits/sonic_jackhammer.ogg", AudioParams.Default.WithVolume(-4f));
+    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/_Goobstation/Items/Modsuit/sonic_jackhammer.ogg", AudioParams.Default.WithVolume(-4f));
 }
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

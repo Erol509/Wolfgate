@@ -1,4 +1,4 @@
-﻿# Black mime hardsuit (Impstation)
+# Black mime hardsuit (Impstation)
 
 - type: entity
   parent: ClothingOuterHardsuitBase
@@ -128,7 +128,7 @@
   components:
   - type: ItemSlots
     slots:
-      cell_slot:
+      mod-core:
         name: modsuit-core-slot-name
         startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
@@ -182,22 +182,11 @@
     - Snout
     - HeadTop
     - HeadSide
-  - type: ComponentToggler
-    components:
-    - type: BreathMask
-    - type: PressureProtection
-      highPressureMultiplier: 0.3
-      lowPressureMultiplier: 1000
-    - type: TemperatureProtection
-      heatingCoefficient: 0.01
-      coolingCoefficient: 0.01
-    - type: IdentityBlocker
-    - type: IngestionBlocker
   - type: PointLight
     color: "#ff66cc"
 
 - type: entity
-  parent: ClothingModsuitGauntletsBase
+  parent: ClothingModsuitGauntletsStandard
   id: ADTClothingHandsModsuitClown
   categories: [ HideSpawnMenu ]
   components:
@@ -205,7 +194,7 @@
     sprite: _WF/ClownCosmetics/Clothing/EVA/Modsuit/clown_gauntlets.rsi
 
 - type: entity
-  parent: ClothingModsuitChestplateBase
+  parent: ClothingModsuitChestplateStandard
   id: ADTClothingOuterModsuitBodyClown
   categories: [ HideSpawnMenu ]
   components:
@@ -232,7 +221,7 @@
     sprintModifier: 1
 
 - type: entity
-  parent: ClothingModsuitBootsBase
+  parent: ClothingModsuitBootsStandard
   id: ADTClothingModsuitShoesClown
   categories: [ HideSpawnMenu ]
   components:

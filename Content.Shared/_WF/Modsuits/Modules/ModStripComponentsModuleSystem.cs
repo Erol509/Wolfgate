@@ -8,6 +8,7 @@ public sealed partial class ModStripComponentsModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModStripComponentsModuleComponent, ModModuleActivatedEvent>(OnActivated);
         SubscribeLocalEvent<ModStripComponentsModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);
     }

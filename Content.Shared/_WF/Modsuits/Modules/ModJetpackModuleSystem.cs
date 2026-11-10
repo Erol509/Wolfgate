@@ -11,6 +11,7 @@ public sealed partial class ModJetpackModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModJetpackModuleComponent, ModModuleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<ModJetpackModuleComponent, ModModuleActivatedEvent>(OnActivated);
         SubscribeLocalEvent<ModJetpackModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);

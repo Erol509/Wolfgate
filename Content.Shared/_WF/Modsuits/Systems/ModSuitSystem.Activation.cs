@@ -232,6 +232,8 @@ public sealed partial class ModSuitSystem
         if (part.Comp.Sealed == sealing)
             return;
 
+        _hideLayer.SetWearerLayersHidden(part, false);
+
         if (TryComp<ModSealedComponentsComponent>(part, out var sealedComps))
         {
             if (sealing)
@@ -244,6 +246,7 @@ public sealed partial class ModSuitSystem
         Dirty(part);
 
         _appearance.SetData(part, ModSuitVisuals.Sealed, sealing);
+        _hideLayer.SetWearerLayersHidden(part, true);
 
         if (silent || suit.Comp.Wearer is not { } wearer)
             return;

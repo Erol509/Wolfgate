@@ -1,9 +1,9 @@
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._WF.Modsuits.Systems;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared._WF.Modsuits.Modules;
@@ -13,6 +13,7 @@ public sealed partial class ModDeviceModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModDeviceModuleComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ModDeviceModuleComponent, ModModuleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<ModDeviceModuleComponent, ModModuleActivatedEvent>(OnActivated);
@@ -57,7 +58,9 @@ public sealed partial class ModDeviceModuleSystem : EntitySystem
     }
     private void OnActivateAttempt(Entity<ModDeviceModuleComponent> ent, ref ModModuleActivateAttemptEvent args)
     {
-        if (args.User is not { } user || _hands.TryGetEmptyHand(user, out _))
+        if (args.User is not { } user
+            || !TryComp<HandsComponent>(user, out var hands)
+            || hands.CountFreeHands() > 0)
             return;
 
         args.Cancelled = true;
@@ -126,37 +129,6 @@ public sealed partial class ModDeviceModuleSystem : EntitySystem
         ent.Comp.DeviceEntity = device;
         Dirty(ent);
         return device;
-    }
-
-    public void SetDevice(Entity<ModDeviceModuleComponent> ent, EntProtoId device)
-    {
-        if (ent.Comp.Device == device)
-            return;
-
-        var wasActive = TryComp<ModModuleComponent>(ent, out var moduleBase) && moduleBase.Active;
-        _modSuit.TryGetModuleSuit(ent, out var suit);
-
-        if (wasActive && suit.Comp != null)
-            _modSuit.SetModuleActive(suit, (ent.Owner, moduleBase!), false);
-
-        if (ent.Comp.DeviceEntity is { } old)
-        {
-            _pendingReturn.Remove(old);
-            ent.Comp.DeviceEntity = null;
-            PredictedQueueDel(old);
-        }
-
-        if (ent.Comp.DeviceContainer.ContainedEntity is { } contained)
-        {
-            _container.Remove(contained, ent.Comp.DeviceContainer);
-            PredictedQueueDel(contained);
-        }
-
-        ent.Comp.Device = device;
-        Dirty(ent);
-
-        if (wasActive && suit.Comp != null)
-            _modSuit.SetModuleActive(suit, (ent.Owner, moduleBase!), true);
     }
 
     private void Deactivate(Entity<ModDeviceModuleComponent> ent)

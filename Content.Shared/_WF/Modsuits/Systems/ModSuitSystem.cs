@@ -18,9 +18,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
-using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Content.Shared.Wires;
@@ -48,7 +46,6 @@ public sealed partial class ModSuitSystem : EntitySystem
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
-    [Dependency] private SharedPowerCellSystem _powerCell = default!;
     [Dependency] private SharedActionsSystem _actions = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
@@ -58,12 +55,9 @@ public sealed partial class ModSuitSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private SharedInteractionSystem _interaction = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
-    [Dependency] private SharedToolSystem _tool = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private SharedWiresSystem _wires = default!;
-    [Dependency] private ToggleableClothingSystem _toggleableClothing = default!;
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private ModCoreSystem _modCore = default!;
 
     private readonly HashSet<EntityUid> _movingParts = new();
 
@@ -72,7 +66,6 @@ public sealed partial class ModSuitSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ModSuitComponent, ComponentInit>(OnSuitInit);
-        SubscribeLocalEvent<ModSuitComponent, ComponentStartup>(OnSuitStartup);
         SubscribeLocalEvent<ModSuitComponent, MapInitEvent>(OnSuitMapInit);
         SubscribeLocalEvent<ModSuitComponent, ComponentShutdown>(OnSuitShutdown);
         SubscribeLocalEvent<ModSuitComponent, GetItemActionsEvent>(OnGetActions);
@@ -86,7 +79,13 @@ public sealed partial class ModSuitSystem : EntitySystem
         SubscribeLocalEvent<ModSuitComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
         SubscribeLocalEvent<ModSuitComponent, ModSuitToggleDoAfterEvent>(OnOtherUserToggleDoAfter);
         SubscribeLocalEvent<ModSuitComponent, AttemptChangePanelEvent>(OnAttemptChangePanel);
-        SubscribeLocalEvent<ModSuitComponent, ModCoreRemoveDoAfterEvent>(OnCoreRemoveDoAfter);
+        SubscribeLocalEvent<ModSuitComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<ModSuitComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<ModSuitComponent, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnSpeedRefresh);
+        SubscribeLocalEvent<ModSuitComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
+        SubscribeLocalEvent<ModSuitComponent, PowerCellChangedEvent>(OnPowerCellChanged);
+        SubscribeLocalEvent<ModSuitComponent, EntInsertedIntoContainerMessage>(OnSuitEntInserted);
+        SubscribeLocalEvent<ModSuitComponent, EntRemovedFromContainerMessage>(OnSuitEntRemoved);
         SubscribeLocalEvent<ModSuitComponent, BoundUserInterfaceMessageAttempt>(OnUiMessageAttempt);
         SubscribeLocalEvent<ModSuitComponent, ModSuitActivateMessage>(OnUiActivate);
         SubscribeLocalEvent<ModSuitComponent, ModSuitTogglePartMessage>(OnUiTogglePart);
@@ -94,14 +93,6 @@ public sealed partial class ModSuitSystem : EntitySystem
         SubscribeLocalEvent<ModSuitComponent, ModSuitModuleToggleMessage>(OnUiModuleToggle);
         SubscribeLocalEvent<ModSuitComponent, ModSuitModulePinMessage>(OnUiModulePin);
         SubscribeLocalEvent<ModSuitComponent, ModSuitModuleRemoveMessage>(OnUiModuleRemove);
-        SubscribeLocalEvent<ModSuitComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<ModSuitComponent, ItemSlotEjectAttemptEvent>(OnCoreEjectAttempt);
-        SubscribeLocalEvent<ModSuitComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<ModSuitComponent, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnSpeedRefresh);
-        SubscribeLocalEvent<ModSuitComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
-        SubscribeLocalEvent<ModSuitComponent, PowerCellChangedEvent>(OnPowerCellChanged);
-        SubscribeLocalEvent<ModSuitComponent, EntInsertedIntoContainerMessage>(OnSuitEntInserted);
-        SubscribeLocalEvent<ModSuitComponent, EntRemovedFromContainerMessage>(OnSuitEntRemoved);
         SubscribeLocalEvent<ModPartComponent, ComponentInit>(OnPartInit);
         SubscribeLocalEvent<ModPartComponent, BeingUnequippedAttemptEvent>(OnPartUnequipAttempt);
         SubscribeLocalEvent<ModPartComponent, GotUnequippedEvent>(OnPartGotUnequipped);
@@ -117,33 +108,28 @@ public sealed partial class ModSuitSystem : EntitySystem
         UpdateActivation();
         UpdatePowerAlerts();
     }
+
     private void OnSuitInit(Entity<ModSuitComponent> ent, ref ComponentInit args)
     {
         ent.Comp.PartsContainer = _container.EnsureContainer<Container>(ent, ent.Comp.PartsContainerId);
         ent.Comp.ModulesContainer = _container.EnsureContainer<Container>(ent, ent.Comp.ModulesContainerId);
     }
+
     private void OnPartInit(Entity<ModPartComponent> ent, ref ComponentInit args)
     {
         ent.Comp.StoredContainer = _container.EnsureContainer<ContainerSlot>(ent, ent.Comp.StoredContainerId);
     }
-    private void OnSuitStartup(Entity<ModSuitComponent> ent, ref ComponentStartup args)
-    {
-        SpawnParts(ent);
-        SpawnStartingModules(ent);
-    }
+
     private void OnSuitMapInit(Entity<ModSuitComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.PartsContainer = _container.EnsureContainer<Container>(ent, ent.Comp.PartsContainerId);
-        ent.Comp.ModulesContainer = _container.EnsureContainer<Container>(ent, ent.Comp.ModulesContainerId);
-
         _actionContainer.EnsureAction(ent, ref ent.Comp.ActivateActionEntity, ent.Comp.ActivateAction);
         _actionContainer.EnsureAction(ent, ref ent.Comp.DeployActionEntity, ent.Comp.DeployAction);
 
         SpawnParts(ent);
         SpawnStartingModules(ent);
-        SyncCharge(ent);
         Dirty(ent);
     }
+
     private void OnSuitShutdown(Entity<ModSuitComponent> ent, ref ComponentShutdown args)
     {
         if (_net.IsClient)
@@ -155,6 +141,7 @@ public sealed partial class ModSuitSystem : EntitySystem
                 QueueDel(part);
         }
     }
+
     private void OnGetActions(Entity<ModSuitComponent> ent, ref GetItemActionsEvent args)
     {
         if (args.SlotFlags is not { } flags || (flags & ent.Comp.RequiredSlot) == 0)
@@ -163,6 +150,7 @@ public sealed partial class ModSuitSystem : EntitySystem
         args.AddAction(ent.Comp.ActivateActionEntity);
         args.AddAction(ent.Comp.DeployActionEntity);
     }
+
     private void OnSuitEquipped(Entity<ModSuitComponent> ent, ref ClothingGotEquippedEvent args)
     {
         if (_timing.ApplyingState || (args.Clothing.InSlotFlag & ent.Comp.RequiredSlot) == 0)
@@ -170,6 +158,7 @@ public sealed partial class ModSuitSystem : EntitySystem
 
         SetWearer(ent, args.Wearer);
     }
+
     private void OnSuitUnequipped(Entity<ModSuitComponent> ent, ref ClothingGotUnequippedEvent args)
     {
         if (_timing.ApplyingState || ent.Comp.Wearer != args.Wearer)
@@ -186,6 +175,7 @@ public sealed partial class ModSuitSystem : EntitySystem
 
         SetWearer(ent, null);
     }
+
     private void OnSuitUnequipAttempt(Entity<ModSuitComponent> ent, ref BeingUnequippedAttemptEvent args)
     {
         if (ent.Comp.State == ModSuitState.Inactive)
@@ -214,7 +204,6 @@ public sealed partial class ModSuitSystem : EntitySystem
 
         if (wearer != null)
         {
-            SyncCharge(ent);
             GrantModuleActions(ent, wearer.Value);
             UpdatePowerAlert(ent);
         }
@@ -225,6 +214,7 @@ public sealed partial class ModSuitSystem : EntitySystem
             RaiseLocalEvent(module, ref ev);
         }
     }
+
     private void OnActivateAction(Entity<ModSuitComponent> ent, ref ModSuitActivateActionEvent args)
     {
         if (args.Handled)
@@ -233,6 +223,7 @@ public sealed partial class ModSuitSystem : EntitySystem
         args.Handled = true;
         TryToggleActivation(ent, args.Performer);
     }
+
     private void OnDeployAction(Entity<ModSuitComponent> ent, ref ModSuitDeployActionEvent args)
     {
         if (args.Handled)
@@ -241,10 +232,12 @@ public sealed partial class ModSuitSystem : EntitySystem
         args.Handled = true;
         ToggleAllParts(ent, args.Performer);
     }
+
     private void OnGetEquipmentVerbs(Entity<ModSuitComponent> ent, ref GetVerbsEvent<EquipmentVerb> args)
     {
         AddEquipmentVerbs(ent, args.User, args.CanComplexInteract, args.Verbs);
     }
+
     private void OnGetRelayedEquipmentVerbs(Entity<ModSuitComponent> ent, ref InventoryRelayedEvent<GetVerbsEvent<EquipmentVerb>> args)
     {
         AddEquipmentVerbs(ent, args.Args.User, args.Args.CanComplexInteract, args.Args.Verbs);
@@ -286,6 +279,7 @@ public sealed partial class ModSuitSystem : EntitySystem
             },
         });
     }
+
     private void OnGetAlternativeVerbs(Entity<ModSuitComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanComplexInteract || ent.Comp.Wearer != null || !CanUseInterface(ent, args.User))
@@ -298,17 +292,6 @@ public sealed partial class ModSuitSystem : EntitySystem
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => _ui.OpenUi(ent.Owner, ModSuitUiKey.Key, user),
         });
-
-        if (HasOpenPanel(ent) && GetCore(ent) is { } core && _modCore.HasCell(core))
-        {
-            args.Verbs.Add(new AlternativeVerb
-            {
-                Text = Loc.GetString("modsuit-verb-remove-cell"),
-                Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
-                Priority = 4,
-                Act = () => _modCore.TryStartCellRemoval(core, ent.Owner, user),
-            });
-        }
     }
 
     private void StartOtherUserToggle(Entity<ModSuitComponent> ent, EntityUid user, EntityUid wearer)
@@ -326,6 +309,7 @@ public sealed partial class ModSuitSystem : EntitySystem
         var popup = Loc.GetString("strippable-component-alert-owner-interact", ("user", Identity.Entity(user, EntityManager)), ("item", ent.Owner));
         _popup.PopupEntity(popup, wearer, wearer, PopupType.Large);
     }
+
     private void OnOtherUserToggleDoAfter(Entity<ModSuitComponent> ent, ref ModSuitToggleDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
@@ -334,6 +318,7 @@ public sealed partial class ModSuitSystem : EntitySystem
         args.Handled = true;
         TryToggleActivation(ent, args.User);
     }
+
     private void OnAttemptChangePanel(Entity<ModSuitComponent> ent, ref AttemptChangePanelEvent args)
     {
         if (args.Cancelled || ent.Comp.State == ModSuitState.Inactive)
@@ -344,54 +329,11 @@ public sealed partial class ModSuitSystem : EntitySystem
 
         args.Cancelled = true;
     }
-    private void OnCoreEjectAttempt(Entity<ModSuitComponent> ent, ref ItemSlotEjectAttemptEvent args)
-    {
-        if (args.Slot.ID != ent.Comp.CoreSlotId || ent.Comp.CoreEjectAllowed)
-            return;
-
-        args.Cancelled = true;
-    }
-
-    private void OnCoreRemoveDoAfter(Entity<ModSuitComponent> ent, ref ModCoreRemoveDoAfterEvent args)
-    {
-        if (args.Cancelled || args.Handled || !HasOpenPanel(ent) || GetCore(ent) == null)
-            return;
-
-        if (!_itemSlots.TryGetSlot(ent, ent.Comp.CoreSlotId, out var slot))
-            return;
-
-        args.Handled = true;
-        ent.Comp.CoreEjectAllowed = true;
-        var ejected = _itemSlots.TryEject(ent, slot, args.User, out _);
-        ent.Comp.CoreEjectAllowed = false;
-
-        if (!ejected)
-            return;
-
-        _audio.PlayPredicted(ent.Comp.ModuleRemoveSound, ent, args.User);
-        _popup.PopupClient(Loc.GetString("modsuit-core-removed"), ent, args.User);
-    }
 
     private void OnInteractUsing(Entity<ModSuitComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
-
-        // The core is unbolted with a wrench, as on /tg/; the panel must already be open.
-        if (HasOpenPanel(ent) && _tool.HasQuality(args.Used, "Anchoring"))
-        {
-            args.Handled = true;
-
-            if (GetCore(ent) == null)
-            {
-                _popup.PopupClient(Loc.GetString("modsuit-core-missing"), ent, args.User);
-                return;
-            }
-
-            if (_tool.UseTool(args.Used, args.User, ent.Owner, 3f, "Anchoring", new ModCoreRemoveDoAfterEvent()))
-                _popup.PopupClient(Loc.GetString("modsuit-core-unbolting"), ent, args.User);
-            return;
-        }
 
         if (HasComp<ModModuleComponent>(args.Used))
         {
@@ -403,6 +345,7 @@ public sealed partial class ModSuitSystem : EntitySystem
         if (GetCore(ent) is { } core)
             RaiseLocalEvent(core, args);
     }
+
     private void OnExamined(Entity<ModSuitComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
@@ -415,9 +358,9 @@ public sealed partial class ModSuitSystem : EntitySystem
                 ("current", GetComplexity(ent)),
                 ("max", theme.ComplexityMax)));
 
-            if (GetCore(ent) != null)
+            if (GetBattery(ent) is { } battery)
             {
-                var percent = (int) MathF.Round(ent.Comp.Charge / MathF.Max(1f, ent.Comp.MaxCharge) * 100f);
+                var percent = (int) MathF.Round(GetCharge(battery) / MathF.Max(1f, battery.Comp.MaxCharge) * 100f);
                 args.PushMarkup(Loc.GetString("modsuit-examine-charge", ("percent", percent)));
             }
             else
@@ -432,6 +375,7 @@ public sealed partial class ModSuitSystem : EntitySystem
             }
         }
     }
+
     private void OnSpeedRefresh(Entity<ModSuitComponent> ent, ref InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
         RelayToActiveModules(ent, args.Args);
@@ -441,6 +385,7 @@ public sealed partial class ModSuitSystem : EntitySystem
 
         args.Args.ModifySpeed(ent.Comp.UnpoweredSpeedModifier);
     }
+
     private void OnDamageModify(Entity<ModSuitComponent> ent, ref InventoryRelayedEvent<DamageModifyEvent> args)
     {
         RelayToActiveModules(ent, args.Args);

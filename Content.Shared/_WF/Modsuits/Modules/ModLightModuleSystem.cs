@@ -8,6 +8,7 @@ public sealed partial class ModLightModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModLightModuleComponent, ModModuleActivatedEvent>(OnActivated);
         SubscribeLocalEvent<ModLightModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);
     }

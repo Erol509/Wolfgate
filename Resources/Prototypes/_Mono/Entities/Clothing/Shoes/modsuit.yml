@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingModsuitBootsBase
+  parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsUSSPVaryag
   name: Marshevyye Varyag
   description: Heavy-duty boots designed for combat and EVA.
@@ -27,7 +27,7 @@
     modifier: 0.75
 
 - type: entity
-  parent: ClothingModsuitBootsBase
+  parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsUSSPZastavnik
   name: Sapogi Zastavnika
   description: Thick, reinforced boots with magnetic stabilizers and shock absorption.
@@ -55,7 +55,7 @@
     modifier: 0.75
 
 - type: entity
-  parent: ClothingModsuitBootsBase
+  parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsRogue
   name: RX-01 modsuit boots
   description: Magnetized voidboots to help you avoid slips, trips, and Feds.
@@ -87,7 +87,7 @@
 
 # Volta
 - type: entity
-  parent: ClothingModsuitBootsBase
+  parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsVolta
   name: Volta Modsuit Boots
   description: Made to get militaristically oily.
@@ -120,7 +120,7 @@
 
 # Gallóglach
 - type: entity
-  parent: ClothingModsuitBootsBase
+  parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsMercenary
   name: mercenary modsuit boots
   description: The suits Actuator Enhancement System paired with the built in magboots make boarding actions a breeze.

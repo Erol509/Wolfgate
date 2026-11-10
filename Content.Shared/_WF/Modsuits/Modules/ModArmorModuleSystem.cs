@@ -11,13 +11,13 @@ public sealed partial class ModArmorModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModArmorModuleComponent, ModModuleActivatedEvent>(OnActivated);
         SubscribeLocalEvent<ModArmorModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);
         SubscribeLocalEvent<ModArmorModuleComponent, DamageModifyEvent>(OnDamageModify);
     }
 
     [Dependency] private ModSuitSystem _modSuit = default!;
-    [Dependency] private SharedArmorSystem _armor = default!;
     private void OnActivated(Entity<ModArmorModuleComponent> ent, ref ModModuleActivatedEvent args)
     {
         RefreshArmor(args.Suit, ent.Comp.Slots);

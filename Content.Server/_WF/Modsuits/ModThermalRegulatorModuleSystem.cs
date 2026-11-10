@@ -2,11 +2,10 @@ using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._WF.Modsuits.Modules;
-using Content.Shared._WF.Modsuits.Systems;
 
 namespace Content.Server._WF.Modsuits;
 
-/// <summary>Drives the thermal regulator module towards its target body temperature.</summary>
+/// <summary>Holds the wearer's body temperature at the module's target while it is active.</summary>
 public sealed partial class ModThermalRegulatorModuleSystem : EntitySystem
 {
     [Dependency] private TemperatureSystem _temperature = default!;

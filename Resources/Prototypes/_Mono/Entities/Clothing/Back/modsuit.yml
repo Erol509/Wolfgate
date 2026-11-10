@@ -38,7 +38,7 @@
   #           - PowerCell
   - type: ItemSlots
     slots:
-      cell_slot:
+      mod-core:
         name: modsuit-core-slot-name
         startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
@@ -86,7 +86,7 @@
   #           - PowerCell
   - type: ItemSlots
     slots:
-      cell_slot:
+      mod-core:
         name: modsuit-core-slot-name
         startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
@@ -144,7 +144,7 @@
   #           - PowerCell
   - type: ItemSlots
     slots:
-      cell_slot:
+      mod-core:
         name: modsuit-core-slot-name
         startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
@@ -216,7 +216,7 @@
   #           - PowerCell
   - type: ItemSlots
     slots:
-      cell_slot:
+      mod-core:
         name: modsuit-core-slot-name
         startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
@@ -289,7 +289,7 @@
   #           - PowerCell
   - type: ItemSlots
     slots:
-      cell_slot:
+      mod-core:
         name: modsuit-core-slot-name
         startingItem: ModsuitCoreStandardHighCapacity
         whitelist:

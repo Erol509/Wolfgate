@@ -16,8 +16,11 @@ public sealed partial class ModSuitVisualizerSystem : VisualizerSystem<ModSuitSe
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ModSuitSealedVisualsComponent, GetEquipmentVisualsEvent>(OnGetEquipmentVisuals, after: new[] { typeof(ClientClothingSystem) });
+
+        SubscribeLocalEvent<ModSuitSealedVisualsComponent, GetEquipmentVisualsEvent>(OnGetEquipmentVisuals,
+            after: new[] { typeof(ClientClothingSystem) });
     }
+
     private void OnGetEquipmentVisuals(Entity<ModSuitSealedVisualsComponent> ent, ref GetEquipmentVisualsEvent args)
     {
         if (!TryComp(ent, out AppearanceComponent? appearance)

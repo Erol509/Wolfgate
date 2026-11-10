@@ -11,6 +11,7 @@ public sealed partial class ModHolsterModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModHolsterModuleComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ModHolsterModuleComponent, ModModuleUsedEvent>(OnUsed);
     }

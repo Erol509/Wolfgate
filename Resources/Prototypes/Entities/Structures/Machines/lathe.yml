@@ -517,6 +517,7 @@
     - DynamicAmmoRecipePack
     - SecurityWeapons
     - SecurityDisablers
+    - ModsuitSecurity # WOLFGATE(Modsuits): departmental MOD module recipes
     - SMCybernetics
     # Mono - Mechs
     - WeaponMechCombatArsenal
@@ -624,6 +625,7 @@
     - NFMedicalStatic # Frontier
     dynamicPacks:
     - Chemistry
+    - ModsuitMedical # WOLFGATE(Modsuits): departmental MOD module recipes
     - SyringeGuns # DeltaV
     - NFMedical # Frontier
     # Shitmed Change

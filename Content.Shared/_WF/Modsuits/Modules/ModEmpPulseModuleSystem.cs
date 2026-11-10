@@ -7,6 +7,7 @@ public sealed partial class ModEmpPulseModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModEmpPulseModuleComponent, ModModuleUsedEvent>(OnUsed);
     }
 

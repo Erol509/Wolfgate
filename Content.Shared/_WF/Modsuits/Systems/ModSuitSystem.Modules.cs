@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Shared._WF.Modsuits.Components;
-using Robust.Shared.Containers;
+using Content.Shared.Actions;
 
 namespace Content.Shared._WF.Modsuits.Systems;
 
@@ -8,11 +8,7 @@ public sealed partial class ModSuitSystem
 {
     private void SpawnStartingModules(Entity<ModSuitComponent> ent)
     {
-        if (_net.IsClient || ent.Comp.ModulesContainer.ContainedEntities.Count != 0)
-            return;
-
-        // Legacy ToggleableClothing suits have no native parts and own their own storage.
-        if (ent.Comp.Parts.Count == 0)
+        if (ent.Comp.ModulesContainer.ContainedEntities.Count != 0)
             return;
 
         var theme = _proto.Index(ent.Comp.Theme);
@@ -28,25 +24,15 @@ public sealed partial class ModSuitSystem
             }
 
             moduleComp.Removable = false;
-            Dirty(module, moduleComp);
             InstallModule(ent, (module, moduleComp));
         }
 
         foreach (var proto in ent.Comp.StartingModules)
         {
             var module = PredictedSpawnAttachedTo(proto, coords);
-            if (!TryComp<ModModuleComponent>(module, out var moduleComp))
+            if (!TryComp<ModModuleComponent>(module, out var moduleComp) || !CanInstallModule(ent, (module, moduleComp), out _, true))
             {
-                Log.Warning($"Starting module {proto} has no ModModule component");
-                PredictedQueueDel(module);
-                continue;
-            }
-
-            if (!CanInstallModule(ent, (module, moduleComp), out var reason, true))
-            {
-                // A theme without the needed part or cap simply skips that starting module.
-                if (reason != "modsuit-module-missing-part")
-                    Log.Warning($"Starting module {proto} could not be installed into {ToPrettyString(ent)}: {reason}");
+                Log.Warning($"Starting module {proto} could not be installed into {ToPrettyString(ent)}");
                 PredictedQueueDel(module);
                 continue;
             }
@@ -283,17 +269,12 @@ public sealed partial class ModSuitSystem
                 if (!CanUseModule(suit, module, user))
                     return false;
 
-                if (!TryUseCharge(suit, moduleComp.UsePower))
-                {
-                    PopupFail(suit, user, "modsuit-no-power");
-                    return false;
-                }
-
                 var used = new ModModuleUsedEvent(suitUid, user);
                 RaiseLocalEvent(moduleUid, ref used);
                 if (!used.Handled)
                     return false;
 
+                TryUseCharge(suit, moduleComp.UsePower);
                 StartCooldown(module);
                 return true;
             default:
@@ -315,15 +296,10 @@ public sealed partial class ModSuitSystem
                     return false;
                 }
 
-                if (!TryUseCharge(suit, moduleComp.UsePower))
-                {
-                    PopupFail(suit, user, "modsuit-no-power");
-                    return false;
-                }
-
                 if (moduleComp.Type == ModModuleType.Active)
                     DeselectActiveModules(suit, moduleUid);
 
+                TryUseCharge(suit, moduleComp.UsePower);
                 StartCooldown(module);
                 SetModuleActive(suit, module, true);
                 return true;
@@ -356,8 +332,7 @@ public sealed partial class ModSuitSystem
         }
 
         var needsPower = module.Comp.UsePower > 0f || module.Comp.ActivePower > 0f;
-        var cost = MathF.Max(module.Comp.UsePower, module.Comp.ActivePower > 0f ? 0.01f : 0f);
-        if (needsPower && (!suit.Comp.Powered || !HasCharge(suit, cost)))
+        if (needsPower && (!suit.Comp.Powered || !HasCharge(suit, module.Comp.UsePower)))
         {
             PopupFail(suit, user, "modsuit-no-power");
             return false;
@@ -419,9 +394,6 @@ public sealed partial class ModSuitSystem
 
     public bool CanAccess(Entity<ModSuitComponent> suit, EntityUid user)
     {
-        if (suit.Comp.ModulesContainer == null)
-            suit.Comp.ModulesContainer = _container.EnsureContainer<Container>(suit, suit.Comp.ModulesContainerId);
-
         var ev = new ModSuitAccessAttemptEvent(user);
         foreach (var module in suit.Comp.ModulesContainer.ContainedEntities)
         {
@@ -475,6 +447,7 @@ public sealed partial class ModSuitSystem
     {
         return suit.Comp.PartEntities.TryGetValue(slot, out var part) ? part : null;
     }
+
     private void OnModuleAction(Entity<ModModuleComponent> ent, ref ModModuleActionEvent args)
     {
         if (args.Handled)
@@ -501,6 +474,7 @@ public sealed partial class ModSuitSystem
                 RemoveModuleAction((module, moduleComp), wearer);
         }
     }
+
     private void OnModuleMapInit(Entity<ModModuleComponent> ent, ref MapInitEvent args)
     {
         EnsureModuleAction(ent);
@@ -518,11 +492,6 @@ public sealed partial class ModSuitSystem
         var action = module.Comp.ActionEntity.Value;
         _metaData.SetEntityName(action, Name(module));
         _metaData.SetEntityDescription(action, Description(module));
-        if (_actions.TryGetActionData(action, out var actionComp, false))
-        {
-            actionComp.EntityIcon = module.Owner;
-            Dirty(action, actionComp);
-        }
         Dirty(module);
     }
 
@@ -531,22 +500,30 @@ public sealed partial class ModSuitSystem
         if (_timing.ApplyingState
             || module.Comp.Type == ModModuleType.Passive
             || !module.Comp.Pinned
-            || _actions.GetAction(module.Comp.ActionEntity, false) is not { } action
-            || action.Comp.AttachedEntity == wearer)
+            || module.Comp.ActionEntity is not { } actionId
+            || !_actions.TryGetActionData(actionId, out var action, false)
+            || action.AttachedEntity == wearer)
             return;
 
-        _actions.AddAction(wearer, action.Owner, module.Owner);
-        _actions.SetToggled(action.AsNullable(), module.Comp.Active);
+        _actions.AddAction(wearer, actionId, module.Owner);
+        _actions.SetToggled(actionId, module.Comp.Active);
+
+        if (action.EntIcon == null)
+        {
+            action.EntIcon = module.Owner;
+            Dirty(actionId, action);
+        }
     }
 
     private void RemoveModuleAction(Entity<ModModuleComponent> module, EntityUid wearer)
     {
         if (_timing.ApplyingState
-            || _actions.GetAction(module.Comp.ActionEntity, false) is not { } action
-            || action.Comp.AttachedEntity != wearer)
+            || module.Comp.ActionEntity is not { } actionId
+            || !_actions.TryGetActionData(actionId, out var action, false)
+            || action.AttachedEntity != wearer)
             return;
 
-        _actions.RemoveProvidedAction(wearer, module, action);
+        _actions.RemoveProvidedAction(wearer, module, actionId);
     }
 
     public void TogglePinned(Entity<ModSuitComponent> suit, Entity<ModModuleComponent> module)

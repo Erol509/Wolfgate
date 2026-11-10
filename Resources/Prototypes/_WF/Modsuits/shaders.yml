@@ -1,11 +1,6 @@
-# WOLFGATE(Modsuits): shaders used by the sphere and projectile dampener modules.
+# WOLFGATE(Modsuits): shader used by the sphere transform module.
 
 - type: shader
   id: ModSphere
   kind: source
   path: /Textures/_WF/Modsuits/Shaders/mod_sphere.swsl
-
-- type: shader
-  id: ModDampenerField
-  kind: source
-  path: /Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl

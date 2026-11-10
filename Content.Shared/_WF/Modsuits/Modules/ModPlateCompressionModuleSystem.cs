@@ -9,6 +9,7 @@ public sealed partial class ModPlateCompressionModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModPlateCompressionModuleComponent, ModModuleInstalledEvent>(OnInstalled);
         SubscribeLocalEvent<ModPlateCompressionModuleComponent, ModModuleRemovedEvent>(OnRemoved);
     }

@@ -32,7 +32,7 @@
   # WOLFGATE(Modsuits): a MOD core replaces the power cell
   - type: ItemSlots
     slots:
-      cell_slot:
+      mod-core:
         name: modsuit-core-slot-name
         startingItem: ModsuitCoreStandardHighCapacity
         whitelist:
@@ -173,7 +173,7 @@
   # WOLFGATE(Modsuits): a MOD core replaces the power cell
   - type: ItemSlots
     slots:
-      cell_slot:
+      mod-core:
         name: modsuit-core-slot-name
         startingItem: ModsuitCoreStandardHighCapacity
         whitelist:

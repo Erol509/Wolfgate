@@ -1,13 +1,22 @@
 # WOLFGATE(Modsuits): tags used by the ported MODsuit modules.
 
 - type: Tag
+  id: ModsuitBoots
+
+- type: Tag
+  id: ModsuitChestplate
+
+- type: Tag
+  id: ModsuitCore
+
+- type: Tag
+  id: ModsuitGauntlets
+
+- type: Tag
+  id: ModsuitHelmet
+
+- type: Tag
   id: ModsuitModule
-
-- type: Tag
-  id: ModsuitModuleStorage
-
-- type: Tag
-  id: ModsuitModuleVisor
 
 - type: Tag
   id: ModsuitModuleGravity
@@ -16,21 +25,52 @@
   id: ModsuitModuleJetpack
 
 - type: Tag
-  id: ModsuitModuleLongfall
+  id: ModsuitModuleStorage
 
 - type: Tag
-  id: MarkerBeacon
-- type: Tag
-  id: ModsuitPlatingMining
+  id: ModsuitModuleVisor
 
 - type: Tag
-  id: ModsuitPlatingLoader
+  id: ModsuitPart
+
+- type: Tag
+  id: ModsuitPlatingAtmostech
 
 - type: Tag
   id: ModsuitPlatingBrigMed
 
 - type: Tag
+  id: ModsuitPlatingCaptain
+
+- type: Tag
+  id: ModsuitPlatingEngineer
+
+- type: Tag
+  id: ModsuitPlatingExternal
+
+- type: Tag
+  id: ModsuitPlatingHeadOfSecurity
+
+- type: Tag
+  id: ModsuitPlatingLoader
+
+- type: Tag
+  id: ModsuitPlatingMining
+
+- type: Tag
+  id: ModsuitPlatingParamedic
+
+- type: Tag
   id: ModsuitPlatingPraetorian
 
 - type: Tag
-  id: SheetPlasma
+  id: ModsuitPlatingRD
+
+- type: Tag
+  id: ModsuitPlatingSecurity
+
+- type: Tag
+  id: ModsuitShell
+
+- type: Tag
+  id: MarkerBeacon

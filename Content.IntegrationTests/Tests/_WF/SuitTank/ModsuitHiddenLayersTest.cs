@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests._WF.SuitTank;
 [TestFixture]
 public sealed class ModsuitHiddenLayersTest
 {
-    private static readonly string[] Suits = ["ClothingModsuitStandartPowerCell", "ClothingModsuitParamedicPowerCell"];
+    private static readonly string[] Suits = ["ClothingModsuitStandardPowerCell", "ClothingModsuitParamedicPowerCell"];
 
     [Test]
     [TestCaseSource(nameof(Suits))]

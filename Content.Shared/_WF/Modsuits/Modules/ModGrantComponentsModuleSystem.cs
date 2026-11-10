@@ -9,6 +9,7 @@ public sealed partial class ModGrantComponentsModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModGrantComponentsModuleComponent, ModModuleActivatedEvent>(OnActivated);
         SubscribeLocalEvent<ModGrantComponentsModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);
         SubscribeLocalEvent<ModGrantComponentsModuleComponent, ModSuitWearerChangedEvent>(OnWearerChanged);

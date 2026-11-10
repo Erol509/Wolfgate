@@ -8,6 +8,7 @@ public sealed partial class ModSuitUiSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModSuitComponent, AfterAutoHandleStateEvent>(OnSuitState);
         SubscribeLocalEvent<ModSuitComponent, ModSuitUpdatedEvent>(OnSuitUpdated);
         SubscribeLocalEvent<ModModuleComponent, AfterAutoHandleStateEvent>(OnModuleState);

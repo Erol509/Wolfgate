@@ -1,4 +1,188 @@
 - type: entity
+  id: PartModsuit
+  parent: BaseItem
+  name: MOD part
+  description: A part used in MOD construction.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Specific/Robotics/modsuit_parts.rsi
+  - type: Icon
+    sprite: _Goobstation/Objects/Specific/Robotics/modsuit_parts.rsi
+  - type: Item
+    size: Normal
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  #- type: GuideHelp TODO: Guide
+
+- type: entity
+  id: ModsuitChestplate
+  parent: PartModsuit
+  name: MOD chestplate
+  components:
+  - type: Sprite
+    state: chestplate
+  - type: Icon
+    state: chestplate
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 62
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitChestplate
+
+- type: entity
+  id: ModsuitBoots
+  parent: PartModsuit
+  name: MOD boots
+  components:
+  - type: Sprite
+    state: boots
+  - type: Icon
+    state: boots
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 62
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitBoots
+
+- type: entity
+  id: ModsuitHelmet
+  parent: PartModsuit
+  name: MOD helmet
+  components:
+  - type: Sprite
+    state: helmet
+  - type: Icon
+    state: helmet
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 62
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitHelmet
+
+- type: entity
+  id: ModsuitGauntlets
+  parent: PartModsuit
+  name: MOD gauntlets
+  components:
+  - type: Sprite
+    state: gauntlets
+  - type: Icon
+    state: gauntlets
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 62
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitGauntlets
+
+- type: entity
+  id: ModsuitShell
+  parent: PartModsuit
+  name: MOD shell
+  components:
+  - type: Appearance
+  - type: Sprite
+    state: shell
+  - type: Icon
+    state: shell
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 125
+      Plasma: 62
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:Container
+      mod-core: !type:Container
+  - type: Construction
+    graph: Modsuit
+    node: start
+    defaultTarget: standard
+    containers:
+    - cell_slot
+    - mod-core
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          shell-core: { state: shell-core }
+          shell-core-secured: { state: shell-core-secured }
+          shell-helmet: { state: shell-helmet }
+          shell-chestplate: { state: shell-chestplate }
+          shell-gauntlets: { state: shell-gauntlets }
+          shell-boots: { state: shell-boots }
+          shell-secured: { state: shell-secured }
+
+- type: entity
+  id: ModsuitPlatingExternal
+  parent: PartModsuit
+  name: MOD standard external plating
+  description: A part used in MOD construction.
+  components:
+  - type: Sprite
+    state: standard-plating
+  - type: Icon
+    state: standard-plating
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 75
+      Glass: 37
+      Plasma: 12
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitPlatingExternal
+
+- type: entity
+  id: ModsuitPlatingParamedic
+  parent: PartModsuit
+  name: MOD standard paramedic 'sanitater' plating
+  description: A part used in MOD construction.
+  components:
+  - type: Sprite
+    state: standard-plating
+  - type: Icon
+    state: standard-plating
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 75
+      Glass: 37
+      Plasma: 12
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitPlatingParamedic
+
+- type: entity
+  id: ModsuitPlatingEngineer
+  parent: PartModsuit
+  name: MOD standard engineer 'sapper' plating
+  description: A part used in MOD construction.
+  components:
+  - type: Sprite
+    state: standard-plating
+  - type: Icon
+    state: standard-plating
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 75
+      Glass: 37
+      Plasma: 12
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitPlatingEngineer
+
+- type: entity
   id: ModsuitPlatingMining
   parent: PartModsuit
   name: MOD mining plating
@@ -37,6 +221,106 @@
     tags:
     - ModsuitPart
     - ModsuitPlatingLoader
+
+- type: entity
+  id: ModsuitPlatingSecurity
+  parent: PartModsuit
+  name: MOD standard security 'soldat' plating
+  description: A part used in MOD construction.
+  components:
+  - type: Sprite
+    state: standard-plating
+  - type: Icon
+    state: standard-plating
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 75
+      Glass: 37
+      Plasma: 12
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitPlatingSecurity
+
+- type: entity
+  id: ModsuitPlatingHeadOfSecurity
+  parent: PartModsuit
+  name: MOD standard head of security 'bulwark' plating
+  description: A part used in MOD construction.
+  components:
+  - type: Sprite
+    state: standard-plating
+  - type: Icon
+    state: standard-plating
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 75
+      Glass: 37
+      Plasma: 12
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitPlatingHeadOfSecurity
+
+- type: entity
+  id: ModsuitPlatingCaptain
+  parent: PartModsuit
+  name: MOD standard captain's magnate plating
+  description: A part used in MOD construction.
+  components:
+  - type: Sprite
+    state: standard-plating
+  - type: Icon
+    state: standard-plating
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 75
+      Glass: 37
+      Plasma: 12
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitPlatingCaptain
+
+- type: entity
+  id: ModsuitPlatingRD
+  parent: PartModsuit
+  name: MOD standard RD's 'minerva' plating
+  description: A part used in MOD construction.
+  components:
+  - type: Sprite
+    state: standard-plating
+  - type: Icon
+    state: standard-plating
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 75
+      Glass: 37
+      Plasma: 12
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitPlatingRD
+
+- type: entity
+  id: ModsuitPlatingAtmostech
+  parent: PartModsuit
+  name: MOD standard atmospheric technician's 'aeolus' plating
+  description: A part used in MOD construction.
+  components:
+  - type: Sprite
+    state: standard-plating
+  - type: Icon
+    state: standard-plating
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 75
+      Glass: 37
+      Plasma: 12
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitPlatingAtmostech
 
 - type: entity
   id: ModsuitPlatingBrigMed
@@ -78,6 +362,43 @@
     tags:
     - ModsuitPart
     - ModsuitPlatingPraetorian
+
+- type: entity
+  id: ModsuitCoreStandard
+  parent: PartModsuit
+  name: MOD standard core
+  description: An internal power source for a Modular Outerwear Device, built around a rare piezoelectric crystal.
+  components:
+  - type: Sprite
+    state: mod-core-standard
+  - type: Icon
+    state: mod-core-standard
+  - type: Tag
+    tags:
+    - ModsuitPart
+    - ModsuitCore
+  - type: PhysicalComposition
+    materialComposition:
+      Plasma: 50
+      Glass: 25
+  - type: ModCore
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        whitelist:
+          components:
+          - PowerCell
+        blacklist:
+          components:
+          - BatterySelfRecharger
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+      cell_slot: !type:ContainerSlot
 
 - type: entity
   parent: ModsuitCoreStandard
@@ -189,12 +510,12 @@
   - type: Battery
     maxCharge: 720
     startingCharge: 720
-  # WOLFGATE(Modsuits): Wolfgate sheets carry no plasma-specific tag; accept any material sheet
   - type: ModCoreRefuelable
-    fuel:
-      tags:
-      - Sheet
-      requireAll: true
+    fuel: {}
+    fuelPrototypes:
+    - SheetPlasma
+    - SheetPlasma1
+    - SheetPlasma10
     chargePerFuel: 180
   - type: PhysicalComposition
     materialComposition:

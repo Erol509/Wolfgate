@@ -1,12 +1,11 @@
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
-using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
-using Robust.Shared.Network;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 
 namespace Content.Shared._WF.Modsuits.Systems;
 
@@ -20,17 +19,23 @@ public sealed partial class ModSuitSystem
         return _itemSlots.GetItemOrNull(ent, ent.Comp.CoreSlotId);
     }
 
+    /// <summary>Returns the battery the suit draws from, either in the core itself or in its cell slot.</summary>
     public Entity<BatteryComponent>? GetBattery(Entity<ModSuitComponent> ent)
     {
         if (GetCore(ent) is not { } core)
             return null;
 
-        if (TryComp<BatteryComponent>(core, out var coreBattery))
-            return (core, coreBattery);
+        return TryGetBattery(core);
+    }
 
-        if (!TryComp<PowerCellSlotComponent>(core, out var cellSlot)
-            || !_itemSlots.TryGetSlot(core, cellSlot.CellSlotId, out var slot)
-            || slot.Item is not { } cell
+    /// <summary>Finds a battery on the entity or in the power cell slot it owns.</summary>
+    public Entity<BatteryComponent>? TryGetBattery(EntityUid uid)
+    {
+        if (TryComp<BatteryComponent>(uid, out var battery))
+            return (uid, battery);
+
+        if (!TryComp<PowerCellSlotComponent>(uid, out var cellSlot)
+            || _itemSlots.GetItemOrNull(uid, cellSlot.CellSlotId) is not { } cell
             || !TryComp<BatteryComponent>(cell, out var cellBattery))
             return null;
 
@@ -113,10 +118,12 @@ public sealed partial class ModSuitSystem
         return drain;
     }
 
-    /// <summary>Power drain is applied by <see cref="UpdatePowerDrain"/>; kept for call sites.</summary>
+    /// <summary>Wolfgate's batteries have no charge-rate hook, so the drain is applied in <see cref="UpdatePowerDrain"/>.</summary>
     public void RefreshDrain(Entity<ModSuitComponent> ent)
     {
+        SyncCharge(ent);
     }
+
     private void OnPowerCellChanged(Entity<ModSuitComponent> ent, ref PowerCellChangedEvent args)
     {
         if (_timing.ApplyingState || ent.Comp.LifeStage > ComponentLifeStage.Running)
@@ -127,6 +134,7 @@ public sealed partial class ModSuitSystem
         SetPowered(ent, !args.Ejected && HasCharge(ent, 0.01f));
         UpdatePowerAlert(ent);
     }
+
     private void OnSuitEntInserted(Entity<ModSuitComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         if (ent.Comp.LifeStage < ComponentLifeStage.Running)
@@ -141,6 +149,7 @@ public sealed partial class ModSuitSystem
         RefreshDrain(ent);
         SetPowered(ent, HasCharge(ent, 0.01f));
     }
+
     private void OnSuitEntRemoved(Entity<ModSuitComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (ent.Comp.LifeStage < ComponentLifeStage.Running)
@@ -185,7 +194,6 @@ public sealed partial class ModSuitSystem
 
         RefreshDrain(ent);
         RefreshSpeed(ent);
-        SyncCharge(ent);
         UpdatePowerAlert(ent);
     }
 
@@ -206,13 +214,10 @@ public sealed partial class ModSuitSystem
             if (comp.Wearer != null && comp.State != ModSuitState.Inactive)
             {
                 UpdatePowerDrain(ent);
-                SyncCharge(ent);
                 UpdatePowerAlert(ent);
             }
-            else
-            {
-                SyncCharge(ent);
-            }
+
+            SyncCharge(ent);
         }
     }
 
@@ -242,7 +247,7 @@ public sealed partial class ModSuitSystem
         if (_timing.ApplyingState || ent.Comp.Wearer is not { } wearer)
             return;
 
-        if (ent.Comp.State == ModSuitState.Inactive || GetCore(ent) == null)
+        if (ent.Comp.State == ModSuitState.Inactive || GetBattery(ent) == null)
         {
             _alerts.ClearAlert(wearer, ent.Comp.PowerAlert);
             return;

@@ -62,7 +62,7 @@ public sealed partial class ModSuitComponent : Component
     public TimeSpan NextDeployStep;
 
     [DataField]
-    public TimeSpan DeployStepTime = TimeSpan.FromSeconds(0.05);
+    public TimeSpan DeployStepTime = TimeSpan.FromSeconds(0.5);
 
     [DataField, AutoNetworkedField]
     public EntityUid? Wearer;
@@ -70,17 +70,13 @@ public sealed partial class ModSuitComponent : Component
     [DataField, AutoNetworkedField]
     public bool Powered;
 
-    /// <summary>Charge last sent to the client; the battery component itself is not networked.</summary>
+    /// <summary>Charge copied from the core's battery so the client can show it.</summary>
     [DataField, AutoNetworkedField]
     public float Charge;
 
-    /// <summary>Capacity last sent to the client, used for the charge percentage.</summary>
+    /// <summary>Capacity copied from the core's battery so the client can show it.</summary>
     [DataField, AutoNetworkedField]
     public float MaxCharge = 1f;
-
-    /// <summary>Set briefly while the wrench do-after runs, so the slot may eject the core.</summary>
-    [ViewVariables]
-    public bool CoreEjectAllowed;
 
     [DataField]
     public SlotFlags RequiredSlot = SlotFlags.BACK;
@@ -113,10 +109,10 @@ public sealed partial class ModSuitComponent : Component
     public SoundSpecifier DeactivateSound = new SoundPathSpecifier("/Audio/_Goobstation/Machines/computer_end.ogg");
 
     [DataField]
-    public SoundSpecifier FailSound = new SoundPathSpecifier("/Audio/_WF/Modsuits/ErrorBeep2.wav");
+    public SoundSpecifier FailSound = new SoundPathSpecifier("/Audio/_Goobstation/Machines/ErrorBeep2.wav");
 
     [DataField]
-    public SoundSpecifier SealBrokenSound = new SoundPathSpecifier("/Audio/_WF/Modsuits/MaxTempAlertCut.wav");
+    public SoundSpecifier SealBrokenSound = new SoundPathSpecifier("/Audio/_Goobstation/Machines/MaxTempAlertCut.wav");
 
     [DataField]
     public SoundSpecifier ModuleInsertSound = new SoundPathSpecifier("/Audio/Items/screwdriver2.ogg");

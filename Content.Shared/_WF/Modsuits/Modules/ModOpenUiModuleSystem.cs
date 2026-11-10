@@ -9,6 +9,7 @@ public sealed partial class ModOpenUiModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModOpenUiModuleComponent, ModModuleUsedEvent>(OnUsed);
     }
 

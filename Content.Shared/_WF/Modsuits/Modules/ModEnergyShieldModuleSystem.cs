@@ -15,9 +15,8 @@ public sealed partial class ModEnergyShieldModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ModEnergyShieldModuleComponent, ModModuleActivatedEvent>(OnActivated);
-        SubscribeLocalEvent<ModEnergyShieldModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);
-        SubscribeLocalEvent<ModEnergyShieldActiveComponent, DamageModifyEvent>(OnDamageModify);
+
+        SubscribeLocalEvent<ModEnergyShieldModuleComponent, DamageModifyEvent>(OnDamageModify);
         SubscribeLocalEvent<ModEnergyShieldModuleComponent, ExaminedEvent>(OnExamined);
     }
 
@@ -43,42 +42,28 @@ public sealed partial class ModEnergyShieldModuleSystem : EntitySystem
             Dirty(uid, shield);
         }
     }
-    private void OnActivated(Entity<ModEnergyShieldModuleComponent> ent, ref ModModuleActivatedEvent args)
+    private void OnDamageModify(Entity<ModEnergyShieldModuleComponent> ent, ref DamageModifyEvent args)
     {
-        if (args.Wearer is not { } wearer)
-            return;
-
-        var active = EnsureComp<ModEnergyShieldActiveComponent>(wearer);
-        active.Module = ent;
-        Dirty(wearer, active);
-    }
-    private void OnDeactivated(Entity<ModEnergyShieldModuleComponent> ent, ref ModModuleDeactivatedEvent args)
-    {
-        if (args.Wearer is { } wearer)
-            RemComp<ModEnergyShieldActiveComponent>(wearer);
-    }
-    private void OnDamageModify(Entity<ModEnergyShieldActiveComponent> ent, ref DamageModifyEvent args)
-    {
-        if (!TryComp<ModEnergyShieldModuleComponent>(ent.Comp.Module, out var shield)
-            || shield.Charges <= 0
+        if (ent.Comp.Charges <= 0
             || args.Origin is not { } origin
-            || origin == ent.Owner
             || args.Damage.GetTotal() <= 0
-            || !_modSuit.TryGetModuleSuit(ent.Comp.Module, out var suit))
+            || !_modSuit.TryGetModuleSuit(ent, out var suit)
+            || suit.Comp.Wearer is not { } wearer
+            || origin == wearer)
             return;
 
         args.Damage = new DamageSpecifier();
-        shield.Charges--;
-        shield.NextCharge = _timing.CurTime + shield.RechargeDelay;
-        Dirty(ent.Comp.Module, shield);
+        ent.Comp.Charges--;
+        ent.Comp.NextCharge = _timing.CurTime + ent.Comp.RechargeDelay;
+        Dirty(ent);
 
-        _modSuit.TryUseCharge(suit, shield.BlockPower);
+        _modSuit.TryUseCharge(suit, ent.Comp.BlockPower);
 
         if (_net.IsClient)
             return;
 
-        _audio.PlayPvs(shield.BlockSound, ent.Owner);
-        _popup.PopupEntity(Loc.GetString("modsuit-energy-shield-block"), ent.Owner, PopupType.Medium);
+        _audio.PlayPvs(ent.Comp.BlockSound, wearer);
+        _popup.PopupEntity(Loc.GetString("modsuit-energy-shield-block"), wearer, PopupType.Medium);
     }
     private void OnExamined(Entity<ModEnergyShieldModuleComponent> ent, ref ExaminedEvent args)
     {
@@ -86,12 +71,4 @@ public sealed partial class ModEnergyShieldModuleSystem : EntitySystem
             ("charges", ent.Comp.Charges),
             ("max", ent.Comp.MaxCharges)));
     }
-}
-
-/// <summary>Marks a wearer protected by an active energy shield module.</summary>
-[RegisterComponent]
-public sealed partial class ModEnergyShieldActiveComponent : Component
-{
-    [DataField]
-    public EntityUid Module;
 }

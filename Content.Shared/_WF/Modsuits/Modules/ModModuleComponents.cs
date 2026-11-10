@@ -5,7 +5,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -43,9 +42,6 @@ public sealed partial class ModStorageModuleComponent : Component
 {
     [DataField(required: true)]
     public ComponentRegistry Components = new();
-
-    [ViewVariables]
-    public bool Upgraded;
 }
 
 [RegisterComponent, NetworkedComponent]
@@ -67,7 +63,7 @@ public sealed partial class ModLightModuleComponent : Component
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ModDeviceModuleComponent : Component
 {
-    [DataField(required: true), AutoNetworkedField]
+    [DataField(required: true)]
     public EntProtoId Device;
 
     [DataField, AutoNetworkedField]
@@ -88,12 +84,7 @@ public sealed partial class ModDeviceItemComponent : Component
 }
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ModJetpackModuleComponent : Component
-{
-    /// <summary>Suit charge spent per second of active thrust.</summary>
-    [DataField]
-    public float ChargePerSecond = 10f;
-}
+public sealed partial class ModJetpackModuleComponent : Component;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ModEmpShieldModuleComponent : Component
@@ -149,10 +140,6 @@ public sealed partial class ModTrayScannerModuleComponent : Component
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ModLoudspeakerModuleComponent : Component
 {
-    /// <summary>Speech radius while the module is active.</summary>
-    [DataField]
-    public float Range = 20f;
-
     [ViewVariables]
     public EntityUid? User;
 }
@@ -186,18 +173,29 @@ public sealed partial class ModSoundModuleComponent : Component
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ModSpawnModuleComponent : Component
 {
-    [DataField]
-    public EntProtoId? Prototype;
+    [DataField(required: true)]
+    public EntProtoId Prototype;
+}
 
-    [DataField]
-    public List<EntProtoId> RandomPrototypes = new();
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class ModQuickCarryComponent : Component
+{
+    [DataField, AutoNetworkedField]
+    public float Multiplier = 0.5f;
+}
 
-    [DataField]
-    public bool ToHand;
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class ModQuickCuffComponent : Component
+{
+    [DataField, AutoNetworkedField]
+    public float Multiplier = 0.5f;
 }
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ModShoveBlockerComponent : Component;
+
+[RegisterComponent, NetworkedComponent]
+public sealed partial class ModAntiGravityComponent : Component;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ModClampComponent : Component
@@ -231,9 +229,6 @@ public sealed partial class ModPatientTransportComponent : Component
     public EntProtoId BagPrototype = "ModsuitHardlightBag";
 
     [DataField]
-    public bool RequireRestrained;
-
-    [DataField]
     public TimeSpan CaptureDelay = TimeSpan.FromSeconds(1.5);
 
     [DataField, AutoNetworkedField]
@@ -248,16 +243,6 @@ public sealed partial class ModHardlightBagComponent : Component
 {
     [DataField, AutoNetworkedField]
     public EntityUid? Projector;
-}
-
-[RegisterComponent, NetworkedComponent]
-public sealed partial class ModCaptureBagComponent : Component
-{
-    [DataField]
-    public ComponentRegistry CaptiveComponents = new();
-
-    [ViewVariables]
-    public Dictionary<EntityUid, List<string>> Added = new();
 }
 
 [RegisterComponent, NetworkedComponent]
@@ -413,6 +398,3 @@ public sealed partial class ModPowerKickingComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? Module;
 }
-
-[RegisterComponent, NetworkedComponent]
-public sealed partial class ModLongfallModuleComponent : Component;

@@ -16,7 +16,18 @@ namespace Content.IntegrationTests.Tests._WF.Modsuits;
 public sealed class ModsuitModulesContentTest
 {
     private const string Pack = "ModsuitModules";
-    private static readonly string[] Technologies = { "WFModsuitModules", "WFModsuitModulesAdvanced" };
+    private static readonly string[] Technologies =
+    {
+        "ModsuitsTech",
+        "ModsuitEquipmentTech",
+        "ModsuitEngineeringTech",
+        "ModsuitAdvancedEngineeringTech",
+        "ModsuitSupplyTech",
+        "ModsuitMedicalTech",
+        "ModsuitServiceTech",
+        "ModsuitSecurityTech",
+    };
+
     private static readonly EntProtoId Fabricator = "ExosuitFabricator";
     private static readonly ProtoId<GuideEntryPrototype> Guide = "WFModsuits";
     private static readonly Regex Embed = new("Entity=\"(\\w+)\"", RegexOptions.Compiled);
@@ -46,11 +57,11 @@ public sealed class ModsuitModulesContentTest
                 var result = recipe.Result!.Value;
                 Assert.That(prototypes.TryIndex(result, out var resultProto), Is.True,
                     $"recipe {recipeId} should produce existing prototype {result}");
-                Assert.That(resultProto!.TryComp<ModModuleComponent>(out _, factory), Is.True,
-                    $"recipe {recipeId} should produce a module with a ModModule component");
+                Assert.That(resultProto!.TryComp<ModModuleComponent>(out _, factory) ||
+                            resultProto.TryComp<ModCoreComponent>(out _, factory), Is.True,
+                    $"recipe {recipeId} should produce a module or core");
             }
 
-            var unlocked = new HashSet<ProtoId<LatheRecipePrototype>>();
             foreach (var techId in Technologies)
             {
                 Assert.That(prototypes.TryIndex<TechnologyPrototype>(techId, out var tech), Is.True,
@@ -59,9 +70,8 @@ public sealed class ModsuitModulesContentTest
 
                 foreach (var unlock in tech.RecipeUnlocks)
                 {
-                    Assert.That(recipes.Contains(unlock), Is.True,
-                        $"technology {techId} unlocks {unlock}, which is not in the {Pack} pack");
-                    unlocked.Add(unlock);
+                    Assert.That(prototypes.HasIndex<LatheRecipePrototype>(unlock),
+                        $"technology {techId} unlocks missing recipe {unlock}");
                 }
 
                 foreach (var prerequisite in tech.TechnologyPrerequisites)
@@ -70,9 +80,6 @@ public sealed class ModsuitModulesContentTest
                         $"technology {techId} requires missing technology {prerequisite}");
                 }
             }
-
-            Assert.That(unlocked, Is.EquivalentTo(recipes),
-                "the two module technologies together should unlock exactly the module recipes");
 
             Assert.That(prototypes.TryIndex(Fabricator, out var fabricator), Is.True);
             Assert.That(fabricator!.TryComp<LatheComponent>(out var lathe, factory), Is.True);

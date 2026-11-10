@@ -19,6 +19,7 @@ public sealed partial class ModSphereVisualsSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModSphereVisualsComponent, BeforePostShaderRenderEvent>(OnBeforeRender);
     }
 
@@ -34,17 +35,13 @@ public sealed partial class ModSphereVisualsSystem : EntitySystem
     private static readonly ProtoId<ShaderPrototype> Shader = "ModSphere";
     public const string PostShaderId = "mod-sphere";
 
-    private static readonly string[] Before = Array.Empty<string>();
-
-    private static readonly string[] After = Array.Empty<string>();
-
     private const float MorphTime = 0.3f;
     private const float VisualRadius = 10f / EyeManager.PixelsPerMeter;
     private const float SquashTime = 0.18f;
     private const float RollSoundMinSpeed = 0.3f;
     private const float RollSoundReferenceSpeed = 7.8f;
 
-    private static readonly SoundSpecifier RollSound = new SoundPathSpecifier("/Audio/_WF/Modsuits/rolling_ball_loop.ogg");
+    private static readonly SoundSpecifier RollSound = new SoundPathSpecifier("/Audio/_Goobstation/Items/Modsuit/rolling_ball_loop.ogg");
 
     private readonly List<EntityUid> _finished = new();
 
@@ -62,10 +59,7 @@ public sealed partial class ModSphereVisualsSystem : EntitySystem
             visuals.Shader = _prototype.Index(Shader).InstanceUnique();
             _sprite.SetPostShader((uid, sprite), new SpriteComponent.PostShaderArgs(PostShaderId, visuals.Shader)
             {
-                RaiseShaderEvent = true,
-                Before = Before,
-                After = After,
-            });
+                RaiseShaderEvent = true,            });
         }
 
         _finished.Clear();

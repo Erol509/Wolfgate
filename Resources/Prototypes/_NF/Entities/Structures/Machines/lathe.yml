@@ -45,6 +45,7 @@
     - ReportingStatic # DeltaV
     dynamicPacks:
     - NFServiceTechfabDeprecated
+    - ModsuitService # WOLFGATE(Modsuits): departmental MOD module recipes
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NFServiceTechfabDeprecatedEmagStatic
@@ -84,6 +85,7 @@
     # Mono End
     dynamicPacks:
     - NFEngineeringTechfabDeprecated
+    - ModsuitEngineering # WOLFGATE(Modsuits): departmental MOD module recipes
     - RCD # Mono
   - type: PirateBountyItem # Mono
     id: Techfab
@@ -117,6 +119,7 @@
     - NFSalvageTechfabDeprecatedStatic
     dynamicPacks:
     - NFSalvageTechfabDeprecated
+    - ModsuitSupply # WOLFGATE(Modsuits): departmental MOD module recipes
   - type: EmagLatheRecipes
     emagStaticPacks:
     - NFSalvageTechfabDeprecatedEmag

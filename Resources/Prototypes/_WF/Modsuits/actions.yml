@@ -1,4 +1,4 @@
-# WOLFGATE(Modsuits): MODsuit actions ported from tgstation via Goob-Station.
+# WOLFGATE(Modsuits): MODsuit actions, ported from GoobStation.
 
 - type: entity
   id: ActionModSuitActivate
@@ -9,10 +9,11 @@
   - type: InstantAction
     checkCanInteract: true
     checkConsciousness: true
-    event: !type:ModSuitActivateActionEvent
+    itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Actions/modsuit.rsi
       state: activate
+    event: !type:ModSuitActivateActionEvent
 
 - type: entity
   id: ActionModSuitDeploy
@@ -22,6 +23,7 @@
   components:
   - type: InstantAction
     checkCanInteract: true
+    itemIconStyle: BigItem
     event: !type:ModSuitDeployActionEvent
 
 - type: entity
@@ -31,6 +33,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
+    itemIconStyle: BigItem
     event: !type:ModModuleActionEvent
 
 - type: entity
@@ -39,10 +42,10 @@
   description: Launch yourself at a target with a devastating kick.
   categories: [ HideSpawnMenu ]
   components:
-  - type: EntityWorldTargetAction
+  - type: WorldTargetAction
     checkCanInteract: true
+    itemIconStyle: BigItem
     checkCanAccess: false
-    canTargetSelf: false
     range: 7
     event: !type:ModPowerKickActionEvent
 
@@ -52,10 +55,10 @@
   description: Charge the hydraulic arms and launch yourself at a target.
   categories: [ HideSpawnMenu ]
   components:
-  - type: EntityWorldTargetAction
+  - type: WorldTargetAction
     checkCanInteract: true
+    itemIconStyle: BigItem
     checkCanAccess: false
-    canTargetSelf: false
     range: 10
     event: !type:ModPowerKickActionEvent
 
@@ -67,39 +70,10 @@
   components:
   - type: WorldTargetAction
     checkCanInteract: true
+    itemIconStyle: BigItem
     checkCanAccess: false
     range: 7
     event: !type:ModMagnetActionEvent
-
-- type: entity
-  id: ActionModRecyclerUnload
-  name: Unload recycler
-  description: Dump everything the recycler has collected at your feet.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    event: !type:ModRecyclerUnloadActionEvent
-
-- type: entity
-  id: ActionModShootingMode
-  name: Cycle shooting mode
-  description: Switch the shooting assistant between off, stormtrooper and sharpshooter modes.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    event: !type:ModShootingModeActionEvent
-
-- type: entity
-  id: ActionModSelectDevice
-  name: Select module tool
-  description: Cycle the tool this MOD module deploys.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    event: !type:ModSelectDeviceActionEvent
 
 - type: entity
   id: ActionModSphereMissiles
@@ -108,11 +82,11 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: WorldTargetAction
+    icon:
+      sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
+      state: mine_missile
+    useDelay: 3
     checkCanInteract: false
     checkCanAccess: false
-    useDelay: 3
     range: 8
-    icon:
-      sprite: _WF/Modsuits/mod_modules.rsi
-      state: mine_missile
     event: !type:ModSphereMissileActionEvent

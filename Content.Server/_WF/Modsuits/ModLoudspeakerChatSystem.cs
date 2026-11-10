@@ -9,13 +9,14 @@ namespace Content.Server._WF.Modsuits;
 /// <summary>Carries an active megaphone module's speech to everyone inside its range.</summary>
 public sealed partial class ModLoudspeakerChatSystem : EntitySystem
 {
+    [Dependency] private ISharedPlayerManager _player = default!;
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<ExpandICChatRecipientsEvent>(OnExpandRecipients);
     }
 
-    [Dependency] private ISharedPlayerManager _player = default!;
     private void OnExpandRecipients(ExpandICChatRecipientsEvent ev)
     {
         if (!TryComp<ModLoudspeakerActiveComponent>(ev.Source, out var loudspeaker))

@@ -9,6 +9,7 @@ public sealed partial class ModSpeedModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModSpeedModuleComponent, ModModuleActivatedEvent>(OnActivated);
         SubscribeLocalEvent<ModSpeedModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);
         SubscribeLocalEvent<ModSpeedModuleComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);

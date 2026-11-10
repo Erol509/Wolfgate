@@ -17,7 +17,6 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Slippery;
-using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -33,6 +32,7 @@ public sealed partial class ModSphereTransformModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModSphereTransformModuleComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ModSphereTransformModuleComponent, ModModuleActivateAttemptEvent>(OnActivateAttempt);
         SubscribeLocalEvent<ModSphereTransformModuleComponent, ModModuleActivatedEvent>(OnActivated);
@@ -48,7 +48,7 @@ public sealed partial class ModSphereTransformModuleSystem : EntitySystem
         SubscribeLocalEvent<ModSphereFormComponent, UpdateCanMoveEvent>(OnCanMove);
         SubscribeLocalEvent<ModSphereFormComponent, TileFrictionEvent>(OnTileFriction);
         SubscribeLocalEvent<ModSphereFormComponent, SlipAttemptEvent>(OnSlipAttempt);
-        SubscribeLocalEvent<ModSphereFormComponent, DownAttemptEvent>(OnKnockdownAttempt);
+        SubscribeLocalEvent<ModSphereFormComponent, KnockDownAttemptEvent>(OnKnockdownAttempt);
         SubscribeLocalEvent<ModSphereFormComponent, InteractionAttemptEvent>(OnInteractionAttempt);
         SubscribeLocalEvent<ModSphereFormComponent, UseAttemptEvent>(OnUseAttempt);
         SubscribeLocalEvent<ModSphereFormComponent, PickupAttemptEvent>(OnPickupAttempt);
@@ -139,8 +139,9 @@ public sealed partial class ModSphereTransformModuleSystem : EntitySystem
         ent.Comp.FormOwner = wearer;
         Dirty(ent);
 
-        if (_actions.GetAction(ent.Comp.MissileActionEntity, false) is { } action)
-            _actions.AddAction(wearer, action.AsNullable(), ent.Owner);
+        if (ent.Comp.MissileActionEntity is { } missileAction
+            && _actions.TryGetActionData(missileAction, out _, false))
+            _actions.AddAction(wearer, missileAction, ent.Owner);
 
         _audio.PlayPredicted(ent.Comp.ActivateSound, wearer, wearer);
     }
@@ -157,8 +158,10 @@ public sealed partial class ModSphereTransformModuleSystem : EntitySystem
         if (TerminatingOrDeleted(uid))
             return;
 
-        if (_actions.GetAction(ent.Comp.MissileActionEntity, false) is { } action && action.Comp.AttachedEntity == uid)
-            _actions.RemoveProvidedAction(uid, ent, action);
+        if (ent.Comp.MissileActionEntity is { } missileActionId
+            && _actions.TryGetActionData(missileActionId, out var missileAction, false)
+            && missileAction.AttachedEntity == uid)
+            _actions.RemoveProvidedAction(uid, ent, missileActionId);
 
         if (playSound)
             _audio.PlayPredicted(ent.Comp.DeactivateSound, uid, uid);
@@ -256,9 +259,9 @@ public sealed partial class ModSphereTransformModuleSystem : EntitySystem
     {
         args.NoSlip = true;
     }
-    private void OnKnockdownAttempt(Entity<ModSphereFormComponent> ent, ref DownAttemptEvent args)
+    private void OnKnockdownAttempt(Entity<ModSphereFormComponent> ent, ref KnockDownAttemptEvent args)
     {
-        args.Cancel();
+        args.Cancelled = true;
     }
     private void OnInteractionAttempt(Entity<ModSphereFormComponent> ent, ref InteractionAttemptEvent args)
     {

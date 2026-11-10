@@ -6,12 +6,13 @@ using Content.Shared._WF.Modsuits.Systems;
 
 namespace Content.Server._WF.Modsuits;
 
-/// <summary>Lets the wearer eat and drink while the helmet is sealed.</summary>
+/// <summary>Opens the helmet's mouth hole while the module is active.</summary>
 public sealed partial class ModMouthholeModuleSystem : EntitySystem
 {
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModMouthholeModuleComponent, ModModuleActivatedEvent>(OnActivated);
         SubscribeLocalEvent<ModMouthholeModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);
     }

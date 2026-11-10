@@ -9,6 +9,7 @@ public sealed partial class ModDnaLockModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModDnaLockModuleComponent, ModSuitAccessAttemptEvent>(OnAccessAttempt);
         SubscribeLocalEvent<ModDnaLockModuleComponent, ModModuleUsedEvent>(OnUsed);
     }

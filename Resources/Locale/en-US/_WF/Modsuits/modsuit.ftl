@@ -1,12 +1,6 @@
 modsuit-core-slot-name = Core
 modsuit-core-full = The core is already fully charged!
 modsuit-core-refueled = You feed the core.
-modsuit-core-missing = There is no MOD core installed!
-modsuit-core-removed = You unbolt the MOD core.
-modsuit-core-unbolting = You start unbolting the MOD core...
-modsuit-cell-removing = You start removing the power cell...
-modsuit-cell-removed = You remove the power cell.
-modsuit-verb-remove-cell = Remove power cell
 
 modsuit-deactivate-first = Deactivate the suit first!
 modsuit-deploy-all-first = Deploy all parts first!
@@ -60,49 +54,15 @@ modsuit-examine-no-core = [color=red]No core installed.[/color]
 modsuit-examine-module = - {$module}
 modsuit-examine-module-builtin = - {$module} [color=gray](built-in)[/color]
 
-modsuit-ui-title = MOD Interface Panel
+modsuit-ui-title = MOD Interface
 modsuit-ui-status = Status: {$state}
 modsuit-ui-state-inactive = Inactive
 modsuit-ui-state-activating = Activating
 modsuit-ui-state-active = Active
 modsuit-ui-state-deactivating = Deactivating
 modsuit-ui-charge = Charge: {$percent}% (drain {$drain}/s)
-modsuit-ui-charge-label = Charge
-modsuit-ui-charge-bar = {$current} of {$max} ({$percent}%)
 modsuit-ui-no-core = Charge: -
-modsuit-ui-no-core-detected = No Core Detected
-modsuit-ui-cell-missing = Power Cell Missing
-modsuit-ui-suit-status = Suit Status
-modsuit-ui-user-status = User Status
-modsuit-ui-hardware = Hardware
-modsuit-ui-id-lock = ID Lock
-modsuit-ui-unlocked = Unlocked
-modsuit-ui-modlink = MODLink
-modsuit-ui-frequency-unset = Frequency Unset
-modsuit-ui-cover = Cover
-modsuit-ui-cover-open = Open
-modsuit-ui-user-name = Name
-modsuit-ui-user-assignment = Assignment
-modsuit-ui-suit-unpowered = SUIT UNPOWERED
 modsuit-ui-complexity = Complexity: {$current}/{$max}
-modsuit-ui-complexity-used = {$current} of {$max} complexity used
-modsuit-ui-actions = Actions
-modsuit-ui-name = Name
-modsuit-ui-idle-power = Idle Power Cost (Watts)
-modsuit-ui-active-power = Active Power Cost (Watts)
-modsuit-ui-use-power = Use Energy Cost (Joules)
-modsuit-ui-module-complexity = Complexity
-modsuit-ui-select = Select
-modsuit-ui-pin = Pin
-modsuit-ui-unpin = Unpin
-modsuit-ui-control-unit = Control Unit
-modsuit-ui-core-label = Core
-modsuit-ui-ai-assistant = AI Assistant
-modsuit-ui-no-ai = No AI Detected
-modsuit-ui-part-slot = {$part} Slot
-modsuit-ui-deploy = Deploy
-modsuit-ui-retract = Retract
-modsuit-ui-no-modules-detected = No Modules Detected
 modsuit-ui-activate = Activate
 modsuit-ui-deactivate = Deactivate
 modsuit-ui-parts = Parts
@@ -115,7 +75,7 @@ modsuit-ui-core = Core: {$core}
 modsuit-ui-core-none = Core: none
 modsuit-ui-modules = Modules
 modsuit-ui-no-modules = No modules installed.
-modsuit-ui-module-info = {$type} · complexity {$complexity} · {$power}/s
+modsuit-ui-module-info = {$type} - complexity {$complexity} - {$power}/s
 modsuit-ui-module-type-passive = Passive
 modsuit-ui-module-type-usable = Usable
 modsuit-ui-module-type-toggle = Toggle
@@ -178,13 +138,29 @@ modsuit-magnet-invalid = There's no crate or locker there to grab!
 modsuit-ash-full = The suit is fully covered in ash!
 modsuit-ash-empty = The suit ran out of ash!
 modsuit-candela-empty = The beacon spool is out of marker beacons!
-modsuit-hat-slot = Hat
-modsuit-recycler-empty = The recycler is empty!
-modsuit-capture-not-restrained = They need to be restrained first!
-modsuit-shooting-mode-off = Shooting assistant off.
-modsuit-shooting-mode-stormtrooper = Stormtrooper mode enabled.
-modsuit-shooting-mode-sharpshooter = Sharpshooter mode enabled.
 
-research-technology-wf-modsuit-modules = Modular Suit Modules
-research-technology-wf-modsuit-modules-advanced = Advanced Modular Suit Modules
-guide-entry-wf-modsuits = Modular Suits
+# WOLFGATE(Modsuits): research, lathe, construction and support strings.
+
+research-technology-modsuit-equipment = Modular Suit Equipment
+research-technology-modsuit-medical = Medical Modular Suits
+research-technology-modsuit-engineering = Engineering Modular Suits
+research-technology-modsuit-advanced-engineering = Advanced Engineering Modular Suits
+research-technology-modsuit-security = Security Modular Suits
+research-technology-modsuit-supply = Supply Modular Suit Equipment
+research-technology-modsuit-service = Service Modular Suit Equipment
+
+lathe-category-modsuit-modules = MOD Modules
+
+construction-graph-tag-mod-core = MOD core
+construction-graph-tag-mod-helmet = MOD helmet
+construction-graph-tag-mod-chestplate = MOD chestplate
+construction-graph-tag-mod-gauntlets = MOD gauntlets
+construction-graph-tag-mod-boots = MOD boots
+construction-graph-tag-mod-plating = MOD plating
+
+guide-entry-wf-modsuits = MODsuits
+
+autoinjector-injection-hardsuit = The suit injects you with an emergency reagent mix!
+comp-autoinjector-examined-on = The autoinjector is ready.
+comp-autoinjector-examined-off = The autoinjector will be ready in {$time} seconds.
+clothing-modify-stand-up-time-examine = This makes standing up {$mod}% faster.

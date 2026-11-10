@@ -12,8 +12,12 @@ public sealed partial class ModCoreComponent : Component;
 [Access(typeof(ModCoreSystem))]
 public sealed partial class ModCoreRefuelableComponent : Component
 {
-    [DataField(required: true)]
+    [DataField]
     public EntityWhitelist Fuel = new();
+
+    /// <summary>Entity prototype IDs that also count as fuel.</summary>
+    [DataField]
+    public List<string> FuelPrototypes = new();
 
     [DataField]
     public float ChargePerFuel = 200f;

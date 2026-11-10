@@ -1,7 +1,6 @@
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.Containers;
 
 namespace Content.Shared._WF.Modsuits.Systems;
 
@@ -12,24 +11,20 @@ public sealed partial class ModSuitSystem
 
     private void SpawnParts(Entity<ModSuitComponent> ent)
     {
-        if (_net.IsClient || ent.Comp.PartsContainer.ContainedEntities.Count != 0)
+        if (ent.Comp.PartsContainer.ContainedEntities.Count != 0)
             return;
 
         foreach (var (slot, proto) in ent.Comp.Parts)
         {
-            var part = Spawn(proto, Transform(ent).Coordinates);
-            if (!_container.Insert(part, ent.Comp.PartsContainer))
-            {
-                QueueDel(part);
+            if (!PredictedTrySpawnInContainer(proto, ent, ent.Comp.PartsContainerId, out var part))
                 continue;
-            }
 
-            var partComp = EnsureComp<ModPartComponent>(part);
+            var partComp = EnsureComp<ModPartComponent>(part.Value);
             partComp.Suit = ent;
             partComp.Slot = slot;
-            Dirty(part, partComp);
+            Dirty(part.Value, partComp);
 
-            ent.Comp.PartEntities[slot] = part;
+            ent.Comp.PartEntities[slot] = part.Value;
         }
     }
 
@@ -153,7 +148,7 @@ public sealed partial class ModSuitSystem
         var suitStorage = StashSuitStorage(wearer, slot);
         if (_inventory.TryGetSlotEntity(wearer, slot, out var current))
         {
-            // Attached hardsuit pieces refuse a normal unequip; force them off so the modsuit part can take the slot.
+            // WOLFGATE(Modsuits): attached hardsuit pieces refuse a normal unequip; force them off.
             var force = HasComp<AttachedClothingComponent>(current.Value);
             if (partComp.StoredContainer.ContainedEntity != null
                 || !_inventory.TryUnequip(wearer, wearer, slot, out var removed, silent: true, force: force, predicted: true)
@@ -277,6 +272,7 @@ public sealed partial class ModSuitSystem
         if (part.Comp.StoredContainer.ContainedEntity is { } stored)
             _container.Remove(stored, part.Comp.StoredContainer);
     }
+
     private void OnPartUnequipAttempt(Entity<ModPartComponent> ent, ref BeingUnequippedAttemptEvent args)
     {
         if (_movingParts.Contains(ent))
@@ -285,6 +281,7 @@ public sealed partial class ModSuitSystem
         args.Reason = ent.Comp.Sealed ? "modsuit-part-sealed" : "modsuit-part-retract-instead";
         args.Cancel();
     }
+
     private void OnPartGotUnequipped(Entity<ModPartComponent> ent, ref GotUnequippedEvent args)
     {
         if (_timing.ApplyingState

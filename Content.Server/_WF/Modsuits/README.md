@@ -1,189 +1,42 @@
 # Modsuits
 
-The MODsuit port from /tg/station: a back-worn control unit deploys a helmet, chestplate, gauntlets and boots,
-seals them, and runs a catalogue of insertable modules. The control unit stores its core and modules behind a
-wires panel; the module UI installs, removes, pins and toggles them. Modules spend the core's charge and add up
-to the theme's complexity cap.
+A port of GoobStation's MODsuit implementation (its PRs 7485, 7489, 7496 and 7500). A back-worn control
+unit spawns and deploys a helmet, chestplate, gauntlets and boots, then seals them one at a time. The unit
+holds a MOD core behind a maintenance panel, every part of the suit has its own seal state, and modules are
+installed into the unit and spend the core's charge while they run.
 
-The core is bolted behind the panel, not an ejectable cell: unbolt it with a wrench, and swap the power cell
-inside it with the panel's "Remove power cell" verb while the panel is open. Native suits ship with a core, a
-charged cell and the compact storage, flashlight and welding modules. Part deployment is quick; sealing runs
-at the theme's activation step. Suit activation and powered modules check the cell's charge, and the ion
-jetpack module draws on it instead of a gas tank. Storage exists only while a storage module is installed;
-removing the module drops everything inside and takes the storage away.
+## How it works
 
-While a suit is active it seals its parts and runs the installed modules. Clothing and the suit's own sprites are
-never tinted or replaced.
+- **Control unit.** `ModSuitComponent` names the theme and the four part prototypes. Parts spawn into the
+  unit's `mod-parts` container on map init and are worn directly on deploy. The core sits in the `mod-core`
+  item slot, behind the wires panel.
+- **Sealing.** `ModSuitSystem` queues deployment and activation one part at a time at the theme's step
+  time. A sealed part gains the components in its `ModSealedComponents` registry and shows its sealed
+  sprite through `ModSuitSealedVisuals`; unsealing reverses both. The suit must be inactive before parts
+  deploy or retract, and a suit cannot be removed while active.
+- **Power.** The core is a MOD core item with its own power cell slot, so the cell can be swapped while the
+  core stays bolted in. The theme and every installed module have an idle/active drain; the suit copies the
+  core's charge into networked fields for the interface and the power alert, and cuts power at zero.
+- **Modules.** `ModModuleComponent` gives each module a type (passive, usable, toggle, active), complexity,
+  power draw, cooldown, required parts and incompatibilities. `ModSuitSystem` installs, removes, pins and
+  uses them; each module system subscribes to the module events it needs. The theme sets the complexity cap,
+  the activation speed, the drain and any inbuilt modules.
+- **Interface.** `ModSuitWindow` on the client lists the suit state, charge, complexity, parts and modules,
+  and sends activate, deploy, toggle, pin and eject messages.
 
-Entry points: `ModSuitComponent` (theme, parts, core slot, module container), `ModModuleComponent` (type,
-complexity, power, cooldown, incompatibilities), `ModThemePrototype` (complexity cap, drain, inbuilt modules),
-`ModSuitSystem` (deployment, sealing, power, module installation), the module systems under
-`Content.Shared/_WF/Modsuits/Modules`, and `ModSuitWindow` on the client. The window's action icons are Font Awesome
-Free glyphs rendered from tgstation's TGUI webfonts into `icons.rsi`, attributed in its `meta.json`.
+Entry points: `ModSuitComponent`, `ModModuleComponent`, `ModPartComponent`, `ModThemePrototype`,
+`ModSuitSystem` (parts, activation, power, modules, UI), the module systems under
+`Content.Shared/_WF/Modsuits/Modules`, and `ModSuitWindow` with `ModSuitVisualizerSystem` on the client.
 
-Original assets are the /tg/ MODsuit module icon set, copied to `Resources/Textures/_WF/Modsuits/mod_modules.rsi`
-with its CC-BY-SA-3.0 notice. Suit part sprites remain in the existing `_Goobstation`, `_Mono` and `_WF`
-modsuit RSIs. Additional module sprites and sounds are attributed in their RSI/audio `meta.json` and
-`attributions.yml` files.
+## Content
 
-## Module checklist
-
-Status is against the /tg/ catalogue at the revision the port was taken from. `Sprite` means the original module
-icon is present in `mod_modules.rsi`. `Behaviour` is what runs in game, not just the prototype.
-
-Only modules whose behaviour runs in game are listed here; every other /tg/ module is under
-"Not implemented" below.
-
-| /tg/ module | Prototype | Sprite | Behaviour | Reused system or new behaviour | Test |
-|---|---|---|---|---|---|
-| energy_shield | ModsuitModuleEnergyShield | yes | yes | new energy shield | manual |
-| noslip | ModsuitModuleNoSlip | yes | yes | existing NoSlip | manual |
-| power_kick | ModsuitModulePowerKick | yes | yes | existing throwing, stun and damage | manual |
-| chameleon | ModsuitModuleChameleon | yes | yes | existing chameleon clothing | manual |
-| plate_compression | ModsuitModulePlateCompression | yes | yes | new suit part scaling | manual |
-| infiltrator | ModsuitModuleInfiltrator | yes | yes | new core program grants | manual |
-| welding | ModsuitModuleWelding | yes | yes | existing EyeProtection | manual |
-| welding/syndicate | ModsuitModuleSyndicateWelding | yes | yes | existing EyeProtection and FlashImmunity | manual |
-| t_ray | ModsuitModuleTRay | yes | yes | existing TrayScanner | manual |
-| magboot | ModsuitModuleMagboots | yes | yes | existing Magboots | manual |
-| magboot/advanced | ModsuitModuleMagbootsAdvanced | yes | yes | existing Magboots | manual |
-| tether | ModsuitModuleTether | yes | yes | new tether device | manual |
-| rad_protection | ModsuitModuleRadProtection | yes | yes | existing radiation protection | manual |
-| constructor | ModsuitModuleConstructor | yes | yes | existing RCD | manual |
-| headprotector | ModsuitModuleHeadProtector | yes | yes | existing head protection | manual |
-| mister | ModsuitModuleMister | yes | yes | existing spray | manual |
-| mister/atmos | ModsuitModuleResinMister | yes | yes | existing spray | manual |
-| storage | ModsuitModuleStorageCompact | yes | yes | existing Storage | `ModsuitModuleTest` |
-| storage/large_capacity | ModsuitModuleStorageLarge | yes | yes | existing Storage | manual |
-| storage/syndicate | ModsuitModuleStorageSyndicate | yes | yes | existing Storage | manual |
-| storage/belt | ModsuitModuleStorageCase | yes | yes | existing Storage | manual |
-| storage/bluespace | ModsuitModuleStorageBluespace | yes | yes | existing Storage | manual |
-| jetpack | ModsuitModuleJetpack | yes | yes | existing Jetpack | manual |
-| jetpack/advanced | ModsuitModuleJetpackAdvanced | yes | yes | existing Jetpack | manual |
-| jump_jet | ModsuitModuleJumpJet | yes | yes | existing throwing | manual |
-| mouthhole | ModsuitModuleMouthhole | yes | yes | existing IngestionBlocker | manual |
-| emp_shield | ModsuitModuleEmpShield | yes | yes | existing EMP events | manual |
-| emp_shield/advanced | ModsuitModuleEmpShieldAdvanced | yes | yes | existing EMP events | manual |
-| flashlight | ModsuitModuleFlashlight | yes | yes | existing PointLight | manual |
-| dispenser | ModsuitModuleBurgerDispenser | yes | yes | existing spawning | manual |
-| longfall | ModsuitModuleLongfall | yes | yes | existing CE z-level fall damage | manual |
-| thermal_regulator | ModsuitModuleThermalRegulator | yes | yes | existing server temperature | manual |
-| dna_lock | ModsuitModuleDnaLock | yes | yes | new suit access check | manual |
-| hat_stabilizer | ModsuitModuleHatStabilizer | yes | yes | existing item slots | manual |
-| hat_stabilizer/syndicate | ModsuitModuleHatStabilizerElite | yes | yes | existing hat stabilizer | manual |
-| signlang_radio | ModsuitModuleGloveTranslator | yes | yes | existing language translator | manual |
-| joint_torsion | ModsuitModuleJointTorsion | yes | yes | existing movement and battery | manual |
-| recycler | ModsuitModuleRecycler | yes | yes | existing storage and spawning | manual |
-| recycler/donk | ModsuitModuleDonkRecycler | yes | yes | existing storage and spawning | manual |
-| shock_absorber | ModsuitModuleShockAbsorber | yes | yes | existing stun events | manual |
-| balloon | ModsuitModuleBalloonBlower | yes | yes | existing spawning | manual |
-| paper_dispenser | ModsuitModulePaperDispenser | yes | yes | existing spawning | manual |
-| stamp | ModsuitModuleStamper | yes | yes | existing stamp devices | manual |
-| recycler/donk/safe | ModsuitModuleDonkSafeRecycler | yes | yes | existing storage and spawning | manual |
-| health_analyzer | ModsuitModuleHealthAnalyzer | yes | yes | existing health analyzer | manual |
-| injector | ModsuitModuleInjector | yes | yes | existing bloodstream | manual |
-| criminalcapture/patienttransport | ModsuitModulePatientTransport | yes | yes | existing entity storage and pulling | manual |
-| defibrillator | ModsuitModuleDefibrillator | yes | yes | existing defibrillator device | manual |
-| defibrillator/combat | ModsuitModuleCombatDefibrillator | yes | yes | existing defibrillator device | manual |
-| stealth | ModsuitModuleCloak | yes | yes | existing stealth | manual |
-| emp_shield/pulse | ModsuitModuleEmpPulse | yes | yes | existing EMP pulse | manual |
-| adrenaline_boost | ModsuitModuleAdrenalineBoost | yes | yes | existing reagents and status effects | manual |
-| reagent_scanner | ModsuitModuleReagentScanner | yes | yes | existing reagent scanner | manual |
-| reagent_scanner/advanced | ModsuitModuleReagentScanner | yes | yes | existing reagent scanner | manual |
-| magnetic_harness | ModsuitModuleMagneticHarness | yes | yes | existing hands and prediction | manual |
-| pepper_shoulders | ModsuitModulePepperShoulders | yes | yes | existing smoke | manual |
-| holster | ModsuitModuleHolster | yes | yes | existing item slots | manual |
-| megaphone | ModsuitModuleMegaphone | yes | yes | existing chat range expansion | manual |
-| criminalcapture | ModsuitModuleCriminalCapture | yes | yes | existing entity storage | manual |
-| projectile_dampener | ModsuitModuleProjectileDampener | yes | yes | existing projectile physics | manual |
-| shooting_assistant | ModsuitModuleShootingAssistant | yes | yes | existing gun modifiers | manual |
-| shove_blocker | ModsuitModuleBulwark | yes | yes | existing disarm events | manual |
-| shove_blocker/locked | ModsuitModuleBulwarkLocked | yes | yes | existing bulwark | manual |
-| bikehorn | ModsuitModuleBikeHorn | yes | yes | existing sound | manual |
-| balloon/advanced | ModsuitModuleAdvancedBalloonBlower | yes | yes | existing spawning | manual |
-| waddle | ModsuitModuleWaddle | yes | yes | existing WaddleWhenWorn | manual |
-| mister/cleaner | ModsuitModuleJanitorMister | yes | yes | existing spray | manual |
-| gps | ModsuitModuleGps | yes | yes | existing GPS | manual |
-| clamp | ModsuitModuleClamp | yes | yes | existing pulling | manual |
-| clamp/loader | ModsuitModuleBuiltinLoaderClamp | yes | yes | existing pulling | manual |
-| drill | ModsuitModuleDrill | yes | yes | existing mining | manual |
-| orebag | ModsuitModuleOreBag | yes | yes | existing storage | manual |
-| hydraulic | ModsuitModuleBuiltinHydraulicArms | yes | yes | existing throwing | manual |
-| magnet | ModsuitModuleBuiltinLoaderMagnet | yes | yes | existing pulling | manual |
-| ash_accretion | ModsuitModuleBuiltinAshAccretion | yes | yes | existing weather and tile data | manual |
-| sphere_transform | ModsuitModuleBuiltinSphereTransform | yes | yes | new sphere controller | manual |
-| candela_spool | ModsuitModuleCandelaSpool | yes | yes | existing beacon spooling | manual |
-| visor | ModsuitModuleVisorMedical and variants | yes | yes | existing HUDs | manual |
-| visor/medhud | ModsuitModuleVisorMedical | yes | yes | existing HUD | manual |
-| visor/diaghud | ModsuitModuleVisorDiagnostic | yes | yes | existing HUD | manual |
-| visor/sechud | ModsuitModuleVisorSecurity | yes | yes | existing HUD | manual |
-| visor/thermal | ModsuitModuleThermalVisor | yes | yes | existing thermal vision | manual |
-| visor/night | ModsuitModuleNightVisor | yes | yes | existing night vision | manual |
-| storage/holding | ModsuitModuleStorageHolding | yes | yes | existing bag of holding | manual |
-| kinesis | ModsuitModuleKinesis | yes | yes | new kinesis controller | manual |
-
-Variants that share one prototype are listed separately because the /tg/ catalogue does; the prototype column names
-the shared item.
-
-## Not implemented
-
-These /tg/ modules have no working behaviour in Wolfgate, so they are not installable. Their icons stay in
-`mod_modules.rsi` for a future port. The stub prototypes and inert components of `plasma_stabilizer`,
-`quick_carry`, `quick_carry/advanced`, `quick_cuff`, `thread_ripper` and `anomaly_locked/antigrav` were removed
-rather than left in the catalogue doing nothing.
-
-| /tg/ module | Prototype | Sprite | Behaviour | Reused system or new behaviour | Test |
-|---|---|---|---|---|---|
-| energy_shield/wizard | - | yes | no | wizard-only variant not ported | - |
-| anti_magic | — | yes | no | needs magic-nullification infrastructure | — |
-| anti_magic/wizard | — | yes | no | wizard-only variant not ported | — |
-| insignia | — | yes | no | cosmetic insignia system absent | — |
-| flamethrower | — | yes | no | no handheld flamethrower system | — |
-| demoralizer | — | yes | no | psi/voice system absent | — |
-| medbeam | — | yes | no | no medical beam gun prototype or system | — |
-| stealth/wraith | - | yes | no | wraith-only variant not ported | - |
-| status_readout | — | yes | no | status readout HUD absent | — |
-| flashlight/darkness | — | yes | no | flashdark light system absent | — |
-| plasma_stabilizer | — | yes | no | no gas-ignition system for plasmamen; stub prototype removed | — |
-| fishing_glove | — | yes | no | no fishing system | — |
-| springlock | — | yes | no | no springlock suit mechanism | — |
-| visor/rave | — | yes | no | rave overlay system absent | — |
-| tanner | — | yes | no | tanning system absent | — |
-| atrocinator | — | yes | no | no atrocinator system | — |
-| quick_carry | — | yes | partial | no grab-stage or carry-speed hook; stub prototype removed | — |
-| quick_carry/advanced | — | yes | partial | no grab-stage or carry-speed hook; stub prototype removed | — |
-| organizer | — | yes | no | organ replacement surgery adapter absent | — |
-| thread_ripper | — | yes | no | no clothing-ignoring surgery system; stub prototype removed | — |
-| surgical_processor | — | yes | no | Shitmed surgery processor adapter absent | — |
-| stealth/ninja | - | yes | no | ninja-only variant not ported | - |
-| welding/camera_vision | — | yes | no | camera vision system absent | — |
-| dispenser/ninja | — | yes | no | ninja-only dispenser variant not ported | — |
-| hacker | - | yes | no | ninja-only variant not ported | - |
-| weapon_recall | - | yes | no | ninja-only variant not ported | - |
-| dna_lock/reinforced | - | yes | no | ninja-only variant not ported | - |
-| status_readout/ninja | — | yes | no | ninja-only variant not ported | — |
-| energy_net | — | yes | no | energy net structure absent | — |
-| anomaly_locked/teleporter | — | yes | no | anomaly-locked teleporter absent | — |
-| dispenser/mirage | — | yes | no | mirage grenade absent | — |
-| active_sonar | — | yes | no | sonar overlay absent | — |
-| anomaly_locked/antigrav | — | yes | no | no weightlessness hook on the wearer; stub prototype removed | — |
-| quick_cuff | — | yes | partial | no cuff-duration hook; stub prototype removed | — |
-| microwave_beam | — | yes | no | microwave cooking beam absent | — |
-| selfcleaner | — | yes | no | perfumer/self-clean system absent | — |
-| disposal_connector | — | yes | no | disposal connector absent | — |
-| eradication_lock | — | yes | no | timeline infrastructure absent | — |
-| rewinder | — | yes | no | timeline infrastructure absent | — |
-| timestopper | — | yes | no | timeline infrastructure absent | — |
-| timeline_jumper | — | yes | no | timeline infrastructure absent | — |
-| tem | — | yes | no | timeline infrastructure absent | — |
-| visor/meson | — | yes | no | meson vision absent | — |
-| kinesis/prototype | - | yes | no | ninja variant not ported | - |
-| kinesis/plus | - | yes | no | admin variant not ported | - |
-| kinesis/admin | - | yes | no | admin variant not ported | - |
-| pathfinder | — | yes | no | pathfinder pod system absent | — |
-
-Two inbuilt prototypes were removed with them: `ModsuitModuleBuiltinAutoInjector` (no clothing auto-injector
-system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
+The standard suit, the department suits (standard, engineering, atmospheric, paramedic, security, head of
+security, brig medical, research director and captain) and the themed suits (contractor, corporate,
+syndicate, elite, loader and mining) live in `Resources/Prototypes/_WF/Modsuits`. Their sprites stay in the
+existing `_Goobstation` modsuit RSIs; the module icon set and the new themed suit RSIs were imported with
+their `meta.json` files. GoobStation's Waddle, quick-carry, restraint-assist, auto-injector and standing-up
+support code lives under `Support`, adapted to this codebase's grabbing, status effect, solution and
+standing systems.
 
 <!-- WOLFGATE-GENERATED START -->
 <!-- Generated by python Tools/_WF/Ci/modules.py --write. Don't edit by hand. -->
@@ -192,12 +45,11 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 
 ### Server
 
-- [`Content.Server/_WF/Modsuits/ModChameleonModuleSystem.cs`](ModChameleonModuleSystem.cs)
+- [`Content.Server/_WF/Modsuits/ClothingAutoinjectorSystem.cs`](ClothingAutoinjectorSystem.cs)
 - [`Content.Server/_WF/Modsuits/ModInjectModuleSystem.cs`](ModInjectModuleSystem.cs)
 - [`Content.Server/_WF/Modsuits/ModLoudspeakerChatSystem.cs`](ModLoudspeakerChatSystem.cs)
 - [`Content.Server/_WF/Modsuits/ModMouthholeModuleSystem.cs`](ModMouthholeModuleSystem.cs)
-- [`Content.Server/_WF/Modsuits/ModPatientTransportSystem.cs`](ModPatientTransportSystem.cs)
-- [`Content.Server/_WF/Modsuits/ModRecyclerSystem.cs`](ModRecyclerSystem.cs)
+- [`Content.Server/_WF/Modsuits/ModStasisMetabolismSystem.cs`](ModStasisMetabolismSystem.cs)
 - [`Content.Server/_WF/Modsuits/ModThermalRegulatorModuleSystem.cs`](ModThermalRegulatorModuleSystem.cs)
 
 ### Shared
@@ -207,33 +59,28 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 - [`Content.Shared/_WF/Modsuits/Components/ModPartComponent.cs`](../../../Content.Shared/_WF/Modsuits/Components/ModPartComponent.cs)
 - [`Content.Shared/_WF/Modsuits/Components/ModSealedComponentsComponent.cs`](../../../Content.Shared/_WF/Modsuits/Components/ModSealedComponentsComponent.cs)
 - [`Content.Shared/_WF/Modsuits/Components/ModSuitComponent.cs`](../../../Content.Shared/_WF/Modsuits/Components/ModSuitComponent.cs)
-- [`Content.Shared/_WF/Modsuits/ModSuitActionExtensions.cs`](../../../Content.Shared/_WF/Modsuits/ModSuitActionExtensions.cs)
 - [`Content.Shared/_WF/Modsuits/ModSuitEvents.cs`](../../../Content.Shared/_WF/Modsuits/ModSuitEvents.cs)
 - [`Content.Shared/_WF/Modsuits/ModSuitUi.cs`](../../../Content.Shared/_WF/Modsuits/ModSuitUi.cs)
 - [`Content.Shared/_WF/Modsuits/ModThemePrototype.cs`](../../../Content.Shared/_WF/Modsuits/ModThemePrototype.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModArmorModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModArmorModuleSystem.cs)
+- [`Content.Shared/_WF/Modsuits/Modules/ModChameleonModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModChameleonModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModClampSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModClampSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModCloakModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModCloakModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModDeviceModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModDeviceModuleSystem.cs)
-- [`Content.Shared/_WF/Modsuits/Modules/ModDeviceSelectorSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModDeviceSelectorSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModDnaLockModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModDnaLockModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModEmpPulseModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModEmpPulseModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModEmpShieldModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModEmpShieldModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModEnergyShieldModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModEnergyShieldModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModGrantComponentsModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModGrantComponentsModuleSystem.cs)
-- [`Content.Shared/_WF/Modsuits/Modules/ModGunModulesSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModGunModulesSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModHolsterModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModHolsterModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModJetpackModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModJetpackModuleSystem.cs)
-- [`Content.Shared/_WF/Modsuits/Modules/ModKinesisComponents.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModKinesisComponents.cs)
-- [`Content.Shared/_WF/Modsuits/Modules/ModKinesisSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModKinesisSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModLightModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModLightModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModLoaderMiningComponents.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModLoaderMiningComponents.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModLoaderMiningModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModLoaderMiningModuleSystem.cs)
-- [`Content.Shared/_WF/Modsuits/Modules/ModLongfallModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModLongfallModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModLoudspeakerModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModLoudspeakerModuleSystem.cs)
-- [`Content.Shared/_WF/Modsuits/Modules/ModMagneticHarnessSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModMagneticHarnessSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModModuleComponents.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModModuleComponents.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModOpenUiModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModOpenUiModuleSystem.cs)
+- [`Content.Shared/_WF/Modsuits/Modules/ModPatientTransportSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModPatientTransportSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModPlateCompressionModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModPlateCompressionModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModPowerKickModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModPowerKickModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModSoundModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModSoundModuleSystem.cs)
@@ -243,10 +90,14 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 - [`Content.Shared/_WF/Modsuits/Modules/ModSphereTransformModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModSphereTransformModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModStorageModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModStorageModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModStripComponentsModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModStripComponentsModuleSystem.cs)
+- [`Content.Shared/_WF/Modsuits/Modules/ModStunEvents.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModStunEvents.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModTrayScannerModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModTrayScannerModuleSystem.cs)
-- [`Content.Shared/_WF/Modsuits/Modules/ModUtilityModuleComponents.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModUtilityModuleComponents.cs)
-- [`Content.Shared/_WF/Modsuits/Modules/ModUtilityModuleSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModUtilityModuleSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Modules/ModWearerEffectsSystem.cs`](../../../Content.Shared/_WF/Modsuits/Modules/ModWearerEffectsSystem.cs)
+- [`Content.Shared/_WF/Modsuits/Support/ClothingAutoInjectComponent.cs`](../../../Content.Shared/_WF/Modsuits/Support/ClothingAutoInjectComponent.cs)
+- [`Content.Shared/_WF/Modsuits/Support/ModifyStandingUpTimeComponent.cs`](../../../Content.Shared/_WF/Modsuits/Support/ModifyStandingUpTimeComponent.cs)
+- [`Content.Shared/_WF/Modsuits/Support/SharedWaddleAnimationSystem.cs`](../../../Content.Shared/_WF/Modsuits/Support/SharedWaddleAnimationSystem.cs)
+- [`Content.Shared/_WF/Modsuits/Support/WaddleAnimationComponent.cs`](../../../Content.Shared/_WF/Modsuits/Support/WaddleAnimationComponent.cs)
+- [`Content.Shared/_WF/Modsuits/Systems/HideLayerClothingSystem.Modsuit.cs`](../../../Content.Shared/_WF/Modsuits/Systems/HideLayerClothingSystem.Modsuit.cs)
 - [`Content.Shared/_WF/Modsuits/Systems/ModCoreSystem.cs`](../../../Content.Shared/_WF/Modsuits/Systems/ModCoreSystem.cs)
 - [`Content.Shared/_WF/Modsuits/Systems/ModSuitSystem.Activation.cs`](../../../Content.Shared/_WF/Modsuits/Systems/ModSuitSystem.Activation.cs)
 - [`Content.Shared/_WF/Modsuits/Systems/ModSuitSystem.cs`](../../../Content.Shared/_WF/Modsuits/Systems/ModSuitSystem.cs)
@@ -258,22 +109,16 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 ### Client
 
 - [`Content.Client/_WF/Modsuits/ModAshCoatVisualsSystem.cs`](../../../Content.Client/_WF/Modsuits/ModAshCoatVisualsSystem.cs)
-- [`Content.Client/_WF/Modsuits/ModDampenedProjectileVisualsSystem.cs`](../../../Content.Client/_WF/Modsuits/ModDampenedProjectileVisualsSystem.cs)
-- [`Content.Client/_WF/Modsuits/ModDampenerFieldOverlay.cs`](../../../Content.Client/_WF/Modsuits/ModDampenerFieldOverlay.cs)
-- [`Content.Client/_WF/Modsuits/ModDampenerFieldSystem.cs`](../../../Content.Client/_WF/Modsuits/ModDampenerFieldSystem.cs)
-- [`Content.Client/_WF/Modsuits/ModHatVisualsSystem.cs`](../../../Content.Client/_WF/Modsuits/ModHatVisualsSystem.cs)
-- [`Content.Client/_WF/Modsuits/ModKinesisInputSystem.cs`](../../../Content.Client/_WF/Modsuits/ModKinesisInputSystem.cs)
-- [`Content.Client/_WF/Modsuits/ModMagneticHarnessPredictionSystem.cs`](../../../Content.Client/_WF/Modsuits/ModMagneticHarnessPredictionSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSphereInputSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSphereInputSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSphereVisualsComponent.cs`](../../../Content.Client/_WF/Modsuits/ModSphereVisualsComponent.cs)
 - [`Content.Client/_WF/Modsuits/ModSphereVisualsSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSphereVisualsSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitBoundUserInterface.cs`](../../../Content.Client/_WF/Modsuits/ModSuitBoundUserInterface.cs)
-- [`Content.Client/_WF/Modsuits/ModSuitIconButton.cs`](../../../Content.Client/_WF/Modsuits/ModSuitIconButton.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitSealedVisualsComponent.cs`](../../../Content.Client/_WF/Modsuits/ModSuitSealedVisualsComponent.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitUiSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitUiSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitVisualizerSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitVisualizerSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitWindow.xaml`](../../../Content.Client/_WF/Modsuits/ModSuitWindow.xaml)
 - [`Content.Client/_WF/Modsuits/ModSuitWindow.xaml.cs`](../../../Content.Client/_WF/Modsuits/ModSuitWindow.xaml.cs)
+- [`Content.Client/_WF/Modsuits/WaddleAnimationSystem.cs`](../../../Content.Client/_WF/Modsuits/WaddleAnimationSystem.cs)
 
 ### Integration tests
 
@@ -284,15 +129,20 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 ### Prototypes
 
 - [`Resources/Prototypes/_WF/Modsuits/actions.yml`](../../../Resources/Prototypes/_WF/Modsuits/actions.yml)
-- [`Resources/Prototypes/_WF/Modsuits/balloons.yml`](../../../Resources/Prototypes/_WF/Modsuits/balloons.yml)
+- [`Resources/Prototypes/_WF/Modsuits/clothing_back.yml`](../../../Resources/Prototypes/_WF/Modsuits/clothing_back.yml)
+- [`Resources/Prototypes/_WF/Modsuits/clothing_hands.yml`](../../../Resources/Prototypes/_WF/Modsuits/clothing_hands.yml)
+- [`Resources/Prototypes/_WF/Modsuits/clothing_head.yml`](../../../Resources/Prototypes/_WF/Modsuits/clothing_head.yml)
+- [`Resources/Prototypes/_WF/Modsuits/clothing_outer.yml`](../../../Resources/Prototypes/_WF/Modsuits/clothing_outer.yml)
+- [`Resources/Prototypes/_WF/Modsuits/clothing_shoes.yml`](../../../Resources/Prototypes/_WF/Modsuits/clothing_shoes.yml)
+- [`Resources/Prototypes/_WF/Modsuits/construction.yml`](../../../Resources/Prototypes/_WF/Modsuits/construction.yml)
 - [`Resources/Prototypes/_WF/Modsuits/contraband.yml`](../../../Resources/Prototypes/_WF/Modsuits/contraband.yml)
 - [`Resources/Prototypes/_WF/Modsuits/guidebook.yml`](../../../Resources/Prototypes/_WF/Modsuits/guidebook.yml)
 - [`Resources/Prototypes/_WF/Modsuits/lathe.yml`](../../../Resources/Prototypes/_WF/Modsuits/lathe.yml)
 - [`Resources/Prototypes/_WF/Modsuits/mod_modules.yml`](../../../Resources/Prototypes/_WF/Modsuits/mod_modules.yml)
 - [`Resources/Prototypes/_WF/Modsuits/modsuit_parts.yml`](../../../Resources/Prototypes/_WF/Modsuits/modsuit_parts.yml)
-- [`Resources/Prototypes/_WF/Modsuits/modules_extra.yml`](../../../Resources/Prototypes/_WF/Modsuits/modules_extra.yml)
 - [`Resources/Prototypes/_WF/Modsuits/research.yml`](../../../Resources/Prototypes/_WF/Modsuits/research.yml)
 - [`Resources/Prototypes/_WF/Modsuits/shaders.yml`](../../../Resources/Prototypes/_WF/Modsuits/shaders.yml)
+- [`Resources/Prototypes/_WF/Modsuits/suits.yml`](../../../Resources/Prototypes/_WF/Modsuits/suits.yml)
 - [`Resources/Prototypes/_WF/Modsuits/tags.yml`](../../../Resources/Prototypes/_WF/Modsuits/tags.yml)
 - [`Resources/Prototypes/_WF/Modsuits/themes.yml`](../../../Resources/Prototypes/_WF/Modsuits/themes.yml)
 
@@ -302,10 +152,6 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 
 ### Textures
 
-- [`Resources/Textures/_WF/Modsuits/balloons.rsi/`](../../../Resources/Textures/_WF/Modsuits/balloons.rsi/)
-- [`Resources/Textures/_WF/Modsuits/icons.rsi/`](../../../Resources/Textures/_WF/Modsuits/icons.rsi/)
-- [`Resources/Textures/_WF/Modsuits/mod_modules.rsi/`](../../../Resources/Textures/_WF/Modsuits/mod_modules.rsi/)
-- [`Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl)
 - [`Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl)
 
 ### Audio
@@ -329,20 +175,14 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
 ## Non-modular edits
 
 - [`Content.Client/Movement/Systems/JetpackSystem.cs`](../../../Content.Client/Movement/Systems/JetpackSystem.cs): MOD jetpack modules keep their own module sprite, which has no jetpack icon states
+- [`Content.Server/_EE/Carrying/CarryingSystem.cs`](../../_EE/Carrying/CarryingSystem.cs): the quick-carry module shortens the pickup
+- [`Content.Server/Clothing/Systems/ChameleonClothingSystem.cs`](../../Clothing/Systems/ChameleonClothingSystem.cs): shared base forwards chameleon changes
 - [`Content.Server/Movement/Systems/JetpackSystem.cs`](../../Movement/Systems/JetpackSystem.cs): the ion jetpack module burns the suit core, not a gas tank
-- [`Resources/Prototypes/_Goobstation/Entities/Clothing/Back/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Back/modsuit.yml)
-  - storage comes from an installed storage module
-  - module and part containers
-  - the module UI replaces the toggleable clothing UI
-  - the native module system spawns and seals the suit parts
-  - the core slot replaces the power cell slot
-  - the module system owns the suit parts
-  - a MOD core replaces the power cell
-- [`Resources/Prototypes/_Goobstation/Entities/Clothing/Hands/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Hands/modsuit.yml)
-- [`Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml): components granted while the native module system has the helmet sealed
-- [`Resources/Prototypes/_Goobstation/Entities/Clothing/OuterClothing/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/OuterClothing/modsuit.yml): the native module system grants sealed components
-- [`Resources/Prototypes/_Goobstation/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Clothing/Shoes/modsuit.yml)
-- [`Resources/Prototypes/_Goobstation/Entities/Objects/Specific/Robotics/modsuit_parts.yml`](../../../Resources/Prototypes/_Goobstation/Entities/Objects/Specific/Robotics/modsuit_parts.yml): the standard core holds a swappable power cell
+- [`Content.Shared/_White/Standing/SharedLayingDownSystem.cs`](../../../Content.Shared/_White/Standing/SharedLayingDownSystem.cs): worn gear can shorten the stand-up do-after
+- [`Content.Shared/Clothing/EntitySystems/SharedChameleonClothingSystem.cs`](../../../Content.Shared/Clothing/EntitySystems/SharedChameleonClothingSystem.cs): MOD chameleon modules drive the disguise from shared code
+- [`Content.Shared/Cuffs/SharedCuffableSystem.cs`](../../../Content.Shared/Cuffs/SharedCuffableSystem.cs): restraint-assist modules shorten the cuff do-after.
+- [`Content.Shared/Stunnable/SharedStunSystem.cs`](../../../Content.Shared/Stunnable/SharedStunSystem.cs): rolling MOD spheres shrug off knockdowns
+- [`Resources/Prototypes/_Goobstation/Recipes/Lathes/robotics.yml`](../../../Resources/Prototypes/_Goobstation/Recipes/Lathes/robotics.yml): MODsuit recipes moved to _WF/Modsuits.
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Back/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Back/modsuit.yml)
   - the native module system owns the suit parts
   - a MOD core replaces the power cell
@@ -352,6 +192,9 @@ system) and `ModsuitModuleBuiltinGrip` (no grab-strength hook).
   - the native module system sets its own sealed appearance
   - the rsi has no resomi state, so sealed Resomi drew an error sprite
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml): the native module system sets its own sealed appearance
-- [`Resources/Prototypes/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/lathe.yml): module recipes
+- [`Resources/Prototypes/_NF/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Machines/lathe.yml): departmental MOD module recipes
+- [`Resources/Prototypes/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/lathe.yml)
+  - module recipes
+  - departmental MOD module recipes
 
 <!-- WOLFGATE-GENERATED END -->

@@ -8,6 +8,7 @@ public sealed partial class ModTrayScannerModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModTrayScannerModuleComponent, ModModuleActivatedEvent>(OnActivated);
         SubscribeLocalEvent<ModTrayScannerModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);
     }

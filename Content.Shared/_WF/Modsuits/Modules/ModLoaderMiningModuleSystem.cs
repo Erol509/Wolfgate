@@ -30,6 +30,7 @@ public sealed partial class ModLoaderMiningModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModAshCoatComponent, DamageModifyEvent>(OnAshDamageModify);
         SubscribeLocalEvent<ModAshCoatComponent, GetExplosionResistanceEvent>(OnAshExplosionResistance);
         SubscribeLocalEvent<ModAshCoatComponent, RefreshMovementSpeedModifiersEvent>(OnAshRefreshSpeed);

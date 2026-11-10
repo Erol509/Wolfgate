@@ -18,6 +18,7 @@ public sealed partial class ModClampSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModClampComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ModClampComponent, EntGotInsertedIntoContainerMessage>(OnStored);
         SubscribeLocalEvent<ModClampComponent, EntityTerminatingEvent>(OnTerminating);

@@ -1,405 +1,602 @@
-# WOLFGATE(Modsuits): module recipes for the exosuit fabricator.
+# WOLFGATE(Modsuits): MODsuit parts, plating and module recipes, ported from GoobStation.
+
+
+- type: latheCategory
+  id: ModsuitModules
+  name: lathe-category-modsuit-modules
+
+- type: latheRecipe
+  id: ModsuitChestplate
+  result: ModsuitChestplate
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 250
+
+- type: latheRecipe
+  id: ModsuitBoots
+  result: ModsuitBoots
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 250
+
+- type: latheRecipe
+  id: ModsuitHelmet
+  result: ModsuitHelmet
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 250
+
+- type: latheRecipe
+  id: ModsuitGauntlets
+  result: ModsuitGauntlets
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 250
+
+- type: latheRecipe
+  id: ModsuitShell
+  result: ModsuitShell
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 500
+    Plasma: 250
+
+- type: latheRecipe
+  id: ModsuitPlatingExternal
+  result: ModsuitPlatingExternal
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 300
+    Glass: 150
+    Plasma: 50
+
+- type: latheRecipe
+  id: ModsuitPlatingParamedic
+  result: ModsuitPlatingParamedic
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 300
+    Silver: 100
+    Glass: 50
+    Plasma: 50
+
+- type: latheRecipe
+  id: ModsuitPlatingMining
+  result: ModsuitPlatingMining
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 300
+    Plasma: 100
+    Glass: 50
+    Silver: 50
+
+- type: latheRecipe
+  id: ModsuitPlatingEngineer
+  result: ModsuitPlatingEngineer
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 300
+    Gold: 100
+    Glass: 50
+    Plasma: 50
+
+- type: latheRecipe
+  id: ModsuitPlatingSecurity
+  result: ModsuitPlatingSecurity
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 300
+    Plasteel: 100
+    Silver: 50
+    Glass: 50
+    Plasma: 50
+
+- type: latheRecipe
+  id: ModsuitPlatingBrigMed
+  result: ModsuitPlatingBrigMed
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 300
+    Silver: 100
+    Plasteel: 50
+    Glass: 50
+    Plasma: 50
+
+- type: latheRecipe
+  id: ModsuitPlatingAtmostech
+  result: ModsuitPlatingAtmostech
+  categories:
+  - Modsuit
+  completetime: 5
+  materials:
+    Steel: 300
+    Plasteel: 100
+    Glass: 50
+    Plasma: 50
+
+# Modules
+
+- type: latheRecipe
+  abstract: true
+  id: BaseModsuitModuleRecipe
+  categories:
+  - ModsuitModules
+  completetime: 5
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitCoreStandard
+  result: ModsuitCoreStandard
+  materials:
+    Steel: 300
+    Glass: 200
+    Plasma: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitCoreStandardMicroreactor
+  result: ModsuitCoreStandardMicroreactor
+  completetime: 10
+  materials:
+    Steel: 600
+    Glass: 400
+    Uranium: 300
+    Gold: 100
+    Plasma: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitCorePlasma
+  result: ModsuitCorePlasma
+  materials:
+    Steel: 300
+    Glass: 200
+    Plasma: 500
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleStorageCompact
+  result: ModsuitModuleStorageCompact
+  materials:
+    Steel: 500
+    Glass: 100
+    Plastic: 300
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleStorageLarge
+  result: ModsuitModuleStorageLarge
+  materials:
+    Steel: 1000
+    Glass: 100
+    Plastic: 500
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleStorageBluespace
+  result: ModsuitModuleStorageBluespace
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 100
+    Silver: 500
+    Plasma: 500
+    Uranium: 150
+    Diamond: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleFlashlight
+  result: ModsuitModuleFlashlight
+  materials:
+    Steel: 300
+    Glass: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleMouthhole
+  result: ModsuitModuleMouthhole
+  materials:
+    Steel: 300
+    Glass: 100
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleMagboots
+  result: ModsuitModuleMagboots
+  materials:
+    Steel: 600
+    Glass: 100
+    Silver: 300
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleWelding
+  result: ModsuitModuleWelding
+  materials:
+    Steel: 300
+    Glass: 400
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleThermalRegulator
+  result: ModsuitModuleThermalRegulator
+  materials:
+    Steel: 400
+    Glass: 200
+    Plasma: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleGps
+  result: ModsuitModuleGps
+  materials:
+    Steel: 300
+    Glass: 300
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleHealthAnalyzer
+  result: ModsuitModuleHealthAnalyzer
+  materials:
+    Steel: 300
+    Glass: 300
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleVisorMedical
+  result: ModsuitModuleVisorMedical
+  materials:
+    Steel: 300
+    Glass: 300
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleVisorDiagnostic
+  result: ModsuitModuleVisorDiagnostic
+  materials:
+    Steel: 300
+    Glass: 300
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleVisorSecurity
+  result: ModsuitModuleVisorSecurity
+  materials:
+    Steel: 300
+    Glass: 300
+    Silver: 100
+    Gold: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleEmpShield
+  result: ModsuitModuleEmpShield
+  materials:
+    Steel: 500
+    Glass: 200
+    Uranium: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleJetpack
+  result: ModsuitModuleJetpack
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 100
+    Plasma: 500
+    Silver: 300
+    Gold: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleQuickCarry
+  result: ModsuitModuleQuickCarry
+  materials:
+    Steel: 500
+    Glass: 200
+    Gold: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleInjector
+  result: ModsuitModuleInjector
+  materials:
+    Steel: 300
+    Glass: 300
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleDefibrillator
+  result: ModsuitModuleDefibrillator
+  materials:
+    Steel: 500
+    Glass: 300
+    Silver: 300
+    Gold: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModulePatientTransport
+  result: ModsuitModulePatientTransport
+  materials:
+    Steel: 500
+    Glass: 500
+    Plasma: 300
+    Silver: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleTRay
+  result: ModsuitModuleTRay
+  materials:
+    Steel: 300
+    Glass: 300
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleRadProtection
+  result: ModsuitModuleRadProtection
+  materials:
+    Steel: 600
+    Glass: 200
+    Uranium: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleHeadProtector
+  result: ModsuitModuleHeadProtector
+  materials:
+    Steel: 600
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleTether
+  result: ModsuitModuleTether
+  materials:
+    Steel: 600
+    Glass: 100
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleMister
+  result: ModsuitModuleMister
+  materials:
+    Steel: 500
+    Glass: 200
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleResinMister
+  result: ModsuitModuleResinMister
+  materials:
+    Steel: 600
+    Glass: 300
+    Plastic: 300
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleHolster
+  result: ModsuitModuleHolster
+  materials:
+    Steel: 500
+    Plastic: 300
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleMegaphone
+  result: ModsuitModuleMegaphone
+  materials:
+    Steel: 300
+    Glass: 200
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModulePepperShoulders
+  result: ModsuitModulePepperShoulders
+  materials:
+    Steel: 400
+    Glass: 200
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleRestraintAssist
+  result: ModsuitModuleRestraintAssist
+  materials:
+    Steel: 400
+    Plastic: 200
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleBulwark
+  result: ModsuitModuleBulwark
+  materials:
+    Steel: 1000
+    Plasma: 200
+    Silver: 300
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleDrill
+  result: ModsuitModuleDrill
+  materials:
+    Steel: 600
+    Glass: 200
+    Silver: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleOreBag
+  result: ModsuitModuleOreBag
+  materials:
+    Steel: 500
+    Plastic: 300
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleCandelaSpool
+  result: ModsuitModuleCandelaSpool
+  materials:
+    Steel: 400
+    Glass: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleClamp
+  result: ModsuitModuleClamp
+  materials:
+    Steel: 1000
+    Glass: 200
+    Gold: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleReagentScanner
+  result: ModsuitModuleReagentScanner
+  materials:
+    Steel: 300
+    Glass: 300
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleAntiGravity
+  result: ModsuitModuleAntiGravity
+  materials:
+    Steel: 600
+    Glass: 300
+    Plasma: 500
+    Uranium: 200
+    Gold: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleBikeHorn
+  result: ModsuitModuleBikeHorn
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleWaddle
+  result: ModsuitModuleWaddle
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleJanitorMister
+  result: ModsuitModuleJanitorMister
+  materials:
+    Steel: 500
+    Glass: 200
+    Plastic: 200
 
 - type: latheRecipePack
   id: ModsuitModules
   recipes:
+  - ModsuitCoreStandard
+  - ModsuitCorePlasma
+  - ModsuitCoreStandardMicroreactor
   - ModsuitModuleStorageCompact
-  - ModsuitModuleFlashlight
-  - ModsuitModuleTether
-  - ModsuitModuleWelding
-  - ModsuitModuleLongfall
-  - ModsuitModuleThermalRegulator
-  - ModsuitModuleGloveTranslator
   - ModsuitModuleStorageLarge
-  - ModsuitModuleClamp
-  - ModsuitModuleHeadProtector
-  - ModsuitModuleMouthhole
-  - ModsuitModuleJanitorMister
-  - ModsuitModuleBikeHorn
-  - ModsuitModuleWaddle
-  - ModsuitModuleVisorMedical
-  - ModsuitModuleVisorDiagnostic
-  - ModsuitModuleVisorSecurity
-  - ModsuitModuleHealthAnalyzer
-  - ModsuitModuleDrill
-  - ModsuitModuleOreBag
+  - ModsuitModuleStorageBluespace
+  - ModsuitModuleFlashlight
+  - ModsuitModuleWelding
+  - ModsuitModuleThermalRegulator
   - ModsuitModuleGps
-  - ModsuitModuleCandelaSpool
+  - ModsuitModuleVisorDiagnostic
   - ModsuitModuleReagentScanner
-  - ModsuitModuleDnaLock
-  - ModsuitModuleInjector
-  - ModsuitModulePatientTransport
-  - ModsuitModuleTRay
+
+- type: latheRecipePack
+  id: ModsuitEngineering
+  recipes:
+  - ModsuitPlatingEngineer
+  - ModsuitPlatingAtmostech
   - ModsuitModuleMagboots
-  - ModsuitModuleConstructor
-  - ModsuitModuleResinMister
-  - ModsuitModuleCloak
-  - ModsuitModuleMagneticHarness
-  - ModsuitModuleHolster
-  - ModsuitModuleProjectileDampener
-  - ModsuitModuleCriminalCapture
-  - ModsuitModuleDefibrillator
+  - ModsuitModuleTRay
+  - ModsuitModuleTether
+  - ModsuitModuleMister
+  - ModsuitModuleHeadProtector
   - ModsuitModuleJetpack
   - ModsuitModuleRadProtection
+  - ModsuitModuleResinMister
+  - ModsuitModuleAntiGravity
+
+- type: latheRecipePack
+  id: ModsuitMedical
+  recipes:
+  - ModsuitPlatingParamedic
+  - ModsuitModuleHealthAnalyzer
+  - ModsuitModuleVisorMedical
+  - ModsuitModuleQuickCarry
+  - ModsuitModuleInjector
+  - ModsuitModuleDefibrillator
+  - ModsuitModulePatientTransport
+- type: latheRecipePack
+  id: ModsuitSecurity
+  recipes:
+  - ModsuitPlatingSecurity
+  - ModsuitPlatingBrigMed
+  - ModsuitModuleVisorSecurity
+  - ModsuitModuleHolster
+  - ModsuitModuleMegaphone
+  - ModsuitModulePepperShoulders
+  - ModsuitModuleRestraintAssist
+  - ModsuitModuleBulwark
   - ModsuitModuleEmpShield
-  - ModsuitModuleStorageBluespace
-  - ModsuitModuleKinesis
-  - ModsuitModuleJointTorsion
-  - ModsuitModuleRecycler
-  - ModsuitModuleShootingAssistant
 
+- type: latheRecipePack
+  id: ModsuitService
+  recipes:
+  - ModsuitModuleBikeHorn
+  - ModsuitModuleWaddle
+  - ModsuitModuleJanitorMister
+  - ModsuitModuleMouthhole
 
-- type: latheRecipe
-  id: ModsuitModuleStorageCompact
-  result: ModsuitModuleStorageCompact
-  completetime: 3
-  materials:
-    Steel: 125
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleFlashlight
-  result: ModsuitModuleFlashlight
-  completetime: 3
-  materials:
-    Steel: 50
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleTether
-  result: ModsuitModuleTether
-  completetime: 3
-  materials:
-    Steel: 50
-    Silver: 50
-
-- type: latheRecipe
-  id: ModsuitModuleWelding
-  result: ModsuitModuleWelding
-  completetime: 3
-  materials:
-    Steel: 50
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleLongfall
-  result: ModsuitModuleLongfall
-  completetime: 3
-  materials:
-    Steel: 50
-
-- type: latheRecipe
-  id: ModsuitModuleThermalRegulator
-  result: ModsuitModuleThermalRegulator
-  completetime: 3
-  materials:
-    Steel: 50
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleGloveTranslator
-  result: ModsuitModuleGloveTranslator
-  completetime: 3
-  materials:
-    Steel: 75
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleStorageLarge
-  result: ModsuitModuleStorageLarge
-  completetime: 3
-  materials:
-    Steel: 250
-    Uranium: 100
-
-- type: latheRecipe
-  id: ModsuitModuleClamp
-  result: ModsuitModuleClamp
-  completetime: 3
-  materials:
-    Steel: 100
-
-- type: latheRecipe
-  id: ModsuitModuleHeadProtector
-  result: ModsuitModuleHeadProtector
-  completetime: 3
-  materials:
-    Steel: 50
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleMouthhole
-  result: ModsuitModuleMouthhole
-  completetime: 3
-  materials:
-    Steel: 75
-
-- type: latheRecipe
-  id: ModsuitModuleJanitorMister
-  result: ModsuitModuleJanitorMister
-  completetime: 3
-  materials:
-    Glass: 50
-    Plasteel: 50
-
-- type: latheRecipe
-  id: ModsuitModuleBikeHorn
-  result: ModsuitModuleBikeHorn
-  completetime: 3
-  materials:
-    Steel: 50
-    Plastic: 50
-
-- type: latheRecipe
-  id: ModsuitModuleWaddle
-  result: ModsuitModuleWaddle
-  completetime: 3
-  materials:
-    Steel: 50
-    Plastic: 50
-
-- type: latheRecipe
-  id: ModsuitModuleVisorMedical
-  result: ModsuitModuleVisorMedical
-  completetime: 3
-  materials:
-    Glass: 50
-    Silver: 50
-
-- type: latheRecipe
-  id: ModsuitModuleVisorDiagnostic
-  result: ModsuitModuleVisorDiagnostic
-  completetime: 3
-  materials:
-    Glass: 50
-    Gold: 50
-
-- type: latheRecipe
-  id: ModsuitModuleVisorSecurity
-  result: ModsuitModuleVisorSecurity
-  completetime: 3
-  materials:
-    Glass: 50
-    Plasteel: 50
-
-- type: latheRecipe
-  id: ModsuitModuleHealthAnalyzer
-  result: ModsuitModuleHealthAnalyzer
-  completetime: 3
-  materials:
-    Steel: 50
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleDrill
-  result: ModsuitModuleDrill
-  completetime: 3
-  materials:
-    Steel: 100
-    Silver: 50
-
-- type: latheRecipe
-  id: ModsuitModuleOreBag
-  result: ModsuitModuleOreBag
-  completetime: 3
-  materials:
-    Steel: 75
-
-- type: latheRecipe
-  id: ModsuitModuleGps
-  result: ModsuitModuleGps
-  completetime: 3
-  materials:
-    Steel: 50
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleCandelaSpool
-  result: ModsuitModuleCandelaSpool
-  completetime: 3
-  materials:
-    Steel: 75
-
-- type: latheRecipe
-  id: ModsuitModuleReagentScanner
-  result: ModsuitModuleReagentScanner
-  completetime: 3
-  materials:
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleDnaLock
-  result: ModsuitModuleDnaLock
-  completetime: 3
-  materials:
-    Glass: 50
-    Diamond: 50
-
-- type: latheRecipe
-  id: ModsuitModuleInjector
-  result: ModsuitModuleInjector
-  completetime: 3
-  materials:
-    Steel: 50
-    Diamond: 50
-
-- type: latheRecipe
-  id: ModsuitModulePatientTransport
-  result: ModsuitModulePatientTransport
-  completetime: 3
-  materials:
-    Steel: 50
-    Bluespace: 50
-
-- type: latheRecipe
-  id: ModsuitModuleTRay
-  result: ModsuitModuleTRay
-  completetime: 3
-  materials:
-    Steel: 50
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleMagboots
-  result: ModsuitModuleMagboots
-  completetime: 3
-  materials:
-    Steel: 50
-    Gold: 50
-
-- type: latheRecipe
-  id: ModsuitModuleConstructor
-  result: ModsuitModuleConstructor
-  completetime: 3
-  materials:
-    Steel: 50
-    Plasteel: 50
-
-- type: latheRecipe
-  id: ModsuitModuleResinMister
-  result: ModsuitModuleResinMister
-  completetime: 3
-  materials:
-    Glass: 50
-    Plasteel: 75
-
-- type: latheRecipe
-  id: ModsuitModuleCloak
-  result: ModsuitModuleCloak
-  completetime: 3
-  materials:
-    Steel: 50
-    Bluespace: 50
-
-- type: latheRecipe
-  id: ModsuitModuleMagneticHarness
-  result: ModsuitModuleMagneticHarness
-  completetime: 3
-  materials:
-    Steel: 75
-    Silver: 50
-
-- type: latheRecipe
-  id: ModsuitModuleHolster
-  result: ModsuitModuleHolster
-  completetime: 3
-  materials:
-    Steel: 75
-    Glass: 50
-
-- type: latheRecipe
-  id: ModsuitModuleProjectileDampener
-  result: ModsuitModuleProjectileDampener
-  completetime: 3
-  materials:
-    Steel: 50
-    Bluespace: 50
-
-- type: latheRecipe
-  id: ModsuitModuleCriminalCapture
-  result: ModsuitModuleCriminalCapture
-  completetime: 3
-  materials:
-    Steel: 50
-    Bluespace: 50
-
-- type: latheRecipe
-  id: ModsuitModuleDefibrillator
-  result: ModsuitModuleDefibrillator
-  completetime: 3
-  materials:
-    Silver: 75
-    Diamond: 50
-    Plasteel: 25
-
-- type: latheRecipe
-  id: ModsuitModuleJetpack
-  result: ModsuitModuleJetpack
-  completetime: 3
-  materials:
-    Steel: 75
-    Plasma: 50
-
-- type: latheRecipe
-  id: ModsuitModuleRadProtection
-  result: ModsuitModuleRadProtection
-  completetime: 3
-  materials:
-    Steel: 50
-    Uranium: 50
-
-- type: latheRecipe
-  id: ModsuitModuleEmpShield
-  result: ModsuitModuleEmpShield
-  completetime: 3
-  materials:
-    Steel: 50
-    Plasma: 50
-
-- type: latheRecipe
-  id: ModsuitModuleStorageBluespace
-  result: ModsuitModuleStorageBluespace
-  completetime: 3
-  materials:
-    Uranium: 25
-    Gold: 150
-    Diamond: 75
-    Bluespace: 100
-
-- type: latheRecipe
-  id: ModsuitModuleKinesis
-  result: ModsuitModuleKinesis
-  completetime: 3
-  materials:
-    Steel: 125
-    Glass: 100
-    Uranium: 50
-    Bluespace: 50
-
-- type: latheRecipe
-  id: ModsuitModuleJointTorsion
-  result: ModsuitModuleJointTorsion
-  completetime: 3
-  materials:
-    Steel: 50
-    Gold: 25
-    Plasteel: 10
-
-- type: latheRecipe
-  id: ModsuitModuleRecycler
-  result: ModsuitModuleRecycler
-  completetime: 3
-  materials:
-    Steel: 100
-    Glass: 50
-    Plastic: 20
-
-- type: latheRecipe
-  id: ModsuitModuleShootingAssistant
-  result: ModsuitModuleShootingAssistant
-  completetime: 3
-  materials:
-    Steel: 100
-    Silver: 20
-    Gold: 10
-    Diamond: 10
+- type: latheRecipePack
+  id: ModsuitSupply
+  recipes:
+  - ModsuitPlatingMining
+  - ModsuitModuleCandelaSpool
+  - ModsuitModuleDrill
+  - ModsuitModuleOreBag
+  - ModsuitModuleClamp

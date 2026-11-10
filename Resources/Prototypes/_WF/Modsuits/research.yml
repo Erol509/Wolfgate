@@ -1,69 +1,165 @@
-# WOLFGATE(Modsuits): MODsuit module research, split into basic and advanced modules.
+# WOLFGATE(Modsuits): MODsuit construction and module research, ported from GoobStation.
 
 - type: technology
-  id: WFModsuitModules
-  name: research-technology-wf-modsuit-modules
-  entityIcon: ModsuitModuleStorageCompact
+  id: ModsuitsTech
+  name: research-technology-modsuits
+  icon:
+    sprite: _Goobstation/Objects/Specific/Robotics/modsuit_parts.rsi
+    state: mod-core-standard
   discipline: Experimental
-  tier: 2
-  cost: 17500
+  tier: 1
+  cost: 5000
   recipeUnlocks:
+  - ModsuitChestplate
+  - ModsuitBoots
+  - ModsuitHelmet
+  - ModsuitGauntlets
+  - ModsuitShell
+  - ModsuitPlatingExternal
+  - ModsuitCoreStandard
   - ModsuitModuleStorageCompact
   - ModsuitModuleFlashlight
-  - ModsuitModuleTether
-  - ModsuitModuleWelding
-  - ModsuitModuleLongfall
-  - ModsuitModuleThermalRegulator
-  - ModsuitModuleGloveTranslator
-  - ModsuitModuleStorageLarge
-  - ModsuitModuleClamp
-  - ModsuitModuleHeadProtector
-  - ModsuitModuleMouthhole
-  - ModsuitModuleJanitorMister
-  - ModsuitModuleBikeHorn
-  - ModsuitModuleWaddle
-  - ModsuitModuleVisorMedical
-  - ModsuitModuleVisorDiagnostic
-  - ModsuitModuleVisorSecurity
-  - ModsuitModuleHealthAnalyzer
-  - ModsuitModuleDrill
-  - ModsuitModuleOreBag
-  - ModsuitModuleGps
-  - ModsuitModuleCandelaSpool
-  - ModsuitModuleReagentScanner
-  - ModsuitModuleDnaLock
+  position: -4,-1
   technologyPrerequisites:
-  - HardsuitsSpecialized
-  position: 2, 7
+  - MagnetsTech
 
 - type: technology
-  id: WFModsuitModulesAdvanced
-  name: research-technology-wf-modsuit-modules-advanced
-  entityIcon: ModsuitModuleJetpack
+  id: ModsuitEquipmentTech
+  name: research-technology-modsuit-equipment
+  icon:
+    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
+    state: regulator
   discipline: Experimental
-  tier: 3
-  cost: 30000
+  tier: 1
+  cost: 7500
   recipeUnlocks:
-  - ModsuitModuleInjector
-  - ModsuitModulePatientTransport
-  - ModsuitModuleTRay
+  - ModsuitCorePlasma
+  - ModsuitModuleStorageLarge
+  - ModsuitModuleWelding
+  - ModsuitModuleThermalRegulator
+  - ModsuitModuleGps
+  - ModsuitModuleVisorDiagnostic
+  - ModsuitModuleReagentScanner
+  position: -5,-2
+  technologyPrerequisites:
+  - ModsuitsTech
+
+- type: technology
+  id: ModsuitEngineeringTech
+  name: research-technology-modsuit-engineering
+  icon:
+    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
+    state: magnet
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - ModsuitPlatingEngineer
   - ModsuitModuleMagboots
-  - ModsuitModuleConstructor
-  - ModsuitModuleResinMister
-  - ModsuitModuleCloak
-  - ModsuitModuleMagneticHarness
-  - ModsuitModuleHolster
-  - ModsuitModuleProjectileDampener
-  - ModsuitModuleCriminalCapture
-  - ModsuitModuleDefibrillator
+  - ModsuitModuleTRay
+  - ModsuitModuleTether
+  - ModsuitModuleMister
+  - ModsuitModuleHeadProtector
+  position: -3,-4
+  technologyPrerequisites:
+  - ModsuitsTech
+
+- type: technology
+  id: ModsuitAdvancedEngineeringTech
+  name: research-technology-modsuit-advanced-engineering
+  icon:
+    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
+    state: jetpack
+  discipline: Industrial
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - ModsuitPlatingAtmostech
   - ModsuitModuleJetpack
   - ModsuitModuleRadProtection
-  - ModsuitModuleEmpShield
-  - ModsuitModuleStorageBluespace
-  - ModsuitModuleKinesis
-  - ModsuitModuleJointTorsion
-  - ModsuitModuleRecycler
-  - ModsuitModuleShootingAssistant
+  - ModsuitModuleResinMister
+  - ModsuitModuleAntiGravity
+  position: -3,-5
   technologyPrerequisites:
-  - WFModsuitModules
-  position: 2, 8
+  - ModsuitEngineeringTech
+
+- type: technology
+  id: ModsuitSupplyTech
+  name: research-technology-modsuit-supply
+  icon:
+    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
+    state: drill
+  discipline: Industrial
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - ModsuitPlatingMining
+  - ModsuitModuleDrill
+  - ModsuitModuleCandelaSpool
+  - ModsuitModuleOreBag
+  - ModsuitModuleClamp
+  position: -4,-4
+  technologyPrerequisites:
+  - ModsuitsTech
+
+- type: technology
+  id: ModsuitMedicalTech
+  name: research-technology-modsuit-medical
+  icon:
+    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
+    state: health
+  discipline: CivilianServices
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - ModsuitPlatingParamedic
+  - ModsuitModuleHealthAnalyzer
+  - ModsuitModuleVisorMedical
+  - ModsuitModuleQuickCarry
+  - ModsuitModuleInjector
+  - ModsuitModuleDefibrillator
+  - ModsuitModulePatientTransport
+  position: 3,7
+  technologyPrerequisites:
+  - ModsuitsTech
+
+- type: technology
+  id: ModsuitServiceTech
+  name: research-technology-modsuit-service
+  icon:
+    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
+    state: bikehorn
+  discipline: CivilianServices
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+  - ModsuitModuleBikeHorn
+  - ModsuitModuleWaddle
+  - ModsuitModuleJanitorMister
+  - ModsuitModuleMouthhole
+  position: 4,7
+  technologyPrerequisites:
+  - ModsuitsTech
+
+- type: technology
+  id: ModsuitSecurityTech
+  name: research-technology-modsuit-security
+  icon:
+    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
+    state: sechud_visor
+  discipline: Arsenal
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - ModsuitModuleVisorSecurity
+  - ModsuitModuleHolster
+  - ModsuitModuleMegaphone
+  - ModsuitModulePepperShoulders
+  - ModsuitModuleRestraintAssist
+  - ModsuitModuleBulwark
+  - ModsuitModuleEmpShield
+  - ModsuitPlatingSecurity
+  - ModsuitPlatingBrigMed
+  position: 4,1
+  technologyPrerequisites:
+  - ModsuitsTech

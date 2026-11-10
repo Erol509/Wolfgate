@@ -14,6 +14,7 @@ public sealed partial class ModCloakModuleSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ModCloakModuleComponent, ModModuleActivatedEvent>(OnActivated);
         SubscribeLocalEvent<ModCloakModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);
         SubscribeLocalEvent<ModCloakedComponent, MeleeAttackEvent>(OnMeleeAttack);
