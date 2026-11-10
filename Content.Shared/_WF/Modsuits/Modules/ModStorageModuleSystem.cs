@@ -21,11 +21,14 @@ public sealed partial class ModStorageModuleSystem : EntitySystem
             return;
 
         EntityManager.AddComponents(args.Suit, ent.Comp.Components);
+        ent.Comp.Granted = true;
     }
     private void OnDeactivated(Entity<ModStorageModuleComponent> ent, ref ModModuleDeactivatedEvent args)
     {
-        if (!TryComp<StorageComponent>(args.Suit, out var storage))
+        if (!ent.Comp.Granted || !TryComp<StorageComponent>(args.Suit, out var storage))
             return;
+
+        ent.Comp.Granted = false;
 
         var coords = _transform.GetMoverCoordinates(args.Suit);
         _container.EmptyContainer(storage.Container, true, coords);

@@ -141,13 +141,6 @@ modsuit-candela-empty = The beacon spool is out of marker beacons!
 
 # WOLFGATE(Modsuits): research, lathe, construction and support strings.
 
-research-technology-modsuit-equipment = Modular Suit Equipment
-research-technology-modsuit-medical = Medical Modular Suits
-research-technology-modsuit-engineering = Engineering Modular Suits
-research-technology-modsuit-advanced-engineering = Advanced Engineering Modular Suits
-research-technology-modsuit-security = Security Modular Suits
-research-technology-modsuit-supply = Supply Modular Suit Equipment
-research-technology-modsuit-service = Service Modular Suit Equipment
 
 lathe-category-modsuit-modules = MOD Modules
 

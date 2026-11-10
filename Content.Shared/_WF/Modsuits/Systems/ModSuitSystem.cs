@@ -127,6 +127,7 @@ public sealed partial class ModSuitSystem : EntitySystem
 
         SpawnParts(ent);
         SpawnStartingModules(ent);
+        SyncCharge(ent);
         Dirty(ent);
     }
 

@@ -2200,9 +2200,6 @@ unmarked:
   - path: Resources/Prototypes/_CE/Entities/Structures/Architecture/Ladders/base.yml
     module: EngineCompat
     reason: Engine v286 Box2 rejects inverted bounds; fixture bounds normalized. Engine v287 occluders dropped boundingBox; the default polygon matches.
-  - path: Resources/Prototypes/_Goobstation/Entities/Clothing/Head/modsuit.yml
-    module: EngineCompat
-    reason: Engine v291 replaced PointLight mask paths with lightMask prototypes.
   - path: Resources/Prototypes/_Mono/Entities/Clothing/Head/modsuit.yml
     module: EngineCompat
     reason: Engine v291 replaced PointLight mask paths with lightMask prototypes.

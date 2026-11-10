@@ -15,6 +15,7 @@ namespace Content.Server._WF.Modsuits;
 public sealed partial class ClothingAutoinjectorSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
@@ -29,7 +30,11 @@ public sealed partial class ClothingAutoinjectorSystem : EntitySystem
 
     private void OnMobStateChange(MobStateChangedEvent args)
     {
-        RaiseLocalEvent(args.Target, new ClothingAutoInjectRelayedEvent(args.Target, args.NewMobState));
+        if (!TryComp<InventoryComponent>(args.Target, out var inventory))
+            return;
+
+        var ev = new ClothingAutoInjectRelayedEvent(args.Target, args.NewMobState);
+        _inventory.RelayEvent((args.Target, inventory), ref ev);
     }
 
     private void OnInject(Entity<ClothingAutoInjectComponent> ent, ref InventoryRelayedEvent<ClothingAutoInjectRelayedEvent> args)

@@ -394,6 +394,9 @@ public sealed partial class ModSuitSystem
 
     public bool CanAccess(Entity<ModSuitComponent> suit, EntityUid user)
     {
+        if (suit.Comp.ModulesContainer == null)
+            return true;
+
         var ev = new ModSuitAccessAttemptEvent(user);
         foreach (var module in suit.Comp.ModulesContainer.ContainedEntities)
         {

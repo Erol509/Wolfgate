@@ -92,7 +92,7 @@ public sealed partial class ModSuitWindow : FancyWindow
             ? Loc.GetString("modsuit-ui-core", ("core", _entMan.GetComponent<MetaDataComponent>(core).EntityName))
             : Loc.GetString("modsuit-ui-core-none");
 
-        if (_modSuit.GetBattery(suit) is not { } battery)
+        if (_modSuit.GetCore(suit) == null || suit.Comp.MaxCharge <= 0f)
         {
             ChargeLabel.Text = Loc.GetString("modsuit-ui-no-core");
             return;

@@ -42,6 +42,9 @@ public sealed partial class ModStorageModuleComponent : Component
 {
     [DataField(required: true)]
     public ComponentRegistry Components = new();
+
+    [ViewVariables]
+    public bool Granted;
 }
 
 [RegisterComponent, NetworkedComponent]

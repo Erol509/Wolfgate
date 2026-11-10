@@ -247,7 +247,7 @@ public sealed partial class ModSuitSystem
         if (_timing.ApplyingState || ent.Comp.Wearer is not { } wearer)
             return;
 
-        if (ent.Comp.State == ModSuitState.Inactive || GetBattery(ent) == null)
+        if (ent.Comp.State == ModSuitState.Inactive || GetCore(ent) == null)
         {
             _alerts.ClearAlert(wearer, ent.Comp.PowerAlert);
             return;
