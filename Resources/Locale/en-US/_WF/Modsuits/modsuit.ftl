@@ -54,7 +54,7 @@ modsuit-examine-no-core = [color=red]No core installed.[/color]
 modsuit-examine-module = - {$module}
 modsuit-examine-module-builtin = - {$module} [color=gray](built-in)[/color]
 
-modsuit-ui-title = MOD Interface
+modsuit-ui-title = MOD Interface Panel
 modsuit-ui-status = Status: {$state}
 modsuit-ui-state-inactive = Inactive
 modsuit-ui-state-activating = Activating
@@ -164,3 +164,39 @@ research-technology-modsuit-advanced-engineering = Advanced Engineering Modular 
 research-technology-modsuit-security = Security Modular Suits
 research-technology-modsuit-supply = Supply Modular Suit Equipment
 research-technology-modsuit-service = Service Modular Suit Equipment
+
+# WOLFGATE(Modsuits): MOD Interface Panel strings.
+modsuit-ui-suit-status = Suit Status
+modsuit-ui-charge-label = Charge
+modsuit-ui-id-lock = ID Lock
+modsuit-ui-unlocked = Unlocked
+modsuit-ui-locked = Locked
+modsuit-ui-modlink = MODLink
+modsuit-ui-frequency-unset = Frequency Unset
+modsuit-ui-cover = Cover
+modsuit-ui-cover-open = Open
+modsuit-ui-user-status = User Status
+modsuit-ui-user-name = Name
+modsuit-ui-user-assignment = Assignment
+modsuit-ui-suit-unpowered = SUIT UNPOWERED
+modsuit-ui-charge-bar = {$current} of {$max} ({$percent}%)
+modsuit-ui-no-core-detected = No Core Detected
+modsuit-ui-cell-missing = Power Cell Missing
+modsuit-ui-complexity-used = {$current} of {$max} complexity used
+modsuit-ui-actions = Actions
+modsuit-ui-name = Name
+modsuit-ui-idle-power = Idle Power Cost (Watts)
+modsuit-ui-active-power = Active Power Cost (Watts)
+modsuit-ui-use-power = Use Energy Cost (Joules)
+modsuit-ui-module-complexity = Complexity
+modsuit-ui-select = Select
+modsuit-ui-pin = Pin
+modsuit-ui-unpin = Unpin
+modsuit-ui-control-unit = Control Unit
+modsuit-ui-core-label = Core
+modsuit-ui-ai-assistant = AI Assistant
+modsuit-ui-no-ai = No AI Detected
+modsuit-ui-part-slot = {$part} Slot
+modsuit-ui-deploy = Deploy
+modsuit-ui-retract = Retract
+modsuit-ui-no-modules-detected = No Modules Detected

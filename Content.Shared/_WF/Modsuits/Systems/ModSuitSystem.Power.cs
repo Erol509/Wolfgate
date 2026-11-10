@@ -77,17 +77,22 @@ public sealed partial class ModSuitSystem
 
         var charge = 0f;
         var max = 1f;
+        var hasBattery = false;
         if (GetBattery(ent) is { } battery)
         {
             charge = GetCharge(battery);
             max = MathF.Max(1f, battery.Comp.MaxCharge);
+            hasBattery = true;
         }
 
-        if (MathF.Abs(ent.Comp.Charge - charge) < 0.01f && MathF.Abs(ent.Comp.MaxCharge - max) < 0.01f)
+        if (MathF.Abs(ent.Comp.Charge - charge) < 0.01f
+            && MathF.Abs(ent.Comp.MaxCharge - max) < 0.01f
+            && ent.Comp.HasBattery == hasBattery)
             return;
 
         ent.Comp.Charge = charge;
         ent.Comp.MaxCharge = max;
+        ent.Comp.HasBattery = hasBattery;
         Dirty(ent);
     }
 

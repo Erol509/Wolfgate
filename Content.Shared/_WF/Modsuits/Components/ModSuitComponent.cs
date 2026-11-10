@@ -78,6 +78,10 @@ public sealed partial class ModSuitComponent : Component
     [DataField, AutoNetworkedField]
     public float MaxCharge = 1f;
 
+    /// <summary>Whether the core currently has a battery, copied so the client can show it.</summary>
+    [DataField, AutoNetworkedField]
+    public bool HasBattery;
+
     [DataField]
     public SlotFlags RequiredSlot = SlotFlags.BACK;
 
