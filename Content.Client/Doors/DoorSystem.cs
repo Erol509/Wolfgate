@@ -17,7 +17,39 @@ public sealed partial class DoorSystem : SharedDoorSystem
     {
         base.Initialize();
         SubscribeLocalEvent<DoorComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<DoorComponent, AnimationCompletedEvent>(OnAnimationCompleted); // WOLFGATE(InteractionParticles)
     }
+
+    // WOLFGATE(InteractionParticles) START: settle on the final sprite once the open/close animation finishes
+    private void OnAnimationCompleted(Entity<DoorComponent> entity, ref AnimationCompletedEvent args)
+    {
+        if (args.Key != DoorComponent.OpenKey && args.Key != DoorComponent.CloseKey)
+            return;
+
+        if (!TryComp<SpriteComponent>(entity, out var sprite))
+            return;
+
+        switch (entity.Comp.State)
+        {
+            case DoorState.Open:
+                foreach (var (layer, layerState) in entity.Comp.OpenSpriteStates)
+                {
+                    _sprite.LayerSetAutoAnimated((entity.Owner, sprite), layer, true);
+                    _sprite.LayerSetRsiState((entity.Owner, sprite), layer, layerState);
+                }
+
+                break;
+            case DoorState.Closed:
+                foreach (var (layer, layerState) in entity.Comp.ClosedSpriteStates)
+                {
+                    _sprite.LayerSetAutoAnimated((entity.Owner, sprite), layer, true);
+                    _sprite.LayerSetRsiState((entity.Owner, sprite), layer, layerState);
+                }
+
+                break;
+        }
+    }
+    // WOLFGATE END
 
     protected override void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
     {
@@ -88,8 +120,10 @@ public sealed partial class DoorSystem : SharedDoorSystem
         if (AppearanceSystem.TryGetData<string>(entity, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
             UpdateSpriteLayers((entity.Owner, args.Sprite), baseRsi);
 
-        if (_animationSystem.HasRunningAnimation(entity, DoorComponent.AnimationKey))
-            _animationSystem.Stop(entity.Owner, DoorComponent.AnimationKey);
+        // WOLFGATE(InteractionParticles) START: do not stop every animation for no reason
+        //if (_animationSystem.HasRunningAnimation(entity, DoorComponent.AnimationKey))
+        //    _animationSystem.Stop(entity.Owner, DoorComponent.AnimationKey);
+        // WOLFGATE END
 
         UpdateAppearanceForDoorState(entity, args.Sprite, state);
     }
@@ -101,6 +135,9 @@ public sealed partial class DoorSystem : SharedDoorSystem
         switch (state)
         {
             case DoorState.Open:
+                if (_animationSystem.HasRunningAnimation(entity, DoorComponent.OpenKey)) // WOLFGATE(InteractionParticles)
+                    return; // WOLFGATE(InteractionParticles)
+
                 foreach (var (layer, layerState) in entity.Comp.OpenSpriteStates)
                 {
                     // Allow animations to play while it's open (e.g., pinion);
@@ -111,6 +148,9 @@ public sealed partial class DoorSystem : SharedDoorSystem
 
                 return;
             case DoorState.Closed:
+                if (_animationSystem.HasRunningAnimation(entity, DoorComponent.CloseKey)) // WOLFGATE(InteractionParticles)
+                    return; // WOLFGATE(InteractionParticles)
+
                 foreach (var (layer, layerState) in entity.Comp.ClosedSpriteStates)
                 {
                     _sprite.LayerSetAutoAnimated((entity.Owner, sprite), layer, true);
@@ -122,22 +162,34 @@ public sealed partial class DoorSystem : SharedDoorSystem
                 if (entity.Comp.OpeningAnimationTime == 0.0)
                     return;
 
-                _animationSystem.Play(entity, (Animation)entity.Comp.OpeningAnimation, DoorComponent.AnimationKey);
+                if (_animationSystem.HasRunningAnimation(entity, DoorComponent.OpenKey)) // WOLFGATE(InteractionParticles)
+                    return; // WOLFGATE(InteractionParticles)
+
+                _animationSystem.Play(entity, (Animation)entity.Comp.OpeningAnimation, DoorComponent.OpenKey); // WOLFGATE(InteractionParticles)
 
                 return;
             case DoorState.Closing:
                 if (entity.Comp.ClosingAnimationTime == 0.0 || entity.Comp.CurrentlyCrushing.Count != 0)
                     return;
 
-                _animationSystem.Play(entity, (Animation)entity.Comp.ClosingAnimation, DoorComponent.AnimationKey);
+                if (_animationSystem.HasRunningAnimation(entity, DoorComponent.CloseKey)) // WOLFGATE(InteractionParticles)
+                    return; // WOLFGATE(InteractionParticles)
+
+                _animationSystem.Play(entity, (Animation)entity.Comp.ClosingAnimation, DoorComponent.CloseKey); // WOLFGATE(InteractionParticles)
 
                 return;
             case DoorState.Denying:
-                _animationSystem.Play(entity, (Animation)entity.Comp.DenyingAnimation, DoorComponent.AnimationKey);
+                if (_animationSystem.HasRunningAnimation(entity, DoorComponent.DenyKey)) // WOLFGATE(InteractionParticles)
+                    return; // WOLFGATE(InteractionParticles)
+
+                _animationSystem.Play(entity, (Animation)entity.Comp.DenyingAnimation, DoorComponent.DenyKey); // WOLFGATE(InteractionParticles)
 
                 return;
             case DoorState.Emagging:
-                _animationSystem.Play(entity, (Animation)entity.Comp.EmaggingAnimation, DoorComponent.AnimationKey);
+                if (_animationSystem.HasRunningAnimation(entity, DoorComponent.EmagKey)) // WOLFGATE(InteractionParticles)
+                    return; // WOLFGATE(InteractionParticles)
+
+                _animationSystem.Play(entity, (Animation)entity.Comp.EmaggingAnimation, DoorComponent.EmagKey); // WOLFGATE(InteractionParticles)
 
                 return;
         }
