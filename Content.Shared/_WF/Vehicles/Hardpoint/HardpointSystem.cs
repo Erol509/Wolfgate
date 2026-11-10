@@ -1092,6 +1092,18 @@ public sealed partial class HardpointSystem : EntitySystem
         return !TryComp(uid, out HardpointIntegrityComponent? integrity) || integrity.Integrity > 0f;
     }
 
+    /// <summary>The welder-type quality a tool repairs this hardpoint with, or null.</summary>
+    private ProtoId<ToolQualityPrototype>? WeldQuality(EntityUid used, HardpointIntegrityComponent comp)
+    {
+        if (_tool.HasQuality(used, comp.RepairToolQuality))
+            return comp.RepairToolQuality;
+
+        if (_tool.HasQuality(used, comp.AltRepairToolQuality))
+            return comp.AltRepairToolQuality;
+
+        return null;
+    }
+
     private void OnHardpointRepair(Entity<HardpointIntegrityComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -1099,7 +1111,7 @@ public sealed partial class HardpointSystem : EntitySystem
 
         var used = args.Used;
         var isFrame = HasComp<HardpointSlotsComponent>(ent.Owner) && !HasComp<HardpointItemComponent>(ent.Owner);
-        var usedWelder = _tool.HasQuality(used, ent.Comp.RepairToolQuality);
+        var usedWelder = WeldQuality(used, ent.Comp) != null;
         var usedWrench = isFrame && _tool.HasQuality(used, ent.Comp.FrameFinishToolQuality);
 
         if (!usedWelder && !usedWrench)
@@ -1152,7 +1164,7 @@ public sealed partial class HardpointSystem : EntitySystem
             return false;
 
         var repairTime = GetRepairTimeForCurrentStep(ent.Owner, ent.Comp, repairAmount, isFrame);
-        var quality = usedWelder ? ent.Comp.RepairToolQuality : ent.Comp.FrameFinishToolQuality;
+        var quality = usedWelder ? WeldQuality(tool, ent.Comp) ?? ent.Comp.RepairToolQuality : ent.Comp.FrameFinishToolQuality;
         var fuel = usedWelder ? (float) GetFuelCostForChunk(ent.Owner, ent.Comp, repairAmount, isFrame) : 0f;
 
         return _tool.UseTool(tool, user, ent.Owner, repairTime, quality, new HardpointRepairDoAfterEvent(), fuel);
@@ -1169,7 +1181,7 @@ public sealed partial class HardpointSystem : EntitySystem
             return;
 
         var isFrame = HasComp<HardpointSlotsComponent>(ent.Owner) && !HasComp<HardpointItemComponent>(ent.Owner);
-        var usedWelder = _tool.HasQuality(used, ent.Comp.RepairToolQuality);
+        var usedWelder = WeldQuality(used, ent.Comp) != null;
         var usedWrench = isFrame && _tool.HasQuality(used, ent.Comp.FrameFinishToolQuality);
 
         if (!usedWelder && !usedWrench)

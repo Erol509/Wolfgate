@@ -82,6 +82,9 @@ public sealed partial class MedicalBountySystem : EntitySystem
         if (component.BountyInitialized)
             return;
 
+        // WOLFGATE: a bounty patient is redeemed at the medical bounty machine, not sold at a pallet for more than the bounty
+        EnsureComp<Content.Server.Cargo.Components.CargoSellBlacklistComponent>(entity);
+
         if (component.Bounty == null)
         {
             if (_cachedPrototypes.Count > 0)

@@ -20,7 +20,7 @@
   IRE shielding is the physical structure that makes the antimatter engine. It's made by converting IRE flatpacks into shielding using a multitool.
 
   To construct an IRE, start putting down a 3x3 or larger square of IRE flatpacks in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all eight sides.
-  The greater amount of center pieces, the more cores your AME will have, and the more power it will be able to output safely.
+  <!-- WOLFGATE: the engine is the IRE everywhere else in game -->The greater amount of center pieces, the more cores your IRE will have, and the more power it will be able to output safely.
 
   <Box>
     <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>

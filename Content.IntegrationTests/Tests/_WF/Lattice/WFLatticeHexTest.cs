@@ -221,4 +221,51 @@ public sealed class WFLatticeHexTest
 
         await pair.CleanReturnAsync();
     }
+
+    /// <summary>Once every primary anchor is gone and the Coda reaches the centre, Kyphrus implodes a few seconds later.</summary>
+    [Test]
+    public async Task CodaAtTheCentreBringsTacet()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var entities = server.EntMan;
+        var lattice = entities.System<WFLatticeSystem>();
+        var config = server.ResolveDependency<Robust.Shared.Configuration.IConfigurationManager>();
+
+        await server.WaitPost(() =>
+        {
+            config.SetCVar(WFLatticeEndgameCVars.AnchorFade, 0f);
+            config.SetCVar(WFLatticeEndgameCVars.TacetCentreDelay, 4f);
+            lattice.Setup(map.MapUid);
+        });
+        await pair.RunSeconds(2f);
+
+        await server.WaitPost(() =>
+        {
+            foreach (var anchor in entities.EntityQuery<WFLatticeAnchorComponent>().Where(a => a.Primary).ToList())
+            {
+                entities.DeleteEntity(anchor.Owner);
+            }
+        });
+        await pair.RunSeconds(2f);
+
+        await server.WaitAssertion(() =>
+        {
+            var field = entities.GetComponent<WFLatticeFieldComponent>(map.MapUid);
+            Assert.That(field.Unstrung, Is.True, "Precondition: losing every primary anchor didn't unstring the Lattice.");
+            Assert.That(field.Tacet, Is.False, "Kyphrus imploded before the delay after the Coda reached the centre.");
+        });
+        await pair.RunSeconds(4f);
+
+        await server.WaitAssertion(() =>
+        {
+            var field = entities.GetComponent<WFLatticeFieldComponent>(map.MapUid);
+            Assert.That(field.Tacet, Is.True, "Kyphrus didn't implode once the Coda reached the centre.");
+            config.SetCVar(WFLatticeEndgameCVars.AnchorFade, WFLatticeEndgameCVars.AnchorFade.DefaultValue);
+            config.SetCVar(WFLatticeEndgameCVars.TacetCentreDelay, WFLatticeEndgameCVars.TacetCentreDelay.DefaultValue);
+        });
+
+        await pair.CleanReturnAsync();
+    }
 }

@@ -157,6 +157,10 @@ public sealed partial class WolfmedDownedSystem : EntitySystem
     /// </summary>
     private void OnInteractionAttempt(Entity<WolfmedDownedComponent> ent, ref InteractionAttemptEvent args)
     {
+        // A body down only for want of legs is awake and has its hands: consoles, seats and lockers stay in reach.
+        if (TryComp<WolfmedConsciousnessComponent>(ent, out var consciousness) && consciousness.Cause == WolfmedCause.Legs)
+            return;
+
         // AUTODOC: a pod marked reachable is the one thing off the body a Downed player may still touch.
         // M2 (OD7 (c)): and a Downed neighbour, with gauze in hand.
         if (args.Target is { } target && !IsSelfOrCarried(ent, target) &&

@@ -45,7 +45,8 @@ station-beacon-salvage = Salvage
 
 station-beacon-engineering = Engineering
 station-beacon-ce = CE
-station-beacon-ame = AME
+# WOLFGATE: the engine is the IRE everywhere else in game, so these lines say IRE too
+station-beacon-ame = IRE
 station-beacon-solars = Solars
 station-beacon-gravgen = Grav
 station-beacon-pa = PA Control

@@ -33,7 +33,8 @@ steal-target-groups-medical-tech-fab-circuitboard = medical techfab machine boar
 steal-target-groups-clothing-headset-alt-medical = chief medical officer's over-ear headset
 steal-target-groups-research-and-development-server-machine-circuitboard = R&D server machine board
 steal-target-groups-fire-axe = fireaxe
-steal-target-groups-ame-part-flatpack =  AME flatpack
+# WOLFGATE: the engine is the IRE everywhere else in game, so these lines say IRE too
+steal-target-groups-ame-part-flatpack =  IRE flatpack
 steal-target-groups-salvage-expeditions-computer-circuitboard = salvage expeditions computer board
 steal-target-groups-cargo-shuttle-console-circuitboard = cargo shuttle console board
 steal-target-groups-clothing-eyes-hud-beer = beer goggles

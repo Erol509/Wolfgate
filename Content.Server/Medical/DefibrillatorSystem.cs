@@ -197,7 +197,9 @@ public sealed partial class DefibrillatorSystem : EntitySystem
             _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-rotten"),
                 InGameICChatType.Speak, true);
         }
-        else if (TryComp<UnrevivableComponent>(target, out var unrevivable))
+        // WOLFGATE(Wolfmed): a living Wolfmed patient in arrest can be shocked; Unrevivable only stops the dead
+        else if (TryComp<UnrevivableComponent>(target, out var unrevivable)
+                 && (!_wolfmedRevival.OwnsRevival(target) || _mobState.IsDead(target, mob))) // WOLFGATE(Wolfmed)
         {
             _chatManager.TrySendInGameICMessage(uid, Loc.GetString(unrevivable.ReasonMessage),
                 InGameICChatType.Speak, true);

@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 09/06/2026 07:19:32
-  entityCount: 1978
+  entityCount: 1980
 maps: []
 grids:
 - 1
@@ -1565,6 +1565,18 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,41.5
+      parent: 1
+  - uid: 1979
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,13.5
+      parent: 1
+  - uid: 1980
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -6.5,13.5
       parent: 1
 - proto: AtmosFixBlockerMarker
   entities:

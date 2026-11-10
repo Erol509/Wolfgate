@@ -1,5 +1,6 @@
 ame-controller-component-fuel-slot-fail-whitelist = You can't put that in the controller...
-ame-controller-component-fuel-slot-fail-locked = Power down the AME before manipulating its fuel.
+# WOLFGATE: the engine is the IRE everywhere else in game, so these lines say IRE too
+ame-controller-component-fuel-slot-fail-locked = Power down the IRE before manipulating its fuel.
 ame-controller-component-fuel-slot-success-insert = You insert the jar into the fuel slot.
 
 ## UI

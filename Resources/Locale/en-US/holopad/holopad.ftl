@@ -109,7 +109,8 @@ holopad-engineering-breakroom = Engineering - Breakroom
 holopad-engineering-front = Engineering - Front
 holopad-engineering-telecoms = Engineering - Telecoms
 holopad-engineering-tech-vault = Engineering - Tech Vault
-holopad-engineering-ame = Engineering - AME
+# WOLFGATE: the engine is the IRE everywhere else in game, so these lines say IRE too
+holopad-engineering-ame = Engineering - IRE
 holopad-engineering-power = Engineering - Power
 holopad-engineering-main = Engineering - Main
 

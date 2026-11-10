@@ -250,7 +250,8 @@ the bands creep inward instead of jumping.
 Unstringing: every station anchor lets go too, all fading the same way, so over about 17 minutes the Coda, its hazards,
 its rot and its dead FTL close in from the edge. Mobile relays (player-built, fuelled) keep holding as the last havens,
 but their power draw doubles every `wf.lattice.haven_load_doubling` (10 minutes) for as long as they stand, and bulbs
-aboard them don't fail. Some 15 to 30 minutes after the Coda has the whole sector comes Tacet, timed by
+aboard them don't fail. Tacet comes 15 s after the Coda reaches the centre (`tacet_centre_delay`), or 15 to 30
+minutes after the Coda has the whole sector if a haven keeps it off the centre, timed by
 `WFLatticeImplosion` so clients draw what the server does: Kyphrus swells to four times its size for 18 s while
 "Spleen" plays, falls in to a point, the whole view goes black for 6 s while the charge builds, then it bursts in a
 blinding flash. Four shockwaves leave the centre 6 s apart at 600 m/s and run out past the farthest grid: each one bursts

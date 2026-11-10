@@ -6766,3 +6766,45 @@ Entries:
   id: 100420
   time: '2026-11-10T12:13:21.0000000+00:00'
   url: https://github.com/VanguardControl/Wolfgate/pull/583
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: >-
+        Losing both legs no longer stops you using consoles, seats, lockers and
+        fabricators. [708]
+    - type: Fix
+      message: >-
+        The Scallywag's small light hangs on the wall instead of in the hatch.
+        [712]
+    - type: Fix
+      message: Harpies can spawn without a head-top marking. [716]
+    - type: Fix
+      message: The AME is called the IRE everywhere now. [722]
+    - type: Fix
+      message: Doctors can take the jaws of life in their gear. [727]
+    - type: Fix
+      message: The Autumn's side airlocks no longer vent the ship. [731]
+    - type: Fix
+      message: >-
+        Unrevivable patients can be shocked out of cardiac arrest while they're
+        still alive. [733]
+    - type: Fix
+      message: Nanite applicators can repair vehicle hardpoints. [735]
+    - type: Fix
+      message: Medical bounty bodies can't be sold through cargo. [737]
+    - type: Fix
+      message: The STC cap looks right on vulpkanin. [739]
+    - type: Fix
+      message: The Juggernaut suit counts as faction gear. [740]
+  id: 100421
+  time: '2026-11-10T15:32:04.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/587
+- author: Balls2zawall
+  changes:
+    - type: Add
+      message: >-
+        The Judges at CC have a shiny new brig to work from! it should feel more
+        like a work space than a banquet hall now.
+  id: 100422
+  time: '2026-11-10T15:36:52.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/588

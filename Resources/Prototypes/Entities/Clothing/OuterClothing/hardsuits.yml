@@ -978,7 +978,7 @@
 
 #Cybersun Juggernaut Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase]
+  parent: [ClothingOuterHardsuitBase, BaseFactionGearPDVT3] # WOLFGATE: PDV gear the TSF can turn in for FMC, like the Phaethon
   id: ClothingOuterHardsuitJuggernaut
   name: juggernaut suit
   description: A suit whose blueprint was bestowed upon the Dynasty by the Sultan Himself. Hefty and durable, but not fully insulated. # WOLFGATE(ArmorBalance): grammar pass.

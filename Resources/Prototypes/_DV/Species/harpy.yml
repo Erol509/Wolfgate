@@ -53,7 +53,7 @@
       defaultMarkings: [ HarpyTailPhoenix ]
     HeadTop:
       points: 1
-      required: true
+      required: false # WOLFGATE(Species): the head tuft is optional, so removing it in the editor sticks
       defaultMarkings: [ HarpyEarsDefault ]
     Chest:
       points: 4 # WOLFGATE(Species): was 1, more marking slots

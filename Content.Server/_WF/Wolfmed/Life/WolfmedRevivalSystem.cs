@@ -119,7 +119,8 @@ public sealed partial class WolfmedRevivalSystem : EntitySystem
         if (_rotting.IsRotten(body))
             return Rotten;
 
-        if (TryComp(body, out UnrevivableComponent? unrevivable))
+        // Unrevivable only bars bringing back the dead; a living patient in arrest can still be shocked.
+        if (TryComp(body, out UnrevivableComponent? unrevivable) && _mobState.IsDead(body))
             return unrevivable.ReasonMessage;
 
         if (!_life.HasBrain(body))
@@ -286,7 +287,8 @@ public sealed partial class WolfmedRevivalSystem : EntitySystem
         if (_rotting.IsRotten(body))
             return Rotten;
 
-        if (TryComp(body, out UnrevivableComponent? unrevivable))
+        // Unrevivable only bars bringing back the dead; a living patient in arrest can still be shocked.
+        if (TryComp(body, out UnrevivableComponent? unrevivable) && _mobState.IsDead(body))
             return unrevivable.ReasonMessage;
 
         if (!_body.GetBodyChildrenOfType(body, BodyPartType.Head).Any())

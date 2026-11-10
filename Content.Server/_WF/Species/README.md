@@ -473,6 +473,7 @@ it back up to Okay after any drain, a Kelotane overdose included, before their d
   - tails are optional so players can go without one
 - [`Resources/Prototypes/_DV/Species/harpy.yml`](../../../Resources/Prototypes/_DV/Species/harpy.yml)
   - tails are optional so players can go without one
+  - the head tuft is optional, so removing it in the editor sticks
   - was 1, more marking slots
 - [`Resources/Prototypes/_DV/Species/rodentia.yml`](../../../Resources/Prototypes/_DV/Species/rodentia.yml)
   - tails are optional so players can go without one

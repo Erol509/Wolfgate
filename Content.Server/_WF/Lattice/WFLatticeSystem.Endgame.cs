@@ -40,6 +40,9 @@ public sealed partial class WFLatticeSystem
     /// <summary>When each unstrung map goes to Tacet, and after it, when its bulbs are next rolled.</summary>
     private readonly Dictionary<EntityUid, TimeSpan> _tacetAt = new();
 
+    /// <summary>Unstrung maps whose centre the Coda has reached, so Tacet is close.</summary>
+    private readonly HashSet<EntityUid> _codaAtCentre = new();
+
     /// <summary>An anchor's hold letting go: where it was, its signed strength, and when it started fading.</summary>
     private readonly record struct Fading(Vector2 Position, float Strength, TimeSpan Start);
 
@@ -223,7 +226,13 @@ public sealed partial class WFLatticeSystem
 
     private void UpdateEndgame(Entity<WFLatticeFieldComponent> map)
     {
-        if (!map.Comp.Unstrung || !_tacetAt.TryGetValue(map, out var at) || _timing.CurTime < at)
+        if (!map.Comp.Unstrung)
+            return;
+
+        if (!map.Comp.Tacet)
+            WatchCentre(map);
+
+        if (!_tacetAt.TryGetValue(map, out var at) || _timing.CurTime < at)
             return;
 
         if (!map.Comp.Tacet)
@@ -234,6 +243,23 @@ public sealed partial class WFLatticeSystem
 
         _tacetAt[map] = _timing.CurTime + TimeSpan.FromSeconds(_config.GetCVar(WFLatticeEndgameCVars.DarkInterval));
         BurstBulbs(map, _config.GetCVar(WFLatticeEndgameCVars.DarkChance));
+    }
+
+    /// <summary>Once the Coda reaches the centre of an unstrung map, Kyphrus implodes shortly after.</summary>
+    private void WatchCentre(Entity<WFLatticeFieldComponent> map)
+    {
+        if (_codaAtCentre.Contains(map)
+            || !_config.GetCVar(WFLatticeEndgameCVars.Tacet)
+            || !_proto.TryIndex(map.Comp.Profile, out var profile)
+            || Locate(map, Vector2.Zero).Band < profile.HazardBand)
+            return;
+
+        _codaAtCentre.Add(map);
+        var at = _timing.CurTime + TimeSpan.FromSeconds(Math.Max(0f, _config.GetCVar(WFLatticeEndgameCVars.TacetCentreDelay)));
+        if (!_tacetAt.TryGetValue(map, out var planned) || at < planned)
+            _tacetAt[map] = at;
+
+        Log.Info($"The Coda has reached the centre of {ToPrettyString(map)}.");
     }
 
     /// <summary>Bursts each working bulb on the map with the given chance, except aboard a mobile anchor's haven.</summary>

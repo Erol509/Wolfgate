@@ -130,6 +130,10 @@ public sealed partial class HardpointIntegrityComponent : Component
     [DataField]
     public ProtoId<ToolQualityPrototype> RepairToolQuality = "Welding";
 
+    /// <summary>A second quality that repairs like the welder: the nanite applicator.</summary>
+    [DataField]
+    public ProtoId<ToolQualityPrototype> AltRepairToolQuality = "Applicating";
+
     [DataField]
     public ProtoId<ToolQualityPrototype> FrameFinishToolQuality = "Anchoring";
 

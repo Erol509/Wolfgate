@@ -5,7 +5,8 @@ advertisement-fuelvend-4 = Checked the pumps lately?
 advertisement-fuelvend-5 = Headed out? Fuel up!
 advertisement-fuelvend-6 = Fuel up! Coal-free since 2520.
 advertisement-fuelvend-7 = GAS, GAS, GAS!
-advertisement-fuelvend-8 = Plasma? Uranium? AME? Got you covered.
+# WOLFGATE: the engine is the IRE everywhere else in game, so these lines say IRE too
+advertisement-fuelvend-8 = Plasma? Uranium? IRE? Got you covered.
 advertisement-fuelvend-9 = Need energy? No time? Buy some fuel!
 advertisement-fuelvend-10 = Locally sourced? Ha. Get some fuel.
 advertisement-fuelvend-11 = Is your generator running? Better go and fuel it!

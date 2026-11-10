@@ -78,7 +78,8 @@ figurines-ce-5 = TESLOOSE!
 
 figurines-engineer-1 = SINGULOOSE!
 figurines-engineer-2 = TESLOOSE!
-figurines-engineer-3 = What is AME?
+# WOLFGATE: the engine is the IRE everywhere else in game, so these lines say IRE too
+figurines-engineer-3 = What is IRE?
 
 figurines-atmostech-1 = I put plasma in distro.
 figurines-atmostech-2 = I will burn you in a burn chamber.

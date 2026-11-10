@@ -147,6 +147,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - the assembler's recipes
   - what the medical assembler makes
   - the assembler's microwave recipes became lathe recipes, which left the guidebook page empty
+- [`Content.Server/_NF/Medical/MedicalBountySystem.cs`](../../Content.Server/_NF/Medical/MedicalBountySystem.cs): a bounty patient is redeemed at the medical bounty machine, not sold at a pallet for more than the bounty
 - [`Content.Server/_NF/PublicTransit/PublicTransitSystem.cs`](../../Content.Server/_NF/PublicTransit/PublicTransitSystem.cs): announce the departure, as FTLToDock now flies and OnShuttleArrival announces the stop
 - [`Content.Server/_RMC14/Weapons/Ranged/Prediction/GunPredictionSystem.cs`](../../Content.Server/_RMC14/Weapons/Ranged/Prediction/GunPredictionSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/Administration/Systems/AdminVerbSystem.Smites.cs`](../../Content.Server/Administration/Systems/AdminVerbSystem.Smites.cs): OwO accent removed
@@ -400,7 +401,17 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - the map has one UndergroundVend, not four
 - [`Resources/Locale/en-US/_Mono/prototypes/access/accesses.ftl`](../../Resources/Locale/en-US/_Mono/prototypes/access/accesses.ftl): Monolith#4816 shipped the Underground access levels without names
 - [`Resources/Locale/en-US/_Mono/store/pdv-uplink-catalog.ftl`](../../Resources/Locale/en-US/_Mono/store/pdv-uplink-catalog.ftl): the uplink had no 5.56 for the Vympel it sells
+- [`Resources/Locale/en-US/_NF/advertisements/vending/fuelvend.ftl`](../../Resources/Locale/en-US/_NF/advertisements/vending/fuelvend.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
+- [`Resources/Locale/en-US/_NF/shipyard/shipyard-console-component.ftl`](../../Resources/Locale/en-US/_NF/shipyard/shipyard-console-component.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
+- [`Resources/Locale/en-US/ame/components/ame-controller-component.ftl`](../../Resources/Locale/en-US/ame/components/ame-controller-component.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
+- [`Resources/Locale/en-US/cargo/bounties.ftl`](../../Resources/Locale/en-US/cargo/bounties.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
 - [`Resources/Locale/en-US/construction/conditions/wallmount.ftl`](../../Resources/Locale/en-US/construction/conditions/wallmount.ftl): say the ghost must face the builder, the usual reason a wallmount is refused
+- [`Resources/Locale/en-US/datasets/figurines.ftl`](../../Resources/Locale/en-US/datasets/figurines.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
+- [`Resources/Locale/en-US/holopad/holopad.ftl`](../../Resources/Locale/en-US/holopad/holopad.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
+- [`Resources/Locale/en-US/navmap-beacons/station-beacons.ftl`](../../Resources/Locale/en-US/navmap-beacons/station-beacons.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
+- [`Resources/Locale/en-US/objectives/conditions/steal-target-groups.ftl`](../../Resources/Locale/en-US/objectives/conditions/steal-target-groups.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
+- [`Resources/Locale/en-US/paper/paper-misc.ftl`](../../Resources/Locale/en-US/paper/paper-misc.ftl): the engine is the IRE everywhere else in game, so this note says IRE too
+- [`Resources/Locale/en-US/tips.ftl`](../../Resources/Locale/en-US/tips.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
 - [`Resources/Maps/_Mono/Bluespace/prefracture.yml`](../../Resources/Maps/_Mono/Bluespace/prefracture.yml): Hardpoints mapped under the Unidentified Vessel's Scythe, Sunder and Flayer guns so gunnery links them.
 - [`Resources/Maps/_Mono/Crocus/jianghui_industrial_0.yml`](../../Resources/Maps/_Mono/Crocus/jianghui_industrial_0.yml): Removed every chasm.
 - [`Resources/Maps/_Mono/Crocus/jianghui_industrial_1.yml`](../../Resources/Maps/_Mono/Crocus/jianghui_industrial_1.yml): Removed every chasm.
@@ -510,7 +521,9 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - gas leak event disabled
   - vent clog event disabled
 - [`Resources/Prototypes/_NF/Guidebook/rules.yml`](../../Resources/Prototypes/_NF/Guidebook/rules.yml): Frontier ruleset is unused, only MonolithRuleset is shown in-game and on Symphony
-- [`Resources/Prototypes/_NF/Roles/Jobs/Medical/doc.yml`](../../Resources/Prototypes/_NF/Roles/Jobs/Medical/doc.yml): the Medical department has no roles since Monolith#4807, so count medic time instead
+- [`Resources/Prototypes/_NF/Roles/Jobs/Medical/doc.yml`](../../Resources/Prototypes/_NF/Roles/Jobs/Medical/doc.yml)
+  - the Medical department has no roles since Monolith#4807, so count medic time instead
+  - the Director of Care boards ships to rescue people like the responders
 - [`Resources/Prototypes/_NF/Smuggling/report_message_sets.yml`](../../Resources/Prototypes/_NF/Smuggling/report_message_sets.yml)
   - PDV pack, TSF pod report 2 min later
   - PDV pack, tighter PDV pod coordinates
@@ -522,7 +535,9 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/Entities/Clothing/Back/specific.yml`](../../Resources/Prototypes/Entities/Clothing/Back/specific.yml): Frontier hid ClothingBackpack, so it was never a valid chameleon pick and the menu got no state
 - [`Resources/Prototypes/Entities/Clothing/Head/hoods.yml`](../../Resources/Prototypes/Entities/Clothing/Head/hoods.yml): radiation hood blocks more radiation (was 0.65)
 - [`Resources/Prototypes/Entities/Clothing/Head/misc.yml`](../../Resources/Prototypes/Entities/Clothing/Head/misc.yml): OwO accent removed
-- [`Resources/Prototypes/Entities/Clothing/OuterClothing/hardsuits.yml`](../../Resources/Prototypes/Entities/Clothing/OuterClothing/hardsuits.yml): CBURN cleanup suit blocks as much radiation as the radiation suit (was 0.1)
+- [`Resources/Prototypes/Entities/Clothing/OuterClothing/hardsuits.yml`](../../Resources/Prototypes/Entities/Clothing/OuterClothing/hardsuits.yml)
+  - PDV gear the TSF can turn in for FMC, like the Phaethon
+  - CBURN cleanup suit blocks as much radiation as the radiation suit (was 0.1)
 - [`Resources/Prototypes/Entities/Clothing/OuterClothing/suits.yml`](../../Resources/Prototypes/Entities/Clothing/OuterClothing/suits.yml)
   - radiation suit blocks more radiation (was 0.1)
   - vend price for the EngiVend, instead of its scrap value
@@ -596,6 +611,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - was 16, Monolith
   - was 16
   - rule colours readable on light and dark backgrounds
+- [`Resources/ServerInfo/_Mono/Guidebook/Shipyard/MotleyAnne.xml`](../../Resources/ServerInfo/_Mono/Guidebook/Shipyard/MotleyAnne.xml): the engine is the IRE everywhere else in game
 - [`Resources/ServerInfo/_NF/Guidebook/Rules/FrontierRuleset.xml`](../../Resources/ServerInfo/_NF/Guidebook/Rules/FrontierRuleset.xml)
   - was Monolith Station Rules
   - rule colours readable on light and dark backgrounds
@@ -603,6 +619,10 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/ServerInfo/_NF/Guidebook/Rules/Zero_Tolerance.xml`](../../Resources/ServerInfo/_NF/Guidebook/Rules/Zero_Tolerance.xml)
   - was 16, Monolith Station
   - erotic roleplay rule removed before this one (#27)
+- [`Resources/ServerInfo/Guidebook/Engineering/AME.xml`](../../Resources/ServerInfo/Guidebook/Engineering/AME.xml): the engine is the IRE everywhere else in game
+- [`Resources/ServerInfo/Guidebook/Engineering/Generators.xml`](../../Resources/ServerInfo/Guidebook/Engineering/Generators.xml): the engine is the IRE everywhere else in game
+- [`Resources/ServerInfo/Guidebook/Engineering/Power.xml`](../../Resources/ServerInfo/Guidebook/Engineering/Power.xml): the engine is the IRE everywhere else in game
+- [`Resources/ServerInfo/Guidebook/Engineering/SolarPanels.xml`](../../Resources/ServerInfo/Guidebook/Engineering/SolarPanels.xml): the engine is the IRE everywhere else in game
 - [`Resources/ServerInfo/Guidebook/Mobs/Diona.xml`](../../Resources/ServerInfo/Guidebook/Mobs/Diona.xml): Monolith gave Diona a shoe slot, and FTL knockdown immunity is back
 - [`Resources/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC0.xml`](../../Resources/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC0.xml)
   - ERP is allowed, rule 4 only covers shock content
@@ -619,6 +639,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - ERP is allowed, rule 4 only covers shock content
   - was 16
 - [`Resources/ServerInfo/Rules.txt`](../../Resources/ServerInfo/Rules.txt): Monolith renamed to Wolfgate in the intro and section headings (#19); the file is unused (server.rules_file is MonolithRuleset).
+- [`Resources/SharedMaps/_Mono/Shuttles/Civilian/autumn.yml`](../../Resources/SharedMaps/_Mono/Shuttles/Civilian/autumn.yml): Mapped directional fans on the two outer side airlocks, which vented the bridge to space.
 - [`Resources/SharedMaps/_Mono/Shuttles/Civilian/caracara.yml`](../../Resources/SharedMaps/_Mono/Shuttles/Civilian/caracara.yml): PDV pack, top-left thruster was mapped disabled.
 - [`Resources/SharedMaps/_Mono/Shuttles/PDV/bazalt.yml`](../../Resources/SharedMaps/_Mono/Shuttles/PDV/bazalt.yml): PDV pack hull, back to Monolith's plastitanium walls after the adamantite refit was reverted.
 - [`Resources/SharedMaps/_Mono/Shuttles/PDV/europa.yml`](../../Resources/SharedMaps/_Mono/Shuttles/PDV/europa.yml): PDV pack hull, back to Monolith's plastitanium walls after the adamantite refit was reverted.
@@ -652,6 +673,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd_command.rsi/`](../../Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd_command.rsi/): Licence and credit set as in HardLight 0fc067be74.
 - [`Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd_experimental.rsi/`](../../Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd_experimental.rsi/): Licence and credit set as in HardLight 0fc067be74.
 - [`Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd_sheriff.rsi/`](../../Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd_sheriff.rsi/): Licence and credit set as in HardLight 0fc067be74.
+- [`Resources/Textures/_NF/Clothing/Head/Hats/stc_cap.rsi/equipped-HELMET-vulpkanin.png`](../../Resources/Textures/_NF/Clothing/Head/Hats/stc_cap.rsi/equipped-HELMET-vulpkanin.png): The vulpkanin state was a winter coat hood; it now draws the cap itself.
 - [`Resources/Textures/_NF/Effects/mobspawn.rsi/`](../../Resources/Textures/_NF/Effects/mobspawn.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.
 - [`Resources/Textures/_NF/Structures/Machines/scrap_processor.rsi/`](../../Resources/Textures/_NF/Structures/Machines/scrap_processor.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.
 - [`Resources/Textures/Objects/Fun/rubber_hammer.rsi/`](../../Resources/Textures/Objects/Fun/rubber_hammer.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.

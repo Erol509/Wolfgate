@@ -28,7 +28,7 @@
   This will extend the runtime of the station's batteries by a significant amount, giving you more time to setup the station's higher-tier [textlink="generators." link="Generators"]
   You can extend this even further by setting up [textlink="solar panels" link="SolarPanels"], which generate power for free.
 
-  After setting up the [textlink="AME" link="AME"] and [textlink="Solars" link="SolarPanels"], you should be generating a decent amount of power.
+  <!-- WOLFGATE: the engine is the IRE everywhere else in game -->After setting up the [textlink="IRE" link="AME"] and [textlink="Solars" link="SolarPanels"], you should be generating a decent amount of power.
 
   Now that you've bought yourself time, you can focus on setting up higher-tier [textlink="generators" link="Generators"] like the [textlink="Singularity Engine" link="SingularityEngine"], which can provide power for the rest of the shift.
 

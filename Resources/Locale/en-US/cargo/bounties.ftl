@@ -128,7 +128,8 @@ bounty-description-bandana =  Bzzzt... Transmission from prison planet OC-1001: 
 bounty-description-steak = The vegetarian cook is refusing to make us anything with meat, and the lizards are getting restless. Can you smuggle us a few steaks to keep them happy?
 bounty-description-banana = Hi station! Botany won't gimme any more. They said slipping the HoS out an open airlock wasn't funny! Can you believe it? Help me out! HONK.
 bounty-description-beer = Some nefarious agent has stolen every single drink in the bar. Yes, everything. Help tide us over until we can find them.
-bounty-description-hi-viz-vest  = The clown stole the AME controller and won't back. It's pretty dark in here. Some hi-viz vests would make seeing each other in the dark a little more bearable.
+# WOLFGATE: the engine is the IRE everywhere else in game, so these lines say IRE too
+bounty-description-hi-viz-vest  = The clown stole the IRE controller and won't back. It's pretty dark in here. Some hi-viz vests would make seeing each other in the dark a little more bearable.
 bounty-description-torch = The chef made all the monkeys and kobolds at once, and they rebelled and took over the cargo shuttle. They're demanding supplies and free passage to a jungle planet, and we're giving in to their demands. All they need now is a few torches.
 bounty-description-medkit-box = CentComm is putting on a play set in a hospital, and needs some props. Just send us some empty medkit boxes, and the show will go on!
 bounty-description-cardboard-box = "The Cardborgs Cometh" is a new play premiering tomorrow, and the costuming team is woefully unprepared. Send us some boxes to work with.

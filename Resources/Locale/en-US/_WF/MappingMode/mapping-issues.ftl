@@ -30,7 +30,7 @@ wf-mapping-issue-ship-no-gyroscope = No gyroscope.
 wf-mapping-issue-ship-no-gyroscope-hint = Place a gyroscope; without one the ship can't turn.
 
 wf-mapping-issue-ship-no-power-source = No power source.
-wf-mapping-issue-ship-no-power-source-hint = Place a generator, APU, solar panels or an AME to feed the power net.
+wf-mapping-issue-ship-no-power-source-hint = Place a generator, APU, solar panels or an IRE to feed the power net.
 
 wf-mapping-issue-ship-no-apc = No APC.
 wf-mapping-issue-ship-no-apc-hint = Place an APC and wire it; machines and lights draw from it.

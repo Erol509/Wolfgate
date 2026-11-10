@@ -64,6 +64,7 @@ public sealed partial class WFLatticeSystem : EntitySystem
             _beamPopup.Clear();
             _central.Clear();
             _tacetAt.Clear();
+            _codaAtCentre.Clear();
             _fading.Clear();
             _implosions.Clear();
             _unstrungAt.Clear();

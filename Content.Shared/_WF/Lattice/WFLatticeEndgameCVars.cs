@@ -17,7 +17,14 @@ public sealed class WFLatticeEndgameCVars
     public static readonly CVarDef<bool> Tacet =
         CVarDef.Create("wf.lattice.tacet", true, CVar.SERVERONLY);
 
-    /// <summary>Soonest and latest Tacet comes after the Unstringing has fully set in, in seconds.</summary>
+    /// <summary>Seconds after the Coda reaches the centre that Kyphrus implodes.</summary>
+    public static readonly CVarDef<float> TacetCentreDelay =
+        CVarDef.Create("wf.lattice.tacet_centre_delay", 15f, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Soonest and latest Tacet comes after the Unstringing has fully set in, in seconds, should the Coda never reach the
+    /// centre (a haven parked on it).
+    /// </summary>
     public static readonly CVarDef<float> TacetMin =
         CVarDef.Create("wf.lattice.tacet_min", 900f, CVar.SERVERONLY);
 

@@ -92,7 +92,8 @@ shipyard-console-class-Stealth = Stealth
 # Mono changes end
 
 shipyard-console-engine-All = All
-shipyard-console-engine-AME = AME
+# WOLFGATE: the engine is the IRE everywhere else in game, so these lines say IRE too
+shipyard-console-engine-AME = IRE
 shipyard-console-engine-TEG = TEG
 shipyard-console-engine-Supermatter = Supermatter
 shipyard-console-engine-Tesla = Tesla

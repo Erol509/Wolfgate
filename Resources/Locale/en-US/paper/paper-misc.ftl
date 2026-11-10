@@ -16,12 +16,13 @@ book-text-holoparasite-info = Thanks for choosing our holoparasite package!
       WARNING: Guardians are metaphysical beings, but draw from your HEALTH in order to exist. Direct damage done to guardians will be partially transferred to you!
       Cybersun inc. is not responsible for complete annihilation following the misuse of Holoparasite technology.
 
+# WOLFGATE: the engine is the IRE everywhere else in game, so this note says IRE too
 book-text-ame-scribbles = I don't know if you're trained already, so I hope this'll help.
-      AME controller needs LV power and an HV wire to output to. Check the area with a crowbar if you aren't sure.
-      There should be an empty room next to where you found this, that room's wired for the AME.
-      You can put an AME anywhere if you can get the wires to it, though.
-      3x3 grid of AME parts, multitool them to unpack. Be careful not to 'trap' anything.
-      AME controller adjacent horizontally or vertically (not diagonally) to any point.
+      IRE controller needs LV power and an HV wire to output to. Check the area with a crowbar if you aren't sure.
+      There should be an empty room next to where you found this, that room's wired for the IRE.
+      You can put an IRE anywhere if you can get the wires to it, though.
+      3x3 grid of IRE parts, multitool them to unpack. Be careful not to 'trap' anything.
+      IRE controller adjacent horizontally or vertically (not diagonally) to any point.
       With only 1 core (what a 3x3 grid will get you), don't turn it up above 2.
       The golden rule is 2 injection for every 1 core. You can go lower to save fuel.
       Higher will burn the engine out and eventually make it explode. Don't.

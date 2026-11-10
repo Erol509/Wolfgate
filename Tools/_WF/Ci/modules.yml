@@ -19,6 +19,12 @@ unmarked:
   - path: Resources/Textures/_EinsteinEngines/Clothing/NanoTrasen/Modsuits/
     module: Modsuits
     reason: Einstein Engines emergency-response MODsuit sprites, ported from GoobStation along with their meta.json files.
+  - path: Resources/Textures/_NF/Clothing/Head/Hats/stc_cap.rsi/equipped-HELMET-vulpkanin.png
+    module: null
+    reason: The vulpkanin state was a winter coat hood; it now draws the cap itself.
+  - path: Resources/SharedMaps/_Mono/Shuttles/Civilian/autumn.yml
+    module: null
+    reason: Mapped directional fans on the two outer side airlocks, which vented the bridge to space.
   - path: Resources/Textures/_Floof/Mobs/Customization/skyrattails.rsi/
     module: null
     reason: The leopard wag's front layers hold the fourth frame as long as the back layers, so the halves stay in step.

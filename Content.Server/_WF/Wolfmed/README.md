@@ -1266,6 +1266,7 @@ Skipped ("dirty-disposed").
   - HOOK 7 / D14, Wolfmed wound treatment data.
 - [`Content.Server/Medical/DefibrillatorSystem.cs`](../../Medical/DefibrillatorSystem.cs)
   - BRAIN
+  - a living Wolfmed patient in arrest can be shocked; Unrevivable only stops the dead
   - BRAIN, the Wolfmed rule replaces the threshold gate for a wound host.
   - M1a: the refusal carries the patient's numbers (blood %, units to transfuse).
   - M1a
