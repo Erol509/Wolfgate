@@ -21,8 +21,10 @@ installed into the unit and spend the core's charge while they run.
   power draw, cooldown, required parts and incompatibilities. `ModSuitSystem` installs, removes, pins and
   uses them; each module system subscribes to the module events it needs. The theme sets the complexity cap,
   the activation speed, the drain and any inbuilt modules.
-- **Interface.** `ModSuitWindow` on the client lists the suit state, charge, complexity, parts and modules,
-  and sends activate, deploy, toggle, pin and eject messages.
+- **Interface.** `ModSuitWindow` is the older MOD Interface Panel layout: suit and user status, a charge bar,
+  the DNA-lock state, cover state, a module table with per-module icons and power/complexity columns, hardware
+  rows for each part and a toggle-all control. It uses the restored `icons.rsi` icon set and sends activate,
+  deploy, toggle, pin and eject messages.
 
 Entry points: `ModSuitComponent`, `ModModuleComponent`, `ModPartComponent`, `ModThemePrototype`,
 `ModSuitSystem` (parts, activation, power, modules, UI), the module systems under
@@ -112,6 +114,7 @@ support code lives under `Support`, adapted to this codebase's status effect, so
 - [`Content.Client/_WF/Modsuits/ModSphereVisualsComponent.cs`](../../../Content.Client/_WF/Modsuits/ModSphereVisualsComponent.cs)
 - [`Content.Client/_WF/Modsuits/ModSphereVisualsSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSphereVisualsSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitBoundUserInterface.cs`](../../../Content.Client/_WF/Modsuits/ModSuitBoundUserInterface.cs)
+- [`Content.Client/_WF/Modsuits/ModSuitIconButton.cs`](../../../Content.Client/_WF/Modsuits/ModSuitIconButton.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitSealedVisualsComponent.cs`](../../../Content.Client/_WF/Modsuits/ModSuitSealedVisualsComponent.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitUiSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitUiSystem.cs)
 - [`Content.Client/_WF/Modsuits/ModSuitVisualizerSystem.cs`](../../../Content.Client/_WF/Modsuits/ModSuitVisualizerSystem.cs)
@@ -151,6 +154,7 @@ support code lives under `Support`, adapted to this codebase's status effect, so
 
 ### Textures
 
+- [`Resources/Textures/_WF/Modsuits/icons.rsi/`](../../../Resources/Textures/_WF/Modsuits/icons.rsi/)
 - [`Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl`](../../../Resources/Textures/_WF/Modsuits/Shaders/mod_sphere.swsl)
 
 ### Guidebook

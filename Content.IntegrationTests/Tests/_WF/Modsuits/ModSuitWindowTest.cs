@@ -34,6 +34,7 @@ public sealed class ModSuitWindowTest
                 Assert.That(window.FindControl<ModSuitIconButton>("ActivateButton").Icon.Texture, Is.Not.Null);
                 Assert.That(window.FindControl<ModSuitIconButton>("IdLockButton").Icon.Texture, Is.Not.Null);
                 Assert.That(window.FindControl<ModSuitIconButton>("ModLinkButton").Icon.Texture, Is.Not.Null);
+                Assert.That(window.FindControl<ModSuitIconButton>("ToggleAllButton").Icon.Texture, Is.Not.Null);
             });
             window.Measure(new Vector2(600, 600));
             window.Arrange(new UIBox2(0, 0, 600, 600));
