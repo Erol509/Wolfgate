@@ -247,7 +247,6 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/ReactorPartComponent.cs`](../../Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/ReactorPartComponent.cs): relabelled MIT as in HardLight b602e8d485
 - [`Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/TurbineComponent.cs`](../../Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/TurbineComponent.cs): relabelled MIT as in HardLight b602e8d485
 - [`Content.Shared/_FinalHorizon/Guns/AlternateGun/AlternateGunSystem.cs`](../../Content.Shared/_FinalHorizon/Guns/AlternateGun/AlternateGunSystem.cs): the client picks the gun to fire from this
-- [`Content.Shared/_Goobstation/Clothing/Systems/SharedSealableClothingSystem.cs`](../../Content.Shared/_Goobstation/Clothing/Systems/SharedSealableClothingSystem.cs): a crit or dead wearer can't work their own seals
 - [`Content.Shared/_Goobstation/Construction/ConstructedEvent.cs`](../../Content.Shared/_Goobstation/Construction/ConstructedEvent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/DoAfter/DoAfterEndedEvent.cs`](../../Content.Shared/_Goobstation/DoAfter/DoAfterEndedEvent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/Factory/AutomatedComponent.cs`](../../Content.Shared/_Goobstation/Factory/AutomatedComponent.cs): restore the licence header removed by Kill Spdx
