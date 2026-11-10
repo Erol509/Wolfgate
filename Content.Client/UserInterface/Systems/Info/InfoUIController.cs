@@ -21,7 +21,7 @@ public sealed partial class InfoUIController : UIController, IOnStateExited<Game
     private RulesAndInfoWindow? _infoWindow;
     private ISawmill _sawmill = default!;
 
-    private static readonly ProtoId<GuideEntryPrototype> DefaultRuleset = "DefaultRuleset";
+    private static readonly ProtoId<GuideEntryPrototype> DefaultRuleset = "MonolithRuleset"; // WOLFGATE: upstream DefaultRuleset is commented out
 
     public ProtoId<GuideEntryPrototype> RulesEntryId = DefaultRuleset;
 

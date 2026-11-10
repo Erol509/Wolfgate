@@ -119,7 +119,8 @@ def _strip_block(lines):
     skipping = False
     for line in lines:
         stripped = line.strip()
-        if stripped.startswith("# WOLFGATE(%s) START" % MODULE):
+        # Only the port's own block: a hand-written block for the module stays.
+        if stripped == BLOCK_START:
             skipping = True
             continue
         if skipping:

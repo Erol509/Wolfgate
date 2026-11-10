@@ -60,6 +60,10 @@ public sealed partial class WFLatticeRelayComponent : Component
     /// <summary>Most shards it holds at once.</summary>
     [DataField]
     public int MaxShards = 6;
+
+    /// <summary>What it draws before the Unstringing, in watts; -1 until first read.</summary>
+    [ViewVariables]
+    public float BaseLoad = -1f;
 }
 
 /// <summary>One of an anchor station's own guns: it fires only from an anchor station.</summary>

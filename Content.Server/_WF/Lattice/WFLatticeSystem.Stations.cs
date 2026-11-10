@@ -350,6 +350,15 @@ public sealed partial class WFLatticeSystem
                         && (!TryComp<PhysicsComponent>(grid, out var body) || body.LinearVelocity.Length() <= relay.MaxSpeed);
             var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var power) || power.Powered;
             relay.Settled = still ? relay.Settled + seconds : 0f;
+            // Past the Unstringing a mobile relay is a haven, and what it draws keeps climbing.
+            if (power != null && relay.NeedsFuel)
+            {
+                if (relay.BaseLoad < 0f)
+                    relay.BaseLoad = power.Load;
+
+                power.Load = relay.BaseLoad * HavenLoadFactor(xform.MapUid);
+            }
+
             anchor.Strength = relay.Strength;
             var was = anchor.Active;
             anchor.Active = powered && relay.Settled >= relay.SettleSeconds && (!relay.NeedsFuel || relay.Fuel > 0f);

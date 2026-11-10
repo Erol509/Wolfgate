@@ -6539,3 +6539,230 @@ Entries:
   id: 100402
   time: '2026-11-08T10:27:16.0000000+00:00'
   url: https://github.com/VanguardControl/Wolfgate/pull/563
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: >-
+        Consoles built on a planet's ground can no longer lift the whole planet
+        into the sky.
+  id: 100403
+  time: '2026-11-09T12:18:35.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/571
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: Things thrown fast no longer pass through walls.
+    - type: Tweak
+      message: Ship collisions throw loose things and people less hard.
+    - type: Fix
+      message: >-
+        Lobby music and backgrounds are no longer downloaded again every time
+        you join.
+  id: 100404
+  time: '2026-11-09T20:45:58.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/574
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: >-
+        [704] Spall liners now stop rounds and fragments lodging in synthetic
+        bodies and robotic limbs.
+    - type: Fix
+      message: >-
+        [701] Synthetic eyes and pumps are repaired with a wrench, multitool and
+        welder instead of flesh surgery.
+    - type: Fix
+      message: >-
+        [703] The synthetic diagnostics readout no longer runs off screen in the
+        Separated layout.
+    - type: Fix
+      message: >-
+        [696] Opening a gas tank's valve on a planet no longer sends it flying
+        up out of sight.
+    - type: Fix
+      message: '[691] The Lee-Enfield accepts low-capacity 7.62x51 magazines.'
+    - type: Fix
+      message: '[689] Burst fire stops when you let go of the trigger.'
+    - type: Fix
+      message: '[688] The leopard tail wag animation no longer flips back and forth.'
+    - type: Fix
+      message: >-
+        [685] [686] TSF, PDV and MMC bodycams can only be viewed from consoles
+        on their own ship or base.
+    - type: Fix
+      message: '[668] You can no longer toggle hardsuit seals while crit or dead.'
+  id: 100405
+  time: '2026-11-09T20:55:58.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/573
+- author: Happyowl93
+  changes:
+    - type: Tweak
+      message: >-
+        NPC crews no longer trust a ship of theirs that boarders have taken. It
+        is hailed, then fired on, and can no longer dock with them.
+    - type: Tweak
+      message: >-
+        Boarding a Reaver ship now raises the alarm. Nearby patrols are
+        recalled, and a patrol hunts a seized Reaver ship.
+  id: 100406
+  time: '2026-11-10T05:55:19.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/578
+- author: Happyowl93
+  changes:
+    - type: Add
+      message: >-
+        Recolourable bunnysuits, bunny ears and bunny ties are now in the
+        civilian loadouts.
+    - type: Tweak
+      message: The AutoDrobe no longer runs out of recolourable clothing.
+  id: 100407
+  time: '2026-11-10T05:55:49.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/576
+- author: burgerenergy
+  changes:
+    - type: Tweak
+      message: Heavy vehicle licenses can now fit in wallets.
+  id: 100408
+  time: '2026-11-10T06:11:10.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/551
+- author: antanananat
+  changes:
+    - type: Tweak
+      message: >-
+        Old Welder hulls have been retrofitted to the more modern Block 2
+        configuration, featuring a mobile drydock, an upgraded engine, among
+        other changes
+  id: 100409
+  time: '2026-11-10T06:16:09.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/539
+- author: Balls2zawall
+  changes:
+    - type: Add
+      message: >-
+        The beloved dwarf who runs Anvilhold has commissioned a new drydock, it
+        has less berths, but quicker turnaround time.
+  id: 100410
+  time: '2026-11-10T06:25:07.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/569
+- author: DriftingSkies
+  changes:
+    - type: Add
+      message: >-
+        The Colony Council on TSFMC Industry and ASF Research on the Lantern
+        Post now post contracts on their own boards.
+    - type: Add
+      message: >-
+        Dozens of new members-only contracts for the TSF, PDV and USSP: hunts,
+        raids, rescues, blockades, ransoms, customs and more.
+    - type: Add
+      message: >-
+        Planetside contracts on every board: clear dens, recover lost gear,
+        repair relays, rescue homesteaders and more, at sites on the sector's
+        worlds. Carcinoma is never included.
+    - type: Add
+      message: >-
+        The Colonial Development Office and the USSP offer a six-stage
+        outpost-building quest worth around 600,000 thalers, paid stage by
+        stage.
+    - type: Add
+      message: >-
+        Viper Group has its own contract board in Camelot. Its work is deniable
+        and pays in ship components.
+    - type: Add
+      message: >-
+        New contract types: deploy relay buoys, hold a picket point against
+        raiders, and build with deployable kits.
+    - type: Tweak
+      message: >-
+        Supply deliveries to faction stations now go into the station's material
+        silo, or into a receiving crate only that faction can open.
+    - type: Tweak
+      message: >-
+        Ammo contracts take loaded magazines and ammo boxes instead of magazine
+        boxes.
+    - type: Tweak
+      message: Your company now takes its cut of contract pay.
+    - type: Fix
+      message: >-
+        Escorts now need the escorted ship to actually dock, and fail if it
+        surrenders.
+  id: 100411
+  time: '2026-11-10T06:31:32.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/540
+- author: Roguenoob
+  changes:
+    - type: Add
+      message: DYRV-Crucible
+  id: 100412
+  time: '2026-11-10T06:41:35.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/572
+- author: Happyowl93
+  changes:
+    - type: Fix
+      message: >-
+        Every round now has both kinds of cargo depot, so medical supplies and
+        the other goods only one kind sells can always be bought.
+    - type: Tweak
+      message: >-
+        Lathe recipes that use trade crates now name the crate they need, such
+        as "medical supplies crate" for medipens.
+    - type: Tweak
+      message: >-
+        The Market app's Materials tab now explains that it shows where to sell
+        mined materials and where to buy them, not a trade route.
+  id: 100413
+  time: '2026-11-10T06:47:37.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/575
+- author: Sushiburger
+  changes:
+    - type: Add
+      message: Several new ASF themed clothing items.
+    - type: Tweak
+      message: Moved some neck items into ASF loadouts
+  id: 100414
+  time: '2026-11-10T06:49:56.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/567
+- author: Gandalf2k15
+  changes:
+    - type: Add
+      message: The good ending.
+  id: 100415
+  time: '2026-11-10T06:52:20.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/565
+- author: Gandalf2k15
+  changes:
+    - type: Tweak
+      message: Caelestinus now has 5 Judge slots, up from 3.
+  id: 100416
+  time: '2026-11-10T06:55:01.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/580
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: The website now only lists the rules that are shown in-game.
+  id: 100417
+  time: '2026-11-10T06:58:33.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/581
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: Fixed a broken Tacet track that stopped the server from building.
+  id: 100418
+  time: '2026-11-10T07:10:18.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/582
+- author: Balls2zawall
+  changes:
+    - type: Tweak
+      message: >-
+        Moved the contract console out of the way of the cargo airlock on the
+        ASF Lantern
+  id: 100419
+  time: '2026-11-10T08:11:06.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/585
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: Drydock berths are named North and South again.
+  id: 100420
+  time: '2026-11-10T12:13:21.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/583

@@ -40,6 +40,7 @@
   - WFAsfGloves
   - WFAsfBackpack
   - MercenaryGlasses
+  - ContractorBelt
   - ContractorEncryptionKey
   - ContractorBoxSurvival
   - ContractorWallet
@@ -129,7 +130,7 @@
     shoes: WFAsfClothingShoesBoots
     ears: WFAsfClothingHeadset
     id: WFAsfEnforcerPDA
-    outerClothing: ClothingOuterArmorBasic
+    # outerClothing: ClothingOuterArmorBasic
     pocket1: WeaponDisabler
   storage:
     back:
@@ -143,11 +144,13 @@
   id: JobWFAsfEnforcer
   groups:
   - WFAsfJumpsuitService
+  - WFAsfOuterEnforcer
   - WFAsfHeadEnforcer
   - WFAsfNeck
   - WFAsfGloves
   - WFAsfBackpack
   - MercenaryGlasses
+  - ContractorBelt
   - ContractorEncryptionKey
   - ContractorBoxSurvival
   - ContractorWallet
@@ -237,7 +240,7 @@
     shoes: WFAsfClothingShoesBoots
     ears: WFAsfClothingHeadset
     id: WFAsfFieldResearcherPDA
-    outerClothing: WFAsfClothingOuterCoatLab
+    # outerClothing: WFAsfClothingOuterCoatLab
   storage:
     back:
     - RadioHandheldNF
@@ -248,11 +251,13 @@
   id: JobWFAsfFieldResearcher
   groups:
   - WFAsfJumpsuitResearcher
+  - WFAsfOuter
   - WFAsfHead
   - WFAsfNeck
   - WFAsfGloves
   - WFAsfBackpack
   - MercenaryGlasses
+  - ContractorBelt
   - ContractorEncryptionKey
   - ContractorBoxSurvival
   - ContractorWallet
@@ -342,7 +347,7 @@
     shoes: WFAsfClothingShoesBoots
     ears: WFAsfClothingHeadset
     id: WFAsfColonistPDA
-    belt: ClothingBeltUtilityFilled
+    # belt: ClothingBeltUtilityFilled
   storage:
     back:
     - RadioHandheldNF
@@ -356,6 +361,7 @@
   - WFAsfGlovesColonist
   - WFAsfBackpack
   - MercenaryGlasses
+  - ContractorBelt
   - ContractorEncryptionKey
   - ContractorBoxSurvival
   - ContractorWallet

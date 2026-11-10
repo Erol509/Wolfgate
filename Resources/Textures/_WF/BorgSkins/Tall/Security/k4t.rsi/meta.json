@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "K4T tallborg by zy.dras. Taken from Bubberstation at https://github.com/Bubberstation/Bubberstation/blob/af69ef933ac71a75a5446f82e0e281ac811b25df/modular_skyrat/modules/borgs/icons/tallrobot_sec.dmi",
+  "size": {
+    "x": 32,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "robot",
+      "directions": 4
+    },
+    {
+      "name": "robot_e",
+      "directions": 4
+    },
+    {
+      "name": "robot_e_r",
+      "directions": 4
+    },
+    {
+      "name": "robot_l",
+      "directions": 4
+    },
+    {
+      "name": "rest"
+    },
+    {
+      "name": "wreck"
+    },
+    {
+      "name": "tipped"
+    },
+    {
+      "name": "credit"
+    }
+  ]
+}

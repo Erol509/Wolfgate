@@ -27,18 +27,18 @@ public sealed class AsfRolesTest
         ("WFAsfEnforcer",
         [
             ("jumpsuit", "WFAsfClothingUniformService"), ("head", "WFAsfClothingHeadBeret"),
-            ("outerClothing", "ClothingOuterArmorBasic"), ("back", "WFAsfClothingBackpack"), ("pocket1", "WeaponDisabler"),
+            ("back", "WFAsfClothingBackpack"), ("pocket1", "WeaponDisabler"),
             ("id", "WFAsfEnforcerPDA"),
         ]),
         ("WFAsfFieldResearcher",
         [
-            ("jumpsuit", "WFAsfClothingUniformResearcher"), ("outerClothing", "WFAsfClothingOuterCoatLab"),
+            ("jumpsuit", "WFAsfClothingUniformResearcher"),
             ("back", "WFAsfClothingBackpack"), ("id", "WFAsfFieldResearcherPDA"),
         ]),
         ("WFAsfColonist",
         [
             ("jumpsuit", "WFAsfClothingUniformColonist"), ("gloves", "ClothingHandsGlovesColorYellow"),
-            ("belt", "ClothingBeltUtilityFilled"), ("back", "WFAsfClothingBackpack"), ("id", "WFAsfColonistPDA"),
+            ("back", "WFAsfClothingBackpack"), ("id", "WFAsfColonistPDA"),
         ]),
     ];
 

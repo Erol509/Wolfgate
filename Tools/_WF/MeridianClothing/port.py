@@ -35,8 +35,9 @@ as part of their coat (a hood is its own head item).
 
 Distribution: each item gets a theme from its typepath (security, medical, cargo, costume, ...). A loadout
 group gets the items whose theme matches one of the roles using it and whose slot is the group's. Faction
-roles (TSFMC, USSP, PDV, MMC, Viper Group, ASF) keep their uniforms. Vending machines get their department's
-items; ClothesMate gets the everyday civilian clothes. Adult, admin and antagonist items go nowhere.
+roles (TSFMC, USSP, PDV, MMC, Viper Group, ASF) keep their uniforms. Civilian roles also get the recolourable
+bunny outfit. Vending machines get their department's items; ClothesMate gets the everyday civilian clothes.
+AutoDrobe's recolourable items never run out. Adult, admin and antagonist items go nowhere.
 
 Run from the repository root (requires Pillow and PyYAML):
     python Tools/_WF/MeridianClothing/port.py --source <Meridian-Rift checkout> [--report <file>]
@@ -221,6 +222,10 @@ VENDORS = {
     "curator": ["CuraDrobeInventory"],
 }
 STOCK = 2
+# The amount Frontier's vending code reads as stock that never runs out.
+UNLIMITED = 4294967295
+# Inventories whose recolourable items never run out: the machine asks for the colours, so one item is every colourway.
+UNLIMITED_RECOLOUR = {"AutoDrobeInventory"}
 
 # Groups that hold survival gear, breathing gear, HUDs or headsets rather than a choice of clothes. Headsets are
 # also why ear items go in no loadout: one would take the radio's place.
@@ -228,6 +233,8 @@ GROUP_SKIP = re.compile(r"Species|Breath|Tank|Survival|Hud|Ears|PDA")
 LOADOUT_SLOTS = {"jumpsuit", "outerClothing", "head", "mask", "shoes", "gloves", "eyes", "neck"}
 
 CIVILIAN = ["civilian", "winter"]
+# Recolourable costume items the civilian loadouts take too: their swatches give every job's bunny outfit.
+CIVILIAN_TOO = re.compile(r"/playbunny|/bunnytie")
 # Role -> themes its loadout groups take. Roles not listed (faction uniforms, borgs) get nothing.
 ROLES = {
     "JobContractor": CIVILIAN, "JobPilot": CIVILIAN, "JobPdvCivilian": CIVILIAN, "JobTsfCivilian": CIVILIAN,
@@ -740,6 +747,8 @@ class Port:
         by_slot_theme = {}
         for p in loadouts:
             by_slot_theme.setdefault((p.item.slot, p.theme), []).append(p.loadout)
+            if p.theme == "costume" and p.item.gags and CIVILIAN_TOO.search(p.item.typepath):
+                by_slot_theme.setdefault((p.item.slot, "civilian"), []).append(p.loadout)
         wanted = {}
         for role, groups in self.repo.roles.items():
             themes = ROLES.get(role)
@@ -767,14 +776,15 @@ class Port:
         stock = {}
         for p in loadouts:
             for inventory in VENDORS.get(p.theme, []):
-                stock.setdefault(inventory, []).append(p.id)
+                unlimited = p.item.gags and inventory in UNLIMITED_RECOLOUR
+                stock.setdefault(inventory, []).append((p.id, UNLIMITED if unlimited else STOCK))
         self.vendor_counts = {}
         for inventory, path in sorted(self.repo.inventories.items()):
             items = sorted(stock.get(inventory, []))
             if items:
                 self.vendor_counts[inventory] = len(items)
             if items or self._has_block(path):
-                repo.write_inventory(path, inventory, [(i, STOCK) for i in items])
+                repo.write_inventory(path, inventory, items)
 
     @staticmethod
     def _has_block(path):

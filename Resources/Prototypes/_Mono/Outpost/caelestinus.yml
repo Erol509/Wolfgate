@@ -56,7 +56,7 @@
             Borg: [ -1, -1 ]
             StationRepresentative: [ 1, 1 ]
             #StationTrafficController: [ 2, 2 ]
-            SecurityGuard: [ 3, 3 ]
+            SecurityGuard: [ 5, 5 ] # WOLFGATE(Judges): judge cap raised from 3 to 5
             CCServiceWorker: [ 4, 4 ]
             NFJanitor: [ 2, 2 ] # WOLFGATE(Janitorial): janitors are back on Caelestinus
             #MailCarrier: [ 2, 2 ]

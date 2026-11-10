@@ -1047,5 +1047,6 @@ The seat HUD also hosts hull and component health, vehicle switches, weapon sele
   - shoot from and at what the handlers settled on
   - handlers can rewrite the shot's origin and target, or refuse it without a cooldown
 - [`Resources/Prototypes/_Mono/Entities/Clothing/AmmoLoader/ammo_loader.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/AmmoLoader/ammo_loader.yml): full name, the bare one suffix-matches VehicleAmmoLoaderBoundUserInterface
+- [`Resources/Prototypes/_NF/Entities/Clothing/Wallet/base_wallet.yml`](../../../Resources/Prototypes/_NF/Entities/Clothing/Wallet/base_wallet.yml): driving liscences go in wallets
 
 <!-- WOLFGATE-GENERATED END -->

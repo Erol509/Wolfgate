@@ -251,6 +251,7 @@ stops. Extorters weigh the four nearest crewed ships and go for the richest hold
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterMarkerSystem.cs`](Systems/WFEncounterMarkerSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterRewardSystem.cs`](Systems/WFEncounterRewardSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSchedulerSystem.cs`](Systems/WFEncounterSchedulerSystem.cs)
+- [`Content.Server/_WF/Encounters/Systems/WFEncounterSeizureSystem.cs`](Systems/WFEncounterSeizureSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterStopSystem.cs`](Systems/WFEncounterStopSystem.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Abduct.cs`](Systems/WFEncounterSystem.Abduct.cs)
 - [`Content.Server/_WF/Encounters/Systems/WFEncounterSystem.Admin.cs`](Systems/WFEncounterSystem.Admin.cs)

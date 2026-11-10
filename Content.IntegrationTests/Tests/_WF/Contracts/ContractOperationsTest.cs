@@ -155,6 +155,17 @@ public sealed class ContractOperationsTest
             Assert.That(contracts.TryAbandon(holder, freight.Id), Is.True);
         });
 
+        // A higher-tier bounty flies the Reaver line for its tier.
+        await server.WaitAssertion(() =>
+        {
+            var gunship = Take(contracts, mob, board, "WFContractMarshalGunship", crewCheck: false);
+            var run = entMan.GetComponent<Content.Server._WF.Encounters.Components.WFEncounterComponent>(gunship.EncounterEntity!.Value);
+            Assert.That(run.Tier, Is.EqualTo(4), "The bounty's encounter did not take the contract's tier.");
+            Assert.That(run.Ships["target"].Vessel?.Id, Is.AnyOf("Kalisto", "Metis", "Mudskipper", "Scallywag"),
+                "A tier 4 gunship bounty should fly a tier 4 Reaver hull.");
+            Assert.That(contracts.TryAbandon(holder, gunship.Id), Is.True);
+        });
+
         // Twin survey: two derelicts, anomalies on both. Chain links never post on their own.
         await server.WaitAssertion(() =>
         {
@@ -167,10 +178,113 @@ public sealed class ContractOperationsTest
                 "A chain link was posted without its first link.");
         });
 
+        // Ammunition drive: full magazines and ammo boxes of any calibre count; short or empty magazines and guns don't.
+        await server.WaitAssertion(() =>
+        {
+            var ammo = new WFContract { Prototype = "WFContractTSFFactionAmmo", Goods = { (0, 6) } };
+            var at = new EntityCoordinates(ContractFlowTest.Largest(server, central), 1.5f, 1.5f);
+            var crate = entMan.SpawnEntity("CrateGenericSteel", at);
+            var storage = entMan.System<Content.Shared.Storage.EntitySystems.SharedEntityStorageSystem>();
+            foreach (var item in new[] { "Magazine9x19mmPistolFMJ", "AmmoBox9x19mmFMJ", "Magazine9x19mmPistolEmpty", "WeaponShotgunKammerer" })
+            {
+                Assert.That(storage.Insert(entMan.SpawnEntity(item, at), crate), Is.True);
+            }
+
+            var shortMag = entMan.SpawnEntity("Magazine9x19mmPistolFMJ", at);
+            var provider = entMan.GetComponent<Content.Shared.Weapons.Ranged.Components.BallisticAmmoProviderComponent>(shortMag);
+            Assert.That(provider.UnspawnedCount, Is.GreaterThan(0), "Precondition: the magazine has unspawned rounds to take.");
+            provider.UnspawnedCount--;
+            Assert.That(storage.Insert(shortMag, crate), Is.True);
+            Assert.That(contracts.Packed(ammo, crate).Single(), Is.EqualTo(2), "Only the full magazine and the box count.");
+        });
+
+        // Buoys: one per point, counted only once set adrift in open space near an unlogged point.
+        WFContract buoys = default!;
+        EntityUid packing = default;
+        var placed = new System.Collections.Generic.List<EntityUid>();
+        var crates = entMan.System<Content.Shared.Storage.EntitySystems.SharedEntityStorageSystem>();
+        await server.WaitAssertion(() =>
+        {
+            buoys = Take(contracts, mob, board, "WFContractCaelNavBuoys");
+            Assert.That(buoys.Items, Has.Count.EqualTo(buoys.Count));
+            Assert.That(buoys.Points, Has.Count.EqualTo(buoys.Count));
+            // At the point but packed in a crate floating there: not adrift.
+            packing = entMan.SpawnEntity("CrateGenericSteel", buoys.Points[0]);
+            Assert.That(crates.Insert(buoys.Items[0], packing), Is.True);
+        });
+        await pair.RunTicksSync(150);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(buoys.Logged, Is.Empty, "A packed buoy was counted.");
+            Assert.That(crates.Remove(buoys.Items[0], packing), Is.True);
+            placed.AddRange(buoys.Items);
+            for (var i = 0; i < buoys.Items.Count; i++)
+            {
+                var point = buoys.Points[i];
+                xforms.SetMapCoordinates(buoys.Items[i], new MapCoordinates(point.Position + new Vector2(20f, 0f), point.MapId));
+            }
+        });
+        await pair.RunTicksSync(90);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(buoys.Status, Is.EqualTo(WFContractStatus.Completed), "Buoys set adrift at every point did not complete.");
+            Assert.That(placed.All(b => !entMan.Deleted(b) && !entMan.IsQueuedForDeletion(b)), Is.True,
+                "Set buoys were cleared away as soon as the contract completed.");
+        });
+
+        // Picket: arriving sends the raiders; holding the point long enough completes it and sends them away.
+        WFContract picket = default!;
+        await server.WaitAssertion(() =>
+        {
+            picket = Take(contracts, mob, board, "WFContractMarshalsPicket");
+            Assert.That(picket.Site, Is.Not.Null);
+            Assert.That(picket.EncounterEntity, Is.Null, "Raiders were sent before anyone arrived.");
+            // Earlier stages leave the test character hurt; the picket wants them conscious.
+            entMan.System<Content.Server.Administration.Systems.RejuvenateSystem>().PerformRejuvenate(mob);
+            xforms.SetMapCoordinates(mob, picket.Site!.Value);
+        });
+        await pair.RunTicksSync(150);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(picket.Started, Is.True, "Reaching the point did not start the picket.");
+            Assert.That(picket.EncounterEntity, Is.Not.Null, "No raiders were sent at the picket.");
+            picket.Progress = System.TimeSpan.FromMinutes(6) - System.TimeSpan.FromSeconds(1);
+        });
+        await pair.RunTicksSync(150);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(picket.Status, Is.EqualTo(WFContractStatus.Completed), "Holding the point did not complete the picket.");
+            var encounter = entMan.GetComponentOrNull<Content.Server._WF.Encounters.Components.WFEncounterComponent>(picket.EncounterEntity!.Value);
+            Assert.That(encounter == null || encounter.Resolution != null, "The raiders were left active after the picket.");
+        });
+
+        // Rescue: every stasis bag must come in; one alone doesn't finish it.
+        WFContract rescue = default!;
+        await server.WaitAssertion(() =>
+        {
+            rescue = Take(contracts, mob, board, "WFContractMarshalsRescue", crewCheck: false);
+            Assert.That(rescue.Items, Has.Count.GreaterThanOrEqualTo(3));
+            xforms.SetCoordinates(rescue.Items[0], new EntityCoordinates(ContractFlowTest.Largest(server, central), 1.5f, 1.5f));
+        });
+        await pair.RunTicksSync(150);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(rescue.Status, Is.EqualTo(WFContractStatus.Active), "One survivor finished a rescue.");
+            Assert.That(rescue.Delivered, Is.EqualTo(1));
+            foreach (var bag in rescue.Items.Skip(1))
+            {
+                xforms.SetCoordinates(bag, new EntityCoordinates(ContractFlowTest.Largest(server, central), 1.5f, 1.5f));
+            }
+        });
+        await pair.RunTicksSync(150);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(rescue.Status, Is.EqualTo(WFContractStatus.Completed), "Every survivor brought in did not finish the rescue.");
+        });
+
         await pair.CleanReturnAsync();
     }
 
-    /// <summary>Posts an offer, waives its deposit (the test character has no bank) and takes it.</summary>
     /// <summary>Every Caelestinus marshal bounty puts its target in the world when taken (feedback #523).</summary>
     [Test]
     public async Task BountiesStart()
@@ -195,7 +309,7 @@ public sealed class ContractOperationsTest
             minds.TransferTo(mind.Owner, mob);
 
             var bounties = server.ProtoMan.EnumeratePrototypes<WFContractPrototype>()
-                .Where(p => p.Contractor.Id == "WFContractorCaelMarshals" && p.Objective is WFContractBounty)
+                .Where(p => p.Contractor.Id == "WFContractorCaelMarshals" && p.Objective is WFContractBounty && p.Weight > 0)
                 .Select(p => p.ID)
                 .ToList();
             Assert.That(bounties, Is.Not.Empty);
@@ -208,6 +322,7 @@ public sealed class ContractOperationsTest
         await pair.CleanReturnAsync();
     }
 
+    /// <summary>Posts an offer, waives its deposit (the test character has no bank) and takes it.</summary>
     private static WFContract Take(WFContractSystem contracts, EntityUid mob, EntityUid board, string id, bool crewCheck = true)
     {
         var offer = contracts.PostOffer(id)!;

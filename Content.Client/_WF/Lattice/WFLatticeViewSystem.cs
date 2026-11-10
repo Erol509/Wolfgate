@@ -24,6 +24,8 @@ public sealed partial class WFLatticeViewSystem : EntitySystem
         base.Initialize();
         _overlays.AddOverlay(new WFLatticeBeamOverlay());
         _overlays.AddOverlay(new WFLatticeSkyOverlay());
+        _overlays.AddOverlay(new WFTacetWaveOverlay());
+        _overlays.AddOverlay(new WFTacetOverlay());
     }
 
     public override void Shutdown()
@@ -31,6 +33,8 @@ public sealed partial class WFLatticeViewSystem : EntitySystem
         base.Shutdown();
         _overlays.RemoveOverlay<WFLatticeBeamOverlay>();
         _overlays.RemoveOverlay<WFLatticeSkyOverlay>();
+        _overlays.RemoveOverlay<WFTacetWaveOverlay>();
+        _overlays.RemoveOverlay<WFTacetOverlay>();
     }
 
     /// <summary>Seconds between changes in how a garbled text reads.</summary>
@@ -127,17 +131,29 @@ public sealed partial class WFLatticeViewSystem : EntitySystem
         return Math.Clamp(depth >= 0f ? MathF.Max(lost, 0.6f + 0.4f * depth) : lost, 0f, 1f);
     }
 
-    /// <summary>Whether Kyphrus has imploded (Tacet) on the local player's sector.</summary>
+    /// <summary>Whether Kyphrus has fallen in on itself (Tacet) on the local player's sector, so there is nothing to draw.</summary>
     public bool Collapsed()
     {
         if (_player.LocalEntity is not { } viewer || Transform(viewer).MapUid is not { } map)
             return false;
 
         if (TryComp<WFLatticeFieldComponent>(map, out var field))
-            return field.Tacet;
+            return field.Tacet && (float) (_timing.CurTime - field.TacetStart).TotalSeconds >= WFLatticeImplosion.Collapse;
 
         CarrierDepth(out var sector);
         return sector?.Tacet ?? false;
+    }
+
+    /// <summary>
+    /// Seconds since Kyphrus began to implode on the sector the local eye is on, with that sector's field; null if it hasn't.
+    /// </summary>
+    public float? ImplosionSeconds(EntityUid? map, out WFLatticeFieldComponent? field)
+    {
+        field = null;
+        if (map is not { } m || !TryComp(m, out field) || !field.Tacet)
+            return null;
+
+        return (float) (_timing.CurTime - field.TacetStart).TotalSeconds;
     }
 
     /// <summary>Whether the local player is Choir, to whom nothing out here reads wrong.</summary>

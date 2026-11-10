@@ -34,6 +34,16 @@
   equipment:
     jumpsuit: WFAsfClothingUniformFormal
 
+- type: loadout
+  id: WFAsfLoadoutUniformStarfleetJumpskirtBlack
+  equipment:
+    jumpsuit: WFAsfClothingUniformStarfleetJumpskirtBlack
+
+- type: loadout
+  id: WFAsfLoadoutUniformStarfleetJumpskirt
+  equipment:
+    jumpsuit: WFAsfClothingUniformStarfleetJumpskirt
+
 - type: loadoutGroup
   id: WFAsfJumpsuitService
   name: loadout-group-contractor-jumpsuit
@@ -44,6 +54,8 @@
   - WFAsfLoadoutUniformColonist
   - WFAsfLoadoutUniformResearcher
   - WFAsfLoadoutUniformMedic
+  - WFAsfLoadoutUniformStarfleetJumpskirtBlack
+  - WFAsfLoadoutUniformStarfleetJumpskirt
   fallbacks:
   - WFAsfLoadoutUniformService
 
@@ -57,6 +69,8 @@
   - WFAsfLoadoutUniformFormal
   - WFAsfLoadoutUniformCasual
   - WFAsfLoadoutUniformColonist
+  - WFAsfLoadoutUniformStarfleetJumpskirtBlack
+  - WFAsfLoadoutUniformStarfleetJumpskirt
   fallbacks:
   - WFAsfLoadoutUniformResearcher
 
@@ -70,6 +84,8 @@
   - WFAsfLoadoutUniformFormal
   - WFAsfLoadoutUniformResearcher
   - WFAsfLoadoutUniformMedic
+  - WFAsfLoadoutUniformStarfleetJumpskirtBlack
+  - WFAsfLoadoutUniformStarfleetJumpskirt
   fallbacks:
   - WFAsfLoadoutUniformColonist
 
@@ -122,6 +138,11 @@
   equipment:
     head: WFAsfClothingHeadHat
 
+- type: loadout
+  id: WFAsfLoadoutConductorCap
+  equipment:
+    head: WFAsfClothingHeadConductorCap
+
 - type: loadoutGroup
   id: WFAsfHeadEnvoy
   name: loadout-group-contractor-head
@@ -130,6 +151,7 @@
   - WFAsfLoadoutBeret
   - WFAsfLoadoutCap
   - WFAsfLoadoutHat
+  - WFAsfLoadoutConductorCap
   fallbacks:
   - WFAsfLoadoutBeretPlumed
 
@@ -139,6 +161,7 @@
   loadouts:
   - WFAsfLoadoutBeret
   - WFAsfLoadoutCap
+  - WFAsfLoadoutConductorCap
   fallbacks:
   - WFAsfLoadoutBeret
 
@@ -149,6 +172,7 @@
   loadouts:
   - WFAsfLoadoutBeret
   - WFAsfLoadoutCap
+  - WFAsfLoadoutConductorCap
 
 # Neck
 
@@ -162,12 +186,29 @@
   equipment:
     neck: WFAsfClothingNeckCape
 
+- type: loadout
+  id: WFAsfLoadoutShroudEnvoy
+  equipment:
+    neck: WFAsfClothingNeckShroudEnvoy
+
+- type: loadout
+  id: WFAsfLoadoutShroudResearcher
+  equipment:
+    neck: WFAsfClothingNeckShroudResearcher
+
 - type: loadoutGroup
   id: WFAsfNeckEnvoy
   name: loadout-group-contractor-neck
   loadouts:
   - WFAsfLoadoutCapelet
   - WFAsfLoadoutCape
+  - WFAsfLoadoutShroudEnvoy
+  - WFAsfLoadoutShroudResearcher
+  - WFMeridianLoadoutClothingAccessoryPandoraHope
+  - ContractorClothingNeckIFFPurple
+  - ContractorClothingNeckTieSci
+  - WFMeridianLoadoutClothingAccessorySpyBug
+  - WFMeridianLoadoutClothingAccessoryNovaAccMedalGlowcrystal
   fallbacks:
   - WFAsfLoadoutCapelet
 
@@ -177,6 +218,12 @@
   minLimit: 0
   loadouts:
   - WFAsfLoadoutCapelet
+  - WFAsfLoadoutShroudResearcher
+  - WFMeridianLoadoutClothingAccessoryPandoraHope
+  - ContractorClothingNeckIFFPurple
+  - ContractorClothingNeckTieSci
+  - WFMeridianLoadoutClothingAccessorySpyBug
+  - WFMeridianLoadoutClothingAccessoryNovaAccMedalGlowcrystal
 
 # Outer clothing
 
@@ -195,6 +242,21 @@
   equipment:
     outerClothing: WFAsfClothingOuterRobe
 
+- type: loadout
+  id: WFAsfLoadoutOuterCoatLab
+  equipment:
+    outerClothing: WFAsfClothingOuterCoatLab
+
+- type: loadout
+  id: WFAsfLoadoutExplorerLabcoat
+  equipment:
+    outerClothing: WFAsfClothingOuterExplorerLabcoat
+
+- type: loadout
+  id: WFAsfLoadoutHaori
+  equipment:
+    outerClothing: WFAsfClothingOuterHaori
+
 - type: loadoutGroup
   id: WFAsfOuterEnvoy
   name: loadout-group-contractor-outerclothing
@@ -202,8 +264,35 @@
   - WFAsfLoadoutGreatcoat
   - WFAsfLoadoutParade
   - WFAsfLoadoutRobe
+  - WFAsfLoadoutOuterCoatLab
+  - WFAsfLoadoutExplorerLabcoat
+  - WFAsfLoadoutHaori
   fallbacks:
   - WFAsfLoadoutGreatcoat
+
+- type: loadoutGroup
+  id: WFAsfOuter
+  name: loadout-group-contractor-outerclothing
+  loadouts:
+  - WFAsfLoadoutOuterCoatLab
+  - WFAsfLoadoutExplorerLabcoat
+  - WFAsfLoadoutHaori
+  fallbacks:
+  - WFAsfLoadoutOuterCoatLab
+
+- type: loadoutGroup
+  id: WFAsfOuterEnforcer
+  name: loadout-group-contractor-outerclothing
+  loadouts:
+  - MercenaryVestSlim
+  - MercenaryVestNormal
+  - MercenaryClothingOuterArmorBPVestLight
+  - MercenaryClothingOuterArmorBPVestMedium
+  - MercenaryClothingOuterArmorBPVestHeavy
+  - MercenaryClothingOuterArmorBPVestPolyvalent
+  - MercenaryClothingOuterArmorBPVestStabproof
+  fallbacks:
+  - MercenaryVestSlim
 
 # Gloves
 

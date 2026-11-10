@@ -4,6 +4,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.NPC.HTN;
 using Content.Shared._WF.Explosion;
 using Content.Shared._WF.Remade;
+using Content.Shared.GameTicking;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -47,6 +48,14 @@ public sealed partial class WFRemadeDirectorSystem
         SubscribeLocalEvent<GunComponent, GunShotEvent>(OnGunShot);
         SubscribeLocalEvent<ExplosionShockwaveEvent>(OnBlast);
         SubscribeLocalEvent<EntitySpokeEvent>(OnSpoke);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+    }
+
+    /// <summary>Noises and the listen clock belong to one round; the next starts at time zero on reused map ids.</summary>
+    private void OnRoundRestart(RoundRestartCleanupEvent args)
+    {
+        _noises.Clear();
+        _nextNoise = TimeSpan.Zero;
     }
 
     private void OnGunShot(Entity<GunComponent> ent, ref GunShotEvent args)

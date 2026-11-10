@@ -12,3 +12,8 @@
   id: WFLatticeBeam
   kind: source
   path: "/Textures/_WF/Lattice/Shaders/lattice_beam.swsl"
+
+- type: shader
+  id: WFTacetShockwave
+  kind: source
+  path: "/Textures/_WF/Lattice/Shaders/tacet_shockwave.swsl"

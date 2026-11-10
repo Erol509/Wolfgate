@@ -6,6 +6,8 @@ uniform highp vec2 viewportSize;
 uniform highp vec2 eyePos;
 // Bands out from the hold: 1 the Slack's edge, 2 Adrift, 3 Untethered, 4 the Deep, towards 5 far out in it.
 uniform highp float reach;
+// After Kyphrus bursts, 0 to 1: the sky goes out but for a scattering of the brightest stars.
+uniform highp float dark;
 
 // How much the sky's own features follow the eye; near 1 they hang still on screen like far parallax.
 const highp float SkySlowness = 0.92;
@@ -136,6 +138,13 @@ void fragment() {
     col = mix(col, vec3(lum) * vec3(1.05, 0.38, 0.32), unt * 0.55);
     col *= 1.0 - unt * 0.25;
 
+    // After the burst almost nothing shines: most stars are gone and the rest are faint.
+    if (dark > 0.0) {
+        lum = dot(col, vec3(0.299, 0.587, 0.114));
+        highp float few = smoothstep(0.5, 0.9, lum) * step(0.65, hash1(floor(sky * 0.25)));
+        col = mix(col, vec3(lum) * vec3(0.7, 0.5, 0.8) * few * 0.4, dark);
+    }
+
     // Only the Coda pays for its veins and watchers.
     if (deep > 0.0) {
         // The Deep: the sky goes out in drifting patches, leaving the brightest stars as dim, wrong-coloured pinpricks.
@@ -149,7 +158,8 @@ void fragment() {
         highp vec2 veinP = sky * 0.035 + swim * 1.5 + vec2(0.0, TIME * 0.01);
         highp float ridge = 1.0 - abs(fbm(veinP) * 2.0 - 1.0);
         highp float vein = pow(ridge, 10.0) * (0.55 + 0.45 * vnoise(sky * 0.008 - TIME * 0.02));
-        col += vec3(0.42, 0.02, 0.16) * vein * deep * (0.5 + 0.7 * beat + 0.6 * abyss);
+        // After the burst they are only just there, a faint pulse in the black.
+        col += vec3(0.42, 0.02, 0.16) * vein * deep * (0.5 + 0.7 * beat + 0.6 * abyss) * (1.0 - 0.85 * dark);
 
         // Something looks back.
         highp vec4 eye = watcher(sky, viewer, 0.06 + 0.16 * abyss);

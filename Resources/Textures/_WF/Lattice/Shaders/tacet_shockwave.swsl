@@ -1,0 +1,66 @@
+light_mode unshaded;
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp vec2 viewportMin;
+uniform highp vec2 viewportSize;
+uniform highp vec2 worldToScreenX;
+uniform highp vec2 worldToScreenY;
+// Each shockwave's front in metres from Kyphrus; 0 or less before it leaves.
+uniform highp vec4 radii;
+uniform highp float width;
+// Where the waves die out, in metres.
+uniform highp float reach;
+
+highp float hash1(highp vec2 p) {
+    p = fract(p * vec2(123.34, 456.21));
+    p += dot(p, p + 45.32);
+    return fract(p.x * p.y);
+}
+
+highp float vnoise(highp vec2 p) {
+    highp vec2 i = floor(p);
+    highp vec2 f = fract(p);
+    highp vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(mix(hash1(i), hash1(i + vec2(1.0, 0.0)), u.x),
+               mix(hash1(i + vec2(0.0, 1.0)), hash1(i + vec2(1.0, 1.0)), u.x), u.y);
+}
+
+// One wave's pull on space (signed, squeezing towards its front) and its glow, at distance d.
+highp vec2 wave(highp float d, highp float front, highp float ragged) {
+    if (front <= 0.0 || front > reach) {
+        return vec2(0.0);
+    }
+
+    highp float x = (d - front - ragged) / width;
+    highp float band = exp(-x * x);
+    // The front is a hard bright edge; behind it a long violet wake.
+    highp float edge = exp(-x * x * 16.0);
+    highp float wake = x < 0.0 ? exp(x * 0.6) * 0.35 : 0.0;
+    highp float fade = 1.0 - smoothstep(reach * 0.85, reach, front);
+    return vec2(x * band, edge + wake) * fade;
+}
+
+void fragment() {
+    highp vec2 world = viewportMin + UV * viewportSize;
+    highp float d = length(world);
+    highp vec2 dir = world / max(d, 0.001);
+    highp float angle = atan(world.y, world.x);
+    // The front isn't a clean circle: it buckles along its length.
+    highp float ragged = (vnoise(vec2(angle * 400.0, TIME * 0.5)) - 0.5) * width * 0.6;
+
+    highp vec2 w = wave(d, radii.x, ragged) + wave(d, radii.y, ragged) + wave(d, radii.z, ragged) + wave(d, radii.w, ragged);
+    if (abs(w.x) < 0.002 && w.y < 0.003) {
+        discard;
+    }
+
+    highp vec2 displacement = dir * w.x * 18.0;
+    highp vec2 pixels = worldToScreenX * displacement.x + worldToScreenY * displacement.y;
+    highp vec2 safe = SCREEN_PIXEL_SIZE * 0.5;
+    highp vec2 uv = clamp((FRAGCOORD.xy - pixels) * SCREEN_PIXEL_SIZE, safe, vec2(1.0) - safe);
+    highp vec3 col = zTextureSpec(SCREEN_TEXTURE, uv).rgb;
+
+    highp float shimmer = 0.75 + 0.25 * vnoise(world * 0.05 + vec2(TIME * 3.0, 0.0));
+    col += vec3(0.62, 0.40, 1.0) * w.y * shimmer * 0.7;
+    col += vec3(1.0, 0.95, 1.0) * pow(clamp(w.y, 0.0, 1.0), 6.0) * 0.6;
+    COLOR = vec4(col, 1.0);
+}

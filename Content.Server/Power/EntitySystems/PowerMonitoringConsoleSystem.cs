@@ -747,10 +747,18 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         if (!Resolve(uid, ref device, ref nodeContainer, ref xform, false))
             return;
 
+        // WOLFGATE START: drop children deleted while still in this collection, they have no metadata to update
+        foreach (var stale in device.ChildDevices.Keys.Where(child => TerminatingOrDeleted(child)).ToList())
+        {
+            device.ChildDevices.Remove(stale);
+        }
+        // WOLFGATE END
+
         // If the device is not attached to a network, exit
         var nodeName = device.SourceNode == string.Empty ? device.LoadNode : device.SourceNode;
 
-        if (!nodeContainer.Nodes.TryGetValue(nodeName, out var node) ||
+        if (TerminatingOrDeleted(uid) || // WOLFGATE: a device being deleted hands its collection on instead of mastering it
+            !nodeContainer.Nodes.TryGetValue(nodeName, out var node) ||
             node.ReachableNodes.Count == 0)
         {
             // Make a child the new master of the collection if necessary
@@ -764,6 +772,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
                 foreach ((var child, var childDevice) in device.ChildDevices)
                 {
+                    if (child == newMaster) // WOLFGATE: the promoted master isn't its own child
+                        continue;
+
                     newMasterDevice.ChildDevices.Add(child, childDevice);
 
                     childDevice.CollectionMaster = newMaster;
@@ -832,6 +843,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     private void UpdateCollectionChildMetaData(EntityUid child, EntityUid master)
     {
+        if (TerminatingOrDeleted(child) || TerminatingOrDeleted(master)) // WOLFGATE: a deleted device has no net entity
+            return;
+
         var netEntity = EntityManager.GetNetEntity(child);
         var xform = Transform(child);
 
@@ -853,6 +867,9 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
 
     private void UpdateCollectionMasterMetaData(EntityUid master, int childCount)
     {
+        if (TerminatingOrDeleted(master)) // WOLFGATE: a deleted device has no net entity
+            return;
+
         var netEntity = EntityManager.GetNetEntity(master);
         var xform = Transform(master);
 

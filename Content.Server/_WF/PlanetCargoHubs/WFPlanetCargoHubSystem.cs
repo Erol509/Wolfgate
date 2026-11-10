@@ -38,6 +38,9 @@ public sealed partial class WFPlanetCargoHubSystem : EntitySystem
     /// <summary>The space depot's game map and station, whose station config the hub's station copies.</summary>
     private const string DepotGameMap = "CargoDepot";
 
+    /// <summary>The depot kind (point of interest) a planetside hub stands in for.</summary>
+    public const string DepotKind = "CargoDepot";
+
     /// <summary>This round's planetside depots by index: the world and the hub layout.</summary>
     private readonly Dictionary<int, (ProtoId<WFPlanetSurfacePrototype> Surface, ProtoId<WFPlanetCargoHubPrototype> Hub)> _plan = new();
 

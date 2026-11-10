@@ -31,6 +31,7 @@ wf-encounter-zone-warn-3 = Vessel {$intruder}, this is your warning. Alter cours
 wf-encounter-zone-attack = {$intruder}, you were warned. Weapons free.
 wf-encounter-zone-unknown = Unidentified vessel
 wf-encounter-zone-identify = Unidentified vessel at {$distance} metres, you are in a restricted zone with no IFF showing. Show your IFF or turn away now. Those were warning shots; the next will not be.
+wf-encounter-zone-seized = {$intruder}, your codes are dead. Who is flying that ship? Heave to and answer, or we open fire.
 wf-encounter-pirate-zone-warn-1 = {$intruder}, cut your engines and stay right where you are. We are coming alongside.
 wf-encounter-pirate-zone-warn-2 = You there, {$intruder}. Heave to and open your hold, and nobody has to get hurt.
 wf-encounter-pirate-zone-warn-3 = {$intruder}, you are {$distance} metres into our hunting ground. Kill your drive.

@@ -254,10 +254,10 @@
   tier: 2
   title: wf-contract-mmc-deep-core
   briefing: wf-contract-mmc-deep-core-brief
-  reward: 42000, 52000
+  reward: 52000, 62000
   deposit: 3000
   minutes: 90
-  minCrew: 3
+  minCrew: 2
   crewBonus: 0.35
   weight: 1.2
   objective: !type:WFContractSupply
@@ -266,13 +266,13 @@
     goodsCap: 36000
     goods:
     - stack: GoldOre
-      count: 40, 60
+      count: 30, 45
     - stack: SilverOre
-      count: 40, 60
+      count: 30, 45
     - stack: PlasmaOre
-      count: 60, 90
+      count: 45, 70
     - stack: UraniumOre
-      count: 50, 80
+      count: 40, 60
 
 - type: wfContract
   id: WFContractMMCStripClaim
@@ -281,10 +281,10 @@
   tier: 3
   title: wf-contract-mmc-strip-claim
   briefing: wf-contract-mmc-strip-claim-brief
-  reward: 64000, 80000
+  reward: 125000, 145000
   deposit: 5000
   minutes: 105
-  minCrew: 4
+  minCrew: 3
   crewBonus: 0.3
   weight: 0.8
   objective: !type:WFContractSupply
@@ -361,7 +361,7 @@
   tier: 3
   title: wf-contract-mmc-annual-quota
   briefing: wf-contract-mmc-annual-quota-brief
-  reward: 110000, 130000
+  reward: 175000, 205000
   deposit: 7500
   minutes: 180
   minCrew: 3
@@ -372,12 +372,107 @@
     goodsCap: 90000
     goods:
     - stack: SteelOre
-      count: 800, 1000
+      count: 600, 750
     - stack: SpaceQuartz
-      count: 400, 500
+      count: 300, 380
     - stack: GoldOre
-      count: 100, 150
+      count: 75, 110
     - stack: PlasmaOre
-      count: 150, 200
+      count: 110, 150
     - stack: UraniumOre
-      count: 100, 150
+      count: 75, 110
+
+# Fifth batch.
+
+- type: wfContract
+  id: WFContractMMCHeavyConvoy
+  contractor: WFContractorMMC
+  category: Escort
+  tier: 3
+  title: wf-contract-mmc-heavy-convoy
+  briefing: wf-contract-mmc-heavy-convoy-brief
+  reward: 40000, 50000
+  deposit: 3000
+  minutes: 75
+  minCrew: 2
+  crewBonus: 0.25
+  weight: 0.8
+  objective: !type:WFContractEscort
+    encounters: [ WFContractEscortHeavy ]
+    destinations: [ WFContractorCaelPort, WFContractorCamelot ]
+    perKilometre: 1500
+
+- type: wfContract
+  id: WFContractMMCOutpostCore
+  contractor: WFContractorMMC
+  category: Salvage
+  tier: 2
+  title: wf-contract-mmc-outpost-core
+  briefing: wf-contract-mmc-outpost-core-brief
+  reward: 20000, 26000
+  deposit: 1500
+  minutes: 55
+  crewBonus: 0.3
+  weight: 1
+  objective: !type:WFContractDownload
+    duration: 180
+    waveInterval: 50
+    waves:
+    - entity: MobCarpSalvage
+      count: 1, 2
+    wrecks:
+    - /Maps/Salvage/asteroid-base.yml
+    - /Maps/Salvage/outpost-arm.yml
+    - /Maps/Salvage/engineering-chunk.yml
+
+- type: wfContract
+  id: WFContractMMCClaimGuard
+  contractor: WFContractorMMC
+  category: Bounty
+  tier: 2
+  title: wf-contract-mmc-claim-guard
+  briefing: wf-contract-mmc-claim-guard-brief
+  reward: 15000, 20000
+  deposit: 1000
+  minutes: 40
+  weight: 1.2
+  objective: !type:WFContractPicket
+    encounters: [ WFContractTargetClaimJumper ]
+    duration: 360
+    range: 400
+
+- type: wfContract
+  id: WFContractMMCPlanetRig
+  contractor: WFContractorMMC
+  category: Salvage
+  tier: 2
+  title: wf-contract-mmc-planet-rig
+  briefing: wf-contract-mmc-planet-rig-brief
+  reward: 20000, 26000
+  deposit: 1000
+  minutes: 70
+  weight: 1.1
+  objective: !type:WFContractRepair
+    wrecks: []
+    planet:
+      hostiles: 3, 4
+
+- type: wfContract
+  id: WFContractMMCPlanetClaim
+  contractor: WFContractorMMC
+  category: Bounty
+  tier: 2
+  title: wf-contract-mmc-planet-claim
+  briefing: wf-contract-mmc-planet-claim-brief
+  reward: 22000, 28000
+  deposit: 1000
+  minutes: 70
+  weight: 1.2
+  crewBonus: 0.25
+  objective: !type:WFContractClear
+    wrecks: []
+    targets:
+      entity: WFContractCreatureDen
+      count: 2, 3
+    planet:
+      hostiles: 3, 5

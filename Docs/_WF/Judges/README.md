@@ -14,6 +14,7 @@ CASC Lightning or Hornet at the Frontier Staff Shipyard. The Roswell and Petra s
 
 ## Non-modular edits
 
+- [`Resources/Prototypes/_Mono/Outpost/caelestinus.yml`](../../../Resources/Prototypes/_Mono/Outpost/caelestinus.yml): judge cap raised from 3 to 5
 - [`Resources/Prototypes/_NF/Roles/Jobs/Frontier/security_guard.yml`](../../../Resources/Prototypes/_NF/Roles/Jobs/Frontier/security_guard.yml): free Lightning or Hornet at spawn
 
 <!-- WOLFGATE-GENERATED END -->

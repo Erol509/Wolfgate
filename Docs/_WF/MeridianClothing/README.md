@@ -12,6 +12,8 @@ component (the Gags module), and players pick the colours in the loadout window.
 
 Players get the clothes from job loadouts, each department's from its own jobs, and from vending machines:
 ClothesMate stocks everyday civilian clothes, AutoDrobe costumes, and each department's Drobe its own.
+Civilian loadouts also have the recolourable bunny outfit (two suits, ears and tie), which gives every job's
+colours, and AutoDrobe's recolourable items never run out.
 Faction uniform groups (TSFMC, USSP, PDV, MMC, Viper Group, ASF) are left alone. Armour, helmets, EVA suits,
 gas masks, HUDs and other protective items take the Wolfgate item with that job as their parent and are in no
 loadout or vending machine, so where they turn up is for mappers and admins to decide. Adult, admin and antagonist

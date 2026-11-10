@@ -181,8 +181,12 @@ public sealed partial class WFCrewEscortSystem : EntitySystem
         }
     }
 
-    private static void Link(Dictionary<EntityUid, HashSet<EntityUid>> neighbors, EntityUid first, EntityUid second)
+    private void Link(Dictionary<EntityUid, HashSet<EntityUid>> neighbors, EntityUid first, EntityUid second)
     {
+        // A hull boarders hold is in nobody's formation.
+        if (HasComp<WFCrewSeizedHullComponent>(first) || HasComp<WFCrewSeizedHullComponent>(second))
+            return;
+
         if (!neighbors.TryGetValue(first, out var outgoing))
             neighbors[first] = outgoing = new HashSet<EntityUid>();
         outgoing.Add(second);

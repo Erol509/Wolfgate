@@ -64,6 +64,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Client/UserInterface/Systems/Admin/AdminUIController.cs`](../../Content.Client/UserInterface/Systems/Admin/AdminUIController.cs): a HUD layout swap rebuilds the button visible
 - [`Content.Client/UserInterface/Systems/Chat/ChatUIController.cs`](../../Content.Client/UserInterface/Systems/Chat/ChatUIController.cs): an unlimited check warns when the eye lags a long teleport
 - [`Content.Client/UserInterface/Systems/Chat/Widgets/ChatBox.xaml.cs`](../../Content.Client/UserInterface/Systems/Chat/Widgets/ChatBox.xaml.cs): Replay seeks and filter changes rebuild the output from scratch.
+- [`Content.Client/UserInterface/Systems/Info/InfoUIController.cs`](../../Content.Client/UserInterface/Systems/Info/InfoUIController.cs): upstream DefaultRuleset is commented out
 - [`Content.Client/UserInterface/Systems/Sandbox/SandboxUIController.cs`](../../Content.Client/UserInterface/Systems/Sandbox/SandboxUIController.cs): a HUD layout swap rebuilds the button visible
 - [`Content.Client/VendingMachines/VendingMachineBoundUserInterface.cs`](../../Content.Client/VendingMachines/VendingMachineBoundUserInterface.cs): skip updates queued before Open(), _uiSystem is still null and the NRE crashes state handling
 - [`Content.Client/Weapons/Ranged/Systems/GunSystem.cs`](../../Content.Client/Weapons/Ranged/Systems/GunSystem.cs): restore the licence header removed by Kill Spdx
@@ -194,11 +195,18 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Server/Movement/Systems/LagCompensationSystem.cs`](../../Content.Server/Movement/Systems/LagCompensationSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/Nutrition/EntitySystems/DrinkSystem.cs`](../../Content.Server/Nutrition/EntitySystems/DrinkSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/Nutrition/EntitySystems/FoodSystem.cs`](../../Content.Server/Nutrition/EntitySystems/FoodSystem.cs): restore the licence header removed by Kill Spdx
+- [`Content.Server/Polymorph/Systems/PolymorphSystem.cs`](../../Content.Server/Polymorph/Systems/PolymorphSystem.cs): skip the copy when either body isn't humanoid, as when an artifact turns a monkey into a lizard
+- [`Content.Server/Power/EntitySystems/PowerMonitoringConsoleSystem.cs`](../../Content.Server/Power/EntitySystems/PowerMonitoringConsoleSystem.cs)
+  - drop children deleted while still in this collection, they have no metadata to update
+  - a device being deleted hands its collection on instead of mastering it
+  - the promoted master isn't its own child
+  - a deleted device has no net entity
 - [`Content.Server/Preferences/Managers/ServerPreferencesManager.cs`](../../Content.Server/Preferences/Managers/ServerPreferencesManager.cs)
   - a failed save is logged with its slot
   - a player who left during the read, or hasn't loaded yet, has no play time to validate against
   - sanitized here like FinishLoad does on login
 - [`Content.Server/Procedural/DungeonJob/DungeonJob.PostGenAutoCabling.cs`](../../Content.Server/Procedural/DungeonJob/DungeonJob.PostGenAutoCabling.cs): a cable island no path reached threw KeyNotFound below and failed the dungeon
+- [`Content.Server/Procedural/DungeonSystem.Rooms.cs`](../../Content.Server/Procedural/DungeonSystem.Rooms.cs): a decal on lattice (a space tile) failed to add and tripped the assert below
 - [`Content.Server/Projectiles/ProjectileSystem.cs`](../../Content.Server/Projectiles/ProjectileSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/Radio/EntitySystems/RadioDeviceSystem.cs`](../../Content.Server/Radio/EntitySystems/RadioDeviceSystem.cs): keep the speaker's own output type and the admin-safe ghost range the radio host port dropped
 - [`Content.Server/Research/Systems/ResearchSystem.Client.cs`](../../Content.Server/Research/Systems/ResearchSystem.Client.cs)
@@ -239,6 +247,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/ReactorPartComponent.cs`](../../Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/ReactorPartComponent.cs): relabelled MIT as in HardLight b602e8d485
 - [`Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/TurbineComponent.cs`](../../Content.Shared/_FarHorizons/Power/Generation/FissionGenerator/TurbineComponent.cs): relabelled MIT as in HardLight b602e8d485
 - [`Content.Shared/_FinalHorizon/Guns/AlternateGun/AlternateGunSystem.cs`](../../Content.Shared/_FinalHorizon/Guns/AlternateGun/AlternateGunSystem.cs): the client picks the gun to fire from this
+- [`Content.Shared/_Goobstation/Clothing/Systems/SharedSealableClothingSystem.cs`](../../Content.Shared/_Goobstation/Clothing/Systems/SharedSealableClothingSystem.cs): a crit or dead wearer can't work their own seals
 - [`Content.Shared/_Goobstation/Construction/ConstructedEvent.cs`](../../Content.Shared/_Goobstation/Construction/ConstructedEvent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/DoAfter/DoAfterEndedEvent.cs`](../../Content.Shared/_Goobstation/DoAfter/DoAfterEndedEvent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/_Goobstation/Factory/AutomatedComponent.cs`](../../Content.Shared/_Goobstation/Factory/AutomatedComponent.cs): restore the licence header removed by Kill Spdx
@@ -441,6 +450,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/_Mono/Entities/Objects/Specific/Mechs/mech_construction.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Specific/Mechs/mech_construction.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/Objects/Specific/Robotics/borg_modules.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Specific/Robotics/borg_modules.yml): its own id; the shared Security id made every faction weapon module a duplicate of the rest
 - [`Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/Launchers/mpssm.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/Launchers/mpssm.yml): restore the licence header removed by Kill Spdx
+- [`Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/Snipers/snipers.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Weapons/Guns/Snipers/snipers.yml): low-cap 7.62x51 mags fit like every other 7.62x51 rifle
 - [`Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/base_launcher.yml`](../../Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/base_launcher.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/Kinetic/charon_launcher.yml`](../../Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/Kinetic/charon_launcher.yml)
   - restore the licence header removed by Kill Spdx
@@ -460,6 +470,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/_Mono/Entities/Structures/Shuttles/thrusters_nfsd.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Shuttles/thrusters_nfsd.yml): PDV pack, 0.33x of the 150 default; cant be upgraded with parts
 - [`Resources/Prototypes/_Mono/Entities/Structures/Shuttles/thrusters_rogue.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Shuttles/thrusters_rogue.yml): PDV pack, 0.33x of the 150 default; cant be upgraded with parts
 - [`Resources/Prototypes/_Mono/Guidebook/rules.yml`](../../Resources/Prototypes/_Mono/Guidebook/rules.yml)
+  - rule 0 is listed in the ruleset, nest it so Symphony doesn't show it as its own ruleset
   - erotic roleplay rule removed, PR #27
   - erotic roleplay rule entry removed, PR #27
 - [`Resources/Prototypes/_Mono/Language/underground.yml`](../../Resources/Prototypes/_Mono/Language/underground.yml): codespeak gets its own chat colour so speakers can tell it from Common
@@ -499,6 +510,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/_NF/Events/events.yml`](../../Resources/Prototypes/_NF/Events/events.yml)
   - gas leak event disabled
   - vent clog event disabled
+- [`Resources/Prototypes/_NF/Guidebook/rules.yml`](../../Resources/Prototypes/_NF/Guidebook/rules.yml): Frontier ruleset is unused, only MonolithRuleset is shown in-game and on Symphony
 - [`Resources/Prototypes/_NF/Roles/Jobs/Medical/doc.yml`](../../Resources/Prototypes/_NF/Roles/Jobs/Medical/doc.yml): the Medical department has no roles since Monolith#4807, so count medic time instead
 - [`Resources/Prototypes/_NF/Smuggling/report_message_sets.yml`](../../Resources/Prototypes/_NF/Smuggling/report_message_sets.yml)
   - PDV pack, TSF pod report 2 min later
@@ -532,6 +544,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/GameRules/pests.yml`](../../Resources/Prototypes/GameRules/pests.yml)
   - pest events were crowding out the rest of the table (was 6)
   - each pest event at most once per 90 minutes
+- [`Resources/Prototypes/Guidebook/rules.yml`](../../Resources/Prototypes/Guidebook/rules.yml): upstream rulesets are unused, only MonolithRuleset is shown in-game and on Symphony
 - [`Resources/Prototypes/Nyanotrasen/Species/felinid.yml`](../../Resources/Prototypes/Nyanotrasen/Species/felinid.yml): mrrow
 - [`Resources/Prototypes/Recipes/Construction/Graphs/tools/logic_gate.yml`](../../Resources/Prototypes/Recipes/Construction/Graphs/tools/logic_gate.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/Recipes/Construction/Graphs/utilities/atmos_binary.yml`](../../Resources/Prototypes/Recipes/Construction/Graphs/utilities/atmos_binary.yml): restore the licence header removed by Kill Spdx
@@ -627,6 +640,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Textures/_FarHorizons/Structures/Power/Generation/FissionGenerator/reactor_component_cap.rsi/`](../../Resources/Textures/_FarHorizons/Structures/Power/Generation/FissionGenerator/reactor_component_cap.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.
 - [`Resources/Textures/_FarHorizons/Structures/Power/Generation/FissionGenerator/reactor_parts.rsi/`](../../Resources/Textures/_FarHorizons/Structures/Power/Generation/FissionGenerator/reactor_parts.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.
 - [`Resources/Textures/_FarHorizons/Structures/Power/Generation/FissionGenerator/turbine.rsi/`](../../Resources/Textures/_FarHorizons/Structures/Power/Generation/FissionGenerator/turbine.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.
+- [`Resources/Textures/_Floof/Mobs/Customization/skyrattails.rsi/`](../../Resources/Textures/_Floof/Mobs/Customization/skyrattails.rsi/): The leopard wag's front layers hold the fourth frame as long as the back layers, so the halves stay in step.
 - [`Resources/Textures/_Goobstation/Objects/Misc/RadioStation/vinyls.rsi/`](../../Resources/Textures/_Goobstation/Objects/Misc/RadioStation/vinyls.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.
 - [`Resources/Textures/_Goobstation/Objects/Misc/RadioStation/vinylsleeves.rsi/`](../../Resources/Textures/_Goobstation/Objects/Misc/RadioStation/vinylsleeves.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.
 - [`Resources/Textures/_Goobstation/Objects/Weapons/Guns/Battery/lawbringer.rsi/`](../../Resources/Textures/_Goobstation/Objects/Weapons/Guns/Battery/lawbringer.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.

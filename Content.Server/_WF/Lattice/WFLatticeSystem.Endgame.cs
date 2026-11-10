@@ -176,13 +176,15 @@ public sealed partial class WFLatticeSystem
             return;
 
         // Everything else that still holds lets go too, slowly, so the Coda engulfs the sector rather than appearing.
+        // Mobile relays don't: they are the last havens.
         var holding = EntityQueryEnumerator<WFLatticeAnchorComponent, TransformComponent>();
-        while (holding.MoveNext(out _, out var anchor, out var anchorXform))
+        while (holding.MoveNext(out var holder, out var anchor, out var anchorXform))
         {
-            if (anchorXform.MapUid == map.Owner && anchor.Active)
+            if (anchorXform.MapUid == map.Owner && anchor.Active && !IsMobileRelay(holder))
                 StartFade(map, _transform.GetWorldPosition(anchorXform), anchor.Primary ? anchor.Strength : -anchor.Strength);
         }
 
+        _unstrungAt[map] = _timing.CurTime;
         map.Comp.Unstrung = true;
         Dirty(map);
         GatherAnchors(map);
@@ -201,7 +203,7 @@ public sealed partial class WFLatticeSystem
         }
     }
 
-    /// <summary>Tacet: Kyphrus implodes and the sector goes dark.</summary>
+    /// <summary>Tacet: Kyphrus begins to implode. The burst, the shockwaves and the dark follow (Implosion).</summary>
     public void Tacet(Entity<WFLatticeFieldComponent> map)
     {
         if (map.Comp.Tacet)
@@ -211,10 +213,11 @@ public sealed partial class WFLatticeSystem
             Unstring(map);
 
         map.Comp.Tacet = true;
+        map.Comp.TacetStart = _timing.CurTime;
         Dirty(map);
-        Announce("wf-lattice-tacet", "wf-lattice-tacet-title", "wf-lattice-tacet-chip", TacetSound);
-        BurstBulbs(map, 1f);
-        _tacetAt[map] = _timing.CurTime + TimeSpan.FromSeconds(_config.GetCVar(WFLatticeEndgameCVars.DarkInterval));
+        // The bulbs keep failing only once the last shockwave has passed.
+        _tacetAt.Remove(map);
+        StartImplosion(map);
         Log.Info($"Tacet on {ToPrettyString(map)}.");
     }
 
@@ -233,16 +236,26 @@ public sealed partial class WFLatticeSystem
         BurstBulbs(map, _config.GetCVar(WFLatticeEndgameCVars.DarkChance));
     }
 
-    /// <summary>Bursts each working bulb on the map with the given chance.</summary>
+    /// <summary>Bursts each working bulb on the map with the given chance, except aboard a mobile anchor's haven.</summary>
     private void BurstBulbs(EntityUid map, float chance)
     {
+        _havens.Clear();
+        var relays = EntityQueryEnumerator<WFLatticeRelayComponent, WFLatticeAnchorComponent, TransformComponent>();
+        while (relays.MoveNext(out var relay, out var anchor, out var relayXform))
+        {
+            if (relay.NeedsFuel && anchor.Active && relayXform.GridUid is { } grid)
+                _havens.Add(grid);
+        }
+
         var query = EntityQueryEnumerator<PoweredLightComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var light, out var xform))
         {
-            if (xform.MapUid == map && _random.Prob(chance))
+            if (xform.MapUid == map && !(xform.GridUid is { } grid && _havens.Contains(grid)) && _random.Prob(chance))
                 _lights.TryDestroyBulb(uid, light);
         }
     }
+
+    private readonly HashSet<EntityUid> _havens = new();
 
     private void Announce(string text, string title, string chip, SoundSpecifier sound)
     {

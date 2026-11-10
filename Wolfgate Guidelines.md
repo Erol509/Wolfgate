@@ -133,4 +133,5 @@ Before building something, grep for it. Upstream SS14 or one of the fork layers 
 
 - Never commit to `main`. Make a branch and PR against `VanguardControl/Wolfgate`.
 - Fill in the PR template, with a `:cl:` changelog if players will notice the change.
+- If you used AI, read the [AI-generated content policy](Docs/_WF/Contributing/AI_POLICY.md) first. AI-generated sprites and audio must be substantially reworked by hand.
 - Trust the PR's CI checks over local runs. Some lints and map tests lie on Windows.

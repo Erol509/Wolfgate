@@ -65,9 +65,9 @@ public sealed class MarketAppTest
             Assert.That(texts, Has.Some.EqualTo("BUY HERE"), "Vendor prices should show on the station's card.");
             Assert.That(texts, Has.Some.EqualTo("1130"));
             Assert.That(texts, Has.Some.EqualTo("scarce"));
-            Assert.That(texts, Has.Some.Contains("Sell at Halcyon: 6.5 each"));
-            Assert.That(texts, Has.Some.Contains("Buy at Camelot: 9.25 each, 1200 in stock"));
-            Assert.That(texts, Has.Some.Contains("No station has this in stock"));
+            Assert.That(texts, Has.Some.Contains("Mined some? Halcyon pays most: 6.5 each"));
+            Assert.That(texts, Has.Some.Contains("Need some? Camelot is cheapest: 9.25 each, 1200 in stock"));
+            Assert.That(texts, Has.Some.Contains("No station has this to sell"));
             Assert.That(texts, Has.Some.EqualTo("44 left"), "A vendor row should show its stock.");
             Assert.That(texts, Has.Some.Contains("310 crates in the sector, 40 waiting on freight"));
             Assert.That(texts, Has.Some.Contains("23 made and 19 used an hour"));

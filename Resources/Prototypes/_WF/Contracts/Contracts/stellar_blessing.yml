@@ -7,7 +7,7 @@
   tier: 1
   title: wf-contract-sb-colony-stores
   briefing: wf-contract-sb-colony-stores-brief
-  reward: 6250, 8750
+  reward: 6250, 10750
   minutes: 45
   weight: 2
   objective: !type:WFContractSupply
@@ -19,9 +19,9 @@
     - entity: FoodBreadPlain
       count: 4, 8
     - stack: Gauze
-      count: 20, 30
+      count: 6, 10
     - stack: Ointment
-      count: 20, 30
+      count: 6, 10
     - entity: EmergencyOxygenTankFilled
       count: 4, 8
 
@@ -162,10 +162,10 @@
   tier: 2
   title: wf-contract-sb-foundation
   briefing: wf-contract-sb-foundation-brief
-  reward: 36000, 45000
+  reward: 48000, 58000
   deposit: 2000
   minutes: 90
-  minCrew: 3
+  minCrew: 2
   crewBonus: 0.35
   weight: 1
   objective: !type:WFContractSupply
@@ -173,13 +173,13 @@
     goodsCap: 30000
     goods:
     - stack: Steel
-      count: 250, 350
+      count: 180, 260
     - stack: Glass
-      count: 150, 250
+      count: 110, 180
     - stack: Plasteel
-      count: 50, 80
+      count: 40, 60
     - stack: Plastic
-      count: 80, 120
+      count: 60, 90
 
 - type: wfContract
   id: WFContractSBColonyOre
@@ -303,3 +303,58 @@
     - /Maps/Salvage/cargo-1.yml
     - /Maps/Salvage/hauling-shuttle.yml
     - /Maps/Salvage/medium-crashed-shuttle.yml
+
+# Fifth batch.
+
+- type: wfContract
+  id: WFContractSBCensusMail
+  contractor: WFContractorStellarBlessing
+  category: Delivery
+  tier: 1
+  title: wf-contract-sb-census-mail
+  briefing: wf-contract-sb-census-mail-brief
+  reward: 5500, 7500
+  minutes: 60
+  weight: 1.2
+  objective: !type:WFContractMailRun
+    package: WFContractParcel
+    stops: 3, 4
+    perStop: 1250
+    perKilometre: 750
+
+- type: wfContract
+  id: WFContractSBCommRelays
+  contractor: WFContractorStellarBlessing
+  category: Delivery
+  tier: 1
+  title: wf-contract-sb-comm-relays
+  briefing: wf-contract-sb-comm-relays-brief
+  reward: 5500, 7500
+  minutes: 45
+  weight: 1.2
+  objective: !type:WFContractDeploy
+    buoy: WFContractRelayBuoy
+    points: 2, 3
+    perPoint: 1500
+    minDistance: 1500
+    maxDistance: 4000
+
+- type: wfContract
+  id: WFContractSBPlanetHomesteaders
+  contractor: WFContractorStellarBlessing
+  category: Salvage
+  tier: 2
+  title: wf-contract-sb-planet-homesteaders
+  briefing: wf-contract-sb-planet-homesteaders-brief
+  reward: 24000, 30000
+  deposit: 1000
+  minutes: 80
+  weight: 1.1
+  minCrew: 2
+  crewBonus: 0.25
+  objective: !type:WFContractRecovery
+    wrecks: []
+    item: WFContractStasisBag
+    count: 2, 3
+    planet:
+      hostiles: 3, 5

@@ -36,6 +36,8 @@
   - type: Tag
     tags:
     - RawMaterial
+    # Too valuable to bank between rounds.
+    - SafetyDepositBlacklist
   - type: Stack
     stackType: WFExoticMatter
     baseLayer: base

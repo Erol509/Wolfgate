@@ -90,7 +90,7 @@ public sealed partial class WFReaverCampaignSystem
     {
         var map = _territory.SectorMap;
         if (Campaign is not { } campaign || State(true) is not { Finished: false } state || TerminatingOrDeleted(target)
-            || !HasComp<MapGridComponent>(target) || HasComp<WFEncounterGridComponent>(target) || Transform(target).MapID != map
+            || !HasComp<MapGridComponent>(target) || NpcHull(target) || Transform(target).MapID != map
             || _scheduler.IsSecretPlace(target) || Neutral(target) || _encounters.DockedAtStation(target))
             return false;
 
@@ -105,7 +105,8 @@ public sealed partial class WFReaverCampaignSystem
         foreach (var patrol in patrols)
         {
             if (patrol.Comp1.Intercepting != null || patrol.Comp1.Recalled
-                || !patrol.Comp2.Ships.TryGetValue(patrol.Comp1.Lead, out var lead) || TerminatingOrDeleted(lead.Grid))
+                || !patrol.Comp2.Ships.TryGetValue(patrol.Comp1.Lead, out var lead) || TerminatingOrDeleted(lead.Grid)
+                || lead.Grid == target)
                 continue;
 
             var position = _transform.GetWorldPosition(lead.Grid);
@@ -158,7 +159,7 @@ public sealed partial class WFReaverCampaignSystem
             ? _transform.GetWorldPosition(lead.Grid)
             : comp.LastSeen;
         // Another campaign's ship has no crew to warn, and the sector is not told of a fight between machines.
-        if (!HasComp<WFEncounterGridComponent>(target))
+        if (!NpcHull(target))
             WarnShip(campaign, target, from, "wf-reaver-intercept-warning");
         return true;
     }

@@ -1,12 +1,14 @@
 using System.Linq;
 using Content.Server._NF.GameRule;
 using Content.Server.Warps;
+using Content.Shared._Mono.Company;
 using Content.Shared._WF.Contracts;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._WF.Contracts;
 
@@ -83,6 +85,82 @@ public sealed partial class WFContractSystem
 
         var front = xform.LocalRotation.RotateVec(new System.Numerics.Vector2(0f, -1f));
         return ClearTileNear(grid, gridComp, xform.Coordinates, front, skipStart: true);
+    }
+
+    /// <summary>Whether a station is home to a faction's contractor, so deliveries there stay with the faction.</summary>
+    private bool HousesFaction(EntityUid station)
+    {
+        var homes = ContractorHomes();
+        return _proto.EnumeratePrototypes<WFContractorPrototype>()
+            .Any(c => c.Companies.Count > 0 && homes.TryGetValue(c.ID, out var home) && home == station);
+    }
+
+    /// <summary>Hands delivered goods to a faction station: into its material silo, else into a receiving crate at its pad.</summary>
+    private void Receive(EntityUid station, EntityUid goods, List<ProtoId<CompanyPrototype>> companies, ref EntityUid? crate)
+    {
+        if (SiloOf(station) is { } silo && _materials.TryInsertMaterialEntity(silo, goods, silo))
+            return;
+
+        if (Anchor(station) is not { } at)
+        {
+            Del(goods);
+            return;
+        }
+
+        // The pad's standing crate takes the goods while it has room; a full one gets a fresh crate beside it.
+        crate ??= PadCrate(at, companies);
+        if (crate is { } standing && _entityStorage.Insert(goods, standing))
+            return;
+
+        crate = Spawn(ReceivingCrate, at);
+        var lockComp = EnsureComp<WFContractReceivingComponent>(crate.Value);
+        lockComp.Companies = companies;
+        Dirty(crate.Value, lockComp);
+        // Anchored, and only its faction may unanchor or pull it, so outsiders can't haul it off to sell.
+        _transform.AnchorEntity(crate.Value);
+        if (!_entityStorage.Insert(goods, crate.Value))
+            Del(goods);
+    }
+
+    /// <summary>A receiving crate already standing at the pad for the same factions.</summary>
+    private EntityUid? PadCrate(EntityCoordinates at, List<ProtoId<CompanyPrototype>> companies)
+    {
+        var pad = _transform.ToMapCoordinates(at);
+        var crates = EntityQueryEnumerator<WFContractReceivingComponent, TransformComponent>();
+        while (crates.MoveNext(out var uid, out var comp, out var xform))
+        {
+            if (xform.Anchored && xform.MapID == pad.MapId && comp.Companies.ToHashSet().SetEquals(companies)
+                && (_transform.GetWorldPosition(xform) - pad.Position).Length() < 1.5f)
+                return uid;
+        }
+
+        return null;
+    }
+
+    /// <summary>Who may open a station's receiving crate: the delivering contractor's faction, else every faction homed there.</summary>
+    private List<ProtoId<CompanyPrototype>> ReceivingCompanies(EntityUid station, WFContract contract)
+    {
+        var contractor = _proto.Index(_proto.Index(contract.Prototype).Contractor);
+        if (contractor.Companies.Count > 0)
+            return new List<ProtoId<CompanyPrototype>>(contractor.Companies);
+
+        var homes = ContractorHomes();
+        return _proto.EnumeratePrototypes<WFContractorPrototype>()
+            .Where(c => c.Companies.Count > 0 && homes.TryGetValue(c.ID, out var home) && home == station)
+            .SelectMany(c => c.Companies).Distinct().ToList();
+    }
+
+    /// <summary>The station's material silo, if it has one.</summary>
+    private EntityUid? SiloOf(EntityUid station)
+    {
+        var silos = EntityQueryEnumerator<Content.Shared.Materials.OreSilo.OreSiloComponent, TransformComponent>();
+        while (silos.MoveNext(out var uid, out _, out var xform))
+        {
+            if (_station.GetOwningStation(uid, xform) == station)
+                return uid;
+        }
+
+        return null;
     }
 
     /// <summary>Where a station hands out cargo: its central drop, else its warp point, else its centre.</summary>

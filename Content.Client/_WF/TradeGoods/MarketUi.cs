@@ -463,6 +463,12 @@ public sealed partial class MarketUiFragment : BoxContainer
     private void UpdateMaterials(WFMarketUiState state)
     {
         _materials.RemoveAllChildren();
+        if (state.Materials.Count > 0)
+        {
+            _materials.AddChild(Dimmed(Loc.GetString("wf-market-material-note-sell")));
+            _materials.AddChild(Dimmed(Loc.GetString("wf-market-material-note-spread")));
+        }
+
         foreach (var material in state.Materials)
         {
             var body = new BoxContainer { Orientation = LayoutOrientation.Vertical, HorizontalExpand = true };

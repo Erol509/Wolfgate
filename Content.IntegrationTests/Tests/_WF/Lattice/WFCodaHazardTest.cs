@@ -167,8 +167,10 @@ public sealed class WFCodaHazardTest
         {
             Assert.That(hazards.IsExposed(map.Grid.Owner), Is.True);
             var grid = (map.Grid.Owner, entities.GetComponent<MapGridComponent>(map.Grid));
+            // The hazard may already have rolled a node of its own during the wait, so count only this seed.
+            var nodesBefore = flesh.Nodes(map.Grid.Owner);
             Assert.That(flesh.Seed(grid, new System.Collections.Generic.List<EntityUid> { mob }), Is.True, "no flesh took root.");
-            Assert.That(flesh.Nodes(map.Grid.Owner), Is.EqualTo(1));
+            Assert.That(flesh.Nodes(map.Grid.Owner), Is.EqualTo(nodesBefore + 1));
             hazards.StartLeviathan(map.Grid.Owner, protos.Index<WFLatticeProfilePrototype>("WFDefault"), touch: true);
         });
 

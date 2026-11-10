@@ -26,6 +26,7 @@ public sealed partial class WFCodaHazardSystem
     [Dependency] private SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private WFDriftMindSystem _mind = default!;
+    [Dependency] private Robust.Shared.Configuration.IConfigurationManager _cfg = default!;
 
     private static readonly SoundSpecifier LeviathanCall = new SoundCollectionSpecifier("WFDreadMenace",
         AudioParams.Default.WithPitchScale(0.35f).WithVolume(4f));
@@ -60,11 +61,15 @@ public sealed partial class WFCodaHazardSystem
     private void RollLeviathan(Entity<MapGridComponent> grid, Ship ship, List<EntityUid> crew, float depth,
         WFLatticeProfilePrototype profile, float seconds, TimeSpan now)
     {
+        // After Tacet hell is loose: it comes far more often, and sooner again.
+        var scale = TryComp<WFLatticeFieldComponent>(Transform(grid).MapUid, out var field) && field.Tacet
+            ? MathF.Max(1f, _cfg.GetCVar(WFLatticeEndgameCVars.TacetLeviathanScale))
+            : 1f;
         if (now < ship.LeviathanAfter || _leviathans.Exists(l => l.Grid == grid.Owner)
-            || !_random.Prob(profile.LeviathanChance * (1f + depth) * seconds / 60f))
+            || !_random.Prob(profile.LeviathanChance * scale * (1f + depth) * seconds / 60f))
             return;
 
-        ship.LeviathanAfter = now + TimeSpan.FromSeconds(profile.LeviathanCooldown);
+        ship.LeviathanAfter = now + TimeSpan.FromSeconds(profile.LeviathanCooldown / scale);
         StartLeviathan(grid.Owner, profile);
     }
 

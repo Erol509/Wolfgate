@@ -67,6 +67,7 @@ public sealed partial class PointOfInterestSystem : EntitySystem
             return;
 
         var currentPreset = _ticker.CurrentPreset.ID;
+        var wfUnspawned = new List<PointOfInterestPrototype>(depotPrototypes); // WOLFGATE(TradeGoods): the depot kinds not spawned yet this round
 
         for (int i = 0; i < depotCount && depotPrototypes.Count > 0; i++)
         {
@@ -74,11 +75,15 @@ public sealed partial class PointOfInterestSystem : EntitySystem
             if (_wfCargoHubs.IsPlanetside(i))
             {
                 rotationOffset += rotation;
+                wfUnspawned.RemoveAll(kind => kind.ID == WFPlanetCargoHubSystem.DepotKind); // WOLFGATE(TradeGoods): a planet hub is a standard depot, so the space slots owe the other kind
                 continue;
             }
             // WOLFGATE END
 
-            var proto = _random.Pick(depotPrototypes);
+            // WOLFGATE(TradeGoods) START: every kind of depot spawns once before any repeats, as each sells goods the other doesn't
+            // var proto = _random.Pick(depotPrototypes);
+            var proto = wfUnspawned.Count > 0 ? _random.PickAndTake(wfUnspawned) : _random.Pick(depotPrototypes);
+            // WOLFGATE END
 
             // Safety check: ensure selected POIs are either fine in any preset or accepts this current one.
             if (proto.SpawnGamePreset.Length > 0 && !proto.SpawnGamePreset.Contains(currentPreset))

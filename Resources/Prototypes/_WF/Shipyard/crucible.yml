@@ -1,0 +1,37 @@
+#Author info
+# Roguenoob (Discord, Github)
+- type: vessel
+  id: WFCrucible
+  parent: BaseVessel
+  name: 'DYRV Crucible'
+  description: 'A Capital class Mobile Repair Yard, build with comfort in mind, for both the crew and those getting recovered. It Sports an Atrium, Warehouse, Singular Mining laser with Ore Processor and Salvage processer, Small Medical Post, Engineering Fab, and Large Crew Quarters for a crew of Four.  Dunerose Yards, Do the Job, and Do it Elegeantly'
+  price: 500544 # appraised at 278080, 1.8x even
+  category: Large # 1539 tiles
+  group: Shipyard
+  shuttlePath: /SharedMaps/_WF/Shipyard/Shuttles/crucible.yml
+  guidebookPage: null
+  class:
+  - Capital
+  - Salvage
+  - Engineering
+  - Civilian
+  engine:
+  - AME
+
+- type: gameMap
+  id: WFCrucible
+  mapName: 'DYRV Crucible'
+  mapPath: /SharedMaps/_WF/Shipyard/Shuttles/crucible.yml
+  minPlayers: 0
+  stations:
+    WFCrucible:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Crucible CIV{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]

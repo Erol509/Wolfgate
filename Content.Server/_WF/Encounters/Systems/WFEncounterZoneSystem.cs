@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server._Mono.AlertLevel;
 using Content.Server._WF.Encounters.Components;
+using Content.Server._WF.NpcCrew.Components;
 using Content.Server._WF.NpcCrew.Systems;
 using Content.Server._WF.NpcDialogue;
 using Content.Server._WF.NpcDialogue.Systems;
@@ -58,6 +59,12 @@ public sealed partial class WFEncounterZoneSystem : EntitySystem
     /// so its people hear a warning before the guns. Fresh fire from it is answered at once.
     /// </summary>
     public static readonly TimeSpan BoardingGrace = TimeSpan.FromSeconds(20);
+
+    /// <summary>
+    /// How long a zone holds its fire on a hull boarders have just seized: it is asked who flies it before the guns
+    /// open. Fresh fire from it is answered at once.
+    /// </summary>
+    public static readonly TimeSpan SeizedGrace = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// Grids with a living player aboard, berthed or not; those that had one on the last look; and those that ever
@@ -229,17 +236,17 @@ public sealed partial class WFEncounterZoneSystem : EntitySystem
                 if (!IsPlayerShip(grid) || _encounters.DockedAtStation(grid) || _stealth.ShipUnseen(grid))
                     continue;
 
-                _crewed[grid] = crewed = new Crewed { GridFlag = WFCompanyFamily.Of(Company(grid)) };
+                _crewed[grid] = crewed = new Crewed { GridFlag = WFCompanyFamily.Of(Colours(grid)) };
             }
 
             // Companies are kept by faction: a Federation civilian aboard flies a Federation flag.
             var own = WFCompanyFamily.Of(Company(uid));
-            var company = WFCompanyFamily.Of(Company(grid));
+            var company = WFCompanyFamily.Of(Colours(grid));
             if (company.Length == 0)
                 company = own;
             if (company.Length > 0 && !crewed.Flags.Contains(company))
                 crewed.Flags.Add(company);
-            var raw = Company(grid);
+            var raw = Colours(grid);
             if (raw.Length == 0)
                 raw = Company(uid);
             if (raw.Length > 0)
@@ -286,9 +293,27 @@ public sealed partial class WFEncounterZoneSystem : EntitySystem
         return _reboarded.ContainsKey(grid);
     }
 
-    /// <summary>Whether a grid is a ship people fly: not a station, outpost or asteroid, and not one of an encounter's own.</summary>
+    /// <summary>Whether a ship's crew came aboard by seizing it too recently for a zone to open fire on it unprovoked.</summary>
+    public bool JustSeized(EntityUid grid)
+    {
+        return TryComp<WFCrewSeizedHullComponent>(grid, out var seized) && _timing.CurTime - seized.Since < SeizedGrace;
+    }
+
+    /// <summary>The company a ship flies for; a seized hull's colours are not its people's, so it flies for none.</summary>
+    private string Colours(EntityUid grid)
+    {
+        return HasComp<WFCrewSeizedHullComponent>(grid) ? string.Empty : Company(grid);
+    }
+
+    /// <summary>
+    /// Whether a grid is a ship people fly: not a station, outpost or asteroid, and not one of an encounter's own
+    /// unless boarders have seized it.
+    /// </summary>
     private bool IsPlayerShip(EntityUid grid)
     {
+        if (HasComp<WFCrewSeizedHullComponent>(grid))
+            return true;
+
         if (HasComp<WFEncounterGridComponent>(grid))
             return false;
 
@@ -560,6 +585,7 @@ public sealed partial class WFEncounterZoneSystem : EntitySystem
             var holdsBack = ship.Mood >= WFShipMood.Desperate && !ship.Engaged.Contains(intruder)
                             && !_alerts.IsAttacker(ship.Grid, intruder);
             if (ship.AttackRange > 0f && distance <= ship.AttackRange && !idle && !holdsBack && !JustReboarded(intruder)
+                && !JustSeized(intruder)
                 && (!ceasefire || ship.Engaged.Contains(intruder) || _alerts.IsAttacker(ship.Grid, intruder)))
             {
                 _alerts.EndZoneWarning(ship.Grid, intruder);
@@ -589,9 +615,12 @@ public sealed partial class WFEncounterZoneSystem : EntitySystem
                 ship.Warned[intruder] = now + WarnCooldown;
                 // One hail for the side: a dozen ships warning in chorus is noise, not a warning. The side warns once,
                 // then once more, then holds its peace until the vessel leaves and comes back.
-                HailOut(encounter, ship, intruder, challenged
-                    ? () => Loc.GetString("wf-encounter-zone-identify", ("distance", (int) distance))
-                    : () => _dialogue.WarnLine(encounter, ship, intruder, name, (int) distance));
+                // A hull the side knew as its own is asked who has it now.
+                HailOut(encounter, ship, intruder, HasComp<WFCrewSeizedHullComponent>(intruder)
+                    ? () => Loc.GetString("wf-encounter-zone-seized", ("intruder", name))
+                    : challenged
+                        ? () => Loc.GetString("wf-encounter-zone-identify", ("distance", (int) distance))
+                        : () => _dialogue.WarnLine(encounter, ship, intruder, name, (int) distance));
             }
             else if (distance > ship.WarnRange)
             {

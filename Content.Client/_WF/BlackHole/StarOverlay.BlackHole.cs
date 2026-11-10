@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client._WF.BlackHole;
 using Content.Client._WF.Lattice;
 using Content.Shared._FarHorizons.StarSystem.Helpers;
+using Content.Shared._WF.Lattice;
 using Robust.Client.Graphics;
 
 namespace Content.Client._FarHorizons.StarSystem;
@@ -14,13 +15,29 @@ public sealed partial class StarOverlay
     /// <summary>Only black holes need a copy of the background for refraction.</summary>
     public override bool RequestScreenTexture => _star?.Shader == BlackHoleShader;
 
-    /// <summary>Culls only black holes, using the same footprint and parallax as the shader. After Tacet there is none.</summary>
+    /// <summary>How big Kyphrus is drawn now: swelling and falling in at Tacet, otherwise its size.</summary>
+    private float _blackHoleScale = 1f;
+
+    /// <summary>How far through its swell it is, 0 to 1, for the shader.</summary>
+    private float _blackHoleSwell;
+
+    /// <summary>Culls only black holes, using the same footprint and parallax as the shader. After it falls in there is none.</summary>
     private bool BlackHoleVisible(Star star, in OverlayDrawArgs args)
     {
-        if (star.Shader == BlackHoleShader && _entMan.System<WFLatticeViewSystem>().Collapsed())
+        if (star.Shader != BlackHoleShader)
+            return true;
+
+        var view = _entMan.System<WFLatticeViewSystem>();
+        if (view.Collapsed())
             return false;
 
-        return star.Shader != BlackHoleShader || BlackHoleVisuals.IsVisible(star.Position, star.Radius,
+        var seconds = view.ImplosionSeconds(args.MapUid, out _);
+        _blackHoleScale = seconds is { } s ? WFLatticeImplosion.Scale(s) : 1f;
+        _blackHoleSwell = seconds is { } t ? Math.Clamp(t / WFLatticeImplosion.Swell, 0f, 1f) : 0f;
+        if (_blackHoleScale <= 0.001f)
+            return false;
+
+        return BlackHoleVisuals.IsVisible(star.Position, star.Radius * _blackHoleScale,
             args.Viewport.Eye?.Position.Position ?? args.WorldAABB.Center, args.WorldAABB);
     }
 
@@ -31,10 +48,11 @@ public sealed partial class StarOverlay
             return;
 
         _shaderInstance.SetParameter("parallaxFactor", BlackHoleVisuals.ParallaxFactor);
-        _shaderInstance.SetParameter("solarRadiusFactor", BlackHoleVisuals.SolarRadiusFactor);
+        _shaderInstance.SetParameter("solarRadiusFactor", BlackHoleVisuals.SolarRadiusFactor * _blackHoleScale);
+        _shaderInstance.SetParameter("swell", _blackHoleSwell);
         _shaderInstance.SetParameter("effectRadius", BlackHoleVisuals.EffectRadius);
         _shaderInstance.SetParameter("hasBackground", ScreenTexture != null);
-        _shaderInstance.SetParameter("unmooring", _entMan.System<WFLatticeViewSystem>().Unmooring());
+        _shaderInstance.SetParameter("unmooring", _blackHoleSwell > 0f ? 1f : _entMan.System<WFLatticeViewSystem>().Unmooring());
         if (ScreenTexture == null)
             return;
 

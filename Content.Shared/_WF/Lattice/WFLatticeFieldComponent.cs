@@ -69,11 +69,19 @@ public sealed partial class WFLatticeFieldComponent : Component
     [DataField, AutoNetworkedField]
     public List<float> WardRadii = new();
 
-    /// <summary>The Unstringing: every primary anchor is gone, nothing holds anywhere, and the Coda is everywhere.</summary>
+    /// <summary>The Unstringing: every primary anchor is gone and only mobile relays hold; the Coda closes in.</summary>
     [DataField, AutoNetworkedField]
     public bool Unstrung;
 
     /// <summary>Tacet: Kyphrus has imploded and the sector has gone dark.</summary>
     [DataField, AutoNetworkedField]
     public bool Tacet;
+
+    /// <summary>When Kyphrus began to implode; see <see cref="WFLatticeImplosion"/>.</summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan TacetStart;
+
+    /// <summary>How far out the shockwaves run before they die, in metres from the centre.</summary>
+    [DataField, AutoNetworkedField]
+    public float WaveReach;
 }

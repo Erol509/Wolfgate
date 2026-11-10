@@ -191,13 +191,18 @@ public enum WFContractSite : byte
     Station,
     Space,
 
-    /// <summary>Reserved for planetary contracts.</summary>
+    /// <summary>A site on one of the sector's worlds.</summary>
     Planet,
 }
 
 /// <summary>What a contract asks for. Each kind has its own handling in the server's contract system.</summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract partial class WFContractObjective;
+public abstract partial class WFContractObjective
+{
+    /// <summary>Set on a wreck objective to run it at a site on one of the sector's worlds instead.</summary>
+    [DataField]
+    public WFContractPlanet? Planet;
+}
 
 public enum WFContractEnd : byte
 {
@@ -283,6 +288,10 @@ public sealed partial class WFContractGoods
     [DataField]
     public string? Component;
 
+    /// <summary>Any full magazine, speed loader or ammunition box of any calibre; guns don't count.</summary>
+    [DataField]
+    public bool Ammo;
+
     /// <summary>What the manifest calls it; left out, the stack's or entity's name.</summary>
     [DataField]
     public LocId? Name;
@@ -321,6 +330,10 @@ public sealed partial class WFContractRecovery : WFContractObjective
 
     [DataField(required: true)]
     public EntProtoId Item;
+
+    /// <summary>How many of the item are placed aboard, rolled between the two; every one must be brought in.</summary>
+    [DataField]
+    public Vector2i Count = new(1, 1);
 
     [DataField]
     public float MinDistance = 3000f;

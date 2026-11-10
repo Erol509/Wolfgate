@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Project Myomer borg by Toriate, commissioned by The Sharkenning. Taken from Bubberstation at https://github.com/Bubberstation/Bubberstation/blob/af69ef933ac71a75a5446f82e0e281ac811b25df/modular_zubbers/code/modules/silicons/borgs/sprites/myomer/ProjectMyomerJani.dmi",
+  "size": {
+    "x": 64,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "standardoverlays"
+    },
+    {
+      "name": "myomer-jani_cl",
+      "directions": 4
+    },
+    {
+      "name": "myomer-jani_cl_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "myomer-jani_c",
+      "directions": 4
+    },
+    {
+      "name": "myomer-jani_c_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "myomer-jani_w",
+      "directions": 4
+    },
+    {
+      "name": "myomer-jani_w_moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "sitting"
+    },
+    {
+      "name": "myomer-jani-sit_e",
+      "directions": 4
+    },
+    {
+      "name": "rest"
+    },
+    {
+      "name": "myomer-jani-rest_e",
+      "directions": 4
+    },
+    {
+      "name": "myomer-jani-bellyup_e",
+      "directions": 4
+    }
+  ]
+}

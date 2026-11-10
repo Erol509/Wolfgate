@@ -30,6 +30,9 @@ public sealed class WFLatticeSkyOverlay : Overlay
     private readonly ShaderInstance _shader;
     private readonly List<(Vector2 Position, float Strength)> _anchors = new();
     private float _shown;
+
+    /// <summary>After Kyphrus bursts, 0 to 1: the sky goes out but for a few stars.</summary>
+    private float _dark;
     private TimeSpan _last;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
@@ -63,6 +66,7 @@ public sealed class WFLatticeSkyOverlay : Overlay
         _shader.SetParameter("viewportSize", args.WorldAABB.Size);
         _shader.SetParameter("eyePos", eye);
         _shader.SetParameter("reach", _shown);
+        _shader.SetParameter("dark", _dark);
 
         args.WorldHandle.UseShader(_shader);
         args.WorldHandle.DrawRect(args.WorldAABB, Color.White);
@@ -80,6 +84,17 @@ public sealed class WFLatticeSkyOverlay : Overlay
         _last = now;
         if (Reach() is not { } target)
             return;
+
+        // After the burst it is the Coda everywhere, and darker than ever.
+        var seconds = _ent.System<WFLatticeViewSystem>().ImplosionSeconds(
+            _ent.System<SharedMapSystem>().GetMapOrInvalid(_eye.CurrentEye.Position.MapId), out _);
+        _dark = seconds is { } s ? Math.Clamp((s - WFLatticeImplosion.Burst) / 8f, 0f, 1f) : 0f;
+        // The burst snaps the sky straight to the Coda's, rather than easing through the bands on the way.
+        if (seconds >= WFLatticeImplosion.Burst)
+        {
+            _shown = MathF.Max(_shown, 4.8f);
+            return;
+        }
 
         _shown += (target - _shown) * (1f - MathF.Exp(-dt * Follow));
     }

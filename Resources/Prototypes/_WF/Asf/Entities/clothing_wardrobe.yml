@@ -47,6 +47,43 @@
     sprite: _WF/Asf/Clothing/Uniforms/formal.rsi
 
 - type: entity
+  parent: ClothingUniformBase
+  id: WFAsfClothingUniformStarfleetJumpskirtBlack
+  components:
+  - type: Sprite
+    sprite: _WF/Asf/Clothing/Uniforms/starfleet_jumpskirt_black.rsi
+    layers:
+    - state: icon
+    - state: icon-accent
+      shader: unshaded
+  - type: Clothing
+    sprite: _WF/Asf/Clothing/Uniforms/starfleet_jumpskirt_black.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+      - state: equipped-INNERCLOTHING-accent
+        shader: unshaded
+  - type: Item
+    inhandVisuals:
+      left:
+        - state: inhand-left
+        - state: inhand-left-accent
+          shader: unshaded
+      right:
+        - state: inhand-right
+        - state: inhand-right-accent
+          shader: unshaded
+
+- type: entity
+  parent: WFAsfClothingUniformStarfleetJumpskirtBlack
+  id: WFAsfClothingUniformStarfleetJumpskirt
+  components:
+  - type: Sprite
+    sprite: _WF/Asf/Clothing/Uniforms/starfleet_jumpskirt.rsi
+  - type: Clothing
+    sprite: _WF/Asf/Clothing/Uniforms/starfleet_jumpskirt.rsi
+
+- type: entity
   parent: ClothingHeadBase
   id: WFAsfClothingHeadBeretPlumed
   components:
@@ -74,6 +111,15 @@
     sprite: _WF/Asf/Clothing/Head/hat.rsi
 
 - type: entity
+  parent: ClothingHeadBase
+  id: WFAsfClothingHeadConductorCap
+  components:
+  - type: Sprite
+    sprite: _WF/Asf/Clothing/Head/conductor_cap.rsi
+  - type: Clothing
+    sprite: _WF/Asf/Clothing/Head/conductor_cap.rsi
+
+- type: entity
   parent: ClothingNeckBase
   id: WFAsfClothingNeckCapelet
   components:
@@ -92,6 +138,29 @@
     sprite: _WF/Asf/Clothing/Neck/cape.rsi
 
 - type: entity
+  parent: ClothingNeckBase
+  id: WFAsfClothingNeckShroudEnvoy
+  components:
+  - type: Sprite
+    sprite: _WF/Asf/Clothing/Neck/envoy_shroud.rsi
+  - type: Clothing
+    sprite: _WF/Asf/Clothing/Neck/envoy_shroud.rsi
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+      - state: equipped-NECK-accent
+        shader: unshaded
+
+- type: entity
+  parent: WFAsfClothingNeckShroudEnvoy
+  id: WFAsfClothingNeckShroudResearcher
+  components:
+  - type: Sprite
+    sprite: _WF/Asf/Clothing/Neck/researcher_shroud.rsi
+  - type: Clothing
+    sprite: _WF/Asf/Clothing/Neck/researcher_shroud.rsi
+
+- type: entity
   parent: ClothingOuterStorageBase
   id: WFAsfClothingOuterParade
   components:
@@ -108,6 +177,42 @@
     sprite: _WF/Asf/Clothing/OuterClothing/robe.rsi
   - type: Clothing
     sprite: _WF/Asf/Clothing/OuterClothing/robe.rsi
+
+- type: entity
+  parent: [ ClothingOuterStorageFoldableBase, ClothingOuterCoatLab ]
+  id: WFAsfClothingOuterExplorerLabcoat
+  components:
+  - type: Sprite
+    sprite: _WF/Asf/Clothing/OuterClothing/explorer_labcoat.rsi
+    layers:
+    - state: icon
+    - state: icon-accent
+      shader: unshaded
+  - type: Clothing
+    sprite: _WF/Asf/Clothing/OuterClothing/explorer_labcoat.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-accent
+        shader: unshaded
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: WFAsfClothingOuterHaori
+  components:
+  - type: Sprite
+    sprite: _WF/Asf/Clothing/OuterClothing/haori.rsi
+    layers:
+    - state: icon
+    - state: icon-accent
+      shader: unshaded
+  - type: Clothing
+    sprite: _WF/Asf/Clothing/OuterClothing/haori.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-accent
+        shader: unshaded
 
 - type: entity
   parent: ClothingOuterEVASuitBase

@@ -160,6 +160,8 @@ public sealed partial class WFReaverCampaignSystem : EntitySystem
         SubscribeLocalEvent<WFEncounterShipSpawnedEvent>(OnShipSpawned);
         SubscribeLocalEvent<WFEncounterSimulatedHitEvent>(OnSimulatedHit);
         SubscribeLocalEvent<WFCrewFriendlyFireQueryEvent>(OnFriendlyFireQuery);
+        SubscribeLocalEvent<WFCrewAlertEvent>(OnCrewAlert);
+        SubscribeLocalEvent<WFEncounterShipSeizedEvent>(OnShipSeized);
         SubscribeLocalEvent<WFSectorResetEvent>(OnSectorReset);
         SubscribeLocalEvent<WFSectorRetakeAttemptEvent>(OnRetakeAttempt);
         SubscribeLocalEvent<WFSectorCellRetakenEvent>(OnRetaken);

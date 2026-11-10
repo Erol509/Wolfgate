@@ -2,3 +2,11 @@
   license: "CC-BY-SA-3.0"
   copyright: "Synthesized for Wolfgate: sub-bass heartbeat over a swelling drone"
   source: "https://github.com/VanguardControl/Wolfgate"
+- files: ["tacet_burst.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "citadel_end_explosion1, supplied by the Wolfgate team; original source to confirm"
+  source: "https://github.com/VanguardControl/Wolfgate"
+- files: ["tacet_spleen.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Spleen, supplied by the Wolfgate team"
+  source: "https://github.com/VanguardControl/Wolfgate"

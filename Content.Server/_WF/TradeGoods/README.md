@@ -44,7 +44,11 @@ researched ship ammo, fission fuel becomes reactor fuel for uranium fuel rods, m
 medipens, ship components become ship parts for ship vouchers and weapon parts become gun parts for turrets. A crate is 10000
 of its material and is used up going in. A lathe only takes one it has a recipe for, researched or not. Roundstart ship ammo
 stays free so a new crew never has to buy crates to fire. These materials cost nothing, since the crate carries the value, and
-have no stack, so they can't be taken back out. `CrateMaterialTest` covers this.
+have no stack, so they can't be taken back out. A lathe names each by the crate it comes from. `CrateMaterialTest` covers this.
+
+The two kinds of cargo depot sell different goods (medical supplies only at the alt depot), so
+`PointOfInterestSystem.GenerateDepots` spawns one of each before any repeats, counting a planet hub as the standard
+kind (`DepotKindsTest`).
 
 Players fill shelves too. Every crate a chute takes goes on the station's shelf. Once a good is scarce, the station's chutes take it
 even if they don't list it, at the best rate any open chute lists, and rush and bulk orders go to the station furthest under target
@@ -199,6 +203,7 @@ still well over the roughly 260 in materials it costs to print.
 ### Integration tests
 
 - [`Content.IntegrationTests/Tests/_WF/TradeGoods/CrateMaterialTest.cs`](../../../Content.IntegrationTests/Tests/_WF/TradeGoods/CrateMaterialTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/TradeGoods/DepotKindsTest.cs`](../../../Content.IntegrationTests/Tests/_WF/TradeGoods/DepotKindsTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/TradeGoods/EconomyLedgerTest.cs`](../../../Content.IntegrationTests/Tests/_WF/TradeGoods/EconomyLedgerTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/TradeGoods/MarketAppTest.cs`](../../../Content.IntegrationTests/Tests/_WF/TradeGoods/MarketAppTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/TradeGoods/MarketBestSaleTest.cs`](../../../Content.IntegrationTests/Tests/_WF/TradeGoods/MarketBestSaleTest.cs)
@@ -252,7 +257,11 @@ still well over the roughly 260 in materials it costs to print.
   - chutes also take consignments they don't list
   - say the chute doesn't buy it instead of only buzzing
   - pay the live quote, print live prices
-- [`Content.Server/_NF/GameRule/PointOfInterestSystem.cs`](../../_NF/GameRule/PointOfInterestSystem.cs): stations take their economy role from their POI
+- [`Content.Server/_NF/GameRule/PointOfInterestSystem.cs`](../../_NF/GameRule/PointOfInterestSystem.cs)
+  - the depot kinds not spawned yet this round
+  - a planet hub is a standard depot, so the space slots owe the other kind
+  - every kind of depot spawns once before any repeats, as each sells goods the other doesn't
+  - stations take their economy role from their POI
 - [`Content.Server/Cargo/Systems/CargoSystem.Shuttle.cs`](../../Cargo/Systems/CargoSystem.Shuttle.cs): materials pay what the station's stock makes them worth
 - [`Content.Server/VendingMachines/VendingMachineSystem.cs`](../../VendingMachines/VendingMachineSystem.cs): trade vendors charge the station's live price
 - [`Resources/Locale/en-US/paper/paper-misc.ftl`](../../../Resources/Locale/en-US/paper/paper-misc.ftl)

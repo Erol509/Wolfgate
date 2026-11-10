@@ -15,9 +15,9 @@ public sealed partial class WFReaverCampaignSystem
             args.Friendly = true;
     }
 
-    /// <summary>Whether a grid is a ship of a campaign encounter.</summary>
+    /// <summary>Whether a grid is a ship of a campaign encounter still in its crew's hands.</summary>
     private bool IsCampaignShip(EntityUid grid)
     {
-        return TryComp<WFEncounterGridComponent>(grid, out var marker) && IsCampaignEncounter(marker.Encounter);
+        return NpcHull(grid) && TryComp<WFEncounterGridComponent>(grid, out var marker) && IsCampaignEncounter(marker.Encounter);
     }
 }

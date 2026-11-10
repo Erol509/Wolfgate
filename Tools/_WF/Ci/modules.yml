@@ -16,6 +16,9 @@ external:
 # Edits outside _WF that can't hold a WOLFGATE marker: JSON, images, audio, rich-text .txt and map files.
 # Each entry has a path (a file, a folder or a glob), the module it serves (null for a standalone edit) and a reason.
 unmarked:
+  - path: Resources/Textures/_Floof/Mobs/Customization/skyrattails.rsi/
+    module: null
+    reason: The leopard wag's front layers hold the fourth frame as long as the back layers, so the halves stay in step.
   - path: Resources/Maps/_Mono/POI/pdvhelios.yml
     module: Lattice
     reason: Mapped a station anchor beside an APC so Helios stays anchored space past the Lattice's hold.
@@ -357,10 +360,13 @@ unmarked:
     reason: TSF faction contract boards with pickup pads in the arrival hall, by both west public docks and the navy dock hall.
   - path: Resources/Maps/_Mono/POI/camelot.yml
     module: Contracts
-    reason: USSP faction contract boards with pickup pads off the warp corridor and by the north-west and south-west docks.
+    reason: USSP contract boards with pickup pads off the warp corridor and by the north-west and south-west docks, and the Viper Group board in their office hall.
   - path: Resources/Maps/_Mono/POI/pdvhelios.yml
     module: Contracts
     reason: PDV faction contract boards with pickup pads in the civilian arm by the west docks and in the cargo bay.
+  - path: Resources/Maps/_Mono/POI/tsfmc_industry.yml
+    module: Contracts
+    reason: The settlers' council contract board and pickup pad in the east hall, by the market and cargo consoles.
   - path: Resources/Maps/_Mono/POI/underground.yml
     module: LockableButtons
     reason: The two blast door buttons take Underground access; the station's crew has no Pirate access.

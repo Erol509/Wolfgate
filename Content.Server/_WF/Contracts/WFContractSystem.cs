@@ -8,7 +8,6 @@ using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
-using Content.Server.Storage.EntitySystems;
 using Content.Shared._Mono.Company;
 using Content.Shared._WF.Contracts;
 using Content.Shared.Chat;
@@ -21,6 +20,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -49,7 +49,11 @@ public sealed partial class WFContractSystem : EntitySystem
     [Dependency] private MapLoaderSystem _mapLoader = default!;
     [Dependency] private WFEncounterSystem _encounters = default!;
     [Dependency] private WFCrewObjectiveSystem _crewObjectives = default!;
-    [Dependency] private EntityStorageSystem _entityStorage = default!;
+    [Dependency] private Content.Server.Materials.MaterialStorageSystem _materials = default!;
+    [Dependency] private Content.Server._WF.Companies.WFCompanySystem _companies = default!;
+
+    /// <summary>What a faction station keeps delivered goods its silo won't take in.</summary>
+    private static readonly EntProtoId ReceivingCrate = "WFContractReceivingCrate";
 
     /// <summary>Standing points needed for each rank, lowest first: Hostile, Distrusted, Applicant and up.</summary>
     public static readonly int[] RankThresholds = [int.MinValue, -5, 0, 1, 3, 6, 10];
@@ -101,6 +105,7 @@ public sealed partial class WFContractSystem : EntitySystem
         _contracts.Clear();
         _standing.Clear();
         _loaded.Clear();
+        _loading.Clear();
         _generation++;
         _owed.Clear();
         _history.Clear();
@@ -315,7 +320,7 @@ public sealed partial class WFContractSystem : EntitySystem
         return true;
     }
 
-    /// <summary>Splits the pay, grown by any crew bonus, among the crew; returns the deposit and credits to the holder; moves standing.</summary>
+    /// <summary>Splits the pay, grown by any crew bonus, among the crew less each member's company cut; returns the deposit and credits to the holder; moves standing.</summary>
     private void Complete(WFContract contract)
     {
         if (contract.Status != WFContractStatus.Active || contract.User is not { } user)
@@ -323,8 +328,9 @@ public sealed partial class WFContractSystem : EntitySystem
 
         var holder = new WFContractHolder(user, contract.Character);
         var proto = _proto.Index(contract.Prototype);
-        // Read before End clears the contract's items.
+        // Read before End clears the contract's items and gives its site back.
         contract.Reward += ArtifactBonus(contract);
+        var site = (contract.PlanetGround, contract.PlanetWorld, contract.PlanetSite);
         End(contract, WFContractStatus.Completed);
 
         var crew = PaidCrew(holder);
@@ -333,8 +339,19 @@ public sealed partial class WFContractSystem : EntitySystem
         var remainder = pool - share * crew.Count;
         foreach (var member in crew)
         {
-            var pay = share + (member == holder ? remainder + contract.Deposit : 0);
+            var earned = share + (member == holder ? remainder : 0);
+            var cut = CompanyCut(member, earned);
+            var pay = earned - cut + (member == holder ? contract.Deposit : 0);
             var paid = Pay(member, pay);
+            if (paid)
+                _companies.PayCut(SessionOf(member), cut, "contract");
+            else if (cut > 0)
+            {
+                // Owed pay is held whole; the company only takes from pay that lands.
+                _owed[member] += cut;
+                pay += cut;
+                cut = 0;
+            }
             AddStanding(member, proto.Contractor, proto.Tier >= 3 ? 2 : 1);
             foreach (var (rival, cost) in proto.Harms)
             {
@@ -342,13 +359,13 @@ public sealed partial class WFContractSystem : EntitySystem
             }
 
             Tell(member, Loc.GetString(paid ? "wf-contract-completed" : "wf-contract-completed-owed",
-                ("title", Title(contract)), ("pay", pay), ("crew", crew.Count)));
+                ("title", Title(contract)), ("pay", pay), ("crew", crew.Count), ("cut", cut)));
         }
 
         if (proto.Credits > 0 && proto.CreditEntity is { } credits && MobOf(holder) is { } mob)
             GiveCredits(mob, credits, proto.Credits);
 
-        PostFollowUp(holder, proto);
+        PostFollowUp(holder, proto, site);
 
         _adminLog.Add(LogType.Action, LogImpact.Low,
             $"Contract #{contract.Id} {contract.Prototype} completed by {holder.Character} ({user}): {pool} split {crew.Count} ways, deposit {contract.Deposit} returned");
@@ -415,6 +432,17 @@ public sealed partial class WFContractSystem : EntitySystem
         return false;
     }
 
+    /// <summary>The holder's company's share of contract earnings; 0 unless they are playing that character now.</summary>
+    private int CompanyCut(WFContractHolder holder, int earned)
+    {
+        return MobOf(holder) is null ? 0 : _companies.CutFor(SessionOf(holder), earned);
+    }
+
+    private ICommonSession? SessionOf(WFContractHolder holder)
+    {
+        return _players.TryGetSessionById(holder.User, out var session) ? session : null;
+    }
+
     /// <summary>Pays what a holder is owed, if they can be paid now.</summary>
     private void PayOwed(WFContractHolder holder)
     {
@@ -459,7 +487,10 @@ public sealed partial class WFContractSystem : EntitySystem
 
             // A follow-up never held a board slot, so its expiry doesn't hold the contractor back.
             if (contract.ReservedFor != null)
+            {
+                ReleaseHeld(contract);
                 _contracts.Remove(contract.Id);
+            }
             else
                 RemoveOffer(contract);
         }

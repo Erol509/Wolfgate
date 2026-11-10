@@ -24,6 +24,9 @@ Contributions are welcome. Wolfgate-specific code lives in `_WF` folders, and ed
 We are not accepting translations on this repository.
 <!-- WOLFGATE END -->
 
+<!-- WOLFGATE(Contributing): link the AI content policy -->
+AI use in contributions is covered by the [AI-generated content policy](Docs/_WF/Contributing/AI_POLICY.md).
+
 ## Building
 
 <!-- WOLFGATE START: reworded for Wolfgate build differences -->

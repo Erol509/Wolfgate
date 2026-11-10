@@ -277,12 +277,13 @@ wf-lattice-hex-turned-back = The hex field throws the Scion back. Nothing of the
 wf-lattice-hex-ftl-refused = The FTL drive won't lock on. Something aboard can't be taken inside the hex field.
 
 wf-lattice-unstring-title = The Unstringing
-wf-lattice-unstring = The last reality anchor has fallen. The Lattice is gone. Nothing holds anywhere in the sector now, not a relay, not a station's own anchor. FTL drives are dead. Survive.
-wf-lattice-unstring-chip = The last anchor has fallen. The Coda is everywhere.
+wf-lattice-unstring = The last reality anchor has fallen. The Lattice is gone. Every relay and station anchor is letting go with it. The Coda is closing in from the edge, and FTL dies wherever it reaches. Get to the centre. Survive.
+wf-lattice-unstring-chip = The last anchor has fallen. The Coda is closing in.
 
 wf-lattice-tacet-title = Tacet
 wf-lattice-tacet = Kyphrus has collapsed in on itself. The light it bent is gone, and every light in the sector went with it.
 wf-lattice-tacet-chip = Kyphrus has imploded. The lights are going out.
+wf-lattice-tacet-wave = A wall of force tears through the hull!
 
 wf-lattice-central-lost-title = Central anchor lost
 wf-lattice-central-lost = Caelestinus Central's anchor has been destroyed. Nothing keeps the growth off the station now.

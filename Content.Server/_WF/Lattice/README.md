@@ -183,8 +183,11 @@ anchors (`WFLatticeStationAnchor`) don't need fuel.
 
 **Kyphrus.** The black hole shader takes `unmooring` (0 to 1) from `WFLatticeViewSystem.Unmooring`: the share of
 primary anchors lost, or at least 0.6 (rising with depth) while the viewer is in the Coda. It strengthens the lensing,
-makes the disk's turning skip, leans its colour from orange to violet, adds a counter-turning ghost image of the disk
-and tears the edge of the shadow (`black_hole.swsl`, set in `StarOverlay.BlackHole.cs`).
+makes the disk's turning skip, leans its colour from orange to violet and adds a counter-turning ghost image of the disk.
+From the first anchor lost it also twists space into a spiral, splits the bent light red from blue and fires precessing
+jets from the poles, growing with each loss. Past half lost, crimson veins pump in the haze to a heartbeat, the disk
+tears into streamers, the shadow swells and reaches out in tendrils, the photon ring stutters and an eye opens inside
+the shadow and watches the viewer (`black_hole.swsl`, set in `StarOverlay.BlackHole.cs`).
 
 **The Choir.** A player at 80 Drift or more is offered the song once a round (`WFChoirSystem`): a popup, a line in chat
 and an "Answer the song" action for five minutes. Using it is the only way in: two confirmation dialogs spell out the
@@ -240,13 +243,22 @@ where broken, Central's anchor at the heart, flesh ships circling as red motes, 
 hex, Central's anchor, flesh ships, the viewer's band (garbled where the band garbles) and each anchor by name. It reads
 only the networked field (`Hex`, `HexUp`, `HexAlive`, `HexNames`, `CentralStanding`, `FleshShips`, `Unstrung`, `Tacet`).
 
-**Fading.** A lost anchor's hold doesn't vanish: it fades where it stood over `wf.lattice.anchor_fade` (20 minutes), so
+**Fading.** A lost anchor's hold doesn't vanish: it fades where it stood over `wf.lattice.anchor_fade` (1,000 s, about 17 minutes), so
 the bands creep inward instead of jumping.
 
-**The end** (`WFLatticeSystem.Endgame.cs`). When the last primary anchor falls, the Unstringing: every relay and station
-anchor lets go too, all fading the same way, so over 20 minutes the Coda, its hazards, its rot and its dead FTL engulf the
-whole sector. Some 15 to 30 minutes after it has fully set in comes Tacet: Kyphrus implodes, every bulb in the sector bursts and new ones keep failing (a quarter every 30 s),
-and clients stop drawing the black hole. `WFLatticeEndgameCVars` (`wf.lattice.tacet*`) tune it. Admins use
+**The end** (`WFLatticeSystem.Endgame.cs`, `WFLatticeSystem.Implosion.cs`). When the last primary anchor falls, the
+Unstringing: every station anchor lets go too, all fading the same way, so over about 17 minutes the Coda, its hazards,
+its rot and its dead FTL close in from the edge. Mobile relays (player-built, fuelled) keep holding as the last havens,
+but their power draw doubles every `wf.lattice.haven_load_doubling` (10 minutes) for as long as they stand, and bulbs
+aboard them don't fail. Some 15 to 30 minutes after the Coda has the whole sector comes Tacet, timed by
+`WFLatticeImplosion` so clients draw what the server does: Kyphrus swells to four times its size for 18 s while
+"Spleen" plays, falls in to a point, the whole view goes black for 6 s while the charge builds, then it bursts in a
+blinding flash. Four shockwaves leave the centre 6 s apart at 600 m/s and run out past the farthest grid: each one bursts
+bulbs it passes (`tacet_wave_bulb_chance`, 55%), throws ships outward and spins them (`tacet_wave_shove`,
+`tacet_wave_spin`), knocks their crews flat and throws anyone adrift. After the last wave the bulbs keep failing (a
+quarter every 30 s), the sky goes nearly black with only a few faint stars (`WFLatticeSkyOverlay`), and the leviathan
+comes three times as often (`tacet_leviathan_scale`). Client: `WFTacetOverlay` (blackout and flash),
+`WFTacetWaveOverlay` (`tacet_shockwave.swsl`). `WFLatticeEndgameCVars` (`wf.lattice.tacet*`) tune it. Admins use
 `wflattice siege|unstring|tacet`.
 
 **Admins.** Spawn `WFLatticeAnchorRelayMarker` (0.4 strength) to push the field out, or delete a primary anchor to
@@ -286,6 +298,7 @@ open a breach. A carrier's band and Drift are on its `WFDriftComponent` in VV.
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.Felt.cs`](WFLatticeSystem.Felt.cs)
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.Ftl.cs`](WFLatticeSystem.Ftl.cs)
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.Hex.cs`](WFLatticeSystem.Hex.cs)
+- [`Content.Server/_WF/Lattice/WFLatticeSystem.Implosion.cs`](WFLatticeSystem.Implosion.cs)
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.LostShips.cs`](WFLatticeSystem.LostShips.cs)
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.RelayFuel.cs`](WFLatticeSystem.RelayFuel.cs)
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.Stations.cs`](WFLatticeSystem.Stations.cs)
@@ -304,6 +317,7 @@ open a breach. A carrier's band and Drift are on its `WFDriftComponent` in VV.
 - [`Content.Shared/_WF/Lattice/WFLatticeFieldComponent.cs`](../../../Content.Shared/_WF/Lattice/WFLatticeFieldComponent.cs)
 - [`Content.Shared/_WF/Lattice/WFLatticeHallucination.cs`](../../../Content.Shared/_WF/Lattice/WFLatticeHallucination.cs)
 - [`Content.Shared/_WF/Lattice/WFLatticeHex.cs`](../../../Content.Shared/_WF/Lattice/WFLatticeHex.cs)
+- [`Content.Shared/_WF/Lattice/WFLatticeImplosion.cs`](../../../Content.Shared/_WF/Lattice/WFLatticeImplosion.cs)
 - [`Content.Shared/_WF/Lattice/WFLatticeMath.cs`](../../../Content.Shared/_WF/Lattice/WFLatticeMath.cs)
 - [`Content.Shared/_WF/Lattice/WFLatticeProfilePrototype.cs`](../../../Content.Shared/_WF/Lattice/WFLatticeProfilePrototype.cs)
 - [`Content.Shared/_WF/Lattice/WFLatticeShelterComponent.cs`](../../../Content.Shared/_WF/Lattice/WFLatticeShelterComponent.cs)
@@ -329,6 +343,8 @@ open a breach. A carrier's band and Drift are on its `WFDriftComponent` in VV.
 - [`Content.Client/_WF/Lattice/WFLatticeStatusUi.cs`](../../../Content.Client/_WF/Lattice/WFLatticeStatusUi.cs)
 - [`Content.Client/_WF/Lattice/WFLatticeViewSystem.cs`](../../../Content.Client/_WF/Lattice/WFLatticeViewSystem.cs)
 - [`Content.Client/_WF/Lattice/WFLeviathanSystem.cs`](../../../Content.Client/_WF/Lattice/WFLeviathanSystem.cs)
+- [`Content.Client/_WF/Lattice/WFTacetOverlay.cs`](../../../Content.Client/_WF/Lattice/WFTacetOverlay.cs)
+- [`Content.Client/_WF/Lattice/WFTacetWaveOverlay.cs`](../../../Content.Client/_WF/Lattice/WFTacetWaveOverlay.cs)
 
 ### Integration tests
 
@@ -349,6 +365,7 @@ open a breach. A carrier's band and Drift are on its `WFDriftComponent` in VV.
 
 ### Unit tests
 
+- [`Content.Tests/_WF/Lattice/WFLatticeImplosionTest.cs`](../../../Content.Tests/_WF/Lattice/WFLatticeImplosionTest.cs)
 - [`Content.Tests/_WF/Lattice/WFLatticeMathTest.cs`](../../../Content.Tests/_WF/Lattice/WFLatticeMathTest.cs)
 
 ### Prototypes
@@ -377,11 +394,14 @@ open a breach. A carrier's band and Drift are on its `WFDriftComponent` in VV.
 - [`Resources/Textures/_WF/Lattice/Shaders/drift_pulse.swsl`](../../../Resources/Textures/_WF/Lattice/Shaders/drift_pulse.swsl)
 - [`Resources/Textures/_WF/Lattice/Shaders/lattice_beam.swsl`](../../../Resources/Textures/_WF/Lattice/Shaders/lattice_beam.swsl)
 - [`Resources/Textures/_WF/Lattice/Shaders/lattice_sky.swsl`](../../../Resources/Textures/_WF/Lattice/Shaders/lattice_sky.swsl)
+- [`Resources/Textures/_WF/Lattice/Shaders/tacet_shockwave.swsl`](../../../Resources/Textures/_WF/Lattice/Shaders/tacet_shockwave.swsl)
 
 ### Audio
 
 - [`Resources/Audio/_WF/Lattice/attributions.yml`](../../../Resources/Audio/_WF/Lattice/attributions.yml)
 - [`Resources/Audio/_WF/Lattice/drift_pulse.ogg`](../../../Resources/Audio/_WF/Lattice/drift_pulse.ogg)
+- [`Resources/Audio/_WF/Lattice/tacet_burst.ogg`](../../../Resources/Audio/_WF/Lattice/tacet_burst.ogg)
+- [`Resources/Audio/_WF/Lattice/tacet_spleen.ogg`](../../../Resources/Audio/_WF/Lattice/tacet_spleen.ogg)
 
 ### Maps
 
