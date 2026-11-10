@@ -276,3 +276,9 @@
 
   - node: praetorian
     entity: ClothingModsuitPraetorian
+
+  - node: rogue
+    entity: ClothingModsuitRogue
+
+  - node: mercenary
+    entity: ClothingModsuitMercenary
