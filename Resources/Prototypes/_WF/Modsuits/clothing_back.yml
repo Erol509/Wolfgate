@@ -77,6 +77,10 @@
   id: ClothingModsuitStandardPowerCell
   suffix: High-Capacity Battery
   components:
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
   - type: ItemSlots
     slots:
       mod-core:
@@ -116,6 +120,10 @@
   id: ClothingModsuitSecurityPowerCell
   suffix: High-Capacity Battery
   components:
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
   - type: ItemSlots
     slots:
       mod-core:
@@ -166,6 +174,10 @@
   id: ClothingModsuitHeadOfSecurityPowerCell
   suffix: High-Capacity Battery
   components:
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
   - type: ItemSlots
     slots:
       mod-core:
@@ -205,6 +217,10 @@
   id: ClothingModsuitParamedicPowerCell
   suffix: High-Capacity Battery
   components:
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
   - type: ItemSlots
     slots:
       mod-core:
@@ -250,6 +266,8 @@
   components:
   - type: ModSuit
     startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
     - ModsuitModuleWelding
   - type: ItemSlots
     slots:
@@ -296,6 +314,8 @@
   components:
   - type: ModSuit
     startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
     - ModsuitModuleWelding
   - type: ItemSlots
     slots:
@@ -343,6 +363,10 @@
   id: ClothingModsuitResearchDirectorPowerCell
   suffix: High-Capacity Battery
   components:
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
   - type: ItemSlots
     slots:
       mod-core:
@@ -386,6 +410,10 @@
   id: ClothingModsuitCaptainPowerCell
   suffix: High-Capacity Battery
   components:
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
   - type: ItemSlots
     slots:
       mod-core:
@@ -425,6 +453,10 @@
   id: ClothingModsuitBrigMedPowerCell
   suffix: High-Capacity Battery
   components:
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
   - type: ItemSlots
     slots:
       mod-core:

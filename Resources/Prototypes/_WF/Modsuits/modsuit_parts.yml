@@ -399,6 +399,9 @@
       bodypart: !type:Container
         ents: []
       cell_slot: !type:ContainerSlot
+  - type: StaticPrice
+    price: 250
+    vendPrice: 750
 
 - type: entity
   parent: ModsuitCoreStandard
@@ -462,6 +465,7 @@
       Uranium: 25
   - type: StaticPrice
     price: 150
+    vendPrice: 1500
 
 - type: entity
   parent: PartModsuit
@@ -523,6 +527,7 @@
       Glass: 25
   - type: StaticPrice
     price: 75
+    vendPrice: 500
 
 - type: entity
   parent: PartModsuit

@@ -27,6 +27,12 @@
   id: ClothingModsuitUSSPVaryagPowerCell
   suffix: High-Capacity Battery
   components:
+  # WOLFGATE(Modsuits) START: premade suits come with basic modules, crafted ones come empty
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
+  # WOLFGATE END
   # WOLFGATE(Modsuits) START: a MOD core replaces the power cell
   # - type: ItemSlots
   #   slots:
@@ -75,6 +81,12 @@
   id: ClothingModsuitUSSPZastavnikPowerCell
   suffix: High-Capacity Battery
   components:
+  # WOLFGATE(Modsuits) START: premade suits come with basic modules, crafted ones come empty
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
+  # WOLFGATE END
   # WOLFGATE(Modsuits) START: a MOD core replaces the power cell
   # - type: ItemSlots
   #   slots:
@@ -133,6 +145,12 @@
   id: ClothingModsuitRoguePowerCell
   suffix: High-Capacity Battery
   components:
+  # WOLFGATE(Modsuits) START: premade suits come with basic modules, crafted ones come empty
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
+  # WOLFGATE END
   # WOLFGATE(Modsuits) START: a MOD core replaces the power cell
   # - type: ItemSlots
   #   slots:
@@ -205,6 +223,12 @@
   id: ClothingModsuitVoltaPowerCell
   suffix: High-Capacity Battery
   components:
+  # WOLFGATE(Modsuits) START: premade suits come with basic modules, crafted ones come empty
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
+  # WOLFGATE END
   # WOLFGATE(Modsuits) START: a MOD core replaces the power cell
   # - type: ItemSlots
   #   slots:
@@ -278,6 +302,12 @@
   id: ClothingModsuitMercenaryPowerCell
   suffix: High-Capacity Battery
   components:
+  # WOLFGATE(Modsuits) START: premade suits come with basic modules, crafted ones come empty
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
+  # WOLFGATE END
   # WOLFGATE(Modsuits) START: a MOD core replaces the power cell
   # - type: ItemSlots
   #   slots:

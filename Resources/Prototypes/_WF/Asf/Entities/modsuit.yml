@@ -29,6 +29,10 @@
   id: WFAsfClothingModsuitFieldPowerCell
   suffix: High-Capacity Battery
   components:
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
   # WOLFGATE(Modsuits): a MOD core replaces the power cell
   - type: ItemSlots
     slots:
@@ -170,6 +174,10 @@
   id: WFAsfClothingModsuitAegisPowerCell
   suffix: High-Capacity Battery
   components:
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
   # WOLFGATE(Modsuits): a MOD core replaces the power cell
   - type: ItemSlots
     slots:

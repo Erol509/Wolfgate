@@ -126,6 +126,10 @@
   parent: ADTClothingModsuitBackClown
   id: ADTClothingModsuitBackClownPowerCell
   components:
+  - type: ModSuit
+    startingModules:
+    - ModsuitModuleFlashlight
+    - ModsuitModuleStorageCompact
   - type: ItemSlots
     slots:
       mod-core:

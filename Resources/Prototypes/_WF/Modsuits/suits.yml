@@ -15,6 +15,7 @@
         outerClothing: ClothingModsuitChestplateContractor
         shoes: ClothingModsuitBootsContractor
       startingModules:
+      - ModsuitModuleStorageCompact
       - ModsuitModuleFlashlight
       - ModsuitModuleMagboots
       inbuiltModules:
