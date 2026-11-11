@@ -1,3 +1,4 @@
+# WOLFGATE(Modsuits) START: MODsuit tags moved to _WF/Modsuits.
 - type: Tag
   id: Magazine762x39mmSubsonic
 
@@ -180,3 +181,4 @@
 
 - type: Tag
   id: CD
+# WOLFGATE END

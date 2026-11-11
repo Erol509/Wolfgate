@@ -1,4 +1,5 @@
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitGauntletsStandard
   id: ClothingModsuitGauntletsUSSPVaryag
   name: Ruki Varyaga
@@ -25,6 +26,7 @@
   # WOLFGATE END
 
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitGauntletsStandard
   id: ClothingModsuitGauntletsUSSPZastavnik
   name: Kuvshiny Zastavnika
@@ -51,6 +53,7 @@
   # WOLFGATE END
 
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitGauntletsStandard
   id: ClothingModsuitGauntletsRogue
   name: RX-01 modsuit gauntlets
@@ -79,6 +82,7 @@
 # Volta
 # Uses exact same gloves as sapper ones, feel free to make them more unique
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitGauntletsStandard
   id: ClothingModsuitGauntletsVolta
   name: Volta Modsuit Gauntlets
@@ -105,6 +109,7 @@
   # WOLFGATE END
 # Gallóglach
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitGauntletsStandard
   id: ClothingModsuitGauntletsMercenary
   name: mercenary modsuit gauntlets

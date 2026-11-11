@@ -1,4 +1,5 @@
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitChestplateStandard
   id: ClothingModsuitChestplateUSSPVaryag
   name: Panzerkorps Varyag
@@ -34,6 +35,7 @@
     reduction: 0.7
 
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitChestplateStandard
   id: ClothingModsuitChestplateUSSPZastavnik
   name: Brust Zastavnika
@@ -68,6 +70,7 @@
     reduction: 0.5
 
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: [ ClothingModsuitChestplateStandard, BaseFactionGearPDVT3 ]
   id: ClothingModsuitChestplateRogue
   name: RX-01 modsuit chestplate
@@ -104,6 +107,7 @@
 # Volta
 
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitChestplateStandard
   id: ClothingModsuitChestplateVolta
   name: Volta Modsuit Chestplate
@@ -162,6 +166,7 @@
 # Gallóglach
 
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitChestplateStandard
   id: ClothingModsuitChestplateMercenary
   name: mercenary modsuit chestplate

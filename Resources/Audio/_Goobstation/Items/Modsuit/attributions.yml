@@ -1,3 +1,4 @@
+# WOLFGATE(Modsuits): MODsuit module sounds ported from GoobStation.
 - files: ["ballin.ogg", "ballout.ogg", "sonic_jackhammer.ogg", "loader_charge.ogg", "loader_launch.ogg", "gravhit.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation at commit 5ee81d6, converted to mono"

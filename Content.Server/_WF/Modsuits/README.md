@@ -176,21 +176,50 @@ adapted to this codebase's status effect, solution and standing systems.
 - [`Content.Shared/Clothing/EntitySystems/SharedChameleonClothingSystem.cs`](../../../Content.Shared/Clothing/EntitySystems/SharedChameleonClothingSystem.cs): MOD chameleon modules drive the disguise from shared code
 - [`Content.Shared/Cuffs/SharedCuffableSystem.cs`](../../../Content.Shared/Cuffs/SharedCuffableSystem.cs): restraint-assist modules shorten the cuff do-after.
 - [`Content.Shared/Stunnable/SharedStunSystem.cs`](../../../Content.Shared/Stunnable/SharedStunSystem.cs): rolling MOD spheres shrug off knockdowns
+- [`Resources/Audio/_Goobstation/Items/Modsuit/attributions.yml`](../../../Resources/Audio/_Goobstation/Items/Modsuit/attributions.yml): MODsuit module sounds ported from GoobStation.
+- [`Resources/Audio/_Goobstation/Items/Modsuit/ballin.ogg`](../../../Resources/Audio/_Goobstation/Items/Modsuit/ballin.ogg): MODsuit module sounds ported from GoobStation.
+- [`Resources/Audio/_Goobstation/Items/Modsuit/ballout.ogg`](../../../Resources/Audio/_Goobstation/Items/Modsuit/ballout.ogg): MODsuit module sounds ported from GoobStation.
+- [`Resources/Audio/_Goobstation/Items/Modsuit/gravhit.ogg`](../../../Resources/Audio/_Goobstation/Items/Modsuit/gravhit.ogg): MODsuit module sounds ported from GoobStation.
+- [`Resources/Audio/_Goobstation/Items/Modsuit/loader_charge.ogg`](../../../Resources/Audio/_Goobstation/Items/Modsuit/loader_charge.ogg): MODsuit module sounds ported from GoobStation.
+- [`Resources/Audio/_Goobstation/Items/Modsuit/loader_launch.ogg`](../../../Resources/Audio/_Goobstation/Items/Modsuit/loader_launch.ogg): MODsuit module sounds ported from GoobStation.
+- [`Resources/Audio/_Goobstation/Items/Modsuit/rolling_ball_loop.ogg`](../../../Resources/Audio/_Goobstation/Items/Modsuit/rolling_ball_loop.ogg): MODsuit module sounds ported from GoobStation.
+- [`Resources/Audio/_Goobstation/Items/Modsuit/sonic_jackhammer.ogg`](../../../Resources/Audio/_Goobstation/Items/Modsuit/sonic_jackhammer.ogg): MODsuit module sounds ported from GoobStation.
+- [`Resources/Audio/_Goobstation/Machines/ErrorBeep2.wav`](../../../Resources/Audio/_Goobstation/Machines/ErrorBeep2.wav): MODsuit module sounds ported from GoobStation.
+- [`Resources/Audio/_Goobstation/Machines/MaxTempAlertCut.wav`](../../../Resources/Audio/_Goobstation/Machines/MaxTempAlertCut.wav): MODsuit module sounds ported from GoobStation.
 - [`Resources/Prototypes/_Goobstation/Recipes/Lathes/robotics.yml`](../../../Resources/Prototypes/_Goobstation/Recipes/Lathes/robotics.yml): MODsuit recipes moved to _WF/Modsuits.
+- [`Resources/Prototypes/_Goobstation/tags.yml`](../../../Resources/Prototypes/_Goobstation/tags.yml): MODsuit tags moved to _WF/Modsuits.
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Back/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Back/modsuit.yml)
   - the native module system owns the suit parts
   - premade suits come with basic modules, crafted ones come empty
   - a MOD core replaces the power cell
   - the native module system sets its own sealed appearance
-- [`Resources/Prototypes/_Mono/Entities/Clothing/Hands/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Hands/modsuit.yml): the native module system sets its own sealed appearance
+- [`Resources/Prototypes/_Mono/Entities/Clothing/Hands/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Hands/modsuit.yml)
+  - MODsuit parts use the native module system.
+  - the native module system sets its own sealed appearance
 - [`Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml)
+  - MODsuit parts use the native module system.
   - the native module system sets its own sealed appearance
   - the rsi has no resomi state, so sealed Resomi drew an error sprite
-- [`Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml): the native module system sets its own sealed appearance
+- [`Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml)
+  - MODsuit parts use the native module system.
+  - the native module system sets its own sealed appearance
 - [`Resources/Prototypes/_NF/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Machines/lathe.yml): departmental MOD module recipes
 - [`Resources/Prototypes/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/lathe.yml)
   - module recipes
   - departmental MOD module recipes
 - [`Resources/Textures/_EinsteinEngines/Clothing/NanoTrasen/Modsuits/`](../../../Resources/Textures/_EinsteinEngines/Clothing/NanoTrasen/Modsuits/): Einstein Engines emergency-response MODsuit sprites, ported from GoobStation along with their meta.json files.
+- [`Resources/Textures/_Goobstation/Clothing/Back/Modsuits/brigmed.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/Back/Modsuits/brigmed.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/Hands/Modsuits/brigmed.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/Hands/Modsuits/brigmed.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/Head/Modsuits/brigmed.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/Head/Modsuits/brigmed.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/brigmed.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/brigmed.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/contractor.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/contractor.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/corporate.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/corporate.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/elite.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/elite.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/loader.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/loader.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/mining.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/mining.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/nct.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/nct.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/syndicate.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/OuterClothing/Modsuits/syndicate.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Clothing/Shoes/Modsuits/brigmed.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/Shoes/Modsuits/brigmed.rsi/): MODsuit sprites ported from GoobStation.
+- [`Resources/Textures/_Goobstation/Objects/Specific/Robotics/mod_modules.rsi/`](../../../Resources/Textures/_Goobstation/Objects/Specific/Robotics/mod_modules.rsi/): MODsuit sprites ported from GoobStation.
 
 <!-- WOLFGATE-GENERATED END -->

@@ -1,4 +1,5 @@
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsUSSPVaryag
   name: Marshevyye Varyag
@@ -27,6 +28,7 @@
     modifier: 0.75
 
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsUSSPZastavnik
   name: Sapogi Zastavnika
@@ -55,6 +57,7 @@
     modifier: 0.75
 
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsRogue
   name: RX-01 modsuit boots
@@ -87,6 +90,7 @@
 
 # Volta
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsVolta
   name: Volta Modsuit Boots
@@ -120,6 +124,7 @@
 
 # Gallóglach
 - type: entity
+  # WOLFGATE(Modsuits): MODsuit parts use the native module system.
   parent: ClothingModsuitBootsStandard
   id: ClothingModsuitBootsMercenary
   name: mercenary modsuit boots
