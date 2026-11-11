@@ -34,7 +34,9 @@
   cost: 7500
   recipeUnlocks:
   - ModsuitCorePlasma
+  - ModsuitCoreStandardMicroreactor
   - ModsuitModuleStorageLarge
+  - ModsuitModuleStorageBluespace
   - ModsuitModuleWelding
   - ModsuitModuleThermalRegulator
   - ModsuitModuleGps
@@ -151,6 +153,8 @@
   tier: 2
   cost: 10000
   recipeUnlocks:
+  - ModsuitModuleStorageBluespace
+  - ModsuitCoreStandardMicroreactor
   - ModsuitModuleVisorSecurity
   - ModsuitModuleHolster
   - ModsuitModuleMegaphone

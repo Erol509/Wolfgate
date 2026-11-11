@@ -155,7 +155,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
-      Glass: 37
+      Glass: 30
       Plasma: 12
   - type: Tag
     tags:
@@ -175,7 +175,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
-      Glass: 37
+      Glass: 30
       Plasma: 12
   - type: Tag
     tags:
@@ -195,7 +195,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
-      Glass: 37
+      Glass: 30
       Plasma: 12
   - type: Tag
     tags:
@@ -235,7 +235,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
-      Glass: 37
+      Glass: 30
       Plasma: 12
   - type: Tag
     tags:
@@ -315,7 +315,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
-      Glass: 37
+      Glass: 30
       Plasma: 12
   - type: Tag
     tags:
@@ -335,7 +335,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
-      Glass: 37
+      Glass: 30
       Plasma: 12
   - type: Tag
     tags:
