@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Client._WF.Modsuits;
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._WF.Modsuits.Systems;
@@ -64,15 +65,13 @@ public sealed class ModsuitModuleTest
             Assert.That(modSuit.GetCharge(battery!.Value), Is.GreaterThan(0f), "the core cell should start charged");
             var core = modSuit.GetCore((suit, comp));
             Assert.That(core, Is.Not.Null);
-            Assert.That(comp.ModulesContainer.ContainedEntities, Is.Empty, "a fresh suit should ship without modules");
+            Assert.That(comp.ModulesContainer.ContainedEntities, Has.Count.EqualTo(2), "the power-cell suit should ship with its two basic modules");
 
             var panel = entMan.GetComponent<WiresPanelComponent>(suit);
             Assert.That(wires.TogglePanel(suit, panel, true, human));
 
-            Assert.That(modSuit.TryInstallModule((suit, comp), module, human), "a compact storage module should install");
             Assert.That(modSuit.TryInstallModule((suit, comp), module, human), Is.False,
-                "the same storage module should be rejected as a duplicate");
-            Assert.That(modSuit.TryInstallModule((suit, comp), flashlight, human), "a flashlight module should install");
+                "a second storage module should be rejected as a duplicate");
             Assert.That(modSuit.TryInstallModule((suit, comp), flashlight, human), Is.False,
                 "a second flashlight should be rejected as a duplicate");
             Assert.That(modSuit.TryInstallModule((suit, comp), jetpack, human), "a jetpack module should install");
@@ -149,8 +148,8 @@ public sealed class ModsuitModuleTest
             var battery = modSuit.GetBattery((suit, comp));
             Assert.That(battery, Is.Not.Null, "the standard core should ship with a power cell");
             Assert.That(modSuit.GetCharge(battery!.Value), Is.GreaterThan(0f), "the shipped cell should be charged");
-            Assert.That(comp.ModulesContainer.ContainedEntities, Is.Empty,
-                "the suit should ship without modules; characters print and install their own");
+            Assert.That(comp.ModulesContainer.ContainedEntities, Has.Count.EqualTo(2),
+                "the power-cell suit should ship with a flashlight and a compact storage module");
         });
 
         await pair.CleanReturnAsync();
@@ -228,8 +227,8 @@ public sealed class ModsuitModuleTest
             var panel = entMan.GetComponent<WiresPanelComponent>(suit);
             Assert.That(wires.TogglePanel(suit, panel, true, human));
 
-            module = entMan.SpawnEntity("ModsuitModuleStorageCompact", coords);
-            Assert.That(modSuit.TryInstallModule((suit, suitComp), module, human), Is.True);
+            module = suitComp.ModulesContainer.ContainedEntities.First(m =>
+                entMan.GetComponent<MetaDataComponent>(m).EntityPrototype?.ID == "ModsuitModuleStorageCompact");
             Assert.That(entMan.TryGetComponent<StorageComponent>(suit, out var suitStorage), Is.True);
 
             foreach (var proto in new[] { "Wrench", "Screwdriver" })

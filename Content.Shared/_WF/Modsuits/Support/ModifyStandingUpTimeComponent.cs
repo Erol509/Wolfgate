@@ -12,9 +12,17 @@ public sealed partial class ModifyStandingUpTimeComponent : Component
 
 /// <summary>Raised on a body to collect standing-up time modifiers from worn gear.</summary>
 [ByRefEvent]
-public record struct GetStandingUpTimeMultiplierEvent(float Multiplier = 1f) : IInventoryRelayEvent
+public record struct GetStandingUpTimeMultiplierEvent : IInventoryRelayEvent
 {
+    /// <summary>The accumulated multiplier. A fresh event starts at one.</summary>
+    public float Multiplier;
+
     public SlotFlags TargetSlots => SlotFlags.WITHOUT_POCKET;
+
+    public GetStandingUpTimeMultiplierEvent()
+    {
+        Multiplier = 1f;
+    }
 }
 
 public sealed partial class MultiplyStandingUpTimeSystem : EntitySystem

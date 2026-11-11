@@ -261,7 +261,7 @@ namespace Content.Server.Carrying
                         * (_standingState.IsDown(carried) ? 0.5f : 1);
 
             // WOLFGATE(Modsuits) START: the quick-carry module shortens the pickup
-            var carryEv = new ModifyCarryDurationEvent(carried);
+            var carryEv = new ModifyCarryDurationEvent(carried, 1f);
             RaiseLocalEvent(carrier, ref carryEv);
             length *= carryEv.Multiplier;
             // WOLFGATE END

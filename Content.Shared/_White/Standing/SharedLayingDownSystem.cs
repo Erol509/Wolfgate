@@ -143,7 +143,11 @@ public abstract partial class SharedLayingDownSystem : EntitySystem
         if (TryComp<InventoryComponent>(uid, out var inventory))
             _inventory.RelayEvent((uid, inventory), ref standingEv);
 
-        var standTime = layingDown.StandingUpTime * standingEv.Multiplier;
+        var multiplier = standingEv.Multiplier;
+        if (multiplier <= 0f || !float.IsFinite(multiplier))
+            multiplier = 1f;
+
+        var standTime = MathF.Max(0.1f, layingDown.StandingUpTime * multiplier);
         // WOLFGATE END
 
         var args = new DoAfterArgs(EntityManager, uid, standTime, new StandingUpDoAfterEvent(), uid)
