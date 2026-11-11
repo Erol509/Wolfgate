@@ -152,3 +152,4 @@
     containers:
       ballistic-ammo: !type:Container
         ents: []
+      mod-part-stored: !type:ContainerSlot
