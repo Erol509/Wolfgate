@@ -1,0 +1,339 @@
+# State-driven surgical operations. These mirror /tg/station's surgery operation datums; the heavy lifting of
+# each step is still performed by the referenced legacy step prototype.
+
+- type: surgicalOperation
+  id: WFInciseSkin
+  name: wf-surgery-op-incise-skin
+  description: wf-surgery-op-incise-skin-desc
+  rndName: wf-surgery-op-incise-skin
+  surgery: WFSurgeryInciseSkin
+  step: WFSurgeryStepInciseSkin
+  requirePreviousSteps: false
+  time: 1.6
+  blockedStates: [SkinCut, SkinOpen]
+  priority: 0
+  flags: [Organic, NoPatient]
+  tools:
+  - component: Scalpel
+  - quality: Slicing
+    speed: 2.25
+  - anyItem: true
+    requiresSharp: true
+    speed: 3.33
+
+- type: surgicalOperation
+  id: WFRetractSkin
+  name: wf-surgery-op-retract-skin
+  description: wf-surgery-op-retract-skin-desc
+  surgery: WFSurgeryRetractSkin
+  step: WFSurgeryStepRetractSkin
+  requirePreviousSteps: false
+  time: 2.4
+  requiredStates: [SkinCut]
+  blockedStates: [SkinOpen]
+  priority: 1
+  flags: [Organic, NoPatient]
+  tools:
+  - component: Retractor
+  - quality: Prying
+    speed: 2.25
+  - quality: Cutting
+    speed: 2.85
+
+- type: surgicalOperation
+  id: WFClampBleeders
+  name: wf-surgery-op-clamp-bleeders
+  description: wf-surgery-op-clamp-bleeders-desc
+  surgery: WFSurgeryClampBleeders
+  step: WFSurgeryStepClampBleeders
+  requirePreviousSteps: false
+  time: 2.4
+  requiredStates: [SkinOpen, VesselsUnclamped]
+  priority: 2
+  flags: [Organic, NoPatient, PriorityNextStep]
+  tools:
+  - component: Hemostat
+  - quality: Cutting
+    speed: 1.67
+
+- type: surgicalOperation
+  id: WFUnclampBleeders
+  name: wf-surgery-op-unclamp-bleeders
+  description: wf-surgery-op-unclamp-bleeders-desc
+  surgery: WFSurgeryUnclampBleeders
+  step: WFSurgeryStepUnclampBleeders
+  requirePreviousSteps: false
+  time: 2.4
+  requiredStates: [SkinOpen, VesselsClamped]
+  priority: 2
+  flags: [Organic, NoPatient]
+  tools:
+  - component: Hemostat
+  - quality: Cutting
+    speed: 1.67
+
+- type: surgicalOperation
+  id: WFSawBone
+  name: wf-surgery-op-saw-bone
+  description: wf-surgery-op-saw-bone-desc
+  surgery: WFSurgerySawBone
+  step: WFSurgeryStepSawBone
+  requirePreviousSteps: false
+  time: 5.4
+  requiredStates: [SkinOpen]
+  blockedStates: [BoneSawed, BoneDrilled]
+  priority: 3
+  flags: [Organic, NoPatient]
+  tools:
+  - component: BoneSaw
+  - quality: Sawing
+  - anyItem: true
+    requiresSharp: true
+    minForce: 10
+    speed: 4
+
+- type: surgicalOperation
+  id: WFDrillBone
+  name: wf-surgery-op-drill-bone
+  description: wf-surgery-op-drill-bone-desc
+  surgery: WFSurgeryDrillBone
+  step: WFSurgeryStepDrillBone
+  requirePreviousSteps: false
+  time: 3
+  requiredStates: [SkinOpen]
+  blockedStates: [BoneSawed, BoneDrilled]
+  priority: 3
+  flags: [Organic, NoPatient]
+  tools:
+  - component: Drill
+  - quality: Screwing
+    speed: 4
+
+- type: surgicalOperation
+  id: WFInciseOrgans
+  name: wf-surgery-op-incise-organs
+  description: wf-surgery-op-incise-organs-desc
+  surgery: WFSurgeryInciseOrgans
+  step: WFSurgeryStepInciseOrgans
+  requirePreviousSteps: false
+  time: 2.4
+  requiredStates: [SkinOpen]
+  blockedStates: [OrgansCut]
+  priority: 4
+  flags: [Organic, NoPatient]
+  tools:
+  - component: Scalpel
+  - quality: Slicing
+    speed: 1.5
+
+- type: surgicalOperation
+  id: WFOrganManipulation
+  name: wf-surgery-op-organ-manipulation
+  description: wf-surgery-op-organ-manipulation-desc
+  surgery: WFSurgeryOrganManipulation
+  step: SurgeryStepRemoveOrgan
+  requirePreviousSteps: false
+  time: 8
+  requiredStates: [SkinOpen, OrgansCut]
+  priority: 5
+  kind: OrganManipulation
+  flags: [Organic]
+  bonesLockChestOrgans: true
+  tools:
+  - component: Tweezers
+  - component: Organ
+  - component: Hemostat
+    speed: 1.5
+  - quality: Prying
+    speed: 2.85
+
+- type: surgicalOperation
+  id: WFMendSkin
+  name: wf-surgery-op-mend-skin
+  description: wf-surgery-op-mend-skin-desc
+  surgery: WFSurgeryMendSkin
+  step: WFSurgeryStepMendSkin
+  requirePreviousSteps: false
+  time: 2.4
+  anyRequiredStates: [SkinCut, SkinOpen]
+  priority: -1
+  flags: [Organic, NoPatient, PriorityNextStep]
+  tools:
+  - component: Cautery
+  - component: WolfmedSuture
+  - quality: Welding
+    speed: 1.5
+
+- type: surgicalOperation
+  id: WFFixBones
+  name: wf-surgery-op-fix-bones
+  description: wf-surgery-op-fix-bones-desc
+  surgery: WFSurgeryFixBones
+  step: WFSurgeryStepFixBones
+  requirePreviousSteps: false
+  time: 4
+  requiredStates: [SkinOpen]
+  anyRequiredStates: [BoneSawed, BoneDrilled]
+  priority: 6
+  flags: [Organic, NoPatient]
+  tools:
+  - component: BoneGel
+
+- type: surgicalOperation
+  id: WFWidenCavity
+  name: wf-surgery-op-widen-cavity
+  description: wf-surgery-op-widen-cavity-desc
+  surgery: WFSurgeryWidenCavity
+  step: WFSurgeryStepWidenCavity
+  requirePreviousSteps: false
+  time: 4.8
+  requiredStates: [SkinOpen, OrgansCut]
+  blockedStates: [CavityWidened]
+  zones: [Torso, Groin]
+  priority: 6
+  flags: [Organic]
+  tools:
+  - component: Retractor
+  - quality: Prying
+    speed: 1.5
+
+- type: surgicalOperation
+  id: WFCloseCavity
+  name: wf-surgery-op-close-cavity
+  description: wf-surgery-op-close-cavity-desc
+  surgery: WFSurgeryCloseCavity
+  step: WFSurgeryStepCloseCavity
+  requirePreviousSteps: false
+  time: 4.8
+  requiredStates: [SkinOpen, OrgansCut, CavityWidened]
+  zones: [Torso, Groin]
+  priority: 6
+  flags: [Organic]
+  tools:
+  - component: Retractor
+  - quality: Prying
+    speed: 1.5
+
+# Mechanical surgery ---------------------------------------------------------
+
+- type: surgicalOperation
+  id: WFUnscrewShell
+  name: wf-surgery-op-unscrew-shell
+  description: wf-surgery-op-unscrew-shell-desc
+  surgery: WFSurgeryUnscrewShell
+  step: WFSurgeryStepUnscrewShell
+  requirePreviousSteps: false
+  time: 2.4
+  blockedStates: [SkinCut, SkinOpen]
+  priority: 0
+  flags: [Mechanical, SelfOperable, NoPatient]
+  tools:
+  - quality: Screwing
+  - component: Scalpel
+    speed: 1.33
+  - anyItem: true
+    requiresSharp: true
+    speed: 10
+
+- type: surgicalOperation
+  id: WFOpenHatch
+  name: wf-surgery-op-open-hatch
+  description: wf-surgery-op-open-hatch-desc
+  surgery: WFSurgeryOpenHatch
+  step: WFSurgeryStepOpenHatch
+  requirePreviousSteps: false
+  time: 1
+  requiredStates: [SkinCut]
+  priority: 1
+  flags: [Mechanical, SelfOperable, NoPatient]
+  tools:
+  - hand: true
+  - quality: Prying
+
+- type: surgicalOperation
+  id: WFPrepareElectronics
+  name: wf-surgery-op-prepare-electronics
+  description: wf-surgery-op-prepare-electronics-desc
+  surgery: WFSurgeryPrepareElectronics
+  step: WFSurgeryStepPrepareElectronics
+  requirePreviousSteps: false
+  time: 2.4
+  requiredStates: [SkinOpen]
+  blockedStates: [OrgansCut]
+  priority: 4
+  flags: [Mechanical, SelfOperable, NoPatient]
+  tools:
+  - quality: Pulsing
+  - component: Hemostat
+    speed: 1.33
+
+- type: surgicalOperation
+  id: WFUnwrenchEndoskeleton
+  name: wf-surgery-op-unwrench-endoskeleton
+  description: wf-surgery-op-unwrench-endoskeleton-desc
+  surgery: WFSurgeryUnwrenchEndoskeleton
+  step: WFSurgeryStepUnwrenchEndoskeleton
+  requirePreviousSteps: false
+  time: 2.4
+  requiredStates: [SkinOpen]
+  blockedStates: [BoneSawed, BoneDrilled]
+  priority: 3
+  flags: [Mechanical, SelfOperable, NoPatient]
+  tools:
+  - quality: Anchoring
+  - component: Retractor
+    speed: 1.33
+
+- type: surgicalOperation
+  id: WFWrenchEndoskeleton
+  name: wf-surgery-op-wrench-endoskeleton
+  description: wf-surgery-op-wrench-endoskeleton-desc
+  surgery: WFSurgeryWrenchEndoskeleton
+  step: WFSurgeryStepWrenchEndoskeleton
+  requirePreviousSteps: false
+  time: 2.4
+  requiredStates: [SkinOpen, BoneSawed]
+  priority: 3
+  flags: [Mechanical, SelfOperable, NoPatient]
+  tools:
+  - quality: Anchoring
+  - component: Retractor
+    speed: 1.33
+
+- type: surgicalOperation
+  id: WFScrewShell
+  name: wf-surgery-op-screw-shell
+  description: wf-surgery-op-screw-shell-desc
+  surgery: WFSurgeryScrewShell
+  step: WFSurgeryStepScrewShell
+  requirePreviousSteps: false
+  time: 2.4
+  anyRequiredStates: [SkinCut, SkinOpen]
+  priority: -1
+  flags: [Mechanical, SelfOperable, NoPatient, PriorityNextStep]
+  tools:
+  - quality: Screwing
+  - component: Scalpel
+    speed: 1.33
+  - anyItem: true
+    requiresSharp: true
+    speed: 10
+
+- type: surgicalOperation
+  id: WFImplantRemoval
+  name: wf-surgery-op-implant-removal
+  description: wf-surgery-op-implant-removal-desc
+  surgery: WFSurgeryImplantRemoval
+  step: WFSurgeryStepImplantRemoval
+  requirePreviousSteps: false
+  time: 6.4
+  requiredStates: [SkinOpen]
+  blockedStates: [VesselsUnclamped]
+  priority: 7
+  kind: ImplantRemoval
+  flags: [Locked]
+  techUnlock: WFAdvancedSurgery
+  tools:
+  - component: Hemostat
+  - quality: Prying
+    speed: 1.5

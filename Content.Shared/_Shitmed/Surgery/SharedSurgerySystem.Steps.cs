@@ -58,10 +58,12 @@ public abstract partial class SharedSurgerySystem
         SubSurgery<SurgeryAddMarkingStepComponent>(OnAddMarkingStep, OnAddMarkingCheck);
         SubSurgery<SurgeryRemoveMarkingStepComponent>(OnRemoveMarkingStep, OnRemoveMarkingCheck);
         SubSurgery<SurgeryAddOrganSlotStepComponent>(OnAddOrganSlotStep, OnAddOrganSlotCheck);
-        Subs.BuiEvents<SurgeryTargetComponent>(SurgeryUIKey.Key, subs =>
-        {
-            subs.Event<SurgeryStepChosenBuiMsg>(OnSurgeryTargetStepChosen);
-        });
+        // WOLFGATE(Surgery): replaces the step-selection UI
+        // (the old message handler stays for reference but is no longer reachable).
+        // Subs.BuiEvents<SurgeryTargetComponent>(SurgeryUIKey.Key, subs =>
+        // {
+        //     subs.Event<SurgeryStepChosenBuiMsg>(OnSurgeryTargetStepChosen);
+        // });
     }
 
     private void SubSurgery<TComp>(EntityEventRefHandler<TComp, SurgeryStepEvent> onStep,
@@ -73,7 +75,7 @@ public abstract partial class SharedSurgerySystem
 
     private void OnToolStep(Entity<SurgeryStepComponent> ent, ref SurgeryStepEvent args)
     {
-        if (ent.Comp.Tool != null)
+        if (ent.Comp.Tool != null && !args.ToolValidated) // WOLFGATE(Surgery): caller-validated tools skip the step's list
         {
             foreach (var reg in ent.Comp.Tool.Values)
             {
@@ -302,7 +304,7 @@ public abstract partial class SharedSurgerySystem
         if (args.Invalid != StepInvalidReason.None)
             return;
 
-        if (ent.Comp.Tool != null)
+        if (ent.Comp.Tool != null && !args.ToolValidated) // WOLFGATE(Surgery): caller-validated tools skip the step's list
         {
             args.ValidTools ??= new Dictionary<EntityUid, float>();
 

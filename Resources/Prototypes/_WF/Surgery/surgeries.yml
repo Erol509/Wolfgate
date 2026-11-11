@@ -1,0 +1,196 @@
+# Surgeries that exist only to carry a generic state-changing step. The state-driven engine treats each
+# step as its own operation, so these surgeries never appear in the old step window.
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryInciseSkin
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepInciseSkin
+    - WFSurgeryStepRetractSkin
+    - WFSurgeryStepClampBleeders
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryRetractSkin
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepRetractSkin
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryClampBleeders
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepClampBleeders
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryUnclampBleeders
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepUnclampBleeders
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgerySawBone
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepSawBone
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryDrillBone
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepDrillBone
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryInciseOrgans
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepInciseOrgans
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryMendSkin
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepMendSkin
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryFixBones
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepFixBones
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryWidenCavity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepWidenCavity
+  - type: SurgeryPartCondition
+    part: Torso
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryCloseCavity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepCloseCavity
+  - type: SurgeryPartCondition
+    part: Torso
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryUnscrewShell
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepUnscrewShell
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryOpenHatch
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepOpenHatch
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryPrepareElectronics
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepPrepareElectronics
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryUnwrenchEndoskeleton
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepUnwrenchEndoskeleton
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryWrenchEndoskeleton
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepWrenchEndoskeleton
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryScrewShell
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepScrewShell
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryOrganManipulation
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - SurgeryStepRemoveOrgan
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
+  id: WFSurgeryImplantRemoval
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - WFSurgeryStepImplantRemoval
+  - type: SurgeryPartPresentCondition

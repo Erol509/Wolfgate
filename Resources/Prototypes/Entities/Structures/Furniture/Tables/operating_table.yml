@@ -12,6 +12,13 @@
     sprite: Structures/Furniture/Tables/optable.rsi
     state: operating_table
   - type: OperatingTable
+  # WOLFGATE(Surgery): the table itself hosts the operating computer UI (and patient monitor)
+  - type: OperatingComputer
+    requiresPower: false
+  - type: UserInterface
+    interfaces:
+      enum.OperatingComputerUiKey.Key:
+        type: OperatingComputerBui
   # Begin Shitmed Changes
   - type: Machine
     board: OperatingTableCircuitboard

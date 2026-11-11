@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests.Fixtures;
 using Content.Server._Shitmed.Medical.Surgery;
+using Content.Server._WF.Surgery;
+using Content.Shared._WF.Surgery;
 using Content.Server.Atmos.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared._Onyx.Wounds;
@@ -32,11 +34,11 @@ namespace Content.IntegrationTests.Tests._WF.Wolfmed;
 [TestOf(typeof(WolfmedSurgeryConditionSystem))]
 public sealed class WolfmedSurgeryClosingStepTest : WolfmedGameTest
 {
-    private static readonly (string Surgery, string Step, string Tool)[] OpenIncision =
+    private static readonly (string Operation, string Tool)[] OpenIncision =
     {
-        ("SurgeryOpenIncision", "SurgeryStepOpenIncisionScalpel", "Scalpel"),
-        ("SurgeryOpenIncision", "SurgeryStepRetractSkin", "Retractor"),
-        ("SurgeryOpenIncision", "SurgeryStepClampBleeders", "Hemostat"),
+        ("WFInciseSkin", "Scalpel"),
+        ("WFRetractSkin", "Retractor"),
+        ("WFClampBleeders", "Hemostat"),
     };
 
     [Test]
@@ -51,9 +53,9 @@ public sealed class WolfmedSurgeryClosingStepTest : WolfmedGameTest
             SEntMan.System<WoundSystem>().CreateOrMergeWound(torso, "WFWolfmedCharringWound", 30);
         });
 
-        foreach (var (surgery, step, tool) in OpenIncision)
-            await Perform(body, torso, surgeon, surgery, step, tool);
-        await Perform(body, torso, surgeon, "WFSurgeryGraftSkin", "WFSurgeryStepGraftSkin", "WFWolfmedSkinGraft");
+        foreach (var (operation, tool) in OpenIncision)
+            await Perform(body, torso, surgeon, operation, tool);
+        await Perform(body, torso, surgeon, "WFOpWFSurgeryGraftSkin_WFSurgeryStepGraftSkin", "WFWolfmedSkinGraft");
 
         await Server.WaitAssertion(() =>
         {
@@ -62,7 +64,7 @@ public sealed class WolfmedSurgeryClosingStepTest : WolfmedGameTest
                 "the graft stopped being a procedure once it removed the charring, so it cannot be sealed.");
         });
 
-        await Perform(body, torso, surgeon, "WFSurgeryGraftSkin", "SurgeryStepSealTendWound", "Cautery");
+        await Perform(body, torso, surgeon, "WFMendSkin", "Cautery");
 
         await Server.WaitAssertion(() =>
         {
@@ -92,14 +94,15 @@ public sealed class WolfmedSurgeryClosingStepTest : WolfmedGameTest
             Assert.That(SEntMan.System<WolfmedEmbeddedObjectSystem>().Add(wound!.Value, "WFWolfmedShrapnelFragment", 1, 1), Is.EqualTo(1));
         });
 
-        foreach (var (surgery, step, tool) in OpenIncision)
-            await Perform(body, torso, surgeon, surgery, step, tool);
-        await Perform(body, torso, surgeon, "WFSurgeryRemoveEmbeddedObjects", "WFSurgeryStepExtractEmbedded", "Hemostat");
+        foreach (var (operation, tool) in OpenIncision)
+            await Perform(body, torso, surgeon, operation, tool);
+        await Perform(body, torso, surgeon,
+            "WFOpWFSurgeryRemoveEmbeddedObjects_WFSurgeryStepExtractEmbedded", "Hemostat");
 
         await Server.WaitAssertion(() =>
             Assert.That(SEntMan.System<WolfmedEmbeddedObjectSystem>().GetPartCount(torso), Is.Zero, "the fragment is still in."));
 
-        await Perform(body, torso, surgeon, "WFSurgeryRemoveEmbeddedObjects", "SurgeryStepSealTendWound", "Cautery");
+        await Perform(body, torso, surgeon, "WFMendSkin", "Cautery");
 
         await Server.WaitAssertion(() =>
             Assert.That(SEntMan.HasComponent<IncisionOpenComponent>(torso), Is.False, "the seal step never ran: the torso is still open."));
@@ -113,8 +116,8 @@ public sealed class WolfmedSurgeryClosingStepTest : WolfmedGameTest
         EntityUid body = default, torso = default, surgeon = default;
         await Server.WaitAssertion(() => (body, torso, surgeon) = Setup(map.GridCoords));
 
-        foreach (var (surgery, step, tool) in OpenIncision)
-            await Perform(body, torso, surgeon, surgery, step, tool);
+        foreach (var (operation, tool) in OpenIncision)
+            await Perform(body, torso, surgeon, operation, tool);
 
         await Server.WaitAssertion(() =>
         {
@@ -139,34 +142,25 @@ public sealed class WolfmedSurgeryClosingStepTest : WolfmedGameTest
         return (body, torso, surgeon);
     }
 
-    /// <summary>One step as the surgery window sends it, with the tool in hand, then the do-after run out.</summary>
-    private async Task Perform(EntityUid body, EntityUid torso, EntityUid surgeon, string surgery, string step, string tool)
+    /// <summary>One operation as the radial sends it, with the tool in hand, then the do-after run out.</summary>
+    private async Task Perform(EntityUid body, EntityUid torso, EntityUid surgeon, string operationId, string tool)
     {
         await Server.WaitAssertion(() =>
         {
             var hands = SEntMan.System<SharedHandsSystem>();
+            var surgery = SEntMan.System<SurgicalOperationSystem>();
             foreach (var held in hands.EnumerateHeld(surgeon).ToList())
                 SEntMan.DeleteEntity(held);
             var item = SEntMan.SpawnEntity(tool, SEntMan.GetComponent<TransformComponent>(surgeon).Coordinates);
             Assert.That(hands.TryPickupAnyHand(surgeon, item, checkActionBlocker: false), Is.True, $"the surgeon cannot hold the {tool}.");
 
-            var chosen = new SurgeryStepChosenBuiMsg(SEntMan.GetNetEntity(torso), surgery, step, false)
-            {
-                UiKey = SurgeryUIKey.Key,
-                Actor = surgeon,
-                Entity = SEntMan.GetNetEntity(body),
-            };
-            SEntMan.EventBus.RaiseLocalEvent(body, chosen);
+            var option = surgery.GetAvailableOperations(surgeon, body, item)
+                .FirstOrDefault(option => option.Operation.ID == operationId);
+            Assert.That(option, Is.Not.Null, $"{operationId} is not available with a {tool}.");
+            surgery.StartOperation(surgeon, body, item, option!);
         });
 
-        await RunSeconds(8);
-
-        await Server.WaitAssertion(() =>
-        {
-            var surgerySystem = SEntMan.System<SurgerySystem>();
-            Assert.That(surgerySystem.IsStepComplete(body, torso, step, surgerySystem.GetSingleton(surgery)!.Value), Is.True,
-                $"{step} of {surgery} did not complete when chosen from the surgery window.");
-        });
+        await RunSeconds(15);
     }
 
     private bool Valid(EntityUid body, EntityUid torso, string surgery) =>

@@ -1,0 +1,11 @@
+# Species anatomy as surgery sees it. A species without an entry is treated as having skin, bones and
+# blood vessels. Keyed by the body part's species id.
+
+- type: surgicalAnatomy
+  id: Skeleton
+  hasSkin: false
+  hasVessels: false
+
+- type: surgicalAnatomy
+  id: SlimePerson
+  hasBones: false

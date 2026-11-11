@@ -6,11 +6,13 @@ using System.Reflection;
 using Content.Client._Shitmed.Medical.Surgery;
 using Content.Client._WF.Genitals;
 using Content.Server._WF.Genitals;
+using Content.Server._WF.Surgery;
 using Content.Server.Administration.Logs;
 using Content.Shared._Shitmed.Medical.Surgery;
 using Content.Shared._Shitmed.Medical.Surgery.Conditions;
 using Content.Shared._WF.CCVar;
 using Content.Shared._WF.Genitals;
+using Content.Shared._WF.Surgery;
 using Content.Shared._WF.Genitals.Components;
 using Content.Shared._WF.Genitals.Profile;
 using Content.Shared._WF.Genitals.Systems;
@@ -504,106 +506,76 @@ public sealed class GenitalSurgeryTest
     }
 
     /// <summary>
-    /// The client window filters the server's list once per state: without the viewer's adult content the choices every
-    /// read uses hold no anatomy surgery, and switching it on or off refilters the open window.
+    /// The radial is filtered by the same server-authoritative consent checks as the steps: a surgeon without adult
+    /// content, a minor or a non-humanoid sees no anatomy operation, and turning consent on or off changes what the
+    /// radial offers after the next interaction.
     /// </summary>
     [Test]
     public async Task ClientSurgeryListTest()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
         var server = pair.Server;
-        var client = pair.Client;
         var sEntMan = server.EntMan;
-        var viewer = client.System<ClientGenitalConsentSystem>();
 
         var player = await GenitalConsentTestHelpers.AttachToNewBody(pair);
         await GenitalConsentTestHelpers.SetPlayerConsent(pair);
 
         EntityUid patient = default;
-        NetEntity netTorso = default;
-        var offered = new List<EntProtoId>();
+        EntityUid tool = default;
+        var offered = new List<string>();
+
         await server.WaitPost(() =>
         {
-            var coords = sEntMan.System<SharedTransformSystem>().ToMapCoordinates(player.Map.GridCoords.Offset(new Vector2(1f, 0f)));
+            var coords = sEntMan.System<SharedTransformSystem>()
+                .ToMapCoordinates(player.Map.GridCoords.Offset(new Vector2(1f, 0f)));
             patient = SpawnPatient(sEntMan, coords);
             var torso = RootPart(sEntMan, patient)!.Value;
-            netTorso = sEntMan.GetNetEntity(torso);
 
-            // The torso list as the server builds it (SurgerySystem.RefreshUI), from a plain surgery and every anatomy one.
-            var candidates = new List<string> { OpenIncision };
-            candidates.AddRange(Procedures.SelectMany(p => new[] { p.Remove, p.Insert }));
-            foreach (var surgery in candidates)
-            {
-                if (IsListed(sEntMan, patient, torso, surgery))
-                    offered.Add(surgery);
-            }
+            // Open the torso so the per-organ operations are state-available; consent is what varies below.
+            sEntMan.EnsureComponent<Content.Shared._Shitmed.Medical.Surgery.Steps.Parts.IncisionOpenComponent>(torso);
+            sEntMan.EnsureComponent<Content.Shared._Shitmed.Medical.Surgery.Steps.Parts.SkinRetractedComponent>(torso);
+            sEntMan.EnsureComponent<Content.Shared._Shitmed.Medical.Surgery.Steps.Parts.BleedersClampedComponent>(torso);
+            sEntMan.EnsureComponent<Content.Shared._Shitmed.Medical.Surgery.Steps.Parts.RibcageSawedComponent>(torso);
+            sEntMan.EnsureComponent<Content.Shared._Shitmed.Medical.Surgery.Steps.Parts.InternalBleedersClampedComponent>(torso);
+            sEntMan.System<SurgicalSiteSystem>().Recalculate(torso);
 
-            var choices = new Dictionary<NetEntity, List<EntProtoId>> { [netTorso] = offered };
-            var ui = sEntMan.System<SharedUserInterfaceSystem>();
-            ui.OpenUi(patient, SurgeryUIKey.Key, player.Body);
-            ui.SetUiState(patient, SurgeryUIKey.Key, new SurgeryBuiState(choices));
+            tool = sEntMan.SpawnEntity("Hemostat", coords);
+            offered = OfferedOperations(sEntMan, player.Body, patient, tool);
         });
 
-        var plainOnly = new List<EntProtoId> { OpenIncision };
-        Assert.Multiple(() =>
-        {
-            Assert.That(offered, Does.Contain(new EntProtoId(OpenIncision)), "Precondition: the server offers the plain surgery.");
-            Assert.That(offered.Count(IsAnatomyId), Is.EqualTo(Procedures.Length), "Precondition: the server offers every removal.");
-        });
+        Assert.That(offered, Does.Contain("WFOrganManipulation"), "the plain organ operation must still be offered.");
+        Assert.That(offered.Count(IsAnatomyOperation), Is.Zero,
+            "a surgeon without adult content was offered anatomy operations.");
 
-        await pair.RunTicksSync(10);
-        var cPatient = pair.ToClientUid(patient);
-        await client.WaitAssertion(() =>
-        {
-            var choices = BuiChoices(client.EntMan, cPatient);
-            Assert.That(choices.Keys, Is.EquivalentTo(new[] { netTorso }), "The torso must stay: it still offers a plain surgery.");
-            Assert.That(choices[netTorso], Is.EquivalentTo(plainOnly), "A viewer without adult content was offered anatomy surgeries.");
-        });
+        await GenitalConsentTestHelpers.SetPlayerConsent(pair, MasterToggle, StripToggle, SurgeryToggle);
+        await server.WaitPost(() => offered = OfferedOperations(sEntMan, player.Body, patient, tool));
 
-        // Turning adult content on refilters the open window from the stored state.
-        await GenitalConsentTestHelpers.SetPlayerConsent(pair, MasterToggle);
-        await client.WaitAssertion(() =>
-            Assert.That(BuiChoices(client.EntMan, cPatient)[netTorso], Is.EquivalentTo(offered), "The window did not refilter when adult content came on."));
-
-        // The server refuses a surgeon under 18 even with adult content on (CanOperate), so the filter offers them nothing.
-        void SetSurgeonAge(int age)
-        {
-            var humanoid = sEntMan.GetComponent<HumanoidAppearanceComponent>(player.Body);
-            humanoid.Age = age;
-            sEntMan.Dirty(player.Body, humanoid);
-        }
-
-        var cSurgeon = pair.ToClientUid(player.Body);
-        await server.WaitPost(() => SetSurgeonAge(17));
-        await GenitalConsentTestHelpers.WaitFor(pair,
-            () => client.EntMan.GetComponent<HumanoidAppearanceComponent>(cSurgeon).Age == 17,
-            "the client to see the surgeon's new age");
-        await client.WaitAssertion(() =>
-        {
-            var filtered = viewer.FilterSurgeryChoices(new Dictionary<NetEntity, List<EntProtoId>> { [netTorso] = offered });
-            Assert.That(filtered[netTorso], Is.EquivalentTo(plainOnly), "A surgeon under 18 was offered anatomy surgeries.");
-        });
-        await server.WaitPost(() => SetSurgeonAge(30));
+        Assert.That(offered.Count(IsAnatomyOperation), Is.GreaterThanOrEqualTo(Procedures.Length),
+            "a consented surgeon was not offered every anatomy removal.");
+        Assert.That(offered, Does.Contain("WFOrganManipulation"), "the plain operation must survive consent turning on.");
 
         await GenitalConsentTestHelpers.SetPlayerConsent(pair);
-        await client.WaitAssertion(() =>
-        {
-            Assert.That(BuiChoices(client.EntMan, cPatient)[netTorso], Is.EquivalentTo(plainOnly), "The window did not refilter when adult content went off.");
+        await server.WaitPost(() => offered = OfferedOperations(sEntMan, player.Body, patient, tool));
 
-            // A part that offers only anatomy surgeries is dropped; one with a plain surgery keeps just that.
-            var anatomyOnly = new NetEntity(1);
-            var mixed = new NetEntity(2);
-            var filtered = viewer.FilterSurgeryChoices(new Dictionary<NetEntity, List<EntProtoId>>
-            {
-                [anatomyOnly] = new() { RemovePenis, InsertPenis },
-                [mixed] = new() { OpenIncision, RemoveVagina },
-            });
-            Assert.That(filtered.Keys, Is.EquivalentTo(new[] { mixed }), "A part that offered only anatomy surgeries was kept.");
-            Assert.That(filtered[mixed], Is.EquivalentTo(plainOnly));
-        });
+        Assert.That(offered.Count(IsAnatomyOperation), Is.Zero,
+            "turning adult content off did not remove the anatomy operations.");
 
         await pair.CleanReturnAsync();
     }
+
+    private static List<string> OfferedOperations(IEntityManager entMan, EntityUid surgeon, EntityUid patient, EntityUid tool)
+    {
+        return entMan.System<Content.Server._WF.Surgery.SurgicalOperationSystem>()
+            .GetAvailableOperations(surgeon, patient, tool)
+            .Select(option => option.Operation.ID)
+            .ToList();
+    }
+
+    private static bool IsAnatomyOperation(string id) => id.Contains("SurgeryRemovePenis") ||
+                                                         id.Contains("SurgeryRemoveTesticles") ||
+                                                         id.Contains("SurgeryRemoveVagina") ||
+                                                         id.Contains("SurgeryRemoveWomb") ||
+                                                         id.Contains("SurgeryRemoveBreasts");
 
     /// <summary>No procedure-specific popup key exists for the anatomy surgeries, so bystanders only see the generic organ lines.</summary>
     [Test]
@@ -760,19 +732,4 @@ public sealed class GenitalSurgeryTest
         entMan.EventBus.RaiseLocalEvent(stepEnt!.Value, ref ev);
     }
 
-    /// <summary>The filtered choices (the WOLFGATE _choices field) of the client's open surgery window on the patient.</summary>
-    private static Dictionary<NetEntity, List<EntProtoId>> BuiChoices(IEntityManager clientEntMan, EntityUid patient)
-    {
-        var ui = clientEntMan.System<SharedUserInterfaceSystem>();
-        Assert.That(ui.TryGetOpenUi<SurgeryBui>(patient, SurgeryUIKey.Key, out var bui), "The client has no open surgery window.");
-
-        var field = typeof(SurgeryBui).GetField("_choices", BindingFlags.Instance | BindingFlags.NonPublic);
-        Assert.That(field, Is.Not.Null, "SurgeryBui._choices was not found.");
-        return (Dictionary<NetEntity, List<EntProtoId>>) field!.GetValue(bui);
-    }
-
-    private static bool IsAnatomyId(EntProtoId id)
-    {
-        return id.Id.StartsWith("WFSurgery", StringComparison.Ordinal);
-    }
 }

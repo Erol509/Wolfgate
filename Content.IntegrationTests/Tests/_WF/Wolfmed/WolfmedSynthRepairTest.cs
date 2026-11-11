@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.IntegrationTests.Pair;
 using Content.Server._Shitmed.Medical.Surgery;
+using Content.Server._WF.Surgery;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Station.Systems;
@@ -199,7 +200,7 @@ public sealed class WolfmedSynthRepairTest : WolfmedGameTest
                 Assert.That(surgery.WolfmedSurgeryValid(body, leg, "WFSurgeryReplaceServo"), Is.True);
             });
 
-            var coil = SEntMan.SpawnEntity("CableApcStack", map.GridCoords);
+            var coil = SEntMan.SpawnEntity("Screwdriver", map.GridCoords);
             RunStep(surgery, user, body, leg, new List<EntityUid> { coil }, "WFSurgeryStepReplaceServo");
             Assert.That(wounds.GetWounds(leg).Select(w => w.Comp.Prototype.Id), Has.None.EqualTo("WFWolfmedServoDamageWound"),
                 "the servo is still damaged.");
@@ -215,17 +216,14 @@ public sealed class WolfmedSynthRepairTest : WolfmedGameTest
         await Server.WaitAssertion(() =>
         {
             var body = SEntMan.SpawnEntity("MobIPC", map.GridCoords);
-            var coil = SEntMan.SpawnEntity("CableApcStack", map.GridCoords);
+            var coil = SEntMan.SpawnEntity("Screwdriver", map.GridCoords);
             Assert.That(SEntMan.System<SharedHandsSystem>().TryPickupAnyHand(body, coil, checkActionBlocker: false));
             Assert.That(SEntMan.System<StandingStateSystem>().Down(body, dropHeldItems: false), Is.True);
 
-            var text = Loc.GetString("surgery-verb-text");
-            var verb = SEntMan.System<SharedVerbSystem>().GetLocalVerbs(body, body, typeof(UtilityVerb))
-                .FirstOrDefault(v => v.Text == text);
-            Assert.That(verb, Is.Not.Null, "a coil in hand offers no surgery on a synth's own body.");
-
-            verb!.Act!();
-            Assert.That(SEntMan.System<SharedUserInterfaceSystem>().IsUiOpen(body, SurgeryUIKey.Key, body), Is.True);
+            var operations = SEntMan.System<SurgicalOperationSystem>().GetAvailableOperations(body, body, coil);
+            Assert.That(operations.Any(operation => operation.Operation.ID == "WFUnscrewShell"), Is.True,
+                "a coil in hand offers no surgery on a synth's own body. Offered: " +
+                string.Join(", ", operations.Select(operation => operation.Operation.ID)));
         });
     }
 

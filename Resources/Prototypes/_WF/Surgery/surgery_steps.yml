@@ -1,0 +1,351 @@
+# Effect steps for the state-driven surgery engine. Each step changes the marker components that make up a
+# body part's surgical state; the operation prototype gates when the step may run.
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepInciseSkin
+  name: Make a skin incision
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Scalpel
+    add:
+    - type: IncisionOpen
+    duration: 1.6
+  - type: WolfmedSurgeryPainEffect
+    amount: 8
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepEmoteEffect
+  - type: WolfmedSurgeryIncisionWoundEffect # WOLFGATE(Surgery): real incision wound so it can bleed, be clamped and scar
+    severity: 10
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepRetractSkin
+  name: Retract the skin
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Retractor
+    add:
+    - type: SkinRetracted
+    duration: 2.4
+  - type: WolfmedSurgeryPainEffect
+    amount: 8
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/retractor.rsi
+    state: retractor
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepClampBleeders
+  name: Clamp the bleeders
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Hemostat
+    add:
+    - type: BleedersClamped
+    duration: 2.4
+  - type: WolfmedSurgeryPainEffect
+    amount: 5
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Bloodloss: -5
+    sleepModifier: 2
+  - type: WolfmedSurgeryIncisionTreatmentEffect
+    treatment: Clamp
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepUnclampBleeders
+  name: Unclamp the bleeders
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Hemostat
+    remove:
+    - type: BleedersClamped
+    duration: 2.4
+  - type: WolfmedSurgeryPainEffect
+    amount: 5
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepSawBone
+  name: Saw through the bone
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: BoneSaw
+    add:
+    - type: RibcageSawed
+    duration: 5.4
+  - type: WolfmedSurgeryPainEffect
+    amount: 15
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/circular-saw.rsi
+    state: circular-saw
+  - type: SurgeryStepEmoteEffect
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Blunt: 50
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepDrillBone
+  name: Drill into the bone
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Drill
+    add:
+    - type: BoneDrilled
+    duration: 3
+  - type: WolfmedSurgeryPainEffect
+    amount: 12
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/drill.rsi
+    state: drill
+  - type: SurgeryStepEmoteEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepInciseOrgans
+  name: Incise the organs
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Scalpel
+    add:
+    - type: InternalBleedersClamped
+    duration: 2.4
+  - type: WolfmedSurgeryPainEffect
+    amount: 12
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepEmoteEffect
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Slash: 10
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepMendSkin
+  name: Mend the incision
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Cautery
+    remove:
+    - type: SkinRetracted
+    - type: BleedersClamped
+    - type: IncisionOpen
+    - type: InternalBleedersClamped
+    - type: RibcageSawed
+    - type: RibcageOpen
+    - type: BoneDrilled
+    - type: CavityWidened
+    duration: 2.4
+  - type: WolfmedSurgeryPainEffect
+    amount: 6
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/cautery.rsi
+    state: cautery
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Heat: -5
+    sleepModifier: 2
+  - type: SurgeryStepEmoteEffect
+  - type: WolfmedSurgeryIncisionTreatmentEffect
+    treatment: Close
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepFixBones
+  name: Mend the bone
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: BoneGel
+    remove:
+    - type: RibcageSawed
+    - type: RibcageOpen
+    - type: BoneDrilled
+    duration: 4
+  - type: WolfmedSurgeryPainEffect
+    amount: 10
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/bone-gel.rsi
+    state: bone-gel
+  - type: SurgeryDamageChangeEffect
+    damage:
+      types:
+        Blunt: -40
+    sleepModifier: 2
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepWidenCavity
+  name: Widen the chest cavity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Retractor
+    add:
+    - type: CavityWidened
+    duration: 4.8
+  - type: WolfmedSurgeryPainEffect
+    amount: 10
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/retractor.rsi
+    state: retractor
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepCloseCavity
+  name: Close the chest cavity
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    tool:
+    - type: Retractor
+    remove:
+    - type: CavityWidened
+    duration: 4.8
+  - type: WolfmedSurgeryPainEffect
+    amount: 8
+  - type: Sprite
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/retractor.rsi
+    state: retractor
+
+# Mechanical counterparts -----------------------------------------------------
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepUnscrewShell
+  name: Unscrew the shell
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    add:
+    - type: IncisionOpen
+    duration: 2.4
+  - type: Sprite
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepOpenHatch
+  name: Open the hatch
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    remove:
+    - type: IncisionOpen
+    add:
+    - type: SkinRetracted
+    - type: BleedersClamped
+    duration: 1
+  - type: Sprite
+    sprite: Objects/Tools/crowbar.rsi
+    state: icon
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepPrepareElectronics
+  name: Prepare the electronics
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    add:
+    - type: InternalBleedersClamped
+    duration: 2.4
+  - type: Sprite
+    sprite: Objects/Tools/multitool.rsi
+    state: icon
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepUnwrenchEndoskeleton
+  name: Unwrench the endoskeleton
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    add:
+    - type: RibcageSawed
+    duration: 2.4
+  - type: Sprite
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepWrenchEndoskeleton
+  name: Wrench the endoskeleton
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    remove:
+    - type: RibcageSawed
+    duration: 2.4
+  - type: Sprite
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepScrewShell
+  name: Screw the shell shut
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    remove:
+    - type: SkinRetracted
+    - type: BleedersClamped
+    - type: IncisionOpen
+    - type: InternalBleedersClamped
+    - type: RibcageSawed
+    - type: BoneDrilled
+    - type: CavityWidened
+    duration: 2.4
+  - type: Sprite
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver
+
+- type: entity
+  parent: SurgeryStepBase
+  id: WFSurgeryStepImplantRemoval
+  name: Search for implants
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SurgeryStep
+    duration: 6.4
+  - type: Sprite
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  - type: SurgeryStepEmoteEffect

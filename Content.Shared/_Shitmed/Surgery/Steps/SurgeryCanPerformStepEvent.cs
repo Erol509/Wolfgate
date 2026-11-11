@@ -11,4 +11,10 @@ public record struct SurgeryCanPerformStepEvent(
     string? Popup = null,
     StepInvalidReason Invalid = StepInvalidReason.None,
     Dictionary<EntityUid, float>? ValidTools = null
-) : IInventoryRelayEvent;
+) : IInventoryRelayEvent
+{
+    // WOLFGATE(Surgery): caller-validated tools
+    // (the engine accepts quality-based substitutes, so the step's own list is already satisfied).
+    /// <summary>Set when the caller has already validated the tool for this step.</summary>
+    public bool ToolValidated;
+}

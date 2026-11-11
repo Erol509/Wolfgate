@@ -1,0 +1,18 @@
+# Research that unlocks surgical operations. The technology itself is an ordinary node; the operation mapping
+# lives in the surgicalResearch prototype beside it, so no generic unlock event is needed.
+
+- type: technology
+  id: WFAdvancedSurgery
+  name: research-technology-wf-advanced-surgery
+  entityIcon: Scalpel
+  discipline: CivilianServices
+  tier: 2
+  cost: 15000
+  position: 8, 24
+  technologyPrerequisites:
+  - Hydroponics
+
+- type: surgicalResearch
+  id: WFAdvancedSurgery
+  operations:
+  - WFImplantRemoval

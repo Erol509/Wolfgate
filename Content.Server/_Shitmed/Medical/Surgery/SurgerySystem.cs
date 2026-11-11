@@ -46,7 +46,9 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SurgeryToolComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
+        // WOLFGATE(Surgery): replaced by the state-driven radial
+        // (the verb would still open a second, competing surgery engine).
+        // SubscribeLocalEvent<SurgeryToolComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
         SubscribeLocalEvent<SurgeryTargetComponent, SurgeryStepDamageEvent>(OnSurgeryStepDamage);
         // You might be wondering "why aren't we using StepEvent for these two?" reason being that StepEvent fires off regardless of success on the previous functions
         // so this would heal entities even if you had a used or incorrect organ.
