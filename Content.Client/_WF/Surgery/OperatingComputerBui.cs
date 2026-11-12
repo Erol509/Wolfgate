@@ -36,7 +36,6 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
 
     private OperatingComputerWindow? _window;
     private OperatingComputerState? _state;
-    private OperatingComputerCatalogState? _catalog;
 
     private readonly HashSet<string> _pins = new();
     private int _tab;
@@ -46,9 +45,18 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
     private bool _hideMechanic;
     private bool _hideMechanicTouched;
     private BoxContainer? _catalogList;
+    private BoxContainer? _host;
+    private ScrollContainer? _patientScroll;
+    private ScrollContainer? _catalogScroll;
+    private Button? _hideButton;
+    private string _catalogSignature = string.Empty;
+    private readonly List<(Control Control, bool Mechanic)> _catalogEntries = new();
 
     /// <summary>Last state received, exposed for integration tests.</summary>
     public OperatingComputerState? CurrentState => _state;
+
+    /// <summary>The open window, exposed for integration tests.</summary>
+    public OperatingComputerWindow? CurrentWindow => _window;
 
     public OperatingComputerBui(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -62,28 +70,30 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         _window.OnClose += Close;
         _window.OpenCentered();
 
-        Rebuild();
+        BuildShell();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
 
-        switch (state)
+        if (state is not OperatingComputerState dynamicState)
+            return;
+
+        if (!_hideMechanicTouched && dynamicState.HasPatient)
+            _hideMechanic = !dynamicState.PatientMechanical;
+        _state = dynamicState;
+
+        if (_window == null)
+            return;
+
+        if (_host == null)
         {
-            case OperatingComputerState dynamicState:
-                if (!_hideMechanicTouched && dynamicState.HasPatient)
-                    _hideMechanic = !dynamicState.PatientMechanical;
-                _state = dynamicState;
-                break;
-            case OperatingComputerCatalogState catalogState:
-                _catalog = catalogState;
-                break;
-            default:
-                return;
+            BuildShell();
+            return;
         }
 
-        Rebuild();
+        RefreshCurrentTab();
     }
 
     protected override void Dispose(bool disposing)
@@ -93,12 +103,12 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
             _window?.Dispose();
     }
 
-    private void Rebuild()
+    /// <summary>Builds the window chrome once; later updates only refresh the active tab's contents.</summary>
+    private void BuildShell()
     {
         if (_window == null || _state == null)
             return;
 
-        _window.SetSize = new Vector2(_tab == 0 ? 350 : 430, 610);
         _window.HeaderTitle.Text = Loc.GetString("operating-computer-title");
         _window.HeaderTitle.FontColorOverride = TextColor;
         _window.Backdrop.PanelOverride = WindowBox();
@@ -108,26 +118,101 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         body.DisposeAllChildren();
         _catalogList = null;
 
-        var tabs = BuildTabs();
-        body.AddChild(tabs);
+        body.AddChild(BuildTabs());
         body.AddChild(new Control { MinSize = new Vector2(0, 4) });
 
-        var host = new BoxContainer
+        _host = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
             HorizontalExpand = true,
             VerticalExpand = true,
         };
-        body.AddChild(host);
-
-        if (_tab == 0)
-            host.AddChild(BuildPatient());
-        else if (_tab == 1)
-            host.AddChild(BuildCatalog());
-        else
-            host.AddChild(BuildExperiments());
+        body.AddChild(_host);
 
         body.AddChild(BuildFooter());
+
+        ShowTab();
+    }
+
+    private void ShowTab()
+    {
+        if (_window == null || _host == null || _state == null)
+            return;
+
+        _window.SetSize = new Vector2(_tab == 0 ? 350 : 430, 610);
+        _host.DisposeAllChildren();
+        _catalogEntries.Clear();
+        _catalogList = null;
+        _catalogScroll = null;
+        _patientScroll = null;
+        _hideButton = null;
+
+        if (_tab == 0)
+        {
+            _host.AddChild(BuildPatient());
+            return;
+        }
+
+        if (_tab == 1)
+        {
+            _catalogSignature = CatalogSignature();
+            _host.AddChild(BuildCatalog());
+            return;
+        }
+
+        _host.AddChild(BuildExperiments());
+    }
+
+    /// <summary>Refreshes the visible tab without recreating the other one or losing its scroll position.</summary>
+    private void RefreshCurrentTab()
+    {
+        if (_host == null)
+            return;
+
+        if (_tab == 0)
+        {
+            var scroll = _patientScroll?.VScroll ?? 0f;
+            _host.DisposeAllChildren();
+            _catalogEntries.Clear();
+            _catalogScroll = null;
+            _patientScroll = null;
+            _host.AddChild(BuildPatient());
+            if (_patientScroll != null)
+                _patientScroll.VScroll = scroll;
+            return;
+        }
+
+        if (_tab == 1)
+            RefreshCatalogIfChanged();
+    }
+
+    /// <summary>Rebuilds the catalog only when its contents (not the patient's next steps) changed.</summary>
+    private void RefreshCatalogIfChanged()
+    {
+        if (_catalogList == null)
+            return;
+
+        var signature = CatalogSignature();
+        if (signature == _catalogSignature)
+            return;
+
+        _catalogSignature = signature;
+        var scroll = _catalogScroll?.VScroll ?? 0f;
+        RefreshCatalogList();
+        if (_catalogScroll != null)
+            _catalogScroll.VScroll = scroll;
+    }
+
+    private string CatalogSignature()
+    {
+        var builder = new StringBuilder();
+        foreach (var operation in CatalogOperations())
+        {
+            builder.Append(operation.Id).Append(operation.Mechanic ? 'm' : 'o')
+                .Append(operation.Locked ? 'l' : 'u').Append(operation.Name).Append('|');
+        }
+
+        return builder.ToString();
     }
 
     private static StyleBoxFlat WindowBox() => new()
@@ -195,7 +280,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
             button.OnPressed += _ =>
             {
                 _tab = index;
-                Rebuild();
+                ShowTab();
             };
 
             bar.AddChild(button);
@@ -311,13 +396,14 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         {
             var index = tools.IndexOf(_filterTool);
             _filterTool = tools[(index + 1) % tools.Count];
-            Rebuild();
+            RefreshCurrentTab();
         };
 
         var section = Section(SectionBox(), Loc.GetString("operating-computer-next-operations"), filter);
         section.VerticalExpand = true;
 
         var scroll = new ScrollContainer { VerticalExpand = true, HorizontalExpand = true };
+        _patientScroll = scroll;
         var list = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
@@ -379,11 +465,12 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
             Label = { FontColorOverride = TextColor },
             ToolTip = Loc.GetString("operating-computer-hide-mechanic"),
         };
+        _hideButton = hide;
         hide.OnToggled += args =>
         {
             _hideMechanic = args.Pressed;
             _hideMechanicTouched = true;
-            RefreshCatalogList();
+            ApplyMechanicFilter();
         };
         header.AddChild(hide);
 
@@ -409,6 +496,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
             VerticalExpand = true,
             HorizontalExpand = true,
         };
+        _catalogScroll = scroll;
         _catalogList = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
@@ -429,10 +517,11 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         _catalogList.DisposeAllChildren();
 
         var operations = CatalogOperations()
-            .Where(operation => !_hideMechanic || !operation.Mechanic)
+            .Where(operation => operation.InList)
             .Where(operation => _search.Length == 0 ||
                                 operation.Name.Contains(_search, StringComparison.OrdinalIgnoreCase) ||
-                                operation.Tool.Contains(_search, StringComparison.OrdinalIgnoreCase));
+                                operation.Tool.Contains(_search, StringComparison.OrdinalIgnoreCase))
+            .DistinctBy(operation => operation.Name);
 
         operations = _sortMode switch
         {
@@ -444,8 +533,22 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
 
         foreach (var operation in operations)
         {
-            _catalogList.AddChild(CatalogEntry(operation));
+            var entry = CatalogEntry(operation);
+            _catalogEntries.Add((entry, operation.Mechanic));
+            _catalogList.AddChild(entry);
         }
+
+        ApplyMechanicFilter();
+    }
+
+    /// <summary>Shows or hides mechanical entries without rebuilding the whole catalog.</summary>
+    private void ApplyMechanicFilter()
+    {
+        foreach (var (control, mechanic) in _catalogEntries)
+            control.Visible = !_hideMechanic || !mechanic;
+
+        if (_hideButton != null)
+            _hideButton.ModulateSelfOverride = _hideMechanic ? SelectedColor : PrimaryColor;
     }
 
     private Control CatalogEntry(OperatingComputerOperationState operation)
@@ -474,7 +577,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         {
             if (!_pins.Remove(operation.Name))
                 _pins.Add(operation.Name);
-            Rebuild();
+            RefreshCatalogList();
         };
         header.AddChild(pin);
 
@@ -604,7 +707,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
             {
                 _tab = 1;
                 _search = operation.Name;
-                Rebuild();
+                ShowTab();
                 args.Event.Handle();
                 return;
             }
@@ -614,7 +717,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
 
             if (!_pins.Remove(operation.Name))
                 _pins.Add(operation.Name);
-            Rebuild();
+            RefreshCurrentTab();
             args.Event.Handle();
         };
 
@@ -622,10 +725,10 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
     }
 
     private IEnumerable<OperatingComputerOperationState> CatalogOperations() =>
-        _catalog?.Operations ?? Enumerable.Empty<OperatingComputerOperationState>();
+        _state?.Operations ?? Enumerable.Empty<OperatingComputerOperationState>();
 
     private IEnumerable<OperatingComputerOperationState> AvailableOperations() =>
-        _state?.NextOperations ?? Enumerable.Empty<OperatingComputerOperationState>();
+        CatalogOperations().Where(operation => operation.ShowAsNext);
 
     private Control LabeledRow(string label, string value, Color? valueColor = null)
     {

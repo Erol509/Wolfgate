@@ -19,10 +19,11 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
   reports the matching states as already present, so a skeleton skips the incision and a slime skips sawing.
 - Each `surgicalOperation` prototype names the legacy surgery providing its conditions and the step providing its
   effects, plus its state gate, accepted tools (including ghetto substitutes and their speed penalties), time and
-  flags. The generic operations cover incision, retraction, clamping, sawing, drilling, organ incision, closing,
-  bone repair, cavities and the mechanical equivalents.
+  flags. The generic operations cover incision, retraction, clamping, sawing, drilling, organ incision, organ
+  manipulation, closing, bone repair and the mechanical equivalents.
 - `python Tools/_WF/Surgery/generate_operations.py` derives one operation per procedure-specific legacy step from
-  the legacy surgery and step prototypes. Run it after editing a legacy surgery.
+  the legacy surgery and step prototypes. Steps already covered generically (organ insertion and removal, the
+  per-surgery seal-wound steps) are skipped so the wheel does not repeat them. Run it after editing a legacy surgery.
 - The operating computer tracks the patient buckled to an adjacent operating table and publishes vitals, the
   selected zone's surgical state and every operation the state permits. It opens on a hand click or with a
   surgical tool; the table itself has no UI. Operations become available when the station
@@ -34,8 +35,13 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
   internal callers keep working without a second execution engine. The old step window itself (SurgeryWindow,
   SurgeryStepButton) was removed; SurgeryBui keeps its registered name but now opens the radial.
 - Detached-limb surgery is limited to operations flagged `NoPatient`; the radial itself opens on a patient.
-- The radial lists one entry per organ (generated from the per-organ legacy procedures) rather than tg's nested
-  organ submenu; the gameplay result is the same.
+- The radial shows at most eight slots at once and puts the rest on further pages (the tg next-page sprite), so a
+  deep anatomical state never produces an unreadably large wheel.
+- Organ insertion and removal go through the single generic organ-manipulation operation, which offers one entry
+  per organ instead of one per-organ surgery. Closing the site (`WFMendSkin`) affixes limbs and organs that the
+  operation reattached, because the per-surgery seal-wound steps are not generated.
+- Cavity widening and closing are not offered at present: the chest cavity state and its marker still exist for
+  legacy compatibility, but nothing sets it.
 - Advanced tg operations without a Wolfgate equivalent yet (lobotomy, pacify, brainwash, revival, autopsy,
   dentals, plastic surgery naming, bioware, xeno surgery) are not shipped. The framework supports them; they need
   Wolfgate-side effects before they can be added honestly.
@@ -63,6 +69,8 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 - [`Content.Shared/_WF/Surgery/SurgicalResearchPrototype.cs`](../../../Content.Shared/_WF/Surgery/SurgicalResearchPrototype.cs)
 - [`Content.Shared/_WF/Surgery/SurgicalSiteComponent.cs`](../../../Content.Shared/_WF/Surgery/SurgicalSiteComponent.cs)
 - [`Content.Shared/_WF/Surgery/SurgicalSiteSystem.cs`](../../../Content.Shared/_WF/Surgery/SurgicalSiteSystem.cs)
+- [`Content.Shared/_WF/Surgery/WFSurgeryAffixOnCloseComponent.cs`](../../../Content.Shared/_WF/Surgery/WFSurgeryAffixOnCloseComponent.cs)
+- [`Content.Shared/_WF/Surgery/WFSurgeryAffixSystem.cs`](../../../Content.Shared/_WF/Surgery/WFSurgeryAffixSystem.cs)
 
 ### Client
 
@@ -71,6 +79,7 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 - [`Content.Client/_WF/Surgery/OperatingComputerWindow.xaml`](../../../Content.Client/_WF/Surgery/OperatingComputerWindow.xaml)
 - [`Content.Client/_WF/Surgery/OperatingComputerWindow.xaml.cs`](../../../Content.Client/_WF/Surgery/OperatingComputerWindow.xaml.cs)
 - [`Content.Client/_WF/Surgery/SurgicalRadialBui.cs`](../../../Content.Client/_WF/Surgery/SurgicalRadialBui.cs)
+- [`Content.Client/_WF/Surgery/SurgicalRadialButton.cs`](../../../Content.Client/_WF/Surgery/SurgicalRadialButton.cs)
 - [`Content.Client/_WF/Surgery/SurgicalRadialMenu.xaml`](../../../Content.Client/_WF/Surgery/SurgicalRadialMenu.xaml)
 - [`Content.Client/_WF/Surgery/SurgicalRadialMenu.xaml.cs`](../../../Content.Client/_WF/Surgery/SurgicalRadialMenu.xaml.cs)
 
@@ -110,10 +119,12 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 - [`Resources/Textures/_WF/Surgery/BodyZones/r_arm.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/r_arm.png)
 - [`Resources/Textures/_WF/Surgery/BodyZones/r_leg.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/r_leg.png)
 - [`Resources/Textures/_WF/Surgery/RadialIcons.rsi/`](../../../Resources/Textures/_WF/Surgery/RadialIcons.rsi/)
+- [`Resources/Textures/_WF/Surgery/RadialUI.rsi/`](../../../Resources/Textures/_WF/Surgery/RadialUI.rsi/)
 
 ### Tools
 
 - [`Tools/_WF/Surgery/extract_radial_icons.py`](../../../Tools/_WF/Surgery/extract_radial_icons.py)
+- [`Tools/_WF/Surgery/extract_radial_ui.py`](../../../Tools/_WF/Surgery/extract_radial_ui.py)
 - [`Tools/_WF/Surgery/generate_operations.py`](../../../Tools/_WF/Surgery/generate_operations.py)
 
 ## Non-modular edits

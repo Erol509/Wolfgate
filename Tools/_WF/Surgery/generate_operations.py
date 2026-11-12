@@ -14,6 +14,7 @@ Run from the repository root:
 from __future__ import annotations
 
 import re
+from collections import Counter
 from pathlib import Path
 
 import yaml
@@ -24,7 +25,8 @@ OUT_OPS = PROTOTYPES / "_WF" / "Surgery" / "legacy_operations.yml"
 OUT_LOC = ROOT / "Resources" / "Locale" / "en-US" / "_WF" / "Surgery" / "legacy_operations.ftl"
 
 # Steps that the generic operations already cover. Generating them per surgery would clutter the radial
-# with duplicates that do exactly the same thing.
+# with duplicates that do exactly the same thing. Organ work is covered by WFOrganManipulation, and the
+# generic close (WFMendSkin / WFScrewShell) affixes reattached parts and organs.
 GENERIC_STEPS = {
     "SurgeryStepOpenIncisionScalpel",
     "SurgeryStepCarefulIncisionScalpel",
@@ -36,6 +38,16 @@ GENERIC_STEPS = {
     "SurgeryStepMendRibcage",
     "SurgeryStepCloseIncision",
     "SurgeryStepSealTendWound",
+    "SurgeryStepSealOrganWound",
+    "SurgeryStepSealWounds",
+    "SurgeryStepInsertOrgan",
+    "SurgeryStepRemoveOrgan",
+    "SurgeryStepInsertHeart",
+    "SurgeryStepInsertEyes",
+    "SurgeryStepInsertLiver",
+    "SurgeryStepInsertLungs",
+    "SurgeryStepInsertStomach",
+    "WFSurgeryStepInsertKidneys",
 }
 
 # Surgeries owned by this module. They are hand-written operations already; generating a second operation from
@@ -376,25 +388,53 @@ def organ_components(surgery):
 
 
 ICON_BY_STEP = {
-    "SurgeryStepOpenIncisionScalpel": "make_incision",
-    "SurgeryStepCarefulIncisionScalpel": "make_incision",
-    "SurgeryStepRetractSkin": "retract_skin",
-    "SurgeryStepClampBleeders": "clamp_bleeders",
-    "SurgeryStepSawBones": "saw_bones",
-    "SurgeryStepPriseOpenBones": "saw_bones",
-    "SurgeryStepClampInternalBleeders": "incise_organs",
-    "SurgeryStepCloseIncision": "mend_incision",
-    "SurgeryStepSealTendWound": "mend_incision",
-    "SurgeryStepSealWounds": "mend_incision",
-    "SurgeryStepSealOrganWound": "mend_incision",
-    "SurgeryStepRemoveOrgan": "base",
-    "SurgeryStepInsertOrgan": "base",
-    "SurgeryStepInsertFeature": "base",
-    "SurgeryStepRemoveFeature": "amputate",
-    "SurgeryStepSawFeature": "saw_bones",
-    "SurgeryStepRepairBruteTissue": "base",
-    "SurgeryStepRepairBurnTissue": "base",
-    "SurgeryStepOpenOrganSlot": "base",
+    "SurgeryStepOpenIncisionScalpel": ("_WF/Surgery/RadialIcons.rsi", "make_incision"),
+    "SurgeryStepCarefulIncisionScalpel": ("_WF/Surgery/RadialIcons.rsi", "make_incision"),
+    "SurgeryStepRetractSkin": ("_WF/Surgery/RadialIcons.rsi", "retract_skin"),
+    "SurgeryStepClampBleeders": ("_WF/Surgery/RadialIcons.rsi", "clamp_bleeders"),
+    "SurgeryStepSawBones": ("_WF/Surgery/RadialIcons.rsi", "saw_bones"),
+    "SurgeryStepPriseOpenBones": ("_WF/Surgery/RadialIcons.rsi", "saw_bones"),
+    "SurgeryStepClampInternalBleeders": ("_WF/Surgery/RadialIcons.rsi", "incise_organs"),
+    "SurgeryStepCloseIncision": ("_WF/Surgery/RadialIcons.rsi", "mend_incision"),
+    "SurgeryStepSealTendWound": ("_WF/Surgery/RadialIcons.rsi", "mend_incision"),
+    "SurgeryStepSealWounds": ("_Shitmed/Objects/Specific/Medical/Surgery/cautery.rsi", "cautery"),
+    "SurgeryStepSealOrganWound": ("_Shitmed/Objects/Specific/Medical/Surgery/cautery.rsi", "cautery"),
+    "SurgeryStepRemoveOrgan": ("_Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi", "insertion"),
+    "SurgeryStepInsertOrgan": ("_Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi", "insertion"),
+    "SurgeryStepInsertFeature": ("_Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi", "insertion"),
+    "SurgeryStepRemoveFeature": ("_WF/Surgery/RadialIcons.rsi", "amputate"),
+    "SurgeryStepSawFeature": ("_WF/Surgery/RadialIcons.rsi", "saw_bones"),
+    "SurgeryStepRepairBruteTissue": ("Objects/Specific/Medical/firstaidkits.rsi", "brutekit"),
+    "SurgeryStepRepairBurnTissue": ("Objects/Specific/Medical/firstaidkits.rsi", "burnkit"),
+    "SurgeryStepOpenOrganSlot": ("_Shitmed/Objects/Specific/Medical/Surgery/scalpel.rsi", "scalpel"),
+    "WFSurgeryStepSetBone": ("_Shitmed/Objects/Specific/Medical/Surgery/bonesetter.rsi", "bonesetter"),
+    "WFSurgeryStepMendFracture": ("_Shitmed/Objects/Specific/Medical/Surgery/bone-gel.rsi", "bone-gel"),
+    "WFSurgeryStepRelocateJoint": ("_Shitmed/Objects/Specific/Medical/Surgery/bonesetter.rsi", "bonesetter"),
+    "WFSurgeryStepClampArtery": ("_Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi", "hemostat"),
+    "WFSurgeryStepRepairArtery": ("Objects/Specific/Medical/medical.rsi", "medicated-suture"),
+    "WFSurgeryStepRepairTendon": ("Objects/Specific/Medical/medical.rsi", "medicated-suture"),
+    "WFSurgeryStepSutureBleeding": ("Objects/Specific/Medical/medical.rsi", "medicated-suture"),
+    "WFSurgeryStepGraftSkin": ("Objects/Specific/Medical/medical.rsi", "regenerative-mesh"),
+    "WFSurgeryStepRemoveNecroticFlesh": ("_Shitmed/Objects/Specific/Medical/Surgery/scalpel.rsi", "scalpel"),
+    "WFSurgeryStepGraftNecroticFlesh": ("Objects/Specific/Medical/medical.rsi", "regenerative-mesh"),
+    "WFSurgeryStepClampEvisceration": ("_Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi", "hemostat"),
+    "WFSurgeryStepCloseEvisceration": ("_Shitmed/Objects/Specific/Medical/Surgery/cautery.rsi", "cautery"),
+    "WFSurgeryStepExtractEmbedded": ("_Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi", "hemostat"),
+    "WFSurgeryStepWeldChassis": ("Objects/Tools/welder.rsi", "icon"),
+    "WFSurgeryStepWeldChassisBreach": ("Objects/Tools/welder.rsi", "icon"),
+    "WFSurgeryStepRewireChassis": ("Objects/Tools/cable-coils.rsi", "coillv-30"),
+    "WFSurgeryStepReplaceServo": ("Objects/Tools/cable-coils.rsi", "coillv-30"),
+    "WFSurgeryStepUnseatCore": ("Objects/Tools/wrench.rsi", "icon"),
+    "WFSurgeryStepReseatCore": ("Objects/Tools/wrench.rsi", "icon"),
+    "WFSurgeryStepRepairCore": ("Objects/Tools/multitool.rsi", "icon"),
+    "WFSurgeryStepRepairSynthCore": ("Objects/Tools/multitool.rsi", "icon"),
+    "WFSurgeryStepOpenServicePanel": ("Objects/Tools/wrench.rsi", "icon"),
+    "WFSurgeryStepCloseServicePanel": ("Objects/Tools/wrench.rsi", "icon"),
+    "WFSurgeryStepRepairSynthPump": ("Objects/Tools/wrench.rsi", "icon"),
+    "WFSurgeryStepRepairChassisPump": ("Objects/Tools/wrench.rsi", "icon"),
+    "WFSurgeryStepRepairChassisEyes": ("Objects/Tools/multitool.rsi", "icon"),
+    "WFSurgeryStepSeatChassisPlating": ("Objects/Tools/wrench.rsi", "icon"),
+    "SurgeryStepInsertPump": ("Objects/Tools/wrench.rsi", "icon"),
 }
 
 
@@ -402,39 +442,47 @@ def icon_for_step(step_id):
     if step_id in ICON_BY_STEP:
         return ICON_BY_STEP[step_id]
     lowered = step_id.lower()
+    radial = "_WF/Surgery/RadialIcons.rsi"
     if "incision" in lowered or "incise_skin" in lowered:
-        return "make_incision"
+        return radial, "make_incision"
     if "retract" in lowered:
-        return "retract_skin"
+        return radial, "retract_skin"
     if "clamp" in lowered and "bleed" in lowered:
-        return "clamp_bleeders"
+        return radial, "clamp_bleeders"
     if "saw" in lowered or "bone" in lowered and "fix" not in lowered:
-        return "saw_bones"
+        return radial, "saw_bones"
     if "drill" in lowered:
-        return "drill_bones"
+        return radial, "drill_bones"
     if "organ" in lowered:
-        return "base"
+        return radial, "base"
     if "seal" in lowered or "close" in lowered or "mend" in lowered:
-        return "mend_incision"
+        return radial, "mend_incision"
     if "unscrew" in lowered:
-        return "unscrew_shell"
+        return radial, "unscrew_shell"
     if "open_hatch" in lowered:
-        return "open_hatch"
+        return radial, "open_hatch"
     if "electronics" in lowered:
-        return "prepare_electronics"
+        return radial, "prepare_electronics"
     if "unwrench" in lowered:
-        return "unwrench_endoskeleton"
+        return radial, "unwrench_endoskeleton"
     if "wrench" in lowered:
-        return "wrench_endoskeleton"
+        return radial, "wrench_endoskeleton"
     if "screw" in lowered:
-        return "screw_shell"
+        return radial, "screw_shell"
     if "amput" in lowered or "remove_part" in lowered:
-        return "amputate"
-    return "base"
+        return radial, "amputate"
+    return radial, "base"
 
 
 def location_id(value):
     return re.sub(r"[^a-z0-9-]+", "-", value.lower()).strip("-")
+
+
+def humanize_id(ident):
+    """Turn a prototype id into a readable qualifier for otherwise identical operation names."""
+    text = re.sub(r"^(WF)?Surgery", "", ident)
+    text = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", text)
+    return text.strip() or ident
 
 
 def main():
@@ -444,6 +492,8 @@ def main():
 
     operations = []
     locale = []
+    used_names = set()
+    surgery_name_counts = Counter(surgery["name"] for surgery in all_surgeries.values())
 
     for surgery_id in sorted(all_surgeries):
         if surgery_id in GENERIC_SURGERY_IDS:
@@ -475,7 +525,21 @@ def main():
             required, any_required, blocked = state_requirements(surgery, step, markers)
 
             op_id = f"WFOp{surgery_id}_{step_id}".replace("__", "_")
+            icon_sprite, icon_state = icon_for_step(step_id)
+
+            # Distinct surgeries can share an effect step (shallow and deep tend wounds, the attach-part
+            # family). Reusing the step's name would show several identical entries in the wheel, so qualify
+            # the repeat with the surgery it belongs to.
             name = step["name"] or surgery["name"]
+            if name in used_names:
+                qualifier = surgery["name"]
+                if qualifier is None or surgery_name_counts[qualifier] > 1:
+                    qualifier = humanize_id(surgery_id)
+                name = f"{name} ({qualifier})"
+            if name in used_names:
+                name = f"{name} ({humanize_id(surgery_id)})"
+            used_names.add(name)
+
             lower = step_id.lower()
             flags = []
             if "Synth" in surgery_id or "Chassis" in surgery_id:
@@ -493,8 +557,8 @@ def main():
                 "type": "surgicalOperation",
                 "id": op_id,
                 "icon": {
-                    "sprite": "_WF/Surgery/RadialIcons.rsi",
-                    "state": icon_for_step(step_id),
+                    "sprite": icon_sprite,
+                    "state": icon_state,
                 },
                 "name": f"wf-surgery-op-{location_id(op_id)}",
                 "description": f"wf-surgery-op-{location_id(op_id)}-desc",

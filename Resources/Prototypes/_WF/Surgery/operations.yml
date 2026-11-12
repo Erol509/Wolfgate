@@ -209,47 +209,6 @@
   tools:
   - component: BoneGel
 
-- type: surgicalOperation
-  id: WFWidenCavity
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-widen-cavity
-  description: wf-surgery-op-widen-cavity-desc
-  surgery: WFSurgeryWidenCavity
-  step: WFSurgeryStepWidenCavity
-  requirePreviousSteps: false
-  time: 4.8
-  requiredStates: [SkinOpen, OrgansCut]
-  blockedStates: [CavityWidened]
-  zones: [Torso, Groin]
-  priority: 6
-  flags: [Organic]
-  tools:
-  - component: Retractor
-  - quality: Prying
-    speed: 1.5
-
-- type: surgicalOperation
-  id: WFCloseCavity
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-close-cavity
-  description: wf-surgery-op-close-cavity-desc
-  surgery: WFSurgeryCloseCavity
-  step: WFSurgeryStepCloseCavity
-  requirePreviousSteps: false
-  time: 4.8
-  requiredStates: [SkinOpen, OrgansCut, CavityWidened]
-  zones: [Torso, Groin]
-  priority: 6
-  flags: [Organic]
-  tools:
-  - component: Retractor
-  - quality: Prying
-    speed: 1.5
-
 # Mechanical surgery ---------------------------------------------------------
 
 - type: surgicalOperation

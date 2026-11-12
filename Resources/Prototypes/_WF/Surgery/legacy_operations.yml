@@ -4,8 +4,8 @@
 - type: surgicalOperation
   id: WFOpSurgeryAttachHands_SurgeryStepInsertFeature
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
   name: wf-surgery-op-wfopsurgeryattachhands-surgerystepinsertfeature
   description: wf-surgery-op-wfopsurgeryattachhands-surgerystepinsertfeature-desc
   surgery: SurgeryAttachHands
@@ -22,35 +22,10 @@
   - Torso
   - Groin
 - type: surgicalOperation
-  id: WFOpSurgeryAttachHands_SurgeryStepSealWounds
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryattachhands-surgerystepsealwounds
-  description: wf-surgery-op-wfopsurgeryattachhands-surgerystepsealwounds-desc
-  surgery: SurgeryAttachHands
-  step: SurgeryStepSealWounds
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpSurgeryAttachHead_SurgeryStepInsertFeature
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
   name: wf-surgery-op-wfopsurgeryattachhead-surgerystepinsertfeature
   description: wf-surgery-op-wfopsurgeryattachhead-surgerystepinsertfeature-desc
   surgery: SurgeryAttachHead
@@ -67,35 +42,10 @@
   - Torso
   - Groin
 - type: surgicalOperation
-  id: WFOpSurgeryAttachHead_SurgeryStepSealWounds
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryattachhead-surgerystepsealwounds
-  description: wf-surgery-op-wfopsurgeryattachhead-surgerystepsealwounds-desc
-  surgery: SurgeryAttachHead
-  step: SurgeryStepSealWounds
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpSurgeryAttachLeftArm_SurgeryStepInsertFeature
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
   name: wf-surgery-op-wfopsurgeryattachleftarm-surgerystepinsertfeature
   description: wf-surgery-op-wfopsurgeryattachleftarm-surgerystepinsertfeature-desc
   surgery: SurgeryAttachLeftArm
@@ -112,35 +62,10 @@
   - Torso
   - Groin
 - type: surgicalOperation
-  id: WFOpSurgeryAttachLeftArm_SurgeryStepSealWounds
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryattachleftarm-surgerystepsealwounds
-  description: wf-surgery-op-wfopsurgeryattachleftarm-surgerystepsealwounds-desc
-  surgery: SurgeryAttachLeftArm
-  step: SurgeryStepSealWounds
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpSurgeryAttachLeftFoot_SurgeryStepInsertFeature
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
   name: wf-surgery-op-wfopsurgeryattachleftfoot-surgerystepinsertfeature
   description: wf-surgery-op-wfopsurgeryattachleftfoot-surgerystepinsertfeature-desc
   surgery: SurgeryAttachLeftFoot
@@ -157,35 +82,10 @@
   - LeftLeg
   - RightLeg
 - type: surgicalOperation
-  id: WFOpSurgeryAttachLeftFoot_SurgeryStepSealWounds
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryattachleftfoot-surgerystepsealwounds
-  description: wf-surgery-op-wfopsurgeryattachleftfoot-surgerystepsealwounds-desc
-  surgery: SurgeryAttachLeftFoot
-  step: SurgeryStepSealWounds
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Leg
-  zones:
-  - LeftLeg
-  - RightLeg
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpSurgeryAttachLeftHand_SurgeryStepInsertFeature
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
   name: wf-surgery-op-wfopsurgeryattachlefthand-surgerystepinsertfeature
   description: wf-surgery-op-wfopsurgeryattachlefthand-surgerystepinsertfeature-desc
   surgery: SurgeryAttachLeftHand
@@ -202,35 +102,10 @@
   - LeftArm
   - RightArm
 - type: surgicalOperation
-  id: WFOpSurgeryAttachLeftHand_SurgeryStepSealWounds
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryattachlefthand-surgerystepsealwounds
-  description: wf-surgery-op-wfopsurgeryattachlefthand-surgerystepsealwounds-desc
-  surgery: SurgeryAttachLeftHand
-  step: SurgeryStepSealWounds
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Arm
-  zones:
-  - LeftArm
-  - RightArm
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpSurgeryAttachLeftLeg_SurgeryStepInsertFeature
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
   name: wf-surgery-op-wfopsurgeryattachleftleg-surgerystepinsertfeature
   description: wf-surgery-op-wfopsurgeryattachleftleg-surgerystepinsertfeature-desc
   surgery: SurgeryAttachLeftLeg
@@ -247,35 +122,10 @@
   - Torso
   - Groin
 - type: surgicalOperation
-  id: WFOpSurgeryAttachLeftLeg_SurgeryStepSealWounds
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryattachleftleg-surgerystepsealwounds
-  description: wf-surgery-op-wfopsurgeryattachleftleg-surgerystepsealwounds-desc
-  surgery: SurgeryAttachLeftLeg
-  step: SurgeryStepSealWounds
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpSurgeryAttachRightArm_SurgeryStepInsertFeature
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
   name: wf-surgery-op-wfopsurgeryattachrightarm-surgerystepinsertfeature
   description: wf-surgery-op-wfopsurgeryattachrightarm-surgerystepinsertfeature-desc
   surgery: SurgeryAttachRightArm
@@ -292,35 +142,10 @@
   - Torso
   - Groin
 - type: surgicalOperation
-  id: WFOpSurgeryAttachRightArm_SurgeryStepSealWounds
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryattachrightarm-surgerystepsealwounds
-  description: wf-surgery-op-wfopsurgeryattachrightarm-surgerystepsealwounds-desc
-  surgery: SurgeryAttachRightArm
-  step: SurgeryStepSealWounds
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpSurgeryAttachRightFoot_SurgeryStepInsertFeature
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
   name: wf-surgery-op-wfopsurgeryattachrightfoot-surgerystepinsertfeature
   description: wf-surgery-op-wfopsurgeryattachrightfoot-surgerystepinsertfeature-desc
   surgery: SurgeryAttachRightFoot
@@ -337,35 +162,10 @@
   - LeftLeg
   - RightLeg
 - type: surgicalOperation
-  id: WFOpSurgeryAttachRightFoot_SurgeryStepSealWounds
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryattachrightfoot-surgerystepsealwounds
-  description: wf-surgery-op-wfopsurgeryattachrightfoot-surgerystepsealwounds-desc
-  surgery: SurgeryAttachRightFoot
-  step: SurgeryStepSealWounds
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Leg
-  zones:
-  - LeftLeg
-  - RightLeg
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpSurgeryAttachRightHand_SurgeryStepInsertFeature
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
   name: wf-surgery-op-wfopsurgeryattachrighthand-surgerystepinsertfeature
   description: wf-surgery-op-wfopsurgeryattachrighthand-surgerystepinsertfeature-desc
   surgery: SurgeryAttachRightHand
@@ -382,35 +182,10 @@
   - LeftArm
   - RightArm
 - type: surgicalOperation
-  id: WFOpSurgeryAttachRightHand_SurgeryStepSealWounds
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryattachrighthand-surgerystepsealwounds
-  description: wf-surgery-op-wfopsurgeryattachrighthand-surgerystepsealwounds-desc
-  surgery: SurgeryAttachRightHand
-  step: SurgeryStepSealWounds
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Arm
-  zones:
-  - LeftArm
-  - RightArm
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpSurgeryAttachRightLeg_SurgeryStepInsertFeature
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
+    state: insertion
   name: wf-surgery-op-wfopsurgeryattachrightleg-surgerystepinsertfeature
   description: wf-surgery-op-wfopsurgeryattachrightleg-surgerystepinsertfeature-desc
   surgery: SurgeryAttachRightLeg
@@ -426,31 +201,6 @@
   zones:
   - Torso
   - Groin
-- type: surgicalOperation
-  id: WFOpSurgeryAttachRightLeg_SurgeryStepSealWounds
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryattachrightleg-surgerystepsealwounds
-  description: wf-surgery-op-wfopsurgeryattachrightleg-surgerystepsealwounds-desc
-  surgery: SurgeryAttachRightLeg
-  step: SurgeryStepSealWounds
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
 - type: surgicalOperation
   id: WFOpSurgeryCorticalBorerRemoval_SurgeryStepRemoveCorticalBorer
   icon:
@@ -473,184 +223,6 @@
   partType: Head
   zones:
   - Head
-- type: surgicalOperation
-  id: WFOpSurgeryInsertBorgBrain_SurgeryStepInsertOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryinsertborgbrain-surgerystepinsertorgan
-  description: wf-surgery-op-wfopsurgeryinsertborgbrain-surgerystepinsertorgan-desc
-  surgery: SurgeryInsertBorgBrain
-  step: SurgeryStepInsertOrgan
-  kind: OrganManipulation
-  priority: 11
-  tools:
-  - component: Organ
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  organComponents: &id001
-  - BorgBrain
-- type: surgicalOperation
-  id: WFOpSurgeryInsertBorgBrain_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryinsertborgbrain-surgerystepsealorganwound
-  description: wf-surgery-op-wfopsurgeryinsertborgbrain-surgerystepsealorganwound-desc
-  surgery: SurgeryInsertBorgBrain
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  flags:
-  - PriorityNextStep
-  organComponents: *id001
-- type: surgicalOperation
-  id: WFOpSurgeryInsertBrain_SurgeryStepInsertOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryinsertbrain-surgerystepinsertorgan
-  description: wf-surgery-op-wfopsurgeryinsertbrain-surgerystepinsertorgan-desc
-  surgery: SurgeryInsertBrain
-  step: SurgeryStepInsertOrgan
-  kind: OrganManipulation
-  priority: 11
-  tools:
-  - component: Organ
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  organComponents: &id002
-  - Brain
-- type: surgicalOperation
-  id: WFOpSurgeryInsertBrain_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryinsertbrain-surgerystepsealorganwound
-  description: wf-surgery-op-wfopsurgeryinsertbrain-surgerystepsealorganwound-desc
-  surgery: SurgeryInsertBrain
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  flags:
-  - PriorityNextStep
-  organComponents: *id002
-- type: surgicalOperation
-  id: WFOpSurgeryInsertEyes_SurgeryStepInsertEyes
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryinserteyes-surgerystepinserteyes
-  description: wf-surgery-op-wfopsurgeryinserteyes-surgerystepinserteyes-desc
-  surgery: SurgeryInsertEyes
-  step: SurgeryStepInsertEyes
-  kind: Default
-  priority: 11
-  tools:
-  - anyItem: true
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  partType: Head
-  zones:
-  - Head
-  organComponents: &id003
-  - Eyes
-- type: surgicalOperation
-  id: WFOpSurgeryInsertEyes_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryinserteyes-surgerystepsealorganwound
-  description: wf-surgery-op-wfopsurgeryinserteyes-surgerystepsealorganwound-desc
-  surgery: SurgeryInsertEyes
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Head
-  zones:
-  - Head
-  flags:
-  - PriorityNextStep
-  organComponents: *id003
-- type: surgicalOperation
-  id: WFOpSurgeryInsertHeart_SurgeryStepInsertHeart
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryinsertheart-surgerystepinsertheart
-  description: wf-surgery-op-wfopsurgeryinsertheart-surgerystepinsertheart-desc
-  surgery: SurgeryInsertHeart
-  step: SurgeryStepInsertHeart
-  kind: Default
-  priority: 11
-  tools:
-  - anyItem: true
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents: &id004
-  - Heart
-- type: surgicalOperation
-  id: WFOpSurgeryInsertHeart_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryinsertheart-surgerystepsealorganwound
-  description: wf-surgery-op-wfopsurgeryinsertheart-surgerystepsealorganwound-desc
-  surgery: SurgeryInsertHeart
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-  organComponents: *id004
 - type: surgicalOperation
   id: WFOpSurgeryInsertItem_SurgeryStepInsertItem
   icon:
@@ -694,108 +266,10 @@
   - Torso
   - Groin
 - type: surgicalOperation
-  id: WFOpSurgeryInsertLiver_SurgeryStepInsertLiver
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryinsertliver-surgerystepinsertliver
-  description: wf-surgery-op-wfopsurgeryinsertliver-surgerystepinsertliver-desc
-  surgery: SurgeryInsertLiver
-  step: SurgeryStepInsertLiver
-  kind: Default
-  priority: 11
-  tools:
-  - anyItem: true
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents: &id005
-  - Liver
-- type: surgicalOperation
-  id: WFOpSurgeryInsertLiver_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryinsertliver-surgerystepsealorganwound
-  description: wf-surgery-op-wfopsurgeryinsertliver-surgerystepsealorganwound-desc
-  surgery: SurgeryInsertLiver
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-  organComponents: *id005
-- type: surgicalOperation
-  id: WFOpSurgeryInsertLungs_SurgeryStepInsertLungs
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryinsertlungs-surgerystepinsertlungs
-  description: wf-surgery-op-wfopsurgeryinsertlungs-surgerystepinsertlungs-desc
-  surgery: SurgeryInsertLungs
-  step: SurgeryStepInsertLungs
-  kind: Default
-  priority: 11
-  tools:
-  - anyItem: true
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents: &id006
-  - Lung
-- type: surgicalOperation
-  id: WFOpSurgeryInsertLungs_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryinsertlungs-surgerystepsealorganwound
-  description: wf-surgery-op-wfopsurgeryinsertlungs-surgerystepsealorganwound-desc
-  surgery: SurgeryInsertLungs
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-  organComponents: *id006
-- type: surgicalOperation
   id: WFOpSurgeryInsertPump_SurgeryStepInsertPump
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopsurgeryinsertpump-surgerystepinsertpump
   description: wf-surgery-op-wfopsurgeryinsertpump-surgerystepinsertpump-desc
   surgery: SurgeryInsertPump
@@ -811,55 +285,6 @@
   - Groin
   organComponents:
   - Heart
-- type: surgicalOperation
-  id: WFOpSurgeryInsertStomach_SurgeryStepInsertStomach
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryinsertstomach-surgerystepinsertstomach
-  description: wf-surgery-op-wfopsurgeryinsertstomach-surgerystepinsertstomach-desc
-  surgery: SurgeryInsertStomach
-  step: SurgeryStepInsertStomach
-  kind: Default
-  priority: 11
-  tools:
-  - anyItem: true
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents: &id007
-  - Stomach
-- type: surgicalOperation
-  id: WFOpSurgeryInsertStomach_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopsurgeryinsertstomach-surgerystepsealorganwound
-  description: wf-surgery-op-wfopsurgeryinsertstomach-surgerystepsealorganwound-desc
-  surgery: SurgeryInsertStomach
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-  organComponents: *id007
 - type: surgicalOperation
   id: WFOpSurgeryOpenRibcage_SurgeryStepPriseOpenBones
   icon:
@@ -883,160 +308,6 @@
   zones:
   - Torso
   - Groin
-- type: surgicalOperation
-  id: WFOpSurgeryRemoveBorgBrain_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryremoveborgbrain-surgerystepremoveorgan
-  description: wf-surgery-op-wfopsurgeryremoveborgbrain-surgerystepremoveorgan-desc
-  surgery: SurgeryRemoveBorgBrain
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 12
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - BorgBrain
-- type: surgicalOperation
-  id: WFOpSurgeryRemoveBrain_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryremovebrain-surgerystepremoveorgan
-  description: wf-surgery-op-wfopsurgeryremovebrain-surgerystepremoveorgan-desc
-  surgery: SurgeryRemoveBrain
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 12
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  - OrgansCut
-  partType: Head
-  zones:
-  - Head
-  organComponents:
-  - Brain
-- type: surgicalOperation
-  id: WFOpSurgeryRemoveEyes_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryremoveeyes-surgerystepremoveorgan
-  description: wf-surgery-op-wfopsurgeryremoveeyes-surgerystepremoveorgan-desc
-  surgery: SurgeryRemoveEyes
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 12
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  - OrgansCut
-  partType: Head
-  zones:
-  - Head
-  organComponents:
-  - Eyes
-- type: surgicalOperation
-  id: WFOpSurgeryRemoveHeart_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryremoveheart-surgerystepremoveorgan
-  description: wf-surgery-op-wfopsurgeryremoveheart-surgerystepremoveorgan-desc
-  surgery: SurgeryRemoveHeart
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 12
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - Heart
-- type: surgicalOperation
-  id: WFOpSurgeryRemoveLiver_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryremoveliver-surgerystepremoveorgan
-  description: wf-surgery-op-wfopsurgeryremoveliver-surgerystepremoveorgan-desc
-  surgery: SurgeryRemoveLiver
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 12
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - Liver
-- type: surgicalOperation
-  id: WFOpSurgeryRemoveLungs_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryremovelungs-surgerystepremoveorgan
-  description: wf-surgery-op-wfopsurgeryremovelungs-surgerystepremoveorgan-desc
-  surgery: SurgeryRemoveLungs
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 12
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - Lung
 - type: surgicalOperation
   id: WFOpSurgeryRemovePart_SurgeryStepSawFeature
   icon:
@@ -1074,36 +345,10 @@
   requiredStates:
   - SkinOpen
 - type: surgicalOperation
-  id: WFOpSurgeryRemoveStomach_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopsurgeryremovestomach-surgerystepremoveorgan
-  description: wf-surgery-op-wfopsurgeryremovestomach-surgerystepremoveorgan-desc
-  surgery: SurgeryRemoveStomach
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 12
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - Stomach
-- type: surgicalOperation
   id: WFOpSurgeryTendWoundsBrute_SurgeryStepRepairBruteTissue
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: brutekit
   name: wf-surgery-op-wfopsurgerytendwoundsbrute-surgerysteprepairbrutetissue
   description: wf-surgery-op-wfopsurgerytendwoundsbrute-surgerysteprepairbrutetissue-desc
   surgery: SurgeryTendWoundsBrute
@@ -1121,8 +366,8 @@
 - type: surgicalOperation
   id: WFOpSurgeryTendWoundsBurn_SurgeryStepRepairBurnTissue
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: burnkit
   name: wf-surgery-op-wfopsurgerytendwoundsburn-surgerysteprepairburntissue
   description: wf-surgery-op-wfopsurgerytendwoundsburn-surgerysteprepairburntissue-desc
   surgery: SurgeryTendWoundsBurn
@@ -1234,8 +479,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryCloseEvisceration_WFSurgeryStepClampEvisceration
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
   name: wf-surgery-op-wfopwfsurgerycloseevisceration-wfsurgerystepclampevisceration
   description: wf-surgery-op-wfopwfsurgerycloseevisceration-wfsurgerystepclampevisceration-desc
   surgery: WFSurgeryCloseEvisceration
@@ -1250,8 +495,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryCloseEvisceration_WFSurgeryStepCloseEvisceration
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/cautery.rsi
+    state: cautery
   name: wf-surgery-op-wfopwfsurgerycloseevisceration-wfsurgerystepcloseevisceration
   description: wf-surgery-op-wfopwfsurgerycloseevisceration-wfsurgerystepcloseevisceration-desc
   surgery: WFSurgeryCloseEvisceration
@@ -1383,8 +628,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryGraftSkin_WFSurgeryStepGraftSkin
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: regenerative-mesh
   name: wf-surgery-op-wfopwfsurgerygraftskin-wfsurgerystepgraftskin
   description: wf-surgery-op-wfopwfsurgerygraftskin-wfsurgerystepgraftskin-desc
   surgery: WFSurgeryGraftSkin
@@ -1435,30 +680,6 @@
   flags:
   - Looping
 - type: surgicalOperation
-  id: WFOpWFSurgeryHealBrain_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryhealbrain-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryhealbrain-surgerystepsealorganwound-desc
-  surgery: WFSurgeryHealBrain
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Head
-  zones:
-  - Head
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpWFSurgeryHealEyes_WFSurgeryStepHealEyes
   icon:
     sprite: _WF/Surgery/RadialIcons.rsi
@@ -1480,30 +701,6 @@
   - Head
   flags:
   - Looping
-- type: surgicalOperation
-  id: WFOpWFSurgeryHealEyes_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryhealeyes-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryhealeyes-surgerystepsealorganwound-desc
-  surgery: WFSurgeryHealEyes
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Head
-  zones:
-  - Head
-  flags:
-  - PriorityNextStep
 - type: surgicalOperation
   id: WFOpWFSurgeryHealHeart_WFSurgeryStepHealHeart
   icon:
@@ -1528,31 +725,6 @@
   flags:
   - Looping
 - type: surgicalOperation
-  id: WFOpWFSurgeryHealHeart_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryhealheart-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryhealheart-surgerystepsealorganwound-desc
-  surgery: WFSurgeryHealHeart
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpWFSurgeryHealKidneys_WFSurgeryStepHealKidneys
   icon:
     sprite: _WF/Surgery/RadialIcons.rsi
@@ -1575,31 +747,6 @@
   - Groin
   flags:
   - Looping
-- type: surgicalOperation
-  id: WFOpWFSurgeryHealKidneys_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryhealkidneys-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryhealkidneys-surgerystepsealorganwound-desc
-  surgery: WFSurgeryHealKidneys
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
 - type: surgicalOperation
   id: WFOpWFSurgeryHealLiver_WFSurgeryStepHealLiver
   icon:
@@ -1624,31 +771,6 @@
   flags:
   - Looping
 - type: surgicalOperation
-  id: WFOpWFSurgeryHealLiver_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryhealliver-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryhealliver-surgerystepsealorganwound-desc
-  surgery: WFSurgeryHealLiver
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpWFSurgeryHealLungs_WFSurgeryStepHealLungs
   icon:
     sprite: _WF/Surgery/RadialIcons.rsi
@@ -1671,31 +793,6 @@
   - Groin
   flags:
   - Looping
-- type: surgicalOperation
-  id: WFOpWFSurgeryHealLungs_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryheallungs-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryheallungs-surgerystepsealorganwound-desc
-  surgery: WFSurgeryHealLungs
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
 - type: surgicalOperation
   id: WFOpWFSurgeryHealSlimeCore_WFSurgeryStepHealSlimeCore
   icon:
@@ -1720,31 +817,6 @@
   flags:
   - Looping
 - type: surgicalOperation
-  id: WFOpWFSurgeryHealSlimeCore_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryhealslimecore-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryhealslimecore-surgerystepsealorganwound-desc
-  surgery: WFSurgeryHealSlimeCore
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpWFSurgeryHealStomach_WFSurgeryStepHealStomach
   icon:
     sprite: _WF/Surgery/RadialIcons.rsi
@@ -1767,31 +839,6 @@
   - Groin
   flags:
   - Looping
-- type: surgicalOperation
-  id: WFOpWFSurgeryHealStomach_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryhealstomach-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryhealstomach-surgerystepsealorganwound-desc
-  surgery: WFSurgeryHealStomach
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
 - type: surgicalOperation
   id: WFOpWFSurgeryImplantSynthPowerCell_WFSurgeryStepInsertSynthPowerCell
   icon:
@@ -1839,299 +886,10 @@
   flags:
   - Mechanical
 - type: surgicalOperation
-  id: WFOpWFSurgeryInsertBreasts_SurgeryStepInsertOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryinsertbreasts-surgerystepinsertorgan
-  description: wf-surgery-op-wfopwfsurgeryinsertbreasts-surgerystepinsertorgan-desc
-  surgery: WFSurgeryInsertBreasts
-  step: SurgeryStepInsertOrgan
-  kind: OrganManipulation
-  priority: 10
-  tools:
-  - component: Organ
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents: &id008
-  - BreastsOrgan
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertBreasts_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryinsertbreasts-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryinsertbreasts-surgerystepsealorganwound-desc
-  surgery: WFSurgeryInsertBreasts
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-  organComponents: *id008
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertKidneys_WFSurgeryStepInsertKidneys
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryinsertkidneys-wfsurgerystepinsertkidneys
-  description: wf-surgery-op-wfopwfsurgeryinsertkidneys-wfsurgerystepinsertkidneys-desc
-  surgery: WFSurgeryInsertKidneys
-  step: WFSurgeryStepInsertKidneys
-  kind: Default
-  priority: 11
-  tools:
-  - anyItem: true
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents: &id009
-  - WFKidneys
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertKidneys_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryinsertkidneys-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryinsertkidneys-surgerystepsealorganwound-desc
-  surgery: WFSurgeryInsertKidneys
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-  organComponents: *id009
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertPenis_SurgeryStepInsertOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryinsertpenis-surgerystepinsertorgan
-  description: wf-surgery-op-wfopwfsurgeryinsertpenis-surgerystepinsertorgan-desc
-  surgery: WFSurgeryInsertPenis
-  step: SurgeryStepInsertOrgan
-  kind: OrganManipulation
-  priority: 10
-  tools:
-  - component: Organ
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents: &id010
-  - PenisOrgan
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertPenis_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryinsertpenis-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryinsertpenis-surgerystepsealorganwound-desc
-  surgery: WFSurgeryInsertPenis
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-  organComponents: *id010
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertTesticles_SurgeryStepInsertOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryinserttesticles-surgerystepinsertorgan
-  description: wf-surgery-op-wfopwfsurgeryinserttesticles-surgerystepinsertorgan-desc
-  surgery: WFSurgeryInsertTesticles
-  step: SurgeryStepInsertOrgan
-  kind: OrganManipulation
-  priority: 10
-  tools:
-  - component: Organ
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents: &id011
-  - TesticlesOrgan
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertTesticles_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryinserttesticles-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryinserttesticles-surgerystepsealorganwound-desc
-  surgery: WFSurgeryInsertTesticles
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-  organComponents: *id011
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertVagina_SurgeryStepInsertOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryinsertvagina-surgerystepinsertorgan
-  description: wf-surgery-op-wfopwfsurgeryinsertvagina-surgerystepinsertorgan-desc
-  surgery: WFSurgeryInsertVagina
-  step: SurgeryStepInsertOrgan
-  kind: OrganManipulation
-  priority: 10
-  tools:
-  - component: Organ
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents: &id012
-  - VaginaOrgan
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertVagina_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryinsertvagina-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryinsertvagina-surgerystepsealorganwound-desc
-  surgery: WFSurgeryInsertVagina
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-  organComponents: *id012
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertWomb_SurgeryStepInsertOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryinsertwomb-surgerystepinsertorgan
-  description: wf-surgery-op-wfopwfsurgeryinsertwomb-surgerystepinsertorgan-desc
-  surgery: WFSurgeryInsertWomb
-  step: SurgeryStepInsertOrgan
-  kind: OrganManipulation
-  priority: 10
-  tools:
-  - component: Organ
-    speed: 1.0
-  requiredStates:
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents: &id013
-  - WombOrgan
-- type: surgicalOperation
-  id: WFOpWFSurgeryInsertWomb_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryinsertwomb-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryinsertwomb-surgerystepsealorganwound-desc
-  surgery: WFSurgeryInsertWomb
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-  organComponents: *id013
-- type: surgicalOperation
   id: WFOpWFSurgeryMendFracture_WFSurgeryStepSetBone
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: saw_bones
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/bonesetter.rsi
+    state: bonesetter
   name: wf-surgery-op-wfopwfsurgerymendfracture-wfsurgerystepsetbone
   description: wf-surgery-op-wfopwfsurgerymendfracture-wfsurgerystepsetbone-desc
   surgery: WFSurgeryMendFracture
@@ -2148,8 +906,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryMendFracture_WFSurgeryStepMendFracture
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/bone-gel.rsi
+    state: bone-gel
   name: wf-surgery-op-wfopwfsurgerymendfracture-wfsurgerystepmendfracture
   description: wf-surgery-op-wfopwfsurgerymendfracture-wfsurgerystepmendfracture-desc
   surgery: WFSurgeryMendFracture
@@ -2167,8 +925,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRelocateJoint_WFSurgeryStepRelocateJoint
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/bonesetter.rsi
+    state: bonesetter
   name: wf-surgery-op-wfopwfsurgeryrelocatejoint-wfsurgerysteprelocatejoint
   description: wf-surgery-op-wfopwfsurgeryrelocatejoint-wfsurgerysteprelocatejoint-desc
   surgery: WFSurgeryRelocateJoint
@@ -2179,35 +937,10 @@
   - anyItem: true
     speed: 1.0
 - type: surgicalOperation
-  id: WFOpWFSurgeryRemoveBreasts_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryremovebreasts-surgerystepremoveorgan
-  description: wf-surgery-op-wfopwfsurgeryremovebreasts-surgerystepremoveorgan-desc
-  surgery: WFSurgeryRemoveBreasts
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 11
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - BreastsOrgan
-- type: surgicalOperation
   id: WFOpWFSurgeryRemoveEmbeddedObjects_WFSurgeryStepExtractEmbedded
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
   name: wf-surgery-op-wfopwfsurgeryremoveembeddedobjects-wfsurgerystepextractembedded
   description: wf-surgery-op-wfopwfsurgeryremoveembeddedobjects-wfsurgerystepextractembedded-desc
   surgery: WFSurgeryRemoveEmbeddedObjects
@@ -2222,36 +955,10 @@
   requiredStates:
   - SkinOpen
 - type: surgicalOperation
-  id: WFOpWFSurgeryRemoveKidneys_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryremovekidneys-surgerystepremoveorgan
-  description: wf-surgery-op-wfopwfsurgeryremovekidneys-surgerystepremoveorgan-desc
-  surgery: WFSurgeryRemoveKidneys
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 12
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - BoneSawed
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - WFKidneys
-- type: surgicalOperation
   id: WFOpWFSurgeryRemoveNecroticFlesh_WFSurgeryStepRemoveNecroticFlesh
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
   name: wf-surgery-op-wfopwfsurgeryremovenecroticflesh-wfsurgerystepremovenecroticflesh
   description: wf-surgery-op-wfopwfsurgeryremovenecroticflesh-wfsurgerystepremovenecroticflesh-desc
   surgery: WFSurgeryRemoveNecroticFlesh
@@ -2268,8 +975,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRemoveNecroticFlesh_WFSurgeryStepGraftNecroticFlesh
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: regenerative-mesh
   name: wf-surgery-op-wfopwfsurgeryremovenecroticflesh-wfsurgerystepgraftnecroticflesh
   description: wf-surgery-op-wfopwfsurgeryremovenecroticflesh-wfsurgerystepgraftnecroticflesh-desc
   surgery: WFSurgeryRemoveNecroticFlesh
@@ -2282,110 +989,10 @@
   requiredStates:
   - SkinOpen
 - type: surgicalOperation
-  id: WFOpWFSurgeryRemovePenis_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryremovepenis-surgerystepremoveorgan
-  description: wf-surgery-op-wfopwfsurgeryremovepenis-surgerystepremoveorgan-desc
-  surgery: WFSurgeryRemovePenis
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 11
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - PenisOrgan
-- type: surgicalOperation
-  id: WFOpWFSurgeryRemoveTesticles_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryremovetesticles-surgerystepremoveorgan
-  description: wf-surgery-op-wfopwfsurgeryremovetesticles-surgerystepremoveorgan-desc
-  surgery: WFSurgeryRemoveTesticles
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 11
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - TesticlesOrgan
-- type: surgicalOperation
-  id: WFOpWFSurgeryRemoveVagina_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryremovevagina-surgerystepremoveorgan
-  description: wf-surgery-op-wfopwfsurgeryremovevagina-surgerystepremoveorgan-desc
-  surgery: WFSurgeryRemoveVagina
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 11
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - VaginaOrgan
-- type: surgicalOperation
-  id: WFOpWFSurgeryRemoveWomb_SurgeryStepRemoveOrgan
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
-  name: wf-surgery-op-wfopwfsurgeryremovewomb-surgerystepremoveorgan
-  description: wf-surgery-op-wfopwfsurgeryremovewomb-surgerystepremoveorgan-desc
-  surgery: WFSurgeryRemoveWomb
-  step: SurgeryStepRemoveOrgan
-  kind: OrganManipulation
-  priority: 11
-  tools:
-  - component: Tweezers
-    speed: 1.0
-  - quality: Prying
-    speed: 2.85
-  requiredStates:
-  - SkinOpen
-  - OrgansCut
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  organComponents:
-  - WombOrgan
-- type: surgicalOperation
   id: WFOpWFSurgeryRepairArtery_WFSurgeryStepClampArtery
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: _Shitmed/Objects/Specific/Medical/Surgery/hemostat.rsi
+    state: hemostat
   name: wf-surgery-op-wfopwfsurgeryrepairartery-wfsurgerystepclampartery
   description: wf-surgery-op-wfopwfsurgeryrepairartery-wfsurgerystepclampartery-desc
   surgery: WFSurgeryRepairArtery
@@ -2402,8 +1009,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairArtery_WFSurgeryStepRepairArtery
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medicated-suture
   name: wf-surgery-op-wfopwfsurgeryrepairartery-wfsurgerysteprepairartery
   description: wf-surgery-op-wfopwfsurgeryrepairartery-wfsurgerysteprepairartery-desc
   surgery: WFSurgeryRepairArtery
@@ -2436,34 +1043,10 @@
   zones:
   - Head
 - type: surgicalOperation
-  id: WFOpWFSurgeryRepairBrain_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryrepairbrain-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryrepairbrain-surgerystepsealorganwound-desc
-  surgery: WFSurgeryRepairBrain
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 12
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Head
-  zones:
-  - Head
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpWFSurgeryRepairChassisEyes_WFSurgeryStepOpenServicePanel
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairchassiseyes-wfsurgerystepopenservicepanel
   description: wf-surgery-op-wfopwfsurgeryrepairchassiseyes-wfsurgerystepopenservicepanel-desc
   surgery: WFSurgeryRepairChassisEyes
@@ -2481,8 +1064,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairChassisEyes_WFSurgeryStepRepairChassisEyes
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/multitool.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairchassiseyes-wfsurgerysteprepairchassiseyes
   description: wf-surgery-op-wfopwfsurgeryrepairchassiseyes-wfsurgerysteprepairchassiseyes-desc
   surgery: WFSurgeryRepairChassisEyes
@@ -2501,8 +1084,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairChassisEyes_WFSurgeryStepCloseServicePanel
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairchassiseyes-wfsurgerystepcloseservicepanel
   description: wf-surgery-op-wfopwfsurgeryrepairchassiseyes-wfsurgerystepcloseservicepanel-desc
   surgery: WFSurgeryRepairChassisEyes
@@ -2524,8 +1107,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairChassisPump_WFSurgeryStepOpenServicePanel
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairchassispump-wfsurgerystepopenservicepanel
   description: wf-surgery-op-wfopwfsurgeryrepairchassispump-wfsurgerystepopenservicepanel-desc
   surgery: WFSurgeryRepairChassisPump
@@ -2544,8 +1127,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairChassisPump_WFSurgeryStepRepairChassisPump
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairchassispump-wfsurgerysteprepairchassispump
   description: wf-surgery-op-wfopwfsurgeryrepairchassispump-wfsurgerysteprepairchassispump-desc
   surgery: WFSurgeryRepairChassisPump
@@ -2565,8 +1148,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairChassisPump_WFSurgeryStepCloseServicePanel
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairchassispump-wfsurgerystepcloseservicepanel
   description: wf-surgery-op-wfopwfsurgeryrepairchassispump-wfsurgerystepcloseservicepanel-desc
   surgery: WFSurgeryRepairChassisPump
@@ -2589,8 +1172,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairCore_WFSurgeryStepUnseatCore
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepaircore-wfsurgerystepunseatcore
   description: wf-surgery-op-wfopwfsurgeryrepaircore-wfsurgerystepunseatcore-desc
   surgery: WFSurgeryRepairCore
@@ -2607,8 +1190,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairCore_WFSurgeryStepRepairCore
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/multitool.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepaircore-wfsurgerysteprepaircore
   description: wf-surgery-op-wfopwfsurgeryrepaircore-wfsurgerysteprepaircore-desc
   surgery: WFSurgeryRepairCore
@@ -2625,8 +1208,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairCore_WFSurgeryStepReseatCore
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepaircore-wfsurgerystepreseatcore
   description: wf-surgery-op-wfopwfsurgeryrepaircore-wfsurgerystepreseatcore-desc
   surgery: WFSurgeryRepairCore
@@ -2662,35 +1245,10 @@
   - Torso
   - Groin
 - type: surgicalOperation
-  id: WFOpWFSurgeryRepairSlimeCore_SurgeryStepSealOrganWound
-  icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
-  name: wf-surgery-op-wfopwfsurgeryrepairslimecore-surgerystepsealorganwound
-  description: wf-surgery-op-wfopwfsurgeryrepairslimecore-surgerystepsealorganwound-desc
-  surgery: WFSurgeryRepairSlimeCore
-  step: SurgeryStepSealOrganWound
-  kind: Default
-  priority: 11
-  tools:
-  - component: Cautery
-    speed: 1.0
-  - quality: Welding
-    speed: 1.5
-  anyRequiredStates:
-  - SkinCut
-  - SkinOpen
-  partType: Torso
-  zones:
-  - Torso
-  - Groin
-  flags:
-  - PriorityNextStep
-- type: surgicalOperation
   id: WFOpWFSurgeryRepairSynthCore_WFSurgeryStepUnseatCore
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairsynthcore-wfsurgerystepunseatcore
   description: wf-surgery-op-wfopwfsurgeryrepairsynthcore-wfsurgerystepunseatcore-desc
   surgery: WFSurgeryRepairSynthCore
@@ -2708,8 +1266,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairSynthCore_WFSurgeryStepRepairSynthCore
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/multitool.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairsynthcore-wfsurgerysteprepairsynthcore
   description: wf-surgery-op-wfopwfsurgeryrepairsynthcore-wfsurgerysteprepairsynthcore-desc
   surgery: WFSurgeryRepairSynthCore
@@ -2727,8 +1285,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairSynthCore_WFSurgeryStepReseatCore
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairsynthcore-wfsurgerystepreseatcore
   description: wf-surgery-op-wfopwfsurgeryrepairsynthcore-wfsurgerystepreseatcore-desc
   surgery: WFSurgeryRepairSynthCore
@@ -2746,8 +1304,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairSynthPump_WFSurgeryStepOpenServicePanel
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairsynthpump-wfsurgerystepopenservicepanel
   description: wf-surgery-op-wfopwfsurgeryrepairsynthpump-wfsurgerystepopenservicepanel-desc
   surgery: WFSurgeryRepairSynthPump
@@ -2766,8 +1324,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairSynthPump_WFSurgeryStepRepairSynthPump
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairsynthpump-wfsurgerysteprepairsynthpump
   description: wf-surgery-op-wfopwfsurgeryrepairsynthpump-wfsurgerysteprepairsynthpump-desc
   surgery: WFSurgeryRepairSynthPump
@@ -2787,8 +1345,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairSynthPump_WFSurgeryStepCloseServicePanel
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: mend_incision
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryrepairsynthpump-wfsurgerystepcloseservicepanel
   description: wf-surgery-op-wfopwfsurgeryrepairsynthpump-wfsurgerystepcloseservicepanel-desc
   surgery: WFSurgeryRepairSynthPump
@@ -2811,8 +1369,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairTendon_WFSurgeryStepRepairTendon
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medicated-suture
   name: wf-surgery-op-wfopwfsurgeryrepairtendon-wfsurgerysteprepairtendon
   description: wf-surgery-op-wfopwfsurgeryrepairtendon-wfsurgerysteprepairtendon-desc
   surgery: WFSurgeryRepairTendon
@@ -2828,8 +1386,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryReplaceServo_WFSurgeryStepReplaceServo
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coillv-30
   name: wf-surgery-op-wfopwfsurgeryreplaceservo-wfsurgerystepreplaceservo
   description: wf-surgery-op-wfopwfsurgeryreplaceservo-wfsurgerystepreplaceservo-desc
   surgery: WFSurgeryReplaceServo
@@ -2842,8 +1400,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryRewireChassis_WFSurgeryStepRewireChassis
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/cable-coils.rsi
+    state: coillv-30
   name: wf-surgery-op-wfopwfsurgeryrewirechassis-wfsurgerysteprewirechassis
   description: wf-surgery-op-wfopwfsurgeryrewirechassis-wfsurgerysteprewirechassis-desc
   surgery: WFSurgeryRewireChassis
@@ -2859,8 +1417,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryStopBleeding_WFSurgeryStepSutureBleeding
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medicated-suture
   name: wf-surgery-op-wfopwfsurgerystopbleeding-wfsurgerystepsuturebleeding
   description: wf-surgery-op-wfopwfsurgerystopbleeding-wfsurgerystepsuturebleeding-desc
   surgery: WFSurgeryStopBleeding
@@ -2896,8 +1454,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryTendWoundsBruteDeep_SurgeryStepRepairBruteTissue
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: brutekit
   name: wf-surgery-op-wfopwfsurgerytendwoundsbrutedeep-surgerysteprepairbrutetissue
   description: wf-surgery-op-wfopwfsurgerytendwoundsbrutedeep-surgerysteprepairbrutetissue-desc
   surgery: WFSurgeryTendWoundsBruteDeep
@@ -2915,8 +1473,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryTendWoundsBurnDeep_SurgeryStepRepairBurnTissue
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: burnkit
   name: wf-surgery-op-wfopwfsurgerytendwoundsburndeep-surgerysteprepairburntissue
   description: wf-surgery-op-wfopwfsurgerytendwoundsburndeep-surgerysteprepairburntissue-desc
   surgery: WFSurgeryTendWoundsBurnDeep
@@ -2934,8 +1492,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryWeldChassis_WFSurgeryStepWeldChassis
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/welder.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryweldchassis-wfsurgerystepweldchassis
   description: wf-surgery-op-wfopwfsurgeryweldchassis-wfsurgerystepweldchassis-desc
   surgery: WFSurgeryWeldChassis
@@ -2955,8 +1513,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryWeldChassisBreach_WFSurgeryStepSeatChassisPlating
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryweldchassisbreach-wfsurgerystepseatchassisplating
   description: wf-surgery-op-wfopwfsurgeryweldchassisbreach-wfsurgerystepseatchassisplating-desc
   surgery: WFSurgeryWeldChassisBreach
@@ -2971,8 +1529,8 @@
 - type: surgicalOperation
   id: WFOpWFSurgeryWeldChassisBreach_WFSurgeryStepWeldChassisBreach
   icon:
-    sprite: _WF/Surgery/RadialIcons.rsi
-    state: base
+    sprite: Objects/Tools/welder.rsi
+    state: icon
   name: wf-surgery-op-wfopwfsurgeryweldchassisbreach-wfsurgerystepweldchassisbreach
   description: wf-surgery-op-wfopwfsurgeryweldchassisbreach-wfsurgerystepweldchassisbreach-desc
   surgery: WFSurgeryWeldChassisBreach

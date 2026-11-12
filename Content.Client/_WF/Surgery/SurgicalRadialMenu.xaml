@@ -4,6 +4,6 @@
     VerticalExpand="True"
     HorizontalExpand="True"
     MinSize="450 450">
-    <ui:RadialContainer Name="Main" InitialRadius="100">
+    <ui:RadialContainer Name="Main" InitialRadius="58">
     </ui:RadialContainer>
 </ui:RadialMenu>

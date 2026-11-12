@@ -85,7 +85,15 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
         !operation.Flags.HasFlag(SurgicalOperationFlags.Locked);
 
     /// <summary>All operations currently offered by the surgeon's tool and the target's state.</summary>
-    public List<SurgicalOperationOption> GetAvailableOperations(EntityUid user, EntityUid target, EntityUid? tool)
+    /// <param name="collapseOrganOptions">
+    /// The radial shows one organ-manipulation slice and opens a picker for the organs; the picker and
+    /// execution use the expanded per-organ list.
+    /// </param>
+    public List<SurgicalOperationOption> GetAvailableOperations(
+        EntityUid user,
+        EntityUid target,
+        EntityUid? tool,
+        bool collapseOrganOptions = false)
     {
         var results = new List<SurgicalOperationOption>();
         var isPart = HasComp<BodyPartComponent>(target);
@@ -115,6 +123,12 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
 
             if (!TryGetOptions(operation, user, body, part, tool, out var options))
                 continue;
+
+            if (collapseOrganOptions && operation.Kind == SurgicalOperationKind.OrganManipulation)
+            {
+                results.Add(MakeOption(operation, part, tool));
+                continue;
+            }
 
             results.AddRange(options);
         }

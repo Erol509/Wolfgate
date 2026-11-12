@@ -77,7 +77,7 @@ public sealed partial class OperatingComputerSystem : EntitySystem
         while (query.MoveNext(out var uid, out var computer))
         {
             if (_ui.IsUiOpen(uid, OperatingComputerUiKey.Key))
-                SendCatalog((uid, computer));
+                SendState((uid, computer), force: true);
         }
     }
 
@@ -90,7 +90,6 @@ public sealed partial class OperatingComputerSystem : EntitySystem
             ent.Comp.Zone = targeting.Target;
 
         _ui.OpenUi(ent.Owner, OperatingComputerUiKey.Key, user);
-        SendCatalog(ent);
         SendState(ent, force: true);
     }
 
@@ -198,11 +197,15 @@ public sealed partial class OperatingComputerSystem : EntitySystem
         var patient = ent.Comp.Patient;
         state.HasPatient = patient is { } && !TerminatingOrDeleted(patient.Value);
 
+        EntityUid? part = null;
         if (state.HasPatient && patient is { } patientUid)
         {
             FillPatient(state, patientUid);
-            FillAvailable(state, patientUid);
+            part = GetPart(patientUid, (TargetBodyPart) state.Zone);
         }
+
+        // The catalog is part of the same state: a second state type would be overwritten before it is sent.
+        FillOperations(state, patient, part);
 
         var signature = BuildSignature(state);
         if (!force && _signatures.TryGetValue(ent.Owner, out var last) && last == signature)
@@ -220,7 +223,14 @@ public sealed partial class OperatingComputerSystem : EntitySystem
         builder.Append('|').Append((int) state.BloodLevel).Append('|').Append((int) state.Brute);
         builder.Append('|').Append((int) state.Burn).Append('|').Append((int) state.Toxin).Append('|').Append((int) state.Oxy);
         builder.Append('|').Append(string.Join(',', state.SurgeryState));
-        builder.Append('|').Append(string.Join(',', state.AvailableOperations));
+
+        foreach (var operation in state.Operations)
+        {
+            if (operation.ShowAsNext || operation.Locked)
+                builder.Append('|').Append(operation.Id).Append(operation.ShowAsNext ? '+' : '-')
+                    .Append(operation.Locked ? '+' : '-');
+        }
+
         return builder.ToString();
     }
 
@@ -277,31 +287,15 @@ public sealed partial class OperatingComputerSystem : EntitySystem
     private static float Group(DamageableComponent damageable, string group) =>
         damageable.DamagePerGroup.TryGetValue(group, out var value) ? (float) value : 0f;
 
-    private void FillAvailable(OperatingComputerState state, EntityUid patient)
+    private void FillOperations(OperatingComputerState state, EntityUid? patient, EntityUid? part)
     {
-        if (GetPart(patient, (TargetBodyPart) state.Zone) is not { } part)
-            return;
-
         foreach (var operation in _surgery.AllOperations)
         {
-            if (!_surgery.IsStateAvailable(patient, part, operation))
-                continue;
-
-            state.AvailableOperations.Add(operation.ID);
-            state.NextOperations.Add(MakeOperationState(operation));
+            var entry = MakeOperationState(operation);
+            entry.ShowAsNext = patient is { } patientUid && part is { } partUid &&
+                               _surgery.IsStateAvailable(patientUid, partUid, operation);
+            state.Operations.Add(entry);
         }
-    }
-
-    private void SendCatalog(Entity<OperatingComputerComponent> ent)
-    {
-        var catalog = new OperatingComputerCatalogState();
-
-        foreach (var operation in _surgery.AllOperations)
-        {
-            catalog.Operations.Add(MakeOperationState(operation));
-        }
-
-        _ui.SetUiState(ent.Owner, OperatingComputerUiKey.Key, catalog);
     }
 
     private OperatingComputerOperationState MakeOperationState(SurgicalOperationPrototype operation) => new()

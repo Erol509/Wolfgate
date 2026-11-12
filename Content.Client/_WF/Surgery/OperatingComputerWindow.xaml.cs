@@ -11,6 +11,7 @@ public sealed partial class OperatingComputerWindow : BaseWindow
     public OperatingComputerWindow()
     {
         RobustXamlLoader.Load(this);
+        MouseFilter = MouseFilterMode.Stop;
         CloseButton.OnPressed += _ => Close();
     }
 

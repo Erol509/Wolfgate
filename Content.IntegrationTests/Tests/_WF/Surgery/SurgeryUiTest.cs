@@ -1,14 +1,20 @@
 #nullable enable
+using System.Collections.Generic;
 using System.Numerics;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Client._WF.Surgery;
 using Content.IntegrationTests.Fixtures;
 using Content.Server._WF.Surgery;
+using Content.Shared._Shitmed.Medical.Surgery.Steps.Parts;
 using Content.Shared._Shitmed.Medical.Surgery.Tools;
 using Content.Shared._WF.Surgery;
+using Content.Shared.Body.Part;
+using Content.Shared.Body.Systems;
 using Content.Shared.Buckle;
 using Content.Shared.Interaction;
 using NUnit.Framework;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
@@ -100,8 +106,131 @@ public sealed class SurgeryUiTest : GameTest
                 .TryGetOpenUi<OperatingComputerBui>(clientComputer, OperatingComputerUiKey.Key, out var bui), Is.True,
                 "the operating computer did not open its window.");
             Assert.That(bui!.CurrentState, Is.Not.Null);
-            Assert.That(bui.CurrentState!.NextOperations, Is.Not.Empty,
+            Assert.That(bui.CurrentState!.Operations, Is.Not.Empty,
+                "the computer sent an empty operation catalog.");
+            Assert.That(bui.CurrentState.Operations.Any(operation => operation.ShowAsNext), Is.True,
                 "the computer sent no possible operations for the patient.");
+        });
+    }
+
+    [Test]
+    public async Task OperatingComputerRendersSurgeryState()
+    {
+        var map = await Pair.CreateTestMap();
+        EntityUid computer = default;
+        EntityUid patient = default;
+
+        await Server.WaitAssertion(() =>
+        {
+            var table = Server.EntMan.SpawnEntity("OperatingTable", map.GridCoords);
+            computer = Server.EntMan.SpawnEntity("WFOperatingComputer",
+                map.GridCoords.Offset(new Vector2(1, 0)));
+            patient = Server.EntMan.SpawnEntity("MobHuman", map.GridCoords);
+            if (ServerSession is { } session)
+                Server.PlayerMan.SetAttachedEntity(session, patient);
+            Assert.That(Server.EntMan.System<SharedBuckleSystem>().TryBuckle(patient, null, table), Is.True);
+
+            var body = Server.EntMan.System<SharedBodySystem>();
+            foreach (var (id, part) in body.GetBodyChildren(patient))
+            {
+                if (part.PartType == BodyPartType.Torso)
+                    Server.EntMan.AddComponent<IncisionOpenComponent>(id);
+            }
+
+            Server.EntMan.EventBus.RaiseLocalEvent(computer, new ActivateInWorldEvent(patient, computer, true));
+        });
+
+        await RunTicksSync(60);
+        await Pair.RunUntilSynced();
+
+        var clientComputer = Pair.ToClientUid(computer);
+        await Client.WaitAssertion(() =>
+        {
+            Assert.That(Client.EntMan.System<Robust.Shared.GameObjects.SharedUserInterfaceSystem>()
+                .TryGetOpenUi<OperatingComputerBui>(clientComputer, OperatingComputerUiKey.Key, out var bui), Is.True,
+                "the operating computer did not open its window.");
+            Assert.That(bui!.CurrentWindow, Is.Not.Null);
+
+            var labels = new List<Label>();
+            var buttons = new List<Button>();
+            Collect(bui.CurrentWindow!.Body, labels, buttons);
+
+            var labelText = string.Join(" | ", labels.Select(label => label.Text));
+            var buttonText = string.Join(" | ", buttons.Select(button => button.Text));
+
+            Assert.That(labels.Select(label => label.Text), Has.Some.Contains("Skin is cut"),
+                $"the patient state is not rendered. Labels: {labelText}");
+            Assert.That(buttons.Select(button => button.Text),
+                Has.Some.Contains("retract skin", StringComparison.OrdinalIgnoreCase),
+                $"the next operations are not rendered. Buttons: {buttonText}");
+        });
+    }
+
+    private static void Collect(Control control, List<Label> labels, List<Button> buttons)
+    {
+        foreach (var child in control.Children)
+        {
+            if (child is Label label)
+                labels.Add(label);
+            if (child is Button button)
+                buttons.Add(button);
+            Collect(child, labels, buttons);
+        }
+    }
+
+    [Test]
+    public async Task OperatingComputerShowsOpenedIncision()
+    {
+        var map = await Pair.CreateTestMap();
+        EntityUid computer = default;
+        EntityUid patient = default;
+
+        await Server.WaitAssertion(() =>
+        {
+            var table = Server.EntMan.SpawnEntity("OperatingTable", map.GridCoords);
+            computer = Server.EntMan.SpawnEntity("WFOperatingComputer",
+                map.GridCoords.Offset(new Vector2(1, 0)));
+            patient = Server.EntMan.SpawnEntity("MobHuman", map.GridCoords);
+            if (ServerSession is { } session)
+                Server.PlayerMan.SetAttachedEntity(session, patient);
+            Assert.That(Server.EntMan.System<SharedBuckleSystem>().TryBuckle(patient, null, table), Is.True);
+
+            // Open the chest, as a surgeon would before the computer is opened.
+            var body = Server.EntMan.System<SharedBodySystem>();
+            var incised = false;
+            foreach (var (id, part) in body.GetBodyChildren(patient))
+            {
+                if (part.PartType != BodyPartType.Torso)
+                    continue;
+
+                Server.EntMan.AddComponent<IncisionOpenComponent>(id);
+                incised = true;
+            }
+
+            Assert.That(incised, Is.True, "the human has no torso part to incise.");
+
+            var ev = new ActivateInWorldEvent(patient, computer, true);
+            Server.EntMan.EventBus.RaiseLocalEvent(computer, ev);
+        });
+
+        await RunTicksSync(60);
+        await Pair.RunUntilSynced();
+
+        var clientComputer = Pair.ToClientUid(computer);
+        await Client.WaitAssertion(() =>
+        {
+            Assert.That(Client.EntMan.System<Robust.Shared.GameObjects.SharedUserInterfaceSystem>()
+                .TryGetOpenUi<OperatingComputerBui>(clientComputer, OperatingComputerUiKey.Key, out var bui), Is.True,
+                "the operating computer did not open its window.");
+
+            var state = bui!.CurrentState;
+            Assert.That(state, Is.Not.Null);
+            Assert.That(state!.HasPatient, Is.True, "the computer did not find the patient.");
+            Assert.That(state.SurgeryState, Has.Some.Contains("Skin is cut"),
+                "the opened incision is not reported.");
+            Assert.That(state.Operations.Where(operation => operation.ShowAsNext).Select(operation => operation.Id),
+                Has.Some.EqualTo("WFRetractSkin"),
+                "retracting the skin is not offered after the incision.");
         });
     }
 }

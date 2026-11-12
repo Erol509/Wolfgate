@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared._WF.Surgery;
@@ -8,6 +9,7 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
 namespace Content.Client._WF.Surgery;
@@ -26,28 +28,85 @@ public partial class SurgicalRadialBui : BoundUserInterface
 
     private readonly SpriteSystem _sprites;
     private readonly TransformSystem _transform;
+    private readonly Texture _slice;
+    private readonly Texture _sliceFocus;
+    private readonly Texture _next;
+
+    private SurgicalRadialState? _shownState;
+    private int _page;
+
+    // /tg/station caps a page at eight slots and reserves one of them for the next-page button.
+    private const int MaxSlots = 8;
 
     [ViewVariables]
     private SurgicalRadialMenu? _menu;
+
+    private OrganSelectionWindow? _organWindow;
 
     public SurgicalRadialBui(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         _sprites = EntMan.System<SpriteSystem>();
         _transform = EntMan.System<TransformSystem>();
+        _slice = Frame("radial_slice");
+        _sliceFocus = Frame("radial_slice_focus");
+        _next = Frame("radial_next");
     }
+
+    private Texture Frame(string state) =>
+        _sprites.Frame0(new SpriteSpecifier.Rsi(new ResPath("/Textures/_WF/Surgery/RadialUI.rsi"), state));
 
     protected override void Open()
     {
         base.Open();
 
         _menu = this.CreateWindow<SurgicalRadialMenu>();
-        Build();
+
+        if (State is SurgicalOrganSelectState organState)
+            ShowOrganPicker(organState);
+        else
+            Build();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
+
+        if (state is SurgicalOrganSelectState organState)
+        {
+            ShowOrganPicker(organState);
+            return;
+        }
+
         Build();
+    }
+
+    /// <summary>Switches from the radial to the organ list the generic organ-manipulation operation opened.</summary>
+    private void ShowOrganPicker(SurgicalOrganSelectState state)
+    {
+        _menu?.Close();
+
+        if (_organWindow == null)
+        {
+            _organWindow = new OrganSelectionWindow();
+            _organWindow.OnChosen += OnOrganChosen;
+            _organWindow.OnCancelled += OnOrganCancelled;
+        }
+
+        _organWindow.SetOptions(state);
+        if (!_organWindow.IsOpen)
+            _organWindow.OpenCentered();
+    }
+
+    private void OnOrganChosen(NetEntity? organ, bool inserting)
+    {
+        SendMessage(new SurgicalOrganChooseMessage(organ, inserting));
+        _organWindow?.Close();
+    }
+
+    private void OnOrganCancelled()
+    {
+        SendMessage(new SurgicalOrganCancelMessage());
+        _organWindow?.Close();
     }
 
     private void Build()
@@ -55,21 +114,26 @@ public partial class SurgicalRadialBui : BoundUserInterface
         if (_menu == null || State is not SurgicalRadialState state)
             return;
 
+        if (!ReferenceEquals(state, _shownState))
+        {
+            _shownState = state;
+            _page = 0;
+        }
+
+        var options = state.Options;
+        var perPage = options.Count > MaxSlots ? MaxSlots - 1 : MaxSlots;
+        var pages = Math.Max(1, (options.Count + perPage - 1) / perPage);
+        _page = Math.Clamp(_page, 0, pages - 1);
+
         var container = _menu.FindControl<RadialContainer>("Main");
         container.DisposeAllChildren();
 
-        foreach (var option in state.Options)
+        var first = _page * perPage;
+        var last = Math.Min(options.Count, first + perPage);
+        for (var i = first; i < last; i++)
         {
-            var icon = _sprites.Frame0(option.Icon ?? DefaultIcon);
-            var texture = new TextureRect
-            {
-                VerticalAlignment = Control.VAlignment.Center,
-                HorizontalAlignment = Control.HAlignment.Center,
-                Texture = icon,
-                TextureScale = new Vector2(2f, 2f),
-            };
-
-            var button = new RadialMenuTextureButtonWithSector
+            var option = options[i];
+            var button = new SurgicalRadialButton(_slice, _sliceFocus)
             {
                 SetSize = new Vector2(64, 64),
                 ToolTip = option.Tool.Length > 0
@@ -79,8 +143,25 @@ public partial class SurgicalRadialBui : BoundUserInterface
 
             var index = option.Index;
             button.OnButtonDown += _ => SendMessage(new SurgicalRadialChooseMessage(index));
-            button.AddChild(texture);
+            button.AddChild(Icon(option.Icon));
             container.AddChild(button);
+        }
+
+        if (pages > 1)
+        {
+            var next = new SurgicalRadialButton(_slice, _sliceFocus)
+            {
+                SetSize = new Vector2(64, 64),
+                ToolTip = Loc.GetString("surgery-radial-next-page", ("page", _page + 1), ("pages", pages)),
+            };
+
+            next.OnButtonDown += _ =>
+            {
+                _page = (_page + 1) % pages;
+                Build();
+            };
+            next.AddChild(Icon(null, _next));
+            container.AddChild(next);
         }
 
         if (!_menu.IsOpen)
@@ -97,10 +178,24 @@ public partial class SurgicalRadialBui : BoundUserInterface
         }
     }
 
+    private TextureRect Icon(SpriteSpecifier? specifier, Texture? texture = null)
+    {
+        return new TextureRect
+        {
+            VerticalAlignment = Control.VAlignment.Center,
+            HorizontalAlignment = Control.HAlignment.Center,
+            Texture = texture ?? _sprites.Frame0(specifier ?? DefaultIcon),
+            TextureScale = new Vector2(2f, 2f),
+        };
+    }
+
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (disposing)
-            _menu?.Dispose();
+        if (!disposing)
+            return;
+
+        _menu?.Dispose();
+        _organWindow?.Dispose();
     }
 }

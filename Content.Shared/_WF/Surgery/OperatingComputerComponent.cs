@@ -70,21 +70,11 @@ public sealed class OperatingComputerState : BoundUserInterfaceState
     public List<string> SurgeryState = new();
     public bool PatientMechanical;
 
-    /// <summary>Operation ids the patient's current state permits.</summary>
-    public List<string> AvailableOperations = new();
-
-    /// <summary>Full entries for the operations the state permits, so the next-step list needs no catalog.</summary>
-    public List<OperatingComputerOperationState> NextOperations = new();
+    /// <summary>Every operation the computer can list, with the next-step flag resolved for the patient.</summary>
+    public List<OperatingComputerOperationState> Operations = new();
 
     public bool HasTechweb;
     public List<string> Experiments = new();
-}
-
-/// <summary>The full operation catalog; only changes when research unlocks something.</summary>
-[Serializable, NetSerializable]
-public sealed class OperatingComputerCatalogState : BoundUserInterfaceState
-{
-    public List<OperatingComputerOperationState> Operations = new();
 }
 
 /// <summary>Asks the computer to show another body zone.</summary>

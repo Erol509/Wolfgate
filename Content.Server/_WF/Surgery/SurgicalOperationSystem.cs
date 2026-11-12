@@ -61,6 +61,8 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
         Subs.BuiEvents<SurgeryTargetComponent>(SurgeryUIKey.Key, subs =>
         {
             subs.Event<SurgicalRadialChooseMessage>(OnRadialChosen);
+            subs.Event<SurgicalOrganChooseMessage>(OnOrganChosen);
+            subs.Event<SurgicalOrganCancelMessage>(OnOrganCancelled);
         });
 
         SubscribeLocalEvent<SurgeryTargetComponent, SurgicalOperationDoAfterEvent>(OnOperationDoAfter);
@@ -234,7 +236,7 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
         if (!_netManager.IsServer)
             return false;
 
-        var options = GetAvailableOperations(user, target, tool);
+        var options = GetAvailableOperations(user, target, tool, collapseOrganOptions: true);
         if (options.Count == 0)
             return false;
 
@@ -244,6 +246,15 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
             var priority = a.Operation.Priority.CompareTo(b.Operation.Priority);
             return priority != 0 ? priority : string.Compare(a.Name, b.Name, StringComparison.Ordinal);
         });
+
+        if (options.Count == 1 && IsOrganPickerOption(options[0]))
+        {
+            if (!_ui.TryOpenUi(target, SurgeryUIKey.Key, user))
+                return StartFirstExpanded(user, target, tool);
+
+            OpenOrganPicker(target, user, options[0].Part);
+            return true;
+        }
 
         if (options.Count == 1)
         {
@@ -268,12 +279,57 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
         return true;
     }
 
+    /// <summary>The radial shows one organ slice; the actual organs are chosen in a second window.</summary>
+    private static bool IsOrganPickerOption(SurgicalOperationOption option) =>
+        option.Operation.Kind == SurgicalOperationKind.OrganManipulation &&
+        option.Organ == null && !option.Inserting;
+
+    private bool StartFirstExpanded(EntityUid user, EntityUid target, EntityUid? tool)
+    {
+        var expanded = GetAvailableOperations(user, target, tool);
+        if (expanded.Count == 0)
+            return false;
+
+        StartOperation(user, target, tool, expanded[0]);
+        return true;
+    }
+
+    /// <summary>Publishes the organ list the surgeon picks from after choosing the organ-manipulation slice.</summary>
+    private void OpenOrganPicker(EntityUid target, EntityUid user, EntityUid part)
+    {
+        var tool = _handsSystem.GetActiveItem(user);
+        var options = GetAvailableOperations(user, target, tool)
+            .Where(option => option.Operation.Kind == SurgicalOperationKind.OrganManipulation &&
+                             option.Part == part)
+            .ToList();
+
+        if (options.Count == 0)
+        {
+            _ui.CloseUi(target, SurgeryUIKey.Key, user);
+            return;
+        }
+
+        var choices = new List<SurgicalOrganOption>(options.Count);
+        foreach (var option in options)
+        {
+            choices.Add(new SurgicalOrganOption
+            {
+                Organ = option.Organ is { } organ ? GetNetEntity(organ) : null,
+                Inserting = option.Inserting,
+                Name = option.Name,
+            });
+        }
+
+        _ui.SetUiState(target, SurgeryUIKey.Key,
+            new SurgicalOrganSelectState(GetNetEntity(target), choices));
+    }
+
     private void OnRadialChosen(Entity<SurgeryTargetComponent> ent, ref SurgicalRadialChooseMessage args)
     {
         var user = args.Actor;
         var tool = _handsSystem.GetActiveItem(user);
 
-        var options = GetAvailableOperations(user, ent.Owner, tool);
+        var options = GetAvailableOperations(user, ent.Owner, tool, collapseOrganOptions: true);
         if (args.Index < 0 || args.Index >= options.Count)
             return;
 
@@ -283,9 +339,49 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
             return priority != 0 ? priority : string.Compare(a.Name, b.Name, StringComparison.Ordinal);
         });
 
-        StartOperation(user, ent.Owner, tool, options[args.Index]);
+        var chosen = options[args.Index];
+        if (IsOrganPickerOption(chosen))
+        {
+            OpenOrganPicker(ent.Owner, user, chosen.Part);
+            return;
+        }
+
+        StartOperation(user, ent.Owner, tool, chosen);
         _ui.CloseUi(ent.Owner, SurgeryUIKey.Key, user);
     }
+
+    private void OnOrganChosen(Entity<SurgeryTargetComponent> ent, ref SurgicalOrganChooseMessage args)
+    {
+        var user = args.Actor;
+        var tool = _handsSystem.GetActiveItem(user);
+        var organ = args.Organ is { } netOrgan ? GetEntity(netOrgan) : (EntityUid?) null;
+
+        foreach (var option in GetAvailableOperations(user, ent.Owner, tool))
+        {
+            if (option.Operation.Kind != SurgicalOperationKind.OrganManipulation ||
+                option.Inserting != args.Inserting)
+                continue;
+
+            if (organ is { } wanted)
+            {
+                if (option.Organ != wanted)
+                    continue;
+            }
+            else if (option.Organ != null)
+            {
+                continue;
+            }
+
+            StartOperation(user, ent.Owner, tool, option);
+            _ui.CloseUi(ent.Owner, SurgeryUIKey.Key, user);
+            return;
+        }
+
+        _ui.CloseUi(ent.Owner, SurgeryUIKey.Key, user);
+    }
+
+    private void OnOrganCancelled(Entity<SurgeryTargetComponent> ent, ref SurgicalOrganCancelMessage args) =>
+        _ui.CloseUi(ent.Owner, SurgeryUIKey.Key, args.Actor);
 
     /// <summary>Starts the do-after for one option.</summary>
     public void StartOperation(EntityUid user, EntityUid target, EntityUid? tool, SurgicalOperationOption option, bool legacyTiming = false)

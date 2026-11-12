@@ -1,9 +1,11 @@
 #nullable enable
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests.Fixtures;
 using Content.IntegrationTests.Tests._WF.Wolfmed;
 using Content.Server._WF.Surgery;
+using Content.Shared._Onyx.Wounds;
 using Content.Shared._Shitmed.Medical.Surgery.Steps.Parts;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared._WF.Surgery;
@@ -179,6 +181,88 @@ public sealed class SurgeryOperationTest : WolfmedGameTest
         {
             Assert.That(Sites.GetState(torso), Is.EqualTo(SurgeryState.None),
                 "Mending the incision should clear every state it opened.");
+        });
+    }
+
+    [Test]
+    public async Task MendBoneClearsFracture()
+    {
+        var (surgeon, patient, torso) = await SpawnPair();
+        EntityUid boneGel = default;
+        EntityUid? fracture = null;
+
+        await Server.WaitAssertion(() =>
+        {
+            var coords = SEntMan.GetComponent<TransformComponent>(patient).Coordinates;
+            boneGel = SEntMan.SpawnEntity("BoneGel", coords);
+            Hands.TryPickupAnyHand(surgeon, boneGel);
+
+            SEntMan.EnsureComponent<IncisionOpenComponent>(torso);
+            SEntMan.EnsureComponent<SkinRetractedComponent>(torso);
+            SEntMan.EnsureComponent<BleedersClampedComponent>(torso);
+            SEntMan.EnsureComponent<RibcageSawedComponent>(torso);
+            Sites.Recalculate(torso);
+
+            // Sawing the ribs leaves a fracture behind, as the real wound system does.
+            var wounds = SEntMan.System<WoundSystem>();
+            var wound = wounds.CreateOrMergeWound(torso, "BoneFractureWound", 20);
+            Assert.That(wound, Is.Not.Null, "the test could not create a fracture wound.");
+            var fractureComp = SEntMan.EnsureComponent<WoundFractureComponent>(wound!.Value);
+            fractureComp.Grade = FractureGrade.Comminuted;
+            fracture = wound;
+
+            var option = Surgery.GetAvailableOperations(surgeon, patient, boneGel)
+                .First(option => option.Operation.ID == "WFFixBones");
+            Surgery.StartOperation(surgeon, patient, boneGel, option);
+        });
+
+        await RunSeconds(8);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(SEntMan.HasComponent<RibcageSawedComponent>(torso), Is.False,
+                "Mending the bone should close the sawed ribcage.");
+            Assert.That(fracture is { } remaining && SEntMan.EntityExists(remaining), Is.False,
+                "Mending the bone should also mend the fracture it left behind.");
+        });
+    }
+
+    [Test]
+    public async Task DuplicateAndCavityOperationsAreGone()
+    {
+        var prototypes = Server.ResolveDependency<Robust.Shared.Prototypes.IPrototypeManager>();
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(prototypes.HasIndex<SurgicalOperationPrototype>("WFWidenCavity"), Is.False,
+                "cavity widening is not part of the current surgery set.");
+            Assert.That(prototypes.HasIndex<SurgicalOperationPrototype>("WFCloseCavity"), Is.False,
+                "cavity closing is not part of the current surgery set.");
+
+            var duplicateSteps = new[]
+            {
+                "SurgeryStepSealOrganWound",
+                "SurgeryStepSealWounds",
+                "SurgeryStepInsertOrgan",
+                "SurgeryStepRemoveOrgan",
+                "SurgeryStepInsertHeart",
+                "SurgeryStepInsertEyes",
+                "SurgeryStepInsertLiver",
+                "SurgeryStepInsertLungs",
+                "SurgeryStepInsertStomach",
+                "WFSurgeryStepInsertKidneys",
+            };
+
+            foreach (var operation in prototypes.EnumeratePrototypes<SurgicalOperationPrototype>())
+            {
+                // The generic organ manipulation legitimately runs the shared remove-organ step; only the
+                // generated per-surgery operations were duplicates.
+                if (!operation.ID.StartsWith("WFOp", StringComparison.Ordinal) || operation.Step is not { } step)
+                    continue;
+
+                Assert.That(duplicateSteps, Has.None.EqualTo(step.ToString()),
+                    $"{operation.ID} reintroduces a per-surgery duplicate of {step}.");
+            }
         });
     }
 }

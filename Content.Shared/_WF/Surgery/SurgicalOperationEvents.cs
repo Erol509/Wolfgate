@@ -112,6 +112,51 @@ public sealed class SurgicalRadialChooseMessage : BoundUserInterfaceMessage
     }
 }
 
+/// <summary>One organ the surgeon can remove, or the held organ they can insert.</summary>
+[Serializable, NetSerializable]
+public sealed class SurgicalOrganOption
+{
+    public NetEntity? Organ;
+    public bool Inserting;
+    public string Name = string.Empty;
+}
+
+/// <summary>The organ picker opened by the generic organ-manipulation operation.</summary>
+[Serializable, NetSerializable]
+public sealed class SurgicalOrganSelectState : BoundUserInterfaceState
+{
+    public NetEntity Target;
+    public List<SurgicalOrganOption> Options = new();
+
+    public SurgicalOrganSelectState()
+    {
+    }
+
+    public SurgicalOrganSelectState(NetEntity target, List<SurgicalOrganOption> options)
+    {
+        Target = target;
+        Options = options;
+    }
+}
+
+/// <summary>The surgeon confirmed one organ in the picker.</summary>
+[Serializable, NetSerializable]
+public sealed class SurgicalOrganChooseMessage : BoundUserInterfaceMessage
+{
+    public NetEntity? Organ;
+    public bool Inserting;
+
+    public SurgicalOrganChooseMessage(NetEntity? organ, bool inserting)
+    {
+        Organ = organ;
+        Inserting = inserting;
+    }
+}
+
+/// <summary>The surgeon closed the organ picker without choosing.</summary>
+[Serializable, NetSerializable]
+public sealed class SurgicalOrganCancelMessage : BoundUserInterfaceMessage;
+
 /// <summary>
 /// Raised when a technology unlocks a surgical operation. Put on a technology's generic unlocks to make the
 /// operation available station-wide.

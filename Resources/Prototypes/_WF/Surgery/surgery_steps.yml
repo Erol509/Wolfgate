@@ -167,6 +167,7 @@
     - type: BoneDrilled
     - type: CavityWidened
     duration: 2.4
+  - type: WFSurgeryAffixOnClose
   - type: WolfmedSurgeryPainEffect
     amount: 6
   - type: Sprite
@@ -195,6 +196,8 @@
     - type: RibcageOpen
     - type: BoneDrilled
     duration: 4
+  - type: WolfmedSurgeryMendFractureEffect
+    treatment: Mended
   - type: WolfmedSurgeryPainEffect
     amount: 10
   - type: Sprite
@@ -333,6 +336,7 @@
     - type: BoneDrilled
     - type: CavityWidened
     duration: 2.4
+  - type: WFSurgeryAffixOnClose
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
     state: screwdriver

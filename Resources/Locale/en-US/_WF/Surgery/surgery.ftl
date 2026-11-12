@@ -38,10 +38,6 @@ wf-surgery-op-mend-skin = mend skin incision
 wf-surgery-op-mend-skin-desc = Mend the incision in the patient's skin, closing it up. Clears most surgical states.
 wf-surgery-op-fix-bones = fix limb bone
 wf-surgery-op-fix-bones-desc = Repair a patient's cut or broken bones. Clears "bone sawed" and "bone drilled" surgical states.
-wf-surgery-op-widen-cavity = widen chest cavity
-wf-surgery-op-widen-cavity-desc = Widen a patient's chest cavity to allow for implanting larger items.
-wf-surgery-op-close-cavity = close chest cavity
-wf-surgery-op-close-cavity-desc = Reset a patient's chest cavity.
 wf-surgery-op-unscrew-shell = unscrew shell
 wf-surgery-op-unscrew-shell-desc = Unscrew the shell of a mechanical patient to access its internals. Causes "cut skin" surgical state.
 wf-surgery-op-open-hatch = open hatch
@@ -80,7 +76,12 @@ surgery-popup-invalid = The operation is no longer possible.
 surgery-popup-already-operating = You are already operating on someone!
 
 surgery-radial-title = Surgery
+surgery-radial-close = Close
+surgery-radial-next-page = More operations (page { $page } of { $pages })
 surgery-radial-tool = Requires: { $tool }
+surgery-organ-select-title = Organ Manipulation
+surgery-organ-select-confirm = OK
+surgery-organ-select-cancel = Cancel
 
 surgery-error-lying = The patient needs to be lying down!
 surgery-error-clothes = The operation site is obstructed by clothing!
