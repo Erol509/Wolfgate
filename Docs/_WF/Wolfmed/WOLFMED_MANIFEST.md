@@ -1452,6 +1452,8 @@ the tourniquet test belongs to WP12-9).
    reached by five non-surgery callers (Mono prybar prosthetics, bionic legs, Goob autosurgeon,
    `GenerateChildPartSystem`, `TryCreatePartSlotAndAttach`'s admin commands) which would silently `QueueDel`
    the replacement limb on exactly the stump they exist for (§8.5 trap 13).
+   **Superseded:** the surgery-layer gate was removed to match tg's direct reattachment. The attach operation
+   now clears the consequence wound when it runs (`WolfmedAttachmentSystem`); `CanAttachPart` stays ungated.
 3. **EXT 1** — `SurgeryWoundedConditionComponent.cs`: the file's `… : Component;` becomes a body with
    `WoundGroup` / `MinWoundSeverity` / `MaxWoundSeverity`, plus the three `using`s those types need
    (`Content.Shared.Damage.Prototypes`, `Content.Shared.FixedPoint`, `Robust.Shared.Prototypes`).
@@ -1524,6 +1526,8 @@ LeftLeg, RightLeg, Hands), an arm stump hides that side's `AttachHand`, a leg st
 (P4-D18). Until WP12-5 ships the surgery that clears it, **a traumatically amputated wound host cannot have
 the limb re-attached by any means.** Surgical limb removal is unaffected — `ApplyAmputationConsequences` has
 exactly one caller, `AmputationSystem.TryAmputate:130`, and Shitmed's `SurgeryDetachPart` does not go through it.
+**Superseded:** the gate is gone; a traumatic stump can be reattached directly and the attach step clears the
+consequence wound. `SurgeryHealAmputationConsequence` remains as the non-surgical treatment path.
 
 **Checkpoint:** `Content.Server`, `Content.Client` and `Content.IntegrationTests` all **0 errors**
 (`-c DebugOpt`). Headless server (~130 s, port 1299) reached `Server Version 277.0.0.0 -> Ready` with

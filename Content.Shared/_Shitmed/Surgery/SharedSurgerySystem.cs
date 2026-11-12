@@ -272,8 +272,7 @@ public abstract partial class SharedSurgerySystem : EntitySystem
             return;
         }
 
-        // WOLFGATE(Wolfmed): HOOK 25 - P4-D18; reattaching clears the stump wound instead of blocking the
-        // operation, so a missing limb can be attached as it is in tg.
+        // WOLFGATE(Wolfmed): HOOK 25 - P4-D18; reattaching clears the stump wound, matching tg.
 
         // Get any existing body parts of the specified type/symmetry
         var results = _body.GetBodyChildrenOfType(args.Body, ent.Comp.Part, symmetry: ent.Comp.Symmetry);

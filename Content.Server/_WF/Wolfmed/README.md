@@ -1567,7 +1567,7 @@ Skipped ("dirty-disposed").
   - playtest 5, a begun procedure stays open until its closing step
   - playtest 3 SAM: a wound host lists by its wounds (HOOK 24)
   - HOOK 24 - P4-D19 wound-severity window
-  - HOOK 25 - P4-D18; reattaching clears the stump wound instead of blocking the
+  - HOOK 25 - P4-D18; reattaching clears the stump wound, matching tg.
   - AUTODOC: a pod has no hands.
   - AUTODOC: an occupant lies down inside the pod.
 - [`Content.Shared/_Shitmed/Surgery/SharedSurgerySystem.Steps.cs`](../../../Content.Shared/_Shitmed/Surgery/SharedSurgerySystem.Steps.cs)

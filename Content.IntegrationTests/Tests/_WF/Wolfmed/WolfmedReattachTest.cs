@@ -109,12 +109,14 @@ public sealed class WolfmedReattachTest : WolfmedGameTest
     }
 
     /// <summary>
-    /// PLAN4 §6.2 T-REATTACH-BLOCKED. HOOK 25 closes the phase-3 P3-D2 gap at the SURGERY layer, not at
-    /// SharedBodySystem.CanAttachPart (P4-D18): the body layer has five non-surgery callers, two of which are
-    /// the Mono prosthetics traits that exist precisely to bolt a limb onto a stump.
+    /// A traumatic stump can be reattached directly (tg behaviour): the old HOOK 25 gate that hid every
+    /// <c>SurgeryAttach*</c> surgery until the consequence was treated is gone. The attach operation clears
+    /// the consequence wound when it runs (covered by the surgery tests).
+    /// The body layer stays ungated (P4-D18): five non-surgery callers, including the Mono prosthetics traits,
+    /// need <c>CanAttachPart</c> to keep working on exactly this stump.
     /// </summary>
     [Test]
-    public async Task AmputatedLimbCannotBeReattachedUntilConsequenceTreatedTest()
+    public async Task AmputatedLimbCanBeReattachedWithoutTreatingConsequenceTest()
     {
         var server = Pair.Server;
         await server.WaitIdleAsync();
@@ -146,8 +148,8 @@ public sealed class WolfmedReattachTest : WolfmedGameTest
 
             Assert.Multiple(() =>
             {
-                Assert.That(AttachCancelled(entities, attach, body, torso), Is.True,
-                    "an untreated stump must hide every SurgeryAttach* surgery that targets it (HOOK 25).");
+                Assert.That(AttachCancelled(entities, attach, body, torso), Is.False,
+                    "an untreated traumatic stump must not hide the attach surgery any more.");
                 // P4-D18's guard: the BODY layer is deliberately NOT gated, so the two Mono prosthetics traits
                 // and the three admin commands that go through AttachPart keep working on exactly this stump.
                 Assert.That(graph.CanAttachPart(torso, "left arm", arm), Is.True,
@@ -165,7 +167,7 @@ public sealed class WolfmedReattachTest : WolfmedGameTest
             {
                 Assert.That(Consequences(entities, wounds, torso), Is.Empty);
                 Assert.That(AttachCancelled(entities, attach, body, torso), Is.False,
-                    "treating the consequence must put the attach surgery back on the list.");
+                    "the attach surgery stays listed after the consequence is treated.");
                 Assert.That(graph.CanAttachPart(torso, "left arm", arm), Is.True);
             });
         });
