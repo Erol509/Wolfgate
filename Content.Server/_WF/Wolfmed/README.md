@@ -251,6 +251,7 @@ Skipped ("dirty-disposed").
 - [`Content.Shared/_WF/Wolfmed/Surgery/SharedSurgerySystem.Autodoc.cs`](../../../Content.Shared/_WF/Wolfmed/Surgery/SharedSurgerySystem.Autodoc.cs)
 - [`Content.Shared/_WF/Wolfmed/Surgery/SharedSurgerySystem.Tend.cs`](../../../Content.Shared/_WF/Wolfmed/Surgery/SharedSurgerySystem.Tend.cs)
 - [`Content.Shared/_WF/Wolfmed/Surgery/SharedSurgerySystem.Wolfmed.cs`](../../../Content.Shared/_WF/Wolfmed/Surgery/SharedSurgerySystem.Wolfmed.cs)
+- [`Content.Shared/_WF/Wolfmed/Surgery/WolfmedAttachmentSystem.cs`](../../../Content.Shared/_WF/Wolfmed/Surgery/WolfmedAttachmentSystem.cs)
 - [`Content.Shared/_WF/Wolfmed/Surgery/WolfmedChassisToolComponents.cs`](../../../Content.Shared/_WF/Wolfmed/Surgery/WolfmedChassisToolComponents.cs)
 - [`Content.Shared/_WF/Wolfmed/Surgery/WolfmedServoKitComponent.cs`](../../../Content.Shared/_WF/Wolfmed/Surgery/WolfmedServoKitComponent.cs)
 - [`Content.Shared/_WF/Wolfmed/Surgery/WolfmedSkinGraftComponent.cs`](../../../Content.Shared/_WF/Wolfmed/Surgery/WolfmedSkinGraftComponent.cs)
@@ -1566,7 +1567,7 @@ Skipped ("dirty-disposed").
   - playtest 5, a begun procedure stays open until its closing step
   - playtest 3 SAM: a wound host lists by its wounds (HOOK 24)
   - HOOK 24 - P4-D19 wound-severity window
-  - HOOK 25 - P4-D18 untreated amputation consequence
+  - HOOK 25 - P4-D18; reattaching clears the stump wound instead of blocking the
   - AUTODOC: a pod has no hands.
   - AUTODOC: an occupant lies down inside the pod.
 - [`Content.Shared/_Shitmed/Surgery/SharedSurgerySystem.Steps.cs`](../../../Content.Shared/_Shitmed/Surgery/SharedSurgerySystem.Steps.cs)

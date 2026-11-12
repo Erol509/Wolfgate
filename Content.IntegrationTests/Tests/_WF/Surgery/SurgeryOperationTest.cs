@@ -228,6 +228,119 @@ public sealed class SurgeryOperationTest : WolfmedGameTest
     }
 
     [Test]
+    public async Task OrganManipulationCollapsesIntoOneRadialOption()
+    {
+        var (surgeon, patient, torso) = await SpawnPair();
+        EntityUid hemostat = default;
+
+        await Server.WaitAssertion(() =>
+        {
+            var coords = SEntMan.GetComponent<TransformComponent>(patient).Coordinates;
+            hemostat = SEntMan.SpawnEntity("Hemostat", coords);
+            Hands.TryPickupAnyHand(surgeon, hemostat);
+
+            SEntMan.EnsureComponent<IncisionOpenComponent>(torso);
+            SEntMan.EnsureComponent<SkinRetractedComponent>(torso);
+            SEntMan.EnsureComponent<BleedersClampedComponent>(torso);
+            SEntMan.EnsureComponent<InternalBleedersClampedComponent>(torso);
+            SEntMan.EnsureComponent<RibcageSawedComponent>(torso);
+            Sites.Recalculate(torso);
+
+            var collapsed = Surgery.GetAvailableOperations(surgeon, patient, hemostat, collapseOrganOptions: true)
+                .Where(option => option.Operation.ID == "WFOrganManipulation")
+                .ToList();
+            Assert.That(collapsed, Has.Count.EqualTo(1),
+                "the radial should show a single organ-manipulation slice.");
+            Assert.That(collapsed[0].Organ, Is.Null);
+            Assert.That(collapsed[0].Inserting, Is.False);
+
+            var expanded = Surgery.GetAvailableOperations(surgeon, patient, hemostat)
+                .Where(option => option.Operation.ID == "WFOrganManipulation" && !option.Inserting)
+                .ToList();
+            Assert.That(expanded, Is.Not.Empty,
+                "the organ picker needs the per-organ options.");
+            Assert.That(expanded.All(option => option.Organ != null), Is.True,
+                "every picker entry should identify its organ.");
+        });
+    }
+
+    [Test]
+    public async Task MissingLimbCanBeAttached()
+    {
+        var (surgeon, patient, torso) = await SpawnPair();
+        EntityUid arm = default;
+        EntityUid? stumpWound = null;
+
+        await Server.WaitAssertion(() =>
+        {
+            var body = Body.GetBodyChildrenOfType(patient, BodyPartType.Arm, symmetry: BodyPartSymmetry.Left).First();
+            arm = body.Id;
+            Assert.That(Body.DetachPart(torso, "left arm", arm), Is.True,
+                "the test could not detach the left arm.");
+            Assert.That(Hands.TryPickupAnyHand(surgeon, arm), Is.True,
+                "the surgeon could not hold the detached arm.");
+
+            // A real amputation leaves a stump wound; it must not block reattachment.
+            var wounds = SEntMan.System<WoundSystem>();
+            var host = SEntMan.GetComponent<WoundHostComponent>(patient);
+            stumpWound = wounds.CreateOrMergeWound(torso, host.AmputationConsequenceWound, 20);
+
+            SEntMan.EnsureComponent<IncisionOpenComponent>(torso);
+            SEntMan.EnsureComponent<SkinRetractedComponent>(torso);
+            SEntMan.EnsureComponent<BleedersClampedComponent>(torso);
+            Sites.Recalculate(torso);
+
+            if (SEntMan.TryGetComponent<TargetingComponent>(surgeon, out var targeting))
+                targeting.Target = TargetBodyPart.Torso;
+
+            var option = Surgery.GetAvailableOperations(surgeon, patient, arm)
+                .FirstOrDefault(option => option.Operation.ID.Contains("AttachLeftArm"));
+            Assert.That(option, Is.Not.Null,
+                "the missing left arm should be attachable from the open torso.");
+            Assert.That(option!.Operation.ID, Is.Not.Empty);
+
+            Surgery.StartOperation(surgeon, patient, arm, option);
+        });
+
+        await RunSeconds(10);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(Body.GetBodyChildrenOfType(patient, BodyPartType.Arm, symmetry: BodyPartSymmetry.Left),
+                Is.Not.Empty, "the attached left arm is not part of the body again.");
+
+            if (stumpWound == null)
+                return;
+
+            var host = SEntMan.GetComponent<WoundHostComponent>(patient);
+            Assert.That(SEntMan.System<WoundSystem>().GetWounds(torso)
+                    .Any(wound => wound.Comp.Prototype == host.AmputationConsequenceWound),
+                Is.False, "reattaching the limb should clear the stump wound.");
+        });
+    }
+
+    [Test]
+    public async Task OtherPartOperationsAreNotOffered()
+    {
+        var (_, patient, torso) = await SpawnPair();
+
+        await Server.WaitAssertion(() =>
+        {
+            SEntMan.EnsureComponent<IncisionOpenComponent>(torso);
+            SEntMan.EnsureComponent<SkinRetractedComponent>(torso);
+            SEntMan.EnsureComponent<RibcageSawedComponent>(torso);
+            Sites.Recalculate(torso);
+
+            var prototypes = Server.ResolveDependency<Robust.Shared.Prototypes.IPrototypeManager>();
+            Assert.That(prototypes.TryIndex<SurgicalOperationPrototype>(
+                "WFOpWFSurgeryRepairBrain_WFSurgeryStepRepairBrain", out var brain), Is.True);
+
+            Assert.That(Surgery.IsStateAvailable(patient, torso, brain!, TargetBodyPart.Torso), Is.False,
+                "a head operation must not be offered on the torso.");
+        });
+    }
+
+    [Test]
     public async Task DuplicateAndCavityOperationsAreGone()
     {
         var prototypes = Server.ResolveDependency<Robust.Shared.Prototypes.IPrototypeManager>();

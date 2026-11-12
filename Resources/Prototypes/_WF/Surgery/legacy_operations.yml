@@ -21,6 +21,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachHead_SurgeryStepInsertFeature
   icon:
@@ -41,6 +42,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachLeftArm_SurgeryStepInsertFeature
   icon:
@@ -61,6 +63,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachLeftFoot_SurgeryStepInsertFeature
   icon:
@@ -81,6 +84,7 @@
   zones:
   - LeftLeg
   - RightLeg
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachLeftHand_SurgeryStepInsertFeature
   icon:
@@ -101,6 +105,7 @@
   zones:
   - LeftArm
   - RightArm
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachLeftLeg_SurgeryStepInsertFeature
   icon:
@@ -121,6 +126,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachRightArm_SurgeryStepInsertFeature
   icon:
@@ -141,6 +147,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachRightFoot_SurgeryStepInsertFeature
   icon:
@@ -161,6 +168,7 @@
   zones:
   - LeftLeg
   - RightLeg
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachRightHand_SurgeryStepInsertFeature
   icon:
@@ -181,6 +189,7 @@
   zones:
   - LeftArm
   - RightArm
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachRightLeg_SurgeryStepInsertFeature
   icon:
@@ -201,6 +210,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryCorticalBorerRemoval_SurgeryStepRemoveCorticalBorer
   icon:
@@ -223,6 +233,7 @@
   partType: Head
   zones:
   - Head
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryInsertItem_SurgeryStepInsertItem
   icon:
@@ -265,6 +276,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryInsertPump_SurgeryStepInsertPump
   icon:
@@ -285,6 +297,7 @@
   - Groin
   organComponents:
   - Heart
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryOpenRibcage_SurgeryStepPriseOpenBones
   icon:
@@ -308,6 +321,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryRemovePart_SurgeryStepSawFeature
   icon:
@@ -344,6 +358,7 @@
     speed: 1.0
   requiredStates:
   - SkinOpen
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryTendWoundsBrute_SurgeryStepRepairBruteTissue
   icon:
@@ -363,6 +378,7 @@
   - SkinOpen
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryTendWoundsBurn_SurgeryStepRepairBurnTissue
   icon:
@@ -382,6 +398,7 @@
   - SkinOpen
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryAlienEmbryoRemoval_WFSurgeryStepCutLarvaRoots
   icon:
@@ -428,6 +445,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryBurstChestRepair_WFSurgeryStepClearBurstChest
   icon:
@@ -476,6 +494,7 @@
   - Groin
   flags:
   - PriorityNextStep
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryCloseEvisceration_WFSurgeryStepClampEvisceration
   icon:
@@ -513,6 +532,7 @@
   - SkinOpen
   flags:
   - PriorityNextStep
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryCutTwistedArm_WFLatticeStepCutTwistedArm
   icon:
@@ -536,6 +556,7 @@
   zones:
   - LeftArm
   - RightArm
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryExciseSong_WFLatticeStepExciseSong
   icon:
@@ -556,6 +577,7 @@
   partType: Head
   zones:
   - Head
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryExtractSynthPowerCell_WFSurgeryStepLocateSynthPowerCell
   icon:
@@ -625,6 +647,7 @@
   - Groin
   flags:
   - Mechanical
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryGraftSkin_WFSurgeryStepGraftSkin
   icon:
@@ -641,6 +664,7 @@
     speed: 1.0
   requiredStates:
   - SkinOpen
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryHealAmputationConsequence_WFSurgeryStepHealAmputationConsequence
   icon:
@@ -657,6 +681,7 @@
     speed: 1.0
   requiredStates:
   - SkinOpen
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryHealBrain_WFSurgeryStepHealBrain
   icon:
@@ -679,6 +704,7 @@
   - Head
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryHealEyes_WFSurgeryStepHealEyes
   icon:
@@ -701,6 +727,7 @@
   - Head
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryHealHeart_WFSurgeryStepHealHeart
   icon:
@@ -724,6 +751,7 @@
   - Groin
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryHealKidneys_WFSurgeryStepHealKidneys
   icon:
@@ -747,6 +775,7 @@
   - Groin
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryHealLiver_WFSurgeryStepHealLiver
   icon:
@@ -770,6 +799,7 @@
   - Groin
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryHealLungs_WFSurgeryStepHealLungs
   icon:
@@ -793,6 +823,7 @@
   - Groin
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryHealSlimeCore_WFSurgeryStepHealSlimeCore
   icon:
@@ -816,6 +847,7 @@
   - Groin
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryHealStomach_WFSurgeryStepHealStomach
   icon:
@@ -839,6 +871,7 @@
   - Groin
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryImplantSynthPowerCell_WFSurgeryStepInsertSynthPowerCell
   icon:
@@ -885,6 +918,7 @@
   - Groin
   flags:
   - Mechanical
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryMendFracture_WFSurgeryStepSetBone
   icon:
@@ -922,6 +956,7 @@
   - SkinOpen
   flags:
   - PriorityNextStep
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRelocateJoint_WFSurgeryStepRelocateJoint
   icon:
@@ -936,6 +971,7 @@
   tools:
   - anyItem: true
     speed: 1.0
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRemoveEmbeddedObjects_WFSurgeryStepExtractEmbedded
   icon:
@@ -954,6 +990,7 @@
     speed: 1.67
   requiredStates:
   - SkinOpen
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRemoveNecroticFlesh_WFSurgeryStepRemoveNecroticFlesh
   icon:
@@ -988,6 +1025,7 @@
     speed: 1.0
   requiredStates:
   - SkinOpen
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairArtery_WFSurgeryStepClampArtery
   icon:
@@ -1022,6 +1060,7 @@
     speed: 1.0
   requiredStates:
   - SkinOpen
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairBrain_WFSurgeryStepRepairBrain
   icon:
@@ -1042,6 +1081,7 @@
   partType: Head
   zones:
   - Head
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairChassisEyes_WFSurgeryStepOpenServicePanel
   icon:
@@ -1104,6 +1144,7 @@
   flags:
   - Mechanical
   - PriorityNextStep
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairChassisPump_WFSurgeryStepOpenServicePanel
   icon:
@@ -1169,6 +1210,7 @@
   flags:
   - Mechanical
   - PriorityNextStep
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairCore_WFSurgeryStepUnseatCore
   icon:
@@ -1223,6 +1265,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairSlimeCore_WFSurgeryStepRepairSlimeCore
   icon:
@@ -1244,6 +1287,7 @@
   zones:
   - Torso
   - Groin
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairSynthCore_WFSurgeryStepUnseatCore
   icon:
@@ -1301,6 +1345,7 @@
   - Head
   flags:
   - Mechanical
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairSynthPump_WFSurgeryStepOpenServicePanel
   icon:
@@ -1366,6 +1411,7 @@
   flags:
   - Mechanical
   - PriorityNextStep
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairTendon_WFSurgeryStepRepairTendon
   icon:
@@ -1383,6 +1429,7 @@
   anyRequiredStates:
   - SkinCut
   - SkinOpen
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryReplaceServo_WFSurgeryStepReplaceServo
   icon:
@@ -1397,6 +1444,7 @@
   tools:
   - component: WolfmedServoKit
     speed: 1.0
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRewireChassis_WFSurgeryStepRewireChassis
   icon:
@@ -1414,6 +1462,7 @@
   flags:
   - Mechanical
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryStopBleeding_WFSurgeryStepSutureBleeding
   icon:
@@ -1432,6 +1481,7 @@
     speed: 1.67
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryStopInternalBleeding_WFSurgeryStepStopInternalBleeding
   icon:
@@ -1451,6 +1501,7 @@
   requiredStates:
   - SkinOpen
   - OrgansCut
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryTendWoundsBruteDeep_SurgeryStepRepairBruteTissue
   icon:
@@ -1470,6 +1521,7 @@
   - SkinOpen
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryTendWoundsBurnDeep_SurgeryStepRepairBurnTissue
   icon:
@@ -1489,6 +1541,7 @@
   - SkinOpen
   flags:
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryWeldChassis_WFSurgeryStepWeldChassis
   icon:
@@ -1510,6 +1563,7 @@
   - Mechanical
   - PriorityNextStep
   - Looping
+  finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryWeldChassisBreach_WFSurgeryStepSeatChassisPlating
   icon:
@@ -1546,3 +1600,4 @@
   flags:
   - Mechanical
   - PriorityNextStep
+  finishProcedure: true

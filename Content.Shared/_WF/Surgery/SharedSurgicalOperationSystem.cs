@@ -683,11 +683,30 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
         return results;
     }
 
-    /// <summary>All operations whose state requirements are met, for the operating computer's catalog.</summary>
-    public bool IsStateAvailable(EntityUid patient, EntityUid part, SurgicalOperationPrototype operation)
+    /// <summary>
+    /// All operations whose state requirements are met on the passed part, for the operating computer.
+    /// The operation's own part type and zone are checked too, so an open torso does not list head or leg
+    /// procedures that the surgeon cannot perform on it.
+    /// </summary>
+    public bool IsStateAvailable(
+        EntityUid patient,
+        EntityUid part,
+        SurgicalOperationPrototype operation,
+        TargetBodyPart? zone = null)
     {
         if (!TryComp<SurgicalSiteComponent>(part, out _))
             return false;
+
+        if (operation.Zones is { } zones && zone is { } current && (zones & current) == 0)
+            return false;
+
+        if (TryComp<BodyPartComponent>(part, out var bodyPart))
+        {
+            if (operation.PartType is { } partType && bodyPart.PartType != partType)
+                return false;
+            if (operation.Symmetry is { } symmetry && bodyPart.Symmetry != symmetry)
+                return false;
+        }
 
         if (operation.Flags.HasFlag(SurgicalOperationFlags.Locked) && !IsOperationUnlocked(operation))
             return false;

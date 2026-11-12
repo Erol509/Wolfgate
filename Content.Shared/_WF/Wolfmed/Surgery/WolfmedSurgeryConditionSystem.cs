@@ -105,6 +105,20 @@ public sealed partial class WolfmedSurgeryConditionSystem : EntitySystem
         MetaData(surgery).EntityPrototype is { } prototype &&
         progress.Surgeries.Contains(prototype.ID);
 
+    /// <summary>
+    /// Ends the "in progress" listing for a procedure whose last procedure-specific step just ran.
+    /// The generic closing operation replaces the legacy closing step, so otherwise the procedure would
+    /// stay listed while the wound or embedded object it treated is already gone.
+    /// </summary>
+    public void FinishProcedure(EntityUid part, EntProtoId surgery)
+    {
+        if (!TryComp(part, out WolfmedSurgeryProgressComponent? progress))
+            return;
+
+        if (progress.Surgeries.Remove(surgery))
+            Dirty(part, progress);
+    }
+
     private bool HasWolfmedCondition(EntityUid surgery) =>
         HasComp<SurgeryWoundedConditionComponent>(surgery) || // Pre-merge review: the tend surgeries stay open to their closing step too
         HasComp<WolfmedSurgeryWoundConditionComponent>(surgery) ||

@@ -66,6 +66,10 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
     {
         base.Open();
 
+        // The initial state may be assigned directly by the UI system without a UpdateState call.
+        if (State is OperatingComputerState initialState)
+            _state = initialState;
+
         _window = new OperatingComputerWindow();
         _window.OnClose += Close;
         _window.OpenCentered();
@@ -80,6 +84,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         if (state is not OperatingComputerState dynamicState)
             return;
 
+        var previousHide = _hideMechanic;
         if (!_hideMechanicTouched && dynamicState.HasPatient)
             _hideMechanic = !dynamicState.PatientMechanical;
         _state = dynamicState;
@@ -94,6 +99,13 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         }
 
         RefreshCurrentTab();
+
+        if (_hideMechanic == previousHide)
+            return;
+
+        if (_hideButton != null)
+            _hideButton.Pressed = _hideMechanic;
+        ApplyMechanicFilter();
     }
 
     protected override void Dispose(bool disposing)
@@ -292,6 +304,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
     private Control BuildPatient()
     {
         var panel = Section(SectionBox());
+        panel.VerticalExpand = true;
 
         if (!_state!.HasTable)
         {
@@ -358,6 +371,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         var states = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
+            HorizontalExpand = true,
             Margin = new Thickness(8, 0, 0, 0),
         };
 
@@ -630,6 +644,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         var inner = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
+            HorizontalExpand = true,
         };
         inner.AddChild(new Label
         {
@@ -641,6 +656,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         var requirements = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
+            HorizontalExpand = true,
             Margin = new Thickness(6, 2, 0, 0),
         };
         foreach (var requirement in operation.Requirements)
@@ -792,6 +808,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         Text = text,
         FontColorOverride = color,
         ClipText = true,
+        HorizontalExpand = true,
     };
 
     private Control Notice(string text, Color color)

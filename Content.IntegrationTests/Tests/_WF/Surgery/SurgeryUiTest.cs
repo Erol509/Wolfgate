@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Content.Client._WF.Surgery;
 using Content.IntegrationTests.Fixtures;
 using Content.Server._WF.Surgery;
+using Content.Shared._Shitmed.Medical.Surgery;
 using Content.Shared._Shitmed.Medical.Surgery.Steps.Parts;
 using Content.Shared._Shitmed.Medical.Surgery.Tools;
 using Content.Shared._WF.Surgery;
@@ -14,6 +15,7 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Buckle;
 using Content.Shared.Interaction;
 using NUnit.Framework;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -158,11 +160,19 @@ public sealed class SurgeryUiTest : GameTest
             var labelText = string.Join(" | ", labels.Select(label => label.Text));
             var buttonText = string.Join(" | ", buttons.Select(button => button.Text));
 
-            Assert.That(labels.Select(label => label.Text), Has.Some.Contains("Skin is cut"),
+            var stateLabels = labels.Where(label => label.Text.Contains("Skin is cut")).ToList();
+            Assert.That(stateLabels, Is.Not.Empty,
                 $"the patient state is not rendered. Labels: {labelText}");
-            Assert.That(buttons.Select(button => button.Text),
-                Has.Some.Contains("retract skin", StringComparison.OrdinalIgnoreCase),
+            Assert.That(stateLabels.Any(label => label.Size.X > 4f), Is.True,
+                $"the patient state label was laid out with no width. Sizes: {string.Join(", ", stateLabels.Select(label => label.Size))}");
+
+            var operationButtons = buttons
+                .Where(button => button.Text.Contains("retract skin", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            Assert.That(operationButtons, Is.Not.Empty,
                 $"the next operations are not rendered. Buttons: {buttonText}");
+            Assert.That(operationButtons.Any(button => button.Size.Y > 4f), Is.True,
+                $"the next operation button was laid out with no height. Sizes: {string.Join(", ", operationButtons.Select(button => button.Size))}");
         });
     }
 
@@ -176,6 +186,26 @@ public sealed class SurgeryUiTest : GameTest
                 buttons.Add(button);
             Collect(child, labels, buttons);
         }
+    }
+
+    [Test]
+    public async Task OrganSelectionWindowLoads()
+    {
+        await Client.WaitPost(() =>
+        {
+            var window = new OrganSelectionWindow();
+            window.SetOptions(new SurgicalOrganSelectState
+            {
+                Options =
+                {
+                    new SurgicalOrganOption { Name = "Remove heart" },
+                    new SurgicalOrganOption { Name = "Remove liver" },
+                },
+            });
+
+            Assert.That(window.Options.ChildCount, Is.EqualTo(2));
+            window.Dispose();
+        });
     }
 
     [Test]
@@ -231,6 +261,40 @@ public sealed class SurgeryUiTest : GameTest
             Assert.That(state.Operations.Where(operation => operation.ShowAsNext).Select(operation => operation.Id),
                 Has.Some.EqualTo("WFRetractSkin"),
                 "retracting the skin is not offered after the incision.");
+        });
+    }
+
+    [Test]
+    public async Task OrganPickerDoesNotCloseTheInterfaceWhileOpening()
+    {
+        var map = await Pair.CreateTestMap();
+        EntityUid patient = default;
+
+        await Server.WaitPost(() =>
+        {
+            patient = Server.EntMan.SpawnEntity("MobHuman", map.GridCoords);
+            if (ServerSession is { } session)
+                Server.PlayerMan.SetAttachedEntity(session, patient);
+
+            var ui = Server.EntMan.System<Robust.Shared.GameObjects.SharedUserInterfaceSystem>();
+            Assert.That(ui.TryOpenUi(patient, SurgeryUIKey.Key, patient), Is.True,
+                "MobHuman does not expose the surgery interface.");
+
+            // The generic organ operation replaces the wheel with the picker in the same tick it opens.
+            ui.SetUiState(patient, SurgeryUIKey.Key, new SurgicalOrganSelectState(
+                Server.EntMan.GetNetEntity(patient),
+                new List<SurgicalOrganOption> { new() { Name = "Remove heart" } }));
+        });
+
+        await RunTicksSync(60);
+        await Pair.RunUntilSynced();
+
+        var clientPatient = Pair.ToClientUid(patient);
+        await Client.WaitAssertion(() =>
+        {
+            Assert.That(Client.EntMan.System<Robust.Shared.GameObjects.SharedUserInterfaceSystem>()
+                .TryGetOpenUi<SurgicalRadialBui>(clientPatient, SurgeryUIKey.Key, out _), Is.True,
+                "the organ picker closed the surgery interface.");
         });
     }
 }

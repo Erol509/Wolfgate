@@ -83,7 +83,11 @@ public partial class SurgicalRadialBui : BoundUserInterface
     /// <summary>Switches from the radial to the organ list the generic organ-manipulation operation opened.</summary>
     private void ShowOrganPicker(SurgicalOrganSelectState state)
     {
-        _menu?.Close();
+        // Closing a CreateWindow window closes the whole BUI, and the UI system calls UpdateState from inside
+        // its queued open/close loop, so that would mutate the queue while it is enumerated. Hide the wheel
+        // instead; Build() shows it again if the state ever returns to it.
+        if (_menu is { Visible: true })
+            _menu.Visible = false;
 
         if (_organWindow == null)
         {
@@ -100,19 +104,20 @@ public partial class SurgicalRadialBui : BoundUserInterface
     private void OnOrganChosen(NetEntity? organ, bool inserting)
     {
         SendMessage(new SurgicalOrganChooseMessage(organ, inserting));
-        _organWindow?.Close();
     }
 
     private void OnOrganCancelled()
     {
         SendMessage(new SurgicalOrganCancelMessage());
-        _organWindow?.Close();
     }
 
     private void Build()
     {
         if (_menu == null || State is not SurgicalRadialState state)
             return;
+
+        if (!_menu.Visible)
+            _menu.Visible = true;
 
         if (!ReferenceEquals(state, _shownState))
         {

@@ -293,7 +293,8 @@ public sealed partial class OperatingComputerSystem : EntitySystem
         {
             var entry = MakeOperationState(operation);
             entry.ShowAsNext = patient is { } patientUid && part is { } partUid &&
-                               _surgery.IsStateAvailable(patientUid, partUid, operation);
+                               _surgery.IsStateAvailable(patientUid, partUid, operation,
+                                   (TargetBodyPart) state.Zone);
             state.Operations.Add(entry);
         }
     }

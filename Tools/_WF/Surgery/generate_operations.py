@@ -593,6 +593,12 @@ def main():
             if step["repeatable"]:
                 operation["flags"] = operation.get("flags", []) + ["Looping"]
 
+            # The generic close replaces the legacy closing step, so Wolfmed would otherwise keep the
+            # procedure listed as "in progress" forever after its wound or embedded object is gone.
+            remaining = surgery["steps"][index + 1:]
+            if all(rest in GENERIC_STEPS or rest not in all_steps for rest in remaining):
+                operation["finishProcedure"] = True
+
             operations.append(operation)
             locale.append(f"wf-surgery-op-{location_id(op_id)} = {name}")
             desc = f"Perform {name.lower()} as part of {surgery['name'].lower()}."

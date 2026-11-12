@@ -354,7 +354,9 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
     {
         var user = args.Actor;
         var tool = _handsSystem.GetActiveItem(user);
-        var organ = args.Organ is { } netOrgan ? GetEntity(netOrgan) : (EntityUid?) null;
+        EntityUid? organ = null;
+        if (args.Organ is { } netOrgan && TryGetEntity(netOrgan, out var organUid))
+            organ = organUid;
 
         foreach (var option in GetAvailableOperations(user, ent.Owner, tool))
         {
@@ -595,6 +597,11 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
         {
             _wolfmedConditions.RecordStep(option.Part, (surgery, surgeryComp), step);
         }
+
+        // Must run after RecordStep: it clears the procedure's in-progress entry instead of leaving it
+        // listed until a legacy closing step that the generic close now replaces.
+        if (option.Operation.FinishProcedure)
+            _wolfmedConditions.FinishProcedure(option.Part, option.Operation.Surgery);
 
         var message = option.Organ is { } organ
             ? Loc.GetString(option.Inserting ? "surgery-popup-success-insert-organ" : "surgery-popup-success-remove-organ",

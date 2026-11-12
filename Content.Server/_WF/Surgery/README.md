@@ -37,11 +37,22 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 - Detached-limb surgery is limited to operations flagged `NoPatient`; the radial itself opens on a patient.
 - The radial shows at most eight slots at once and puts the rest on further pages (the tg next-page sprite), so a
   deep anatomical state never produces an unreadably large wheel.
-- Organ insertion and removal go through the single generic organ-manipulation operation, which offers one entry
-  per organ instead of one per-organ surgery. Closing the site (`WFMendSkin`) affixes limbs and organs that the
-  operation reattached, because the per-surgery seal-wound steps are not generated.
+- A missing limb is replaced the tg way: open the torso (skin cut, retracted and bleeders clamped), then use the
+  detached limb on the patient while targeting the torso. Reattaching clears the stump's amputation-consequence
+  wound instead of requiring a separate repair procedure first.
+- Organ insertion and removal go through the single generic organ-manipulation operation: the radial shows one
+  slice, and choosing it opens a small organ list with OK and Cancel. Closing the site (`WFMendSkin`) affixes
+  limbs and organs that the operation reattached, because the per-surgery seal-wound steps are not generated.
+  The autodoc keeps calling the legacy surgery and step prototypes directly, so it needs no changes.
 - Cavity widening and closing are not offered at present: the chest cavity state and its marker still exist for
   legacy compatibility, but nothing sets it.
+- A procedure's last generated step ends its Wolfmed "in progress" listing instead of waiting for the skipped
+  legacy closing step, so stopping internal bleeding or extracting embedded objects removes those slices as soon
+  as the part no longer has the wound or object.
+- The operating computer keeps its shell while state updates arrive: only the active tab is refreshed, the
+  possible-operations and catalog scroll positions are preserved, and the mechanical filter toggles visibility
+  in place instead of rebuilding the list. Its possible-operations list also checks each operation's body part
+  and zone, so an open torso does not list head or limb procedures.
 - Advanced tg operations without a Wolfgate equivalent yet (lobotomy, pacify, brainwash, revival, autopsy,
   dentals, plastic surgery naming, bioware, xeno surgery) are not shipped. The framework supports them; they need
   Wolfgate-side effects before they can be added honestly.
@@ -78,6 +89,8 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 - [`Content.Client/_WF/Surgery/OperatingComputerBui.cs`](../../../Content.Client/_WF/Surgery/OperatingComputerBui.cs)
 - [`Content.Client/_WF/Surgery/OperatingComputerWindow.xaml`](../../../Content.Client/_WF/Surgery/OperatingComputerWindow.xaml)
 - [`Content.Client/_WF/Surgery/OperatingComputerWindow.xaml.cs`](../../../Content.Client/_WF/Surgery/OperatingComputerWindow.xaml.cs)
+- [`Content.Client/_WF/Surgery/OrganSelectionWindow.xaml`](../../../Content.Client/_WF/Surgery/OrganSelectionWindow.xaml)
+- [`Content.Client/_WF/Surgery/OrganSelectionWindow.xaml.cs`](../../../Content.Client/_WF/Surgery/OrganSelectionWindow.xaml.cs)
 - [`Content.Client/_WF/Surgery/SurgicalRadialBui.cs`](../../../Content.Client/_WF/Surgery/SurgicalRadialBui.cs)
 - [`Content.Client/_WF/Surgery/SurgicalRadialButton.cs`](../../../Content.Client/_WF/Surgery/SurgicalRadialButton.cs)
 - [`Content.Client/_WF/Surgery/SurgicalRadialMenu.xaml`](../../../Content.Client/_WF/Surgery/SurgicalRadialMenu.xaml)

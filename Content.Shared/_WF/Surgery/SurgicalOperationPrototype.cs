@@ -149,6 +149,14 @@ public sealed partial class SurgicalOperationPrototype : IPrototype
     [DataField]
     public bool RequirePreviousSteps = true;
 
+    /// <summary>
+    /// Completing this step ends the legacy procedure because no procedure-specific step follows it.
+    /// Wolfmed keeps a procedure listed while it is in progress so its closing step is reachable; this
+    /// clears that marker when the generic closing operation replaces the legacy closing step.
+    /// </summary>
+    [DataField]
+    public bool FinishProcedure;
+
     /// <summary>Base time in seconds. Zero uses the referenced step's duration.</summary>
     [DataField]
     public float Time;

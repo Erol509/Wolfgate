@@ -51,14 +51,6 @@ public abstract partial class SharedSurgerySystem
                ent.Comp.MaxWoundSeverity is { } max && severity > max;
     }
 
-    /// <summary>HOOK 25 body: true while a stump still carries an untreated AmputationConsequenceWound.</summary>
-    private bool WolfmedStumpBlocksAttachment(EntityUid parent)
-    {
-        return TryComp(parent, out BodyPartComponent? bodyPart) && bodyPart.Body is { } body &&
-               TryComp(body, out WoundHostComponent? host) &&
-               _wolfmedWounds.GetWounds(parent).Any(wound => wound.Comp.Prototype == host.AmputationConsequenceWound);
-    }
-
     /// <summary>Whether a tend step has wounds left to close on a host's part; null for a non-host (HOOK 26).</summary>
     // Upstream reads the whole body's damage of the group, so a torso tend never finished while a hand had a scratch.
     // On a wound host the step runs until the open part's wounds are closed, whatever the damage bookkeeping says.
