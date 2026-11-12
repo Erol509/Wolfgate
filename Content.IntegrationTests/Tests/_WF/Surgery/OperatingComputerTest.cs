@@ -38,7 +38,6 @@ public sealed class OperatingComputerTest : WolfmedGameTest
             var computerCoords = map.GridCoords.Offset(new System.Numerics.Vector2(1, 0));
             computer = SEntMan.SpawnEntity("WFOperatingComputer", computerCoords);
             patient = SEntMan.SpawnEntity("MobHuman", map.GridCoords);
-            SEntMan.GetComponent<OperatingComputerComponent>(computer).RequiresPower = false;
 
             Assert.That(SEntMan.System<SharedBuckleSystem>().TryBuckle(patient, null, table), Is.True,
                 "The test patient should buckle to the operating table.");

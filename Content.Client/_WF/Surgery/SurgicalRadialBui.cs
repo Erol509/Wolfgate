@@ -69,13 +69,12 @@ public partial class SurgicalRadialBui : BoundUserInterface
                 TextureScale = new Vector2(2f, 2f),
             };
 
-            var button = new RadialMenuTextureButton
+            var button = new RadialMenuTextureButtonWithSector
             {
-                StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64, 64),
                 ToolTip = option.Tool.Length > 0
-                    ? $"{option.Description}\n{Loc.GetString("surgery-radial-tool", ("tool", option.Tool))}"
-                    : option.Description,
+                    ? $"{option.Name}\n{option.Description}\n{Loc.GetString("surgery-radial-tool", ("tool", option.Tool))}"
+                    : $"{option.Name}\n{option.Description}",
             };
 
             var index = option.Index;

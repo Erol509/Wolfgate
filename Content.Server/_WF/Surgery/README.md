@@ -23,9 +23,9 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
   bone repair, cavities and the mechanical equivalents.
 - `python Tools/_WF/Surgery/generate_operations.py` derives one operation per procedure-specific legacy step from
   the legacy surgery and step prototypes. Run it after editing a legacy surgery.
-- The operating table itself hosts the monitor UI, and the separate operating computer finds an adjacent table.
-  Either tracks the buckled patient and publishes vitals, the selected zone's surgical state and every operation
-  the state permits. Operations become available when the station
+- The operating computer tracks the patient buckled to an adjacent operating table and publishes vitals, the
+  selected zone's surgical state and every operation the state permits. It opens on a hand click or with a
+  surgical tool; the table itself has no UI. Operations become available when the station
   researches the technology named in a `surgicalResearch` prototype.
 
 ## Compatibility notes
@@ -66,6 +66,7 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 
 ### Client
 
+- [`Content.Client/_WF/Surgery/BodyZoneSelectorControl.cs`](../../../Content.Client/_WF/Surgery/BodyZoneSelectorControl.cs)
 - [`Content.Client/_WF/Surgery/OperatingComputerBui.cs`](../../../Content.Client/_WF/Surgery/OperatingComputerBui.cs)
 - [`Content.Client/_WF/Surgery/OperatingComputerWindow.xaml`](../../../Content.Client/_WF/Surgery/OperatingComputerWindow.xaml)
 - [`Content.Client/_WF/Surgery/OperatingComputerWindow.xaml.cs`](../../../Content.Client/_WF/Surgery/OperatingComputerWindow.xaml.cs)
@@ -78,6 +79,7 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 - [`Content.IntegrationTests/Tests/_WF/Surgery/OperatingComputerTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Surgery/OperatingComputerTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Surgery/SurgeryOperationTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Surgery/SurgeryOperationTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Surgery/SurgeryUiTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Surgery/SurgeryUiTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Surgery/SurgicalToolGateTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Surgery/SurgicalToolGateTest.cs)
 
 ### Prototypes
 
@@ -94,8 +96,24 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 - [`Resources/Locale/en-US/_WF/Surgery/legacy_operations.ftl`](../../../Resources/Locale/en-US/_WF/Surgery/legacy_operations.ftl)
 - [`Resources/Locale/en-US/_WF/Surgery/surgery.ftl`](../../../Resources/Locale/en-US/_WF/Surgery/surgery.ftl)
 
+### Textures
+
+- [`Resources/Textures/_WF/Surgery/BodyZones/ATTRIBUTION.md`](../../../Resources/Textures/_WF/Surgery/BodyZones/ATTRIBUTION.md)
+- [`Resources/Textures/_WF/Surgery/BodyZones/base.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/base.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/chest.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/chest.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/eyes.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/eyes.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/groin.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/groin.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/head.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/head.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/l_arm.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/l_arm.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/l_leg.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/l_leg.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/mouth.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/mouth.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/r_arm.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/r_arm.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/r_leg.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/r_leg.png)
+- [`Resources/Textures/_WF/Surgery/RadialIcons.rsi/`](../../../Resources/Textures/_WF/Surgery/RadialIcons.rsi/)
+
 ### Tools
 
+- [`Tools/_WF/Surgery/extract_radial_icons.py`](../../../Tools/_WF/Surgery/extract_radial_icons.py)
 - [`Tools/_WF/Surgery/generate_operations.py`](../../../Tools/_WF/Surgery/generate_operations.py)
 
 ## Non-modular edits
@@ -107,6 +125,5 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
   - caller-validated tools skip the step's list
 - [`Content.Shared/_Shitmed/Surgery/Steps/SurgeryCanPerformStepEvent.cs`](../../../Content.Shared/_Shitmed/Surgery/Steps/SurgeryCanPerformStepEvent.cs): caller-validated tools
 - [`Content.Shared/_Shitmed/Surgery/SurgeryStepEvent.cs`](../../../Content.Shared/_Shitmed/Surgery/SurgeryStepEvent.cs): caller-validated tools
-- [`Resources/Prototypes/Entities/Structures/Furniture/Tables/operating_table.yml`](../../../Resources/Prototypes/Entities/Structures/Furniture/Tables/operating_table.yml): the table itself hosts the operating computer UI (and patient monitor)
 
 <!-- WOLFGATE-GENERATED END -->

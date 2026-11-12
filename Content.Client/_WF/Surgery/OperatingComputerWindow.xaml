@@ -2,16 +2,17 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client._WF.Surgery"
     MinSize="350 610">
-    <PanelContainer Name="Backdrop" Access="Public" HorizontalExpand="True" VerticalExpand="True">
-        <BoxContainer Orientation="Vertical" Margin="4">
-            <BoxContainer Name="TabBar" Access="Public" Orientation="Horizontal" HorizontalExpand="True" />
-            <PanelContainer Name="Separator" Access="Public" MinSize="0 2" Margin="0 4" />
-            <BoxContainer Name="PatientRoot" Access="Public" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" />
-            <BoxContainer Name="CatalogBar" Access="Public" Orientation="Horizontal" HorizontalExpand="True" Visible="False" />
-            <ScrollContainer Name="CatalogScroll" Access="Public" VerticalExpand="True" HorizontalExpand="True" Visible="False">
-                <BoxContainer Name="CatalogRoot" Access="Public" Orientation="Vertical" HorizontalExpand="True" />
-            </ScrollContainer>
-            <Label Name="Footer" Access="Public" HorizontalAlignment="Right" Margin="0 4 0 0" />
+    <PanelContainer Name="Backdrop" Access="Public" HorizontalExpand="True" VerticalExpand="True" MouseFilter="Ignore">
+        <BoxContainer Orientation="Vertical" SeparationOverride="0">
+            <PanelContainer Name="HeaderPanel" Access="Public" MinSize="0 25" MouseFilter="Ignore">
+                <BoxContainer Orientation="Horizontal">
+                    <Label Name="HeaderTitle" Access="Public" Margin="6 0 0 0" HorizontalExpand="True"
+                           ClipText="True" VAlign="Center" MouseFilter="Ignore" />
+                    <TextureButton Name="CloseButton" Access="Public" StyleClasses="windowCloseButton"
+                                   VerticalAlignment="Center" />
+                </BoxContainer>
+            </PanelContainer>
+            <BoxContainer Name="Body" Access="Public" Orientation="Vertical" Margin="5" HorizontalExpand="True" VerticalExpand="True" RectClipContent="True" />
         </BoxContainer>
     </PanelContainer>
 </controls:OperatingComputerWindow>

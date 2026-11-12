@@ -38,6 +38,30 @@ GENERIC_STEPS = {
     "SurgeryStepSealTendWound",
 }
 
+# Surgeries owned by this module. They are hand-written operations already; generating a second operation from
+# their generic effect step would bypass the state gate (and produced duplicate, mechanical-looking radial options).
+GENERIC_SURGERY_IDS = {
+    "WFSurgeryInciseSkin",
+    "WFSurgeryRetractSkin",
+    "WFSurgeryClampBleeders",
+    "WFSurgeryUnclampBleeders",
+    "WFSurgerySawBone",
+    "WFSurgeryDrillBone",
+    "WFSurgeryInciseOrgans",
+    "WFSurgeryMendSkin",
+    "WFSurgeryFixBones",
+    "WFSurgeryWidenCavity",
+    "WFSurgeryCloseCavity",
+    "WFSurgeryUnscrewShell",
+    "WFSurgeryOpenHatch",
+    "WFSurgeryPrepareElectronics",
+    "WFSurgeryUnwrenchEndoskeleton",
+    "WFSurgeryWrenchEndoskeleton",
+    "WFSurgeryScrewShell",
+    "WFSurgeryOrganManipulation",
+    "WFSurgeryImplantRemoval",
+}
+
 # The step's own tool components mapped to ghetto alternatives from /tg/station.
 TOOL_QUALITY = {
     "Scalpel": ("Slicing", 2.25),
@@ -280,6 +304,10 @@ def state_requirements(surgery, step, markers):
         if has_cavity:
             required.append("CavityWidened")
 
+    # Internal bleeding is inside the cavity; do not offer it beside the surface clamp-bleeders operation.
+    if step_id == "WFSurgeryStepStopInternalBleeding" and "OrgansCut" not in required:
+        required.append("OrgansCut")
+
     # Repeat prevention for state-changing procedure-specific steps.
     if not step["repeatable"]:
         for added in step["add"]:
@@ -347,6 +375,64 @@ def organ_components(surgery):
     return names
 
 
+ICON_BY_STEP = {
+    "SurgeryStepOpenIncisionScalpel": "make_incision",
+    "SurgeryStepCarefulIncisionScalpel": "make_incision",
+    "SurgeryStepRetractSkin": "retract_skin",
+    "SurgeryStepClampBleeders": "clamp_bleeders",
+    "SurgeryStepSawBones": "saw_bones",
+    "SurgeryStepPriseOpenBones": "saw_bones",
+    "SurgeryStepClampInternalBleeders": "incise_organs",
+    "SurgeryStepCloseIncision": "mend_incision",
+    "SurgeryStepSealTendWound": "mend_incision",
+    "SurgeryStepSealWounds": "mend_incision",
+    "SurgeryStepSealOrganWound": "mend_incision",
+    "SurgeryStepRemoveOrgan": "base",
+    "SurgeryStepInsertOrgan": "base",
+    "SurgeryStepInsertFeature": "base",
+    "SurgeryStepRemoveFeature": "amputate",
+    "SurgeryStepSawFeature": "saw_bones",
+    "SurgeryStepRepairBruteTissue": "base",
+    "SurgeryStepRepairBurnTissue": "base",
+    "SurgeryStepOpenOrganSlot": "base",
+}
+
+
+def icon_for_step(step_id):
+    if step_id in ICON_BY_STEP:
+        return ICON_BY_STEP[step_id]
+    lowered = step_id.lower()
+    if "incision" in lowered or "incise_skin" in lowered:
+        return "make_incision"
+    if "retract" in lowered:
+        return "retract_skin"
+    if "clamp" in lowered and "bleed" in lowered:
+        return "clamp_bleeders"
+    if "saw" in lowered or "bone" in lowered and "fix" not in lowered:
+        return "saw_bones"
+    if "drill" in lowered:
+        return "drill_bones"
+    if "organ" in lowered:
+        return "base"
+    if "seal" in lowered or "close" in lowered or "mend" in lowered:
+        return "mend_incision"
+    if "unscrew" in lowered:
+        return "unscrew_shell"
+    if "open_hatch" in lowered:
+        return "open_hatch"
+    if "electronics" in lowered:
+        return "prepare_electronics"
+    if "unwrench" in lowered:
+        return "unwrench_endoskeleton"
+    if "wrench" in lowered:
+        return "wrench_endoskeleton"
+    if "screw" in lowered:
+        return "screw_shell"
+    if "amput" in lowered or "remove_part" in lowered:
+        return "amputate"
+    return "base"
+
+
 def location_id(value):
     return re.sub(r"[^a-z0-9-]+", "-", value.lower()).strip("-")
 
@@ -360,6 +446,9 @@ def main():
     locale = []
 
     for surgery_id in sorted(all_surgeries):
+        if surgery_id in GENERIC_SURGERY_IDS:
+            continue
+
         surgery = all_surgeries[surgery_id]
         chain = chain_for(surgery_id, all_surgeries)
         if not chain:
@@ -403,6 +492,10 @@ def main():
             operation = {
                 "type": "surgicalOperation",
                 "id": op_id,
+                "icon": {
+                    "sprite": "_WF/Surgery/RadialIcons.rsi",
+                    "state": icon_for_step(step_id),
+                },
                 "name": f"wf-surgery-op-{location_id(op_id)}",
                 "description": f"wf-surgery-op-{location_id(op_id)}-desc",
                 "surgery": surgery_id,

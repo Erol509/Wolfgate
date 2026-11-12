@@ -533,9 +533,9 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
             if (tool is not { } used)
                 continue;
 
-            var matches = entry.AnyItem;
+            var matches = false;
 
-            if (!matches && entry.Component != null &&
+            if (entry.Component != null &&
                 _components.TryGetRegistration(entry.Component, out var registration) &&
                 HasComp(used, registration.Type))
             {
@@ -548,13 +548,14 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
                 matches = true;
             }
 
-            if (!matches && (entry.RequiresSharp || entry.MinForce > 0f) &&
-                TryComp<Content.Shared.Weapons.Melee.MeleeWeaponComponent>(used, out var melee))
+            if (!matches && entry.AnyItem)
             {
-                var slash = melee.Damage.DamageDict.GetValueOrDefault("Slash");
-                var piercing = melee.Damage.DamageDict.GetValueOrDefault("Piercing");
-                var force = melee.Damage.GetTotal().Float();
-                matches = (slash > 0 || piercing > 0) && force >= entry.MinForce;
+                matches = !entry.RequiresSharp && entry.MinForce <= 0f ||
+                          IsSharpEnough(used, entry.MinForce);
+            }
+            else if (!matches && (entry.RequiresSharp || entry.MinForce > 0f))
+            {
+                matches = IsSharpEnough(used, entry.MinForce);
             }
 
             if (!matches)
@@ -566,6 +567,18 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
         }
 
         return false;
+    }
+
+
+    /// <summary>tg's edged/pointed sharpness check: slash or piercing damage, plus a minimum force.</summary>
+    private bool IsSharpEnough(EntityUid tool, float minForce)
+    {
+        if (!TryComp<Content.Shared.Weapons.Melee.MeleeWeaponComponent>(tool, out var melee))
+            return false;
+
+        var slash = melee.Damage.DamageDict.GetValueOrDefault("Slash");
+        var piercing = melee.Damage.DamageDict.GetValueOrDefault("Piercing");
+        return (slash > 0 || piercing > 0) && melee.Damage.GetTotal().Float() >= minForce;
     }
 
     private string? GetEntryToolName(SurgicalToolEntry entry, EntityUid tool)

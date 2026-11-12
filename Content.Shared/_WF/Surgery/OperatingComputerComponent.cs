@@ -22,10 +22,6 @@ public sealed partial class OperatingComputerComponent : Component
     /// <summary>The body zone the computer is showing.</summary>
     [DataField, AutoNetworkedField]
     public TargetBodyPart Zone = TargetBodyPart.Torso;
-
-    /// <summary>Whether a powered computer can be used.</summary>
-    [DataField]
-    public bool RequiresPower = true;
 }
 
 /// <summary>Bound user interface key of the operating computer.</summary>
@@ -72,9 +68,13 @@ public sealed class OperatingComputerState : BoundUserInterfaceState
     public float Toxin;
     public float Oxy;
     public List<string> SurgeryState = new();
+    public bool PatientMechanical;
 
     /// <summary>Operation ids the patient's current state permits.</summary>
     public List<string> AvailableOperations = new();
+
+    /// <summary>Full entries for the operations the state permits, so the next-step list needs no catalog.</summary>
+    public List<OperatingComputerOperationState> NextOperations = new();
 
     public bool HasTechweb;
     public List<string> Experiments = new();

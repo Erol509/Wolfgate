@@ -3,6 +3,9 @@
 
 - type: surgicalOperation
   id: WFInciseSkin
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: make_incision
   name: wf-surgery-op-incise-skin
   description: wf-surgery-op-incise-skin-desc
   rndName: wf-surgery-op-incise-skin
@@ -23,6 +26,9 @@
 
 - type: surgicalOperation
   id: WFRetractSkin
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: retract_skin
   name: wf-surgery-op-retract-skin
   description: wf-surgery-op-retract-skin-desc
   surgery: WFSurgeryRetractSkin
@@ -42,6 +48,9 @@
 
 - type: surgicalOperation
   id: WFClampBleeders
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: clamp_bleeders
   name: wf-surgery-op-clamp-bleeders
   description: wf-surgery-op-clamp-bleeders-desc
   surgery: WFSurgeryClampBleeders
@@ -58,6 +67,9 @@
 
 - type: surgicalOperation
   id: WFUnclampBleeders
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: unclamp_bleeders
   name: wf-surgery-op-unclamp-bleeders
   description: wf-surgery-op-unclamp-bleeders-desc
   surgery: WFSurgeryUnclampBleeders
@@ -74,6 +86,9 @@
 
 - type: surgicalOperation
   id: WFSawBone
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: saw_bones
   name: wf-surgery-op-saw-bone
   description: wf-surgery-op-saw-bone-desc
   surgery: WFSurgerySawBone
@@ -94,6 +109,9 @@
 
 - type: surgicalOperation
   id: WFDrillBone
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: drill_bones
   name: wf-surgery-op-drill-bone
   description: wf-surgery-op-drill-bone-desc
   surgery: WFSurgeryDrillBone
@@ -111,6 +129,9 @@
 
 - type: surgicalOperation
   id: WFInciseOrgans
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: incise_organs
   name: wf-surgery-op-incise-organs
   description: wf-surgery-op-incise-organs-desc
   surgery: WFSurgeryInciseOrgans
@@ -128,6 +149,9 @@
 
 - type: surgicalOperation
   id: WFOrganManipulation
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: base
   name: wf-surgery-op-organ-manipulation
   description: wf-surgery-op-organ-manipulation-desc
   surgery: WFSurgeryOrganManipulation
@@ -149,6 +173,9 @@
 
 - type: surgicalOperation
   id: WFMendSkin
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: mend_incision
   name: wf-surgery-op-mend-skin
   description: wf-surgery-op-mend-skin-desc
   surgery: WFSurgeryMendSkin
@@ -166,6 +193,9 @@
 
 - type: surgicalOperation
   id: WFFixBones
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: fix_bones
   name: wf-surgery-op-fix-bones
   description: wf-surgery-op-fix-bones-desc
   surgery: WFSurgeryFixBones
@@ -181,6 +211,9 @@
 
 - type: surgicalOperation
   id: WFWidenCavity
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: base
   name: wf-surgery-op-widen-cavity
   description: wf-surgery-op-widen-cavity-desc
   surgery: WFSurgeryWidenCavity
@@ -199,6 +232,9 @@
 
 - type: surgicalOperation
   id: WFCloseCavity
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: base
   name: wf-surgery-op-close-cavity
   description: wf-surgery-op-close-cavity-desc
   surgery: WFSurgeryCloseCavity
@@ -218,6 +254,9 @@
 
 - type: surgicalOperation
   id: WFUnscrewShell
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: unscrew_shell
   name: wf-surgery-op-unscrew-shell
   description: wf-surgery-op-unscrew-shell-desc
   surgery: WFSurgeryUnscrewShell
@@ -237,6 +276,9 @@
 
 - type: surgicalOperation
   id: WFOpenHatch
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: open_hatch
   name: wf-surgery-op-open-hatch
   description: wf-surgery-op-open-hatch-desc
   surgery: WFSurgeryOpenHatch
@@ -252,6 +294,9 @@
 
 - type: surgicalOperation
   id: WFPrepareElectronics
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: prepare_electronics
   name: wf-surgery-op-prepare-electronics
   description: wf-surgery-op-prepare-electronics-desc
   surgery: WFSurgeryPrepareElectronics
@@ -269,6 +314,9 @@
 
 - type: surgicalOperation
   id: WFUnwrenchEndoskeleton
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: unwrench_endoskeleton
   name: wf-surgery-op-unwrench-endoskeleton
   description: wf-surgery-op-unwrench-endoskeleton-desc
   surgery: WFSurgeryUnwrenchEndoskeleton
@@ -286,6 +334,9 @@
 
 - type: surgicalOperation
   id: WFWrenchEndoskeleton
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: wrench_endoskeleton
   name: wf-surgery-op-wrench-endoskeleton
   description: wf-surgery-op-wrench-endoskeleton-desc
   surgery: WFSurgeryWrenchEndoskeleton
@@ -302,6 +353,9 @@
 
 - type: surgicalOperation
   id: WFScrewShell
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: screw_shell
   name: wf-surgery-op-screw-shell
   description: wf-surgery-op-screw-shell-desc
   surgery: WFSurgeryScrewShell
@@ -321,6 +375,9 @@
 
 - type: surgicalOperation
   id: WFImplantRemoval
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: base
   name: wf-surgery-op-implant-removal
   description: wf-surgery-op-implant-removal-desc
   surgery: WFSurgeryImplantRemoval

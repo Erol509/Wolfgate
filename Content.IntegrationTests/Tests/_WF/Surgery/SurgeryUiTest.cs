@@ -41,41 +41,17 @@ public sealed class SurgeryUiTest : GameTest
     }
 
     [Test]
-    public async Task OperatingTableOpensItsOwnWindow()
+    public async Task EveryRadialIconResolves()
     {
-        var map = await Pair.CreateTestMap();
-        EntityUid table = default;
-        EntityUid patient = default;
-
-        await Server.WaitPost(() =>
-        {
-            table = Server.EntMan.SpawnEntity("OperatingTable", map.GridCoords);
-            patient = Server.EntMan.SpawnEntity("MobHuman", map.GridCoords);
-            if (ServerSession is { } session)
-                Server.PlayerMan.SetAttachedEntity(session, patient);
-
-            Assert.That(Server.EntMan.System<SharedBuckleSystem>().TryBuckle(patient, null, table), Is.True);
-
-            var scalpel = Server.EntMan.SpawnEntity("Scalpel", map.GridCoords);
-            var ev = new InteractUsingEvent(patient, scalpel, table,
-                Server.EntMan.GetComponent<TransformComponent>(table).Coordinates);
-            Server.EntMan.EventBus.RaiseLocalEvent(table, ev);
-
-            var ui = Server.EntMan.System<Robust.Shared.GameObjects.SharedUserInterfaceSystem>();
-            Assert.That(ui.IsUiOpen(table, OperatingComputerUiKey.Key, patient), Is.True,
-                "the operating table did not open its own window.");
-        });
-
-        await RunTicksSync(60);
-        await Pair.RunUntilSynced();
-
-        var clientTable = Pair.ToClientUid(table);
         await Client.WaitAssertion(() =>
         {
-            Assert.That(Client.EntMan.EntityExists(clientTable), Is.True);
-            Assert.That(Client.EntMan.System<Robust.Shared.GameObjects.SharedUserInterfaceSystem>()
-                .TryGetOpenUi<OperatingComputerBui>(clientTable, OperatingComputerUiKey.Key, out _), Is.True,
-                "the operating table's window did not reach the client.");
+            var prototypes = Client.ResolveDependency<Robust.Shared.Prototypes.IPrototypeManager>();
+            var sprites = Client.EntMan.System<Robust.Client.GameObjects.SpriteSystem>();
+            foreach (var operation in prototypes.EnumeratePrototypes<SurgicalOperationPrototype>())
+            {
+                if (operation.Icon != null)
+                    Assert.DoesNotThrow(() => sprites.Frame0(operation.Icon), $"{operation.ID} icon does not resolve.");
+            }
         });
     }
 
@@ -94,12 +70,9 @@ public sealed class SurgeryUiTest : GameTest
             patient = Server.EntMan.SpawnEntity("MobHuman", map.GridCoords);
             if (ServerSession is { } session)
                 Server.PlayerMan.SetAttachedEntity(session, patient);
-            Server.EntMan.GetComponent<OperatingComputerComponent>(computer).RequiresPower = false;
             Assert.That(Server.EntMan.System<SharedBuckleSystem>().TryBuckle(patient, null, table), Is.True);
 
-            var scalpel = Server.EntMan.SpawnEntity("Scalpel", map.GridCoords);
-            var ev = new InteractUsingEvent(patient, scalpel, computer,
-                Server.EntMan.GetComponent<TransformComponent>(computer).Coordinates);
+            var ev = new ActivateInWorldEvent(patient, computer, true);
             Server.EntMan.EventBus.RaiseLocalEvent(computer, ev);
 
             var ui = Server.EntMan.System<Robust.Shared.GameObjects.SharedUserInterfaceSystem>();
@@ -124,8 +97,11 @@ public sealed class SurgeryUiTest : GameTest
         {
             Assert.That(Client.EntMan.EntityExists(clientComputer), Is.True, "the computer never reached the client.");
             Assert.That(Client.EntMan.System<Robust.Shared.GameObjects.SharedUserInterfaceSystem>()
-                .TryGetOpenUi<OperatingComputerBui>(clientComputer, OperatingComputerUiKey.Key, out _), Is.True,
+                .TryGetOpenUi<OperatingComputerBui>(clientComputer, OperatingComputerUiKey.Key, out var bui), Is.True,
                 "the operating computer did not open its window.");
+            Assert.That(bui!.CurrentState, Is.Not.Null);
+            Assert.That(bui.CurrentState!.NextOperations, Is.Not.Empty,
+                "the computer sent no possible operations for the patient.");
         });
     }
 }

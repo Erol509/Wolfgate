@@ -11,7 +11,6 @@ using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Server.GameObjects;
@@ -25,7 +24,6 @@ public sealed partial class OperatingComputerSystem : EntitySystem
     [Dependency] private SharedBodySystem _body = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private MobThresholdSystem _thresholds = default!;
-    [Dependency] private SharedPowerReceiverSystem _power = default!;
     [Dependency] private IPrototypeManager _prototypes = default!;
     [Dependency] private SurgicalOperationSystem _surgery = default!;
     [Dependency] private SurgicalSiteSystem _sites = default!;
@@ -57,12 +55,11 @@ public sealed partial class OperatingComputerSystem : EntitySystem
         if (args.Handled)
             return;
 
-        // A table also answers an empty hand; the dedicated console follows the surgical-tool convention.
-        if (HasComp<SurgeryToolComponent>(args.Used) || HasComp<OperatingTableComponent>(ent.Owner))
-        {
-            Open(ent, args.User);
-            args.Handled = true;
-        }
+        if (!HasComp<SurgeryToolComponent>(args.Used))
+            return;
+
+        Open(ent, args.User);
+        args.Handled = true;
     }
 
     private void OnActivate(Entity<OperatingComputerComponent> ent, ref ActivateInWorldEvent args)
@@ -86,9 +83,6 @@ public sealed partial class OperatingComputerSystem : EntitySystem
 
     private void Open(Entity<OperatingComputerComponent> ent, EntityUid user)
     {
-        if (ent.Comp.RequiresPower && !_power.IsPowered(ent.Owner))
-            return;
-
         FindTable(ent);
         UpdatePatient(ent);
 
@@ -120,13 +114,6 @@ public sealed partial class OperatingComputerSystem : EntitySystem
 
     private void FindTable(Entity<OperatingComputerComponent> ent)
     {
-        // An operating table hosts its own UI.
-        if (HasComp<OperatingTableComponent>(ent.Owner))
-        {
-            ent.Comp.Table = ent.Owner;
-            return;
-        }
-
         ent.Comp.Table = null;
         var xform = Transform(ent.Owner);
         var query = EntityQueryEnumerator<OperatingTableComponent, TransformComponent>();
@@ -277,9 +264,14 @@ public sealed partial class OperatingComputerSystem : EntitySystem
         }
 
         if (GetPart(patient, (TargetBodyPart) state.Zone) is { } part)
+        {
             state.SurgeryState = _sites.GetReadableState(part);
+            state.PatientMechanical = _sites.IsMechanical(part);
+        }
         else
+        {
             state.SurgeryState.Add(Loc.GetString("operating-computer-bodypart-missing"));
+        }
     }
 
     private static float Group(DamageableComponent damageable, string group) =>
@@ -292,8 +284,11 @@ public sealed partial class OperatingComputerSystem : EntitySystem
 
         foreach (var operation in _surgery.AllOperations)
         {
-            if (_surgery.IsStateAvailable(patient, part, operation))
-                state.AvailableOperations.Add(operation.ID);
+            if (!_surgery.IsStateAvailable(patient, part, operation))
+                continue;
+
+            state.AvailableOperations.Add(operation.ID);
+            state.NextOperations.Add(MakeOperationState(operation));
         }
     }
 
@@ -303,57 +298,136 @@ public sealed partial class OperatingComputerSystem : EntitySystem
 
         foreach (var operation in _surgery.AllOperations)
         {
-            catalog.Operations.Add(new OperatingComputerOperationState
-            {
-                Id = operation.ID,
-                Name = Loc.GetString(operation.RndName is { } rnd ? rnd : operation.Name),
-                Description = Loc.GetString(operation.RndDescription is { } rndDesc ? rndDesc : operation.Description),
-                Tool = _surgery.GetRecommendedToolName(operation),
-                Priority = operation.Flags.HasFlag(SurgicalOperationFlags.PriorityNextStep),
-                Mechanic = operation.Flags.HasFlag(SurgicalOperationFlags.Mechanical),
-                Locked = operation.Flags.HasFlag(SurgicalOperationFlags.Locked) && !_surgery.IsUnlocked(operation.ID),
-                Requirements = DescribeRequirements(operation),
-            });
+            catalog.Operations.Add(MakeOperationState(operation));
         }
 
         _ui.SetUiState(ent.Owner, OperatingComputerUiKey.Key, catalog);
     }
 
+    private OperatingComputerOperationState MakeOperationState(SurgicalOperationPrototype operation) => new()
+    {
+        Id = operation.ID,
+        Name = Loc.GetString(operation.RndName is { } rnd ? rnd : operation.Name),
+        Description = Loc.GetString(operation.RndDescription is { } rndDesc ? rndDesc : operation.Description),
+        Tool = _surgery.GetRecommendedToolName(operation),
+        Priority = operation.Flags.HasFlag(SurgicalOperationFlags.PriorityNextStep),
+        Mechanic = operation.Flags.HasFlag(SurgicalOperationFlags.Mechanical),
+        Locked = operation.Flags.HasFlag(SurgicalOperationFlags.Locked) && !_surgery.IsUnlocked(operation.ID),
+        Requirements = DescribeRequirements(operation),
+    };
+
     private List<string> DescribeRequirements(SurgicalOperationPrototype operation)
     {
         var lines = new List<string>();
 
-        foreach (var (flag, locId) in SurgeryStateExtensions.Readable)
+        var allRequired = new List<string>();
+        foreach (var (flag, _) in SurgeryStateExtensions.Readable)
         {
             if (operation.RequiredStates.HasAny(flag))
-                lines.Add(Loc.GetString("surgery-req-required", ("state", Loc.GetString(locId))));
+                allRequired.Add(StateRequirement(flag, blocked: false));
+        }
+
+        if (!operation.Flags.HasFlag(SurgicalOperationFlags.StandingAllowed))
+            allRequired.Add(Loc.GetString("surgery-req-lying"));
+        if (!operation.Flags.HasFlag(SurgicalOperationFlags.IgnoreClothes))
+            allRequired.Add(Loc.GetString("surgery-req-clothes"));
+        if (operation.Flags.HasFlag(SurgicalOperationFlags.Mechanical))
+            allRequired.Add(Loc.GetString("surgery-req-mechanical"));
+        if (operation.Flags.HasFlag(SurgicalOperationFlags.Organic))
+            allRequired.Add(Loc.GetString("surgery-req-organic"));
+
+        if (allRequired.Count > 0)
+        {
+            lines.Add("!" + Loc.GetString("operating-computer-requirement-all"));
+            lines.AddRange(allRequired);
         }
 
         if (operation.AnyRequiredStates != SurgeryState.None)
         {
-            var any = SurgeryStateExtensions.Readable
-                .Where(pair => operation.AnyRequiredStates.HasAny(pair.State))
-                .Select(pair => Loc.GetString(pair.LocId));
-            lines.Add(Loc.GetString("surgery-req-any", ("state", string.Join(", ", any))));
+            lines.Add("!" + Loc.GetString("operating-computer-requirement-any"));
+            lines.AddRange(AnyRequirementStrings(operation.AnyRequiredStates));
         }
 
-        foreach (var (flag, locId) in SurgeryStateExtensions.Readable)
+        if (operation.Flags.HasFlag(SurgicalOperationFlags.SelfOperable))
+        {
+            lines.Add("!" + Loc.GetString("operating-computer-requirement-optional"));
+            lines.Add(Loc.GetString("surgery-req-self"));
+        }
+
+        var blocked = new List<string>();
+        foreach (var (flag, _) in SurgeryStateExtensions.Readable)
         {
             if (operation.BlockedStates.HasAny(flag))
-                lines.Add(Loc.GetString("surgery-req-blocked", ("state", Loc.GetString(locId))));
+                blocked.Add(StateRequirement(flag, blocked: true));
         }
 
-        if (!operation.Flags.HasFlag(SurgicalOperationFlags.StandingAllowed))
-            lines.Add(Loc.GetString("surgery-req-lying"));
-        if (!operation.Flags.HasFlag(SurgicalOperationFlags.IgnoreClothes))
-            lines.Add(Loc.GetString("surgery-req-clothes"));
         if (operation.Flags.HasFlag(SurgicalOperationFlags.Mechanical))
-            lines.Add(Loc.GetString("surgery-req-mechanical"));
+            blocked.Add(Loc.GetString("surgery-req-not-organic"));
         if (operation.Flags.HasFlag(SurgicalOperationFlags.Organic))
-            lines.Add(Loc.GetString("surgery-req-organic"));
-        if (operation.Flags.HasFlag(SurgicalOperationFlags.SelfOperable))
-            lines.Add(Loc.GetString("surgery-req-self"));
+            blocked.Add(Loc.GetString("surgery-req-not-mechanical"));
+
+        if (blocked.Count > 0)
+        {
+            lines.Add("!" + Loc.GetString("operating-computer-requirement-blocked"));
+            lines.AddRange(blocked);
+        }
 
         return lines;
+    }
+
+    private List<string> AnyRequirementStrings(SurgeryState states)
+    {
+        var lines = new List<string>();
+
+        if ((states & SurgeryStateExtensions.AllSkin) == SurgeryStateExtensions.AllSkin)
+            lines.Add(Loc.GetString("surgery-req-skin-cut-or-open"));
+        else if (states.HasAny(SurgeryState.SkinCut))
+            lines.Add(Loc.GetString("surgery-req-skin-cut"));
+        else if (states.HasAny(SurgeryState.SkinOpen))
+            lines.Add(Loc.GetString("surgery-req-skin-open"));
+
+        if ((states & SurgeryStateExtensions.AllBones) == SurgeryStateExtensions.AllBones)
+            lines.Add(Loc.GetString("surgery-req-bone-sawed-or-drilled"));
+        else if (states.HasAny(SurgeryState.BoneSawed))
+            lines.Add(Loc.GetString("surgery-req-bone-sawed"));
+        else if (states.HasAny(SurgeryState.BoneDrilled))
+            lines.Add(Loc.GetString("surgery-req-bone-drilled"));
+
+        if ((states & SurgeryStateExtensions.AllVessels) == SurgeryStateExtensions.AllVessels)
+            lines.Add(Loc.GetString("surgery-req-vessels-either"));
+        else if (states.HasAny(SurgeryState.VesselsUnclamped))
+            lines.Add(Loc.GetString("surgery-req-vessels-unclamped"));
+        else if (states.HasAny(SurgeryState.VesselsClamped))
+            lines.Add(Loc.GetString("surgery-req-vessels-clamped"));
+
+        if (states.HasAny(SurgeryState.OrgansCut))
+            lines.Add(Loc.GetString("surgery-req-organs-cut"));
+        if (states.HasAny(SurgeryState.CavityWidened))
+            lines.Add(Loc.GetString("surgery-req-cavity-widened"));
+        if (states.HasAny(SurgeryState.PlasticApplied))
+            lines.Add(Loc.GetString("surgery-req-plastic-applied"));
+        if (states.HasAny(SurgeryState.ProstheticUnsecured))
+            lines.Add(Loc.GetString("surgery-req-prosthetic-unsecured"));
+
+        return lines;
+    }
+
+    private string StateRequirement(SurgeryState state, bool blocked)
+    {
+        var suffix = blocked ? "-blocked" : string.Empty;
+        return state switch
+        {
+            SurgeryState.SkinCut => Loc.GetString("surgery-req-skin-cut" + suffix),
+            SurgeryState.SkinOpen => Loc.GetString("surgery-req-skin-open" + suffix),
+            SurgeryState.VesselsUnclamped => Loc.GetString("surgery-req-vessels-unclamped" + suffix),
+            SurgeryState.VesselsClamped => Loc.GetString("surgery-req-vessels-clamped" + suffix),
+            SurgeryState.OrgansCut => Loc.GetString("surgery-req-organs-cut" + suffix),
+            SurgeryState.BoneDrilled => Loc.GetString("surgery-req-bone-drilled" + suffix),
+            SurgeryState.BoneSawed => Loc.GetString("surgery-req-bone-sawed" + suffix),
+            SurgeryState.PlasticApplied => Loc.GetString("surgery-req-plastic-applied" + suffix),
+            SurgeryState.ProstheticUnsecured => Loc.GetString("surgery-req-prosthetic-unsecured" + suffix),
+            SurgeryState.CavityWidened => Loc.GetString("surgery-req-cavity-widened" + suffix),
+            _ => string.Empty,
+        };
     }
 }

@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Extracted from tgstation's icons/hud/surgery_radial.dmi (tgstation contributors)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "clamp_bleeders",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "unclamp_bleeders",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "retract_skin",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "make_incision",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "saw_bones",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "fix_bones",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "drill_bones",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "incise_organs",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "mend_incision",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "amputate",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "mechbase",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "base",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "unscrew_shell",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "open_hatch",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "screw_shell",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "prepare_electronics",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "unwrench_endoskeleton",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "wrench_endoskeleton",
+      "directions": 1,
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    }
+  ]
+}
