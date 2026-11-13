@@ -21,6 +21,9 @@ installed into the unit and spend the core's charge while they run.
   power draw, cooldown, required parts and incompatibilities. `ModSuitSystem` installs, removes, pins and
   uses them; each module system subscribes to the module events it needs. The theme sets the complexity cap,
   the activation speed, the drain and any inbuilt modules.
+- **Slowdown.** The control unit adds 5%, and a chestplate adds at most another 5%, so a suit stays at or
+  below 10% total. Chestplates with a piercing coefficient above 0.6 add no slowdown, and boots never add
+  any; only piercing protection decides which tier a chestplate is in.
 - **Interface.** `ModSuitWindow` is the older MOD Interface Panel layout: suit and user status, a charge bar,
   the DNA-lock state, cover state, a module table with per-module icons and power/complexity columns, hardware
   rows for each part and a toggle-all control. It uses the restored `icons.rsi` icon set and sends activate,
@@ -198,11 +201,14 @@ adapted to this codebase's status effect, solution and standing systems.
   - the native module system sets its own sealed appearance
 - [`Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/OuterClothing/modsuit.yml)
   - MODsuit parts use the native module system.
+  - heavy MODsuit chestplates add at most 5% on top of the control unit's 5%
+  - light MODsuit chestplates add no slowdown; the control unit supplies the 5% cap
   - the native module system sets its own sealed appearance
   - the rsi has no resomi state, so sealed Resomi drew an error sprite
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Shoes/modsuit.yml)
   - MODsuit parts use the native module system.
   - the native module system sets its own sealed appearance
+  - MODsuit boots add no slowdown; the chestplate and control unit carry the suit's cap
 - [`Resources/Prototypes/_NF/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Machines/lathe.yml): departmental MOD module recipes
 - [`Resources/Prototypes/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/lathe.yml)
   - module recipes

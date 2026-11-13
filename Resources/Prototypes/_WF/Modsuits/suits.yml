@@ -588,6 +588,9 @@
   components:
     - type: Sprite
       sprite: _Goobstation/Clothing/OuterClothing/Modsuits/nct.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 0.95
+      sprintModifier: 0.95
     - type: Armor # mostly the same stats as HoS modsuit
       modifiers:
         coefficients:
@@ -1087,8 +1090,8 @@
   - type: Sprite
     sprite: _Goobstation/Clothing/OuterClothing/Modsuits/syndicate.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
+    walkModifier: 0.95
+    sprintModifier: 0.95
   - type: Armor
     coverage:
     - Torso
@@ -1691,7 +1694,7 @@
           Caustic: 0.2
     - type: ClothingSpeedModifier
       walkModifier: 0.95
-      sprintModifier: 0.75
+      sprintModifier: 0.95
     - type: ModSuitSealedVisuals
       spriteLayer: sealed
       clothingVisuals:
@@ -1726,9 +1729,6 @@
         - state: equipped-FEET-sealed
         shoes-vox:
         - state: equipped-FEET-sealed-vox
-    - type: ClothingSpeedModifier
-      walkModifier: 0.95
-      sprintModifier: 0.95
 
 - type: entity
   id: SuitStorageInquisitory
@@ -1906,8 +1906,8 @@
     - type: Sprite
       sprite: _EinsteinEngines/Clothing/NanoTrasen/Modsuits/praetorian.rsi
     - type: ClothingSpeedModifier
-      walkModifier: 0.75
-      sprintModifier: 0.75
+      walkModifier: 0.95
+      sprintModifier: 0.95
     - type: Armor
       modifiers:
         coefficients:
@@ -1956,9 +1956,6 @@
         - state: equipped-FEET-sealed-vox
         shoes-reptilian:
         - state: equipped-FEET-sealed-reptilian
-    - type: ClothingSpeedModifier
-      walkModifier: 0.95
-      sprintModifier: 0.9
 
 - type: entity
   id: SuitStoragePraetorian
@@ -2328,9 +2325,6 @@
         - state: equipped-FEET-sealed-vox
         - state: equipped-FEET-sealed-unshaded-vox
           shader: unshaded
-    - type: ClothingSpeedModifier
-      walkModifier: 0.95
-      sprintModifier: 0.95
 
 - type: entity
   id: SuitStorageResponsoryJanitorial
@@ -2699,9 +2693,6 @@
         - state: equipped-FEET-sealed-vox
         - state: equipped-FEET-sealed-unshaded-vox
           shader: unshaded
-    - type: ClothingSpeedModifier
-      walkModifier: 0.95
-      sprintModifier: 0.95
 
 - type: entity
   id: SuitStorageResponsoryMedical
@@ -2884,9 +2875,6 @@
         - state: equipped-FEET-sealed-vox
         - state: equipped-FEET-sealed-unshaded-vox
           shader: unshaded
-    - type: ClothingSpeedModifier
-      walkModifier: 0.95
-      sprintModifier: 0.95
 
 - type: entity
   id: SuitStorageResponsorySecurity

@@ -33,9 +33,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
@@ -100,8 +97,8 @@
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
   - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
+    walkModifier: 0.95
+    sprintModifier: 0.95
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
@@ -172,8 +169,8 @@
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
   - type: ClothingSpeedModifier
-    walkModifier: 0.80
-    sprintModifier: 0.80
+    walkModifier: 0.95
+    sprintModifier: 0.95
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
@@ -244,9 +241,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ClothingSpeedModifier
-    walkModifier: 0.85
-    sprintModifier: 0.85
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
@@ -317,9 +311,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
@@ -391,9 +382,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
@@ -463,9 +451,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ClothingSpeedModifier
-    walkModifier: 0.75
-    sprintModifier: 0.75
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
@@ -540,8 +525,8 @@
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
   - type: ClothingSpeedModifier
-    walkModifier: 0.8
-    sprintModifier: 0.8
+    walkModifier: 0.95
+    sprintModifier: 0.95
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot
@@ -612,9 +597,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
   - type: ContainerContainer
     containers:
       mod-part-stored: !type:ContainerSlot

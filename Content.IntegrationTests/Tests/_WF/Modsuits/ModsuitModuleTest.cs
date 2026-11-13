@@ -3,6 +3,8 @@ using System.Linq;
 using Content.Client._WF.Modsuits;
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._WF.Modsuits.Systems;
+using Content.Shared.Armor;
+using Content.Shared.Clothing;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
@@ -17,7 +19,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests._WF.Modsuits;
 
-/// <summary>Checks a MODsuit deploys, seals, and takes modules through the native module system.</summary>
+/// <summary>Checks a MODsuit deploys, seals, takes modules through the native module system, and stays within its slowdown cap.</summary>
 [TestFixture]
 public sealed class ModsuitModuleTest
 {
@@ -347,6 +349,65 @@ public sealed class ModsuitModuleTest
                     $"{proto.ID} is a module prototype but has no ModModule component");
                 Assert.DoesNotThrow(() => entMan.SpawnEntity(proto.ID, coords),
                     $"{proto.ID} should initialise");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>Every deployed suit stays at 10% slowdown at most, or 5% when its piercing protection is low.</summary>
+    [Test]
+    public async Task EveryModSuitStaysUnderItsSlowdownCap()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var prototypes = server.ResolveDependency<IPrototypeManager>();
+        var factory = server.ResolveDependency<IComponentFactory>();
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var proto in prototypes.EnumeratePrototypes<EntityPrototype>())
+            {
+                if (proto.Abstract || !proto.TryComp<ModSuitComponent>(out var suit, factory))
+                    continue;
+
+                var parts = suit.Parts;
+                if (!parts.ContainsKey("outerClothing")
+                    || !prototypes.TryIndex(parts["outerClothing"], out var chest))
+                    continue;
+
+                var piercing = 1f;
+                if (chest.TryComp<ArmorComponent>(out var armor, factory)
+                    && armor.Modifiers.Coefficients.TryGetValue("Piercing", out var value))
+                    piercing = value;
+
+                var cap = piercing <= 0.6f ? 0.10f : 0.05f;
+                var walk = 1f;
+                var sprint = 1f;
+
+                foreach (var partId in parts.Values)
+                {
+                    if (!prototypes.TryIndex(partId, out var part)
+                        || !part.TryComp<ClothingSpeedModifierComponent>(out var speed, factory))
+                        continue;
+
+                    walk *= speed.WalkModifier;
+                    sprint *= speed.SprintModifier;
+                }
+
+                if (proto.TryComp<ClothingSpeedModifierComponent>(out var suitSpeed, factory))
+                {
+                    walk *= suitSpeed.WalkModifier;
+                    sprint *= suitSpeed.SprintModifier;
+                }
+
+                Assert.Multiple(() =>
+                {
+                    Assert.That(1f - walk, Is.LessThanOrEqualTo(cap + 0.0001f),
+                        $"{proto.ID} has {1f - walk:P2} walk slowdown, cap is {cap:P0}");
+                    Assert.That(1f - sprint, Is.LessThanOrEqualTo(cap + 0.0001f),
+                        $"{proto.ID} has {1f - sprint:P2} sprint slowdown, cap is {cap:P0}");
+                });
             }
         });
 

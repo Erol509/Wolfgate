@@ -99,10 +99,12 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Shoes/Modsuits/tsfmc-volta.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
   - type: NoSlip
+  # WOLFGATE(Modsuits) START: MODsuit boots add no slowdown; the chestplate and control unit carry the suit's cap
+  # - type: ClothingSpeedModifier
+  #   walkModifier: 0.9
+  #   sprintModifier: 0.9
+  # WOLFGATE END
   # WOLFGATE(Modsuits) START: the native module system sets its own sealed appearance
   # - type: SealableClothingVisuals
   #   spriteLayer: sealed
@@ -133,9 +135,11 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Shoes/Modsuits/mercenary.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9 # Mono
-    sprintModifier: 0.9 # Mono
+  # WOLFGATE(Modsuits) START: MODsuit boots add no slowdown; the chestplate and control unit carry the suit's cap
+  # - type: ClothingSpeedModifier
+  #   walkModifier: 0.9 # Mono
+  #   sprintModifier: 0.9 # Mono
+  # WOLFGATE END
   - type: JumpAbility
     jumpDistance: 4
     jumpSound: /Audio/Effects/Footsteps/suitstep2.ogg
