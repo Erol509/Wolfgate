@@ -446,8 +446,7 @@
       - state: equipped-HEAD-vox
       head-vulpkanin:
       - state: equipped-HEAD-vulpkanin
-      head-feroxi:
-      - state: equipped-HEAD-feroxi
+      # The atmostech RSI has no Feroxi state; the generic head layer is used instead.
       head-hydrakin:
       - state: equipped-HEAD-hydrakin
   - type: ContainerContainer
@@ -461,14 +460,11 @@
     clothingVisuals:
       head:
       - state: equipped-HEAD-sealed
-      head-resomi:
-      - state: equipped-HEAD-sealed-resomi
+      # The atmostech RSI has no Resomi or Feroxi states; the generic head layer is used instead.
       head-vox:
       - state: equipped-HEAD-sealed-vox
       head-vulpkanin:
       - state: equipped-HEAD-sealed-vulpkanin
-      head-feroxi:
-      - state: equipped-HEAD-sealed-feroxi
       head-hydrakin:
       - state: equipped-HEAD-sealed-hydrakin
   - type: Armor
