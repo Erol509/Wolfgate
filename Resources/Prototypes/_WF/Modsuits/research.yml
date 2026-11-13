@@ -3,9 +3,7 @@
 - type: technology
   id: ModsuitsTech
   name: research-technology-modsuits
-  icon:
-    sprite: _Goobstation/Objects/Specific/Robotics/modsuit_parts.rsi
-    state: mod-core-standard
+  entityIcon: ModsuitCoreStandard
   discipline: Experimental
   tier: 1
   cost: 5000
@@ -26,9 +24,7 @@
 - type: technology
   id: ModsuitEquipmentTech
   name: research-technology-modsuit-equipment
-  icon:
-    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
-    state: regulator
+  entityIcon: ModsuitModuleThermalRegulator
   discipline: Experimental
   tier: 1
   cost: 7500
@@ -49,9 +45,7 @@
 - type: technology
   id: ModsuitEngineeringTech
   name: research-technology-modsuit-engineering
-  icon:
-    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
-    state: magnet
+  entityIcon: ModsuitModuleMagboots
   discipline: Industrial
   tier: 2
   cost: 10000
@@ -69,9 +63,7 @@
 - type: technology
   id: ModsuitAdvancedEngineeringTech
   name: research-technology-modsuit-advanced-engineering
-  icon:
-    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
-    state: jetpack
+  entityIcon: ModsuitModuleJetpack
   discipline: Industrial
   tier: 3
   cost: 15000
@@ -88,9 +80,7 @@
 - type: technology
   id: ModsuitSupplyTech
   name: research-technology-modsuit-supply
-  icon:
-    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
-    state: drill
+  entityIcon: ModsuitModuleDrill
   discipline: Industrial
   tier: 2
   cost: 7500
@@ -107,9 +97,7 @@
 - type: technology
   id: ModsuitMedicalTech
   name: research-technology-modsuit-medical
-  icon:
-    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
-    state: health
+  entityIcon: ModsuitModuleHealthAnalyzer
   discipline: CivilianServices
   tier: 2
   cost: 10000
@@ -128,9 +116,7 @@
 - type: technology
   id: ModsuitServiceTech
   name: research-technology-modsuit-service
-  icon:
-    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
-    state: bikehorn
+  entityIcon: ModsuitModuleBikeHorn
   discipline: CivilianServices
   tier: 2
   cost: 5000
@@ -146,9 +132,7 @@
 - type: technology
   id: ModsuitSecurityTech
   name: research-technology-modsuit-security
-  icon:
-    sprite: _Goobstation/Objects/Specific/Robotics/mod_modules.rsi
-    state: sechud_visor
+  entityIcon: ModsuitModuleVisorSecurity
   discipline: Arsenal
   tier: 2
   cost: 10000
