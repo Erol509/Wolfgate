@@ -228,7 +228,9 @@ public sealed class ShipAccessCodeTest
             Assert.That(typeof(WFShipAccessCodeComponent).Assembly.GetName().Name, Is.EqualTo("Content.Server"), "Codes are stored server-side.");
 
             var members = typeof(WFDoorAccessRuleComponent).GetMembers(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            var strings = members.Where(m => m is FieldInfo { FieldType: var ft } && ft == typeof(string) || m is PropertyInfo { PropertyType: var pt } && pt == typeof(string)).Select(m => m.Name).ToList();
+            // Zone is the id of a ShipCommand zone such as "docks", not a code.
+            var strings = members.Where(m => m is FieldInfo { FieldType: var ft } && ft == typeof(string) || m is PropertyInfo { PropertyType: var pt } && pt == typeof(string))
+                .Select(m => m.Name).Where(name => name != nameof(WFDoorAccessRuleComponent.Zone)).ToList();
             Assert.That(strings, Is.Empty, "The networked rule component must not carry a code string.");
 
             var accessStrings = typeof(WFShipAccessComponent).GetFields(BindingFlags.Public | BindingFlags.Instance)

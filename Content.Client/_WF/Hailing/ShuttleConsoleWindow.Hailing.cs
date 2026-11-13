@@ -26,6 +26,9 @@ public sealed partial class ShuttleConsoleWindow
     /// <summary>The pilot picked one of the answers on offer.</summary>
     public event Action<string>? HailChooseRequested;
 
+    /// <summary>The person at a desk offered the caller its own service.</summary>
+    public event Action? HailOfferRequested;
+
     private HailWindow? _hailWindow;
     private HailStrip _hailStrip = default!;
     private EntityUid? _hailConsole;
@@ -49,6 +52,7 @@ public sealed partial class ShuttleConsoleWindow
         window.EndRequested += () => HailEndRequested?.Invoke();
         window.SayRequested += text => HailSayRequested?.Invoke(text);
         window.ChooseRequested += id => HailChooseRequested?.Invoke(id);
+        window.OfferRequested += () => HailOfferRequested?.Invoke();
     }
 
     /// <summary>

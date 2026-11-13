@@ -64,6 +64,10 @@ services add in `HailServiceGreetEvent`, and `Offer`s its grid's services (four 
 opens that service on the caller's helm; the answers come back when the window is closed, and the caller can type
 while it is open. `HailingSystem.SayToCaller` lets a service speak on a helm's call.
 
+A console that carries HailService itself can also be worked by a person: on a call there the hail window shows a button
+that offers the caller that service (`HailOfferServiceMessage`, `HailResponderSystem.OfferOwnService`). Other consoles
+don't show it.
+
 To offer a station service, put a shuttle console by an NPC with HailResponder and give the serving entity HailService.
 A station with a shuttle console should get `PreventPilot` so it can't be flown.
 

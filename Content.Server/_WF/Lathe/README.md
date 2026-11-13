@@ -64,6 +64,7 @@ use, editing queued totals), `FabricationSiloMenu` and `LatheMenu.Wolfgate`.
 - [`Resources/Prototypes/_WF/Lathe/Entities/Objects/Devices/flatpack.yml`](../../../Resources/Prototypes/_WF/Lathe/Entities/Objects/Devices/flatpack.yml)
 - [`Resources/Prototypes/_WF/Lathe/Entities/Structures/Machines/fabrication_silo.yml`](../../../Resources/Prototypes/_WF/Lathe/Entities/Structures/Machines/fabrication_silo.yml)
 - [`Resources/Prototypes/_WF/Lathe/Recipes/Lathes/electronics.yml`](../../../Resources/Prototypes/_WF/Lathe/Recipes/Lathes/electronics.yml)
+- [`Resources/Prototypes/_WF/Lathe/Recipes/Lathes/jetpacks.yml`](../../../Resources/Prototypes/_WF/Lathe/Recipes/Lathes/jetpacks.yml)
 
 ### Localization
 

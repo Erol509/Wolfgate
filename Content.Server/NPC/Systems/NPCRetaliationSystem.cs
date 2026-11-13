@@ -51,6 +51,10 @@ public sealed partial class NPCRetaliationSystem : EntitySystem
         if (_npcFaction.IsEntityFriendly(ent.Owner, target))
             return false;
 
+        // WOLFGATE(NpcCrew): a crewman's ship may let an attacker off, such as its Boss
+        if (WfForgiven(ent.Owner, target))
+            return false;
+
         _npcFaction.AggroEntity(ent.Owner, target);
         if (ent.Comp.AttackMemoryLength is {} memoryLength)
             ent.Comp.AttackMemories[target] = _timing.CurTime + memoryLength;

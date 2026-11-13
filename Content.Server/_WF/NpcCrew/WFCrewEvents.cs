@@ -1,4 +1,6 @@
+using Content.Server._WF.NpcCrew.Components;
 using Content.Shared._WF.NpcCrew;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._WF.NpcCrew;
@@ -12,6 +14,44 @@ public record struct WFCrewFriendlyFireQueryEvent(EntityUid Grid, EntityUid Atta
 {
     public bool Friendly;
 }
+
+/// <summary>
+/// Raised on a crewman's home grid before the crew's own rules decide whether someone aboard, or a ship docking, is
+/// welcome: a system that commands the ship sets <see cref="Authorized"/> and, for someone it turns away, the
+/// <see cref="Response"/> to use instead of the crewman's boarding rule. Unanswered, company and faction decide.
+/// </summary>
+[ByRefEvent]
+public record struct WFCrewAuthorizeEvent(EntityUid Crew, EntityUid Other)
+{
+    public bool? Authorized;
+    public WFCrewSecurityResponse? Response;
+}
+
+/// <summary>
+/// Raised on an NPC medic's home grid before he takes a patient: a system that commands the ship sets
+/// <see cref="Refused"/> for someone its crew should not treat. For a clone the body may be gone: <see cref="PatientUser"/>
+/// says whose it was.
+/// </summary>
+[ByRefEvent]
+public record struct WFCrewMayTreatEvent(EntityUid Medic, EntityUid Patient)
+{
+    public NetUserId? PatientUser;
+    public bool Refused;
+}
+
+/// <summary>
+/// Raised on a crewman's home grid when someone hurts, shoves or robs him: a system that commands the ship sets
+/// <see cref="Forgiven"/> for someone the crew take it from, and the deed is neither remembered, answered nor reported.
+/// </summary>
+[ByRefEvent]
+public record struct WFCrewForgiveEvent(EntityUid Crew, EntityUid Attacker)
+{
+    public bool Forgiven;
+}
+
+/// <summary>Broadcast when an NPC medic finishes a treatment.</summary>
+[ByRefEvent]
+public readonly record struct WFCrewTreatedEvent(EntityUid Medic, EntityUid Patient, WFCrewMedicAction Action);
 
 /// <summary>Raised on the crewman and broadcast when a crewman goes critical or dies.</summary>
 [ByRefEvent]

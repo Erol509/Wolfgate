@@ -134,6 +134,15 @@
   - type: PowerCellSlot
     cellSlotId: cell_slot
     fitsInCharger: true
+  # WOLFGATE(Cyborgs) START: recharge from APCs and loose cells, and a bank account for ATMs and pay
+  - type: BatteryDrinker
+    drinkSpeed: 2
+  - type: BankAccount
+  # WOLFGATE END
+  # WOLFGATE(Cyborgs) START: buckle into seats and climb onto tables
+  - type: Buckle
+  - type: Climbing
+  # WOLFGATE END
   - type: ItemToggle
     onActivate: false # You should not be able to turn off a borg temporarily.
     activated: false # gets activated when a mind is added
@@ -148,6 +157,38 @@
     action: ActionToggleNightVision
     phosphorColor: "#00FF00"
     lightingColor: "#FFFFFF32"
+  # WOLFGATE(Cyborgs) START: the headlight Monolith commented out, back as a toggle
+  - type: ItemTogglePointLight
+  - type: HandheldLight
+    toggleOnInteract: false
+    wattage: 0.2
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      id: radiating
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      minValue: 0.1
+      maxValue: 2.0
+      isLooped: true
+  - type: ToggleableVisuals
+    spriteLayer: light
+  - type: PointLight
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 4
+    netsync: false
+  # WOLFGATE END
   - type: AccessToggle
   # TODO: refactor movement to just be based on toggle like speedboots but for the boots themselves
   # TODO: or just have sentient speedboots be fast idk

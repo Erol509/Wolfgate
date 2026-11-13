@@ -136,7 +136,7 @@ public sealed partial class AutodocSystem : EntitySystem
         var tools = _containers.EnsureContainer<Container>(ent, AutodocComponent.ToolContainerId);
         foreach (var proto in ent.Comp.Tools)
         {
-            var tool = Spawn(proto, Transform(ent).Coordinates);
+            var tool = Spawn(proto, _xform.GetMapCoordinates(ent)); // a surgeon's instruments are held off the map
             if (!_containers.Insert(tool, tools))
                 QueueDel(tool);
         }

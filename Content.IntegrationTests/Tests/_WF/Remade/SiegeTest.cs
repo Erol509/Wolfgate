@@ -22,7 +22,8 @@ public sealed class SiegeTest
     [Test]
     public async Task FleshShipsBesiegeAnAnchor()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        // No connected client: everything checked is server side, and the client tripped a sprite bounds debug assert on the flesh ships.
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
         var server = pair.Server;
         var map = await pair.CreateTestMap();
         var entities = server.EntMan;

@@ -18,10 +18,13 @@ public sealed partial class ShipShieldsSystem
             TerminatingOrDeleted(grid) || !HasComp<MapGridComponent>(grid))
             return false;
         var allocation = EnsureComp<WFShipShieldShuntComponent>(grid);
+        concentration = Math.Clamp(concentration, 0f, 1f);
+        arcRadians = Math.Clamp(arcRadians, WFShipShieldShuntMath.MinimumArc, WFShipShieldShuntMath.FullArc);
+        LimitWolfgateShieldShunt(grid, ref concentration, ref arcRadians);
         allocation.TargetInitialized = true;
         allocation.TargetDirectionRadians = WFShipShieldShuntMath.NormalizeAngle(directionRadians);
-        allocation.TargetConcentration = Math.Clamp(concentration, 0f, 1f);
-        allocation.TargetArcRadians = Math.Clamp(arcRadians, WFShipShieldShuntMath.MinimumArc, WFShipShieldShuntMath.FullArc);
+        allocation.TargetConcentration = concentration;
+        allocation.TargetArcRadians = arcRadians;
         _wfMovingShunts.Add(grid);
         return true;
     }
@@ -95,6 +98,7 @@ public sealed partial class ShipShieldsSystem
         directionRadians = WFShipShieldShuntMath.NormalizeAngle(directionRadians);
         concentration = Math.Clamp(concentration, 0f, 1f);
         arcRadians = Math.Clamp(arcRadians, WFShipShieldShuntMath.MinimumArc, WFShipShieldShuntMath.FullArc);
+        LimitWolfgateShieldShunt(grid, ref concentration, ref arcRadians);
         var allocation = EnsureComp<WFShipShieldShuntComponent>(grid);
         allocation.TargetInitialized = true;
         allocation.TargetDirectionRadians = directionRadians;
@@ -136,6 +140,7 @@ public sealed partial class ShipShieldsSystem
     private WFShipShieldShuntComponent SyncWolfgateShieldShunt(EntityUid shield, EntityUid grid, MapGridComponent mapGrid)
     {
         var source = EnsureComp<WFShipShieldShuntComponent>(grid);
+        EnforceWolfgateShieldArcLimit(shield, grid, source);
         source.Center = mapGrid.LocalAABB.Center;
         DirtyField(grid, source, nameof(WFShipShieldShuntComponent.Center));
         var target = EnsureComp<WFShipShieldShuntComponent>(shield);

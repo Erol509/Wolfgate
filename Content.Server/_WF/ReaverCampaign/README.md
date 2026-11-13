@@ -123,7 +123,8 @@ and counted for the round summary. `wf_reavers respond <q> <r>` sends one by han
 
 Smuggling funds the Reavers (`.Funding`). Each smuggling crate (the market's `contrabandGoods`) sold at an open chute,
 and each crate of NPC freight (a manifest seal) fenced at a `sealedOnlyChutes` chute (the Underground fence), banks
-toward a war chest; every `fundingCrates` (5) pays out, bringing every stronghold's next reinforcement and the next
+toward a war chest, and so does every `fundingGoodsValue` (5,000) of `fundingGoodsTag` goods (narcotics) sold on a
+cargo pallet (`WFPalletSaleEvent`); every `fundingCrates` (5) pays out, bringing every stronghold's next reinforcement and the next
 spread forward by `fundingShare` (a quarter) of their intervals, unannounced. The chest holds one
 payout at most and spends it once a stronghold stands, the campaign isn't held and `fundingCooldown` (20 minutes) has
 passed since the last payout; `wf_reavers status` shows it.

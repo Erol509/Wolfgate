@@ -75,6 +75,7 @@ namespace Content.Server.Database
         public DbSet<WolfgateCensus> WolfgateCensus { get; set; } = null!;
         public DbSet<WolfgateCensusResponse> WolfgateCensusResponse { get; set; } = null!;
         // WOLFGATE END
+        public DbSet<WolfgateShipCommandPreset> WolfgateShipCommandPreset { get; set; } = null!; // WOLFGATE(ShipCommand): players' ship presets
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -606,6 +607,12 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<WolfgateCensusResponse>()
                 .HasIndex(r => r.CensusId);
+            // WOLFGATE END
+
+            // WOLFGATE(ShipCommand) START: one preset per player, vessel design and name
+            modelBuilder.Entity<WolfgateShipCommandPreset>()
+                .HasIndex(p => new { p.PlayerUserId, p.Vessel, p.Name })
+                .IsUnique();
             // WOLFGATE END
         }
 
@@ -2314,6 +2321,28 @@ namespace Content.Server.Database
         public string Answers { get; set; } = null!;
 
         public DateTime CreatedAt { get; set; }
+    }
+    // WOLFGATE END
+
+    // WOLFGATE(ShipCommand) START: a player's saved settings for a commanded ship of one vessel design
+    public class WolfgateShipCommandPreset
+    {
+        [Key]
+        public int Id { get; set; }
+
+        public Guid PlayerUserId { get; set; }
+
+        [Required, MaxLength(64)]
+        public string Vessel { get; set; } = "";
+
+        [Required, MaxLength(32)]
+        public string Name { get; set; } = "";
+
+        /// <summary>The settings as JSON (WFShipPresetData).</summary>
+        [Required]
+        public string Data { get; set; } = "";
+
+        public DateTime Saved { get; set; }
     }
     // WOLFGATE END
 }

@@ -7,7 +7,7 @@
   name: 'TSF-ENG Welder'
   description: 'A multipurpose, utilitarian vessel envisioned as an all-in-one multitool for ship-to-ship support operations. Features an entire repair shop''s worth of tools, a drydock for repairing or scrapping shuttles, and a powerful generator with excess power, but offers only minimal armaments and thin armor.'
   price: 203497 # appraised at 176954, 15% markup
-  purchasable: false # voucher only - T1
+  purchasable: false # voucher only - T0
   category: Medium # 371 tiles
   group: Security
   access: Security

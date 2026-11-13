@@ -7,6 +7,7 @@ using Content.Shared._WF.NpcCrew;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;
 using Content.Shared.Shuttles.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -47,13 +48,28 @@ public sealed partial class WFCrewRoutineSystem : EntitySystem
                 || _work.HomeGrid(uid) != null || _weapons.HasLiveThreat(uid))
                 continue;
             crew.NextPatrol = _timing.CurTime + TimeSpan.FromSeconds(_random.Next(45, 91));
-            var posts = _planner.DeckPosts(grid).Where(post => !_transform.InRange(post.Coordinates, xform.Coordinates, 3f)).ToList();
-            if (posts.Count == 0)
+            if (NextPatrolPoint(uid, grid, xform) is not { } point)
                 continue;
-            htn.Blackboard.SetValue(WFCrewSystem.PostKey, _random.Pick(posts).Coordinates);
+            htn.Blackboard.SetValue(WFCrewSystem.PostKey, point);
             EntityManager.System<WFCrewSpeechSystem>().Say(uid, "patrol");
             EntityManager.System<HTNSystem>().Replan(htn);
         }
+    }
+
+    /// <summary>Where a guard walks next: along his standing route, staying put with none, or else a deck post away from here.</summary>
+    public EntityCoordinates? NextPatrolPoint(EntityUid uid, EntityUid grid, TransformComponent xform)
+    {
+        if (TryComp<WFCrewPatrolOrdersComponent>(uid, out var orders))
+        {
+            if (orders.Route.Count == 0)
+                return null;
+
+            orders.Next %= orders.Route.Count;
+            return orders.Route[orders.Next++];
+        }
+
+        var posts = _planner.DeckPosts(grid).Where(post => !_transform.InRange(post.Coordinates, xform.Coordinates, 3f)).ToList();
+        return posts.Count == 0 ? null : _random.Pick(posts).Coordinates;
     }
 
     /// <summary>Faces a console while it is occupied, including after movement systems rotate the operator.</summary>

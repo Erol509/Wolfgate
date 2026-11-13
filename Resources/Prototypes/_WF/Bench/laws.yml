@@ -154,6 +154,40 @@
   minFine: 50000
   maxFine: 120000
 
+# Narcotics: street drugs and neuroware, which carry Class 3 contraband.
+- type: wfLaw
+  id: WFLawNarcoticsPossession
+  chapter: WFLawChapterPersons
+  order: 5
+  name: wf-law-narcotics-possession
+  text: wf-law-narcotics-possession-text
+  level: Citation
+  fine: 5000
+  minFine: 2500
+  maxFine: 10000
+
+- type: wfLaw
+  id: WFLawNarcoticsTrafficking
+  chapter: WFLawChapterPersons
+  order: 6
+  name: wf-law-narcotics-trafficking
+  text: wf-law-narcotics-trafficking-text
+  level: Impound
+  fine: 50000
+  minFine: 30000
+  maxFine: 90000
+
+- type: wfLaw
+  id: WFLawUnlawfulLoading
+  chapter: WFLawChapterPersons
+  order: 7
+  name: wf-law-unlawful-loading
+  text: wf-law-unlawful-loading-text
+  level: Citation
+  fine: 20000
+  minFine: 10000
+  maxFine: 40000
+
 - type: wfLaw
   id: WFLawHeaveTo
   chapter: WFLawChapterBench

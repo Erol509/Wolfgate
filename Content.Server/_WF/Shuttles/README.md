@@ -137,6 +137,7 @@ A jump's mass-scaled startup, travel and cooldown times use the mass of every gr
 - [`Content.Client/_WF/Shuttles/UI/ShuttleHullRoofOverlay.cs`](../../../Content.Client/_WF/Shuttles/UI/ShuttleHullRoofOverlay.cs)
 - [`Content.Client/_WF/Shuttles/UI/ShuttleLowLightOverlay.cs`](../../../Content.Client/_WF/Shuttles/UI/ShuttleLowLightOverlay.cs)
 - [`Content.Client/_WF/Shuttles/UI/ShuttleNavControl.Settings.cs`](../../../Content.Client/_WF/Shuttles/UI/ShuttleNavControl.Settings.cs)
+- [`Content.Client/_WF/Shuttles/UI/ShuttleNavControl.ZoomToMouse.cs`](../../../Content.Client/_WF/Shuttles/UI/ShuttleNavControl.ZoomToMouse.cs)
 - [`Content.Client/_WF/Shuttles/UI/ShuttlePoiPointerOverlay.cs`](../../../Content.Client/_WF/Shuttles/UI/ShuttlePoiPointerOverlay.cs)
 - [`Content.Client/_WF/Shuttles/UI/WFFtlDriveNotice.cs`](../../../Content.Client/_WF/Shuttles/UI/WFFtlDriveNotice.cs)
 
@@ -172,6 +173,7 @@ A jump's mass-scaled startup, travel and cooldown times use the mass of every gr
 - [`Resources/Locale/en-US/_WF/Shuttles/collision-warning.ftl`](../../../Resources/Locale/en-US/_WF/Shuttles/collision-warning.ftl)
 - [`Resources/Locale/en-US/_WF/Shuttles/destination-search.ftl`](../../../Resources/Locale/en-US/_WF/Shuttles/destination-search.ftl)
 - [`Resources/Locale/en-US/_WF/Shuttles/ftl-drive.ftl`](../../../Resources/Locale/en-US/_WF/Shuttles/ftl-drive.ftl)
+- [`Resources/Locale/en-US/_WF/Shuttles/radar-zoom.ftl`](../../../Resources/Locale/en-US/_WF/Shuttles/radar-zoom.ftl)
 - [`Resources/Locale/en-US/_WF/Shuttles/ship-view.ftl`](../../../Resources/Locale/en-US/_WF/Shuttles/ship-view.ftl)
 - [`Resources/Locale/en-US/_WF/Shuttles/shuttle-camera.ftl`](../../../Resources/Locale/en-US/_WF/Shuttles/shuttle-camera.ftl)
 
@@ -210,6 +212,7 @@ A jump's mass-scaled startup, travel and cooldown times use the mass of every gr
   - ship screen and collision state
 - [`Content.Client/Shuttles/UI/ShuttleNavControl.xaml.cs`](../../../Content.Client/Shuttles/UI/ShuttleNavControl.xaml.cs)
   - start with the player's saved radar display choices.
+  - zoom toward the cursor toggle.
   - keep a changed radar display choice for the next radar.
 - [`Content.Server/_Mono/Detection/ApplyIFFFlagsToDockedShipsSystem.cs`](../../_Mono/Detection/ApplyIFFFlagsToDockedShipsSystem.cs)
   - the host can be grid B, since docking orders the pair by entity id.

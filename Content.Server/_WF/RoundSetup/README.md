@@ -166,6 +166,7 @@ Entry points: `WFRoundSetupSystem`, `GameTicker.RoundSetup`, `WFCrashScenarioSys
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Burst.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Burst.cs)
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Comms.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Comms.cs)
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Cyborg.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Cyborg.cs)
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Factions.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Factions.cs)
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Live.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Live.cs)
 - [`Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Payments.cs`](../../../Content.IntegrationTests/Tests/_WF/RoundSetup/WFRoundSetupLobbyTest.Payments.cs)

@@ -3,7 +3,10 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client._WF.VehicleShop;
 
-/// <summary>Opens a vehicle purchase terminal's window and sends its buy, sell and repair presses.</summary>
+/// <summary>
+/// Opens a vehicle purchase terminal's window and sends its buy, sell and repair presses. Its state comes as a message
+/// to this customer alone, since prices differ by customer.
+/// </summary>
 public sealed class WFVehicleShopBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
@@ -21,13 +24,14 @@ public sealed class WFVehicleShopBoundUserInterface : BoundUserInterface
         _window.OnBuy += index => SendMessage(new WFVehicleShopBuyMessage(index));
         _window.OnSell += () => SendMessage(new WFVehicleShopSellMessage());
         _window.OnRepair += () => SendMessage(new WFVehicleShopRepairMessage());
+        SendMessage(new WFVehicleShopRefreshMessage());
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
-        base.UpdateState(state);
+        base.ReceiveMessage(message);
 
-        if (state is WFVehicleShopState shop)
-            _window?.UpdateState(shop);
+        if (message is WFVehicleShopStateMessage shop)
+            _window?.UpdateState(shop.State);
     }
 }

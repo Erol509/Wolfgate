@@ -92,6 +92,15 @@ public sealed partial class SolutionHeaterSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        // WOLFGATE(NetTraffic) START: heat in steps, as each one re-sends every heated solution to everyone in view
+        _wfHeatTime += frameTime;
+        if (_wfHeatTime < WfHeatStep)
+            return;
+
+        frameTime = _wfHeatTime;
+        _wfHeatTime = 0f;
+        // WOLFGATE END
+
         var query = EntityQueryEnumerator<ActiveSolutionHeaterComponent, SolutionHeaterComponent, ItemPlacerComponent>();
         while (query.MoveNext(out _, out _, out var heater, out var placer))
         {

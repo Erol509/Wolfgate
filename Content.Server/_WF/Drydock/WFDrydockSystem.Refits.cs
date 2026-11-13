@@ -91,10 +91,10 @@ public sealed partial class WFDrydockSystem
     }
 
     /// <summary>
-    /// One refit line for the console: the tier the ship owns, its units, and the price of the next tier, with the
-    /// parts the cranes would take for it.
+    /// One refit line for the console: the tier the ship owns, its units, and the price of the next tier as a refit is
+    /// charged before any price rule, with the parts the cranes would take for it.
     /// </summary>
-    private WFDrydockUpgradeEntry BuildRefitEntry(WFShipRefitPrototype refit, EntityUid? ship, WFDrydockConsoleComponent comp,
+    private WFDrydockUpgradeEntry BuildRefitEntry(EntityUid console, WFShipRefitPrototype refit, EntityUid? ship, WFDrydockConsoleComponent comp,
         WFDrydockMaterialPaymentComponent? pay, List<EntityUid> cranes, bool scan)
     {
         var entry = new WFDrydockUpgradeEntry
@@ -129,7 +129,7 @@ public sealed partial class WFDrydockSystem
             items.Add(RefitItem(refit, owned, target, ref left, comp));
         }
 
-        entry.NextPrice = items.Sum(i => i.Cost);
+        entry.NextPrice = WorkPrice(console, shipUid, comp, refit.ID, items);
         if (pay != null)
         {
             foreach (var item in items)

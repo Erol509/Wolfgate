@@ -302,8 +302,11 @@ public sealed class WFBirdSystem : EntitySystem
                 if (Arrived(bird, xform) || now >= bird.StateEnd)
                 {
                     var circle = _random.NextFloat(bird.CircleTime.X, bird.CircleTime.Y);
-                    if (circle >= 1f && now < bird.StateEnd)
+                    if (circle >= 1f && now < bird.StateEnd && !bird.Circled)
+                    {
+                        bird.Circled = true;
                         StartCircling(bird, bird.Goal, circle, now);
+                    }
                     else
                         TryLand(uid, bird, xform);
                 }
@@ -640,6 +643,7 @@ public sealed class WFBirdSystem : EntitySystem
         bird.State = WFBirdState.Flying;
         bird.Goal = goal;
         bird.Moving = true;
+        bird.Circled = false;
         bird.StateEnd = _timing.CurTime + TimeSpan.FromSeconds(MaxFlightSeconds);
         if (wasAirborne)
             return;

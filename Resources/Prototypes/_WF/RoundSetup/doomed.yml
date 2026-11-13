@@ -27,6 +27,7 @@
       Chef: [ -1, -1 ]
       Bartender: [ -1, -1 ]
       Janitor: [ -1, -1 ]
+      Borg: [ -1, -1 ]
 
 # Down With Ye' Ship!: three tier 4-5 Reaver warships round the SY Reach, fighting to the last man.
 # Spawned by WFDoomedScenarioSystem on the crew's first arrival, which orders each ship to attack the Reach.

@@ -29,6 +29,22 @@
   - WFMeridianLoadoutClothingHeadCollectableHos
   - WFMeridianLoadoutClothingHeadCollectablePolice
   - WFMeridianLoadoutClothingHeadPlaybunnyearsBrigPhys
+  - WFMeridianLoadoutHeadHatsSyndicateInterdyneDeckofficerBlack
+  - WFMeridianLoadoutHeadHatsSyndicateInterdyneDeckofficerWhite
+  - WFMeridianLoadoutHeadHatsWardenDrill
+  - WFMeridianLoadoutHeadHatsWardenPolicePatrol
+  - WFMeridianLoadoutHeadHatsWardenRed
+  - WFMeridianLoadoutHeadHatsWardenSyndicate
+  - WFMeridianLoadoutClothingHeadPlaybunnyearsHos
+  - WFMeridianLoadoutClothingHeadPlaybunnyearsSecurity
+  - WFMeridianLoadoutClothingHeadPlaybunnyearsSecurityAssistant
+  # WOLFGATE END
+  # WOLFGATE(Judges) START: Extra hats for judges
+  - HeadofSecurityHead
+  - HeadofSecurityBeret
+  - WardenBeret
+  - WardenHead
+  - ContractorClothingHeadSanabi
   # WOLFGATE END
 
 - type: loadoutGroup
@@ -100,9 +116,12 @@
 
 - type: loadoutGroup
   id: SecurityGuardFace
-  name: loadout-group-contractor-face
-  hidden: true # No point in showing this, it gets auto-selected.
+  name: loadout-group-contractor-face # WOLFGATE(Judges): Judge mask gear
   loadouts:
   - SecurityClothingMaskGasSecurity
+  - MonoSecurityGuardNeckGaiter # WOLFGATE(Judges): Judge mask gear
+  - MonoSecurityGuardNeckGaiterRed # WOLFGATE(Judges): Judge mask gear
+  - MercenaryClothingMaskDrakeIndustriesWatchdog # WOLFGATE(Judges): Judge mask gear
+  - ContractorClothingMaskDrakeIndustries # WOLFGATE(Judges): Judge mask gear
   fallbacks:
   - SecurityClothingMaskGasSecurity

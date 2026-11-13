@@ -63,7 +63,7 @@ public sealed partial class WFVehicleShopWindow : FancyWindow
             _ => Loc.GetString("wf-vehicle-shop-pad-clear"),
         };
 
-        RepairButton.Visible = state.Pad == WFVehicleShopPad.Vehicle && state.RepairPrice > 0;
+        RepairButton.Visible = state.Pad == WFVehicleShopPad.Vehicle && state.Damaged;
         RepairButton.Disabled = state.Balance is not { } repairFunds || repairFunds < state.RepairPrice;
         RepairButton.Text = Loc.GetString("wf-vehicle-shop-repair", ("price", BankSystemExtensions.ToSpesoString(state.RepairPrice)));
 

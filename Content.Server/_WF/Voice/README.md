@@ -16,7 +16,8 @@ nothing. Only characters from the normal spawn and their clones get a voice.
 
 Entry points: `SpeechVoice` (settings, saved in the profile as JSON in `speech_voice`), the server
 `SpeechVoiceSystem` (sets the voice and sends each listener the line), the client `SpeechVoiceSystem` (plays it, at
-most 8 at once, 4 of them radio and 2 from one source) and `SpeechVoiceSynth` (renders the audio). No audio is sent over the network. CVar:
+most 8 at once, 4 of them radio and 2 from one source) and `SpeechVoiceSynth` (renders the audio). `SpeechVoiceModifyEvent`, raised on the speaker once per line, lets another system change
+the voice for that line; WolfChem uses it to speed up or slow down a high speaker. No audio is sent over the network. CVar:
 `wf.voice.enabled`.
 
 <!-- WOLFGATE-GENERATED START -->
@@ -27,6 +28,7 @@ most 8 at once, 4 of them radio and 2 from one source) and `SpeechVoiceSynth` (r
 ### Server
 
 - [`Content.Server/_WF/Voice/SpeechVoiceJson.cs`](SpeechVoiceJson.cs)
+- [`Content.Server/_WF/Voice/SpeechVoiceModifyEvent.cs`](SpeechVoiceModifyEvent.cs)
 - [`Content.Server/_WF/Voice/SpeechVoiceSystem.cs`](SpeechVoiceSystem.cs)
 
 ### Shared

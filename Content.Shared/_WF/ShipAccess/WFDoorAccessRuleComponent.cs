@@ -37,6 +37,13 @@ public sealed partial class WFDoorAccessRuleComponent : Component
     /// <summary>Set while a door sealed when not shut waits to shut, so its bolts drop then instead of mid-close.</summary>
     [DataField]
     public bool SealPending;
+
+    /// <summary>
+    /// The zone this door belongs to on a commanded ship (ShipCommand), whose switch sets its rule. The access tab
+    /// leaves such a door to its zone. Saved with the grid, so a map carries its zones' doors.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string? Zone;
 }
 
 /// <summary>The per-door access rules. Every rule but Default applies whether or not the ship is locked.</summary>
@@ -69,4 +76,10 @@ public enum WFDoorAccessRule : byte
 
     /// <summary>The owner and members of the linked company, regardless of ship mode.</summary>
     Company,
+
+    /// <summary>
+    /// The owner and whoever the door's zone admits now, named by the zone's owner through
+    /// <c>WFDoorZoneKeysEvent</c>. Set only by a zone switch, never from the access tab.
+    /// </summary>
+    Zone,
 }

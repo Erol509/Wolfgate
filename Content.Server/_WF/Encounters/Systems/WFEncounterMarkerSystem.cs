@@ -32,7 +32,6 @@ public sealed partial class WFEncounterMarkerSystem : EntitySystem
     };
 
     private TimeSpan _next;
-    private bool _sentAny;
 
     public override void Update(float frameTime)
     {
@@ -85,12 +84,8 @@ public sealed partial class WFEncounterMarkerSystem : EntitySystem
         var collect = new WFEncounterCollectMarkersEvent(ev.Markers);
         RaiseLocalEvent(ref collect);
 
-        // One empty update after the last marker goes, then silence.
-        if (ev.Markers.Count == 0 && !_sentAny)
-            return;
-
-        _sentAny = ev.Markers.Count > 0;
-        RaiseNetworkEvent(ev, Filter.Broadcast());
+        // Sent when it changes, and to players who joined since (WFEncounterMarkerSystem.NetTraffic.cs).
+        WfSendMarkers(ev);
     }
 
     /// <summary>

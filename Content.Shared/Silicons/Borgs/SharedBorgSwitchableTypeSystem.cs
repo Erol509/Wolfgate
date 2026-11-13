@@ -110,6 +110,11 @@ public abstract partial class SharedBorgSwitchableTypeSystem : EntitySystem
         if (subtype != null)
             Dirty(ent.Owner, subtype);
 
+        // WOLFGATE(BorgSkins) START: tells the skin's pose system which subtype was chosen
+        var wfSelected = new Content.Shared._WF.BorgSkins.WFBorgSubtypeSelectedEvent(borgSubtype);
+        RaiseLocalEvent(ent, ref wfSelected);
+        // WOLFGATE END
+
         UpdateEntityAppearance(ent);
     }
 

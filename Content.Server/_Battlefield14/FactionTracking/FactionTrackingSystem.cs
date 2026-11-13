@@ -13,7 +13,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server._Battlefield14.FactionTracking;
 
-public sealed class FactionTrackingSystem : EntitySystem
+public sealed partial class FactionTrackingSystem : EntitySystem // WOLFGATE(NetTraffic): partial for send-on-change
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -55,7 +55,10 @@ public sealed class FactionTrackingSystem : EntitySystem
         }
 
         var ev = new TickerFactionCountEvent(isRoundStarted, bluforReady, redforReady, totalReady, bluforAlive, redforAlive);
-        RaiseNetworkEvent(ev);
+        // WOLFGATE(NetTraffic) START: only changed counts go to everyone; players who joined since get the last ones
+        // RaiseNetworkEvent(ev);
+        WfSendCounts(ev);
+        // WOLFGATE END
     }
 
     private (int blufor, int redfor, int total) CountReadyByFaction(GameTicker ticker)

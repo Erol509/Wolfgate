@@ -2531,6 +2531,47 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("wolfgate_photo_album", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.WolfgateShipCommandPreset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("wolfgate_ship_command_preset_id");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("data");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<DateTime>("Saved")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("saved");
+
+                    b.Property<string>("Vessel")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("vessel");
+
+                    b.HasKey("Id")
+                        .HasName("PK_wolfgate_ship_command_preset");
+
+                    b.HasIndex("PlayerUserId", "Vessel", "Name")
+                        .IsUnique();
+
+                    b.ToTable("wolfgate_ship_command_preset", (string)null);
+                });
+
             modelBuilder.Entity("PlayerRound", b =>
                 {
                     b.Property<int>("PlayersId")

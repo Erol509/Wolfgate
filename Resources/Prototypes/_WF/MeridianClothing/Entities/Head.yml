@@ -2483,13 +2483,13 @@
     state: icon
   - type: Clothing
     sprite: _WF/MeridianClothing/Head/hats_syndicate_interdyne_deckofficer_black.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.7
-        Heat: 0.6
+  # - type: Armor
+  #   modifiers:
+  #     coefficients:
+  #       Blunt: 0.6
+  #       Slash: 0.6
+  #       Piercing: 0.7
+  #       Heat: 0.6
 
 - type: entity
   parent: ClothingHeadBase
@@ -2500,13 +2500,13 @@
     state: icon
   - type: Clothing
     sprite: _WF/MeridianClothing/Head/hats_syndicate_interdyne_deckofficer_white.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.7
-        Heat: 0.6
+  # - type: Armor
+  #   modifiers:
+  #     coefficients:
+  #       Blunt: 0.6
+  #       Slash: 0.6
+  #       Piercing: 0.7
+  #       Heat: 0.6
 
 - type: entity
   parent: ClothingHeadBase
@@ -2527,13 +2527,13 @@
     state: icon
   - type: Clothing
     sprite: _WF/MeridianClothing/Head/hats_warden_drill.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.7
-        Heat: 0.6
+  # - type: Armor
+  #   modifiers:
+  #     coefficients:
+  #       Blunt: 0.6
+  #       Slash: 0.6
+  #       Piercing: 0.7
+  #       Heat: 0.6
 
 - type: entity
   parent: ClothingHeadBase
@@ -2554,13 +2554,13 @@
         color: "#39393F"
       - state: equipped-HELMET-2-c2
         color: "#A52F29"
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.65
-        Slash: 0.65
-        Piercing: 0.7
-        Heat: 0.6
+  # - type: Armor
+  #   modifiers:
+  #     coefficients:
+  #       Blunt: 0.65
+  #       Slash: 0.65
+  #       Piercing: 0.7
+  #       Heat: 0.6
   - type: WFGags
     colors:
     - "#39393F"
@@ -2575,13 +2575,13 @@
     state: icon
   - type: Clothing
     sprite: _WF/MeridianClothing/Head/hats_warden_red.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.7
-        Heat: 0.6
+  # - type: Armor
+  #   modifiers:
+  #     coefficients:
+  #       Blunt: 0.6
+  #       Slash: 0.6
+  #       Piercing: 0.7
+  #       Heat: 0.6
 
 - type: entity
   parent: ClothingHeadBase
@@ -2592,13 +2592,13 @@
     state: icon
   - type: Clothing
     sprite: _WF/MeridianClothing/Head/hats_warden_syndicate.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.7
-        Heat: 0.6
+  # - type: Armor
+  #   modifiers:
+  #     coefficients:
+  #       Blunt: 0.6
+  #       Slash: 0.6
+  #       Piercing: 0.7
+  #       Heat: 0.6
 
 - type: entity
   parent: ClothingHeadHelmetBasic
@@ -6266,13 +6266,13 @@
     state: icon
   - type: Clothing
     sprite: _WF/MeridianClothing/Head/playbunnyears_hos.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.6
-        Slash: 0.6
-        Piercing: 0.7
-        Heat: 0.65
+  # - type: Armor
+  #   modifiers:
+  #     coefficients:
+  #       Blunt: 0.6
+  #       Slash: 0.6
+  #       Piercing: 0.7
+  #       Heat: 0.65
 
 - type: entity
   parent: ClothingHeadBase
@@ -6440,13 +6440,13 @@
     state: icon
   - type: Clothing
     sprite: _WF/MeridianClothing/Head/playbunnyears_security.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.65
-        Slash: 0.65
-        Piercing: 0.7
-        Heat: 0.6
+  # - type: Armor
+  #   modifiers:
+  #     coefficients:
+  #       Blunt: 0.65
+  #       Slash: 0.65
+  #       Piercing: 0.7
+  #       Heat: 0.6
 
 - type: entity
   parent: ClothingHeadBase
@@ -6457,13 +6457,13 @@
     state: icon
   - type: Clothing
     sprite: _WF/MeridianClothing/Head/playbunnyears_security_assistant.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.65
-        Slash: 0.65
-        Piercing: 0.7
-        Heat: 0.6
+  # - type: Armor
+  #   modifiers:
+  #     coefficients:
+  #       Blunt: 0.65
+  #       Slash: 0.65
+  #       Piercing: 0.7
+  #       Heat: 0.6
 
 - type: entity
   parent: ClothingHeadBase

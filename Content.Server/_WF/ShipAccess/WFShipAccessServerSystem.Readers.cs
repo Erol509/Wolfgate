@@ -244,6 +244,14 @@ public sealed partial class WFShipAccessServerSystem
                 foreach (var key in rule!.Players)
                     keys.Add(_access.ToRecordKey(key));
                 break;
+            case WFDoorAccessRule.Zone:
+            {
+                // The zone's owner names who it admits now; with nobody answering, only the owner.
+                keys.UnionWith(owners);
+                var zoneKeys = new WFDoorZoneKeysEvent(uid, rule?.Zone, keys);
+                RaiseLocalEvent(ship.Owner, ref zoneKeys);
+                break;
+            }
             default:
                 keys.UnionWith(owners);
                 foreach (var entry in ship.Comp.AllowList)

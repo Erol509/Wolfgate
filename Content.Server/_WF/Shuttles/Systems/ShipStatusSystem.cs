@@ -67,6 +67,12 @@ public sealed partial class ShipStatusSystem : EntitySystem
     /// <summary>Starts part way through the second, off the tick other one-second systems run on.</summary>
     private TimeSpan _nextUpdate = TimeSpan.FromSeconds(0.4);
 
+    /// <summary>The last sweep each console was sent and when, so a hull that reads the same isn't sent again.</summary>
+    private readonly Dictionary<EntityUid, (ShipStatusMessage Message, TimeSpan Sent)> _lastSent = new();
+
+    /// <summary>How long an unchanged sweep is held back before it is sent anyway.</summary>
+    private static readonly TimeSpan ResendInterval = TimeSpan.FromSeconds(5);
+
     public override void Initialize()
     {
         base.Initialize();
@@ -126,6 +132,9 @@ public sealed partial class ShipStatusSystem : EntitySystem
                 _listeners.Remove(console);
         }
 
+        foreach (var console in _lastSent.Keys.Where(console => !_listeners.ContainsKey(console)).ToArray())
+            _lastSent.Remove(console);
+
         if (_listeners.Count == 0)
             return;
 
@@ -152,9 +161,14 @@ public sealed partial class ShipStatusSystem : EntitySystem
             foreach (var console in consoles)
             {
                 var request = GetRequest(console);
-                _ui.ServerSendUiMessage(console,
-                    ShuttleConsoleUiKey.Key,
-                    BuildMessage(grid, request.Overlays, request.HullOnly));
+                var message = BuildMessage(grid, request.Overlays, request.HullOnly);
+                if (_lastSent.TryGetValue(console, out var last)
+                    && _timing.CurTime - last.Sent < ResendInterval
+                    && SameStatus(last.Message, message))
+                    continue;
+
+                _lastSent[console] = (message, _timing.CurTime);
+                _ui.ServerSendUiMessage(console, ShuttleConsoleUiKey.Key, message);
             }
         }
     }
@@ -191,7 +205,25 @@ public sealed partial class ShipStatusSystem : EntitySystem
         if (GetStatus(console, request.Overlays, request.HullOnly) is not { } message)
             return;
 
+        _lastSent[console] = (message, _timing.CurTime);
         _ui.ServerSendUiMessage(console, ShuttleConsoleUiKey.Key, message);
+    }
+
+    /// <summary>Whether two sweeps would draw the same: same hull, same tiles in the same order, same summary.</summary>
+    private static bool SameStatus(ShipStatusMessage a, ShipStatusMessage b)
+    {
+        if (a.Grid != b.Grid || a.Tiles.Count != b.Tiles.Count || !a.Summary.Equals(b.Summary))
+            return false;
+
+        for (var i = 0; i < a.Tiles.Count; i++)
+        {
+            var x = a.Tiles[i];
+            var y = b.Tiles[i];
+            if (x.Index != y.Index || x.Integrity != y.Integrity || x.Pressure != y.Pressure || x.Flags != y.Flags)
+                return false;
+        }
+
+        return true;
     }
 
     /// <summary>

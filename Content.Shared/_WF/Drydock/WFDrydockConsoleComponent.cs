@@ -34,6 +34,13 @@ public sealed partial class WFDrydockConsoleComponent : Component
     /// <summary>Last console state pushed to viewers, as a key. Runtime only.</summary>
     public string? LastPushed;
 
+    /// <summary>
+    /// Whether the berth is locked to its drydock terminal: it refuses walk-in work and is left out of bookings, and
+    /// only a linked terminal works it. Bookings already held are kept.
+    /// </summary>
+    [DataField]
+    public bool Locked;
+
     /// <summary>Least fee per repair job, never refunded.</summary>
     [DataField]
     public int MinFee = 1500;

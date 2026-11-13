@@ -79,6 +79,11 @@ public sealed partial class ProjectileSystem : SharedProjectileSystem
         if (component.ProjectileSpent)
             return null;
 
+        // WOLFGATE(ShipShields) START: a deflector field slows a round and lets it fly on unspent
+        if (_wfShipShields.PassWolfgateDeflector(target, uid, component))
+            return null;
+        // WOLFGATE END
+
         var otherName = ToPrettyString(target);
         // Get damage required for destructible before base applies damage
         var damageRequired = FixedPoint2.Zero;

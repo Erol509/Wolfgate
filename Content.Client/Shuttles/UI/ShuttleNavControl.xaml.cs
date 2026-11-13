@@ -303,6 +303,7 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         _radarModeButtons.AddChild(_radarRotationButton);
         _radarModeButtons.AddChild(_radarAnchorButton);
         _radarModeButtons.AddChild(_radarResetButton);
+        AddWfZoomToMouseButton(_radarModeButtons); // WOLFGATE(Shuttles): zoom toward the cursor toggle.
 
         parent.AddChild(_radarModeButtons);
         AddWfTerrainButton(parent); // WOLFGATE(Planets): terrain toggle overlays the radar, not the settings column.
@@ -344,7 +345,8 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
         Azimuth,
         Rotation,
         Anchor,
-        Reset
+        Reset,
+        WfZoomToMouse // WOLFGATE(Shuttles): zoom toward the cursor toggle.
     }
 
     public sealed partial class RadarModeButton : BaseButton // WOLFGATE(CombatConsole): theme the original radar mode controls.
@@ -447,6 +449,11 @@ public partial class ShuttleNavControl : BaseShuttleControl // Mono
                         handle.DrawLine(left, right, iconColor);
                         break;
                     }
+                // WOLFGATE(Shuttles) START: zoom toward the cursor toggle.
+                case RadarModeButtonIcon.WfZoomToMouse:
+                    WfDrawZoomToMouse(handle, center, radius, Color.Lime.WithAlpha(0.95f));
+                    break;
+                // WOLFGATE END
                 default:
                     break;
             }

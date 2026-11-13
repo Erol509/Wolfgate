@@ -165,7 +165,7 @@
   - BorgModuleTool # Mono
   - BorgModuleTreatment
   - BorgModuleSurgery # Mono
-  - BorgModuleDefibrillator # Mono
+  # - BorgModuleDefibrillator # Mono # WOLFGATE(Cyborgs): the treatment module carries the defibrillator
 
   radioChannels:
   - Science

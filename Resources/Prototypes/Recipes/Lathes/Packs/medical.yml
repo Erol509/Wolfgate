@@ -25,6 +25,7 @@
   - Jug
   - ChemistryEmptyBottle01
   - ClothingEyesGlassesChemical
+  - WFPurityTester # WOLFGATE(WolfChem): purity testers print with the chemistry kit
 
 - type: latheRecipePack
   id: SurgeryStatic

@@ -84,6 +84,9 @@ public sealed partial class WFDrydockConsoleWindow : FancyWindow
 
     private WFDrydockConsoleState _state = new();
 
+    /// <summary>This viewer's own prices, sent apart from a console's shared state.</summary>
+    private WFDrydockQuote? _viewerQuote;
+
     /// <summary>Refit rows in display order, kept across state updates so their buttons aren't rebuilt.</summary>
     private readonly List<RefitRow> _refitRows = new();
 
@@ -180,6 +183,19 @@ public sealed partial class WFDrydockConsoleWindow : FancyWindow
         UpdateSupplies(state);
         UpdateRefits(state, blocked);
         UpdateBerthLights(state, blocked);
+    }
+
+    /// <summary>Shows this viewer's own prices, which a console sends apart from its shared state.</summary>
+    public void UpdateQuote(WFDrydockQuote quote)
+    {
+        _viewerQuote = quote;
+        UpdateState(_state);
+    }
+
+    /// <summary>The prices to show: the state's own when it was built for this viewer, else the last sent to them.</summary>
+    private WFDrydockQuote? ViewerQuote(WFDrydockConsoleState state)
+    {
+        return state.Quote ?? _viewerQuote;
     }
 
     private void UpdateStatus(WFDrydockConsoleState state)
@@ -287,8 +303,10 @@ public sealed partial class WFDrydockConsoleWindow : FancyWindow
         }
         else
         {
+            // The usual price says whether there is work; the viewer is shown what they would pay for it.
+            var repairPrice = ViewerQuote(state)?.RepairPrice ?? state.RepairPrice;
             _quote.SetRows(null);
-            _quote.Value = Loc.GetString("drydock-ui-credits", ("price", state.RepairPrice.ToString("N0", CultureInfo.InvariantCulture)));
+            _quote.Value = Loc.GetString("drydock-ui-credits", ("price", repairPrice.ToString("N0", CultureInfo.InvariantCulture)));
             _quote.Lit = state.RepairPrice > 0;
             _quote.Tint = null;
             RepairButton.Disabled = state.ShipName is null || state.Working || state.RepairPrice <= 0 || blocked;
@@ -320,7 +338,8 @@ public sealed partial class WFDrydockConsoleWindow : FancyWindow
             _salvage.Lit = state.BreakYield.Count > 0;
         }
         CleanDriftButton.Visible = state.CleanDriftPrice > 0 && !state.Working;
-        CleanDriftButton.Text = Loc.GetString("drydock-ui-clean-drift", ("price", state.CleanDriftPrice.ToString("N0", CultureInfo.InvariantCulture)));
+        var driftPrice = ViewerQuote(state)?.CleanDriftPrice ?? state.CleanDriftPrice;
+        CleanDriftButton.Text = Loc.GetString("drydock-ui-clean-drift", ("price", driftPrice.ToString("N0", CultureInfo.InvariantCulture)));
         CleanDriftButton.Disabled = blocked;
         BreakButton.Visible = state.CanBreak;
         BreakButton.Disabled = state.ShipName is null || state.Working || !state.Breakable || blocked;
@@ -567,8 +586,9 @@ public sealed partial class WFDrydockConsoleWindow : FancyWindow
             }
             else
             {
+                var price = ViewerQuote(state)?.RefitPrices.GetValueOrDefault(entry.Id, entry.NextPrice) ?? entry.NextPrice;
                 row.Bill.SetRows(null);
-                row.Bill.Value = Loc.GetString("drydock-ui-credits", ("price", entry.NextPrice.ToString("N0", CultureInfo.InvariantCulture)));
+                row.Bill.Value = Loc.GetString("drydock-ui-credits", ("price", price.ToString("N0", CultureInfo.InvariantCulture)));
             }
 
             button.Text = Loc.GetString(state.Booking ? "drydock-ui-book-refit-key" : "drydock-ui-refit-key", ("mark", RefitMark(entry)));

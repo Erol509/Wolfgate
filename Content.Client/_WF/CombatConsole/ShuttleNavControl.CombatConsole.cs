@@ -21,11 +21,13 @@ public partial class ShuttleNavControl
 
         _radarModeButtons.Name = "WfRadarModes";
         _radarModeButtons.SeparationOverride = 4;
-        _radarModeButtons.MinSize = _radarModeButtons.MaxSize = new Vector2(140, 32);
+        _radarModeButtons.MinSize = _radarModeButtons.MaxSize = new Vector2(176, 32);
         WfStyleMode(_radarAzimuthButton!, "WfRadarAzimuth", () => _azimuthMode != RadarAzimuthMode.Off);
         WfStyleMode(_radarRotationButton!, "WfRadarRotation", () => _angleFollow);
         WfStyleMode(_radarAnchorButton!, "WfRadarAnchor", () => _relativePanning);
         WfStyleMode(_radarResetButton!, "WfRadarReset", () => false);
+        if (_wfZoomToMouseButton != null)
+            WfStyleMode(_wfZoomToMouseButton, "WfRadarZoomToMouse", () => _wfZoomToMouse);
         Move(_radarModeButtons, LayoutContainer.LayoutPreset.BottomLeft);
         if (_wfTerrainButton != null)
         {
@@ -130,6 +132,9 @@ public partial class ShuttleNavControl
                     Line(-0.15f, -0.9f, -0.55f, -0.5f);
                     Line(-0.15f, -0.9f, 0.25f, -0.5f);
                     WFConsoleDigital.Dot(handle, center, 1.5f * UIScale, ink, ref _wfVertices);
+                    break;
+                case RadarModeButtonIcon.WfZoomToMouse:
+                    WfDrawZoomToMouse(handle, center, radius, ink);
                     break;
             }
             if (active)

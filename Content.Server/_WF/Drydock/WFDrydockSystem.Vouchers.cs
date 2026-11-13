@@ -3,6 +3,7 @@ using Content.Shared._NF.Shipyard.Components;
 using Content.Shared.Chat;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.Player;
+using Content.Shared._WF.Cyborgs;
 using Content.Shared._WF.Drydock;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
@@ -17,6 +18,7 @@ public sealed partial class WFDrydockSystem
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private IChatManager _chat = default!;
+    [Dependency] private WFBorgIdCardSystem _borgItems = default!;
 
     private const string VoucherSound = "/Audio/Machines/chime.ogg";
 
@@ -148,10 +150,16 @@ public sealed partial class WFDrydockSystem
         comp.ShipName = Name(ship);
     }
 
-    /// <summary>A voucher in the actor's hands or worn slots that repairs this ship, if any.</summary>
-    private EntityUid? FindRepairVoucher(EntityUid actor, EntityUid ship)
+    /// <summary>A voucher in the actor's hands or worn slots, or put away in a cyborg's module, that repairs this ship, if any.</summary>
+    public EntityUid? FindRepairVoucher(EntityUid actor, EntityUid ship)
     {
         foreach (var item in _inventory.GetHandOrInventoryEntities(actor))
+        {
+            if (TryComp<WFDrydockRepairVoucherComponent>(item, out var comp) && (comp.Ship == null || comp.Ship == ship))
+                return item;
+        }
+
+        foreach (var item in _borgItems.StowedItems(actor))
         {
             if (TryComp<WFDrydockRepairVoucherComponent>(item, out var comp) && (comp.Ship == null || comp.Ship == ship))
                 return item;

@@ -67,6 +67,12 @@ public sealed class WFBorgSkinTest
                     Assert.That(rsi.TryGetState(state, out _), $"{subtype.ID}: {path} has no state {state}");
                 }
 
+                foreach (var pose in skin?.Poses ?? new List<WFBorgPose>())
+                {
+                    var state = pose.ToString().ToLowerInvariant();
+                    Assert.That(rsi.TryGetState(state, out _), $"{subtype.ID}: {path} has no pose state {state}");
+                }
+
                 Assert.That(prototypes.HasIndex<EntityPrototype>(subtype.DummyPrototype), $"{subtype.ID}: no dummy chassis");
             }
 

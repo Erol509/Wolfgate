@@ -195,6 +195,11 @@
     - TemporaryBlindness
     - Pacified
     - Flashed
+    # Neuroware: twins apply these to a synthetic's own body.
+    - Drunk
+    - Drowsiness
+    - ForcedSleep
+    - Jitter
   - type: Reactive
     groups:
       Flammable: [Touch]

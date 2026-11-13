@@ -30,8 +30,10 @@ public abstract partial class SharedSurgerySystem
     /// <summary>
     /// Performs one surgery step on behalf of a performer that cannot run a do-after (the autodoc). Every
     /// validity check the hand-driven path makes still runs, so the step has the same effect it would by hand.
+    /// With <paramref name="byHand"/> (NpcCrew's surgeon at a table) the step also counts as a surgeon's, as the
+    /// do-after path records it.
     /// </summary>
-    public bool WolfmedPerformStep(EntityUid user, EntityUid body, EntityUid targetPart, EntProtoId surgeryId, EntProtoId stepId)
+    public bool WolfmedPerformStep(EntityUid user, EntityUid body, EntityUid targetPart, EntProtoId surgeryId, EntProtoId stepId, bool byHand = false)
     {
         if (!IsSurgeryValid(body, targetPart, surgeryId, stepId, user, out var surgery, out var part, out var step) ||
             !PreviousStepsComplete(body, part, surgery, stepId) ||
@@ -40,6 +42,8 @@ public abstract partial class SharedSurgerySystem
 
         var ev = new SurgeryStepEvent(user, body, part, GetTools(user), surgery);
         RaiseLocalEvent(step, ref ev);
+        if (byHand)
+            WolfmedStepDone(part, surgery, stepId);
         RefreshUI(body);
         return true;
     }

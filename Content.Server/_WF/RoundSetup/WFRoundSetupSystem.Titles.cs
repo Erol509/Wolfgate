@@ -27,7 +27,8 @@ public sealed partial class WFRoundSetupSystem
             custom.Title = title;
         }
         var cards = EntityManager.System<SharedIdCardSystem>();
-        if (!cards.TryFindIdCard(body, out var card))
+        // Also finds a cyborg's issued card while its module is put away.
+        if (!_shipCredentials.TryGetCard(body, out var card))
             return;
         cards.TryChangeJobTitle(card, title);
         var records = EntityManager.System<StationRecordsSystem>();

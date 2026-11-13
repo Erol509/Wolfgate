@@ -3,6 +3,7 @@ using Content.Server.Shuttles.Components;
 using Content.Shared._WF.Hailing;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -31,6 +32,24 @@ public sealed partial class HailResponderSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<HailOptionChosenEvent>(OnChosen);
+        Subs.BuiEvents<HailServiceComponent>(ShuttleConsoleUiKey.Key, subs => subs.Event<HailOfferServiceMessage>(OnOfferService));
+    }
+
+    /// <summary>The hail window's button at a console that is itself a hail service.</summary>
+    private void OnOfferService(Entity<HailServiceComponent> ent, ref HailOfferServiceMessage args)
+    {
+        OfferOwnService(ent.Owner, args.Actor);
+    }
+
+    /// <summary>Puts a console's own hail service in front of the caller. False when there is no call to offer it on.</summary>
+    public bool OfferOwnService(EntityUid console, EntityUid user)
+    {
+        if (!TryComp<HailServiceComponent>(console, out var service))
+            return false;
+
+        _options.Clear();
+        _options.Add(new HailOption(OptionId(console), Loc.GetString(service.Name)));
+        return _hailing.Offer(console, user, _options);
     }
 
     public override void Update(float frameTime)
@@ -160,7 +179,7 @@ public sealed partial class HailResponderSystem : EntitySystem
     private void OnChosen(ref HailOptionChosenEvent args)
     {
         if (args.OffererGrid is not { } grid || !TryComp<HailConsoleComponent>(args.Offerer, out var hail) ||
-            hail.OperatorUid is not { } responder || !HasComp<HailResponderComponent>(responder))
+            hail.OperatorUid is not { } responder || !HasComp<HailResponderComponent>(responder) && !HasComp<HailServiceComponent>(args.Offerer))
         {
             return;
         }

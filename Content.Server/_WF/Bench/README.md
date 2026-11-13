@@ -6,8 +6,8 @@ The Common Writ, the sector's in-character law, and the tools Caelestinus judges
 a book that opens that page. Items listed in the Writ's Schedule of Unlawful Material carry `Contraband` with the
 `WFUnlawful` severity, so examine marks them. `Docs/_WF/Bench/LAWBOOK.md` is the review copy.
 
-**Judges.** A judge (`SecurityGuard`, `WFBenchSystem.JudgeJobs`) spawns with the Bench app on their PDA. A
-`WFBenchTerminal` gives the same tools in place. Ticket tab: pick someone within `wf.bench.range` (3 tiles), tick laws
+**Judges.** A judge or the Overseer (`SecurityGuard`, `StationRepresentative`: `WFBenchSystem.JudgeJobs`) spawns with the Bench app on their PDA. A
+`WFBenchTerminal` gives the same tools in place. Ticket tab: pick someone within `wf.bench.range` (3 tiles, plus 1.5 so someone stepping back stays listed and can be ticketed), tick laws
 and set each fine inside its range, add posted ordinances or custom charges, then Issue. Ledger tab: the round's
 tickets, and Pardon. Laws tab: the Writ, plus ordinances judges post for the round. Only judges can act; anyone else
 holding the app only reads the laws.

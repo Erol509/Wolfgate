@@ -25,6 +25,10 @@ public sealed class CrewLoadoutTest
             var prototypes = pair.Server.ResolveDependency<IPrototypeManager>();
             foreach (var job in WFShipCrewJobs.Jobs)
             {
+                // A cyborg spawns as its own entity and wears nothing.
+                if (prototypes.Index<JobPrototype>(job).JobEntity != null)
+                    continue;
+
                 var profile = HumanoidCharacterProfile.DefaultWithSpecies("Human").WithoutAllTraitPreferences().WithBankBalance(1000000);
                 var mob = spawning.SpawnPlayerMob(map.GridCoords, new ProtoId<JobPrototype>(job), profile, null, session: pair.Player);
                 foreach (var slot in new[] { "jumpsuit", "back", "shoes", "id" })

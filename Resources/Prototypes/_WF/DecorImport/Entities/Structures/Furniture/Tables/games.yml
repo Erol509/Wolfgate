@@ -35,6 +35,14 @@
   - type: Construction
     graph: DecorBuildCoyoteTableSnooker
     node: built
+  # Pool module: the six pieces share one game, kept on the bottom left piece.
+  - type: WFPoolTable
+    multiTile: true
+  - type: UserInterface
+    interfaces:
+      enum.WFPoolUiKey.Key:
+        type: PoolBoundUserInterface
+        interactionRange: 6
 
 - type: entity
   parent: CoyoteTableSnooker
@@ -90,6 +98,11 @@
     key: DarkPackTableWoodBilliard
     base: state
     mode: NoSprite
+  - type: WFPoolTable
+  - type: UserInterface
+    interfaces:
+      enum.WFPoolUiKey.Key:
+        type: PoolBoundUserInterface
   - type: Damageable
     damageModifierSet: Wood
   - type: Destructible

@@ -51,6 +51,9 @@ public sealed partial class HealthAnalyzerSystem
             BuildWoundDiagnostics(target),
             BuildOrganInfo(target),
             BuildChemicalInfo(target, bloodstream),
-            BuildVitalDamage(target));
+            BuildVitalDamage(target))
+        {
+            Conditions = _wfConditions.Build(target),
+        };
     }
 }

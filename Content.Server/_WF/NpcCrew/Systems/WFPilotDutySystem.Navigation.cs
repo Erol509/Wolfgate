@@ -6,6 +6,7 @@ using Content.Server.Physics.Controllers;
 using Content.Server.Shuttles.Components;
 using Content.Shared._NF.Shuttles.Events;
 using Content.Shared._WF.NpcCrew;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Map;
@@ -18,6 +19,8 @@ namespace Content.Server._WF.NpcCrew.Systems;
 public sealed partial class WFPilotDutySystem
 {
     [Dependency] private MoverController _navigationMover = default!;
+    [Dependency] private WFCrewSystem _helmCrew = default!;
+    [Dependency] private WFCrewSecuritySystem _helmSecurity = default!;
 
     /// <summary>Applies independent scenario limits without restarting an objective or losing its hold anchor.</summary>
     public bool SetNavigation(Entity<WFPilotDutyComponent?> ent, WFCrewNavigationSettings settings)
@@ -80,6 +83,29 @@ public sealed partial class WFPilotDutySystem
         var row = duty.EscortSlot / 2 + 1;
         var center = TryComp<MapGridComponent>(target, out var targetGrid) ? targetGrid.LocalAABB.Center : Vector2.Zero;
         duty.EscortOffset = center + GridForwardAngle(duty, target).RotateVec(new Vector2((duty.EscortSlot % 2 == 0 ? -1 : 1) * spacing, -row * spacing));
+    }
+
+    /// <summary>How long after a person last touched the controls the crewman waits before flying again.</summary>
+    private static readonly TimeSpan PersonFlightGrace = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    /// Whether a player the crew lets fly is working the controls at a helm of this shuttle; sitting at one doesn't
+    /// count. A boarder at the helm is not yielded to, and his input is averaged with the crewman's as before.
+    /// </summary>
+    private bool PersonFlying(EntityUid crewman, EntityUid shuttle)
+    {
+        if (!TryComp<PilotedShuttleComponent>(shuttle, out var piloted))
+            return false;
+
+        foreach (var source in piloted.InputSources)
+        {
+            if (source != crewman && HasComp<ActorComponent>(source)
+                && TryComp<PilotComponent>(source, out var pilot) && pilot.HeldButtons != ShuttleButtons.None
+                && (_helmCrew.SameCrew(crewman, source) || _helmSecurity.IsAuthorized(crewman, source)))
+                return true;
+        }
+
+        return false;
     }
 
     private void CaptureHold(Entity<WFPilotDutyComponent> ent)
@@ -231,6 +257,16 @@ public sealed partial class WFPilotDutySystem
             || !TryComp<ShuttleComponent>(args.ShuttleUid, out var shuttle)
             || !TryComp<PhysicsComponent>(args.ShuttleUid, out var body))
             return;
+
+        // A person working the controls flies the ship; Update has the crewman take up station again once they stop.
+        if (PersonFlying(ent, args.ShuttleUid))
+            ent.Comp.YieldedUntil = _timing.CurTime + PersonFlightGrace;
+
+        if (ent.Comp.YieldedUntil is { } yielded && _timing.CurTime < yielded)
+        {
+            args.Input = null;
+            return;
+        }
 
         var duty = ent.Comp;
         var limits = duty.Navigation;

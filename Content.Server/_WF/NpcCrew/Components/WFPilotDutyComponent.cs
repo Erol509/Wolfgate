@@ -32,6 +32,9 @@ public sealed partial class WFPilotDutyComponent : Component
     public EntityCoordinates? HoldPosition;
     public Angle HoldHeading;
 
+    /// <summary>A person is flying the ship, so this crewman leaves the controls alone until then; orders restart after it.</summary>
+    public TimeSpan? YieldedUntil;
+
     /// <summary>Without a captain aboard, whether this pilot evades attacking ships on their own.</summary>
     [DataField]
     public bool ReactToAttacks = true;

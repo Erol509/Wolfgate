@@ -51,6 +51,10 @@ namespace Content.Server.DeviceNetwork.Systems
 
         public override void Update(float frameTime)
         {
+            // WOLFGATE(DeviceNetGuard) START: a packet storm is spread over ticks or dropped, not run in one tick
+            if (GuardedUpdate())
+                return;
+            // WOLFGATE END
 
             while (_activeQueue.TryDequeue(out var packet))
             {

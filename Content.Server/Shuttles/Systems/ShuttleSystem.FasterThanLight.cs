@@ -269,7 +269,7 @@ public sealed partial class ShuttleSystem
         {
 
             // Too large to FTL
-            if (FTLMassLimit > 0 &&  shuttlePhysics.Mass > FTLMassLimit)
+            if (FTLMassLimit > 0 &&  shuttlePhysics.Mass > FTLMassLimit && !WfIgnoresFtlMassLimit(shuttleUid)) // WOLFGATE(ShipCommand): an unrestricted grid has no mass limit
             {
                 reason = Loc.GetString("shuttle-console-mass");
                 return false;

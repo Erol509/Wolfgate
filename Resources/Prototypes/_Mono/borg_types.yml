@@ -24,7 +24,7 @@
 - type: borgType
   id: pdvengineer
   dummyPrototype: PDVBorgChassisEngineer
-  extraModuleCount: 2
+  extraModuleCount: 4 # WOLFGATE(Cyborgs): was 2, too few to fit a printed kit
   moduleWhitelist:
     tags:
     - BorgModuleGeneric
@@ -56,7 +56,7 @@
 - type: borgType
   id: pdvmedical
   dummyPrototype: PDVBorgChassisMedical
-  extraModuleCount: 2
+  extraModuleCount: 4 # WOLFGATE(Cyborgs): was 2, too few to fit a printed kit
   moduleWhitelist:
     tags:
     - BorgModuleGeneric
@@ -69,7 +69,7 @@
   - BorgModuleTool
   - BorgModuleTreatment
   - BorgModuleSurgery
-  - BorgModuleDefibrillator
+  # - BorgModuleDefibrillator # WOLFGATE(Cyborgs): the treatment module carries the defibrillator
   addComponents:
   - type: ShowHealthBars
     damageContainers:
@@ -108,7 +108,7 @@
 - type: borgType
   id: tsfengineer
   dummyPrototype: TSFBorgChassisEngineer
-  extraModuleCount: 2
+  extraModuleCount: 4 # WOLFGATE(Cyborgs): was 2, too few to fit a printed kit
   moduleWhitelist:
     tags:
     - BorgModuleGeneric
@@ -140,7 +140,7 @@
 - type: borgType
   id: tsfmedical
   dummyPrototype: TSFBorgChassisMedical
-  extraModuleCount: 2
+  extraModuleCount: 4 # WOLFGATE(Cyborgs): was 2, too few to fit a printed kit
   moduleWhitelist:
     tags:
     - BorgModuleGeneric
@@ -153,7 +153,7 @@
   - BorgModuleTool
   - BorgModuleTreatment
   - BorgModuleSurgery
-  - BorgModuleDefibrillator
+  # - BorgModuleDefibrillator # WOLFGATE(Cyborgs): the treatment module carries the defibrillator
   addComponents:
   - type: ShowHealthBars
     damageContainers:

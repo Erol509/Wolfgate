@@ -41,6 +41,7 @@ wf-trait-group-augments = Augments
 wf-trait-group-skills = Skills
 wf-trait-group-training = Training
 wf-trait-group-frailties = Frailties
+wf-trait-group-habits = Habits
 wf-trait-group-light-sensitivity = Light sensitivity
 wf-trait-group-background = Background
 wf-trait-group-sight = Sight

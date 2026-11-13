@@ -65,6 +65,7 @@ public sealed partial class WFDrydockSystem
         UpdateBerthLights(curTime);
         UpdateBlockers(curTime);
         RefreshOpenConsoles(curTime);
+        RefreshOpenTerminals(curTime);
 
         _ends.Clear();
         var query = EntityQueryEnumerator<WFDrydockJobComponent, WFDrydockConsoleComponent>();
@@ -393,7 +394,7 @@ public sealed partial class WFDrydockSystem
         }
         else
         {
-            var refund = job.Voucher != null ? 0 : returned.Sum(i => i.Cost);
+            var refund = job.Voucher != null ? 0 : (int) MathF.Floor(returned.Sum(i => i.Cost) * job.RefundScale);
             job.SkippedRefund += refund;
             Refund(job, refund);
         }
@@ -644,6 +645,9 @@ public sealed partial class WFDrydockSystem
         return crane.LocalToArm(Vector2.Transform(worldPos, _transform.GetInvWorldMatrix(craneUid)));
     }
 
+    /// <summary>How far a crane axis may be from its target and still count as there (tiles or radians).</summary>
+    private const float CraneAimSlack = 0.001f;
+
     /// <summary>
     /// Sets a crane's targets and returns how long the client animation takes. The arm moves first, then the head, paced by its slowest axis.
     /// </summary>
@@ -659,13 +663,24 @@ public sealed partial class WFDrydockSystem
         if (time > (correction ? 0.5f : 0.25f))
             _audio.PlayPvs(comp.CraneMoveSound, new EntityCoordinates(uid, crane.ArmToLocal(0f, 0f)));
 
-        crane.Arm = target.Arm;
-        crane.Position = target.Position;
-        crane.TrolleyPosition = target.Trolley;
-        crane.Extension = target.Extension;
-        crane.Angle = target.Angle;
+        // An aim correction that lands where the crane already points changes nothing a client would draw.
+        var moved = !MathHelper.CloseTo(crane.Arm, target.Arm, CraneAimSlack)
+                    || !MathHelper.CloseTo(crane.Position, target.Position, CraneAimSlack)
+                    || !MathHelper.CloseTo(crane.TrolleyPosition, target.Trolley, CraneAimSlack)
+                    || !MathHelper.CloseTo(crane.Extension, target.Extension, CraneAimSlack)
+                    || !MathHelper.CloseTo(crane.Angle, target.Angle, CraneAimSlack);
 
-        if (crane.Active != active)
+        if (moved)
+        {
+            crane.Arm = target.Arm;
+            crane.Position = target.Position;
+            crane.TrolleyPosition = target.Trolley;
+            crane.Extension = target.Extension;
+            crane.Angle = target.Angle;
+        }
+
+        var toggled = crane.Active != active;
+        if (toggled)
         {
             crane.Active = active;
             _ambient.SetAmbience(uid, active);
@@ -674,7 +689,9 @@ public sealed partial class WFDrydockSystem
         if (TryComp<PowerConsumerComponent>(uid, out var consumer))
             consumer.DrawRate = active ? crane.WorkingLoad : crane.IdleLoad;
 
-        Dirty(uid, crane);
+        if (moved || toggled)
+            Dirty(uid, crane);
+
         return time;
     }
 
@@ -773,7 +790,7 @@ public sealed partial class WFDrydockSystem
             }
             else
             {
-                var refund = job.Voucher != null ? 0 : unfinished.Sum(i => i.Cost);
+                var refund = job.Voucher != null ? 0 : (int) MathF.Floor(unfinished.Sum(i => i.Cost) * job.RefundScale);
                 Refund(job, refund);
                 ReturnVoucher(job);
                 Notify(console, comp, job, Loc.GetString(powerLost ? "drydock-console-aborted-power" : "drydock-console-aborted", ("refund", refund)));

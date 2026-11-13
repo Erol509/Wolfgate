@@ -1,16 +1,18 @@
 using Content.Shared.Damage;
+using Content.Shared._WF.Xenonids;
 using Content.Shared.Doors;
 using Content.Shared.FixedPoint;
 
 namespace Content.Shared._WF.Barricades;
 
-/// <summary>Unanchored barricades take extra damage, and folding barricade doors only close while anchored.</summary>
+/// <summary>Unanchored barricades take extra damage; folding barricade doors only close while anchored and xenos can't open them.</summary>
 public sealed class BarricadeAnchorSystem : EntitySystem
 {
     public override void Initialize()
     {
         SubscribeLocalEvent<DamageReceivedModifierWhenUnanchoredComponent, DamageModifyEvent>(OnDamageModify);
         SubscribeLocalEvent<RMCOpenOnlyWhenUnanchoredComponent, BeforeDoorClosedEvent>(OnBeforeDoorClosed);
+        SubscribeLocalEvent<RMCOpenOnlyWhenUnanchoredComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
     }
 
     private void OnDamageModify(Entity<DamageReceivedModifierWhenUnanchoredComponent> ent, ref DamageModifyEvent args)
@@ -24,6 +26,12 @@ public sealed class BarricadeAnchorSystem : EntitySystem
     private void OnBeforeDoorClosed(Entity<RMCOpenOnlyWhenUnanchoredComponent> ent, ref BeforeDoorClosedEvent args)
     {
         if (!Transform(ent).Anchored)
+            args.Cancel();
+    }
+
+    private void OnBeforeDoorOpened(Entity<RMCOpenOnlyWhenUnanchoredComponent> ent, ref BeforeDoorOpenedEvent args)
+    {
+        if (HasComp<XenoComponent>(args.User))
             args.Cancel();
     }
 }

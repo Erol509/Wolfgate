@@ -14,6 +14,7 @@ public static class WFShipCrewJobs
         "Contractor", "Pilot", "Mercenary", "StationEngineer", "AtmosphericTechnician",
         "MedicalDoctor", "MdMedic", "Chemist", "Paramedic", "SalvageSpecialist",
         "Scientist", "CargoTechnician", "Botanist", "Chef", "Bartender", "Janitor",
+        "Borg",
     };
 
     /// <summary>Supplies localized role labels, real jobs and capacities without assigning any player.</summary>

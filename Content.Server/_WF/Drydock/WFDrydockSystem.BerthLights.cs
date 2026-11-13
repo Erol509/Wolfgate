@@ -14,6 +14,9 @@ public sealed partial class WFDrydockSystem
 
     private void OnToggleBerthLights(EntityUid uid, WFDrydockConsoleComponent comp, WFDrydockToggleBerthLightsMessage args)
     {
+        if (WalkInLocked(uid, comp, args.Actor))
+            return;
+
         if (comp.BerthLightsUntil != null)
         {
             TurnOffBerthLights(uid, comp);

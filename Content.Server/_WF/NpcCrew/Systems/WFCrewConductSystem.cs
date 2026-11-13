@@ -15,7 +15,8 @@ namespace Content.Server._WF.NpcCrew.Systems;
 /// <summary>
 /// How an NPC crew takes a visitor's conduct aboard its ship. A player seen with a gun in hand is told to put it away
 /// and has <see cref="BrandishTime"/> to do it before the crew turn on him; a player seen by one of its fighters picking
-/// up something of the ship's is a thief and is fought at once. Crews already hostile to strangers are left to that.
+/// up something of the ship's is a thief and is fought at once. Crews already hostile to strangers are left to that,
+/// and anyone the ship's command forgives or welcomes where he stands may carry a gun aboard.
 /// </summary>
 public sealed partial class WFCrewConductSystem : EntitySystem
 {
@@ -25,6 +26,7 @@ public sealed partial class WFCrewConductSystem : EntitySystem
     [Dependency] private SharedHandsSystem _hands = default!;
     [Dependency] private WFCrewSystem _crew = default!;
     [Dependency] private WFCrewAlertSystem _alerts = default!;
+    [Dependency] private WFCrewSecuritySystem _security = default!;
     [Dependency] private WFCrewWeaponSystem _weapons = default!;
 
     /// <summary>How long a player told to put his gun away has to do it.</summary>
@@ -110,7 +112,7 @@ public sealed partial class WFCrewConductSystem : EntitySystem
 
                 foreach (var player in list)
                 {
-                    if (_crew.SameCrew(uid, player) || !Minds(grid, member.Group, rules, player))
+                    if (_crew.SameCrew(uid, player) || !Minds(grid, member.Group, rules, player) || Commanded(uid, player))
                         continue;
 
                     var key = (grid, member.Group, player);
@@ -143,8 +145,9 @@ public sealed partial class WFCrewConductSystem : EntitySystem
 
             if (!_armed.Contains(key))
             {
-                // Put away while still in sight: the crew say so.
-                if (Transform(key.Player).GridUid == key.Grid && Seer(key) is { } seer)
+                // Put away while still in sight: the crew say so. One the ship's command now lets be just goes unremarked.
+                if (!TerminatingOrDeleted(key.Player) && Transform(key.Player).GridUid == key.Grid && !HoldsGun(key.Player)
+                    && Seer(key) is { } seer)
                     Say(seer, "wf-crew-conduct-brandish-complied");
                 _warned.Remove(key);
                 continue;
@@ -160,7 +163,7 @@ public sealed partial class WFCrewConductSystem : EntitySystem
         }
     }
 
-    /// <summary>A stranger seen by one of the crew's fighters picking up the ship's property is fought at once.</summary>
+    /// <summary>A stranger seen by one of the crew's fighters picking up the ship's property is fought at once, unless the ship forgives him.</summary>
     private void OnPickedUp(Entity<WFCrewPropertyComponent> ent, ref GotEquippedHandEvent args)
     {
         var thief = args.User;
@@ -173,7 +176,7 @@ public sealed partial class WFCrewConductSystem : EntitySystem
         {
             if (member.Group != ent.Comp.Group || xform.GridUid != grid || !WFCrewSystem.IsFighter(member)
                 || !_mobs.IsAlive(uid) || HasComp<ActorComponent>(uid) || _crew.SameCrew(uid, thief)
-                || !_weapons.CanSee(uid, thief, ignoreStealth: true))
+                || _crew.Forgives(uid, thief) || !_weapons.CanSee(uid, thief, ignoreStealth: true))
                 continue;
 
             Say(uid, "wf-crew-conduct-theft");
@@ -191,6 +194,15 @@ public sealed partial class WFCrewConductSystem : EntitySystem
     {
         return _warned.ContainsKey((grid, group, player))
                || rules.Boarding != WFCrewSecurityResponse.Hostile && !_alerts.IsAlerted(grid, group);
+    }
+
+    /// <summary>
+    /// Whether the ship's command lets a player carry a gun past this crewman: one it forgives, or welcomes where he
+    /// stands. Only a commanding system answers, so a ship without one keeps the rule for everyone.
+    /// </summary>
+    private bool Commanded(EntityUid crew, EntityUid player)
+    {
+        return _crew.Forgives(crew, player) || _security.CommandAuthorizes(crew, player);
     }
 
     private bool HoldsGun(EntityUid player)

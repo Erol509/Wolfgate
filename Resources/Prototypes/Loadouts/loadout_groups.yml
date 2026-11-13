@@ -2345,7 +2345,7 @@
 # Security
 - type: loadoutGroup
   id: HeadofSecurityHead
-  name: loadout-group-head-of-security-head
+  name: loadout-group-contractor-head # WOLFGATE(Judges): judges use these groups, so they get the contractor label
   minLimit: 0
   loadouts:
   - HeadofSecurityHead
@@ -2355,11 +2355,27 @@
   - WFMeridianLoadoutClothingHeadCollectableHos
   - WFMeridianLoadoutClothingHeadCollectablePolice
   - WFMeridianLoadoutClothingHeadPlaybunnyearsBrigPhys
+  - WFMeridianLoadoutHeadHatsSyndicateInterdyneDeckofficerBlack
+  - WFMeridianLoadoutHeadHatsSyndicateInterdyneDeckofficerWhite
+  - WFMeridianLoadoutHeadHatsWardenDrill
+  - WFMeridianLoadoutHeadHatsWardenPolicePatrol
+  - WFMeridianLoadoutHeadHatsWardenRed
+  - WFMeridianLoadoutHeadHatsWardenSyndicate
+  - WFMeridianLoadoutClothingHeadPlaybunnyearsHos
+  - WFMeridianLoadoutClothingHeadPlaybunnyearsSecurity
+  - WFMeridianLoadoutClothingHeadPlaybunnyearsSecurityAssistant
+  # WOLFGATE END
+  # WOLFGATE(Judges) START: Expanding loadout options in HeadOfSecurityHead for overseer
+  - SecurityBeret
+  - SecurityHelmet
+  - WardenBeret
+  - WardenHead
+  - ContractorClothingHeadSanabi
   # WOLFGATE END
 
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit
-  name: loadout-group-head-of-security-jumpsuit
+  name: loadout-group-contractor-jumpsuit # WOLFGATE(Judges): judges use these groups, so they get the contractor label
   loadouts:
   - HeadofSecurityJumpsuit
   - HeadofSecurityJumpskirt
@@ -2404,11 +2420,16 @@
   - WFMeridianLoadoutClothingUnderRankSecurityWardenNovaSuitBlue
   - WFMeridianLoadoutClothingUnderSolfedOfficer
   - WFMeridianLoadoutClothingUnderSolfedOfficerLowrnk
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityNovaAltSkirt
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityNovaParadeFemale
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityNovaBlue
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityNovaFormal
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityNovaFormalBlue
   # WOLFGATE END
 
 - type: loadoutGroup
   id: HeadofSecurityNeck
-  name: loadout-group-head-of-security-neck
+  name: loadout-group-contractor-neck # WOLFGATE(Judges): judges use these groups, so they get the contractor label
   minLimit: 0
   loadouts:
   - HeadofSecurityCloak
@@ -2422,11 +2443,15 @@
   - WFMeridianLoadoutClothingNeckTieBunnytieBrigPhys
   - WFMeridianLoadoutClothingNeckTieBunnytieSecurity
   - WFMeridianLoadoutClothingNeckTieBunnytieSecurityAssistant
+  - WFMeridianLoadoutClothingNeckMantleHosmantle
+  - WFMeridianLoadoutClothingNeckPauldron
+  - ContractorClothingNeckCloakSanabi
+  - ContractorClothingNeckIFFRed
   # WOLFGATE END
 
 - type: loadoutGroup
   id: HeadofSecurityOuterClothing
-  name: loadout-group-head-of-security-outerclothing
+  name: loadout-group-contractor-outerclothing # WOLFGATE(Judges): judges use these groups, so they get the contractor label
   loadouts:
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
@@ -2443,7 +2468,7 @@
 
 - type: loadoutGroup
   id: WardenHead
-  name: loadout-group-warden-head
+  name: loadout-group-contractor-head # WOLFGATE(Judges): judges use these groups, so they get the contractor label
   minLimit: 0
   loadouts:
   - WardenHead
@@ -2457,7 +2482,7 @@
 
 - type: loadoutGroup
   id: WardenJumpsuit
-  name: loadout-group-warden-jumpsuit
+  name: loadout-group-contractor-jumpsuit # WOLFGATE(Judges): judges use these groups, so they get the contractor label
   loadouts:
   - WardenJumpsuit
   - WardenJumpskirt
@@ -2502,7 +2527,7 @@
 
 - type: loadoutGroup
   id: WardenOuterClothing
-  name: loadout-group-warden-outerclothing
+  name: loadout-group-contractor-outerclothing # WOLFGATE(Judges): judges use these groups, so they get the contractor label
   loadouts:
   - WardenCoat
   - WardenArmoredWinterCoat

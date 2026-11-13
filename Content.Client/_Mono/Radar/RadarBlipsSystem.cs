@@ -47,6 +47,7 @@ public sealed partial class RadarBlipsSystem : EntitySystem
         base.Initialize();
         SubscribeNetworkEvent<GiveBlipsEvent>(HandleReceiveBlips);
         SubscribeNetworkEvent<BlipRemovalEvent>(RemoveBlip);
+        SubscribeNetworkEvent<WFBlipRemovalBatchEvent>(WFRemoveBlips); // WOLFGATE(Performance): removals arrive one batch a tick
     }
 
     private void HandleReceiveBlips(GiveBlipsEvent ev, EntitySessionEventArgs args)

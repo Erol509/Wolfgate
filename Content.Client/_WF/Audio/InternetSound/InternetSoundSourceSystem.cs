@@ -1,9 +1,11 @@
 using Content.Client._WF.Shuttles.Systems;
+using Content.Shared._WF.CCVar;
 using Content.Shared._WF.Audio.InternetSound;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -12,10 +14,12 @@ namespace Content.Client._WF.Audio.InternetSound;
 /// <summary>
 /// Plays the internet sound an item such as a boombox is carrying, from the item, at the item's place on its
 /// timeline. The voice starts once the audio has arrived and stops out of earshot or when the track changes.
+/// The jukebox volume option scales it, and at zero mutes it.
 /// </summary>
 public sealed partial class InternetSoundSourceSystem : EntitySystem
 {
     [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private ShuttleCameraListenerSystem _listener = default!;
     [Dependency] private IResourceCache _resources = default!;
@@ -66,7 +70,8 @@ public sealed partial class InternetSoundSourceSystem : EntitySystem
             if (playing && voice.Track != source.TrackId)
                 StopVoice(uid);
 
-            var wanted = source.Path != null && source.IsPlaying(_timing.CurTime) && _timing.CurTime >= source.Start
+            var gain = _cfg.GetCVar(JukeboxVolumeCVars.Volume);
+            var wanted = gain > 0f && source.Path != null && source.IsPlaying(_timing.CurTime) && _timing.CurTime >= source.Start
                          && !_released.Contains(source.TrackId)
                          && xform.MapID == listener.MapId
                          && (_xform.GetWorldPosition(xform) - listener.Position).Length()
@@ -81,15 +86,21 @@ public sealed partial class InternetSoundSourceSystem : EntitySystem
             if (_voices.TryGetValue(uid, out voice) && Exists(voice.Stream))
             {
                 // The owner can turn it up or down mid-track.
-                _audio.SetVolume(voice.Stream, source.Volume);
+                _audio.SetVolume(voice.Stream, Volume(source, gain));
                 continue;
             }
 
-            StartVoice(uid, source);
+            StartVoice(uid, source, gain);
         }
     }
 
-    private void StartVoice(EntityUid uid, InternetSoundSourceComponent source)
+    /// <summary>The source's own volume with this client's jukebox volume applied.</summary>
+    private static float Volume(InternetSoundSourceComponent source, float gain)
+    {
+        return source.Volume + SharedAudioSystem.GainToVolume(gain);
+    }
+
+    private void StartVoice(EntityUid uid, InternetSoundSourceComponent source, float gain)
     {
         // Querying the cache before the file arrives would cache it as missing and poison later playback.
         if (source.Path is not { } path || !_resources.ContentFileExists(new ResPath(path)))
@@ -109,7 +120,7 @@ public sealed partial class InternetSoundSourceSystem : EntitySystem
 
         var offset = (float) (_timing.CurTime - source.Start).TotalSeconds;
         var parameters = AudioParams.Default
-            .WithVolume(source.Volume)
+            .WithVolume(Volume(source, gain))
             .WithMaxDistance(source.Range)
             .WithReferenceDistance(2f)
             .WithRolloffFactor(1.5f)

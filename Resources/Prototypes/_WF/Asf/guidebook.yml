@@ -8,3 +8,8 @@
   id: WFShipyardAsfRevelation
   name: guide-entry-wf-shipyard-asf-revelation
   text: "/ServerInfo/_WF/Asf/Guidebook/Shipyard/Revelation.xml"
+  
+- type: guideEntry
+  id: WFShipyardAsfSurveyor
+  name: guide-entry-wf-shipyard-asf-surveyor
+  text: "/ServerInfo/_WF/Asf/Guidebook/Shipyard/Surveyor.xml"

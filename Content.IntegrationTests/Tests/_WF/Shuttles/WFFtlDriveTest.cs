@@ -92,7 +92,10 @@ public sealed class WFFtlDriveTest
                 return state!.MapState.FtlDrive;
             }
 
+            // A helm only holds a state while someone has it open.
+            ui.OpenUi(console, ShuttleConsoleUiKey.Key, actor);
             Assert.That(Reported(), Is.EqualTo(WFFtlDriveStatus.Missing), "A ship with no drive reports none.");
+            ui.CloseUi(console, ShuttleConsoleUiKey.Key, actor);
 
             var drive = entities.SpawnEntity(Drive, map.GridCoords);
             var power = entities.GetComponent<ApcPowerReceiverComponent>(drive);

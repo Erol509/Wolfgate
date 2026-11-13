@@ -32,6 +32,9 @@ public sealed partial class ShipShieldsSystem
     /// <summary>Consumes a shield contact before a collision-triggered warhead can detonate.</summary>
     public bool AbsorbWolfgateTriggerCollision(EntityUid shield, EntityUid projectile)
     {
+        // A round a deflector let through keeps its warhead for the hull.
+        if (HasWolfgateDeflectorPassed(shield, projectile))
+            return true;
         if (!IsWolfgateShieldLive(shield) || !TryComp<PhysicsComponent>(shield, out var physics) || !physics.CanCollide ||
             !TryComp<ShipShieldComponent>(shield, out var field) || !_shipWeaponProjectileQuery.HasComponent(projectile) ||
             !_projectileQuery.TryGetComponent(projectile, out var component) || IsWolfgateShieldFriendlyProjectile(shield, projectile))
@@ -40,6 +43,6 @@ public sealed partial class ShipShieldsSystem
             return true;
         var contact = new ProjectileReflectAttemptEvent(projectile, component, false);
         OnWolfgateShieldContact(shield, field, ref contact);
-        return component.ProjectileSpent;
+        return component.ProjectileSpent || HasWolfgateDeflectorPassed(shield, projectile);
     }
 }

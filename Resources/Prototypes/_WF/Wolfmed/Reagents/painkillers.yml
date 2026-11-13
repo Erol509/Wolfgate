@@ -38,6 +38,11 @@
     Medicine:
       metabolismRate: 0.1
       effects:
+      # Narcotics: a medical opioid builds dependence slowly through the Opium profile.
+      - !type:WFDose
+        profile: WFOpium
+        perUnit: 0.5
+        dependenceOnly: true
       # Strong: enough to walk a patient off the field, at the price of the sedation meter. M2 (plan §3.4):
       # sedation aims for 0.22 per unit in the blood, so one 3 u pen levels off under the 0.6 breathing line and
       # two put the patient on the floor.
@@ -95,5 +100,9 @@
     Medicine:
       metabolismRate: 0.5
       effects:
+      # Narcotics: also knocks opioid highs down.
+      - !type:WFClearIntoxication
+        family: Opioid
+        amount: 3
       - !type:WolfmedReverseSedation
         sedationReversePerUnit: 0.3

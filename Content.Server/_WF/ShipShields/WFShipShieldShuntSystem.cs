@@ -14,6 +14,7 @@ using Robust.Shared.Physics.Components;
 using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server._Crescent.ShipShields.Components;
+using Content.Server._WF.ShipCommand;
 
 namespace Content.Server._WF.ShipShields;
 
@@ -25,6 +26,7 @@ public sealed partial class WFShipShieldShuntSystem : EntitySystem
     [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private ActionBlockerSystem _blocker = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private WFShipShieldControlSystem _staffControl = default!;
 
     private float _generatorUiAccumulator;
     private readonly Dictionary<EntityUid, WFShipShieldShuntState> _generatorStates = new();
@@ -196,7 +198,7 @@ public sealed partial class WFShipShieldShuntSystem : EntitySystem
     private EntityUid? TryGetGeneratorGrid(EntityUid uid, EntityUid actor)
     {
         return !TerminatingOrDeleted(uid) && Transform(uid).Anchored &&
-            _blocker.CanInteract(actor, uid) && _access.IsAllowed(actor, uid)
+            _blocker.CanInteract(actor, uid) && _access.IsAllowed(actor, uid) && _staffControl.CanControl(actor, uid)
             ? Transform(uid).GridUid : null;
     }
 

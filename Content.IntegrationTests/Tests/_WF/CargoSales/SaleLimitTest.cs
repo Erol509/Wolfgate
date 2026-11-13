@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server._Mono.Cargo;
 using Content.Server._Mono.Store.Components;
+using Content.Server._NF.Bank;
+using Content.Server._NF.SectorServices;
 using Content.Server._WF.TradeGoods.Systems;
 using Content.Server.Cargo.Systems;
+using Content.Shared._NF.Bank.Components;
 using Content.Shared._WF.TradeGoods;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -17,7 +20,10 @@ using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests._WF.CargoSales;
 
-/// <summary>A pallet over a MaxPerSale limit is refused whole, and appraising a pallet changes nothing on the goods.</summary>
+/// <summary>
+/// A pallet over a MaxPerSale limit is refused whole, appraising a pallet changes nothing on the goods, and taxed
+/// goods pay their tax inside a container.
+/// </summary>
 [TestFixture]
 [TestOf(typeof(CargoSystem))]
 public sealed class SaleLimitTest
@@ -114,6 +120,47 @@ public sealed class SaleLimitTest
 
             Sell(entMan, setup);
             Assert.That(entMan.EntityExists(crate), "A crate over the limit must be refused.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>A taxed good pays the same tax inside an untaxed crate as it does loose.</summary>
+    [Test]
+    public async Task TaxedGoodsInsideContainersPayTax()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = false });
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var entMan = server.EntMan;
+        var storage = entMan.System<SharedEntityStorageSystem>();
+        var bank = entMan.System<BankSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var setup = Build(entMan, map);
+            // The sector bank only exists once a station hosts the sector services.
+            var host = entMan.SpawnEntity(null, setup.Pad.Offset(new System.Numerics.Vector2(5f, 5f)));
+            entMan.AddComponent<StationSectorServiceHostComponent>(host);
+
+            int BlackMarket()
+            {
+                Assert.That(bank.TryGetBalance(SectorBankAccount.BlackMarket, out var balance));
+                return balance;
+            }
+
+            var start = BlackMarket();
+            entMan.SpawnEntity(Limited, setup.Pad);
+            Sell(entMan, setup);
+            var loose = BlackMarket() - start;
+            Assert.That(loose, Is.GreaterThan(0), "A loose crystal pays the black market its share.");
+
+            var crate = entMan.SpawnEntity("CrateGenericSteel", setup.Pad);
+            Assert.That(storage.Insert(entMan.SpawnEntity(Limited, setup.Pad), crate));
+            Sell(entMan, setup);
+            Assert.That(entMan.EntityExists(crate), Is.False);
+            Assert.That(BlackMarket() - start - loose, Is.EqualTo(loose), "A crated one pays the same.");
+            entMan.DeleteEntity(host);
         });
 
         await pair.CleanReturnAsync();

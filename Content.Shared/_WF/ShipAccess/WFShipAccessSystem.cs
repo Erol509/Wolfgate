@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared._Mono.Company;
 using Content.Shared._NF.Shipyard.Components;
+using Content.Shared._WF.Cyborgs;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -30,6 +31,7 @@ public sealed partial class WFShipAccessSystem : EntitySystem
     [Dependency] private SharedIdCardSystem _idCard = default!;
     [Dependency] private IPrototypeManager _proto = default!;
     [Dependency] private ISharedPlayerManager _player = default!;
+    [Dependency] private WFBorgIdCardSystem _borgCards = default!;
 
     /// <summary>Whether the rule lets a code open the door.</summary>
     public static bool TakesCode(WFDoorAccessRule rule)
@@ -64,7 +66,7 @@ public sealed partial class WFShipAccessSystem : EntitySystem
         return TryComp<WFDoorAccessRuleComponent>(door, out var rule) ? rule.Rule : WFDoorAccessRule.Default;
     }
 
-    /// <summary>The card a person would swipe: the one in their active hand, else the one they wear. False when they carry none.</summary>
+    /// <summary>The card a person would swipe: the one in their active hand, else the one they wear or, for a cyborg, were issued. False when they carry none.</summary>
     public bool TryGetCard(EntityUid user, out EntityUid card)
     {
         if (_idCard.TryFindIdCard(user, out var idCard))
@@ -73,8 +75,7 @@ public sealed partial class WFShipAccessSystem : EntitySystem
             return true;
         }
 
-        card = default;
-        return false;
+        return _borgCards.TryGetCard(user, out card);
     }
 
     /// <summary>The crew record key a card carries. False for a card without a crew record, which no reader can be given.</summary>
@@ -143,8 +144,8 @@ public sealed partial class WFShipAccessSystem : EntitySystem
     }
 
     /// <summary>
-    /// Whether the user holds this grid's deed: on an ID card in their hands or id slot, directly or in a PDA, or on a
-    /// voucher in their hands, as Mono's own deed checks count it.
+    /// Whether the user holds this grid's deed: on an ID card in their hands or id slot, directly or in a PDA, on a
+    /// voucher in their hands, as Mono's own deed checks count it, or on a cyborg's issued card.
     /// </summary>
     public bool HasDeedFor(EntityUid user, EntityUid grid)
     {
@@ -154,7 +155,11 @@ public sealed partial class WFShipAccessSystem : EntitySystem
                 return true;
         }
 
-        return _inventory.TryGetSlotEntity(user, "id", out var worn) && HoldsDeedFor(worn.Value, grid);
+        if (_inventory.TryGetSlotEntity(user, "id", out var worn) && HoldsDeedFor(worn.Value, grid))
+            return true;
+
+        // A cyborg's issued card counts as worn while it is stowed.
+        return _borgCards.TryGetCard(user, out var issued) && IsDeedFor(issued, grid);
     }
 
     private bool HoldsDeedFor(EntityUid item, EntityUid grid)
@@ -194,7 +199,10 @@ public sealed partial class WFShipAccessSystem : EntitySystem
                 return true;
         }
 
-        return _inventory.TryGetSlotEntity(user, "id", out var worn) && IsOwnerCard(worn.Value, comp);
+        if (_inventory.TryGetSlotEntity(user, "id", out var worn) && IsOwnerCard(worn.Value, comp))
+            return true;
+
+        return _borgCards.TryGetCard(user, out var issued) && IsOwnerCard(issued, comp);
     }
 
     private bool IsOwnerCard(EntityUid item, WFShipAccessComponent comp)
@@ -204,7 +212,10 @@ public sealed partial class WFShipAccessSystem : EntitySystem
                && comp.OwnerKeys.Contains(key);
     }
 
-    /// <summary>The ID card in the user's id slot, directly or in a PDA: their own, as opposed to one they happen to hold.</summary>
+    /// <summary>
+    /// The ID card in the user's id slot, directly or in a PDA, or the one a cyborg was issued: their own, as opposed
+    /// to one they happen to hold.
+    /// </summary>
     public bool TryGetWornCard(EntityUid user, out EntityUid card)
     {
         if (_inventory.TryGetSlotEntity(user, "id", out var worn) && _idCard.TryGetIdCard(worn.Value, out var idCard))
@@ -213,8 +224,7 @@ public sealed partial class WFShipAccessSystem : EntitySystem
             return true;
         }
 
-        card = default;
-        return false;
+        return _borgCards.TryGetCard(user, out card);
     }
 
     /// <summary>The ID card in an item the user holds in hand, directly or in a PDA, so a card can be added without its owner present.</summary>

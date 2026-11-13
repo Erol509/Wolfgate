@@ -1,5 +1,9 @@
 # Pays for one full repair at a drydock that takes credits, such as Anvilhold. Carried in hand or a pocket when the
 # work starts. Reaver bounties give one to each ship that helped, bound to that ship, one unused at a time.
+# What a cyborg's gripper hand knows the voucher by: its component is server only.
+- type: Tag
+  id: WFDrydockRepairVoucher
+
 - type: entity
   parent: BaseItem
   id: WFDrydockRepairVoucher
@@ -19,5 +23,8 @@
     size: Tiny
     sprite: _Mono/Objects/Misc/lpcnew.rsi
   - type: WFDrydockRepairVoucher
+  - type: Tag
+    tags:
+    - WFDrydockRepairVoucher
   - type: StaticPrice
     price: 0

@@ -23,7 +23,7 @@ stops holding, the delta alarm sounds, and a global announcement and chip say re
 (`WFLatticeAnchorComponent`) adds a hold that halves at the profile's `reach`; the bands' thresholds are the summed hold
 at each band edge for the intact hexagon, so a lost anchor pulls the edges in, most on its side. Every second each
 player's carrier gets a band and builds Drift (`WFDriftComponent`): the grid they are on, themselves in open space, or
-on a planet, their ground or grid at the world's place in the sector. Each band has a ceiling (`maxDrift`: 20, 40, 65, then 100 only in the Coda) that Drift climbs to over about ten minutes and eases back down to from above. Ghosts are skipped, and Drift only changes while
+on a planet, their ground or grid at the world's place in the sector. A vehicle's crew count as wherever the vehicle is. Each band has a ceiling (`maxDrift`: 20, 40, 65, then 100 only in the Coda) that Drift climbs to over about ten minutes and eases back down to from above. Ghosts are skipped, and Drift only changes while
 someone is aboard. The field component carries the anchors and thresholds to clients. `WFLatticeMath` holds the field,
 band, depth and garble sums.
 
@@ -160,6 +160,8 @@ Coda, through `WFLatticeSystem.YieldAt` in `WFAsteroidSystem`) and, in the Coda 
 stabiliser flatpack (5 shards; 15 kW while running), which shelters the ship it is anchored on from 80% of Drift gain
 and stops the taking, and the anchor charm (1 shard), worn round the neck, which keeps half the Drift off its wearer.
 `WFLatticeShelterSystem` keeps the `WFLatticeShelterComponent` on ships and wearers.
+`WFDriftGainEvent` is raised on everyone aboard a carrier that is gaining Drift and the largest multiplier asked for
+scales the gain; the WolfChem exotic sense (Chorus) uses it.
 
 **Anchor stations and their defence.** Each station is loaded from `Resources/Maps/_WF/Lattice/anchor_station.yml`
 (the profile's `stationMap`; a plain deck is built in code if it fails), placed so its core sits on the hexagon's
@@ -298,6 +300,7 @@ open a breach. A carrier's band and Drift are on its `WFDriftComponent` in VV.
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.Endgame.cs`](WFLatticeSystem.Endgame.cs)
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.Felt.cs`](WFLatticeSystem.Felt.cs)
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.Ftl.cs`](WFLatticeSystem.Ftl.cs)
+- [`Content.Server/_WF/Lattice/WFLatticeSystem.Gain.cs`](WFLatticeSystem.Gain.cs)
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.Hex.cs`](WFLatticeSystem.Hex.cs)
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.Implosion.cs`](WFLatticeSystem.Implosion.cs)
 - [`Content.Server/_WF/Lattice/WFLatticeSystem.LostShips.cs`](WFLatticeSystem.LostShips.cs)
@@ -356,6 +359,7 @@ open a breach. A carrier's band and Drift are on its `WFDriftComponent` in VV.
 - [`Content.IntegrationTests/Tests/_WF/Lattice/WFDriftDepthTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Lattice/WFDriftDepthTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Lattice/WFDriftEffectsTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Lattice/WFDriftEffectsTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Lattice/WFDriftMindTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Lattice/WFDriftMindTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Lattice/WFDriftRidersTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Lattice/WFDriftRidersTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Lattice/WFLatticeFtlTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Lattice/WFLatticeFtlTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Lattice/WFLatticeHexTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Lattice/WFLatticeHexTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Lattice/WFLatticeShelterTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Lattice/WFLatticeShelterTest.cs)

@@ -200,6 +200,8 @@ public sealed partial class ShuttleConsoleSystem
         _shuttle.GetAllDockedShuttlesIgnoringFTLLock(shuttleUid.Value, dockedGrids);
 
         // Mono
+        // WOLFGATE(ShipCommand): an unrestricted grid jumps with other ships' helms close by
+        if (!_shuttle.WfIgnoresFtlProximity(shuttleUid.Value))
         foreach (var (console, consoleComp) in _lookup.GetEntitiesInRange<ShuttleConsoleComponent>(_transform.GetMapCoordinates(xform), ShuttleFTLRange))
         {
             var consoleXform = Transform(console);

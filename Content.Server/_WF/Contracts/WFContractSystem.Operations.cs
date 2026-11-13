@@ -5,6 +5,7 @@ using Content.Shared._WF.NpcCrew;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Examine;
 using Content.Shared.Verbs;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
@@ -49,6 +50,7 @@ public sealed partial class WFContractSystem
     private void InitializeOperations()
     {
         SubscribeLocalEvent<WFContractInspectableComponent, GetVerbsEvent<AlternativeVerb>>(OnInspectVerbs);
+        SubscribeLocalEvent<WFContractInspectableComponent, ExaminedEvent>(OnInspectExamined);
     }
 
     /// <summary>Rolls one of the second set of objectives; null if the objective is not one of them.</summary>
@@ -806,21 +808,41 @@ public sealed partial class WFContractSystem
     /// <summary>The verb that completes an inspection, for the holder's crew only.</summary>
     private void OnInspectVerbs(Entity<WFContractInspectableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !_contracts.TryGetValue(ent.Comp.Contract, out var contract)
-            || contract.Status != WFContractStatus.Active || contract.User is not { } holder
-            || !TryComp<ActorComponent>(args.User, out var actor) || !_crews.CrewMembers(holder).Contains(actor.PlayerSession.UserId))
+        if (!args.CanAccess || !args.CanInteract || InspectingContract(ent, args.User) is not { } contract)
             return;
 
         var user = args.User;
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("wf-contract-inspect-verb"),
-            Act = () =>
-            {
-                _popup.PopupEntity(Loc.GetString("wf-contract-inspect-done"), ent, user);
-                Complete(contract);
-            },
+            Act = () => FinishInspection(ent, contract, user),
         });
+    }
+
+    /// <summary>Examining the cargo up close inspects it too, as the briefing asks.</summary>
+    private void OnInspectExamined(Entity<WFContractInspectableComponent> ent, ref ExaminedEvent args)
+    {
+        // A ghost's examine counts as in range anywhere, so only the living inspect this way.
+        if (args.IsInDetailsRange && !HasComp<Content.Shared.Ghost.GhostComponent>(args.Examiner)
+            && InspectingContract(ent, args.Examiner) is { } contract)
+            FinishInspection(ent, contract, args.Examiner);
+    }
+
+    /// <summary>The active contract a user's crew holds on this cargo, if any.</summary>
+    private WFContract? InspectingContract(Entity<WFContractInspectableComponent> ent, EntityUid user)
+    {
+        if (!_contracts.TryGetValue(ent.Comp.Contract, out var contract)
+            || contract.Status != WFContractStatus.Active || contract.User is not { } holder
+            || !TryComp<ActorComponent>(user, out var actor) || !_crews.CrewMembers(holder).Contains(actor.PlayerSession.UserId))
+            return null;
+
+        return contract;
+    }
+
+    private void FinishInspection(Entity<WFContractInspectableComponent> ent, WFContract contract, EntityUid user)
+    {
+        _popup.PopupEntity(Loc.GetString("wf-contract-inspect-done"), ent, user);
+        Complete(contract);
     }
 
     /// <summary>Repaired derelicts jump away once their time is up and no one is aboard.</summary>

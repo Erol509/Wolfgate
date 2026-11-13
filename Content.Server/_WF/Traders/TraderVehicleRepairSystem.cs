@@ -131,7 +131,8 @@ public sealed class TraderVehicleRepairSystem : EntitySystem
         if (missing <= 0f || max <= 0f)
             return null;
 
-        var value = _pricing.GetPrice(vehicle, includeContents: false);
+        // A vehicle bought at a bargain is repaired at its full value.
+        var value = _pricing.GetUndiscountedPrice(vehicle, includeContents: false);
         var price = (int) Math.Ceiling(value * ent.Comp.ValueShare * (missing / max));
         return Math.Max(ent.Comp.MinimumPrice, price);
     }

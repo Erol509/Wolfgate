@@ -86,6 +86,17 @@ public sealed partial class WFCrewSystem : EntitySystem
         return crew.Post?.EntityId ?? Transform(uid).GridUid;
     }
 
+    /// <summary>Whether the crewman's ship lets this attacker off (<see cref="WFCrewForgiveEvent"/>).</summary>
+    public bool Forgives(EntityUid crew, EntityUid attacker)
+    {
+        if (crew == attacker || HomeGrid(crew) is not { } home)
+            return false;
+
+        var ev = new WFCrewForgiveEvent(crew, attacker);
+        RaiseLocalEvent(home, ref ev);
+        return ev.Forgiven;
+    }
+
     /// <summary>One crew is the same group label serving the same home grid.</summary>
     public bool SameCrew(EntityUid first, EntityUid second)
     {
@@ -121,7 +132,7 @@ public sealed partial class WFCrewSystem : EntitySystem
 
         var attacker = Wielder(source);
         // A mounted gun or a blast is not somebody to go after; the ship it came from is answered as a ship.
-        if (attacker == ent.Owner || !HasComp<MobStateComponent>(attacker))
+        if (attacker == ent.Owner || !HasComp<MobStateComponent>(attacker) || Forgives(ent, attacker))
             return;
 
         if (!_retaliation.TryRetaliate(ent, attacker))
@@ -149,7 +160,7 @@ public sealed partial class WFCrewSystem : EntitySystem
     {
         var thief = args.User;
         if (args.Stealth || thief == ent.Owner || !_mobs.IsAlive(ent) || HasComp<ActorComponent>(ent)
-            || !HasComp<MobStateComponent>(thief) || SameCrew(ent, thief))
+            || !HasComp<MobStateComponent>(thief) || SameCrew(ent, thief) || Forgives(ent, thief))
             return;
 
         if (TryComp<NPCRetaliationComponent>(ent, out var retaliation))

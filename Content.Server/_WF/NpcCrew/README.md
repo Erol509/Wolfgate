@@ -7,7 +7,11 @@ draft enables reorder/remove/replace. Each crew keeps its draft across selection
 preserve dropdown buttons, filters and unfinished clicks; polling runs on display frames rather than prediction
 replays. Security settings can be changed without replacing the queue;
 unauthorized boarding and docking independently support Ignore, Warn and Hostile. Authorization uses company
-membership where available, otherwise a shared NPC faction. A crew's ordered docking destination is authorized
+membership where available, otherwise a shared NPC faction, unless the system commanding the crew's home grid
+answers `WFCrewAuthorizeEvent` first (ShipCommand does, by the visitor's standing and zone, and may set the
+response per visitor). Likewise `WFCrewForgiveEvent` on the home grid lets the ship forgive whoever hurts, shoves or
+robs a crewman (ShipCommand forgives the Boss): the deed is then neither remembered, answered nor reported, upstream
+`NPCRetaliationSystem.TryRetaliate` included. A crew's ordered docking destination is authorized
 for that approach. Incoming ships do not cause the stationary crew to announce that it is docking. Radio officers
 announce their own approach and completed docking, and warn unauthorized arrivals.
 
@@ -61,8 +65,10 @@ along the orbit. A hull whose guns bear equally all round flies as before.
 
 Conduct aboard (`WFCrewConductSystem`): a crew that does not already fight strangers and is not in a fight tells a
 player it sees with a gun in hand to put it away, and turns on him if it is still out after 10 s; holstered in time,
-nothing comes of it. Items aboard when an encounter ship is set up are marked `WFCrewPropertyComponent`; a player
-seen by one of its fighters picking one up is fought at once. A pilot with `FleeAttackers` (traders) runs directly
+nothing comes of it. Anyone the ship's command forgives (`WFCrewForgiveEvent`) or welcomes where he stands
+(`WFCrewAuthorizeEvent`) may carry a gun aboard; a ship with no command keeps the rule for everyone. Items aboard when
+an encounter ship is set up are marked `WFCrewPropertyComponent`; a player seen by one of its fighters picking one up
+is fought at once, unless the ship forgives him. A pilot with `FleeAttackers` (traders) runs directly
 away from the nearest attacking ship instead of circling it.
 
 Stealth (`WFCrewStealthSystem`): crews do not see a mob whose stealth field is up (a stealth suit) or a ship whose
@@ -87,9 +93,14 @@ cyborg chassis and hostile NPC bodies still qualify. Crew relay sightings throug
 headsets; switched-off, removed or blocked radios do not share
 contacts. Boarding alerts go to both the local and alert channels. Action chatter has a fifteen-second speaker
 cooldown and a one-minute repeat cooldown. Deckhands and marines select safe deck patrol stops 45–90 seconds
-apart; other roles keep their stations. Pilots and gunners maintain their facing toward occupied consoles.
+apart, unless `WFCrewPatrolOrdersComponent` gives them a route to walk or, with none, keeps them at their post; other
+roles keep their stations. A grid's `WFGunnerPolicyComponent` can hold its gunners to firing only once fired on, or
+on whoever has fired on a ship docked to them (`WFCrewAlertSystem.Docked.cs`). Pilots and gunners maintain their
+facing toward occupied consoles.
 Pilots, gunners, captains and radio officers defend themselves only against personal attackers, even when their
 engagement rule is On Sight. They actively return after displacement or combat; pilots retain their assigned helm.
+A pilot leaves the controls to a player the crew authorize who works a helm of the ship, and his orders, dock timers
+and waypoints included, wait until 3 s after they stop; a boarder at the helm only shares the input with him.
 Injury and casualty reports require a witness or working headset reception on the same ship.
 
 Crew use their equipped ammunition and weapons, then unarmed combat, without scavenging empty loose guns.
@@ -231,6 +242,54 @@ shows posts only to the requesting admin for 30 seconds; clear affects only the 
 `design.md` under `Docs/_WF/NpcCrew/` is the full brief: pilot duty and orders, docking by hand, the event-driven
 radio officer, crew alerting, the access-door edit and the Crew Setup admin window.
 
+Medics (`WFCrewMedicComponent`, roles `WFCrewParamedic` and `WFCrewSurgeon` in `medics.yml`) treat people with
+`WFCrewMedicSystem`. Once a second a free medic takes the patient most in need on his home grid or a ship docked to
+it: the dead who can be brought back and hearts in arrest, then the unconscious, the downed and bleeding, the downed,
+anyone who called for help, and anyone lying in a bed that heals. A paramedic takes anyone not yet in a bed, and those
+in beds with minor injuries; a surgeon works the beds. `WFCrewMayTreatEvent` on the home grid lets the ship refuse
+someone (ShipCommand refuses the barred and the crew's attackers), and a medic never treats whoever attacked him.
+Each step reads the patient as they are and is a do-after the medic stands still for: shock a heart that can be
+restarted (`WolfmedRevivalSystem.TryDefibrillate`; a paramedic gives three shocks on the spot), CPR for an arrest
+that can't, a tourniquet on a limb's undressable bleed, gauze on any other bleed, epinephrine for the unconscious and
+dylovene above a toxin load (each at most once a minute), then brutepack and ointment, applied through
+`WoundHealingSystem.TryApplyHealing` with healing items the medic keeps off the map, so his kit never runs out. A
+paramedic patches minor injuries where the patient lies; anyone downed or with more damage than `SeriousDamage` he
+drags to the nearest free bed that heals (or the unrevivable dead to a morgue drawer) once the bleeding and the heart
+are seen to, and the surgeon takes it from there. The shock count and the dose clocks are the patient's
+(`WFCrewPatientCare`), whichever medic gave them, so letting a patient go and taking them again repeats nothing. With
+no free bed or drawer a paramedic does what he can where the patient lies and then leaves them for 30 s, and a body
+waiting so comes after every living patient. A medic who gets no nearer his patient, or their bed, for 30 s gives them
+up and leaves them be for a minute. The HTN branch (`WFCrewMedicOperator`) sits after the fight and before other
+work; `WFCrewTreatedEvent` is broadcast after each treatment.
+
+The surgeon also runs the autodoc (`WFCrewMedicSystem.Surgery.cs`). A bed patient who lacks a limb or an organ, or who
+is down, dead but revivable (or only lacking blood or a heart) or badly hurt with work on the pod's triage plan
+(`AutodocSystem.Plan` with `preview`, which shocks and transfuses nobody), is taken off the bed to the nearest free,
+powered autodoc on his home grid and put in it. Before each run he fills the pod's reservoirs (an empty slot gets the
+bottle from `Reservoirs`, anything there is topped back up) and puts the species' own missing part or organ, from the
+patient's body prototype, in its tray, which is what lets the pod plan the replacement; then it plans its whole triage
+and he starts it. He answers it when it waits for a part, starts another run while it still finds work (up to
+`OperationsPerPatient`), and then takes the patient out and back to a bed, where they rest a while before he looks at
+them for the pod again. Brains are never replaced. Assisting is a later phase.
+
+When every pod on his home grid is busy or there is none, he operates by hand (`WFCrewMedicSystem.Table.cs`): the same
+patients, on the nearest free operating table. He works from `Instruments`, an off-map autodoc whose library and triage
+are what he knows and whose tools, tray and reservoirs are his, answering `WolfmedSurgeryToolsEvent` while he is at the
+table. Each planned procedure runs step by step, a do-after per step with the real Shitmed step behind it
+(`SharedSurgerySystem.WolfmedPerformStep` with `byHand`); he puts the patient under by the pod's rules, takes off
+whatever is in the way whole, and gives a shock or dresses bleeding on a part he hasn't opened before going on. A step
+that changes nothing three times, or a procedure that can't go on, is given up; `TableProcedures` caps the procedures
+per patient. Then the patient goes back to a bed. Paramedics and the surgeon no longer count an operating table as a
+bed to carry someone to.
+
+And he clones from the ship's genetic records (`WFCrewMedicSystem.Cloning.cs`). A living player can use the verb on
+him to be put on file: he takes their genetic record into the genetic database on his home grid; the same verb takes
+them off file, deleting the record. Records made at the body scanner count the same. When a player on file is
+cloneable he starts a free cloning pod aboard: at once if their body is gone or past reviving, otherwise after
+`CloneAfter` (two minutes) with no medic working on it. The cloner still asks the player before they wake in the new
+body; a clone they turn down or leave unanswered is tried once more after ten minutes, then not again until they are
+alive.
+
 ## Local playtesting
 
 Run `Tools/_WF/NpcCrew/Start-TestPair.ps1` from PowerShell to build and open an isolated local pair on port 1221.
@@ -267,8 +326,10 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewEngineerComponent.cs`](Components/WFCrewEngineerComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewGrabberComponent.cs`](Components/WFCrewGrabberComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewHuntedHullComponent.cs`](Components/WFCrewHuntedHullComponent.cs)
+- [`Content.Server/_WF/NpcCrew/Components/WFCrewMedicComponent.cs`](Components/WFCrewMedicComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewNonLethalComponent.cs`](Components/WFCrewNonLethalComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewOnSightComponent.cs`](Components/WFCrewOnSightComponent.cs)
+- [`Content.Server/_WF/NpcCrew/Components/WFCrewPatrolOrdersComponent.cs`](Components/WFCrewPatrolOrdersComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewPropertyComponent.cs`](Components/WFCrewPropertyComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewRadioComponent.cs`](Components/WFCrewRadioComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewRepairComponent.cs`](Components/WFCrewRepairComponent.cs)
@@ -283,12 +344,14 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewVoidKitComponent.cs`](Components/WFCrewVoidKitComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewWeaponComponent.cs`](Components/WFCrewWeaponComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFGunnerDutyComponent.cs`](Components/WFGunnerDutyComponent.cs)
+- [`Content.Server/_WF/NpcCrew/Components/WFGunnerPolicyComponent.cs`](Components/WFGunnerPolicyComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFHoldFireComponent.cs`](Components/WFHoldFireComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFPilotDutyComponent.cs`](Components/WFPilotDutyComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFRadioOperatorComponent.cs`](Components/WFRadioOperatorComponent.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewGrabOperator.cs`](HTN/WFCrewGrabOperator.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewLoadedGunPrecondition.cs`](HTN/WFCrewLoadedGunPrecondition.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewMayFightPrecondition.cs`](HTN/WFCrewMayFightPrecondition.cs)
+- [`Content.Server/_WF/NpcCrew/HTN/WFCrewMedicOperator.cs`](HTN/WFCrewMedicOperator.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewReturnOperator.cs`](HTN/WFCrewReturnOperator.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewTargetOperator.cs`](HTN/WFCrewTargetOperator.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewWorkOperator.cs`](HTN/WFCrewWorkOperator.cs)
@@ -302,6 +365,7 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Server/_WF/NpcCrew/NPCSystem.Sleep.cs`](NPCSystem.Sleep.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/FireControlSystem.Crew.cs`](Systems/FireControlSystem.Crew.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/NPCCombatSystem.Crew.cs`](Systems/NPCCombatSystem.Crew.cs)
+- [`Content.Server/_WF/NpcCrew/Systems/NPCRetaliationSystem.Crew.cs`](Systems/NPCRetaliationSystem.Crew.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/NPCSteeringSystem.Access.cs`](Systems/NPCSteeringSystem.Access.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/NPCSteeringSystem.Shove.cs`](Systems/NPCSteeringSystem.Shove.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/NuclearReactorSystem.NpcCrew.cs`](Systems/NuclearReactorSystem.NpcCrew.cs)
@@ -311,6 +375,7 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Server/_WF/NpcCrew/Systems/WFCaptainSystem.cs`](Systems/WFCaptainSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewAccessSystem.cs`](Systems/WFCrewAccessSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewAlertSystem.cs`](Systems/WFCrewAlertSystem.cs)
+- [`Content.Server/_WF/NpcCrew/Systems/WFCrewAlertSystem.Docked.cs`](Systems/WFCrewAlertSystem.Docked.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewAlertSystem.Mechs.cs`](Systems/WFCrewAlertSystem.Mechs.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewCommsSystem.cs`](Systems/WFCrewCommsSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewConductSystem.cs`](Systems/WFCrewConductSystem.cs)
@@ -318,6 +383,10 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewEvaSystem.cs`](Systems/WFCrewEvaSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewFriendlyFireSystem.cs`](Systems/WFCrewFriendlyFireSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewGrabberSystem.cs`](Systems/WFCrewGrabberSystem.cs)
+- [`Content.Server/_WF/NpcCrew/Systems/WFCrewMedicSystem.Cloning.cs`](Systems/WFCrewMedicSystem.Cloning.cs)
+- [`Content.Server/_WF/NpcCrew/Systems/WFCrewMedicSystem.cs`](Systems/WFCrewMedicSystem.cs)
+- [`Content.Server/_WF/NpcCrew/Systems/WFCrewMedicSystem.Surgery.cs`](Systems/WFCrewMedicSystem.Surgery.cs)
+- [`Content.Server/_WF/NpcCrew/Systems/WFCrewMedicSystem.Table.cs`](Systems/WFCrewMedicSystem.Table.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewObjectiveSystem.cs`](Systems/WFCrewObjectiveSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewObjectiveSystem.Virtual.cs`](Systems/WFCrewObjectiveSystem.Virtual.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewPlannerSystem.cs`](Systems/WFCrewPlannerSystem.cs)
@@ -355,11 +424,13 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Shared/_WF/NpcCrew/WFCompanyFamily.cs`](../../../Content.Shared/_WF/NpcCrew/WFCompanyFamily.cs)
 - [`Content.Shared/_WF/NpcCrew/WFCrewEngagement.cs`](../../../Content.Shared/_WF/NpcCrew/WFCrewEngagement.cs)
 - [`Content.Shared/_WF/NpcCrew/WFCrewLimits.cs`](../../../Content.Shared/_WF/NpcCrew/WFCrewLimits.cs)
+- [`Content.Shared/_WF/NpcCrew/WFCrewMedicDoAfterEvent.cs`](../../../Content.Shared/_WF/NpcCrew/WFCrewMedicDoAfterEvent.cs)
 - [`Content.Shared/_WF/NpcCrew/WFCrewNavigationProfilePrototype.cs`](../../../Content.Shared/_WF/NpcCrew/WFCrewNavigationProfilePrototype.cs)
 - [`Content.Shared/_WF/NpcCrew/WFCrewNavigationSettings.cs`](../../../Content.Shared/_WF/NpcCrew/WFCrewNavigationSettings.cs)
 - [`Content.Shared/_WF/NpcCrew/WFCrewProfilePrototype.cs`](../../../Content.Shared/_WF/NpcCrew/WFCrewProfilePrototype.cs)
 - [`Content.Shared/_WF/NpcCrew/WFCrewRolePrototype.cs`](../../../Content.Shared/_WF/NpcCrew/WFCrewRolePrototype.cs)
 - [`Content.Shared/_WF/NpcCrew/WFCrewSetupMessages.cs`](../../../Content.Shared/_WF/NpcCrew/WFCrewSetupMessages.cs)
+- [`Content.Shared/_WF/NpcCrew/WFGunnerPolicy.cs`](../../../Content.Shared/_WF/NpcCrew/WFGunnerPolicy.cs)
 - [`Content.Shared/_WF/NpcCrew/WFPilotOrder.cs`](../../../Content.Shared/_WF/NpcCrew/WFPilotOrder.cs)
 - [`Content.Shared/_WF/NpcCrew/WFStripAttemptEvent.cs`](../../../Content.Shared/_WF/NpcCrew/WFStripAttemptEvent.cs)
 
@@ -379,7 +450,9 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 ### Integration tests
 
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFBodyToolTest.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFBodyToolTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewMedicTest.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewMedicTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewSuitHelmetTest.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewSuitHelmetTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewSurgeonTest.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewSurgeonTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Arena.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Arena.cs)
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.AuditCombat.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.AuditCombat.cs)
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.AuditNavigation.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.AuditNavigation.cs)
@@ -446,6 +519,7 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Resources/Prototypes/_WF/NpcCrew/gear.yml`](../../../Resources/Prototypes/_WF/NpcCrew/gear.yml)
 - [`Resources/Prototypes/_WF/NpcCrew/htn.yml`](../../../Resources/Prototypes/_WF/NpcCrew/htn.yml)
 - [`Resources/Prototypes/_WF/NpcCrew/markers.yml`](../../../Resources/Prototypes/_WF/NpcCrew/markers.yml)
+- [`Resources/Prototypes/_WF/NpcCrew/medics.yml`](../../../Resources/Prototypes/_WF/NpcCrew/medics.yml)
 - [`Resources/Prototypes/_WF/NpcCrew/mobs.yml`](../../../Resources/Prototypes/_WF/NpcCrew/mobs.yml)
 - [`Resources/Prototypes/_WF/NpcCrew/names.yml`](../../../Resources/Prototypes/_WF/NpcCrew/names.yml)
 - [`Resources/Prototypes/_WF/NpcCrew/navigation.yml`](../../../Resources/Prototypes/_WF/NpcCrew/navigation.yml)
@@ -457,6 +531,7 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 
 - [`Resources/Locale/en-US/_WF/NpcCrew/companies.ftl`](../../../Resources/Locale/en-US/_WF/NpcCrew/companies.ftl)
 - [`Resources/Locale/en-US/_WF/NpcCrew/crew.ftl`](../../../Resources/Locale/en-US/_WF/NpcCrew/crew.ftl)
+- [`Resources/Locale/en-US/_WF/NpcCrew/medics.ftl`](../../../Resources/Locale/en-US/_WF/NpcCrew/medics.ftl)
 - [`Resources/Locale/en-US/_WF/NpcCrew/navigation.ftl`](../../../Resources/Locale/en-US/_WF/NpcCrew/navigation.ftl)
 - [`Resources/Locale/en-US/_WF/NpcCrew/radio-reports.ftl`](../../../Resources/Locale/en-US/_WF/NpcCrew/radio-reports.ftl)
 - [`Resources/Locale/en-US/_WF/NpcCrew/setup.ftl`](../../../Resources/Locale/en-US/_WF/NpcCrew/setup.ftl)
@@ -504,6 +579,7 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
   - no shooting while Downed, crit, stunned or asleep
   - Crew miss by their skill level.
   - crew pull a semi-automatic's trigger at a person's pace
+- [`Content.Server/NPC/Systems/NPCRetaliationSystem.cs`](../../NPC/Systems/NPCRetaliationSystem.cs): a crewman's ship may let an attacker off, such as its Boss
 - [`Content.Server/NPC/Systems/NPCSteeringSystem.Context.cs`](../../NPC/Systems/NPCSteeringSystem.Context.cs)
   - a loose crate on the node is shoved, not walked into
   - compare both bodies for every NPC; the engine helper reads the first fixtures twice.

@@ -448,6 +448,10 @@ namespace Content.Server.Decals
                     Dirty(uid.Value, decals);
             }
 
+            // WOLFGATE(NetTraffic): with PVS, dirty chunks gather over a few ticks so a chunk changed every tick goes once per flush
+            if (PvsEnabled)
+                WfGatherDirtyChunks();
+
             /* // Mono edit: early return is redundant, if PVS is disabled, it will clear at end anyways.
             if (!PvsEnabled)
             {

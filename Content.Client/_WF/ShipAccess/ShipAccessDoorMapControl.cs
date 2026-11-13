@@ -65,9 +65,15 @@ public sealed class ShipAccessDoorMapControl : ShipViewControl
     /// <summary>The hull is fitted to the shorter side.</summary>
     protected override int ScaledMinimapRadius => (int) (MathF.Min(PixelWidth, PixelHeight) / 2f - MinimapMargin * UIScale);
 
+    /// <summary>A door that follows its zone's switch.</summary>
+    private static readonly Color ZoneColor = Color.FromHex("#f06bd0");
+
     /// <summary>The colour a rule is drawn in, on the diagram and in the legend.</summary>
     public static Color ColorFor(WFDoorAccessRule rule)
     {
+        if (rule == WFDoorAccessRule.Zone)
+            return ZoneColor;
+
         var i = (int) rule;
         return i >= 0 && i < RuleColors.Length ? RuleColors[i] : RuleColors[0];
     }

@@ -1,5 +1,6 @@
 using Content.Shared._WF.Encounters;
 using Content.Shared._WF.SectorControl;
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -137,6 +138,14 @@ public sealed partial class WFReaverCampaignPrototype : IPrototype
     /// <summary>Smuggling crates sold at open chutes that make one funding payout; 0 turns funding off.</summary>
     [DataField]
     public int FundingCrates = 5;
+
+    /// <summary>Goods with this tag fund the Reavers by value when sold on a cargo pallet.</summary>
+    [DataField]
+    public ProtoId<TagPrototype> FundingGoodsTag = "WFNarcotic";
+
+    /// <summary>Appraised value of such goods that counts as one smuggling crate; 0 turns it off.</summary>
+    [DataField]
+    public int FundingGoodsValue = 5000;
 
     /// <summary>Share of the reinforcement and spread intervals a funding payout takes off every stronghold's next reinforcement and the next spread.</summary>
     [DataField]

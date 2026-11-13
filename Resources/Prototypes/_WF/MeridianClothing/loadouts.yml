@@ -1295,6 +1295,42 @@
     head: WFMeridianClothingHeadChaplainTaqiyahWhite
 
 - type: loadout
+  id: WFMeridianLoadoutHeadHatsSyndicateInterdyneDeckofficerBlack
+  price: 0
+  equipment:
+    head: WFMeridianClothingHeadHatsSyndicateInterdyneDeckofficerBlack
+
+- type: loadout
+  id: WFMeridianLoadoutHeadHatsSyndicateInterdyneDeckofficerWhite
+  price: 0
+  equipment:
+    head: WFMeridianClothingHeadHatsSyndicateInterdyneDeckofficerWhite
+
+- type: loadout
+  id: WFMeridianLoadoutHeadHatsWardenDrill
+  price: 0
+  equipment:
+    head: WFMeridianClothingHeadHatsWardenDrill
+
+- type: loadout
+  id: WFMeridianLoadoutHeadHatsWardenPolicePatrol
+  price: 0
+  equipment:
+    head: WFMeridianClothingHeadHatsWardenPolicePatrol
+
+- type: loadout
+  id: WFMeridianLoadoutHeadHatsWardenRed
+  price: 0
+  equipment:
+    head: WFMeridianClothingHeadHatsWardenRed
+
+- type: loadout
+  id: WFMeridianLoadoutHeadHatsWardenSyndicate
+  price: 0
+  equipment:
+    head: WFMeridianClothingHeadHatsWardenSyndicate
+
+- type: loadout
   id: WFMeridianLoadoutClothingHeadCollectableBeret
   price: 0
   equipment:
@@ -2411,6 +2447,12 @@
     head: WFMeridianClothingHeadPlaybunnyearsGeneticist
 
 - type: loadout
+  id: WFMeridianLoadoutClothingHeadPlaybunnyearsHos
+  price: 0
+  equipment:
+    head: WFMeridianClothingHeadPlaybunnyearsHos
+
+- type: loadout
   id: WFMeridianLoadoutClothingHeadPlaybunnyearsJanitor
   price: 0
   equipment:
@@ -2493,6 +2535,18 @@
   price: 0
   equipment:
     head: WFMeridianClothingHeadPlaybunnyearsScientist
+
+- type: loadout
+  id: WFMeridianLoadoutClothingHeadPlaybunnyearsSecurity
+  price: 0
+  equipment:
+    head: WFMeridianClothingHeadPlaybunnyearsSecurity
+
+- type: loadout
+  id: WFMeridianLoadoutClothingHeadPlaybunnyearsSecurityAssistant
+  price: 0
+  equipment:
+    head: WFMeridianClothingHeadPlaybunnyearsSecurityAssistant
 
 - type: loadout
   id: WFMeridianLoadoutClothingHeadPlaybunnyearsUsa

@@ -70,7 +70,7 @@ public sealed class DrydockTest
     private static readonly Vector2 BerthAHull = StationPos + new Vector2(0.5f, -67f);
 
     /// <summary>World position of a damaged hull outside the bays, past their open end.</summary>
-    private static readonly Vector2 OutsideBayPos = StationPos + new Vector2(0.5f, -115f);
+    internal static readonly Vector2 OutsideBayPos = StationPos + new Vector2(0.5f, -115f);
 
     /// <summary>World position of a mobile shipyard's host grid, clear of the drydock.</summary>
     private static readonly Vector2 HostPos = new(-300f, 0f);

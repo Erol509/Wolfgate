@@ -89,6 +89,12 @@ public sealed class WolfgateCVars
         CVarDef.Create("wf.radar_azimuth", 0, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
+    /// Whether scrolling on a radar zooms toward the cursor instead of the screen centre.
+    /// </summary>
+    public static readonly CVarDef<bool> RadarZoomToMouse =
+        CVarDef.Create("wf.radar_zoom_to_mouse", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// The player's chat tabs: <c>name=channel,channel</c> entries separated by <c>|</c>, with <c>*</c> for every
     /// channel. Empty means the default tabs.
     /// </summary>

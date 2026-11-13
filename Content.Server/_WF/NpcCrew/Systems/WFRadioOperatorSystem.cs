@@ -185,9 +185,10 @@ public sealed partial class WFRadioOperatorSystem : EntitySystem
             return;
 
         // A beam names the gun as its origin; the contact is whoever holds it.
-        var origin = EntityManager.System<WFCrewSystem>().Wielder(source);
-        // A shot can land after the gun that fired it is gone.
-        if (origin == uid || TerminatingOrDeleted(origin))
+        var crewSystem = EntityManager.System<WFCrewSystem>();
+        var origin = crewSystem.Wielder(source);
+        // A shot can land after the gun that fired it is gone; a blow the ship forgives is nobody's business.
+        if (origin == uid || TerminatingOrDeleted(origin) || crewSystem.Forgives(uid, origin))
             return;
 
         var home = HomeGridOf(uid);

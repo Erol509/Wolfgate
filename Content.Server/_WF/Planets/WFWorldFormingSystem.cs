@@ -5,10 +5,10 @@ using Robust.Shared.Timing;
 namespace Content.Server._WF.Planets;
 
 /// <summary>
-/// Sends every client how far the forming worlds have got, a few times a second while any are forming and once
+/// Sends every client how far the forming worlds have got, about once a second while any are forming and once
 /// empty when they are done, for the lobby's world-forming bar and the in-round one.
 /// </summary>
-public sealed class WFWorldFormingSystem : EntitySystem
+public sealed partial class WFWorldFormingSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private WFPlanetNetworkSystem _networks = default!;
@@ -18,7 +18,6 @@ public sealed class WFWorldFormingSystem : EntitySystem
     private static readonly TimeSpan Interval = TimeSpan.FromSeconds(0.25);
 
     private TimeSpan _next;
-    private bool _sentAny;
 
     /// <summary>The latest state sent.</summary>
     public WFWorldFormingEvent Last { get; private set; } = new();
@@ -33,21 +32,9 @@ public sealed class WFWorldFormingSystem : EntitySystem
         _next = _timing.CurTime + Interval;
         var state = Measure();
 
-        // Nothing forming: one empty state clears the bars, then silence.
-        if (state.Worlds.Count == 0 && !state.RoundHeld)
-        {
-            if (!_sentAny)
-                return;
-
-            _sentAny = false;
-        }
-        else
-        {
-            _sentAny = true;
-        }
-
-        Last = state;
-        RaiseNetworkEvent(state);
+        // A changed list or stage goes at once, bare progress once a second, and nothing once all is done
+        // (WFWorldFormingSystem.NetTraffic.cs).
+        WfSendState(state);
     }
 
     /// <summary>The forming worlds as they stand.</summary>

@@ -32,6 +32,12 @@ wf-law-piracy = Piracy
 wf-law-piracy-text = Harpooning, pinning, boarding or stripping a vessel without its crew's consent.
 wf-law-hull-theft = Hull Theft
 wf-law-hull-theft-text = Flying, selling or breaking a vessel without its deed, or dealing in its parts.
+wf-law-narcotics-possession = Narcotics Possession
+wf-law-narcotics-possession-text = Holding a controlled narcotic or neuroware build for personal use.
+wf-law-narcotics-trafficking = Narcotics Trafficking
+wf-law-narcotics-trafficking-text = Growing, cooking, selling or carrying in bulk any controlled narcotic or neuroware build.
+wf-law-unlawful-loading = Unlawful Loading
+wf-law-unlawful-loading-text = Loading neuroware into a synthetic without its consent. Charged together with Assault where it harms them.
 
 wf-law-heave-to = Failing to Heave To
 wf-law-heave-to-text = Ignoring or fleeing a judge's hail.

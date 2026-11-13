@@ -299,7 +299,7 @@ public sealed partial class HealthAnalyzerSystem
     {
         var reagents = new List<HealthAnalyzerReagentInfo>();
         foreach (var reagent in solution.Contents)
-            reagents.Add(new HealthAnalyzerReagentInfo(reagent.Reagent.Prototype, reagent.Quantity));
+            reagents.Add(new HealthAnalyzerReagentInfo(reagent.Reagent.Prototype, reagent.Quantity, solution.GetPurity(reagent.Reagent.Prototype)));
 
         result.Add(new HealthAnalyzerChemicalInfo(type, reagents));
     }

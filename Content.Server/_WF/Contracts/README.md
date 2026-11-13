@@ -124,7 +124,7 @@ escort encounters), `world_fauna.yml` (each world's hostiles for planetside work
 - `WFContractDownload` (Salvage): a wreck with a `terminal`; progress banks every check while the holder or a crewmate
   is within `range`, and from the first moment someone is, `waves` spawn aboard every `waveInterval`.
 - `WFContractInspect` (Bounty): a stopped ship (a wreck map) with hostile `crew` and suspect `cargo`; the holder's crew
-  get an Inspect cargo verb on it that completes the contract.
+  get an Inspect cargo verb on it, and examining it up close does the same; either completes the contract.
 - `WFContractOperation` (Salvage): one wreck that needs all three: its anomalies scanned, its `item` brought aboard the
   contractor's station, and the hull towed within `range`.
 - Surveys take `derelicts` (twin surveys load a second derelict 160 m away and spread the anomalies over both).

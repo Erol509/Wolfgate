@@ -4,6 +4,8 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Content.IntegrationTests.Tests._WF.TradeGoods;
 using Content.Server._NF.SectorServices;
+using Content.Server._WF.CargoSales;
+using Content.Server.Cargo.Systems;
 using Content.Server._WF.ReaverCampaign.Components;
 using Content.Server._WF.ReaverCampaign.Systems;
 using Content.Server._WF.TradeGoods.Systems;
@@ -106,6 +108,47 @@ public sealed class WFReaverFundingTest : WFReaverTestBase
 
         await RunTicks(30);
         Assert.That(ChatSince(since).Any(line => line.Contains(Funded)), Is.False, "A payout is not announced.");
+    }
+
+    /// <summary>Narcotics sold on a cargo pallet bank a crate for every share of their value; other goods bank nothing.</summary>
+    [Test]
+    public async Task PalletNarcoticsFundTheReavers()
+    {
+        await StartCampaign();
+        await Server.WaitAssertion(() =>
+        {
+            var reavers = Server.System<WFReaverCampaignSystem>();
+            var pricing = Server.System<PricingSystem>();
+            var campaign = reavers.Campaign!;
+            reavers.State(true);
+
+            void Sell(params EntityUid[] goods)
+            {
+                var ev = new WFPalletSaleEvent(goods.ToHashSet(), MapData.Grid);
+                SEntMan.EventBus.RaiseEvent(EventSource.Local, ref ev);
+            }
+
+            Sell(SEntMan.SpawnEntity("Crowbar", MapData.GridCoords));
+            Assert.That(State().Funding, Is.Zero);
+            Assert.That(State().FundingGoods, Is.Zero, "An ordinary good funded the Reavers.");
+
+            var baggie = SEntMan.SpawnEntity("WFBaggieCocaine", MapData.GridCoords);
+            var price = pricing.GetPrice(baggie);
+            Assert.That(price, Is.GreaterThan(0).And.LessThan(campaign.FundingGoodsValue));
+            Sell(baggie);
+            Assert.That(State().Funding, Is.Zero);
+            Assert.That(State().FundingGoods, Is.EqualTo(price).Within(0.01), "A small sale waits toward the next crate.");
+
+            var more = (int) (campaign.FundingGoodsValue / price) + 1;
+            var goods = new EntityUid[more];
+            for (var i = 0; i < more; i++)
+            {
+                goods[i] = SEntMan.SpawnEntity("WFBaggieCocaine", MapData.GridCoords);
+            }
+
+            Sell(goods);
+            Assert.That(State().Funding, Is.EqualTo((int) ((more + 1) * price / campaign.FundingGoodsValue)));
+        });
     }
 
     /// <summary>Freight taken off NPC haulers funds the Reavers when fenced at the Underground, not when sold at a lawful chute.</summary>

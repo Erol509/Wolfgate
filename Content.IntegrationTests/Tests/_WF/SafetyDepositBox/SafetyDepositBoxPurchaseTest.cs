@@ -3,10 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server._Mono.MonoCoins;
 using Content.Server._WF.SafetyDepositBox;
+using Content.Server._WF.ShipCommand;
 using Content.Server.Database;
 using Content.Server.Preferences.Managers;
 using Content.Shared._NF.Bank.Components;
 using Content.Shared._WF.SafetyDepositBox.Components;
+using Content.Shared._WF.ShipCommand;
 using Content.Shared._WF.SafetyDepositBox.Events;
 using Content.Shared.Mind;
 using Content.Shared.Preferences;
@@ -28,7 +30,8 @@ public sealed class SafetyDepositBoxPurchaseTest
     [TestCase(5000000, 0, 3000000, 0, TestName = "BankPaysWhenThereAreNoSavings")]
     [TestCase(1000000, 1500000, 500000, 0, TestName = "SavingsPayFirstAndBankPaysTheRest")]
     [TestCase(5000000, 3000000, 5000000, 1000000, TestName = "SavingsCoverItAndBankIsUntouched")]
-    public async Task PurchaseCharges(int bank, int savings, int bankAfter, int savingsAfter)
+    [TestCase(5000000, 0, 4000000, 0, 0.5f, TestName = "ACommandedShipsPriceRuleSetsTheCharge")]
+    public async Task PurchaseCharges(int bank, int savings, int bankAfter, int savingsAfter, float multiplier = 1f)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
         var server = pair.Server;
@@ -48,6 +51,15 @@ public sealed class SafetyDepositBoxPurchaseTest
         await server.WaitPost(() =>
         {
             var mindSys = entMan.System<SharedMindSystem>();
+            if (multiplier != 1f)
+            {
+                // The buyer is the test's admin session, so with admins served free the rule would never apply.
+                var command = entMan.EnsureComponent<WFShipCommandComponent>(map.Grid.Owner);
+                command.OwnerServedFree = command.AdminsServedFree = false;
+                entMan.System<WFShipServiceSystem>().SetRule((map.Grid.Owner, command),
+                    new WFShipPriceRule { Name = "rule", Services = WFShipServiceKind.Deposit, Multiplier = multiplier }, null);
+            }
+
             console = entMan.SpawnEntity("SafetyDepositConsole", map.GridCoords);
             body = entMan.SpawnEntity("MobHuman", map.GridCoords);
             mindSys.TransferTo(mindSys.CreateMind(player.UserId).Owner, body);
@@ -108,7 +120,7 @@ public sealed class SafetyDepositBoxPurchaseTest
                     "The bank component still shows the old balance.");
                 Assert.That(coins.GetMonoCoinsBalance(player.UserId), Is.EqualTo(savingsAfter),
                     "Savings were charged the wrong amount.");
-                Assert.That(bank + savings - bankAfter - savingsAfter, Is.EqualTo(Cost), "The test's numbers don't add up to the cost.");
+                Assert.That(bank + savings - bankAfter - savingsAfter, Is.EqualTo((int) (Cost * multiplier)), "The test's numbers don't add up to the cost.");
             });
         });
 

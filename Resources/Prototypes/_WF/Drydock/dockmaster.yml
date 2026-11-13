@@ -39,7 +39,8 @@
     response: drydock-dockmaster-response-who
 
 - type: entity
-  id: WFDrydockDockmaster
+  abstract: true
+  id: WFDrydockDockmasterBase
   parent: WFBaseTrader
   name: Hammer Ironstrike
   description: The drydock's dwarf dockmaster, beard tucked into his hazard vest.
@@ -71,6 +72,12 @@
     - drydock-hail-greeting-1
     - drydock-hail-greeting-2
     - drydock-hail-greeting-3
+
+# A dockmaster who is the booking service himself, as at Anvilhold.
+- type: entity
+  id: WFDrydockDockmaster
+  parent: WFDrydockDockmasterBase
+  components:
   - type: WFDrydockOperator
   - type: HailService
     name: drydock-hail-service

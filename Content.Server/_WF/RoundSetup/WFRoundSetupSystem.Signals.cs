@@ -19,6 +19,15 @@ public sealed partial class WFRoundSetupSystem
     public const string CrewChannel = "WFCrew";
     private readonly HashSet<EntityUid> _crewRadios = new();
     private readonly HashSet<NetUserId> _signalRecipients = new();
+
+    /// <summary>The last signal each crew member was sent and when, so one that reads the same isn't sent again.</summary>
+    private readonly Dictionary<NetUserId, (WFCrewSignalEvent Signal, TimeSpan Sent)> _lastCrewSignal = new();
+
+    /// <summary>How long an unchanged signal is held back before it is sent anyway.</summary>
+    private static readonly TimeSpan CrewSignalResend = TimeSpan.FromSeconds(3);
+
+    /// <summary>Metres a position may drift before the signal counts as changed.</summary>
+    private const float CrewSignalDrift = 0.25f;
     private TimeSpan _nextCrewSignal;
 
     private void InitializeCrewSignals()
@@ -82,17 +91,38 @@ public sealed partial class WFRoundSetupSystem
             recipients.Add(user);
             _watchers.Add(user);
             InstallCrewRadio(body);
-            RaiseNetworkEvent(LeaderSignal(lobby, player, body), player.Channel);
+            var signal = LeaderSignal(lobby, player, body);
+            if (_lastCrewSignal.TryGetValue(user, out var last)
+                && _timing.CurTime - last.Sent < CrewSignalResend
+                && SameCrewSignal(last.Signal, signal))
+                continue;
+
+            _lastCrewSignal[user] = (signal, _timing.CurTime);
+            RaiseNetworkEvent(signal, player.Channel);
         }
         foreach (var body in _crewRadios.Except(bodies).ToArray())
             RemoveCrewRadio(body);
         foreach (var user in _signalRecipients.Except(recipients))
         {
+            _lastCrewSignal.Remove(user);
             if (_players.TryGetSessionById(user, out var player))
                 RaiseNetworkEvent(new WFCrewSignalEvent(null, string.Empty, string.Empty, WFCrewLeaderStatus.Unavailable), player.Channel);
         }
         _signalRecipients.Clear();
         _signalRecipients.UnionWith(recipients);
+    }
+
+    /// <summary>Whether two signals would point a crew member the same way.</summary>
+    private static bool SameCrewSignal(WFCrewSignalEvent a, WFCrewSignalEvent b)
+    {
+        if (a.Body != b.Body || a.Status != b.Status || a.Crew != b.Crew || a.Leader != b.Leader
+            || a.Offset.HasValue != b.Offset.HasValue)
+            return false;
+
+        if ((a.Origin - b.Origin).Length() > CrewSignalDrift)
+            return false;
+
+        return a.Offset is not { } from || b.Offset is not { } to || (from - to).Length() <= CrewSignalDrift;
     }
 
     private WFCrewSignalEvent LeaderSignal(Lobby lobby, ICommonSession player, EntityUid body)

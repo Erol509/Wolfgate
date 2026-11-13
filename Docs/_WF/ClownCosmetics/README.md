@@ -25,6 +25,7 @@ Coyote outfits sit on `ClothingUniformSkirtBase`, and the unicycle handles like 
 - [`Resources/Prototypes/_WF/ClownCosmetics/clothing_extra.yml`](../../../Resources/Prototypes/_WF/ClownCosmetics/clothing_extra.yml)
 - [`Resources/Prototypes/_WF/ClownCosmetics/eva.yml`](../../../Resources/Prototypes/_WF/ClownCosmetics/eva.yml)
 - [`Resources/Prototypes/_WF/ClownCosmetics/facepaint.yml`](../../../Resources/Prototypes/_WF/ClownCosmetics/facepaint.yml)
+- [`Resources/Prototypes/_WF/ClownCosmetics/jukebox.yml`](../../../Resources/Prototypes/_WF/ClownCosmetics/jukebox.yml)
 - [`Resources/Prototypes/_WF/ClownCosmetics/loadouts.yml`](../../../Resources/Prototypes/_WF/ClownCosmetics/loadouts.yml)
 - [`Resources/Prototypes/_WF/ClownCosmetics/loadouts_extra.yml`](../../../Resources/Prototypes/_WF/ClownCosmetics/loadouts_extra.yml)
 - [`Resources/Prototypes/_WF/ClownCosmetics/loadouts_toys.yml`](../../../Resources/Prototypes/_WF/ClownCosmetics/loadouts_toys.yml)
@@ -121,6 +122,7 @@ Coyote outfits sit on `ClothingUniformSkirtBase`, and the unicycle handles like 
 - [`Resources/Textures/_WF/ClownCosmetics/Facepaints/human.rsi/`](../../../Resources/Textures/_WF/ClownCosmetics/Facepaints/human.rsi/)
 - [`Resources/Textures/_WF/ClownCosmetics/Facepaints/reptilian.rsi/`](../../../Resources/Textures/_WF/ClownCosmetics/Facepaints/reptilian.rsi/)
 - [`Resources/Textures/_WF/ClownCosmetics/Facepaints/vulpkanin.rsi/`](../../../Resources/Textures/_WF/ClownCosmetics/Facepaints/vulpkanin.rsi/)
+- [`Resources/Textures/_WF/ClownCosmetics/Toys/chucklefuck.rsi/`](../../../Resources/Textures/_WF/ClownCosmetics/Toys/chucklefuck.rsi/)
 - [`Resources/Textures/_WF/ClownCosmetics/Toys/honkco.rsi/`](../../../Resources/Textures/_WF/ClownCosmetics/Toys/honkco.rsi/)
 
 ### Audio
@@ -132,12 +134,15 @@ Coyote outfits sit on `ClothingUniformSkirtBase`, and the unicycle handles like 
 - [`Resources/Audio/_WF/ClownCosmetics/Footsteps/boots2.ogg`](../../../Resources/Audio/_WF/ClownCosmetics/Footsteps/boots2.ogg)
 - [`Resources/Audio/_WF/ClownCosmetics/Footsteps/boots3.ogg`](../../../Resources/Audio/_WF/ClownCosmetics/Footsteps/boots3.ogg)
 - [`Resources/Audio/_WF/ClownCosmetics/Footsteps/boots4.ogg`](../../../Resources/Audio/_WF/ClownCosmetics/Footsteps/boots4.ogg)
+- [`Resources/Audio/_WF/ClownCosmetics/Jukebox/attributions.yml`](../../../Resources/Audio/_WF/ClownCosmetics/Jukebox/attributions.yml)
+- [`Resources/Audio/_WF/ClownCosmetics/Jukebox/seth_clown_music.ogg`](../../../Resources/Audio/_WF/ClownCosmetics/Jukebox/seth_clown_music.ogg)
 
 ## Non-modular edits
 
 - [`Content.Client/Buckle/BuckleSystem.cs`](../../../Content.Client/Buckle/BuckleSystem.cs): Frontier's MaintainSpriteLayers keeps the rider's draw depth
 - [`Content.Shared/Buckle/Components/StrapComponent.cs`](../../../Content.Shared/Buckle/Components/StrapComponent.cs): Frontier's MaintainSpriteLayers, so a unicycle rider stays drawn over the wheel
 - [`Resources/migration.yml`](../../../Resources/migration.yml): WF prefix on the ported clown and mime clothing
+- [`Resources/Prototypes/_NF/Catalog/VendingMachines/Inventories/cuddlycritter.yml`](../../../Resources/Prototypes/_NF/Catalog/VendingMachines/Inventories/cuddlycritter.yml): stock the clown plushie
 - [`Resources/Prototypes/_NF/Loadouts/contractor_loadout_groups.yml`](../../../Resources/Prototypes/_NF/Loadouts/contractor_loadout_groups.yml)
 - [`Resources/Prototypes/Catalog/VendingMachines/Inventories/theater.yml`](../../../Resources/Prototypes/Catalog/VendingMachines/Inventories/theater.yml): stock the ClownCosmetics clown and mime clothing
 - [`Resources/Prototypes/Entities/Clothing/Head/hats.yml`](../../../Resources/Prototypes/Entities/Clothing/Head/hats.yml): the alt jester hood and the harlequin hood cover the hair

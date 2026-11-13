@@ -15,9 +15,9 @@ public static class WFFactionCrewPolicy
 
     /// <summary>Regular ranks and specialist postings supported by faction crews.</summary>
     public static readonly string[] TsfJobs = { "Cadet", "Deputy", "Brigmedic", "TsfEngineer", "NFDetective",
-        "PublicAffairsLiaison", "SeniorOfficer", "Bailiff", "Sheriff" };
+        "PublicAffairsLiaison", "TsfBorg", "SeniorOfficer", "Bailiff", "Sheriff" };
     /// <summary>Regular PDV ranks and specialist postings.</summary>
-    public static readonly string[] PdvJobs = { "Pirate", "PDVInfiltrator", "WFPdvJarrah", "PDVDenasvar", "PirateFirstMate", "PirateCaptain" };
+    public static readonly string[] PdvJobs = { "Pirate", "PDVInfiltrator", "WFPdvJarrah", "PdvBorg", "PDVDenasvar", "PirateFirstMate", "PirateCaptain" };
     /// <summary>Viper Group ranks.</summary>
     public static readonly string[] VgJobs = { "VGInfanteer", "VGLieutenant", "VGCommander" };
     /// <summary>USSP ranks.</summary>
@@ -29,11 +29,11 @@ public static class WFFactionCrewPolicy
     public static int Rank(WFCrewFaction faction, string? job) => (faction, job) switch
     {
         (WFCrewFaction.TSF, "Cadet") => 0,
-        (WFCrewFaction.TSF, "Deputy" or "Brigmedic" or "TsfEngineer" or "NFDetective" or "PublicAffairsLiaison") => 1,
+        (WFCrewFaction.TSF, "Deputy" or "Brigmedic" or "TsfEngineer" or "NFDetective" or "PublicAffairsLiaison" or "TsfBorg") => 1,
         (WFCrewFaction.TSF, "SeniorOfficer") => 2,
         (WFCrewFaction.TSF, "Bailiff") => 3,
         (WFCrewFaction.TSF, "Sheriff") => 4,
-        (WFCrewFaction.PDV, "Pirate" or "PDVInfiltrator" or "WFPdvJarrah") => 1,
+        (WFCrewFaction.PDV, "Pirate" or "PDVInfiltrator" or "WFPdvJarrah" or "PdvBorg") => 1,
         (WFCrewFaction.PDV, "PDVDenasvar") => 2,
         (WFCrewFaction.PDV, "PirateFirstMate") => 3,
         (WFCrewFaction.PDV, "PirateCaptain") => 4,

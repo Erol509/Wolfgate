@@ -468,6 +468,10 @@ namespace Content.Server.Lathe
             if (!Resolve(uid, ref component))
                 return;
 
+            // WOLFGATE(NetTraffic): closed windows get no state; LatheSupplySystem sets it on BoundUIOpenedEvent
+            if (!_uiSys.IsUiOpen(uid, LatheUiKey.Key))
+                return;
+
             // WOLFGATE(Lathe) START: a queued batch waiting for supplies is not being fabricated
             // var producing = component.CurrentRecipe ?? component.Queue.FirstOrDefault()?.Recipe; // Frontier: add ?.Recipe
             var producing = component.CurrentRecipe;

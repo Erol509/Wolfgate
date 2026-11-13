@@ -266,10 +266,11 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             CleanGrid(shuttleUid, consoleUid);
         }
 
-        bill = (int)_pricing.AppraiseGrid(shuttleUid, LacksPreserveOnSaleComp);
+        var wfAppraisal = (int)_pricing.AppraiseGrid(shuttleUid, LacksPreserveOnSaleComp); // WOLFGATE(ShipCommand): appraised before a bargain's discount
+        bill = _wfShipServices.ResaleValue(shuttleUid, wfAppraisal); // WOLFGATE(ShipCommand): a bargain resells less its discount
 
         // WOLFGATE(Shipyard) START: last look at the grid, with its deed, before it goes. See _WF/Shipyard.
-        var soldEv = new _WF.Shipyard.ShipSoldEvent(shuttleUid, consoleUid, stationUid, bill);
+        var soldEv = new _WF.Shipyard.ShipSoldEvent(shuttleUid, consoleUid, stationUid, wfAppraisal); // WOLFGATE(ShipCommand): the used lot lists a bargain at its full value
         RaiseLocalEvent(ref soldEv);
         // WOLFGATE END
 

@@ -157,6 +157,13 @@ public sealed partial class WFDrydockJobComponent : Component
     [ViewVariables]
     public int CashTotal;
 
+    /// <summary>
+    /// The share of each item's cost the payer paid, after a commanded ship's price rule: refunds of unfinished items
+    /// are scaled by it, so a free or discounted job never refunds more than it took.
+    /// </summary>
+    [ViewVariables]
+    public float RefundScale = 1f;
+
     /// <summary>Thalers a chop-shop break has printed so far.</summary>
     [ViewVariables]
     public int CashPaid;

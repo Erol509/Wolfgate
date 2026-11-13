@@ -80,9 +80,14 @@ public sealed partial class WFBenchSystem
         }
     }
 
+    /// <summary>
+    /// The nearby list counts anyone whose body touches the range, so the issue check allows a step's slack past it.
+    /// </summary>
+    private const float IssueSlack = 1.5f;
+
     private bool InRange(EntityUid judge, EntityUid offender)
     {
-        var range = _cfg.GetCVar(BenchCVars.Range);
+        var range = _cfg.GetCVar(BenchCVars.Range) + IssueSlack;
         return Transform(judge).Coordinates.TryDistance(EntityManager, Transform(offender).Coordinates, out var distance)
             && distance <= range;
     }
@@ -103,9 +108,10 @@ public sealed partial class WFBenchSystem
         if (!judge)
             return state;
 
-        foreach (var person in _lookup.GetEntitiesInRange<ActorComponent>(Transform(viewer).Coordinates, _cfg.GetCVar(BenchCVars.Range)))
+        // The same reach Issue allows, so whoever is listed can be ticketed and someone stepping back stays listed.
+        foreach (var person in _lookup.GetEntitiesInRange<ActorComponent>(Transform(viewer).Coordinates, _cfg.GetCVar(BenchCVars.Range) + IssueSlack))
         {
-            if (person.Owner == viewer || _mobState.IsDead(person))
+            if (person.Owner == viewer || _mobState.IsDead(person) || !InRange(viewer, person))
                 continue;
             state.Nearby.Add(new WFBenchPersonView { Entity = GetNetEntity(person), Name = Name(person) });
         }

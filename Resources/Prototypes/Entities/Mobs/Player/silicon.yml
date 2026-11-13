@@ -713,7 +713,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
+        startingItem: PowerCellHigh # WOLFGATE(Cyborgs): was PowerCellMedium, half an hour of work per charge
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true

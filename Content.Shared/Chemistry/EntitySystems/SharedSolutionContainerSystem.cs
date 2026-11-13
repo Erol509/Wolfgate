@@ -1,3 +1,4 @@
+using Content.Shared._WF.WolfChem.Purity; // WOLFGATE(WolfChem)
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
@@ -954,7 +955,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         {
             msg.PushNewline();
             msg.AddMarkupOrThrow(Loc.GetString("scannable-solution-chemical"
-                , ("type", proto.LocalizedName)
+                , ("type", WFPurityText.Name(proto.LocalizedName, solution.GetPurity(proto.ID))) // WOLFGATE(WolfChem): goggles show grades
                 , ("color", proto.SubstanceColor.ToHexNoAlpha())
                 , ("amount", quantity)));
         }

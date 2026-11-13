@@ -52,6 +52,20 @@ public sealed partial class IdCardOwnerSystem : EntitySystem
     }
 
     /// <summary>
+    /// Stamps a card with the player controlling <paramref name="mob"/>. A card that already has an owner keeps it
+    /// unless <paramref name="overwrite"/> is set.
+    /// </summary>
+    public void Stamp(EntityUid idCard, EntityUid mob, bool overwrite = false)
+    {
+        if (!TryComp<ActorComponent>(mob, out var actor) || !overwrite && HasComp<IdCardOwnerComponent>(idCard))
+            return;
+
+        var owner = EnsureComp<IdCardOwnerComponent>(idCard);
+        owner.UserId = actor.PlayerSession.UserId;
+        owner.CharacterName = Name(mob);
+    }
+
+    /// <summary>
     /// True when the ID card was issued to the player currently controlling <paramref name="mob"/>.
     /// </summary>
     public bool IsOwnedBy(EntityUid idCard, EntityUid mob)

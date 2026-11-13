@@ -68,7 +68,8 @@ public sealed partial class RadarConsoleSystem : SharedRadarConsoleSystem
             angle = _transform.GetWorldRotation(xform) - _transform.GetWorldRotation(parent);
         }
 
-        if (_uiSystem.HasUi(uid, RadarConsoleUiKey.Key))
+        if (_uiSystem.HasUi(uid, RadarConsoleUiKey.Key)
+            && _uiSystem.IsUiOpen(uid, RadarConsoleUiKey.Key)) // WOLFGATE(NetTraffic): a stored state is sent to everyone who sees the console, open or not
         {
             NavInterfaceState state;
             var docks = _console.GetAllDocks();

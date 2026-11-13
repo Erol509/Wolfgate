@@ -19,6 +19,7 @@ using Content.Server.Cargo.Systems;
 using Content.Server.Carrying;
 using Content.Server.Chat.Systems;
 using Content.Server.Stack;
+using Content.Server._WF.ShipCommand;
 using Content.Shared.Chat;
 using Content.Shared.Climbing.Components;
 using Content.Shared._NF.Bank;
@@ -81,6 +82,7 @@ public sealed partial class TraderSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedPhysicsSystem _physics = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private WFShipServiceSystem _shipServices = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
@@ -468,6 +470,9 @@ public sealed partial class TraderSystem : EntitySystem
             return false;
         }
 
+        if (TurnAway(ent, customer))
+            return false;
+
         if (ent.Comp.Customer is { } current && current != customer)
         {
             Say(ent, Loc.GetString("trader-busy"));
@@ -487,6 +492,21 @@ public sealed partial class TraderSystem : EntitySystem
         ent.Comp.LastInput = _timing.CurTime;
         _ui.TryOpenUi(ent.Owner, TraderUiKey.Dialogue, customer);
         UpdateDialogueState(ent);
+        return true;
+    }
+
+    /// <summary>
+    /// Turns away a customer the trader's commanded ship has barred, ending any conversation with them. True when it did.
+    /// </summary>
+    public bool TurnAway(Entity<TraderComponent> ent, EntityUid customer)
+    {
+        if (!_shipServices.Refuses(ent.Owner, customer, out var refusal))
+            return false;
+
+        _popup.PopupEntity(refusal, ent.Owner, customer);
+        if (ent.Comp.Customer == customer)
+            EndConversation(ent, farewell: false);
+
         return true;
     }
 
@@ -700,7 +720,7 @@ public sealed partial class TraderSystem : EntitySystem
         if (!_proto.TryIndex(ent.Comp.Dialogue, out var dialogue))
             return;
 
-        if (args.Index < 0 || args.Index >= dialogue.Options.Count)
+        if (args.Index < 0 || args.Index >= dialogue.Options.Count || TurnAway(ent, args.Actor))
             return;
 
         NoteInput(ent);
@@ -765,7 +785,7 @@ public sealed partial class TraderSystem : EntitySystem
 
     private void OnConfirm(Entity<TraderComponent> ent, ref TraderConfirmMessage args)
     {
-        if (ent.Comp.Customer != args.Actor || !ent.Comp.Confirming)
+        if (ent.Comp.Customer != args.Actor || !ent.Comp.Confirming || TurnAway(ent, args.Actor))
             return;
 
         NoteInput(ent);
@@ -780,7 +800,7 @@ public sealed partial class TraderSystem : EntitySystem
 
     private void OnText(Entity<TraderComponent> ent, ref TraderTextMessage args)
     {
-        if (ent.Comp.Customer != args.Actor || ent.Comp.TextPrompt == null)
+        if (ent.Comp.Customer != args.Actor || ent.Comp.TextPrompt == null || TurnAway(ent, args.Actor))
             return;
 
         NoteInput(ent);

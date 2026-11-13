@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
 using Content.Server.Stack;
 using Content.Server._NF.Bank;
+using Content.Server._WF.ShipCommand;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
@@ -14,6 +15,7 @@ using Content.Shared.Popups;
 using Content.Shared.Prototypes;
 using Content.Shared.SubFloor;
 using Content.Shared._Mono.Traits.Physical;
+using Content.Shared._WF.ShipCommand;
 using Content.Shared._WF.VehicleShop;
 using Content.Shared._WF.Vehicles.Base;
 using Content.Shared._WF.Vehicles.Core;
@@ -48,6 +50,7 @@ public sealed class WFVehicleShopSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private PricingSystem _pricing = default!;
     [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private WFShipServiceSystem _shipServices = default!;
     [Dependency] private StackSystem _stack = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
@@ -66,6 +69,7 @@ public sealed class WFVehicleShopSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<WFVehicleShopComponent, BoundUIOpenedEvent>(OnOpened);
+        SubscribeLocalEvent<WFVehicleShopComponent, WFVehicleShopRefreshMessage>(OnRefresh);
         SubscribeLocalEvent<WFVehicleShopComponent, WFVehicleShopBuyMessage>(OnBuy);
         SubscribeLocalEvent<WFVehicleShopComponent, WFVehicleShopSellMessage>(OnSell);
         SubscribeLocalEvent<WFVehicleShopComponent, WFVehicleShopRepairMessage>(OnRepair);
@@ -76,9 +80,28 @@ public sealed class WFVehicleShopSystem : EntitySystem
         UpdateUi(ent, args.Actor);
     }
 
+    /// <summary>The window asks once it is open, in case the state sent as it opened came before it.</summary>
+    private void OnRefresh(Entity<WFVehicleShopComponent> ent, ref WFVehicleShopRefreshMessage args)
+    {
+        UpdateUi(ent, args.Actor);
+    }
+
+    /// <summary>True, with a popup, when the terminal's commanded ship turns this customer away.</summary>
+    private bool Refused(Entity<WFVehicleShopComponent> ent, EntityUid user)
+    {
+        if (!_shipServices.Refuses(ent, user, out var reason))
+            return false;
+
+        _popup.PopupEntity(reason, ent, user);
+        return true;
+    }
+
     private void OnBuy(Entity<WFVehicleShopComponent> ent, ref WFVehicleShopBuyMessage args)
     {
         var user = args.Actor;
+        if (Refused(ent, user))
+            return;
+
         var listings = Listings(ent);
         if (args.Index < 0 || args.Index >= listings.Count)
             return;
@@ -107,27 +130,31 @@ public sealed class WFVehicleShopSystem : EntitySystem
             pad = padUid;
         }
 
-        if (!_bank.TryBankWithdraw(user, listing.Price))
+        var price = _shipServices.Quote(ent, user, WFShipServiceKind.Vehicles, listing.Price, out var rule);
+        if (price > 0 && !_bank.TryBankWithdraw(user, price))
         {
             _popup.PopupEntity(Loc.GetString("wf-vehicle-shop-no-funds"), ent, user);
             UpdateUi(ent, user);
             return;
         }
 
+        _shipServices.Record(ent, user, WFShipServiceKind.Vehicles, listing.Vehicle.Id, listing.Price, price, rule);
         if (pad is not { } deliverTo)
         {
             var item = Spawn(listing.Vehicle, Transform(user).Coordinates);
+            _shipServices.MarkBargainGoods(item, listing.Price, price);
             _hands.PickupOrDrop(user, item);
             var handed = new WFVehicleShopPurchasedEvent(user, ent);
             RaiseLocalEvent(item, ref handed);
             _popup.PopupEntity(Loc.GetString("wf-vehicle-shop-handed", ("item", Name(item))), ent, user);
             _adminLog.Add(LogType.ShipYardUsage, LogImpact.Low,
-                $"{ToPrettyString(user):actor} bought {ToPrettyString(item)} for {listing.Price} at {ToPrettyString(ent)}");
-            UpdateUi(ent, user);
+                $"{ToPrettyString(user):actor} bought {ToPrettyString(item)} for {price} at {ToPrettyString(ent)}");
+            UpdateAll(ent);
             return;
         }
 
         var vehicle = Spawn(listing.Vehicle, Transform(deliverTo).Coordinates);
+        _shipServices.MarkBargainGoods(vehicle, listing.Price, price);
         _transform.SetLocalRotation(vehicle, Angle.Zero);
 
         // The buyer gets the vehicle's key; without one it can't be started.
@@ -138,13 +165,16 @@ public sealed class WFVehicleShopSystem : EntitySystem
         RaiseLocalEvent(vehicle, ref delivered);
         _popup.PopupEntity(Loc.GetString("wf-vehicle-shop-delivered", ("vehicle", Name(vehicle))), ent, user);
         _adminLog.Add(LogType.ShipYardUsage, LogImpact.Low,
-            $"{ToPrettyString(user):actor} bought {ToPrettyString(vehicle)} for {listing.Price} at {ToPrettyString(ent)}");
-        UpdateUi(ent, user);
+            $"{ToPrettyString(user):actor} bought {ToPrettyString(vehicle)} for {price} at {ToPrettyString(ent)}");
+        UpdateAll(ent);
     }
 
     private void OnSell(Entity<WFVehicleShopComponent> ent, ref WFVehicleShopSellMessage args)
     {
         var user = args.Actor;
+        if (Refused(ent, user))
+            return;
+
         var (_, status, vehicle) = InspectPad(ent);
         if (status != WFVehicleShopPad.Vehicle || vehicle is not { } vehicleUid)
         {
@@ -170,12 +200,15 @@ public sealed class WFVehicleShopSystem : EntitySystem
             _stack.Spawn(price, CashStack, Transform(ent).Coordinates);
 
         _popup.PopupEntity(Loc.GetString("wf-vehicle-shop-sold", ("vehicle", name), ("price", price)), ent, user);
-        UpdateUi(ent, user);
+        UpdateAll(ent);
     }
 
     private void OnRepair(Entity<WFVehicleShopComponent> ent, ref WFVehicleShopRepairMessage args)
     {
         var user = args.Actor;
+        if (Refused(ent, user))
+            return;
+
         var (_, status, vehicle) = InspectPad(ent);
         if (status != WFVehicleShopPad.Vehicle || vehicle is not { } vehicleUid)
         {
@@ -183,29 +216,34 @@ public sealed class WFVehicleShopSystem : EntitySystem
             return;
         }
 
-        var price = RepairPrice(ent, vehicleUid);
-        if (price <= 0)
+        var basePrice = RepairPrice(ent, vehicleUid);
+        if (basePrice <= 0)
         {
             UpdateUi(ent, user);
             return;
         }
 
-        if (!_bank.TryBankWithdraw(user, price))
+        var price = _shipServices.Quote(ent, user, WFShipServiceKind.Vehicles, basePrice, out var rule);
+        if (price > 0 && !_bank.TryBankWithdraw(user, price))
         {
             _popup.PopupEntity(Loc.GetString("wf-vehicle-shop-no-funds"), ent, user);
             UpdateUi(ent, user);
             return;
         }
 
+        _shipServices.Record(ent, user, WFShipServiceKind.Vehicles, Loc.GetString("wf-ship-service-repair"), basePrice, price, rule);
         _hardpoints.RestoreIntegrity(vehicleUid);
         _audio.PlayPvs(ent.Comp.RepairSound, vehicleUid);
         _popup.PopupEntity(Loc.GetString("wf-vehicle-shop-repaired", ("vehicle", Name(vehicleUid)), ("price", price)), ent, user);
         _adminLog.Add(LogType.ShipYardUsage, LogImpact.Low,
             $"{ToPrettyString(user):actor} repaired {ToPrettyString(vehicleUid)} for {price} at {ToPrettyString(ent)}");
-        UpdateUi(ent, user);
+        UpdateAll(ent);
     }
 
-    /// <summary>Sends the catalogue, the customer's balance and what the pad holds.</summary>
+    /// <summary>
+    /// Sends one customer the catalogue at their own prices, their balance and what the pad holds. Prices differ by
+    /// customer aboard a commanded ship, so this goes to them alone rather than as the terminal's shared state.
+    /// </summary>
     private void UpdateUi(Entity<WFVehicleShopComponent> ent, EntityUid user)
     {
         var (_, status, thing) = InspectPad(ent);
@@ -214,10 +252,24 @@ public sealed class WFVehicleShopSystem : EntitySystem
         var name = thing is { } onPad ? Name(onPad) : null;
         var price = vehicle is { } priced ? SellPrice(ent, priced) : 0;
         var occupied = vehicle is { } inside && IsOccupied(inside);
-        var repair = vehicle is { } damaged ? RepairPrice(ent, damaged) : 0;
+        var repairBase = vehicle is { } damaged ? RepairPrice(ent, damaged) : 0;
+        var repair = _shipServices.Quote(ent, user, WFShipServiceKind.Vehicles, repairBase);
+        var listings = Listings(ent).ConvertAll(listing => new WFVehicleListing
+        {
+            Vehicle = listing.Vehicle,
+            Price = _shipServices.Quote(ent, user, WFShipServiceKind.Vehicles, listing.Price),
+            Licence = listing.Licence,
+        });
 
-        _ui.SetUiState(ent.Owner, WFVehicleShopUiKey.Key,
-            new WFVehicleShopState(Listings(ent), balance, status, name, price, occupied, HasLicence(user), repair));
+        var state = new WFVehicleShopState(listings, balance, status, name, price, occupied, HasLicence(user), repair, repairBase > 0);
+        _ui.ServerSendUiMessage(ent.Owner, WFVehicleShopUiKey.Key, new WFVehicleShopStateMessage(state), user);
+    }
+
+    /// <summary>Sends everyone with the terminal open their own view of it, once what the pad holds has changed.</summary>
+    private void UpdateAll(Entity<WFVehicleShopComponent> ent)
+    {
+        foreach (var actor in _ui.GetActors(ent.Owner, WFVehicleShopUiKey.Key).ToList())
+            UpdateUi(ent, actor);
     }
 
     /// <summary>Everything a terminal sells: its catalogue, then each further catalogue in order.</summary>
@@ -362,7 +414,8 @@ public sealed class WFVehicleShopSystem : EntitySystem
 
     /// <summary>
     /// What the terminal pays for a vehicle: its share of the lower of the vehicle's value as it stands and its listed
-    /// price, so a vehicle stripped of its parts fetches less and none fetches more than it cost.
+    /// price, so a vehicle stripped of its parts fetches less and none fetches more than it cost. A vehicle bought at a
+    /// bargain is valued less its discount, as everywhere else, so it can't be sold back at a profit.
     /// </summary>
     public int SellPrice(Entity<WFVehicleShopComponent> ent, EntityUid vehicle)
     {
@@ -377,14 +430,17 @@ public sealed class WFVehicleShopSystem : EntitySystem
         return (int) Math.Max(0, Math.Floor(value * ent.Comp.SellFraction));
     }
 
-    /// <summary>What making a vehicle whole costs: its share of the vehicle's value, by how much of its integrity is gone.</summary>
+    /// <summary>
+    /// What making a vehicle whole costs: its share of the vehicle's value, by how much of its integrity is gone. A
+    /// vehicle bought at a bargain is repaired at its full value.
+    /// </summary>
     public int RepairPrice(Entity<WFVehicleShopComponent> ent, EntityUid vehicle)
     {
         var missing = _hardpoints.GetMissingIntegrity(vehicle, out var max);
         if (missing <= 0f || max <= 0f)
             return 0;
 
-        var cost = _pricing.GetPrice(vehicle) * ent.Comp.RepairFraction * (missing / max);
+        var cost = _pricing.GetUndiscountedPrice(vehicle) * ent.Comp.RepairFraction * (missing / max);
         return Math.Max(MinRepairPrice, (int) Math.Ceiling(cost));
     }
 

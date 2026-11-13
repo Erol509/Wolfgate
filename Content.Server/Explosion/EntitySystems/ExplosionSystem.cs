@@ -29,6 +29,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Throwing;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
+using Robust.Shared.Audio; // WOLFGATE(NetTraffic)
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -83,6 +84,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private FlammableSystem _flammableSystem = default!;
     [Dependency] private DestructibleSystem _destructibleSystem = default!;
     [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private Content.Server._WF.NetTraffic.WFNetExplosionSystem _wfNetExplosion = default!; // WOLFGATE(NetTraffic)
 
     private EntityQuery<FlammableComponent> _flammableQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -476,6 +478,10 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         // Frontier - Block explosions on safe zone
 
         var visualEnt = CreateExplosionVisualEntity(pos, queued.Proto.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
+        // WOLFGATE(NetTraffic) START: the sounds go out in the explosion's message instead of as audio entities.
+        SoundSpecifier? wfNearSound = null, wfFarSound = null;
+        Filter? wfNear = null, wfFar = null;
+        // WOLFGATE END
 
         // WOLFGATE(Planets) START: a silent blast still carves its crater, it just does not shake, push or sound.
         // See QueuedExplosion.Silent. The upstream shake, shockwave and sound are only re-indented under this guard.
@@ -507,6 +513,13 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
                 ? queued.Proto.SmallSound
                 : queued.Proto.Sound;
 
+            // WOLFGATE(NetTraffic): sent with the explosion's message when that is on.
+            if (_wfNetExplosion.Enabled)
+            {
+                wfNearSound = sound;
+                wfNear = filter;
+            }
+            else
             _audio.PlayStatic(sound, filter, entPos, true, sound.Params);
 
             // play far sound
@@ -517,9 +530,20 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
                 ? queued.Proto.SmallSoundFar
                 : queued.Proto.SoundFar;
 
+            // WOLFGATE(NetTraffic): sent with the explosion's message when that is on.
+            if (_wfNetExplosion.Enabled)
+            {
+                wfFarSound = farSound;
+                wfFar = farFilter;
+            }
+            else
             _audio.PlayGlobal(farSound, farFilter, true, farSound.Params);
         }
         // WOLFGATE END
+
+        // WOLFGATE(NetTraffic): one message per player carries the overlay and the sound they hear.
+        if (_wfNetExplosion.Enabled)
+            _wfNetExplosion.Send(visualEnt, pos, entPos, wfNearSound, wfNear, wfFarSound, wfFar);
 
         return new Explosion(this,
             queued.Proto,

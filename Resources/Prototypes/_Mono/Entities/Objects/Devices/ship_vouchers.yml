@@ -89,6 +89,9 @@
     - Tumour
     - Razorback
     # WOLFGATE END
+    # WOLFGATE(Shipyard) START: New WF T0 Ships
+    - Welder
+    # WOLFGATE END
 
 - type: entity
   parent: ShipVoucherTsfT0
@@ -113,9 +116,6 @@
     - Calypso
     - Dagger
     - Fracture
-    # WOLFGATE(Shipyard) START: New WF T1 Ships
-    - Welder
-    # WOLFGATE END
 
 - type: entity
   parent: ShipVoucherTsfT0

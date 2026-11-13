@@ -2,7 +2,8 @@ namespace Content.Server._WF.Shipyard;
 
 /// <summary>
 /// Raised just before a sold ship is deleted, while the grid is still intact and still
-/// carries its deed. Last chance to copy it.
+/// carries its deed. Last chance to copy it. The appraisal is the grid's own, before any
+/// discount it was bought at comes off what the seller is paid.
 /// </summary>
 [ByRefEvent]
 public record struct ShipSoldEvent(

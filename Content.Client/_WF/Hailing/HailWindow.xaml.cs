@@ -46,6 +46,9 @@ public sealed partial class HailWindow : FancyWindow
     /// <summary>The pilot picked one of the answers on offer.</summary>
     public event Action<string>? ChooseRequested;
 
+    /// <summary>The person at a console that is itself a hail service offered it to the caller.</summary>
+    public event Action? OfferRequested;
+
     private readonly Dictionary<NetEntity, ContactRow> _rows = new();
     private readonly HashSet<NetEntity> _listed = new();
     private readonly List<NetEntity> _gone = new();
@@ -73,6 +76,7 @@ public sealed partial class HailWindow : FancyWindow
         SendButton.OnPressed += _ => Send();
         AnswerButton.OnPressed += _ => AnswerRequested?.Invoke(true);
         EndButton.OnPressed += _ => EndRequested?.Invoke();
+        OfferButton.OnPressed += _ => OfferRequested?.Invoke();
 
         DeclineButton.OnPressed += _ =>
         {
@@ -324,8 +328,22 @@ public sealed partial class HailWindow : FancyWindow
                 SendButton.Disabled = !_transmit;
                 ChatEntry.PlaceHolder = Loc.GetString(_transmit ? "hail-chat-placeholder" : "hail-chat-listening");
                 ShowOptions(hail);
+                ShowOwnService();
                 break;
         }
+    }
+
+    /// <summary>Only a console that is itself a hail service, such as a dock desk, gets the button that offers it.</summary>
+    private void ShowOwnService()
+    {
+        if (!_transmit || _standalone || !_entManager.TryGetComponent<HailServiceComponent>(_console, out var service))
+        {
+            OfferButton.Visible = false;
+            return;
+        }
+
+        OfferButton.Visible = true;
+        OfferButton.Text = Loc.GetString("hail-offer-service", ("service", Loc.GetString(service.Name)));
     }
 
     /// <summary>What the answers on offer look like, so a change in them is noticed.</summary>

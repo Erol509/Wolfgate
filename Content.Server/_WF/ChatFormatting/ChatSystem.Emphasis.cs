@@ -4,11 +4,27 @@ namespace Content.Server.Chat.Systems;
 
 public partial class ChatSystem
 {
+    // The atomic group gives every character one reading: "~" before a delimiter is an escape, anything else is
+    // itself. Without it a run of tildes after an unclosed opener backtracks exponentially, and muffled whispers
+    // are mostly tildes.
     private static readonly Regex Pattern = new(
-        @"~([|+^])|([|+^])((?:~.|(?!\2).)+?)\2",
-        RegexOptions.Compiled | RegexOptions.Singleline);
+        @"~([|+^])|([|+^])((?>~[|+^]|(?!\2).)+?)\2",
+        RegexOptions.Compiled | RegexOptions.Singleline,
+        // Player input on the game thread: one message must never hold the tick.
+        TimeSpan.FromMilliseconds(100));
 
-    public static string ConvertCustomEmphasisToBBCode(string message) => Parse(message);
+    /// <summary>Converts |italic|, +bold+ and ^small^ to BBCode; an input that times out comes back unchanged.</summary>
+    public static string ConvertCustomEmphasisToBBCode(string message)
+    {
+        try
+        {
+            return Parse(message);
+        }
+        catch (RegexMatchTimeoutException)
+        {
+            return message;
+        }
+    }
 
     private static string Parse(string input)
     {

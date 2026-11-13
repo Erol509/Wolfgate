@@ -87,6 +87,9 @@ public sealed partial class WFBirdComponent : Component
 
     [ViewVariables] public TimeSpan NextHop;
 
+    /// <summary>Whether this flight has already circled its landing spot; it lands on the next arrival.</summary>
+    [ViewVariables] public bool Circled;
+
     [ViewVariables] public TimeSpan LastSeen;
 
     /// <summary>Collision layer and mask of each fixture before take-off.</summary>

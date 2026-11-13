@@ -2643,6 +2643,49 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("wolfgate_photo_album", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.WolfgateShipCommandPreset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("wolfgate_ship_command_preset_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("data");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("name");
+
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<DateTime>("Saved")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("saved");
+
+                    b.Property<string>("Vessel")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("vessel");
+
+                    b.HasKey("Id")
+                        .HasName("PK_wolfgate_ship_command_preset");
+
+                    b.HasIndex("PlayerUserId", "Vessel", "Name")
+                        .IsUnique();
+
+                    b.ToTable("wolfgate_ship_command_preset", (string)null);
+                });
+
             modelBuilder.Entity("PlayerRound", b =>
                 {
                     b.Property<int>("PlayersId")

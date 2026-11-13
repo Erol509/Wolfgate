@@ -254,6 +254,9 @@ public sealed partial class TraderUsedShipsSystem : EntitySystem
             return;
 
         var traderEnt = (ent.Owner, trader);
+        if (_trader.TurnAway(traderEnt, args.Actor))
+            return;
+
         _trader.NoteInput(traderEnt);
 
         if (!_market.TryGetAvailableListing(args.Listing, out var listing))

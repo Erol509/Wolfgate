@@ -25,6 +25,20 @@
       operator: !type:WFReloadOperator
     - !type:HTNCompoundTask
       task: WFCrewFightCompound
+  # A medic with a patient (WFCrewMedicSystem): walk to them, or with them in tow to a bed, and treat them there.
+  - tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:WFCrewMedicOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:WFHolsterWeaponOperator
+    - !type:HTNPrimitiveTask
+      operator: !type:MoveToOperator
+        targetKey: WFCrewMedicDestination
+        rangeKey: InteractRange
+        removeKeyOnFinish: false
+    - !type:HTNPrimitiveTask
+      operator: !type:WFCrewMedicOperator
+        perform: true
   - tasks:
     - !type:HTNPrimitiveTask
       operator: !type:WFCrewWorkOperator

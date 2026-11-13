@@ -48,7 +48,7 @@ shipyard-console-class-Mercenary = Mercenary
 
 ## spawnvessel command
 cmd-spawnvessel-desc = Spawns a vessel prototype's grid at your current position with its late-join job slots, optionally registering it to a player (their account, and the ID card they carry as its deed) and naming it.
-cmd-spawnvessel-help = Usage: {$command} <vessel ID> [owner username, or - for none] [ship name]
+cmd-spawnvessel-help = Usage: {$command} <vessel ID> [owner username, or - for none] [ship name] [preset:<name>, a commanded ship's preset to apply]
 cmd-spawnvessel-hint = <vessel ID>
 cmd-spawnvessel-owner-hint = [owner username, or - for none]
 cmd-spawnvessel-name-hint = [ship name]

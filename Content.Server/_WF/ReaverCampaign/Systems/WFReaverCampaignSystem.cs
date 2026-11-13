@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server._NF.GameTicking.Events;
+using Content.Server._WF.CargoSales;
 using Content.Server._WF.Encounters;
 using Content.Server._WF.Encounters.Components;
 using Content.Server._WF.Encounters.Systems;
@@ -169,6 +170,7 @@ public sealed partial class WFReaverCampaignSystem : EntitySystem
         SubscribeLocalEvent<WFSectorCellContestedEvent>(OnCellContested);
         SubscribeLocalEvent<WFSectorContestResolvedEvent>(OnContestResolved);
         SubscribeLocalEvent<WFTradeSaleEvent>(OnTradeSale);
+        SubscribeLocalEvent<WFPalletSaleEvent>(OnPalletSale);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 

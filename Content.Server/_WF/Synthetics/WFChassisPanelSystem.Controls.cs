@@ -272,6 +272,8 @@ public sealed partial class WFChassisPanelSystem
 
         _statusEffects.TryRemoveStatusEffect(body, "Stun");
         _statusEffects.TryRemoveStatusEffect(body, "KnockedDown");
+        var rebooted = new WFChassisRebootedEvent();
+        RaiseLocalEvent(body, ref rebooted);
         _audio.PlayPvs(RebootDoneSound, body);
         _popup.PopupEntity(Loc.GetString("wf-chassis-reboot-done"), body, body);
         PushState(body);
@@ -443,3 +445,7 @@ public sealed partial class WFChassisOverclockComponent : Component
     [DataField]
     public TimeSpan NextTick;
 }
+
+/// <summary>Raised on a body when a panel reboot finishes, so running software can be cleared.</summary>
+[ByRefEvent]
+public readonly record struct WFChassisRebootedEvent;

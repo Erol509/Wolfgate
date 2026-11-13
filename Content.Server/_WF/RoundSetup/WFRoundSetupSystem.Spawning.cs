@@ -44,7 +44,12 @@ public sealed partial class WFRoundSetupSystem
     {
         if (_pendingSpawns.TryGetValue(session.UserId, out var pending))
             return pending.Station == station;
-        return IsStandardStation(station) && !IsPlayerShip(station) && FindLobby(session.UserId) == null;
+        // An admin vessel with player jobs (ShipCommand) takes ordinary joins for its own jobs, from anyone it hasn't
+        // barred.
+        var shipJobs = EntityManager.System<Content.Server._WF.ShipCommand.WFShipJobsSystem>();
+        return IsStandardStation(station)
+               && (!IsPlayerShip(station) || shipJobs.IsJobsStation(station) && !shipJobs.Refuses(station, session.UserId))
+               && FindLobby(session.UserId) == null;
     }
 
     /// <summary>Whether a station isn't a private scenario station.</summary>

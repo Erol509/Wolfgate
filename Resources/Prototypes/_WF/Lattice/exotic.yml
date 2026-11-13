@@ -52,6 +52,16 @@
     color: "#b040e0"
   - type: Item
     size: Tiny
+  # Grinds down to the residue Chorus is cooked from (Narcotics).
+  - type: SolutionContainerManager
+    solutions:
+      exotic:
+        maxVol: 5
+        reagents:
+        - ReagentId: WFLatticeResidue
+          Quantity: 5
+  - type: Extractable
+    grindableSolutionName: exotic
   # Cuts the song out of a Choir member's head, a shard at a time.
   - type: WFSongExcisionTool
   # Matter from outside the Lattice's hold still carries a little of it.

@@ -26,6 +26,26 @@
         items: [ CigaretteSpaceDrugs, JointRainbow, BluntRainbow ]
         next: sold
         broke: broke
+      - text: wf-stranger-dealer-buy-hard
+        cost: 1200
+        items: [ WFBaggieCocaineCut, WFBaggieHeroinCut, WFCrackRockCut, WFCrystalShardCut ]
+        next: sold
+        broke: broke
+      - text: wf-stranger-dealer-buy-stick
+        cost: 1350
+        items: [ WFNeurowareStickWhitelineCopy, WFNeurowareStickNullLoopCopy, WFNeurowareStickBurstCopy, WFNeurowareStickIdleCopy ]
+        next: sold
+        broke: broke
+      - text: wf-stranger-dealer-buy-seeds
+        cost: 300
+        items: [ WFCocaSeeds, WFOpiumPoppySeeds ]
+        next: sold
+        broke: broke
+      - text: wf-stranger-dealer-buy-tester
+        cost: 150
+        items: [ WFPurityTester ]
+        next: sold
+        broke: broke
       - text: wf-stranger-dealer-pass
         next: shrug
     sold:

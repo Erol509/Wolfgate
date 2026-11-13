@@ -48,7 +48,12 @@ public sealed class PlanetNpcGearTest
             var plating = server.ResolveDependency<ITileDefinitionManager>()["Plating"].TileId;
             for (var x = -12; x <= 12; x++)
             for (var y = -12; y <= 12; y++)
+            {
                 maps.SetTile(map.Grid.Owner, map.Grid.Comp, new Vector2i(x, y), new Tile(plating));
+                // Walled in, or a wandering or stalking stranger walks off the floor and mob cleanup deletes him.
+                if (Math.Abs(x) == 12 || Math.Abs(y) == 12)
+                    entMan.SpawnEntity("WallSolid", new EntityCoordinates(map.Grid.Owner, x + 0.5f, y + 0.5f));
+            }
             // The world's air over the whole map, as its z-network stamps it on every layer.
             var proto = server.ProtoMan.Index<WFPlanetSurfacePrototype>(surface);
             entMan.AddComponents(map.MapUid, proto.NetworkComponents!);

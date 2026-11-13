@@ -175,8 +175,8 @@ public sealed class WFCockpitStatusTest
             var ui = entities.System<SharedUserInterfaceSystem>();
             // The power network must not rebuild the cached helm snapshot while real ticks run.
             entities.RemoveComponent<ApcPowerReceiverComponent>(console);
-            Assert.That(ui.TryGetUiState<ShuttleBoundUserInterfaceState>(console, ShuttleConsoleUiKey.Key, out var cached), Is.True);
-            Assert.That(cached!.CockpitAutopilotActive, Is.False, "The cached snapshot predates the live status.");
+            Assert.That(ui.TryGetUiState<ShuttleBoundUserInterfaceState>(console, ShuttleConsoleUiKey.Key, out _), Is.False,
+                "A closed helm holds no snapshot that could go stale.");
             // Without planning the live status is unavailable, a value only the status messages can deliver.
             entities.RemoveComponent<HTNComponent>(console);
             Assert.That(entities.System<ShuttleConsoleSystem>().GetWfCockpitAutopilotStatus(console), Is.Null);

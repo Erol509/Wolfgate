@@ -1,3 +1,5 @@
+using Content.Server._WF.ShipCommand;
+using Content.Shared._WF.ShipCommand;
 using System.Linq;
 using System.Numerics;
 using Content.Server._WF.Hailing;
@@ -50,7 +52,7 @@ public sealed partial class WFDrydockSystem
     private void OnOperatorServiceOpened(EntityUid uid, WFDrydockOperatorComponent comp, ref HailServiceOpenedEvent args)
     {
         comp.Viewers[args.Actor] = args.Helm;
-        SendOperatorState(uid, ValidShip(args.Ship), args.Helm);
+        SendOperatorState(uid, ValidShip(args.Ship), args.Helm, args.Actor);
     }
 
     private void OnOperatorClosed(EntityUid uid, WFDrydockOperatorComponent comp, BoundUIClosedEvent args)
@@ -81,7 +83,7 @@ public sealed partial class WFDrydockSystem
             Tell(args.Actor, helm, Loc.GetString("drydock-booking-cancelled"));
         }
 
-        SendOperatorState(uid, ship, helm);
+        SendOperatorState(uid, ship, helm, args.Actor);
     }
 
     /// <summary>Books a repair or refit for the caller's ship, then refreshes the caller's window.</summary>
@@ -91,7 +93,7 @@ public sealed partial class WFDrydockSystem
         if (ship is { } caller)
             Book(uid, comp, caller, helm, actor, upgrade);
 
-        SendOperatorState(uid, ship, helm);
+        SendOperatorState(uid, ship, helm, actor);
     }
 
     private void OnOperatorHailAnswered(EntityUid uid, WFDrydockOperatorComponent comp, ref HailServiceGreetEvent args)
@@ -166,7 +168,7 @@ public sealed partial class WFDrydockSystem
         var query = EntityQueryEnumerator<WFDrydockConsoleComponent, TransformComponent>();
         while (query.MoveNext(out var console, out var comp, out var xform))
         {
-            if (xform.GridUid != grid || !TryGetBerth(console, comp, out var berth))
+            if (xform.GridUid != grid || comp.Locked || !TryGetBerth(console, comp, out var berth))
                 continue;
 
             berths.Add(new BerthSlot(console, comp, berth));
@@ -235,16 +237,18 @@ public sealed partial class WFDrydockSystem
         return new(chosen, chosen, null);
     }
 
-    /// <summary>Builds the booking window state for a caller's ship, with its booking and any running job.</summary>
-    private WFDrydockConsoleState BuildOperatorState(EntityUid op, EntityUid? ship)
+    /// <summary>
+    /// Builds the booking window state for a caller's ship, with its booking and any running job, priced for the one
+    /// who called.
+    /// </summary>
+    private WFDrydockConsoleState BuildOperatorState(EntityUid op, EntityUid? ship, EntityUid? actor)
     {
         var eval = Evaluate(ship, GetBerths(op));
-        if (eval.Pricing is not { } slot)
-            return new WFDrydockConsoleState { Booking = true, Notice = eval.Notice };
 
-        // Prefer the berth working on or booked for the ship over the one a booking would take.
-        var console = slot.Console;
-        var comp = slot.Comp;
+        // Prefer the berth working on or booked for the ship over the one a booking would take. It shows even when
+        // locked, which leaves it out of the berths to book, so the booking can still be seen and cancelled.
+        EntityUid console;
+        WFDrydockConsoleComponent comp;
         WFDrydockJobComponent? job = null;
         if (ship is { } caller &&
             (TryFindJob(caller, out var shown) || TryFindBooking(caller, out shown)) &&
@@ -254,10 +258,21 @@ public sealed partial class WFDrydockSystem
             comp = shownComp;
             job = CompOrNull<WFDrydockJobComponent>(shown);
         }
+        else if (eval.Pricing is { } slot)
+        {
+            console = slot.Console;
+            comp = slot.Comp;
+        }
+        else
+        {
+            return new WFDrydockConsoleState { Booking = true, Notice = eval.Notice };
+        }
 
         var state = BuildState(console, ship, comp, job);
         state.Booking = true;
         state.Notice = eval.Notice;
+        if (actor is { } viewer)
+            state.Quote = QuoteFor(console, viewer, state);
 
         if (ship is { } booked && TryFindBooking(booked, out var bookedConsole) &&
             TryComp<WFDrydockBookingComponent>(bookedConsole, out var booking) &&
@@ -270,10 +285,13 @@ public sealed partial class WFDrydockSystem
         return state;
     }
 
-    /// <summary>Sends the booking state to the helm's window when relayed, else to the operator window.</summary>
-    private void SendOperatorState(EntityUid op, EntityUid? ship, EntityUid? helm)
+    /// <summary>
+    /// Sends the booking state, priced for the caller, to the helm's window when relayed, which only the caller has
+    /// open, else to the operator window.
+    /// </summary>
+    private void SendOperatorState(EntityUid op, EntityUid? ship, EntityUid? helm, EntityUid? actor)
     {
-        _ui.SetUiState(helm ?? op, WFDrydockConsoleUiKey.Key, BuildOperatorState(op, ship));
+        _ui.SetUiState(helm ?? op, WFDrydockConsoleUiKey.Key, BuildOperatorState(op, ship, actor));
     }
 
     /// <summary>Books the work on the berth the ship would take, if it can pay and the work is still due.</summary>
@@ -283,6 +301,12 @@ public sealed partial class WFDrydockSystem
         if (eval.Chosen is not { } slot)
         {
             Tell(actor, helm, eval.Notice ?? Loc.GetString("drydock-booking-full"));
+            return;
+        }
+
+        if (_shipServices.Refuses(slot.Console, actor, out var refusal))
+        {
+            Tell(actor, helm, refusal);
             return;
         }
 
@@ -298,7 +322,7 @@ public sealed partial class WFDrydockSystem
             return;
         }
 
-        var price = WorkPrice(slot.Console, ship, slot.Comp, upgrade, items);
+        var price = _shipServices.Quote(slot.Console, actor, WFShipServiceKind.Drydock, WorkPrice(slot.Console, ship, slot.Comp, upgrade, items));
         if (!TryComp<BankAccountComponent>(actor, out var bank))
         {
             Tell(actor, helm, Loc.GetString("drydock-console-no-bank-account"));
@@ -506,7 +530,7 @@ public sealed partial class WFDrydockSystem
                 if (!IsViewing(helm))
                     comp.Viewers.Remove(actor);
                 else
-                    SendOperatorState(op, ValidShip(Transform(helm).GridUid), helm);
+                    SendOperatorState(op, ValidShip(Transform(helm).GridUid), helm, actor);
             }
         }
     }

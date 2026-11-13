@@ -193,6 +193,10 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
             return;
 
         _next = _timing.CurTime + Interval();
+        // Several fights at once already load the network; this turn waits a whole interval.
+        if (Busy())
+            return;
+
         // An attempt that started nothing tries again soon, not a whole interval later.
         if (!TrySchedule(out _))
             _next = _timing.CurTime + RetryDelay;
@@ -301,7 +305,7 @@ public sealed partial class WFEncounterSchedulerSystem : EntitySystem
     private bool TryStart(WFEncounterPrototype prototype, out EntityUid encounter)
     {
         encounter = default;
-        if (!TryPlace(prototype, out var origin, out var stops))
+        if (!TryPlaceUncrowded(prototype, out var origin, out var stops))
         {
             Log.Info($"Encounter {prototype.ID} not started: no place for it.");
             return false;

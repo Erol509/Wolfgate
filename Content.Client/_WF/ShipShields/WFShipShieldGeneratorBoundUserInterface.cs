@@ -22,8 +22,9 @@ public sealed class WFShipShieldGeneratorBoundUserInterface : BoundUserInterface
         _window.ShieldPanel.AllocationRequested += (direction, concentration, arc) =>
             SendMessage(new WFShipShieldSetShuntMessage(direction, concentration, arc));
         _window.ShieldPanel.OnSetEnabled += enabled => SendMessage(new WFShipShieldSetEnabledMessage(enabled));
+        _window.StrengthRequested += strength => SendMessage(new WFShipShieldSetStrengthMessage(strength));
         if (State is WFShipShieldGeneratorUiState state)
-            _window.ShieldPanel.UpdateState(state.ShieldShunt, 0f);
+            Show(state);
         _window.OpenCentered();
     }
 
@@ -31,6 +32,16 @@ public sealed class WFShipShieldGeneratorBoundUserInterface : BoundUserInterface
     {
         base.UpdateState(state);
         if (state is WFShipShieldGeneratorUiState shield)
-            _window?.ShieldPanel.UpdateState(shield.ShieldShunt, 0f);
+            Show(shield);
+    }
+
+    private void Show(WFShipShieldGeneratorUiState state)
+    {
+        if (_window == null)
+            return;
+
+        _window.ShieldPanel.UpdateState(state.ShieldShunt, 0f);
+        if (EntMan.HasComponent<WFShipShieldStrengthControlComponent>(Owner) && state.ShieldShunt.Stats is { } stats)
+            _window.ShowStrength(stats.DamageLimit);
     }
 }

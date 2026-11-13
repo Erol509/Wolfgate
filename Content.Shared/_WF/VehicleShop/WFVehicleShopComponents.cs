@@ -72,7 +72,8 @@ public sealed class WFVehicleShopState(
     int sellPrice,
     bool occupied,
     bool licensed = false,
-    int repairPrice = 0) : BoundUserInterfaceState
+    int repairPrice = 0,
+    bool damaged = false) : BoundUserInterfaceState
 {
     public readonly List<WFVehicleListing> Listings = listings;
 
@@ -92,9 +93,23 @@ public sealed class WFVehicleShopState(
     /// <summary>Whether the customer carries a heavy vehicle licence.</summary>
     public readonly bool Licensed = licensed;
 
-    /// <summary>What repairing the vehicle on the pad costs; 0 when it needs nothing.</summary>
+    /// <summary>What repairing the vehicle on the pad costs this customer.</summary>
     public readonly int RepairPrice = repairPrice;
+
+    /// <summary>Whether the vehicle on the pad needs repair, which a price rule can make free.</summary>
+    public readonly bool Damaged = damaged;
 }
+
+/// <summary>A terminal's state as one customer sees it, at their own prices, sent to them alone.</summary>
+[Serializable, NetSerializable]
+public sealed class WFVehicleShopStateMessage(WFVehicleShopState state) : BoundUserInterfaceMessage
+{
+    public readonly WFVehicleShopState State = state;
+}
+
+/// <summary>Sent by the window once it is open, for the customer's state.</summary>
+[Serializable, NetSerializable]
+public sealed class WFVehicleShopRefreshMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
 public sealed class WFVehicleShopBuyMessage(int index) : BoundUserInterfaceMessage

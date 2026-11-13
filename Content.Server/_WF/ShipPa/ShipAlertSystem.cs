@@ -71,6 +71,8 @@ public sealed partial class ShipAlertSystem : EntitySystem
     /// </summary>
     private void OnConsoleOpened(Entity<ShuttleConsoleComponent> ent, ref BoundUIOpenedEvent args)
     {
+        // The helm only holds a state while it is open (NetTraffic), so the opening viewer needs a fresh one.
+        EntityManager.System<Content.Server.Shuttles.Systems.ShuttleConsoleSystem>().WfRefreshConsole(ent);
         EntityManager.System<Content.Server.Shuttles.Systems.ShuttleConsoleSystem>().WfCockpitConsoleOpened(ent, args.Actor);
         if (GetConsoleGrid(ent) is not { } grid)
             return;

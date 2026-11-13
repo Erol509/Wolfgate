@@ -320,6 +320,39 @@ public sealed class ContractFlowTest
         await pair.CleanReturnAsync();
     }
 
+    /// <summary>A contract site is never put within <see cref="WFContractSystem.PlayerClearance"/> of a player out in the band.</summary>
+    [Test]
+    public async Task SitesKeepClearOfPlayers()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var entMan = server.EntMan;
+        var contracts = entMan.System<WFContractSystem>();
+        var pickSite = typeof(WFContractSystem).GetMethod("PickSite",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!;
+
+        await server.WaitAssertion(() =>
+        {
+            var central = Station(server, map, Vector2.Zero, "Frontier");
+            var bystander = new Vector2(3750f, 0f);
+            var mob = entMan.SpawnEntity(Mob, new MapCoordinates(bystander, map.MapId));
+            var minds = entMan.System<SharedMindSystem>();
+            minds.TransferTo(minds.CreateMind(pair.Player!.UserId, "Bystander").Owner, mob);
+            Assert.That(entMan.HasComponent<Robust.Shared.Player.ActorComponent>(mob), Is.True);
+
+            for (var i = 0; i < 200; i++)
+            {
+                var site = (MapCoordinates?) pickSite.Invoke(contracts, new object?[] { central, 3000f, 4500f, 2500f, false });
+                Assert.That(site, Is.Not.Null, "No site was found with one player in the band.");
+                Assert.That((site!.Value.Position - bystander).Length(), Is.GreaterThanOrEqualTo(WFContractSystem.PlayerClearance),
+                    "A contract site was put on top of a player.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
     /// <summary>A small station grid at a position, made from a real game map's station config.</summary>
     internal static EntityUid Station(RobustIntegrationTest.ServerIntegrationInstance server, TestMapData map, Vector2 position, string gameMap)
     {

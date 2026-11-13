@@ -27,7 +27,8 @@ public sealed partial class WFDrydockSystem
 
     /// <summary>
     /// What a ship is worth to a chop shop: its shipyard price, from its own record or its vessel station's, else what
-    /// the grid's fittings appraise at. Loose cargo is left out, since it drifts off when the hull goes.
+    /// the grid's fittings appraise at. Loose cargo is left out, since it drifts off when the hull goes. A ship bought at
+    /// a bargain is worth that less its discount, as at a shipyard, so breaking it can't pay more than it cost.
     /// </summary>
     public int ChopValue(EntityUid ship)
     {
@@ -39,9 +40,10 @@ public sealed partial class WFDrydockSystem
             id = info.Vessel;
 
         if (id != null && _prototype.TryIndex(id.Value, out var proto) && proto.Price > 0)
-            return proto.Price;
+            return _shipServices.ResaleValue(ship, proto.Price);
 
-        return (int) Math.Min(_pricing.AppraiseGrid(ship, uid => Transform(uid).ParentUid != ship || Transform(uid).Anchored), int.MaxValue);
+        var appraisal = (int) Math.Min(_pricing.AppraiseGrid(ship, uid => Transform(uid).ParentUid != ship || Transform(uid).Anchored), int.MaxValue);
+        return _shipServices.ResaleValue(ship, appraisal);
     }
 
     /// <summary>What a chop shop still pays for breaking the rest of a ship, less what earlier breaks of it printed.</summary>

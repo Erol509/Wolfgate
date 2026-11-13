@@ -868,6 +868,7 @@
     - StaticGrenades
     - SecurityWeaponsStatic
     - MonoCaelestinusVouchersStatic
+    - MonoAttachmentsStatic # WOLFGATE(Weapons): give judges attachments
     dynamicPacks:
     - SecurityEquipment
     - SecurityExplosives

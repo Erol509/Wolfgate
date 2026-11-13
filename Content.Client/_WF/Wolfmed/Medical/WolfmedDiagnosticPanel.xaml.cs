@@ -1,3 +1,4 @@
+using Content.Shared._WF.WolfChem.Purity;
 using System.Linq;
 using System.Numerics;
 using Content.Client._Onyx.Medical.HealthAnalyzer;
@@ -57,6 +58,7 @@ public sealed partial class WolfmedDiagnosticPanel : BoxContainer
         WoundsButton.OnPressed += _ => SelectTab(WolfmedDiagnosticTab.Wounds);
         OrgansButton.OnPressed += _ => SelectTab(WolfmedDiagnosticTab.Organs);
         ChemicalsButton.OnPressed += _ => SelectTab(WolfmedDiagnosticTab.Chemicals);
+        ConditionsButton.OnPressed += _ => SelectTab(WolfmedDiagnosticTab.Conditions);
 
         ApplyTab();
     }
@@ -68,6 +70,7 @@ public sealed partial class WolfmedDiagnosticPanel : BoxContainer
         DrawWoundDiagnostics(msg);
         DrawOrgans(msg);
         DrawChemicals(msg);
+        DrawConditions(msg);
         ApplyTab();
     }
 
@@ -87,6 +90,7 @@ public sealed partial class WolfmedDiagnosticPanel : BoxContainer
         VitalDamageRow.Visible = false;
         ClearOrganRows();
         ChemicalsContainer.RemoveAllChildren();
+        ConditionsContainer.RemoveAllChildren();
     }
 
     /// <summary>UI3: the procedure window is a separate window, so it has to go when the analyzer does.</summary>
@@ -108,10 +112,12 @@ public sealed partial class WolfmedDiagnosticPanel : BoxContainer
         WoundsTab.Visible = _tab == WolfmedDiagnosticTab.Wounds;
         OrgansTab.Visible = _tab == WolfmedDiagnosticTab.Organs;
         ChemicalsTab.Visible = _tab == WolfmedDiagnosticTab.Chemicals;
+        ConditionsTab.Visible = _tab == WolfmedDiagnosticTab.Conditions;
 
         WoundsButton.Disabled = _tab == WolfmedDiagnosticTab.Wounds;
         OrgansButton.Disabled = _tab == WolfmedDiagnosticTab.Organs;
         ChemicalsButton.Disabled = _tab == WolfmedDiagnosticTab.Chemicals;
+        ConditionsButton.Disabled = _tab == WolfmedDiagnosticTab.Conditions;
     }
 
     // UI2: DrawWoundDiagnostics and its helpers moved to WolfmedDiagnosticPanel.Wounds.cs, which builds
@@ -277,6 +283,7 @@ public sealed partial class WolfmedDiagnosticPanel : BoxContainer
                     var name = _prototypes.TryIndex(reagent.Prototype, out ReagentPrototype? prototype)
                         ? prototype.LocalizedName
                         : Loc.GetString("chem-master-window-unknown-reagent-text");
+                    name = WFPurityText.Name(name, reagent.Purity);
                     group.AddChild(CreateDiagnosticItemLabel(
                         $" - {Loc.GetString("health-analyzer-window-solution-reagent", ("reagent", name), ("quantity", reagent.Quantity))}"));
                 }
@@ -330,10 +337,11 @@ public sealed partial class WolfmedDiagnosticPanel : BoxContainer
     }
 }
 
-/// <summary>Which of the panel's three tabs is showing.</summary>
+/// <summary>Which of the panel's tabs is showing.</summary>
 public enum WolfmedDiagnosticTab : byte
 {
     Wounds,
     Organs,
     Chemicals,
+    Conditions,
 }

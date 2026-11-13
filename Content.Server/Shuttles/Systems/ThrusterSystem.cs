@@ -245,6 +245,7 @@ public sealed partial class ThrusterSystem : EntitySystem
                 shuttleComponent.AngularThrust += component.Thrust;
                 DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Add(uid);
+                shuttleComponent.WFAngularFiring = null; // WOLFGATE(Performance): the arrival hasn't been set yet
                 return;
             }
         }
@@ -361,6 +362,7 @@ public sealed partial class ThrusterSystem : EntitySystem
                 shuttleComponent.AngularThrust += component.Thrust;
                 DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Add(uid);
+                shuttleComponent.WFAngularFiring = null; // WOLFGATE(Performance): the arrival hasn't been set yet
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -627,6 +629,13 @@ public sealed partial class ThrusterSystem : EntitySystem
 
     public void SetAngularThrust(ShuttleComponent component, bool on)
     {
+        // WOLFGATE(Performance) START: idle shuttles call this every tick with every thruster already set
+        if (component.WFAngularFiring == on)
+            return;
+
+        component.WFAngularFiring = on;
+        // WOLFGATE END
+
         var appearanceQuery = GetEntityQuery<AppearanceComponent>();
         var thrusterQuery = GetEntityQuery<ThrusterComponent>();
 

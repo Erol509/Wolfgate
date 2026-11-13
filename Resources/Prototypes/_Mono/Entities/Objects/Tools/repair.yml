@@ -56,7 +56,7 @@
   components:
   - type: LimitedCharges
     maxCharges: 300
-    charges: 50
+    charges: 300 # WOLFGATE(Cyborgs): was 50, a 20 minute wait before a cyborg's first real repair
   - type: AutoRecharge
     rechargeDuration: 5
 

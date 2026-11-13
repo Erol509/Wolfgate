@@ -1,5 +1,5 @@
 ent-CoyoteTableSnooker = pool table
-    .desc = A cloth surfaced pool table for that bar themed aesthetic! Bring over the brews! Pool not included.
+    .desc = A cloth surfaced pool table for that bar themed aesthetic! Bring over the brews! Bring a cue to play.
 ent-CoyoteTableSnookerBottom = { ent-CoyoteTableSnooker }
     .desc = { ent-CoyoteTableSnooker.desc }
 ent-CoyoteTableSnookerTopLeft = { ent-CoyoteTableSnooker }

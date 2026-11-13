@@ -835,6 +835,7 @@
 - type: vendingMachineInventory
   id: WFTraderSystemsBrokerInventory
   startingInventory:
+    WFFlatpackShieldDeflectorBroker: 1
     WFFlatpackShieldSentinel: 1
     WFFlatpackShieldAegis: 1
     WFFlatpackShieldTitan: 1

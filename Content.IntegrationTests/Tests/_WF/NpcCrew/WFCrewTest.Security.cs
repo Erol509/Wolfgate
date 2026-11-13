@@ -3,11 +3,14 @@ using System.Numerics;
 using System.Linq;
 using Content.Server._WF.NpcCrew.Components;
 using Content.Server._WF.NpcCrew.Systems;
+using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared._WF.NpcCrew;
 using Content.Shared._WF.ShipAccess;
+using Content.Shared._WF.ShipCommand;
 using Content.Shared.Access.Systems;
 using Content.Shared.Damage;
+using Content.Shared.Mobs.Components;
 using Content.Shared.NPC.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -80,5 +83,70 @@ public sealed partial class WFCrewTest
             Assert.That(SEntMan.TryGetComponent<Content.Shared.NPC.Components.FactionExceptionComponent>(crew, out var exceptions)
                 && exceptions.Hostiles.Any(target => target == visitor), Is.EqualTo(hostile));
         });
+    }
+
+    /// <summary>
+    /// The audit's brandish case: a commanded ship's crew let its owner carry a gun, past the warning's deadline and
+    /// without turning on him; a ship with no command still tells the same player to put it away.
+    /// </summary>
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task BrandishRuleDefersToTheShipsCommand(bool commanded)
+    {
+        var deck = await CreateDeck(new Vector2(6, 0), 7, gravity: true);
+        var conduct = Server.System<WFCrewConductSystem>();
+        EntityUid crew = default;
+        EntityUid gun = default;
+        await Server.WaitPost(() =>
+        {
+            if (commanded)
+            {
+                SEntMan.EnsureComponent<WFShipAccessComponent>(deck).OwnerUsers.Add(ServerSession.UserId);
+                SEntMan.EnsureComponent<WFShipCommandComponent>(deck);
+            }
+
+            crew = Server.System<WFCrewSystem>().SpawnCrewman(WFCrewRoles.Deckhand,
+                new EntityCoordinates(deck, new Vector2(2.5f, 3.5f)), "conduct")!.Value;
+            SEntMan.GetComponent<HTNComponent>(crew).Enabled = false;
+            SEntMan.EnsureComponent<WFCrewSecurityComponent>(crew).Boarding = WFCrewSecurityResponse.Ignore;
+
+            // A player's body is a mob; the bare test body is not.
+            SEntMan.EnsureComponent<MobStateComponent>(SPlayer);
+            Transform.SetCoordinates(SPlayer, new EntityCoordinates(deck, new Vector2(4.5f, 3.5f)));
+            gun = SEntMan.SpawnEntity("WeaponPistolViper", new EntityCoordinates(deck, new Vector2(4.5f, 3.5f)));
+            Assert.That(HandSys.TryPickupAnyHand(SPlayer, gun), Is.True, "Precondition: the player holds a gun.");
+        });
+
+        if (!commanded)
+        {
+            await WaitUntil(() => conduct.IsWarned(deck, "conduct", SPlayer), 60,
+                () => "A ship with no command still tells a player to put his gun away.");
+        }
+        else
+        {
+            var ticks = (int) (WFCrewConductSystem.BrandishTime.TotalSeconds + 3) * 30;
+            for (var waited = 0; waited < ticks; waited += 30)
+            {
+                await RunTicks(30);
+                await Server.WaitAssertion(() =>
+                    Assert.That(conduct.IsWarned(deck, "conduct", SPlayer), Is.False, "The crew don't tell the owner to put his gun away."));
+            }
+
+            await Server.WaitAssertion(() =>
+            {
+                var memories = SEntMan.TryGetComponent<NPCRetaliationComponent>(crew, out var retaliation)
+                    ? retaliation.AttackMemories
+                    : null;
+                var remembered = memories?.ContainsKey(SPlayer) == true;
+                Assert.That(remembered, Is.False, "Nor do they turn on him.");
+            });
+        }
+
+        await Server.WaitPost(() =>
+        {
+            SEntMan.DeleteEntity(gun);
+            Transform.SetCoordinates(SPlayer, new EntityCoordinates(MapData.MapUid, Vector2.Zero));
+        });
+        await RunTicks(5);
     }
 }

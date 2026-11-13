@@ -80,10 +80,17 @@ public sealed partial class SlimeLatchSystem : EntitySystem
                 continue;
             }
 
-            _damageable.TryChangeDamage(uid, comp.Damage, ignoreResistances: true, origin: source,
-                targetPart: TargetBodyPart.All);
+            // A slime only eats what it takes, and lets go of what its acid can't hurt, such as a bot.
+            var dealt = _damageable.TryChangeDamage(uid, comp.Damage, ignoreResistances: true, origin: source,
+                targetPart: TargetBodyPart.All)?.GetTotal().Float() ?? 0f;
+            if (dealt <= 0f)
+            {
+                Unlatch((source, slime));
+                continue;
+            }
+
             if (TryComp<HungerComponent>(source, out var hunger))
-                _hunger.ModifyHunger(source, comp.Damage.GetTotal().Float(), hunger);
+                _hunger.ModifyHunger(source, dealt, hunger);
         }
     }
 

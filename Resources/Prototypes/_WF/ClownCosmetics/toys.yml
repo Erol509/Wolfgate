@@ -138,3 +138,57 @@
     color: yellow
   - type: StaticPrice
     price: 10
+
+- type: entity
+  parent: PlushieNuke
+  id: ChucklefuckPlushie
+  components:
+  - type: Sprite
+    sprite: _WF/ClownCosmetics/Toys/chucklefuck.rsi
+    state: ChucklefuckPlushie
+  - type: Item
+    sprite: _WF/ClownCosmetics/Toys/chucklefuck.rsi
+  - type: Clothing
+    quickEquip: false
+    sprite: _WF/ClownCosmetics/Toys/chucklefuck.rsi
+    slots:
+    - HEAD
+  - type: EmitSoundOnUse
+    sound: &PlushieChucklefuckSound
+      collection: ChucklefuckPlushie
+  - type: EmitSoundOnLand
+    sound: *PlushieChucklefuckSound
+  - type: EmitSoundOnActivate
+    sound: *PlushieChucklefuckSound
+  - type: EmitSoundOnTrigger
+    sound: *PlushieChucklefuckSound
+  - type: EmitSoundOnCollide
+    sound: *PlushieChucklefuckSound
+  - type: MeleeWeapon
+    soundHit: *PlushieChucklefuckSound
+  - type: Food
+    useSound: *PlushieChucklefuckSound
+  - type: Slippery
+    slipSound: *PlushieChucklefuckSound
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask

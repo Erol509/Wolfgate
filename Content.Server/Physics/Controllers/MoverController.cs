@@ -45,6 +45,8 @@ public sealed partial class MoverController : SharedMoverController
     [Dependency] private EntityQuery<WFMappingObserverComponent> _wfMapperQuery = default!; // WOLFGATE(MappingMode)
     [Dependency] private EntityQuery<ActorComponent> _wfActorQuery = default!; // WOLFGATE(Performance): idle-mover skip
     private int _wfIdleSkipped; // WOLFGATE(Performance): movers skipped this tick for being asleep with no input
+    private readonly List<ShuttleInput> _wfShuttleInputs = new(); // WOLFGATE(Performance): reused by HandleShuttleMovement
+    private readonly List<EntityUid> _wfLostPilots = new(); // WOLFGATE(Performance): reused by HandleShuttleMovement
 
     // Not needed for persistence; just used to save an alloc
     private readonly HashSet<EntityUid> _seenMovers = [];
@@ -509,9 +511,15 @@ public sealed partial class MoverController : SharedMoverController
         var shuttleQuery = EntityQueryEnumerator<ShuttleComponent, PilotedShuttleComponent, PhysicsComponent>();
         while (shuttleQuery.MoveNext(out var uid, out var shuttle, out var piloted, out var body))
         {
-            var inputs = new List<ShuttleInput>();
-            // query all our pilots for input
-            var toRemove = new List<EntityUid>();
+            // WOLFGATE(Performance) START: two lists were allocated per shuttle per tick
+            // var inputs = new List<ShuttleInput>();
+            // // query all our pilots for input
+            // var toRemove = new List<EntityUid>();
+            var inputs = _wfShuttleInputs;
+            inputs.Clear();
+            var toRemove = _wfLostPilots;
+            toRemove.Clear();
+            // WOLFGATE END
 
             var angularMul = 0f;
             var accelMul = 0f;

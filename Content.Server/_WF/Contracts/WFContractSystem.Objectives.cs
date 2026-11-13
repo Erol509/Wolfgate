@@ -11,6 +11,7 @@ using Content.Shared._WF.NpcCrew;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Examine;
+using Content.Shared.Ghost;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
@@ -39,13 +40,19 @@ public sealed partial class WFContractSystem
     /// <summary>How close a player must be to a wreck to keep it in the world once its contract ends.</summary>
     private const float WreckKeepRange = 300f;
 
-    /// <summary>Tries at finding a site, each with the band widened by <see cref="SiteWidening"/>.</summary>
-    private const int SitePasses = 3;
+    /// <summary>
+    /// Tries at finding a site: the first half in the contract's own band, then each with the band widened by
+    /// <see cref="SiteWidening"/>.
+    /// </summary>
+    private const int SitePasses = 8;
 
     private const float SiteWidening = 1.3f;
 
     /// <summary>Open space a bounty or wreck needs round it.</summary>
     private const float SiteClearance = 250f;
+
+    /// <summary>How far a site must be from every player, past the range any bounty target warns or opens fire at.</summary>
+    public const float PlayerClearance = 2000f;
 
     /// <summary>How far an escort's rendezvous must be from any station.</summary>
     private const float EscortClearance = 800f;
@@ -826,10 +833,18 @@ public sealed partial class WFContractSystem
 
     private bool PlayerNear(EntityUid uid, float range)
     {
-        var at = _transform.GetMapCoordinates(uid);
+        return PlayerNear(_transform.GetMapCoordinates(uid), range, ghosts: true);
+    }
+
+    /// <summary>Whether a player is within range of a point; ghosts count only if asked.</summary>
+    private bool PlayerNear(MapCoordinates at, float range, bool ghosts = false)
+    {
         var players = EntityQueryEnumerator<ActorComponent, TransformComponent>();
         while (players.MoveNext(out var player, out _, out var xform))
         {
+            if (!ghosts && HasComp<GhostComponent>(player))
+                continue;
+
             if (xform.MapID == at.MapId && (_transform.GetWorldPosition(xform) - at.Position).Length() <= range)
                 return true;
         }
@@ -837,7 +852,10 @@ public sealed partial class WFContractSystem
         return false;
     }
 
-    /// <summary>Open space at a distance from a station, clear of grids, stations, gravity wells and reality anchors; a crowded band is widened.</summary>
+    /// <summary>
+    /// Open space at a distance from a station, clear of grids, stations, gravity wells, reality anchors and players;
+    /// a crowded band is tried again, then widened.
+    /// </summary>
     private MapCoordinates? PickSite(EntityUid station, float min, float max, float clearance, bool quiet = false)
     {
         if (_station.GetLargestGrid(station) is not { } grid)
@@ -851,11 +869,13 @@ public sealed partial class WFContractSystem
             {
                 var point = centre.Position + _random.NextAngle().ToVec() * _random.NextFloat(min, far);
                 if (_scheduler.IsClearSpace(centre.MapId, point, SiteClearance, clearance)
-                    && !_lattice.NearAnchor(centre.MapId, point, AnchorClearance))
+                    && !_lattice.NearAnchor(centre.MapId, point, AnchorClearance)
+                    && !PlayerNear(new MapCoordinates(point, centre.MapId), PlayerClearance))
                     return new MapCoordinates(point, centre.MapId);
             }
 
-            far *= SiteWidening;
+            if (pass + 1 >= SitePasses / 2)
+                far *= SiteWidening;
         }
 
         if (!quiet)

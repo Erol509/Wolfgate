@@ -61,7 +61,7 @@ public sealed partial class WFCrashScenarioSystem : EntitySystem
     public static readonly TimeSpan PreparationTime = TimeSpan.FromSeconds(WFCrashCountdownEvent.DurationSeconds);
 
     /// <summary>Civilian occupations available aboard a crash start.</summary>
-    public static readonly string[] AllowedJobs = { "Contractor", "Pilot", "Mercenary", "StationEngineer", "MedicalDoctor" };
+    public static readonly string[] AllowedJobs = { "Contractor", "Pilot", "Mercenary", "StationEngineer", "MedicalDoctor", "Borg" };
 
     /// <summary>Existing civilian hulls with enclosed crew spaces and room for wreck survivors.</summary>
     public static readonly string[] VesselIds =

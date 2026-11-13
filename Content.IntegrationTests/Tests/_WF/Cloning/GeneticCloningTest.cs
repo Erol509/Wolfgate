@@ -50,6 +50,7 @@ public sealed class GeneticCloningTest
         "/SharedMaps/_WF/OldVessels/BlackMarket/ganymede.yml",
         "/SharedMaps/_WF/OldVessels/dervi.yml",
         "/SharedMaps/_WF/OldVessels/tzipora.yml",
+        "/SharedMaps/_WF/AdminVessels/lupercal.yml",
     };
 
     [Test]

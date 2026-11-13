@@ -251,7 +251,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
 
         // Check exclusion zones.
         // This needs to be passed in manually due to PVS.
-        if (exclusionZones != null)
+        if (exclusionZones != null && !WfIgnoresFtlExclusionZones(shuttleUid)) // WOLFGATE(ShipCommand): an unrestricted grid jumps into no-jump zones
         {
             foreach (var exclusion in exclusionZones)
             {

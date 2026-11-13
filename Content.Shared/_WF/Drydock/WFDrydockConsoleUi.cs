@@ -139,9 +139,41 @@ public sealed class WFDrydockConsoleState : BoundUserInterfaceState
     /// <summary>Outstanding work on the ship, in the ship's frame, at most <see cref="MaxMarks"/>.</summary>
     public List<WFDrydockPlotMark> Marks = new();
 
+    /// <summary>
+    /// The viewer's own prices, when the state was built for one viewer; null in a console's shared state, whose
+    /// viewers are each sent a <see cref="WFDrydockQuoteMessage"/>. The prices above are the usual ones.
+    /// </summary>
+    public WFDrydockQuote? Quote;
+
     /// <summary>Most work marks sent to the berth plot.</summary>
     public const int MaxMarks = 512;
 }
+
+/// <summary>What one viewer pays for the work a drydock console offers, under a commanded ship's price rules.</summary>
+[Serializable, NetSerializable]
+public sealed class WFDrydockQuote
+{
+    /// <summary>The viewer's price for the next repair.</summary>
+    public int RepairPrice;
+
+    /// <summary>The viewer's price for cleaning the Drift out of the berthed hull.</summary>
+    public int CleanDriftPrice;
+
+    /// <summary>The viewer's price for each refit line's next tier, by refit id.</summary>
+    public Dictionary<string, int> RefitPrices = new();
+}
+
+/// <summary>Sent to one viewer of a drydock console with their own prices, which its shared state can't carry.</summary>
+[Serializable, NetSerializable]
+public sealed class WFDrydockQuoteMessage(WFDrydockQuote quote) : BoundUserInterfaceMessage
+{
+    /// <summary>The viewer's prices.</summary>
+    public readonly WFDrydockQuote Quote = quote;
+}
+
+/// <summary>Sent by a console window once it is open, for the viewer's own prices.</summary>
+[Serializable, NetSerializable]
+public sealed class WFDrydockQuoteRequestMessage : BoundUserInterfaceMessage;
 
 /// <summary>How many of one item the parts silos hold, by prototype and name, since salvaged flatpacks differ only by name.</summary>
 [Serializable, NetSerializable]
@@ -202,28 +234,39 @@ public sealed class WFDrydockUpgradeEntry
 }
 
 /// <summary>
+/// A berth console's work message. A drydock terminal names the berth it sends it for; the console itself leaves it
+/// null.
+/// </summary>
+[Serializable, NetSerializable]
+public abstract class WFDrydockBerthMessage : BoundUserInterfaceMessage
+{
+    /// <summary>The berth console a terminal sends this for, or null at the console.</summary>
+    public NetEntity? Berth;
+}
+
+/// <summary>
 /// Starts a repair on the berthed ship, or books one through a dockmaster.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class WFDrydockRepairMessage : BoundUserInterfaceMessage;
+public sealed class WFDrydockRepairMessage : WFDrydockBerthMessage;
 
 /// <summary>
 /// Cleans the Drift soaked into the berthed ship's hull.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class WFDrydockCleanDriftMessage : BoundUserInterfaceMessage;
+public sealed class WFDrydockCleanDriftMessage : WFDrydockBerthMessage;
 
 /// <summary>
 /// Starts breaking up the berthed ship.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class WFDrydockBreakMessage : BoundUserInterfaceMessage;
+public sealed class WFDrydockBreakMessage : WFDrydockBerthMessage;
 
 /// <summary>
 /// Turns the console's berth lights on or off.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class WFDrydockToggleBerthLightsMessage : BoundUserInterfaceMessage;
+public sealed class WFDrydockToggleBerthLightsMessage : WFDrydockBerthMessage;
 
 /// <summary>
 /// Cancels the booking held for the caller's ship.
@@ -235,7 +278,7 @@ public sealed class WFDrydockCancelBookingMessage : BoundUserInterfaceMessage;
 /// Starts or books the next tier of a refit line.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class WFDrydockUpgradeMessage(string upgrade) : BoundUserInterfaceMessage
+public sealed class WFDrydockUpgradeMessage(string upgrade) : WFDrydockBerthMessage
 {
     /// <summary>Refit prototype id.</summary>
     public string Upgrade = upgrade;

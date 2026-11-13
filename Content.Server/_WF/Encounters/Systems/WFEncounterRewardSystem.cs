@@ -306,7 +306,9 @@ public sealed partial class WFEncounterRewardSystem : EntitySystem
         var players = EntityQueryEnumerator<ActorComponent, TransformComponent>();
         while (players.MoveNext(out var uid, out var actor, out var xform))
         {
-            if (xform.GridUid == attacker && !HasComp<GhostComponent>(uid) && !_mobs.IsDead(uid))
+            // A borer rides in its host; the host's shots aren't its own.
+            if (xform.GridUid == attacker && !HasComp<GhostComponent>(uid) && !_mobs.IsDead(uid)
+                && CompOrNull<Content.Shared._Mono.CorticalBorer.CorticalBorerComponent>(uid)?.Host == null)
                 crew.Add(actor.PlayerSession.UserId);
         }
 

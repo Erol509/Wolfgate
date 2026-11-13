@@ -32,6 +32,7 @@
   - MonoSecurityGuardAssaultBelt
   - MonoSecurityGuardSecurityCarrier
   - MonoSecurityGuardSecurityCarrierLarge
+  - ContractorClothingBeltHolster # WOLFGATE(Judges): added holster to security belt options
   fallbacks:
   - MonoSecurityGuardWebbing
 
@@ -84,6 +85,16 @@
   loadouts:
   - MonoSecHUD
   - MonoSecPGlasses
+  # WOLFGATE(Judges) START: additional security eyewear
+  - LoadoutEyesGlassesSecurity
+  - LoadoutEyesEyepatchHudSecurity
+  - WFMeridianLoadoutGlassesHudSecuritySunglassesEyepatch
+  - WFMeridianLoadoutGlassesHudArProjectorSecurity
+  - WFMeridianLoadoutGlassesHudArAviatorSecurity
+  - WFMeridianLoadoutGlassesHudArAviatorSecurityblue
+  - WFMeridianLoadoutGlassesHudSecuritySunglassesArmadyne
+  - WFMeridianLoadoutGlassesHudSecuritySunglassesPeacekeeper
+  # WOLFGATE END
   fallbacks:
   - MonoSecHUD
 
@@ -159,6 +170,22 @@
   - WFMeridianLoadoutClothingUnderRankSecurityWardenNovaSuitBlue
   - WFMeridianLoadoutClothingUnderSolfedOfficer
   - WFMeridianLoadoutClothingUnderSolfedOfficerLowrnk
+  # WOLFGATE END
+  # WOLFGATE(Judges) START: additional security jumpsuits for judges
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityBunnysuit
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityNovaAltSkirt
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityNovaParadeFemale
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityNovaBlue
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityNovaFormal
+  - WFMeridianLoadoutClothingUnderRankSecurityHeadOfSecurityNovaFormalBlue
+  - HeadofSecurityJumpsuit
+  - HeadofSecurityJumpskirt
+  - HeadofSecurityTurtleneck
+  - HeadofSecurityTurtleneckSkirt
+  - HeadofSecurityFormalSuit
+  - HeadofSecurityFormalSkirt
+  - WardenJumpsuit
+  - WardenJumpskirt
   # WOLFGATE END
   fallbacks:
   - MonoSecJumpsuitRed

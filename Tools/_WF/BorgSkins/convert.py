@@ -224,8 +224,10 @@ for _kind, (_name, _folder, _pattern, _depts) in PACKS.items():
 SIZES = {'tall': 'Tall', 'dullahan': 'Tall', 'wide': 'Wide', 'kitty': 'Wide', 'cat': 'Wide', 'myomer': 'Wide',
          'wyvern': 'Large'}
 
-# Extra poses kept in each skin's RSI; nothing uses them yet.
+# Extra poses kept in each skin's RSI. WFBorgSkinSystem shows wreck and tipped by itself; the voluntary ones are
+# listed in the skin's wfBorgSkin.poses and become actions.
 POSES = ['rest', 'sit', 'bellyup', 'wreck', 'tipped']
+VOLUNTARY_POSES = {'rest': 'Rest', 'sit': 'Sit', 'bellyup': 'BellyUp'}
 # The eng sheet has the Alina body but not its overlays.
 LIGHT_FALLBACK = {'alina': 'widerobot_med.dmi'}
 
@@ -400,10 +402,13 @@ def main():
             states.append((f'{body}_moving', idle))
         animated = any(len(frames[0]) > 1 for _, (frames, _) in states)
 
+        offered = []
         for pose in POSES:
             taken = dmi.take(f'{icon}-{pose}')
             if taken:
                 states.append((pose, taken))
+                if pose in VOLUNTARY_POSES:
+                    offered.append(VOLUNTARY_POSES[pose])
         if kind == 'tall':
             taken = dmi.take('k4tcredit' if icon.startswith('k4t') else 'credit')
             if taken:
@@ -424,6 +429,8 @@ def main():
             extra.append('  animated: true')
         if walk:
             extra.append('  walks: true')
+        if offered:
+            extra.append(f"  poses: [ {', '.join(offered)} ]")
         if extra:
             entry += f'\n- type: wfBorgSkin\n  id: {subtype}\n' + '\n'.join(extra) + '\n'
         subtypes.append(((borg_type, kind), entry))

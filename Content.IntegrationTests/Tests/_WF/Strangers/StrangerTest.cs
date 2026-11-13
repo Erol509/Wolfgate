@@ -6,6 +6,8 @@ using Content.IntegrationTests.Pair;
 using Content.Server._WF.Strangers;
 using Content.Server.NPC.HTN;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Hands.EntitySystems;
@@ -131,6 +133,46 @@ public sealed class StrangerTest
             Assert.That(held.Any(id => id is "CigaretteSpaceDrugs" or "JointRainbow" or "BluntRainbow"), Is.True, "No drugs were handed over.");
             var angry = entMan.TryGetComponent<FactionExceptionComponent>(dealer, out var exceptions) ? exceptions.Hostiles : new HashSet<EntityUid>();
             Assert.That(angry, Does.Not.Contain(player), "A sale shouldn't anger him.");
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The harder stock is cut: it comes out below standard grade.</summary>
+    [Test]
+    public async Task TheDealerSellsCutHardStock()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var (map, player) = await Rig(pair);
+        await server.WaitAssertion(() =>
+        {
+            var hands = server.System<SharedHandsSystem>();
+            var cash = entMan.SpawnEntity("SpaceCash2500", entMan.GetComponent<TransformComponent>(player).Coordinates);
+            Assert.That(hands.TryPickupAnyHand(player, cash), Is.True);
+            var dealer = entMan.SpawnEntity("WFStrangerDealer", new EntityCoordinates(map.Grid.Owner, 1.5f, 0.5f));
+            var stranger = entMan.GetComponent<WFStrangerComponent>(dealer);
+            var strangers = server.System<WFStrangerSystem>();
+
+            strangers.StartConversation((dealer, stranger), player);
+            strangers.Choose((dealer, stranger), player, 0);
+            strangers.Choose((dealer, stranger), player, 1);
+
+            Assert.That(entMan.GetComponent<StackComponent>(cash).Count, Is.EqualTo(1300));
+            var bought = hands.EnumerateHeld(player).FirstOrDefault(item => item != cash);
+            Assert.That(bought, Is.Not.EqualTo(default(EntityUid)), "Nothing was handed over.");
+            var solutions = server.System<SharedSolutionContainerSystem>();
+            var graded = false;
+            foreach (var (_, soln) in solutions.EnumerateSolutions(bought))
+            {
+                foreach (var reagent in soln.Comp.Solution.Contents)
+                {
+                    Assert.That(soln.Comp.Solution.GetPurity(reagent.Reagent.Prototype), Is.LessThan(Solution.StandardPurityThreshold));
+                    graded = true;
+                }
+            }
+
+            Assert.That(graded, Is.True, "The stock held no reagent.");
         });
         await pair.CleanReturnAsync();
     }
@@ -397,7 +439,7 @@ public sealed class StrangerTest
 
     /// <summary>Saying no nicely, or being too broke to buy, isn't worth a fight.</summary>
     [TestCase(new[] { 1 }, TestName = "APoliteNoLeavesTheDealerCalm(NotInterested)")]
-    [TestCase(new[] { 0, 1 }, TestName = "APoliteNoLeavesTheDealerCalm(TooRichForMe)")]
+    [TestCase(new[] { 0, 5 }, TestName = "APoliteNoLeavesTheDealerCalm(TooRichForMe)")]
     public async Task APoliteNoLeavesTheDealerCalm(int[] answers)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });

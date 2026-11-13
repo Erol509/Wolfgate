@@ -26,8 +26,8 @@ prototypes.
 - Wolfgate has no species change, so the green jelly and the human, felinid and advanced mutation toxins are gone; the
   green extract makes unstable mutagen instead and the black extract keeps only its failing reactions. The light pink
   extract's DNA scramble, the sepia chronofield and the red extract's clothing coating are gone too.
-- Trauma's adamantine bar only matters to its forging system, so the adamantine extract gives five PDV composite
-  sheets. The volatile organ is a self-charging power cell.
+- Trauma's adamantine bar only matters to its forging system, so the adamantine extract gives ten plasteel
+  sheets (not PDV composite, which is the PDV's currency). The volatile organ is a self-charging power cell.
 - Gold extract mob spawners only list mobs Wolfgate has. The dark blue jelly grants heat immunity, without ash storm
   immunity.
 

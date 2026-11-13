@@ -92,3 +92,4 @@ cmd-hailtest-cleared = Removed { $count } test { $count ->
     [one] ship
    *[other] ships
 }.
+hail-offer-service = Offer the caller: { $service }

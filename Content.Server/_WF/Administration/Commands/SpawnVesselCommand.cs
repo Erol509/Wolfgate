@@ -25,11 +25,16 @@ public sealed partial class SpawnVesselCommand : LocalizedEntityCommands
     [Dependency] private AdminVesselSpawnSystem _vesselSpawn = default!;
 
     private const string NoOwner = "-";
+    private const string PresetPrefix = "preset:";
 
     public override string Command => WolfgateAdminCommands.SpawnVessel;
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
+        // preset:<name> anywhere after the vessel names the ship preset to apply; the rest keep their places.
+        var preset = args.Skip(1).LastOrDefault(a => a.StartsWith(PresetPrefix))?.Substring(PresetPrefix.Length);
+        args = args.Where((a, i) => i == 0 || !a.StartsWith(PresetPrefix)).ToArray();
+
         if (args.Length < 1)
         {
             shell.WriteError(Loc.GetString("cmd-spawnvessel-invalid-args"));
@@ -85,6 +90,8 @@ public sealed partial class SpawnVesselCommand : LocalizedEntityCommands
         // Named last, so a deed made for the owner takes the name too.
         if (name.Length > 0 && !_vesselSpawn.TryRenameVessel(grid.Value, name, player))
             shell.WriteError(Loc.GetString("cmd-renamevessel-failed"));
+
+        EntityManager.EventBus.RaiseEvent(EventSource.Local, new WFAdminVesselSpawnedEvent(grid.Value, vessel.ID, shell.Player, owner, preset));
     }
 
     private void AssignOwner(IConsoleShell shell, EntityUid grid, VesselPrototype vessel, ICommonSession owner)

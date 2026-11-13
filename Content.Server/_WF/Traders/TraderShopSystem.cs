@@ -1,3 +1,5 @@
+using Content.Server._WF.ShipCommand;
+using Content.Shared._WF.ShipCommand;
 using System.Text;
 using Content.Server._Mono.VendingMachine;
 using Content.Server._NF.Bank;
@@ -30,6 +32,7 @@ public sealed partial class TraderShopSystem : EntitySystem
     [Dependency] private TraderSystem _trader = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
     [Dependency] private VendingMachinePurchaseSystem _purchase = default!;
+    [Dependency] private WFShipServiceSystem _shipServices = default!;
 
     [Dependency] private Robust.Shared.Random.IRobustRandom _random = default!;
 
@@ -97,6 +100,9 @@ public sealed partial class TraderShopSystem : EntitySystem
             return;
 
         var traderEnt = (ent.Owner, trader);
+        if (_trader.TurnAway(traderEnt, args.Actor))
+            return;
+
         _trader.NoteInput(traderEnt);
 
         var success = TryCheckout(ent, traderEnt, args.Actor, args.Items);
@@ -117,8 +123,21 @@ public sealed partial class TraderShopSystem : EntitySystem
         EntityUid customer,
         Dictionary<string, int> wanted)
     {
-        if (!TryPriceBasket(ent, wanted, out var lines, out var total))
+        if (!TryPriceBasket(ent, wanted, out var lines, out var basePrice))
             return false;
+
+        // On a commanded ship each line costs what its price rules make of one of it, as the catalogue shows it, so the
+        // basket costs the sum of what was shown; goods are marked and taxed at the price they were sold for.
+        string? rule = null;
+        var sold = new List<TraderShopLine>(lines.Count);
+        var total = 0;
+        foreach (var line in lines)
+        {
+            var unit = _shipServices.Quote(ent.Owner, customer, WFShipServiceKind.Counter, line.Price, out var lineRule);
+            rule ??= lineRule;
+            sold.Add(line with { Price = unit });
+            total += unit * line.Count;
+        }
 
         if (!_trader.TryTakePayment(trader, customer, total, out var tendered, out var change))
             return false;
@@ -126,12 +145,14 @@ public sealed partial class TraderShopSystem : EntitySystem
         var goods = new List<EntityUid>();
         var shares = new Dictionary<EntProtoId, int>();
 
-        foreach (var line in lines)
+        for (var index = 0; index < sold.Count; index++)
         {
+            var line = sold[index];
             for (var i = 0; i < line.Count; i++)
             {
                 var item = Spawn(line.Item, _trader.GetOutputCoordinates(trader));
                 _purchase.MarkAsPurchased(item, ent.Owner, line.Price);
+                _shipServices.MarkBargainGoods(item, lines[index].Price, line.Price);
                 goods.Add(item);
             }
 
@@ -147,9 +168,10 @@ public sealed partial class TraderShopSystem : EntitySystem
                 PayTaxes(vend, share);
         }
 
-        var receipt = PrintReceipt(trader, customer, lines, total, tendered, change);
+        var receipt = PrintReceipt(trader, customer, sold, total, tendered, change);
         Package(ent, trader, goods, receipt);
 
+        _shipServices.Record(ent.Owner, customer, WFShipServiceKind.Counter, Loc.GetString("wf-ship-service-shop", ("items", goods.Count)), basePrice, total, rule);
         _trader.SayAndShow(trader, Loc.GetString("trader-shop-thanks"));
         return true;
     }
@@ -395,7 +417,7 @@ public sealed partial class TraderShopSystem : EntitySystem
 
         var catalogue = new List<TraderShopEntry>();
         foreach (var entry in GetStock(ent))
-            catalogue.Add(new TraderShopEntry(entry.Item, entry.Price, ent.Comp.Limited?.GetValueOrDefault(entry.Item) ?? -1));
+            catalogue.Add(new TraderShopEntry(entry.Item, _shipServices.Quote(ent.Owner, customer, WFShipServiceKind.Counter, entry.Price), ent.Comp.Limited?.GetValueOrDefault(entry.Item) ?? -1));
 
         _ui.SetUiState(ent.Owner, TraderUiKey.Shop,
             new TraderShopState(catalogue, cash, idName, balance));

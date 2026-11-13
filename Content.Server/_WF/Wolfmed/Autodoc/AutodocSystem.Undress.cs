@@ -146,13 +146,13 @@ public sealed partial class AutodocSystem
     /// The same refusals a person taking it off would meet, asked as the pod: the slot's container (unremoveable
     /// items), then the garment itself (locked or unremovable clothing, a helmet still attached to its suit).
     /// </summary>
-    private bool CanTakeOff(Entity<AutodocComponent> ent, EntityUid body, SlotDefinition slot, EntityUid item)
+    private bool CanTakeOff(EntityUid actor, EntityUid body, SlotDefinition slot, EntityUid item)
     {
         if (!_inventory.TryGetSlotContainer(body, slot.Name, out var container, out _) ||
             !_containers.CanRemove(item, container))
             return false;
 
-        var attempt = new BeingUnequippedAttemptEvent(ent.Owner, body, item, slot);
+        var attempt = new BeingUnequippedAttemptEvent(actor, body, item, slot);
         RaiseLocalEvent(item, attempt, true);
         return !attempt.Cancelled;
     }

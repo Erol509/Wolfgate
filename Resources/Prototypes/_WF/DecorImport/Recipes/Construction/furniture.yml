@@ -770,7 +770,7 @@
   startNode: start
   targetNode: built
   category: construction-category-furniture
-  description: "A cloth surfaced pool table for that bar themed aesthetic! Bring over the brews! Pool not included."
+  description: "A cloth surfaced pool table for that bar themed aesthetic! Bring over the brews! Bring a cue to play."
   icon:
     sprite: _WF/DecorImport/Structures/Furniture/Tables/games.rsi
     state: nv_pooltable

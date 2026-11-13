@@ -82,6 +82,10 @@ ship-access-all-doors-set = { $count ->
     }
 ship-access-door-not-on-ship = That door is not on this ship.
 ship-access-seal-pending = The door will bolt as soon as it is shut and powered.
+ship-access-door-in-zone = That door follows its zone, switched at the ship's command console.
+ship-access-door-zone-hint = This door follows its zone, switched at the ship's command console. Now: { $desc }
+ship-access-rule-zone-name = Zone
+ship-access-rule-zone-desc = The owner and whoever its zone admits: in a Staff zone the officers, the staff list and admins; in a Locked zone the officers and admins.
 ship-access-no-owner-key = Neither the deed nor your ID card has a crew record, so no door can be keyed to you. Locking would shut you out.
 
 # Codes and the keypad

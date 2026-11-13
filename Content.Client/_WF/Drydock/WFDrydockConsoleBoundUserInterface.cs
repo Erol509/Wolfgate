@@ -4,7 +4,7 @@ using Robust.Client.UserInterface;
 namespace Content.Client._WF.Drydock;
 
 /// <summary>
-/// Client UI for the drydock berth console.
+/// Client UI for the drydock berth console: its shared state, and this viewer's own prices as a message.
 /// </summary>
 public sealed class WFDrydockConsoleBoundUserInterface : BoundUserInterface
 {
@@ -26,6 +26,7 @@ public sealed class WFDrydockConsoleBoundUserInterface : BoundUserInterface
         _window.OnUpgradePressed += OnUpgradePressed;
         _window.OnCancelBookingPressed += OnCancelBookingPressed;
         _window.OnBerthLightsPressed += OnBerthLightsPressed;
+        SendMessage(new WFDrydockQuoteRequestMessage());
     }
 
     private void OnBerthLightsPressed()
@@ -56,5 +57,14 @@ public sealed class WFDrydockConsoleBoundUserInterface : BoundUserInterface
             return;
 
         _window?.UpdateState(castState);
+    }
+
+    /// <summary>Takes this viewer's own prices, which the console sends apart from its shared state.</summary>
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+
+        if (message is WFDrydockQuoteMessage quote)
+            _window?.UpdateQuote(quote.Quote);
     }
 }

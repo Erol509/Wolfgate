@@ -25,6 +25,7 @@ using Robust.Shared.Utility;
 using System.Numerics;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 using Content.Shared._WF.RMCCore.Explosion; // WOLFGATE(RMCCore)
+using Content.Server._WF.AdminVessels; // WOLFGATE(AdminVessels)
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -551,6 +552,9 @@ public sealed partial class ExplosionSystem
 
         // Mono
         if (tileDef.Indestructible)
+            return;
+
+        if (HasComp<WFBlastproofFloorsComponent>(tileRef.GridUid)) // WOLFGATE(AdminVessels): a blast-proof grid loses no tile
             return;
 
         if (!CanCreateVacuum)

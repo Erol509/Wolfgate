@@ -23,6 +23,8 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - the medical assembler is a lathe now, so show its lathe recipe
 - [`Content.Client/_RMC14/Weapons/Ranged/Prediction/GunPredictionSystem.cs`](../../Content.Client/_RMC14/Weapons/Ranged/Prediction/GunPredictionSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Client/Atmos/EntitySystems/FireVisualizerSystem.cs`](../../Content.Client/Atmos/EntitySystems/FireVisualizerSystem.cs): a mob that arrives burning would get its light child before it is initialised itself; the appearance update queued at startup lays it.
+- [`Content.Client/Cargo/Systems/CargoSystem.Telepad.cs`](../../Content.Client/Cargo/Systems/CargoSystem.Telepad.cs): Stop() raises this mid-OnChangeData; re-entering it played the beam twice and crashed the client
+- [`Content.Client/Changelog/ChangelogTab.xaml.cs`](../../Content.Client/Changelog/ChangelogTab.xaml.cs): a stray bracket in one entry no longer empties the whole changelog
 - [`Content.Client/CharacterInfo/CharacterInfoSystem.cs`](../../Content.Client/CharacterInfo/CharacterInfoSystem.cs)
   - replays skip the character info request
   - Replay spectators have a local entity but no server to answer this request.
@@ -37,6 +39,10 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - replays skip the guidebook data request
   - partial for the network dependency
   - replay playback starts these systems without a server connection
+- [`Content.Client/Guidebook/Richtext/TextLinkTag.cs`](../../Content.Client/Guidebook/Richtext/TextLinkTag.cs)
+  - the tag is shared, so walk up from the clicked label, not the last one built
+  - takes the clicked label
+  - start from the clicked label; Control is the last label any document built
 - [`Content.Client/Holopad/HolopadSystem.cs`](../../Content.Client/Holopad/HolopadSystem.cs)
   - post-shader flags are set through SpriteSystem since engine 291
   - wizden#38042
@@ -149,6 +155,9 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - the assembler's microwave recipes became lathe recipes, which left the guidebook page empty
 - [`Content.Server/_NF/Medical/MedicalBountySystem.cs`](../../Content.Server/_NF/Medical/MedicalBountySystem.cs): a bounty patient is redeemed at the medical bounty machine, not sold at a pallet for more than the bounty
 - [`Content.Server/_NF/PublicTransit/PublicTransitSystem.cs`](../../Content.Server/_NF/PublicTransit/PublicTransitSystem.cs): announce the departure, as FTLToDock now flies and OnShuttleArrival announces the stop
+- [`Content.Server/_Rat/Overwatch/OverwatchSystem.cs`](../../Content.Server/_Rat/Overwatch/OverwatchSystem.cs)
+  - nothing advanced the timer, so the member cache never expired
+  - NPC crew that no player controls don't crowd the console
 - [`Content.Server/_RMC14/Weapons/Ranged/Prediction/GunPredictionSystem.cs`](../../Content.Server/_RMC14/Weapons/Ranged/Prediction/GunPredictionSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/Administration/Systems/AdminVerbSystem.Smites.cs`](../../Content.Server/Administration/Systems/AdminVerbSystem.Smites.cs): OwO accent removed
 - [`Content.Server/Administration/Systems/BwoinkSystem.cs`](../../Content.Server/Administration/Systems/BwoinkSystem.cs)
@@ -172,6 +181,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - the speech style reaches a deaf listener's wrap too
   - a speech style decides the bold too
   - a voice mask's speech style wins, as it did before the language port dropped it here
+- [`Content.Server/Construction/ConstructionSystem.Interactions.cs`](../../Content.Server/Construction/ConstructionSystem.Interactions.cs): a tag or component step takes one item off a stack, not the whole stack
 - [`Content.Server/Damage/Systems/DamageOtherOnHitSystem.cs`](../../Content.Server/Damage/Systems/DamageOtherOnHitSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/DeviceLinking/Systems/SignalTimerSystem.cs`](../../Content.Server/DeviceLinking/Systems/SignalTimerSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Server/DeviceNetwork/Systems/SingletonDeviceNetServerSystem.cs`](../../Content.Server/DeviceNetwork/Systems/SingletonDeviceNetServerSystem.cs)
@@ -188,6 +198,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Server/Kitchen/EntitySystems/MicrowaveSystem.cs`](../../Content.Server/Kitchen/EntitySystems/MicrowaveSystem.cs)
   - microwaves leave emags in hand
   - an emag is used on a machine, so it stays in hand instead of going in with the food
+- [`Content.Server/Kitchen/EntitySystems/ReagentGrinderSystem.cs`](../../Content.Server/Kitchen/EntitySystems/ReagentGrinderSystem.cs): a wrench or drill goes to anchoring, not a "can't put it in" popup
 - [`Content.Server/Lightning/LightningSystem.cs`](../../Content.Server/Lightning/LightningSystem.cs)
   - restore the licence header removed by Kill Spdx
   - call the private overload; the public one recursed forever
@@ -396,9 +407,10 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Locale/en-US/_Everdream/accessories/hair.ftl`](../../Resources/Locale/en-US/_Everdream/accessories/hair.ftl): Everdream hair port
 - [`Resources/Locale/en-US/_Goobstation/guidebook/guides.ftl`](../../Resources/Locale/en-US/_Goobstation/guidebook/guides.ftl): restore the licence header removed by Kill Spdx
 - [`Resources/Locale/en-US/_Mono/guidebook/guides.ftl`](../../Resources/Locale/en-US/_Mono/guidebook/guides.ftl): was Monolith Rules
+- [`Resources/Locale/en-US/_Mono/job/job-description.ftl`](../../Resources/Locale/en-US/_Mono/job/job-description.ftl): fugitives are wanted for arrest, not kill on sight
 - [`Resources/Locale/en-US/_Mono/poi/stations.ftl`](../../Resources/Locale/en-US/_Mono/poi/stations.ftl)
   - keeps [bold]; upstream's [color=bold] tag is unbalanced
-  - the map has one UndergroundVend, not four
+  - the map has one UndergroundVend, not four; its roles are wanted, not kill on sight
 - [`Resources/Locale/en-US/_Mono/prototypes/access/accesses.ftl`](../../Resources/Locale/en-US/_Mono/prototypes/access/accesses.ftl): Monolith#4816 shipped the Underground access levels without names
 - [`Resources/Locale/en-US/_Mono/store/pdv-uplink-catalog.ftl`](../../Resources/Locale/en-US/_Mono/store/pdv-uplink-catalog.ftl): the uplink had no 5.56 for the Vympel it sells
 - [`Resources/Locale/en-US/_NF/advertisements/vending/fuelvend.ftl`](../../Resources/Locale/en-US/_NF/advertisements/vending/fuelvend.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too

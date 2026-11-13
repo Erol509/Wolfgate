@@ -400,6 +400,12 @@ public sealed partial class WFGunnerDutySystem : EntitySystem
     /// <summary>How far off a vessel a warning shot is laid, in its own frame.</summary>
     private static readonly Vector2 WarningShotOffset = new(0f, 90f);
 
+    /// <summary>Whether a ship's standing policy keeps its gunners from opening fire on a ship that hasn't fired first.</summary>
+    public bool HoldsFireByPolicy(EntityUid grid)
+    {
+        return CompOrNull<WFGunnerPolicyComponent>(grid)?.Policy is WFGunnerPolicy.DefendDocked or WFGunnerPolicy.WhenFiredOn;
+    }
+
     /// <summary>Squared distance to a ship this gunner may fire on, or null when it must hold fire.</summary>
     private float? Engageable(EntityUid uid, EntityUid grid, WFCrewComponent crew, WFGunnerDutyComponent duty,
         MapCoordinates here, EntityUid ship, bool hostile)
@@ -421,6 +427,8 @@ public sealed partial class WFGunnerDutySystem : EntitySystem
         var assigned = _objectives.IsAttackTarget(grid, crew.Group, ship);
         // A ship that has fired on this one is answered from beyond a deterring crew's range, as its captain does.
         var fired = !assigned && _alerts.FiredShipGuns(grid, crew.Group, ship);
+        if (!assigned && !fired && HoldsFireByPolicy(grid))
+            return null;
         if (_status.ShouldDisengage(grid, ship, range: !assigned && !fired, shooter: fired))
             return null;
         // Reported attackers stay targets even inside the formation for their attack window.

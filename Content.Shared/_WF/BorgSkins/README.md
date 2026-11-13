@@ -6,9 +6,20 @@ and the Wyvern. Each is a cosmetic `borgSubtype`, picked in the borg's type menu
 departments with no borg type here (cargo, security, peacekeeper, ninja, syndicate, clown, research, Tarkon) are
 offered under the generic type.
 
-Entry points: `WFBorgSkinPrototype` (per-subtype offset and animation flags, same ID as the subtype) and the client
-`WFBorgSkinSystem`, which lifts tall sprites onto their tile, keeps the eye and lamp layers in step with an animated
-body and swaps to the `_moving` states while the borg has speed.
+Entry points: `WFBorgSkinPrototype` (per-subtype offset, animation flags and poses, same ID as the subtype) and the
+client `WFBorgSkinSystem`, which lifts tall sprites onto their tile, keeps the eye and lamp layers in step with an
+animated body, swaps to the `_moving` states while the borg has speed and shows the skin's poses.
+
+## Poses
+
+A skin's pose states replace the whole chassis sprite; a skin without a given state keeps its normal look.
+
+- `wreck` shows while the borg is critical or dead, `tipped` while it is stunned or knocked down, and a buckled
+  borg shows `sit`, or `rest` on a strap that lays it down. All are picked by the client from state that is
+  already networked.
+- `rest`, `sit` and `bellyup` are voluntary. `WFBorgPoseSystem` gives the borg an action for each one its skin lists
+  under `poses` when the subtype is chosen (a marked hook in `SharedBorgSwitchableTypeSystem`), and
+  `WFBorgPoseComponent` carries the pose. Using the action again or moving ends it. Poses are cosmetic.
 
 ## Sprites
 
@@ -23,7 +34,22 @@ The skyrat art is CC-BY-SA 3.0. The tallborg artist asks that the skinline is po
 (`Resources/Textures/_WF/BorgSkins/Tall/readme.md`) and the `credit` state stay with it, so every department is
 converted even where nothing uses it. Each RSI also keeps the `rest`, `sit`, `bellyup`, `wreck` and `tipped` poses,
 and each sheet's leftover states (cover and weapon overlays, sleeper lights) are in an `extras.rsi`; no code uses
-those yet.
+the extras yet.
+
+`Tools/_WF/BorgSkins/zoomba.py <dmi folder> <Meridian Rift commit>` does the same for the Zoomba, a normal-sized
+(32x32) skin for every department, from Meridian Rift's `modular_nova/modules/borgs/icons/robots*.dmi` (CC-BY-SA
+3.0), into `Small/<department>` and the `zoomba_*` prototype and locale files. A Zoomba has no eyes, so its status
+lights show while it has a mind.
+
+`Tools/_WF/BorgSkins/recolor.py` (run it after either script) repaints the engineering, medical and security skins in
+PDV and TSF colours for the faction engineer, medical and assault borg types, into `<size>/<PDV|TSF>/<role>` and the
+`faction_*` prototype and locale files. A skin's main accent takes the faction's body ramp, everything else becomes
+plain metal and the eyes take the faction's lamp colour; near-black detail stays black and the meka's visor becomes
+black glass. The poses have no eye layer, so the lights painted into them take the lamp colour as well; the `credit`
+state is copied as it is. Light strips drawn into a body (the bodies under `TRIMMED` in the script) move into its
+`_l` states, laid out frame for frame like the body, so they glow and go dark with the eyes. The faction types
+show one `_l` state as both eyes and headlight, so these skins have no separate lamp glow. The dullahans are not
+recoloured.
 
 The dullahans are by Toriate and Cecily, who agreed to the port. Only the dullahan states are taken from the zubbers
 `tallrobot` sheets; the other skins in them are not ported.
@@ -38,6 +64,8 @@ The cat borgs, Myomer and Wyvern are by Toriate and are CC BY-NC-SA 3.0: non-com
 
 ### Shared
 
+- [`Content.Shared/_WF/BorgSkins/WFBorgPoseComponent.cs`](WFBorgPoseComponent.cs)
+- [`Content.Shared/_WF/BorgSkins/WFBorgPoseSystem.cs`](WFBorgPoseSystem.cs)
 - [`Content.Shared/_WF/BorgSkins/WFBorgSkinPrototype.cs`](WFBorgSkinPrototype.cs)
 
 ### Client
@@ -47,19 +75,28 @@ The cat borgs, Myomer and Wyvern are by Toriate and are CC BY-NC-SA 3.0: non-com
 
 ### Integration tests
 
+- [`Content.IntegrationTests/Tests/_WF/BorgSkins/WFBorgPoseTest.cs`](../../../Content.IntegrationTests/Tests/_WF/BorgSkins/WFBorgPoseTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/BorgSkins/WFBorgSkinTest.cs`](../../../Content.IntegrationTests/Tests/_WF/BorgSkins/WFBorgSkinTest.cs)
 
 ### Prototypes
 
+- [`Resources/Prototypes/_WF/BorgSkins/actions.yml`](../../../Resources/Prototypes/_WF/BorgSkins/actions.yml)
 - [`Resources/Prototypes/_WF/BorgSkins/chassis.yml`](../../../Resources/Prototypes/_WF/BorgSkins/chassis.yml)
+- [`Resources/Prototypes/_WF/BorgSkins/faction_chassis.yml`](../../../Resources/Prototypes/_WF/BorgSkins/faction_chassis.yml)
+- [`Resources/Prototypes/_WF/BorgSkins/faction_subtypes.yml`](../../../Resources/Prototypes/_WF/BorgSkins/faction_subtypes.yml)
 - [`Resources/Prototypes/_WF/BorgSkins/subtypes.yml`](../../../Resources/Prototypes/_WF/BorgSkins/subtypes.yml)
+- [`Resources/Prototypes/_WF/BorgSkins/zoomba_chassis.yml`](../../../Resources/Prototypes/_WF/BorgSkins/zoomba_chassis.yml)
+- [`Resources/Prototypes/_WF/BorgSkins/zoomba_subtypes.yml`](../../../Resources/Prototypes/_WF/BorgSkins/zoomba_subtypes.yml)
 
 ### Localization
 
 - [`Resources/Locale/en-US/_WF/BorgSkins/chassis.ftl`](../../../Resources/Locale/en-US/_WF/BorgSkins/chassis.ftl)
+- [`Resources/Locale/en-US/_WF/BorgSkins/faction_chassis.ftl`](../../../Resources/Locale/en-US/_WF/BorgSkins/faction_chassis.ftl)
+- [`Resources/Locale/en-US/_WF/BorgSkins/zoomba_chassis.ftl`](../../../Resources/Locale/en-US/_WF/BorgSkins/zoomba_chassis.ftl)
 
 ### Textures
 
+- [`Resources/Textures/_WF/BorgSkins/Actions/poses.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Actions/poses.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Credits/kittycatborgs/CREDIT.MD`](../../../Resources/Textures/_WF/BorgSkins/Credits/kittycatborgs/CREDIT.MD)
 - [`Resources/Textures/_WF/BorgSkins/Credits/kittycatborgs/LICENSE.txt`](../../../Resources/Textures/_WF/BorgSkins/Credits/kittycatborgs/LICENSE.txt)
 - [`Resources/Textures/_WF/BorgSkins/Credits/myomer/CREDIT.MD`](../../../Resources/Textures/_WF/BorgSkins/Credits/myomer/CREDIT.MD)
@@ -74,6 +111,9 @@ The cat borgs, Myomer and Wyvern are by Toriate and are CC BY-NC-SA 3.0: non-com
 - [`Resources/Textures/_WF/BorgSkins/Large/Medical/wyvern_extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/Medical/wyvern_extras.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Large/Mining/wyvern.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/Mining/wyvern.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Large/Mining/wyvern_extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/Mining/wyvern_extras.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Large/PDV/Assault/wyvern.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/PDV/Assault/wyvern.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Large/PDV/Engineer/wyvern.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/PDV/Engineer/wyvern.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Large/PDV/Medical/wyvern.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/PDV/Medical/wyvern.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Large/Peacekeeper/wyvern.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/Peacekeeper/wyvern.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Large/Peacekeeper/wyvern_extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/Peacekeeper/wyvern_extras.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Large/Research/wyvern.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/Research/wyvern.rsi/)
@@ -82,6 +122,24 @@ The cat borgs, Myomer and Wyvern are by Toriate and are CC BY-NC-SA 3.0: non-com
 - [`Resources/Textures/_WF/BorgSkins/Large/Security/wyvern_extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/Security/wyvern_extras.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Large/Syndicate/wyvern.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/Syndicate/wyvern.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Large/Syndicate/wyvern_extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/Syndicate/wyvern_extras.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Large/TSF/Assault/wyvern.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/TSF/Assault/wyvern.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Large/TSF/Engineer/wyvern.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/TSF/Engineer/wyvern.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Large/TSF/Medical/wyvern.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Large/TSF/Medical/wyvern.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/Cargo/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/Cargo/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/Engineering/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/Engineering/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/Janitor/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/Janitor/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/Medical/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/Medical/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/Mining/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/Mining/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/PDV/Assault/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/PDV/Assault/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/PDV/Engineer/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/PDV/Engineer/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/PDV/Medical/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/PDV/Medical/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/Peacekeeper/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/Peacekeeper/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/Security/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/Security/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/Service/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/Service/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/Standard/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/Standard/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/TSF/Assault/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/TSF/Assault/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/TSF/Engineer/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/TSF/Engineer/zoomba.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Small/TSF/Medical/zoomba.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Small/TSF/Medical/zoomba.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Tall/Cargo/dullahan.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Cargo/dullahan.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Tall/Cargo/dullahan_extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Cargo/dullahan_extras.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Tall/Cargo/dullahan_taur.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Cargo/dullahan_taur.rsi/)
@@ -144,6 +202,22 @@ The cat borgs, Myomer and Wyvern are by Toriate and are CC BY-NC-SA 3.0: non-com
 - [`Resources/Textures/_WF/BorgSkins/Tall/Ninja/meka.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Ninja/meka.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Tall/Ninja/nika.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Ninja/nika.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Tall/Ninja/niko.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Ninja/niko.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Assault/k4t.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Assault/k4t.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Assault/meka.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Assault/meka.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Assault/nika.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Assault/nika.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Assault/niko.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Assault/niko.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/k4t_hazard.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/k4t_hazard.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/k4t_technician.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/k4t_technician.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/meka.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/meka.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/nika.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/nika.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/niko.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/niko.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/niko_alt.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Engineer/niko_alt.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/k4t_doc.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/k4t_doc.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/k4t_field_medic.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/k4t_field_medic.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/meka.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/meka.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/nika.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/nika.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/niko.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/niko.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/niko_alt.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/PDV/Medical/niko_alt.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Tall/Peacekeeper/dullahan.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Peacekeeper/dullahan.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Tall/Peacekeeper/dullahan_extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Peacekeeper/dullahan_extras.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Tall/Peacekeeper/dullahan_taur.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Peacekeeper/dullahan_taur.rsi/)
@@ -186,6 +260,22 @@ The cat borgs, Myomer and Wyvern are by Toriate and are CC BY-NC-SA 3.0: non-com
 - [`Resources/Textures/_WF/BorgSkins/Tall/Syndicate/niko.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Syndicate/niko.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Tall/Tarkon/dullahan.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Tarkon/dullahan.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Tall/Tarkon/dullahan_extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/Tarkon/dullahan_extras.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Assault/k4t.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Assault/k4t.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Assault/meka.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Assault/meka.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Assault/nika.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Assault/nika.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Assault/niko.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Assault/niko.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/k4t_hazard.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/k4t_hazard.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/k4t_technician.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/k4t_technician.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/meka.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/meka.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/nika.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/nika.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/niko.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/niko.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/niko_alt.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Engineer/niko_alt.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/k4t_doc.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/k4t_doc.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/k4t_field_medic.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/k4t_field_medic.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/meka.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/meka.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/nika.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/nika.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/niko.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/niko.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/niko_alt.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Tall/TSF/Medical/niko_alt.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Wide/Cargo/borgi.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Cargo/borgi.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Wide/Cargo/darkhound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Cargo/darkhound.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Wide/Cargo/drake.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Cargo/drake.rsi/)
@@ -247,6 +337,36 @@ The cat borgs, Myomer and Wyvern are by Toriate and are CC BY-NC-SA 3.0: non-com
 - [`Resources/Textures/_WF/BorgSkins/Wide/Mining/vale.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Mining/vale.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Wide/Ninja/myomer.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Ninja/myomer.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Wide/Ninja/myomer_extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Ninja/myomer_extras.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/alina.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/alina.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/borgi.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/borgi.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/c9_t7o.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/c9_t7o.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/darkhound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/darkhound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/drake.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/drake.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/hound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/hound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/k1_t7y.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/k1_t7y.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/myomer.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/myomer.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/otie.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/otie.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/vale.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Assault/vale.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/alina.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/alina.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/borgi.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/borgi.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/c9_t7o.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/c9_t7o.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/darkhound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/darkhound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/drake.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/drake.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/hound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/hound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/k1_t7y.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/k1_t7y.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/myomer.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/myomer.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/otie.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/otie.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/pup_dozer.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/pup_dozer.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/vale.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Engineer/vale.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/alina.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/alina.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/borgi.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/borgi.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/c9_t7o.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/c9_t7o.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/darkhound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/darkhound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/drake.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/drake.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/hound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/hound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/k1_t7y.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/k1_t7y.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/myomer.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/myomer.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/vale.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/PDV/Medical/vale.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Wide/Peacekeeper/borgi.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Peacekeeper/borgi.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Wide/Peacekeeper/drake.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Peacekeeper/drake.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Wide/Peacekeeper/extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Peacekeeper/extras.rsi/)
@@ -288,13 +408,45 @@ The cat borgs, Myomer and Wyvern are by Toriate and are CC BY-NC-SA 3.0: non-com
 - [`Resources/Textures/_WF/BorgSkins/Wide/Service/vale_dark.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Service/vale_dark.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Wide/Syndicate/myomer.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Syndicate/myomer.rsi/)
 - [`Resources/Textures/_WF/BorgSkins/Wide/Syndicate/myomer_extras.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/Syndicate/myomer_extras.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/alina.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/alina.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/borgi.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/borgi.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/c9_t7o.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/c9_t7o.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/darkhound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/darkhound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/drake.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/drake.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/hound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/hound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/k1_t7y.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/k1_t7y.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/myomer.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/myomer.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/otie.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/otie.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/vale.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Assault/vale.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/alina.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/alina.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/borgi.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/borgi.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/c9_t7o.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/c9_t7o.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/darkhound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/darkhound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/drake.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/drake.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/hound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/hound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/k1_t7y.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/k1_t7y.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/myomer.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/myomer.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/otie.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/otie.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/pup_dozer.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/pup_dozer.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/vale.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Engineer/vale.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/alina.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/alina.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/borgi.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/borgi.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/c9_t7o.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/c9_t7o.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/darkhound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/darkhound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/drake.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/drake.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/hound.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/hound.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/k1_t7y.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/k1_t7y.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/myomer.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/myomer.rsi/)
+- [`Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/vale.rsi/`](../../../Resources/Textures/_WF/BorgSkins/Wide/TSF/Medical/vale.rsi/)
 
 ### Tools
 
 - [`Tools/_WF/BorgSkins/convert.py`](../../../Tools/_WF/BorgSkins/convert.py)
+- [`Tools/_WF/BorgSkins/recolor.py`](../../../Tools/_WF/BorgSkins/recolor.py)
+- [`Tools/_WF/BorgSkins/zoomba.py`](../../../Tools/_WF/BorgSkins/zoomba.py)
 
 ## Non-modular edits
 
-None.
+- [`Content.Shared/Silicons/Borgs/SharedBorgSwitchableTypeSystem.cs`](../../Silicons/Borgs/SharedBorgSwitchableTypeSystem.cs): tells the skin's pose system which subtype was chosen
 
 <!-- WOLFGATE-GENERATED END -->

@@ -38,6 +38,20 @@ public sealed class WFShipShieldSetEnabledMessage : BoundUserInterfaceMessage
     }
 }
 
+/// <summary>Requests a new overload strength at a generator that allows it.</summary>
+[Serializable, NetSerializable]
+public sealed class WFShipShieldSetStrengthMessage : BoundUserInterfaceMessage
+{
+    /// <summary>The damage the field should take before it overloads.</summary>
+    public float Strength;
+
+    /// <summary>Creates one strength request.</summary>
+    public WFShipShieldSetStrengthMessage(float strength)
+    {
+        Strength = strength;
+    }
+}
+
 /// <summary>Publishes the generator's ship-wide shield settings and health.</summary>
 [Serializable, NetSerializable]
 public sealed class WFShipShieldGeneratorUiState : BoundUserInterfaceState

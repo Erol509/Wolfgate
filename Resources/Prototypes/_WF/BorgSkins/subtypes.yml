@@ -10,6 +10,7 @@
   id: WFBorgSkinEngineeringC9T7O
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringDullahan
@@ -20,6 +21,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinEngineeringDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringDullahanTaur
@@ -30,6 +32,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinEngineeringDullahanTaur
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringK1T7Y
@@ -41,6 +44,7 @@
   id: WFBorgSkinEngineeringK1T7Y
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringMyomer
@@ -52,6 +56,7 @@
   id: WFBorgSkinEngineeringMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringMeka
@@ -63,6 +68,7 @@
   id: WFBorgSkinEngineeringMeka
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringK4TTechnician
@@ -73,6 +79,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinEngineeringK4TTechnician
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringK4THazard
@@ -83,6 +90,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinEngineeringK4THazard
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringNiKA
@@ -93,6 +101,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinEngineeringNiKA
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringNiKO
@@ -103,6 +112,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinEngineeringNiKO
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringNiKOAlt
@@ -113,6 +123,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinEngineeringNiKOAlt
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringDrake
@@ -124,6 +135,7 @@
   id: WFBorgSkinEngineeringDrake
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringVale
@@ -135,6 +147,7 @@
   id: WFBorgSkinEngineeringVale
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringHound
@@ -146,6 +159,7 @@
   id: WFBorgSkinEngineeringHound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringDarkhound
@@ -157,6 +171,7 @@
   id: WFBorgSkinEngineeringDarkhound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringBorgi
@@ -168,6 +183,7 @@
   id: WFBorgSkinEngineeringBorgi
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringOtie
@@ -179,6 +195,7 @@
   id: WFBorgSkinEngineeringOtie
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringPupDozer
@@ -190,6 +207,7 @@
   id: WFBorgSkinEngineeringPupDozer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringAlina
@@ -201,6 +219,7 @@
   id: WFBorgSkinEngineeringAlina
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinEngineeringWyvern
@@ -213,6 +232,7 @@
   offset: 0, 0.5
   animated: true
   walks: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityC9T7O
@@ -224,6 +244,7 @@
   id: WFBorgSkinSecurityC9T7O
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinResearchC9T7O
@@ -235,6 +256,7 @@
   id: WFBorgSkinResearchC9T7O
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoDullahan
@@ -245,6 +267,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinCargoDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoDullahanTaur
@@ -255,6 +278,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinCargoDullahanTaur
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityDullahan
@@ -265,6 +289,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinSecurityDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperDullahan
@@ -275,6 +300,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinPeacekeeperDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperDullahanTaur
@@ -285,6 +311,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinPeacekeeperDullahanTaur
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinNinjaDullahan
@@ -295,6 +322,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinNinjaDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinNinjaDullahanTaur
@@ -305,6 +333,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinNinjaDullahanTaur
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSyndicateDullahan
@@ -315,6 +344,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinSyndicateDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSyndicateDullahanTaur
@@ -325,6 +355,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinSyndicateDullahanTaur
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinClownDullahan
@@ -335,6 +366,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinClownDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinClownDullahanTaur
@@ -345,6 +377,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinClownDullahanTaur
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinResearchDullahan
@@ -355,6 +388,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinResearchDullahan
   offset: 0, 0.5
+  poses: [ Rest, Sit ]
 
 - type: borgSubtype
   id: WFBorgSkinTarkonDullahan
@@ -365,6 +399,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinTarkonDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityK1T7Y
@@ -376,6 +411,7 @@
   id: WFBorgSkinSecurityK1T7Y
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinResearchK1T7Y
@@ -387,6 +423,7 @@
   id: WFBorgSkinResearchK1T7Y
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoMyomer
@@ -398,6 +435,7 @@
   id: WFBorgSkinCargoMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityMyomer
@@ -409,6 +447,7 @@
   id: WFBorgSkinSecurityMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperMyomer
@@ -420,6 +459,7 @@
   id: WFBorgSkinPeacekeeperMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinNinjaMyomer
@@ -431,6 +471,7 @@
   id: WFBorgSkinNinjaMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinSyndicateMyomer
@@ -442,6 +483,7 @@
   id: WFBorgSkinSyndicateMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinResearchMyomer
@@ -453,6 +495,7 @@
   id: WFBorgSkinResearchMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoMeka
@@ -464,6 +507,7 @@
   id: WFBorgSkinCargoMeka
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoK4TLoader
@@ -474,6 +518,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinCargoK4TLoader
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoK4TTurtleneck
@@ -484,6 +529,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinCargoK4TTurtleneck
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoNiKA
@@ -494,6 +540,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinCargoNiKA
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoNiKO
@@ -504,6 +551,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinCargoNiKO
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoNiKOAlt
@@ -514,6 +562,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinCargoNiKOAlt
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityMeka
@@ -525,6 +574,7 @@
   id: WFBorgSkinSecurityMeka
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityK4T
@@ -535,6 +585,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinSecurityK4T
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityNiKA
@@ -545,6 +596,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinSecurityNiKA
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityNiKO
@@ -555,6 +607,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinSecurityNiKO
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperMeka
@@ -566,6 +619,7 @@
   id: WFBorgSkinPeacekeeperMeka
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperK4T
@@ -576,6 +630,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinPeacekeeperK4T
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperNiKA
@@ -586,6 +641,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinPeacekeeperNiKA
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperNiKO
@@ -596,6 +652,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinPeacekeeperNiKO
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperNiKOAlt
@@ -606,6 +663,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinPeacekeeperNiKOAlt
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinNinjaMeka
@@ -617,6 +675,7 @@
   id: WFBorgSkinNinjaMeka
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinNinjaK4T
@@ -627,6 +686,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinNinjaK4T
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinNinjaNiKA
@@ -637,6 +697,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinNinjaNiKA
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinNinjaNiKO
@@ -647,6 +708,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinNinjaNiKO
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSyndicateMeka
@@ -658,6 +720,7 @@
   id: WFBorgSkinSyndicateMeka
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSyndicateK4T
@@ -668,6 +731,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinSyndicateK4T
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSyndicateNiKA
@@ -678,6 +742,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinSyndicateNiKA
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSyndicateNiKO
@@ -688,6 +753,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinSyndicateNiKO
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinClownK4T
@@ -698,6 +764,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinClownK4T
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoDrake
@@ -709,6 +776,7 @@
   id: WFBorgSkinCargoDrake
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoVale
@@ -720,6 +788,7 @@
   id: WFBorgSkinCargoVale
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoHound
@@ -731,6 +800,7 @@
   id: WFBorgSkinCargoHound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoDarkhound
@@ -742,6 +812,7 @@
   id: WFBorgSkinCargoDarkhound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinCargoBorgi
@@ -753,6 +824,7 @@
   id: WFBorgSkinCargoBorgi
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityDrake
@@ -764,6 +836,7 @@
   id: WFBorgSkinSecurityDrake
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityVale
@@ -775,6 +848,7 @@
   id: WFBorgSkinSecurityVale
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityHound
@@ -786,6 +860,7 @@
   id: WFBorgSkinSecurityHound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityDarkhound
@@ -797,6 +872,7 @@
   id: WFBorgSkinSecurityDarkhound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityBorgi
@@ -808,6 +884,7 @@
   id: WFBorgSkinSecurityBorgi
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityOtie
@@ -819,6 +896,7 @@
   id: WFBorgSkinSecurityOtie
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityAlina
@@ -830,6 +908,7 @@
   id: WFBorgSkinSecurityAlina
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperDrake
@@ -841,6 +920,7 @@
   id: WFBorgSkinPeacekeeperDrake
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperVale
@@ -852,6 +932,7 @@
   id: WFBorgSkinPeacekeeperVale
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperBorgi
@@ -863,6 +944,7 @@
   id: WFBorgSkinPeacekeeperBorgi
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinSecurityWyvern
@@ -875,6 +957,7 @@
   offset: 0, 0.5
   animated: true
   walks: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinPeacekeeperWyvern
@@ -887,6 +970,7 @@
   offset: 0, 0.5
   animated: true
   walks: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinSyndicateWyvern
@@ -899,6 +983,7 @@
   offset: 0, 0.5
   animated: true
   walks: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinResearchWyvern
@@ -911,6 +996,7 @@
   offset: 0, 0.5
   animated: true
   walks: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorDullahan
@@ -921,6 +1007,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinJanitorDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorDullahanTaur
@@ -931,6 +1018,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinJanitorDullahanTaur
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorK1T7Y
@@ -942,6 +1030,7 @@
   id: WFBorgSkinJanitorK1T7Y
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorMyomer
@@ -953,6 +1042,7 @@
   id: WFBorgSkinJanitorMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorMeka
@@ -964,6 +1054,7 @@
   id: WFBorgSkinJanitorMeka
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorK4TViscera
@@ -974,6 +1065,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinJanitorK4TViscera
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorK4TDomestic
@@ -984,6 +1076,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinJanitorK4TDomestic
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorNiKA
@@ -994,6 +1087,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinJanitorNiKA
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorNiKO
@@ -1004,6 +1098,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinJanitorNiKO
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorDrake
@@ -1015,6 +1110,7 @@
   id: WFBorgSkinJanitorDrake
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorVale
@@ -1026,6 +1122,7 @@
   id: WFBorgSkinJanitorVale
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorScrubpuppy
@@ -1037,6 +1134,7 @@
   id: WFBorgSkinJanitorScrubpuppy
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorBorgi
@@ -1048,6 +1146,7 @@
   id: WFBorgSkinJanitorBorgi
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorOtie
@@ -1059,6 +1158,7 @@
   id: WFBorgSkinJanitorOtie
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinJanitorWyvern
@@ -1071,6 +1171,7 @@
   offset: 0, 0.5
   animated: true
   walks: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalC9T7O
@@ -1082,6 +1183,7 @@
   id: WFBorgSkinMedicalC9T7O
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalDullahan
@@ -1092,6 +1194,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMedicalDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalDullahanTaur
@@ -1102,6 +1205,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMedicalDullahanTaur
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalK1T7Y
@@ -1113,6 +1217,7 @@
   id: WFBorgSkinMedicalK1T7Y
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalMyomer
@@ -1124,6 +1229,7 @@
   id: WFBorgSkinMedicalMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalMeka
@@ -1135,6 +1241,7 @@
   id: WFBorgSkinMedicalMeka
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalK4TDoc
@@ -1145,6 +1252,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMedicalK4TDoc
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalK4TFieldMedic
@@ -1155,6 +1263,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMedicalK4TFieldMedic
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalNiKA
@@ -1165,6 +1274,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMedicalNiKA
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalNiKO
@@ -1175,6 +1285,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMedicalNiKO
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalNiKOAlt
@@ -1185,6 +1296,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMedicalNiKOAlt
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalDrake
@@ -1196,6 +1308,7 @@
   id: WFBorgSkinMedicalDrake
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalVale
@@ -1207,6 +1320,7 @@
   id: WFBorgSkinMedicalVale
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalHound
@@ -1218,6 +1332,7 @@
   id: WFBorgSkinMedicalHound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalDarkhound
@@ -1229,6 +1344,7 @@
   id: WFBorgSkinMedicalDarkhound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalBorgi
@@ -1240,6 +1356,7 @@
   id: WFBorgSkinMedicalBorgi
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalAlina
@@ -1251,6 +1368,7 @@
   id: WFBorgSkinMedicalAlina
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMedicalWyvern
@@ -1263,6 +1381,7 @@
   offset: 0, 0.5
   animated: true
   walks: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningC9T7O
@@ -1274,6 +1393,7 @@
   id: WFBorgSkinMiningC9T7O
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningDullahan
@@ -1284,6 +1404,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMiningDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningDullahanTaur
@@ -1294,6 +1415,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMiningDullahanTaur
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningK1T7Y
@@ -1305,6 +1427,7 @@
   id: WFBorgSkinMiningK1T7Y
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningMyomer
@@ -1316,6 +1439,7 @@
   id: WFBorgSkinMiningMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningMeka
@@ -1327,6 +1451,7 @@
   id: WFBorgSkinMiningMeka
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningK4TRookie
@@ -1337,6 +1462,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMiningK4TRookie
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningK4TVeteran
@@ -1347,6 +1473,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMiningK4TVeteran
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningNiKA
@@ -1357,6 +1484,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMiningNiKA
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningNiKO
@@ -1367,6 +1495,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMiningNiKO
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningNiKAAlt
@@ -1377,6 +1506,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinMiningNiKAAlt
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningDrake
@@ -1388,6 +1518,7 @@
   id: WFBorgSkinMiningDrake
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningVale
@@ -1399,6 +1530,7 @@
   id: WFBorgSkinMiningVale
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningHound
@@ -1410,6 +1542,7 @@
   id: WFBorgSkinMiningHound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningDarkhound
@@ -1421,6 +1554,7 @@
   id: WFBorgSkinMiningDarkhound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningOtie
@@ -1432,12 +1566,17 @@
   id: WFBorgSkinMiningOtie
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningBlade
   parentBorgType: mining
   spritePath: _WF/BorgSkins/Wide/Mining/blade.rsi
   dummyPrototype: WFBorgChassisMiningBlade
+
+- type: wfBorgSkin
+  id: WFBorgSkinMiningBlade
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinMiningWyvern
@@ -1450,6 +1589,7 @@
   offset: 0, 0.5
   animated: true
   walks: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceC9T7O
@@ -1461,6 +1601,7 @@
   id: WFBorgSkinServiceC9T7O
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceDullahan
@@ -1471,6 +1612,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinServiceDullahan
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceDullahanAlt
@@ -1481,6 +1623,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinServiceDullahanAlt
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceDullahanTaur
@@ -1491,6 +1634,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinServiceDullahanTaur
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceK1T7Y
@@ -1502,6 +1646,7 @@
   id: WFBorgSkinServiceK1T7Y
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceMyomer
@@ -1513,6 +1658,7 @@
   id: WFBorgSkinServiceMyomer
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceMeka
@@ -1524,6 +1670,7 @@
   id: WFBorgSkinServiceMeka
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceMekaAlt
@@ -1535,6 +1682,7 @@
   id: WFBorgSkinServiceMekaAlt
   offset: 0, 0.5
   animated: true
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceK4TBarista
@@ -1545,6 +1693,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinServiceK4TBarista
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceK4T80s
@@ -1555,6 +1704,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinServiceK4T80s
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceK4TDispenser
@@ -1565,6 +1715,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinServiceK4TDispenser
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceNiKA
@@ -1575,6 +1726,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinServiceNiKA
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceNiKO
@@ -1585,6 +1737,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinServiceNiKO
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceNiKOAlt
@@ -1595,6 +1748,7 @@
 - type: wfBorgSkin
   id: WFBorgSkinServiceNiKOAlt
   offset: 0, 0.5
+  poses: [ Rest ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceDrake
@@ -1606,6 +1760,7 @@
   id: WFBorgSkinServiceDrake
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceVale
@@ -1617,6 +1772,7 @@
   id: WFBorgSkinServiceVale
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceValeDark
@@ -1628,6 +1784,7 @@
   id: WFBorgSkinServiceValeDark
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceDarkhound
@@ -1639,6 +1796,7 @@
   id: WFBorgSkinServiceDarkhound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinServicePartyhound
@@ -1650,6 +1808,7 @@
   id: WFBorgSkinServicePartyhound
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]
 
 - type: borgSubtype
   id: WFBorgSkinServiceBorgi
@@ -1661,3 +1820,4 @@
   id: WFBorgSkinServiceBorgi
   animated: true
   walks: true
+  poses: [ Rest, Sit, BellyUp ]

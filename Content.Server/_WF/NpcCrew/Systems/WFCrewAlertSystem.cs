@@ -139,6 +139,7 @@ public sealed partial class WFCrewAlertSystem : EntitySystem
 
     private void OnHullHit(ref WFCrewHullHitEvent args)
     {
+        ReportDockedAttack(args.Grid, args.AttackerGrid);
         if (Excuse(args.Grid, args.AttackerGrid))
             return;
         ReportAttack(args.Grid, args.AttackerGrid, gunfire: true);
@@ -155,6 +156,24 @@ public sealed partial class WFCrewAlertSystem : EntitySystem
     private static readonly TimeSpan StraySpacing = TimeSpan.FromSeconds(0.5);
 
     private readonly Dictionary<(EntityUid Grid, EntityUid Attacker), (TimeSpan First, TimeSpan Last, int Count)> _strays = new();
+    private readonly List<(EntityUid Grid, EntityUid Attacker)> _staleStrays = new();
+
+    /// <summary>Forgets stray counts whose window has closed or whose ship is gone; a closed window counts afresh anyway.</summary>
+    private void PruneStrays(TimeSpan now)
+    {
+        if (_strays.Count == 0)
+            return;
+
+        _staleStrays.Clear();
+        foreach (var (key, strays) in _strays)
+        {
+            if (now - strays.First > StrayWindow || TerminatingOrDeleted(key.Grid) || TerminatingOrDeleted(key.Attacker))
+                _staleStrays.Add(key);
+        }
+
+        foreach (var key in _staleStrays)
+            _strays.Remove(key);
+    }
 
     /// <summary>
     /// Says whether a ship weapon hit is let pass. Fire from a vessel fighting on the ship's side, by alliance or by
@@ -266,6 +285,7 @@ public sealed partial class WFCrewAlertSystem : EntitySystem
         if ((args.Weapon ?? args.Shooter) is { } source
             && EntityManager.System<WFCrewFriendlyFireSystem>().Protected(source, args.Grid))
             return;
+        ReportDockedAttack(args.Grid, args.AttackerGrid);
         if (Excuse(args.Grid, args.AttackerGrid))
             return;
         ReportAttack(args.Grid, args.AttackerGrid, gunfire: true);
@@ -473,6 +493,7 @@ public sealed partial class WFCrewAlertSystem : EntitySystem
 
         var now = _timing.CurTime;
         _nextPoll = now + TimeSpan.FromSeconds(1);
+        PruneStrays(now);
         var groups = new Dictionary<(EntityUid Grid, string Group), List<Entity<HTNComponent>>>();
         var query = EntityQueryEnumerator<WFCrewComponent, HTNComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var crew, out var htn, out var xform))

@@ -84,6 +84,9 @@ public sealed partial class WFDrydockSystem
 
     private void OnBreak(EntityUid uid, WFDrydockConsoleComponent comp, WFDrydockBreakMessage args)
     {
+        if (WalkInLocked(uid, comp, args.Actor))
+            return;
+
         if (TryGetWorkableShip(uid, comp, args.Actor, out var ship))
             TryStartBreak(uid, comp, ship, args.Actor);
     }

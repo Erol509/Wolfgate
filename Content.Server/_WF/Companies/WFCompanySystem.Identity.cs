@@ -11,6 +11,7 @@ using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Shared._WF.Companies;
 using Content.Shared._WF.Roles;
+using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
@@ -109,8 +110,10 @@ public sealed partial class WFCompanySystem
             return;
         var member = company.Members[profile];
         var rank = TitleOf(company, member);
-        if (!_idCards.TryFindIdCard(body, out var card))
+        // Also finds a cyborg's issued card, which it doesn't wear.
+        if (!_shipKeys.TryGetCard(body, out var cardUid) || !TryComp<IdCardComponent>(cardUid, out var cardComp))
             return;
+        Entity<IdCardComponent> card = (cardUid, cardComp);
         CaptureMemberKey(profile, card);
         var marker = EnsureComp<WFCompanyIdComponent>(card);
         marker.CompanyId = company.Id;
@@ -325,7 +328,7 @@ public sealed partial class WFCompanySystem
     /// <summary>Adds the company on the target's ID to their examine card.</summary>
     public void FillExamineCard(EntityUid target, Content.Shared._WF.ExamineCard.ExamineCardEvent card)
     {
-        if (!_idCards.TryFindIdCard(target, out var id) || !TryComp<WFCompanyIdComponent>(id, out var marker))
+        if (!_shipKeys.TryGetCard(target, out var id) || !TryComp<WFCompanyIdComponent>(id, out var marker))
             return;
         card.Company = $"[{marker.Tag}] {marker.Company}";
         card.CompanyRank = marker.Rank;

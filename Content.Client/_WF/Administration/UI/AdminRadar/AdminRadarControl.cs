@@ -18,9 +18,9 @@ namespace Content.Client._WF.Administration.UI.AdminRadar;
 public sealed class AdminRadarControl : ShuttleNavControl
 {
     /// <summary>
-    /// Furthest zoom, measured from the centre to the edge of the longer side. Grids past it aren't looked up.
+    /// Furthest zoom, measured from the centre to the edge of the longer side. Grids are looked up out to the view's corners.
     /// </summary>
-    public const float AdminMaxRange = 25600f;
+    public const float AdminMaxRange = 76800f;
 
     private const float AdminMinRange = 64f;
     private const float StartRange = 256f;
@@ -49,6 +49,7 @@ public sealed class AdminRadarControl : ShuttleNavControl
         _adminRadar = EntManager.System<AdminRadarSystem>();
         _shuttle = EntManager.System<ShuttleSystem>();
         _xform = EntManager.System<SharedTransformSystem>();
+        MaxRadarRange = AdminMaxRange * MathF.Sqrt(2f);
 
         // The nav control fixes itself to a square; here the window sets the size and the drawing follows it.
         SetSize = new Vector2(float.NaN, float.NaN);

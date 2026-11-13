@@ -50,6 +50,10 @@ public sealed partial class WFReaverCampaignComponent : Component
     [ViewVariables]
     public int Funding;
 
+    /// <summary>Value of tagged goods sold on pallets that hasn't made up a whole crate yet.</summary>
+    [ViewVariables]
+    public double FundingGoods;
+
     /// <summary>Funding payouts the Reavers have spent this round.</summary>
     [ViewVariables]
     public int Funded;

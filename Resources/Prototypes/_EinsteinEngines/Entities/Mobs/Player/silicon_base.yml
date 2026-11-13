@@ -325,6 +325,12 @@
     # - PsionicsDisabled
     # - PsionicallyInsulated
     - Flashed # Goobstation
+    # WOLFGATE(WolfChem) START: neuroware twins apply these to a synthetic's own body
+    - Drunk
+    - Drowsiness
+    - ForcedSleep
+    - Jitter
+    # WOLFGATE END
   - type: Blindable
   - type: FireVisuals
     alternateState: Standing

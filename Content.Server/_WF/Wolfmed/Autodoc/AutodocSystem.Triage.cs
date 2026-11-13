@@ -47,9 +47,11 @@ public sealed partial class AutodocSystem
     /// <remarks>
     /// Playtest 3 SAM: <paramref name="followUps"/>, when given, collects the entries planned ahead of a state the pod
     /// itself will bring about, which <see cref="TryPlan"/> queues as follow-ups (<see cref="AutodocQueued.FollowUp"/>).
+    /// With <paramref name="preview"/> set the plan only asks: no shock, no transfusion, no antibiotic course, so it can be
+    /// worked out for a body that isn't in the pod (NpcCrew's surgeon decides with it who the pod could help).
     /// </remarks>
     public List<AutodocProcedureEntry> Plan(Entity<AutodocComponent> ent, EntityUid body,
-        Dictionary<(string Surgery, TargetBodyPart Part), bool>? followUps = null)
+        Dictionary<(string Surgery, TargetBodyPart Part), bool>? followUps = null, bool preview = false)
     {
         var result = new List<AutodocProcedureEntry>();
         if (!_protos.TryIndex(ent.Comp.Triage, out var triage))
@@ -66,21 +68,24 @@ public sealed partial class AutodocSystem
             // The one step that is not a surgery: the paddles come before anything else is worth doing.
             if (step.Defibrillate)
             {
-                TryDefibrillateOccupant(ent, body);
+                if (!preview)
+                    TryDefibrillateOccupant(ent, body);
                 continue;
             }
 
             // Playtest 4, IV: the blood reservoir's transfusion runs alongside the queue, not in it.
             if (step.Transfuse)
             {
-                ScheduleTransfusion(ent, body);
+                if (!preview)
+                    ScheduleTransfusion(ent, body);
                 continue;
             }
 
             // Playtest 5: the antibiotic course runs beside the queue too.
             if (step.Antibiotics)
             {
-                ScheduleAntibiotics(ent, body);
+                if (!preview)
+                    ScheduleAntibiotics(ent, body);
                 continue;
             }
 

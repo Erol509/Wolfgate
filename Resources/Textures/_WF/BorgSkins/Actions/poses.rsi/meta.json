@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made for Wolfgate, in the style of the tgstation jump action icon",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "rest"
+    },
+    {
+      "name": "sit"
+    },
+    {
+      "name": "bellyup"
+    }
+  ]
+}

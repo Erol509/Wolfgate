@@ -85,14 +85,17 @@ public sealed partial class WFShipAccessServerSystem
         return true;
     }
 
-    /// <summary>Sets every door on the ship to one rule, as the console's set-all control does, and returns how many changed.</summary>
+    /// <summary>
+    /// Sets every door on the ship to one rule, as the console's set-all control does, and returns how many changed.
+    /// A zone's doors are left to the zone.
+    /// </summary>
     public int SetAllDoorRules(Entity<WFShipAccessComponent> ship, WFDoorAccessRule rule)
     {
         var changed = 0;
         var children = Transform(ship.Owner).ChildEnumerator;
         while (children.MoveNext(out var child))
         {
-            if (IsRuledDoor(child) && ApplyDoorRule(child, rule, out _))
+            if (IsRuledDoor(child) && !InZone(child) && ApplyDoorRule(child, rule, out _))
                 changed++;
         }
 
@@ -103,6 +106,30 @@ public sealed partial class WFShipAccessServerSystem
         _adminLog.Add(LogType.Action, LogImpact.Low,
             $"Every door on {ToPrettyString(ship.Owner):grid} was set to rule {rule} ({changed} changed)");
         return changed;
+    }
+
+    /// <summary>
+    /// Gives a zone's doors the rule its mode calls for and rewrites their readers, also where the rule stays the
+    /// same, since who the zone admits may have changed. The zone's owner logs the switch. Returns how many rules changed.
+    /// </summary>
+    public int ApplyZoneRule(IEnumerable<EntityUid> doors, WFDoorAccessRule rule)
+    {
+        var changed = 0;
+        foreach (var door in doors)
+        {
+            if (ApplyDoorRule(door, rule, out _))
+                changed++;
+
+            RefreshReader(door);
+        }
+
+        return changed;
+    }
+
+    /// <summary>Whether a door belongs to a zone, whose switch sets its rule.</summary>
+    public bool InZone(EntityUid door)
+    {
+        return TryComp<WFDoorAccessRuleComponent>(door, out var rule) && rule.Zone != null;
     }
 
     /// <summary>Writes a door's rule and its bolts, leaving the reader to the caller. False when nothing changed.</summary>
@@ -275,6 +302,13 @@ public sealed partial class WFShipAccessServerSystem
         if (!TryGetEditableShip(console, args.Actor, out var ship) || !TryGetShipDoor(console, ship, args.Door, args.Actor, out var door))
             return;
 
+        // A zone's doors follow its switch, and only a zone switch gives a door the Zone rule.
+        if (args.Rule == WFDoorAccessRule.Zone || InZone(door))
+        {
+            Popup(console, args.Actor, "ship-access-door-in-zone");
+            return;
+        }
+
         if (args.Rule == WFDoorAccessRule.Crew && !TryLinkCrew(ship, args.Actor))
         {
             Popup(console, args.Actor, "ship-access-no-crew");
@@ -294,7 +328,7 @@ public sealed partial class WFShipAccessServerSystem
 
     private void OnSetAllDoorRules(Entity<ShuttleConsoleComponent> console, ref WFShipAccessSetAllDoorRulesMessage args)
     {
-        if (!TryGetEditableShip(console, args.Actor, out var ship))
+        if (!TryGetEditableShip(console, args.Actor, out var ship) || args.Rule == WFDoorAccessRule.Zone)
             return;
 
         if (args.Rule == WFDoorAccessRule.Crew && !TryLinkCrew(ship, args.Actor))

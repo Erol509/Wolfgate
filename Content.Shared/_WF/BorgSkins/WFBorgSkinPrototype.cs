@@ -21,4 +21,8 @@ public sealed partial class WFBorgSkinPrototype : IPrototype
     /// <summary>The RSI has a <c>_moving</c> variant of each chassis state, shown while the borg moves.</summary>
     [DataField]
     public bool Walks;
+
+    /// <summary>The voluntary poses the RSI has a state for, each offered to the borg as an action.</summary>
+    [DataField]
+    public List<WFBorgPose> Poses = new();
 }

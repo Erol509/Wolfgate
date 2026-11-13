@@ -4,8 +4,8 @@ meta:
   engineVersion: 291.0.4
   forkId: ""
   forkVersion: ""
-  time: 11/07/2026 23:44:54
-  entityCount: 1032
+  time: 11/11/2026 21:08:01
+  entityCount: 1036
 maps: []
 grids:
 - 1
@@ -804,6 +804,29 @@ entities:
       parent: 1
       rot: -1.5707963267948966 rad
       pos: 6.5,7.5
+  - uid: 1033
+    components:
+    - type: Transform
+      parent: 1
+      rot: -1.5707963267948966 rad
+      pos: 2.5,7.5
+  - uid: 1034
+    components:
+    - type: Transform
+      parent: 1
+      rot: 3.141592653589793 rad
+      pos: 8.5,10.5
+  - uid: 1035
+    components:
+    - type: Transform
+      parent: 1
+      rot: 1.5707963267948966 rad
+      pos: 6.5,4.5
+  - uid: 1036
+    components:
+    - type: Transform
+      parent: 1
+      pos: 10.5,2.5
 - proto: AirSensor
   entities:
   - uid: 19
@@ -845,7 +868,6 @@ entities:
     - type: Transform
       parent: 1
       pos: 4.5,10.5
-    - type: DeviceNetwork
   - uid: 859
     components:
     - type: Transform
@@ -890,6 +912,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 11.580938,-0.34850025
+    - type: Physics
+      canCollide: False
 - proto: AmeShielding
   entities:
   - uid: 223
@@ -1533,6 +1557,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 1.2639475,-1.2244761
+    - type: Physics
+      canCollide: False
 - proto: CableApcExtension
   entities:
   - uid: 13
@@ -2167,6 +2193,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 7.67023,13.002333
+    - type: Physics
+      canCollide: False
     - type: Stack
       count: 100
 - proto: CableHV
@@ -2373,6 +2401,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 7.23273,12.611708
+    - type: Physics
+      canCollide: False
     - type: Stack
       count: 100
 - proto: CableMV
@@ -2774,6 +2804,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 7.20148,13.146664
+    - type: Physics
+      canCollide: False
     - type: Stack
       count: 100
 - proto: CableTerminal
@@ -3468,6 +3500,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 2.8157213,-4.2160163
+    - type: Physics
+      canCollide: False
 - proto: CigaretteSpent
   entities:
   - uid: 445
@@ -3475,29 +3509,39 @@ entities:
     - type: Transform
       parent: 1
       pos: 2.3000963,-4.3566413
+    - type: Physics
+      canCollide: False
   - uid: 447
     components:
     - type: Transform
       parent: 1
       rot: -1.5707963267948966 rad
       pos: 3.8313463,-3.2785163
+    - type: Physics
+      canCollide: False
   - uid: 448
     components:
     - type: Transform
       parent: 1
       rot: 3.141592653589793 rad
       pos: 1.3782213,-3.8253913
+    - type: Physics
+      canCollide: False
   - uid: 449
     components:
     - type: Transform
       parent: 1
       rot: 1.5707963267948966 rad
       pos: 1.7688463,-4.3878913
+    - type: Physics
+      canCollide: False
   - uid: 450
     components:
     - type: Transform
       parent: 1
       pos: 1.8157213,-4.1535163
+    - type: Physics
+      canCollide: False
 - proto: CigPackRed
   entities:
   - uid: 442
@@ -3505,6 +3549,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 2.2688463,-4.1847663
+    - type: Physics
+      canCollide: False
 - proto: ClosetFireFilled
   entities:
   - uid: 717
@@ -3531,11 +3577,15 @@ entities:
     - type: Transform
       parent: 1
       pos: 1.8345897,2.3261547
+    - type: Physics
+      canCollide: False
   - uid: 1006
     components:
     - type: Transform
       parent: 1
       pos: 1.8345897,2.6855297
+    - type: Physics
+      canCollide: False
 - proto: ClothingEyesGlassesMeson
   entities:
   - uid: 744
@@ -3543,16 +3593,22 @@ entities:
     - type: Transform
       parent: 1
       pos: 2.2407541,4.880911
+    - type: Physics
+      canCollide: False
   - uid: 748
     components:
     - type: Transform
       parent: 1
       pos: 2.3345041,4.709036
+    - type: Physics
+      canCollide: False
   - uid: 756
     components:
     - type: Transform
       parent: 1
       pos: 2.4751291,4.521536
+    - type: Physics
+      canCollide: False
 - proto: CMSemioticBridge
   entities:
   - uid: 10
@@ -3676,6 +3732,8 @@ entities:
       parent: 1
       rot: -1.5707963267948966 rad
       pos: 1.5608225,-1.6619761
+    - type: Physics
+      canCollide: False
 - proto: EngineeringTechFab
   entities:
   - uid: 471
@@ -3803,6 +3861,8 @@ entities:
       parent: 1
       rot: -1.5707963267948966 rad
       pos: 1.7170725,-1.2869761
+    - type: Physics
+      canCollide: False
 - proto: FuelBananium
   entities:
   - uid: 769
@@ -3810,16 +3870,22 @@ entities:
     - type: Transform
       parent: 1
       pos: 7.1925545,11.74231
+    - type: Physics
+      canCollide: False
   - uid: 770
     components:
     - type: Transform
       parent: 1
       pos: 7.4738045,11.601685
+    - type: Physics
+      canCollide: False
   - uid: 771
     components:
     - type: Transform
       parent: 1
       pos: 7.7550545,11.42981
+    - type: Physics
+      canCollide: False
 - proto: FuelPlasma
   entities:
   - uid: 763
@@ -3827,16 +3893,22 @@ entities:
     - type: Transform
       parent: 1
       pos: 7.246418,6.8041263
+    - type: Physics
+      canCollide: False
   - uid: 764
     components:
     - type: Transform
       parent: 1
       pos: 7.496418,6.6791263
+    - type: Physics
+      canCollide: False
   - uid: 765
     components:
     - type: Transform
       parent: 1
       pos: 7.762043,6.5228763
+    - type: Physics
+      canCollide: False
 - proto: FuelUranium
   entities:
   - uid: 766
@@ -3844,16 +3916,22 @@ entities:
     - type: Transform
       parent: 1
       pos: 7.183918,5.8510013
+    - type: Physics
+      canCollide: False
   - uid: 767
     components:
     - type: Transform
       parent: 1
       pos: 7.418293,5.6635013
+    - type: Physics
+      canCollide: False
   - uid: 768
     components:
     - type: Transform
       parent: 1
       pos: 7.683918,5.4916263
+    - type: Physics
+      canCollide: False
 - proto: GasMixerFlipped
   entities:
   - uid: 496
@@ -4518,7 +4596,6 @@ entities:
     - type: Transform
       parent: 1
       pos: 5.5,10.5
-    - type: DeviceNetwork
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 463
@@ -4750,11 +4827,15 @@ entities:
     - type: Transform
       parent: 1
       pos: 1.2087882,5.9958377
+    - type: Physics
+      canCollide: False
   - uid: 205
     components:
     - type: Transform
       parent: 1
       pos: 1.7244132,6.1677127
+    - type: Physics
+      canCollide: False
 - proto: IntercomEngineering
   entities:
   - uid: 84
@@ -4772,11 +4853,15 @@ entities:
     - type: Transform
       parent: 1
       pos: 1.709938,5.8193607
+    - type: Physics
+      canCollide: False
   - uid: 761
     components:
     - type: Transform
       parent: 1
       pos: 1.350563,5.6162357
+    - type: Physics
+      canCollide: False
 - proto: LockerEngineerFilled
   entities:
   - uid: 709
@@ -4833,12 +4918,16 @@ entities:
       parent: 1
       rot: -1.5707963267948966 rad
       pos: 1.678688,6.6943607
+    - type: Physics
+      canCollide: False
   - uid: 758
     components:
     - type: Transform
       parent: 1
       rot: -1.5707963267948966 rad
       pos: 1.272438,6.4912357
+    - type: Physics
+      canCollide: False
 - proto: NFAshtray
   entities:
   - uid: 443
@@ -4846,6 +4935,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 2.6594713,-4.4035163
+    - type: Physics
+      canCollide: False
 - proto: NFHolopadShip
   entities:
   - uid: 23
@@ -5803,11 +5894,15 @@ entities:
     - type: Transform
       parent: 1
       pos: 2.2563791,2.8184109
+    - type: Physics
+      canCollide: False
   - uid: 736
     components:
     - type: Transform
       parent: 1
       pos: 2.6470041,2.5059109
+    - type: Physics
+      canCollide: False
 - proto: ShipRepairDeviceAmmo
   entities:
   - uid: 737
@@ -5815,31 +5910,43 @@ entities:
     - type: Transform
       parent: 1
       pos: 1.7720041,4.865286
+    - type: Physics
+      canCollide: False
   - uid: 738
     components:
     - type: Transform
       parent: 1
       pos: 1.4751291,4.834036
+    - type: Physics
+      canCollide: False
   - uid: 739
     components:
     - type: Transform
       parent: 1
       pos: 1.1938791,4.834036
+    - type: Physics
+      canCollide: False
   - uid: 740
     components:
     - type: Transform
       parent: 1
       pos: 1.2251291,4.599661
+    - type: Physics
+      canCollide: False
   - uid: 742
     components:
     - type: Transform
       parent: 1
       pos: 1.4907541,4.584036
+    - type: Physics
+      canCollide: False
   - uid: 743
     components:
     - type: Transform
       parent: 1
       pos: 1.7095041,4.584036
+    - type: Physics
+      canCollide: False
 - proto: SignalButtonDirectional
   entities:
   - uid: 690
@@ -6816,11 +6923,15 @@ entities:
     - type: Transform
       parent: 1
       pos: 1.290525,2.6778367
+    - type: Physics
+      canCollide: False
   - uid: 713
     components:
     - type: Transform
       parent: 1
       pos: 1.5249,2.4747117
+    - type: Physics
+      canCollide: False
 - proto: WeldingFuelTankFull
   entities:
   - uid: 714
@@ -6877,6 +6988,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 7.3788605,14.653239
+    - type: Physics
+      canCollide: False
 - proto: WFPowerCordCoilLV
   entities:
   - uid: 786
@@ -6884,6 +6997,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 7.3994236,13.664293
+    - type: Physics
+      canCollide: False
 - proto: WFPowerCordCoilMV
   entities:
   - uid: 727
@@ -6891,6 +7006,8 @@ entities:
     - type: Transform
       parent: 1
       pos: 7.6288605,14.403239
+    - type: Physics
+      canCollide: False
 - proto: WindoorSecurePlasma
   entities:
   - uid: 1002

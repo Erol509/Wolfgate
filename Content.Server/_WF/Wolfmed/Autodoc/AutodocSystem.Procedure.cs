@@ -961,7 +961,8 @@ public sealed partial class AutodocSystem
         });
     }
 
-    private bool IsFinalStep(EntProtoId surgery, EntProtoId step)
+    /// <summary>Whether a step is the last of a surgery's steps.</summary>
+    public bool IsFinalStep(EntProtoId surgery, EntProtoId step)
     {
         return _surgery.GetSingleton(surgery) is { } ent &&
                TryComp(ent, out SurgeryComponent? comp) &&

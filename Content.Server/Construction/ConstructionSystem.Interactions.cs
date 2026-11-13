@@ -318,6 +318,15 @@ namespace Content.Server.Construction
 
                         insert = stack;
                     }
+                    // WOLFGATE START: a tag or component step takes one item off a stack, not the whole stack
+                    else if (TryComp<Content.Shared.Stacks.StackComponent>(insert, out var insertStack) && insertStack.Count > 1)
+                    {
+                        if (_stackSystem.Split(insert, 1, Transform(interactUsing.User).Coordinates, insertStack) is not {} single)
+                            return HandleResult.False;
+
+                        insert = single;
+                    }
+                    // WOLFGATE END
 
                     // Container-storage handling.
                     if (!string.IsNullOrEmpty(insertStep.Store))

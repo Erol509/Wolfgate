@@ -64,7 +64,8 @@ public sealed class WFVehicleRepairKitSystem : EntitySystem
             return false;
         }
 
-        if (_pricing.GetPrice(vehicle, includeContents: false) > ent.Comp.MaxVehicleValue)
+        // A vehicle bought at a bargain is as big a job as any other.
+        if (_pricing.GetUndiscountedPrice(vehicle, includeContents: false) > ent.Comp.MaxVehicleValue)
         {
             reason = "wf-vehicle-repair-kit-too-big";
             return false;

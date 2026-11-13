@@ -1,5 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
+using Content.Server._WF.ShipCommand;
 using Content.Shared._WF.VehicleShop;
 using Content.Shared._WF.Vehicles.Base;
 using Content.Shared._WF.Vehicles.Core;
@@ -37,6 +38,7 @@ public sealed class WFVehicleBeaconSystem : EntitySystem
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private PricingSystem _pricing = default!;
     [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private WFShipServiceSystem _shipServices = default!;
     [Dependency] private WFVehicleShopSystem _shop = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
@@ -131,6 +133,8 @@ public sealed class WFVehicleBeaconSystem : EntitySystem
 
         var vehicle = Spawn(ent.Comp.Vehicle, spot);
         _transform.SetLocalRotation(vehicle, Angle.Zero);
+        // A beacon bought at a bargain opens into a vehicle that resells for no more than the beacon would have.
+        _shipServices.CarryBargain(ent, vehicle);
 
         EntityUid? key = null;
         if (HasComp<RMCVehicleComponent>(vehicle))

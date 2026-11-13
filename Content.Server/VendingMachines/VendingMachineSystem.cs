@@ -440,6 +440,9 @@ namespace Content.Server.VendingMachines
             if (!_prototypeManager.TryIndex<EntityPrototype>(itemId, out var proto))
                 return;
 
+            if (WfShipCommandRefuses(uid, sender, component)) // WOLFGATE(ShipCommand): a commanded ship's vendors turn the barred away
+                return; // WOLFGATE(ShipCommand)
+
             var price = _pricing.GetEstimatedPrice(proto);
             // Somewhere deep in the code of pricing, a hardcoded 20 dollar value exists for anything without
             // a staticprice component for some god forsaken reason, and I cant find it or think of another way to
@@ -459,6 +462,7 @@ namespace Content.Server.VendingMachines
             if (priceVend > 0.0 && component.RequiresCash) // if vending price exists, overwrite it.
                 totalPrice = (int) priceVend;
             totalPrice = WfTradeBuyPrice(uid, proto, totalPrice); // WOLFGATE(TradeGoods): trade vendors charge the station's live price
+            totalPrice = WfShipCommandPrice(uid, sender, totalPrice); // WOLFGATE(ShipCommand): a commanded ship's price rules
 
             if (IsAuthorized(uid, sender, component))
             {
@@ -515,6 +519,7 @@ namespace Content.Server.VendingMachines
 
                     _adminLogger.Add(LogType.Action, LogImpact.Low,
                         $"{ToPrettyString(sender):user} bought from [vendingMachine:{ToPrettyString(uid!)}, product:{proto.Name}, cost:{totalPrice},  with ${cashSlotBalance} in the cash slot and ${bankBalance} in the bank.");
+                    WfShipCommandRecord(uid, sender, proto, totalPrice); // WOLFGATE(ShipCommand): logged as service use aboard a commanded ship, a bargain held for the item
                 }
             }
             // End Frontier
@@ -665,6 +670,8 @@ namespace Content.Server.VendingMachines
             if (_pendingColors.Remove(uid, out var colors))
                 _gags.SetColors(ent, colors);
             // WOLFGATE END
+
+            WfShipCommandMarkVended(uid, ent); // WOLFGATE(ShipCommand): a vend sold below its usual price resells for no more than was paid
 
             // Mono: Track vending machine purchases for pricing modifications
             // Only track if this was a paid purchase (not a random eject or force eject)

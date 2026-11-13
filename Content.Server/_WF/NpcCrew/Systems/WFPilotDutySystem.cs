@@ -98,6 +98,23 @@ public sealed partial class WFPilotDutySystem : EntitySystem
             if (refreshDocks || now >= duty.NextDockCheck)
                 RefreshDocked((uid, duty));
 
+            if (duty.YieldedUntil is { } yielded)
+            {
+                // While a person flies the ship its orders stand still: no dock timer runs and no waypoint is passed.
+                if (now < yielded)
+                    continue;
+
+                // Someone flew the ship while this crewman stood by: its orders start again from where the ship is now,
+                // and a bump while they flew is not the creep's.
+                duty.YieldedUntil = null;
+                duty.HoldPosition = null;
+                duty.DockCollision = null;
+                if (Steer((uid, duty)) == null)
+                    _toRelease.Add(uid);
+
+                continue;
+            }
+
             if (!TryComp<ShipSteererComponent>(uid, out var steerer)
                 || TargetElsewhere(duty, xform.MapID) != duty.AwaitingTarget)
             {

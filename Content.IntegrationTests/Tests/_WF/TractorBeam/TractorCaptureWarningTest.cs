@@ -30,6 +30,11 @@ public sealed class TractorCaptureWarningTest
             var (source, target, _, _) = TractorBeamTest.CreateLock(entities, maps, map.MapId);
             entities.System<MetaDataSystem>().SetEntityName(source, "SECRET ARRESTOR NAME");
             var helm = entities.SpawnEntity("ComputerShuttle", new EntityCoordinates(target, new Vector2(0.5f, 0.5f)));
+            // A helm only holds a state while someone has it open.
+            var pilot = entities.SpawnEntity("MobHuman", new EntityCoordinates(target, new Vector2(0.5f, 0.5f)));
+            entities.System<SharedUserInterfaceSystem>().OpenUi(helm, ShuttleConsoleUiKey.Key, pilot);
+            Assert.That(entities.System<SharedUserInterfaceSystem>().IsUiOpen(helm, ShuttleConsoleUiKey.Key),
+                "The helm must be open to hold a state.");
             var helms = entities.System<ShuttleConsoleSystem>();
             var shuttles = entities.System<SharedShuttleSystem>();
             entities.System<TractorBeamSystem>().UpdateBeforeSolve(false, 1f / 60f);
@@ -42,6 +47,8 @@ public sealed class TractorCaptureWarningTest
             shuttles.RemoveIFFFlag(source, hiddenFlag);
             helms.Update(0.25f);
             Assert.That(Sources(), Is.EqualTo(new[] { "SECRET ARRESTOR NAME" }), "IFF changes refresh an existing warning.");
+            entities.System<SharedUserInterfaceSystem>().CloseUi(helm, ShuttleConsoleUiKey.Key, pilot);
+            entities.DeleteEntity(pilot);
             entities.DeleteEntity(source);
             entities.DeleteEntity(target);
             helms.Update(0.25f);
@@ -77,6 +84,14 @@ public sealed class TractorCaptureWarningTest
             metadata.SetEntityName(secondSource, "ARRESTOR BETA");
             var victimHelm = entities.SpawnEntity("ComputerShuttle", new EntityCoordinates(target, new Vector2(0.5f, 0.5f)));
             var arrestorHelm = entities.SpawnEntity("ComputerShuttle", new EntityCoordinates(source, new Vector2(3.5f, 0.5f)));
+            // A helm only holds a state while someone has it open.
+            var ui = entities.System<SharedUserInterfaceSystem>();
+            var victimPilot = entities.SpawnEntity("MobHuman", new EntityCoordinates(target, new Vector2(0.5f, 0.5f)));
+            var arrestorPilot = entities.SpawnEntity("MobHuman", new EntityCoordinates(source, new Vector2(3.5f, 0.5f)));
+            ui.OpenUi(victimHelm, ShuttleConsoleUiKey.Key, victimPilot);
+            ui.OpenUi(arrestorHelm, ShuttleConsoleUiKey.Key, arrestorPilot);
+            Assert.That(ui.IsUiOpen(victimHelm, ShuttleConsoleUiKey.Key) && ui.IsUiOpen(arrestorHelm, ShuttleConsoleUiKey.Key),
+                "Both helms must be open to hold a state.");
             helms.Update(0.25f);
             Assert.That(Sources(victimHelm), Is.Empty, "An acquired but inactive beam does not report a capture.");
 
@@ -126,6 +141,10 @@ public sealed class TractorCaptureWarningTest
             entities.DeleteEntity(lastSource);
             helms.Update(0.25f);
             Assert.That(Sources(victimHelm), Is.Empty, "Deleting the source ship must not leave a stale warning.");
+            ui.CloseUi(victimHelm, ShuttleConsoleUiKey.Key, victimPilot);
+            ui.CloseUi(arrestorHelm, ShuttleConsoleUiKey.Key, arrestorPilot);
+            entities.DeleteEntity(victimPilot);
+            entities.DeleteEntity(arrestorPilot);
             entities.DeleteEntity(source);
             entities.DeleteEntity(secondSource);
             entities.DeleteEntity(target);

@@ -26,8 +26,10 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
 - Roofs network as chunk deltas (`SharedRoofSystem.WFDelta`). Maps go to every player, and a cavern map's full roof
   is tens of kilobytes; each tile change on the surface above resent all of it, which emptied clients' state buffers.
   A delta carries only the chunks changed since the client's last ack.
-- Radar requests share one walk of the blips per map per tick (`RadarBlipSystem.WFCache`), and console nav states share
-  one walk of the docks for up to half a second, or until something docks or undocks (`ShuttleConsoleSystem.WFDocks`).
+- Radar requests share one walk of the blips per tick (`RadarBlipSystem.WFCache`), which sorts them into squares so a
+  request skips the squares out of its reach, and console nav states share one walk of the docks for up to half a
+  second, or until something docks or undocks (`ShuttleConsoleSystem.WFDocks`). The server answers one player's blip
+  requests at most `wf.radar.max_request_hz` times a second (10); lower it under load.
 - Radar consoles ask for blips at `wf.radar.request_hz` (15 a second) instead of twice a second, so a turning missile
   stops lurching between straight-line guesses, and the console finds each blip's grid from its own coordinates instead
   of a spatial query per blip per frame. `ShuttleNavControl`'s radar interval was zero, which divided by zero and drew
@@ -94,6 +96,7 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
 - [`Content.Server/_WF/Performance/WFDockIndexSystem.cs`](WFDockIndexSystem.cs)
 - [`Content.Server/_WF/Performance/WFGridDeleteSystem.cs`](WFGridDeleteSystem.cs)
 - [`Content.Server/_WF/Performance/WFGridDeleteWatchSystem.cs`](WFGridDeleteWatchSystem.cs)
+- [`Content.Server/_WF/Performance/WFRequestCap.cs`](WFRequestCap.cs)
 - [`Content.Server/_WF/Performance/WFSerializerWarmupSystem.cs`](WFSerializerWarmupSystem.cs)
 - [`Content.Server/_WF/Performance/WorldControllerSystem.WFIdleHelms.cs`](WorldControllerSystem.WFIdleHelms.cs)
 - [`Content.Server/_WF/Performance/WorldControllerSystem.WFUnloadGrace.cs`](WorldControllerSystem.WFUnloadGrace.cs)
@@ -107,6 +110,7 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
 - [`Content.Shared/_WF/Performance/SharedMoverController.WFAroundCollider.cs`](../../../Content.Shared/_WF/Performance/SharedMoverController.WFAroundCollider.cs)
 - [`Content.Shared/_WF/Performance/SharedRoofSystem.WFDelta.cs`](../../../Content.Shared/_WF/Performance/SharedRoofSystem.WFDelta.cs)
 - [`Content.Shared/_WF/Performance/WFAsteroidFieldComponent.cs`](../../../Content.Shared/_WF/Performance/WFAsteroidFieldComponent.cs)
+- [`Content.Shared/_WF/Performance/WFBlipRemovalBatchEvent.cs`](../../../Content.Shared/_WF/Performance/WFBlipRemovalBatchEvent.cs)
 - [`Content.Shared/_WF/Performance/WFCollectionExtensions.cs`](../../../Content.Shared/_WF/Performance/WFCollectionExtensions.cs)
 - [`Content.Shared/_WF/Performance/WFDeletedRefStateSystem.cs`](../../../Content.Shared/_WF/Performance/WFDeletedRefStateSystem.cs)
 - [`Content.Shared/_WF/Performance/WFPerformanceCVars.cs`](../../../Content.Shared/_WF/Performance/WFPerformanceCVars.cs)
@@ -116,6 +120,7 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
 
 ### Client
 
+- [`Content.Client/_WF/Performance/RadarBlipsSystem.WFRemovalBatch.cs`](../../../Content.Client/_WF/Performance/RadarBlipsSystem.WFRemovalBatch.cs)
 - [`Content.Client/_WF/Performance/ShuttleNavControl.WFAsteroidFields.cs`](../../../Content.Client/_WF/Performance/ShuttleNavControl.WFAsteroidFields.cs)
 - [`Content.Client/_WF/Performance/WFAsteroidFieldSystem.cs`](../../../Content.Client/_WF/Performance/WFAsteroidFieldSystem.cs)
 - [`Content.Client/_WF/Performance/WFNetBufferSystem.cs`](../../../Content.Client/_WF/Performance/WFNetBufferSystem.cs)
@@ -124,6 +129,7 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
 
 - [`Content.IntegrationTests/Tests/_WF/Performance/GridDeleteTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/GridDeleteTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Performance/NavMapPlanetLayerTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/NavMapPlanetLayerTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Performance/WFAngularThrustIdleTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFAngularThrustIdleTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Performance/WFAroundColliderTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFAroundColliderTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Performance/WFAsteroidCullTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFAsteroidCullTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Performance/WFBottomlessRegenTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFBottomlessRegenTest.cs)
@@ -137,6 +143,7 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
 - [`Content.IntegrationTests/Tests/_WF/Performance/WFNavMapDeltaTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFNavMapDeltaTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Performance/WFNavMapTrimTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFNavMapTrimTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Performance/WFPreferencesRefreshTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFPreferencesRefreshTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Performance/WFRadarRequestTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFRadarRequestTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Performance/WFRadiusHeaterTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFRadiusHeaterTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Performance/WFRoofDeltaTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFRoofDeltaTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Performance/WFSharedWalkTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Performance/WFSharedWalkTest.cs)
@@ -145,6 +152,7 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
 
 ### Unit tests
 
+- [`Content.Tests/_WF/Performance/WFRequestCapTest.cs`](../../../Content.Tests/_WF/Performance/WFRequestCapTest.cs)
 - [`Content.Tests/_WF/Performance/WFTickBucketsTest.cs`](../../../Content.Tests/_WF/Performance/WFTickBucketsTest.cs)
 - [`Content.Tests/_WF/Performance/WFTickSpreadTest.cs`](../../../Content.Tests/_WF/Performance/WFTickSpreadTest.cs)
 
@@ -169,6 +177,7 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
 - [`Content.Client/_Mono/Radar/RadarBlipsSystem.cs`](../../../Content.Client/_Mono/Radar/RadarBlipsSystem.cs)
   - blips arrived at 2 Hz, so a curving missile lurched between straight-line guesses.
   - lookups and colours for the missile lines, which are rebuilt on every draw frame
+  - removals arrive one batch a tick
   - the sent coord already names its grid, so only an off-grid blip needs the query
   - one dictionary lookup per missile, not a scan of every blip per missile.
 - [`Content.Client/Atmos/Consoles/AtmosMonitoringConsoleNavMapControl.cs`](../../../Content.Client/Atmos/Consoles/AtmosMonitoringConsoleNavMapControl.cs): wizden#38974, subnets carry a Color instead of a hex string
@@ -241,8 +250,9 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
   - see above
 - [`Content.Server/_Mono/Radar/RadarBlipSystem.cs`](../../_Mono/Radar/RadarBlipSystem.cs)
   - removals go only to sessions that asked recently
+  - the server caps how often it answers one player; the client's throttle is not enforced
   - send removals only to recent radar users, none during round cleanup
-  - every radar on a map shares one walk of the blips per tick
+  - radars share one walk of the blips per tick and skip the squares out of reach
 - [`Content.Server/_Mono/Ships/Systems/ShuttleRestrictionsSystem.cs`](../../_Mono/Ships/Systems/ShuttleRestrictionsSystem.cs): integer division made this 0 or 1, so the 0.5 threshold needed every console powered
 - [`Content.Server/_Mono/Temperature/Systems/EntityRadiusHeaterSystem.cs`](../../_Mono/Temperature/Systems/EntityRadiusHeaterSystem.cs)
   - each heater takes its own tick of the second, not all on one
@@ -331,9 +341,11 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
   - gauge of sleeping movers skipped
   - idle-mover skip
   - movers skipped this tick for being asleep with no input
+  - reused by HandleShuttleMovement
   - reset idle-skip counter
   - a sleeping, input-less, player-less mover has nothing to move
   - idle movers skipped
+  - two lists were allocated per shuttle per tick
   - Enum.GetValues allocated every tick per shuttle
 - [`Content.Server/Pinpointer/NavMapSystem.cs`](../../Pinpointer/NavMapSystem.cs)
   - a planet layer grid's nav map would cover the whole world and nothing shows it
@@ -357,6 +369,7 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
 - [`Content.Server/Procedural/DungeonJob/DungeonJob.PostGenDungeonEntrance.cs`](../../Procedural/DungeonJob/DungeonJob.PostGenDungeonEntrance.cs): yield between entrances so a big dungeon never finishes in one tick
 - [`Content.Server/Procedural/DungeonJob/DungeonJob.PostGenEntranceFlank.cs`](../../Procedural/DungeonJob/DungeonJob.PostGenEntranceFlank.cs): yield between spawns so a big dungeon never finishes in one tick
 - [`Content.Server/Procedural/DungeonJob/DungeonJob.PostGenRoomEntrance.cs`](../../Procedural/DungeonJob/DungeonJob.PostGenRoomEntrance.cs): yield between rooms so a big dungeon never finishes in one tick
+- [`Content.Server/Shuttles/Components/ShuttleComponent.cs`](../../Shuttles/Components/ShuttleComponent.cs): what SetAngularThrust last set every angular thruster to; null once one is added
 - [`Content.Server/Shuttles/Systems/DockingSystem.Shuttle.cs`](../../Shuttles/Systems/DockingSystem.Shuttle.cs)
   - rule out pairs that land elsewhere before the tile walk, not after
   - chunk-first walk, same result; this ran per dock pair for every fixture
@@ -367,8 +380,10 @@ Small fixes for hot spots found in live server profiles, kept as narrow hooks in
   - consoles should see an undock at once
   - every open console asks for this, so share one walk of the docks
 - [`Content.Server/Shuttles/Systems/ThrusterSystem.cs`](../../Shuttles/Systems/ThrusterSystem.cs)
+  - the arrival hasn't been set yet
   - fixed list instead of Enum.GetValues on every call
   - idle shuttles call this every tick with everything already off
+  - idle shuttles call this every tick with every thruster already set
 - [`Content.Server/Sound/EmitSoundSystem.cs`](../../Sound/EmitSoundSystem.cs): finding what's due walks every spammer; NextSound keeps the rate
 - [`Content.Server/Spreader/SpreaderSystem.cs`](../../Spreader/SpreaderSystem.cs)
   - see Update

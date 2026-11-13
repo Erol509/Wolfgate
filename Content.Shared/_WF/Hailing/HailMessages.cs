@@ -84,6 +84,10 @@ public sealed class HailChooseMessage : BoundUserInterfaceMessage
     }
 }
 
+/// <summary>The person at a console that is itself a hail service puts it in front of the caller.</summary>
+[Serializable, NetSerializable]
+public sealed class HailOfferServiceMessage : BoundUserInterfaceMessage;
+
 /// <summary>Tells a console why its hail or call stopped.</summary>
 [Serializable, NetSerializable]
 public sealed class HailEndedMessage : BoundUserInterfaceMessage

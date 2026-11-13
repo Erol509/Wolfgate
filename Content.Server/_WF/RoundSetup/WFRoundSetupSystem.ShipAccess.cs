@@ -60,7 +60,8 @@ public sealed partial class WFRoundSetupSystem
                 !_players.TryGetSessionById(user, out var session) || session.AttachedEntity != body ||
                 !_shipCredentials.TryGetWornCard(body, out var card) || !_shipCredentials.TryGetKey(card, out var key) ||
                 !EntityManager.System<StationRecordsSystem>().TryGetRecord<GeneralStationRecord>(_shipCredentials.ToRecordKey(key), out var record) ||
-                record.Name != member.Name)
+                // A cyborg's record is under its chassis name, not its player's character.
+                record.Name != member.Name && record.Name != Name(body))
                 continue;
             member.AccessKey = key;
         }

@@ -32,6 +32,7 @@ public sealed partial class ShipShieldsSystem
         SubscribeLocalEvent<ShipShieldComponent, WFShipShieldProjectileRayHitEvent>(OnWolfgateShieldRayHit);
         SubscribeLocalEvent<ShipShieldedComponent, MoveEvent>(OnWolfgateShieldGridMove);
         SubscribeLocalEvent<ShipShieldedComponent, EntityTerminatingEvent>(OnWolfgateShieldGridTerminating);
+        InitializeWolfgateDeflectors();
     }
 
     private void OnWolfgateShieldGridMove(EntityUid uid, ShipShieldedComponent component, ref MoveEvent args)
@@ -93,11 +94,13 @@ public sealed partial class ShipShieldsSystem
         _transformSystem.SetCoordinates(shield, Transform(shield), coordinates, rotation);
     }
 
-    /// <summary>Passes shots from the protected ship and other protected autonomous fire.</summary>
+    /// <summary>Passes shots from the protected ship, other protected autonomous fire and rounds a deflector already slowed.</summary>
     private bool IsWolfgateShieldFriendlyProjectile(EntityUid shield, EntityUid projectile)
     {
         if (!TryComp<ShipShieldComponent>(shield, out var shieldComp))
             return false;
+        if (HasWolfgateDeflectorPassed(shield, projectile))
+            return true;
         if (TryComp<ProjectileGridPhaseComponent>(projectile, out var phase) && phase.SourceGrid == shieldComp.Shielded)
             return true;
         if (!_shipWeaponProjectileQuery.HasComponent(projectile) || !_projectileQuery.TryGetComponent(projectile, out var shot))
@@ -204,7 +207,7 @@ public sealed partial class ShipShieldsSystem
         _transformSystem.SetCoordinates(args.Projectile, _transformSystem.ToCoordinates(args.Position));
         var contact = new ProjectileReflectAttemptEvent(args.Projectile, args.Component, false);
         OnWolfgateShieldContact(uid, component, ref contact);
-        args.Handled = args.Component.ProjectileSpent;
+        args.Handled = args.Component.ProjectileSpent || HasWolfgateDeflectorPassed(uid, args.Projectile);
     }
 
     /// <summary>Consumes ship weapon projectiles after a real shield contact.</summary>
@@ -216,6 +219,8 @@ public sealed partial class ShipShieldsSystem
         args.Cancelled = true;
         var strength = WolfgateShieldStrength(uid, args.ProjUid);
         if (strength <= 0f)
+            return;
+        if (component.Source is { } deflector && TryDeflectWolfgateProjectile(uid, component, deflector, args.ProjUid, projectile, strength))
             return;
         DisarmWolfgateAbsorbedProjectile(args.ProjUid);
         var impactPosition = WolfgateShieldImpactPosition(uid, args.ProjUid);

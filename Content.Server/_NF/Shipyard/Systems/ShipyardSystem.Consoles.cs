@@ -109,6 +109,9 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (args.Actor is not { Valid: true } player)
             return;
 
+        if (WfRefuses(shipyardConsoleUid, player, component)) // WOLFGATE(ShipCommand): a commanded ship's shipyards turn the barred away
+            return; // WOLFGATE(ShipCommand)
+
         if (component.TargetIdSlot.ContainerSlot?.ContainedEntity is not { Valid: true } targetId)
         {
             ConsolePopup(player, Loc.GetString("shipyard-console-no-idcard"));
@@ -157,6 +160,8 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
         if (vessel.Price <= 0)
             return;
+
+        var wfPrice = WfQuote(shipyardConsoleUid, player, vessel.Price, out var wfRule); // WOLFGATE(ShipCommand): a commanded ship's price rules
 
         if (_station.GetOwningStation(shipyardConsoleUid) is not { Valid: true } station)
         {
@@ -267,21 +272,22 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             //     cashBalance = Math.Max(cashBalance - vessel.Price,0);
             // if (remainingDebt > 0) // Mono
             //     _bank.TryBankWithdraw(player, remainingDebt); // Mono
-            var fromCash = Math.Min(cashBalance, vessel.Price);
-            var fromBank = vessel.Price - fromCash;
+            var fromCash = Math.Min(cashBalance, wfPrice); // WOLFGATE(ShipCommand): what this buyer is charged
+            var fromBank = wfPrice - fromCash; // WOLFGATE(ShipCommand)
             _bank.TryGetBalance(player, out var bankFunds);
 
             // The bank goes first, so a refused withdrawal leaves the cash in the slot.
             if (bankFunds < fromBank || fromBank > 0 && !_bank.TryBankWithdraw(player, fromBank))
             {
                 Del(shuttleUid);
-                ConsolePopup(player, Loc.GetString("cargo-console-insufficient-funds", ("cost", vessel.Price)));
+                ConsolePopup(player, Loc.GetString("cargo-console-insufficient-funds", ("cost", wfPrice))); // WOLFGATE(ShipCommand)
                 PlayDenySound(player, shipyardConsoleUid, component);
                 return;
             }
 
             if (fromCash > 0 && TryTakeConsoleCash(shipyardConsoleUid, player, fromCash)) // WOLFGATE(Traders): the cash share comes off a hosting trader's counter
                 cashBalance -= fromCash;
+            WfRecordPurchase(shipyardConsoleUid, player, shuttleUid, vessel.ID, vessel.Price, wfPrice, wfRule); // WOLFGATE(ShipCommand)
             // WOLFGATE END
         }
 
@@ -434,7 +440,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         {
             // Get the price of the ship
             if (TryComp<ShuttleDeedComponent>(targetId, out var deed))
-                sellValue = (int)_pricing.AppraiseGrid((EntityUid)(deed?.ShuttleUid!), LacksPreserveOnSaleComp);
+                sellValue = _wfShipServices.ResaleValue((EntityUid)(deed?.ShuttleUid!), (int)_pricing.AppraiseGrid((EntityUid)(deed?.ShuttleUid!), LacksPreserveOnSaleComp)); // WOLFGATE(ShipCommand): a bargain resells less its discount
 
             // Adjust for taxes
             sellValue = CalculateShipResaleValue((shipyardConsoleUid, component), sellValue);
@@ -463,7 +469,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (voucherUsed)
             _adminLogger.Add(LogType.ShipYardUsage, LogImpact.Low, $"{ToPrettyString(player):actor} used {ToPrettyString(targetId)} to purchase shuttle {ToPrettyString(shuttleUid)} with a voucher via {ToPrettyString(shipyardConsoleUid)}");
         else
-            _adminLogger.Add(LogType.ShipYardUsage, LogImpact.Low, $"{ToPrettyString(player):actor} used {ToPrettyString(targetId)} to purchase shuttle {ToPrettyString(shuttleUid)} for {vessel.Price} credits via {ToPrettyString(shipyardConsoleUid)}");
+            _adminLogger.Add(LogType.ShipYardUsage, LogImpact.Low, $"{ToPrettyString(player):actor} used {ToPrettyString(targetId)} to purchase shuttle {ToPrettyString(shuttleUid)} for {wfPrice} credits via {ToPrettyString(shipyardConsoleUid)}"); // WOLFGATE(ShipCommand): the price actually paid
 
         // Adding the record to the shuttle records system makes them eligible to be copied.
         // Can be set on the component of the shipyard.
@@ -476,7 +482,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                     ownerName: shuttleOwner,
                     entityUid: _entityManager.GetNetEntity(shuttleUid),
                     purchasedWithVoucher: voucherUsed,
-                    purchasePrice: (uint)vessel.Price
+                    purchasePrice: (uint)(voucherUsed ? vessel.Price : wfPrice) // WOLFGATE(ShipCommand): the price actually paid
                 )
             );
         }
@@ -509,6 +515,9 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (attemptEv.Cancelled)
             return;
         // WOLFGATE END
+
+        if (WfRefuses(uid, player, component)) // WOLFGATE(ShipCommand): a commanded ship's shipyards turn the barred away
+            return; // WOLFGATE(ShipCommand)
 
         if (component.TargetIdSlot.ContainerSlot?.ContainedEntity is not { Valid: true } targetId)
         {
@@ -708,7 +717,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         int sellValue = 0;
         if (deed?.ShuttleUid != null)
         {
-            sellValue = (int)_pricing.AppraiseGrid((EntityUid)(deed?.ShuttleUid!), LacksPreserveOnSaleComp);
+            sellValue = _wfShipServices.ResaleValue((EntityUid)(deed?.ShuttleUid!), (int)_pricing.AppraiseGrid((EntityUid)(deed?.ShuttleUid!), LacksPreserveOnSaleComp)); // WOLFGATE(ShipCommand): a bargain resells less its discount
             sellValue = CalculateShipResaleValue((uid, component), sellValue);
         }
 
@@ -817,7 +826,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             int sellValue = 0;
             if (deed?.ShuttleUid != null)
             {
-                sellValue = (int)_pricing.AppraiseGrid(deed.ShuttleUid.Value, LacksPreserveOnSaleComp);
+                sellValue = _wfShipServices.ResaleValue(deed.ShuttleUid.Value, (int)_pricing.AppraiseGrid(deed.ShuttleUid.Value, LacksPreserveOnSaleComp)); // WOLFGATE(ShipCommand): a bargain resells less its discount
                 sellValue = CalculateShipResaleValue((uid, component), sellValue);
             }
 
@@ -1053,6 +1062,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             uiKey.ToString(),
             freeListings,
             CalculateSellRate(uid));
+        newState.PriceMultiplier = WfPriceMultiplier(uid, uiKey); // WOLFGATE(ShipCommand): shows what a commanded ship's rules charge
 
         _ui.SetUiState(uid, uiKey, newState);
     }

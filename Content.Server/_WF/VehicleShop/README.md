@@ -7,7 +7,10 @@ takes the price from the customer's bank and delivers the vehicle onto the pad, 
 room the biggest vehicle of the catalogue takes up (loose items and what lies under the floor don't count), and the
 window names whatever is in the way. A vehicle parked on the pad is sold back from the same window for 75% of the lower of its appraised value
 and its listed price, paid into the bank (as cash for an Ironman); a vehicle with anyone or anything dragged still inside
-can't be sold. Mappers place a terminal and a pad with room for the biggest vehicle round it.
+can't be sold. Aboard a commanded ship the ship's price rules set what each customer pays, so each is sent their own
+window state as a message; what is sold below its listing carries the ship's bargain mark and resells, here and
+anywhere, for no more than was paid (ShipCommand README). Mappers place a terminal and a pad with room for the biggest
+vehicle round it.
 
 The first terminal is `WFComputerVehicleShopExpeditionary` with `WFVehicleCatalogExpeditionary`: two small cargo trucks,
 the box and pizza vans, the ambulance and the transport and medical humvees. Prices sit about a fifth over each
@@ -29,7 +32,8 @@ answered by MilitaryVehicles), and everything sold raises `WFVehicleShopPurchase
 Delivery beacons (`WFVehicleBeaconSystem`, `beacons.yml`) are a vehicle bought to carry: used in hand, the beacon is set
 down and opens ten seconds later into its vehicle, square to the ground, if nothing solid is in its room (the pad's
 check), with the key handed to whoever set it off; blocked, it says what is in the way and can be set off again. A
-beacon sells at its catalogue's listing and resells for what the pad would pay for the vehicle. The roadside mechanic
+beacon sells at its catalogue's listing and resells for what the pad would pay for the vehicle; one bought at a bargain
+opens into a vehicle that carries the bargain on. The roadside mechanic
 sells them from `WFVehicleCatalogMechanic`: the ATV, two small trucks and two vans. The vehicle repair box
 (`WFVehicleRepairKitSystem`) is used on a damaged civilian vehicle (appraised up to 40,000) and makes the frame and
 every fitted part whole, once.

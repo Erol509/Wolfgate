@@ -65,8 +65,8 @@ public sealed partial class WFBenchSystem : EntitySystem
     public static readonly EntProtoId Cartridge = "WFBenchCartridge";
     public static readonly EntProtoId TicketPaper = "WFBenchTicket";
 
-    /// <summary>Jobs that sit on the Bench.</summary>
-    public static readonly HashSet<string> JudgeJobs = new() { "SecurityGuard" };
+    /// <summary>Jobs that sit on the Bench: judges and the Overseer they answer to.</summary>
+    public static readonly HashSet<string> JudgeJobs = new() { "SecurityGuard", "StationRepresentative" };
 
     private const int MaxTitle = 60;
     private const int MaxText = 300;

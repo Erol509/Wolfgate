@@ -7,3 +7,13 @@
   storage:
     back:
     - HonkCoFlippo
+
+- type: loadout
+  id: WFContractorCrazyGlue
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT1
+  price: 0
+  storage:
+    back:
+    - CrazyGlue

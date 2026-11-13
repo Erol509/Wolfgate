@@ -7,7 +7,9 @@ using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Server._NF.Bank;
+using Content.Server._WF.ShipCommand;
 using Content.Shared._NF.Bank.Components;
+using Content.Shared._WF.ShipCommand;
 using Content.Shared._WF.SafetyDepositBox.BUI;
 using Content.Shared._WF.SafetyDepositBox.Components;
 using Content.Shared._WF.SafetyDepositBox.Events;
@@ -47,6 +49,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
     [Dependency] private MapLoaderSystem _loader = default!;
     [Dependency] private MonoCoinsManager _coinBase = default!; // I had to.
     [Dependency] private ISharedPlayerManager _playerManager = default!;
+    [Dependency] private WFShipServiceSystem _shipServices = default!;
 
     private readonly HashSet<Guid> _pendingBoxes = new();
 
@@ -154,18 +157,33 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             0, // No cash display needed anymore
             boxInSlot != null,
             boxInSlotInfo,
-            GetBoxCost(component.SmallBoxProto),
-            GetBoxCost(component.MediumBoxProto),
-            GetBoxCost(component.LargeBoxProto),
+            _shipServices.Quote(consoleUid, player, WFShipServiceKind.Deposit, GetBoxCost(component.SmallBoxProto)),
+            _shipServices.Quote(consoleUid, player, WFShipServiceKind.Deposit, GetBoxCost(component.MediumBoxProto)),
+            _shipServices.Quote(consoleUid, player, WFShipServiceKind.Deposit, GetBoxCost(component.LargeBoxProto)),
             _gameTicker.RoundId
         );
 
         _uiSystem.SetUiState(consoleUid, SafetyDepositConsoleUiKey.Key, state);
     }
 
+    /// <summary>
+    /// True, with a popup and the deny sound, when the console's commanded ship turns the barred away: no new box, and
+    /// a box they own stays put, neither taken out, reclaimed nor stored, until they are taken off the list.
+    /// </summary>
+    private bool Refused(EntityUid console, SafetyDepositConsoleComponent component, EntityUid player)
+    {
+        if (!_shipServices.Refuses(console, player, out var refusal))
+            return false;
+
+        ConsolePopup(player, refusal);
+        PlayDenySound(console, component);
+        return true;
+    }
+
     private void OnPurchase(EntityUid uid, SafetyDepositConsoleComponent component, SafetyDepositPurchaseMessage args)
     {
-        int cost;
+        int baseCost, cost;
+        string? rule;
         EntityPrototype prototypeId;
         if (args.Actor is not { Valid: true } player)
             return;
@@ -173,9 +191,13 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         if (!TryComp<ActorComponent>(player, out var actor))
             return;
 
+        if (Refused(uid, component, player))
+            return;
+
         if (_prototypeManager.TryIndex(args.BoxProto, out var proto) && proto.TryComp<SafetyDepositBoxComponent>(out var boxComponent, _componentFactory))
         {
-            cost = boxComponent.Cost;
+            baseCost = boxComponent.Cost;
+            cost = _shipServices.Quote(uid, player, WFShipServiceKind.Deposit, baseCost, out rule);
             prototypeId = proto;
         }
         else
@@ -217,7 +239,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         }
 
         // Withdraw from bank
-        if (!_bankSystem.TryBankWithdraw(session!, prefs!, profile, (int)(initialBankBalance - bankBalance), out var newBalance, true))
+        if (cost > 0 && !_bankSystem.TryBankWithdraw(session!, prefs!, profile, (int)(initialBankBalance - bankBalance), out _, true))
         {
             ConsolePopup(player, Loc.GetString("safety-deposit-console-error-transaction-failed"));
             PlayDenySound(uid, component);
@@ -225,6 +247,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         }
 
         _bankSystem.RefreshBalance(player);
+        _shipServices.Record(uid, player, WFShipServiceKind.Deposit, prototypeId.ID, baseCost, cost, rule);
 
         var characterIndex = prefs.SelectedCharacterIndex;
         var characterName = MetaData(player).EntityName;
@@ -288,7 +311,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         if (args.Actor is not { Valid: true } player)
             return;
 
-        if (!TryComp<ActorComponent>(player, out var actor))
+        if (!TryComp<ActorComponent>(player, out var actor) || Refused(uid, component, player))
             return;
 
         // Check if there's a box in the slot
@@ -405,7 +428,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         if (args.Actor is not { Valid: true } player)
             return;
 
-        if (!TryComp<ActorComponent>(player, out var actor))
+        if (!TryComp<ActorComponent>(player, out var actor) || Refused(uid, component, player))
             return;
 
         var userId = actor.PlayerSession.UserId;
@@ -422,7 +445,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         if (args.Actor is not { Valid: true } player)
             return;
 
-        if (!TryComp<ActorComponent>(player, out var actor))
+        if (!TryComp<ActorComponent>(player, out var actor) || Refused(uid, component, player))
             return;
 
         var userId = actor.PlayerSession.UserId;

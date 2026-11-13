@@ -109,4 +109,16 @@ public sealed class EncountersCVars
     /// <summary>Seconds a simulated fight between two even ships takes, on average, before one of them is lost.</summary>
     public static readonly CVarDef<float> DuelMeanSeconds =
         CVarDef.Create("wf.encounters.duel_mean_seconds", 120f, CVar.SERVERONLY);
+
+    /// <summary>Metres around a new encounter's origin counted for crowding; 0 turns the check off.</summary>
+    public static readonly CVarDef<float> CrowdRadius =
+        CVarDef.Create("wf.encounters.crowd_radius", 5000f, CVar.SERVERONLY);
+
+    /// <summary>A new encounter is not placed where this many unresolved encounters already have a ship within the crowd radius.</summary>
+    public static readonly CVarDef<int> CrowdMax =
+        CVarDef.Create("wf.encounters.crowd_max", 2, CVar.SERVERONLY);
+
+    /// <summary>While this many encounters are fighting, the scheduler skips its turn; 0 never skips.</summary>
+    public static readonly CVarDef<int> BusyFights =
+        CVarDef.Create("wf.encounters.busy_fights", 3, CVar.SERVERONLY);
 }

@@ -202,6 +202,46 @@ public sealed class StateRecoveryTest
         await pair.CleanReturnAsync();
     }
 
+    /// <summary>A client stuck applying states runs no ticks, but its frames still purge the stale entry.</summary>
+    [Test]
+    public async Task StalledClientPurgesFromFrames()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var client = pair.Client;
+        var cEntMan = client.EntMan;
+
+        var map = await pair.CreateTestMap();
+        var netMap = pair.Server.EntMan.GetNetEntity(map.MapUid);
+        await RunFor(pair, TimeSpan.FromSeconds(1));
+        var recovery = cEntMan.System<WFStateRecoverySystem>();
+
+        DynamicTree<EntityUid> tree = default!;
+        var stale = EntityUid.Invalid;
+        await client.WaitPost(() =>
+        {
+            tree = cEntMan.GetComponent<BroadphaseComponent>(cEntMan.GetEntity(netMap)).SundriesTree;
+            stale = cEntMan.SpawnEntity(null, MapCoordinates.Nullspace);
+            tree.Add(stale, new Box2(5000f, 5000f, 5001f, 5001f));
+            cEntMan.DeleteEntity(stale);
+        });
+
+        // No ticks run while stuck; only frames do.
+        await Task.Delay(TimeSpan.FromSeconds(2.5));
+        var failureLevel = pair.ClientLogHandler.FailureLevel;
+        pair.ClientLogHandler.FailureLevel = LogLevel.Error;
+        try
+        {
+            await client.WaitPost(() => recovery.FrameUpdate(0.016f));
+        }
+        finally
+        {
+            pair.ClientLogHandler.FailureLevel = failureLevel;
+        }
+
+        Assert.That(tree.Contains(stale), Is.False, "the stalled client kept the deleted entity in the tree");
+        await pair.CleanReturnAsync();
+    }
+
     // The detector windows on real time, which pooled ticks outrun.
     private static async Task RunFor(TestPair pair, TimeSpan time)
     {

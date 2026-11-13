@@ -430,6 +430,9 @@ unmarked:
   - path: Resources/Maps/_Mono/Outpost/caelestinus_central.yml
     module: Contracts
     reason: Contract boards with pickup pads at the central plaza and beside each of the six dock arms.
+  - path: Resources/Maps/_Mono/Outpost/caelestinus_central.yml
+    module: ScratchTickets
+    reason: Scratches-to-Win, the scratch ticket seller, stands at the card table in the bar lounge.
   - path: Resources/Maps/_Mono/POI/tsfmchalcyon.yml
     module: Contracts
     reason: TSF faction contract boards with pickup pads in the arrival hall, by both west public docks and the navy dock hall.

@@ -9,6 +9,11 @@
     state: icon
   - type: Item
     size: Tiny
+  # WOLFGATE(WolfChem) START: fits a baggie
+  - type: Tag
+    tags:
+    - WFBaggable
+  # WOLFGATE END
   - type: StaticPrice
     price: 10000 # worth a lot but expensive to make
   - type: Food
