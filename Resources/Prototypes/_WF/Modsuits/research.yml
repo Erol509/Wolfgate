@@ -19,7 +19,7 @@
   - ModsuitCoreStandard
   - ModsuitModuleStorageCompact
   - ModsuitModuleFlashlight
-  position: -4,-1
+  position: -4,-2
   technologyPrerequisites:
   - MagnetsTech
 
