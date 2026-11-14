@@ -31,8 +31,12 @@
   components:
   - type: ModSuit
     startingModules:
-    - ModsuitModuleFlashlight
     - ModsuitModuleStorageCompact
+    - ModsuitModuleFlashlight
+    - ModsuitModuleJetpack
+    - ModsuitModulePepperShoulders
+    - ModsuitModuleRestraintAssist
+    - ModsuitModuleHeadProtector
   # WOLFGATE(Modsuits): a MOD core replaces the power cell
   - type: ItemSlots
     slots:
@@ -176,8 +180,12 @@
   components:
   - type: ModSuit
     startingModules:
-    - ModsuitModuleFlashlight
     - ModsuitModuleStorageCompact
+    - ModsuitModuleFlashlight
+    - ModsuitModuleJetpack
+    - ModsuitModulePepperShoulders
+    - ModsuitModuleRestraintAssist
+    - ModsuitModuleHeadProtector
   # WOLFGATE(Modsuits): a MOD core replaces the power cell
   - type: ItemSlots
     slots:

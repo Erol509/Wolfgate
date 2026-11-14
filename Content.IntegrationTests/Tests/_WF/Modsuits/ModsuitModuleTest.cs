@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client._WF.Modsuits;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
+using Content.Shared._WF.Modsuits;
 using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._WF.Modsuits.Systems;
 using Content.Shared.Armor;
@@ -12,6 +15,7 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Wires;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -67,7 +71,7 @@ public sealed class ModsuitModuleTest
             Assert.That(modSuit.GetCharge(battery!.Value), Is.GreaterThan(0f), "the core cell should start charged");
             var core = modSuit.GetCore((suit, comp));
             Assert.That(core, Is.Not.Null);
-            Assert.That(comp.ModulesContainer.ContainedEntities, Has.Count.EqualTo(2), "the power-cell suit should ship with its two basic modules");
+            Assert.That(comp.ModulesContainer.ContainedEntities, Has.Count.EqualTo(3), "the power-cell suit should ship with its three basic modules");
 
             var panel = entMan.GetComponent<WiresPanelComponent>(suit);
             Assert.That(wires.TogglePanel(suit, panel, true, human));
@@ -78,7 +82,7 @@ public sealed class ModsuitModuleTest
                 "a second flashlight should be rejected as a duplicate");
             Assert.That(modSuit.TryInstallModule((suit, comp), jetpack, human), "a jetpack module should install");
 
-            Assert.That(modSuit.GetComplexity((suit, comp)), Is.EqualTo(5));
+            Assert.That(modSuit.GetComplexity((suit, comp)), Is.EqualTo(6));
             Assert.That(entMan.HasComponent<StorageComponent>(suit), Is.True,
                 "the compact storage module should grant storage as soon as it is installed");
             Assert.That(wires.TogglePanel(suit, panel, false, human), "the panel should close before sealing");
@@ -105,6 +109,11 @@ public sealed class ModsuitModuleTest
             Assert.That(comp.State, Is.EqualTo(ModSuitState.Active), "the suit should finish sealing");
             Assert.That(modSuit.TryUseModule(jetpack, human), "the ion jetpack should switch on in weightless space");
             Assert.That(entMan.HasComponent<ActiveJetpackComponent>(jetpack), "the jetpack should be active");
+            var jetpackComp = entMan.GetComponent<JetpackComponent>(jetpack);
+            Assert.That(jetpackComp.JetpackUser, Is.EqualTo(human),
+                "the jetpack should track its wearer so the client can draw particles");
+            Assert.That(jetpackComp.Acceleration, Is.GreaterThan(1f), "the ion jetpack acceleration should match a normal jetpack");
+            Assert.That(jetpackComp.WeightlessModifier, Is.GreaterThan(2f), "the ion jetpack should not move at half speed");
             var coreBattery = modSuit.GetBattery((suit, comp))!.Value;
             batteries.ChangeCharge(coreBattery.Owner, -100000f);
 
@@ -150,8 +159,8 @@ public sealed class ModsuitModuleTest
             var battery = modSuit.GetBattery((suit, comp));
             Assert.That(battery, Is.Not.Null, "the standard core should ship with a power cell");
             Assert.That(modSuit.GetCharge(battery!.Value), Is.GreaterThan(0f), "the shipped cell should be charged");
-            Assert.That(comp.ModulesContainer.ContainedEntities, Has.Count.EqualTo(2),
-                "the power-cell suit should ship with a flashlight and a compact storage module");
+            Assert.That(comp.ModulesContainer.ContainedEntities, Has.Count.EqualTo(3),
+                "the power-cell suit should ship with storage, welding and a flashlight");
         });
 
         await pair.CleanReturnAsync();
@@ -408,6 +417,233 @@ public sealed class ModsuitModuleTest
                     Assert.That(1f - sprint, Is.LessThanOrEqualTo(cap + 0.0001f),
                         $"{proto.ID} has {1f - sprint:P2} sprint slowdown, cap is {cap:P0}");
                 });
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>A worn suit's core charges while its wearer is inside a cyborg recharger.</summary>
+    [Test]
+    public async Task SuitChargesInsideBorgCharger()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var map = await pair.CreateTestMap();
+        var batteries = entMan.System<BatterySystem>();
+        var containers = entMan.System<SharedContainerSystem>();
+        var inventory = entMan.System<InventorySystem>();
+        var modSuit = entMan.System<ModSuitSystem>();
+        var transform = entMan.System<SharedTransformSystem>();
+
+        EntityUid wearer = default, suit = default;
+        await server.WaitPost(() =>
+        {
+            wearer = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            suit = entMan.SpawnEntity("ClothingModsuitStandardPowerCell", map.GridCoords);
+            Assert.That(inventory.TryEquip(wearer, suit, "back", force: true), Is.True);
+
+            var suitComp = entMan.GetComponent<ModSuitComponent>(suit);
+            var battery = modSuit.GetBattery((suit, suitComp));
+            Assert.That(battery, Is.Not.Null);
+            batteries.SetCharge(battery!.Value.Owner, 0f, battery.Value.Comp);
+
+            var charger = entMan.SpawnEntity("BorgCharger", map.GridCoords);
+            transform.AnchorEntity(charger);
+            var receiver = entMan.EnsureComponent<ApcPowerReceiverComponent>(charger);
+            receiver.NeedsPower = false;
+            receiver.Powered = true;
+
+            Assert.That(containers.TryGetContainer(charger, "entity_storage", out var container), Is.True);
+            Assert.That(containers.Insert(wearer, container!), Is.True);
+        });
+
+        await server.WaitRunTicks(pair.SecondsToTicks(2f));
+
+        await server.WaitAssertion(() =>
+        {
+            var suitComp = entMan.GetComponent<ModSuitComponent>(suit);
+            var battery = modSuit.GetBattery((suit, suitComp));
+            Assert.That(battery, Is.Not.Null);
+            Assert.That(battery!.Value.Comp.CurrentCharge, Is.GreaterThan(0f),
+                "the suit core was not charged by the cyborg recharger");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>A suit can start with some parts retracted, but modules only work while their part is deployed.</summary>
+    [Test]
+    public async Task SuitActivatesWithOnlyDeployedParts()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var map = await pair.CreateTestMap();
+        var inventory = entMan.System<InventorySystem>();
+        var modSuit = entMan.System<ModSuitSystem>();
+
+        EntityUid wearer = default, suit = default;
+        await server.WaitPost(() =>
+        {
+            wearer = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            suit = entMan.SpawnEntity("ClothingModsuitEngineerPowerCell", map.GridCoords);
+            Assert.That(inventory.TryEquip(wearer, suit, "back", force: true), Is.True);
+        });
+        await server.WaitRunTicks(5);
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(modSuit.TryStartActivation((suit, comp), wearer), Is.True,
+                "the suit refused to activate with every part retracted");
+        });
+        await server.WaitRunTicks(pair.SecondsToTicks(3f));
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(comp.State, Is.EqualTo(ModSuitState.Active));
+            foreach (var (slot, part) in comp.PartEntities)
+            {
+                Assert.That(entMan.GetComponent<ModPartComponent>(part).Sealed, Is.False,
+                    $"{slot} sealed while it was retracted");
+            }
+
+            modSuit.StartDeactivation((suit, comp));
+        });
+        await server.WaitRunTicks(pair.SecondsToTicks(6f));
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(comp.State, Is.EqualTo(ModSuitState.Inactive));
+            Assert.That(modSuit.TryDeployPart((suit, comp), "head", wearer), Is.True);
+            Assert.That(modSuit.TryStartActivation((suit, comp), wearer), Is.True);
+        });
+        await server.WaitRunTicks(pair.SecondsToTicks(3f));
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(comp.State, Is.EqualTo(ModSuitState.Active));
+            Assert.That(entMan.GetComponent<ModPartComponent>(comp.PartEntities["head"]).Sealed, Is.True,
+                "the deployed helmet did not seal");
+            Assert.That(entMan.GetComponent<ModPartComponent>(comp.PartEntities["shoes"]).Sealed, Is.False,
+                "the retracted boots sealed");
+
+            EntityUid? flashlight = null;
+            EntityUid? magboots = null;
+            foreach (var module in comp.ModulesContainer.ContainedEntities)
+            {
+                switch (entMan.GetComponent<MetaDataComponent>(module).EntityPrototype?.ID)
+                {
+                    case "ModsuitModuleFlashlight":
+                        flashlight = module;
+                        break;
+                    case "ModsuitModuleMagboots":
+                        magboots = module;
+                        break;
+                }
+            }
+
+            Assert.That(flashlight, Is.Not.Null);
+            Assert.That(magboots, Is.Not.Null);
+            Assert.That(modSuit.TryUseModule(flashlight!.Value, wearer), Is.True,
+                "a module whose part is deployed should still work");
+            Assert.That(modSuit.TryUseModule(magboots!.Value, wearer), Is.False,
+                "a module whose part is retracted should not work");
+
+            Assert.That(modSuit.TryDeployPart((suit, comp), "shoes", wearer), Is.True,
+                "the suit should deploy a part while active");
+            Assert.That(entMan.GetComponent<ModPartComponent>(comp.PartEntities["shoes"]).Sealed, Is.True,
+                "a part deployed while active should seal immediately");
+            Assert.That(modSuit.TryUseModule(magboots.Value, wearer), Is.True,
+                "the module should work once its part is deployed");
+            modSuit.ToggleAllParts((suit, comp), wearer);
+        });
+        await server.WaitRunTicks(pair.SecondsToTicks(2f));
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(comp.State, Is.EqualTo(ModSuitState.Active));
+            foreach (var (slot, part) in comp.PartEntities)
+            {
+                Assert.That(entMan.GetComponent<ModPartComponent>(part).Sealed, Is.True,
+                    $"{slot} should be deployed and sealed");
+            }
+
+            Assert.That(modSuit.TryRetractPart((suit, comp), "shoes", wearer), Is.True,
+                "the suit should retract a part while active");
+            Assert.That(modSuit.IsPartDeployed((suit, comp), "shoes"), Is.False);
+            Assert.That(entMan.GetComponent<ModPartComponent>(comp.PartEntities["shoes"]).Sealed, Is.False,
+                "a part retracted while active should unseal");
+
+            EntityUid? bootModule = null;
+            foreach (var module in comp.ModulesContainer.ContainedEntities)
+            {
+                if (entMan.GetComponent<MetaDataComponent>(module).EntityPrototype?.ID == "ModsuitModuleMagboots")
+                {
+                    bootModule = module;
+                    break;
+                }
+            }
+
+            Assert.That(bootModule, Is.Not.Null);
+            Assert.That(entMan.GetComponent<ModModuleComponent>(bootModule!.Value).Active, Is.False,
+                "retracting the boots should shut off modules that need them");
+
+            Assert.That(modSuit.TryDeployPart((suit, comp), "shoes", wearer), Is.True);
+            modSuit.ToggleAllParts((suit, comp), wearer);
+        });
+        await server.WaitRunTicks(pair.SecondsToTicks(3f));
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(comp.State, Is.EqualTo(ModSuitState.Active),
+                "retracting parts should not turn the suit off");
+            foreach (var (slot, part) in comp.PartEntities)
+            {
+                Assert.That(modSuit.IsPartDeployed((suit, comp), slot), Is.False,
+                    $"{slot} should be retracted");
+                Assert.That(entMan.GetComponent<ModPartComponent>(part).Sealed, Is.False,
+                    $"{slot} should be unsealed");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>Every ready suit installs every module its prototype and theme list.</summary>
+    [Test]
+    public async Task EveryModSuitInstallsItsStartingModules()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var prototypes = server.ResolveDependency<IPrototypeManager>();
+        var factory = server.ResolveDependency<IComponentFactory>();
+
+        await server.WaitAssertion(() =>
+        {
+            var maps = entMan.System<SharedMapSystem>();
+            maps.CreateMap(out var mapId);
+            var coords = new MapCoordinates(0, 0, mapId);
+
+            foreach (var proto in prototypes.EnumeratePrototypes<EntityPrototype>())
+            {
+                if (proto.Abstract || !proto.TryComp<ModSuitComponent>(out var suit, factory))
+                    continue;
+
+                var theme = prototypes.Index(suit.Theme);
+                var expected = suit.StartingModules.Count + suit.InbuiltModules.Count + theme.InbuiltModules.Count;
+                var suitEntity = entMan.SpawnEntity(proto.ID, coords);
+                var comp = entMan.GetComponent<ModSuitComponent>(suitEntity);
+                Assert.That(comp.ModulesContainer.ContainedEntities.Count, Is.EqualTo(expected),
+                    $"{proto.ID} installed {comp.ModulesContainer.ContainedEntities.Count} of {expected} modules");
+                entMan.DeleteEntity(suitEntity);
             }
         });
 

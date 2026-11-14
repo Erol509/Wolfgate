@@ -3,7 +3,6 @@ modsuit-core-full = The core is already fully charged!
 modsuit-core-refueled = You feed the core.
 
 modsuit-deactivate-first = Deactivate the suit first!
-modsuit-deploy-all-first = Deploy all parts first!
 modsuit-deploying = The suit is still deploying!
 modsuit-deploy-failed = The suit couldn't deploy a part!
 modsuit-verb-interface = MOD interface
@@ -42,6 +41,7 @@ modsuit-module-incompatible = That module is incompatible with an installed modu
 modsuit-module-not-removable = That module is built into the suit!
 modsuit-module-not-worn = You need to be wearing the suit to use that!
 modsuit-module-suit-inactive = The suit needs to be active to use that!
+modsuit-module-part-retracted = Deploy the part that module needs first!
 modsuit-module-cooldown = That module is still recharging!
 modsuit-module-hands-full = You need a free hand for that!
 

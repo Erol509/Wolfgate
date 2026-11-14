@@ -16,7 +16,8 @@ installed into the unit and spend the core's charge while they run.
   deploy or retract, and a suit cannot be removed while active.
 - **Power.** The core is a MOD core item with its own power cell slot, so the cell can be swapped while the
   core stays bolted in. The theme and every installed module have an idle/active drain; the suit copies the
-  core's charge into networked fields for the interface and the power alert, and cuts power at zero.
+  core's charge into networked fields for the interface and the power alert, and cuts power at zero. A worn
+  suit's core also charges while its wearer is inside a cyborg recharger.
 - **Modules.** `ModModuleComponent` gives each module a type (passive, usable, toggle, active), complexity,
   power draw, cooldown, required parts and incompatibilities. `ModSuitSystem` installs, removes, pins and
   uses them; each module system subscribes to the module events it needs. The theme sets the complexity cap,
@@ -58,6 +59,7 @@ adapted to this codebase's status effect, solution and standing systems.
 - [`Content.Server/_WF/Modsuits/ModLoudspeakerChatSystem.cs`](ModLoudspeakerChatSystem.cs)
 - [`Content.Server/_WF/Modsuits/ModMouthholeModuleSystem.cs`](ModMouthholeModuleSystem.cs)
 - [`Content.Server/_WF/Modsuits/ModStasisMetabolismSystem.cs`](ModStasisMetabolismSystem.cs)
+- [`Content.Server/_WF/Modsuits/ModSuitChargingSystem.cs`](ModSuitChargingSystem.cs)
 - [`Content.Server/_WF/Modsuits/ModThermalRegulatorModuleSystem.cs`](ModThermalRegulatorModuleSystem.cs)
 
 ### Shared
@@ -171,7 +173,9 @@ adapted to this codebase's status effect, solution and standing systems.
 
 ## Non-modular edits
 
-- [`Content.Client/Movement/Systems/JetpackSystem.cs`](../../../Content.Client/Movement/Systems/JetpackSystem.cs): MOD jetpack modules keep their own module sprite, which has no jetpack icon states
+- [`Content.Client/Movement/Systems/JetpackSystem.cs`](../../../Content.Client/Movement/Systems/JetpackSystem.cs)
+  - MOD jetpack modules keep their own module sprite, which has no jetpack icon states
+  - a MOD jetpack module sits inside the suit, so use the wearer's body for position and velocity.
 - [`Content.Server/_EE/Carrying/CarryingSystem.cs`](../../_EE/Carrying/CarryingSystem.cs): the quick-carry module shortens the pickup
 - [`Content.Server/Clothing/Systems/ChameleonClothingSystem.cs`](../../Clothing/Systems/ChameleonClothingSystem.cs): shared base forwards chameleon changes
 - [`Content.Server/Movement/Systems/JetpackSystem.cs`](../../Movement/Systems/JetpackSystem.cs): the ion jetpack module burns the suit core, not a gas tank

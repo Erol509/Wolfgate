@@ -79,8 +79,9 @@
   components:
   - type: ModSuit
     startingModules:
-    - ModsuitModuleFlashlight
     - ModsuitModuleStorageCompact
+    - ModsuitModuleWelding
+    - ModsuitModuleFlashlight
   - type: ItemSlots
     slots:
       mod-core:
@@ -122,8 +123,12 @@
   components:
   - type: ModSuit
     startingModules:
-    - ModsuitModuleFlashlight
     - ModsuitModuleStorageCompact
+    - ModsuitModuleFlashlight
+    - ModsuitModuleJetpack
+    - ModsuitModulePepperShoulders
+    - ModsuitModuleRestraintAssist
+    - ModsuitModuleHeadProtector
   - type: ItemSlots
     slots:
       mod-core:
@@ -176,8 +181,13 @@
   components:
   - type: ModSuit
     startingModules:
+    - ModsuitModuleStorageLarge
     - ModsuitModuleFlashlight
-    - ModsuitModuleStorageCompact
+    - ModsuitModuleJetpack
+    - ModsuitModuleMegaphone
+    - ModsuitModulePepperShoulders
+    - ModsuitModuleRestraintAssist
+    - ModsuitModuleHeadProtector
   - type: ItemSlots
     slots:
       mod-core:
@@ -219,8 +229,10 @@
   components:
   - type: ModSuit
     startingModules:
-    - ModsuitModuleFlashlight
     - ModsuitModuleStorageCompact
+    - ModsuitModuleFlashlight
+    - ModsuitModuleHealthAnalyzer
+    - ModsuitModuleQuickCarry
   - type: ItemSlots
     slots:
       mod-core:
@@ -266,9 +278,13 @@
   components:
   - type: ModSuit
     startingModules:
-    - ModsuitModuleFlashlight
     - ModsuitModuleStorageCompact
     - ModsuitModuleWelding
+    - ModsuitModuleFlashlight
+    - ModsuitModuleRadProtection
+    - ModsuitModuleTether
+    - ModsuitModuleMagboots
+    - ModsuitModuleHeadProtector
   - type: ItemSlots
     slots:
       mod-core:
@@ -314,9 +330,15 @@
   components:
   - type: ModSuit
     startingModules:
-    - ModsuitModuleFlashlight
     - ModsuitModuleStorageCompact
     - ModsuitModuleWelding
+    - ModsuitModuleFlashlight
+    - ModsuitModuleRadProtection
+    - ModsuitModuleMagboots
+    - ModsuitModuleTRay
+    - ModsuitModuleQuickCarry
+    - ModsuitModuleHeadProtector
+    - ModsuitModuleResinMister
   - type: ItemSlots
     slots:
       mod-core:
@@ -365,8 +387,11 @@
   components:
   - type: ModSuit
     startingModules:
+    - ModsuitModuleStorageLarge
+    - ModsuitModuleWelding
     - ModsuitModuleFlashlight
-    - ModsuitModuleStorageCompact
+    - ModsuitModuleTRay
+    - ModsuitModuleHeadProtector
   - type: ItemSlots
     slots:
       mod-core:
@@ -412,8 +437,11 @@
   components:
   - type: ModSuit
     startingModules:
+    - ModsuitModuleStorageLarge
     - ModsuitModuleFlashlight
-    - ModsuitModuleStorageCompact
+    - ModsuitModuleJetpack
+    - ModsuitModuleRestraintAssist
+    - ModsuitModuleHeadProtector
   - type: ItemSlots
     slots:
       mod-core:
@@ -455,8 +483,10 @@
   components:
   - type: ModSuit
     startingModules:
+    - ModsuitModuleStorageLarge
     - ModsuitModuleFlashlight
-    - ModsuitModuleStorageCompact
+    - ModsuitModuleHealthAnalyzer
+    - ModsuitModuleInjector
   - type: ItemSlots
     slots:
       mod-core:

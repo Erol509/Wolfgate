@@ -215,10 +215,54 @@ public sealed partial class ModSuitSystem
 
     private bool ShouldPassiveBeActive(Entity<ModSuitComponent> ent, ModModuleComponent module)
     {
+        if (!HasRequiredPartsDeployed(ent, module))
+            return false;
+
         if ((module.AllowFlags & ModModuleAllowFlags.Inactive) != 0)
             return true;
 
         return ent.Comp.State == ModSuitState.Active && ent.Comp.Powered;
+    }
+
+    /// <summary>True when every part the module needs is currently deployed on the wearer.</summary>
+    private bool HasRequiredPartsDeployed(Entity<ModSuitComponent> ent, ModModuleComponent module)
+    {
+        foreach (var slot in module.RequiredParts)
+        {
+            if (!IsPartDeployed(ent, slot))
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>Re-checks passive modules after parts deploy or retract.</summary>
+    private void RefreshPassiveModules(Entity<ModSuitComponent> ent)
+    {
+        foreach (var module in ent.Comp.ModulesContainer.ContainedEntities.ToArray())
+        {
+            if (!TryComp<ModModuleComponent>(module, out var moduleComp)
+                || moduleComp.Type != ModModuleType.Passive)
+                continue;
+
+            var shouldBeActive = ShouldPassiveBeActive(ent, moduleComp);
+            if (shouldBeActive != moduleComp.Active)
+                SetModuleActive(ent, (module, moduleComp), shouldBeActive);
+        }
+    }
+
+    /// <summary>Turns off any active module that needed the part being retracted.</summary>
+    private void DeactivateModulesRequiringPart(Entity<ModSuitComponent> ent, string slot)
+    {
+        foreach (var module in ent.Comp.ModulesContainer.ContainedEntities.ToArray())
+        {
+            if (!TryComp<ModModuleComponent>(module, out var moduleComp)
+                || !moduleComp.Active
+                || !moduleComp.RequiredParts.Contains(slot))
+                continue;
+
+            SetModuleActive(ent, (module, moduleComp), false);
+        }
     }
 
     private void ActivatePassiveModules(Entity<ModSuitComponent> ent)
@@ -324,6 +368,12 @@ public sealed partial class ModSuitSystem
 
         if ((flags & ModModuleAllowFlags.Incapacitated) == 0 && !_actionBlocker.CanInteract(user, null))
             return false;
+
+        if (!HasRequiredPartsDeployed(suit, module.Comp))
+        {
+            PopupFail(suit, user, "modsuit-module-part-retracted");
+            return false;
+        }
 
         if (_timing.CurTime < module.Comp.NextUse)
         {

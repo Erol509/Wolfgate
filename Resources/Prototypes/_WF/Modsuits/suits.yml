@@ -255,6 +255,7 @@
       - ModsuitModuleStorageLarge
       - ModsuitModuleFlashlight
       - ModsuitModuleMagboots
+      - ModsuitModuleEmpShield
       inbuiltModules:
       - ModsuitModuleBuiltinThermal
       - ModsuitModuleBuiltinSecHud
@@ -675,6 +676,9 @@
       gloves: ClothingModsuitGauntletsLoader
       outerClothing: ClothingModsuitChestplateLoader
       shoes: ClothingModsuitBootsLoader
+    startingModules:
+    - ModsuitModuleStorageLarge
+    - ModsuitModuleFlashlight
   - type: ModSuitSealedVisuals
     spriteLayer: sealed
     clothingVisuals:
@@ -834,6 +838,13 @@
       gloves: ClothingModsuitGauntletsMining
       outerClothing: ClothingModsuitChestplateMining
       shoes: ClothingModsuitBootsMining
+    startingModules:
+    - ModsuitModuleStorageLarge
+    - ModsuitModuleGps
+    - ModsuitModuleOreBag
+    - ModsuitModuleClamp
+    - ModsuitModuleDrill
+    - ModsuitModuleMouthhole
   - type: Construction
     graph: Modsuit
     node: mining
@@ -1000,6 +1011,10 @@
     startingModules:
     - ModsuitModuleStorageSyndicate
     - ModsuitModuleFlashlight
+    - ModsuitModuleEmpShield
+    - ModsuitModuleJetpack
+    - ModsuitModuleDnaLock
+    - ModsuitModuleRestraintAssist
 
 - type: entity
   parent: [ ClothingModsuitHelmetStandard, BaseWFModsuitSyndicateContraband ]
@@ -1205,6 +1220,10 @@
     startingModules:
     - ModsuitModuleStorageSyndicate
     - ModsuitModuleFlashlight
+    - ModsuitModuleEmpShield
+    - ModsuitModuleJetpack
+    - ModsuitModuleDnaLock
+    - ModsuitModuleRestraintAssist
 
 - type: entity
   parent: [ ClothingModsuitHelmetStandard, BaseWFModsuitSyndicateContraband ]
@@ -1399,6 +1418,10 @@
       - ModsuitModuleStorageBluespace
       - ModsuitModuleFlashlight
       - ModsuitModuleMagboots
+      - ModsuitModuleWelding
+      - ModsuitModuleEmpShield
+      - ModsuitModuleJetpack
+      - ModsuitModuleRestraintAssist
       inbuiltModules:
       - ModsuitModuleBuiltinThermal
       - ModsuitModuleBuiltinSecHud
@@ -1590,6 +1613,9 @@
       - ModsuitModuleStorageBluespace
       - ModsuitModuleFlashlight
       - ModsuitModuleMagboots
+      - ModsuitModuleWelding
+      - ModsuitModuleEmpShield
+      - ModsuitModuleRestraintAssist
       inbuiltModules:
       - ModsuitModuleBuiltinSecHud
       - ModsuitModuleBuiltinMedHud
@@ -1795,6 +1821,9 @@
       - ModsuitModuleStorageLarge
       - ModsuitModuleFlashlight
       - ModsuitModuleMagboots
+      - ModsuitModuleWelding
+      - ModsuitModuleEmpShield
+      - ModsuitModuleRestraintAssist
       inbuiltModules:
       - ModsuitModuleBuiltinFlashProtection
       - ModsuitModuleBuiltinInsulation
@@ -1990,6 +2019,10 @@
       - ModsuitModuleStorageBluespace
       - ModsuitModuleFlashlight
       - ModsuitModuleMagboots
+      - ModsuitModuleWelding
+      - ModsuitModuleEmpShield
+      - ModsuitModuleRestraintAssist
+      - ModsuitModuleRadProtection
       inbuiltModules:
       - ModsuitModuleBuiltinSecHud
       - ModsuitModuleBuiltinMedHud
@@ -2180,6 +2213,11 @@
       - ModsuitModuleStorageBluespace
       - ModsuitModuleFlashlight
       - ModsuitModuleMagboots
+      - ModsuitModuleWelding
+      - ModsuitModuleEmpShield
+      - ModsuitModuleRestraintAssist
+      - ModsuitModuleNoSlip
+      - ModsuitModuleJanitorMister
       inbuiltModules:
       - ModsuitModuleBuiltinSecHud
       - ModsuitModuleBuiltinMedHud
@@ -2362,6 +2400,10 @@
       - ModsuitModuleStorageBluespace
       - ModsuitModuleFlashlight
       - ModsuitModuleMagboots
+      - ModsuitModuleWelding
+      - ModsuitModuleEmpShield
+      - ModsuitModuleRestraintAssist
+      - ModsuitModulePowerKick
       inbuiltModules:
       - ModsuitModuleBuiltinSecHud
       - ModsuitModuleBuiltinMedHud
@@ -2545,6 +2587,10 @@
       - ModsuitModuleStorageBluespace
       - ModsuitModuleFlashlight
       - ModsuitModuleMagboots
+      - ModsuitModuleWelding
+      - ModsuitModuleEmpShield
+      - ModsuitModuleRestraintAssist
+      - ModsuitModuleQuickCarry
       inbuiltModules:
       - ModsuitModuleBuiltinSecHud
       - ModsuitModuleBuiltinMedHud
@@ -2727,6 +2773,10 @@
       - ModsuitModuleStorageBluespace
       - ModsuitModuleFlashlight
       - ModsuitModuleMagboots
+      - ModsuitModuleWelding
+      - ModsuitModuleEmpShield
+      - ModsuitModuleRestraintAssist
+      - ModsuitModulePepperShoulders
       inbuiltModules:
       - ModsuitModuleBuiltinSecHud
       - ModsuitModuleBuiltinMedHud

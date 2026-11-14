@@ -37,12 +37,6 @@ public sealed partial class ModSuitSystem
             return false;
         }
 
-        if (!AllPartsDeployed(ent))
-        {
-            PopupFail(ent, user, "modsuit-deploy-all-first");
-            return false;
-        }
-
         if (HasOpenPanel(ent))
         {
             PopupFail(ent, user, "modsuit-close-panel-first");
@@ -57,7 +51,13 @@ public sealed partial class ModSuitSystem
 
         var theme = _proto.Index(ent.Comp.Theme);
         ent.Comp.State = ModSuitState.Activating;
-        ent.Comp.ActivationQueue = new List<string>(ent.Comp.PartEntities.Keys);
+        ent.Comp.ActivationQueue = new List<string>();
+        foreach (var slot in ent.Comp.PartEntities.Keys)
+        {
+            if (IsPartDeployed(ent, slot))
+                ent.Comp.ActivationQueue.Add(slot);
+        }
+
         ent.Comp.NextActivationStep = _timing.CurTime + theme.ActivationStepTime;
         Dirty(ent);
         RaiseUpdated(ent);
@@ -203,12 +203,14 @@ public sealed partial class ModSuitSystem
 
     public void ForceActivate(Entity<ModSuitComponent> ent)
     {
-        if (ent.Comp.State == ModSuitState.Active || !AllPartsDeployed(ent))
+        if (ent.Comp.State == ModSuitState.Active)
             return;
 
-        foreach (var part in ent.Comp.PartEntities.Values)
+        foreach (var (slot, part) in ent.Comp.PartEntities)
         {
-            if (TryComp<ModPartComponent>(part, out var partComp) && !partComp.Sealed)
+            if (IsPartDeployed(ent, slot)
+                && TryComp<ModPartComponent>(part, out var partComp)
+                && !partComp.Sealed)
                 SetPartSealed((part, partComp), ent, true, true);
         }
 

@@ -113,7 +113,8 @@ public sealed partial class ModSuitWindow : FancyWindow
         var state = suit.State;
 
         ActivateButton.Text = Loc.GetString($"modsuit-ui-state-{state.ToString().ToLowerInvariant()}");
-        ToggleAllButton.Disabled = state != ModSuitState.Inactive || suit.DeployQueue.Count > 0;
+        var canToggleAll = state is ModSuitState.Inactive or ModSuitState.Active;
+        ToggleAllButton.Disabled = !canToggleAll || suit.DeployQueue.Count > 0;
         StyleButton(ActivateButton, state == ModSuitState.Active ? GoodColor : PrimaryColor);
 
         CoverRow.Visible = _entMan.TryGetComponent<WiresPanelComponent>(_suit, out var panel) && panel.Open;

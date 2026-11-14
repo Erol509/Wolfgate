@@ -308,6 +308,8 @@
       tags:
       - ModsuitModuleJetpack
   - type: Jetpack
+    acceleration: 1.15
+    weightlessModifier: 2.4
   - type: ModJetpackModule
   - type: Tag
     tags:

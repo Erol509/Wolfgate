@@ -53,7 +53,7 @@ public sealed partial class ModSuitSystem
         if (ent.Comp.Wearer == null || ent.Comp.DeployQueue.Count > 0 || !CanAccess(ent, user))
             return;
 
-        if (ent.Comp.State != ModSuitState.Inactive)
+        if (ent.Comp.State is not (ModSuitState.Inactive or ModSuitState.Active))
         {
             PopupFail(ent, user, "modsuit-deactivate-first");
             return;
@@ -63,7 +63,10 @@ public sealed partial class ModSuitSystem
         foreach (var slot in ent.Comp.PartEntities.Keys)
         {
             if (!IsPartDeployed(ent, slot))
+            {
                 retracting = false;
+                break;
+            }
         }
 
         var queue = new List<string>();
@@ -93,7 +96,8 @@ public sealed partial class ModSuitSystem
                 continue;
 
             var ent = (uid, comp);
-            if (comp.Wearer is not { } wearer || comp.State != ModSuitState.Inactive)
+            if (comp.Wearer is not { } wearer
+                || comp.State is not (ModSuitState.Inactive or ModSuitState.Active))
             {
                 comp.DeployQueue.Clear();
                 Dirty(uid, comp);
@@ -139,7 +143,7 @@ public sealed partial class ModSuitSystem
             || !TryComp<ModPartComponent>(part, out var partComp))
             return false;
 
-        if (ent.Comp.State != ModSuitState.Inactive)
+        if (ent.Comp.State is not (ModSuitState.Inactive or ModSuitState.Active))
         {
             PopupFail(ent, user, "modsuit-deactivate-first");
             return false;
@@ -174,7 +178,12 @@ public sealed partial class ModSuitSystem
         }
 
         RestoreSuitStorage(wearer, suitStorage);
+
+        if (ent.Comp.State == ModSuitState.Active)
+            SetPartSealed((part, partComp), ent, true, silent);
+
         Dirty(ent);
+        RefreshPassiveModules(ent);
         return true;
     }
 
@@ -185,7 +194,7 @@ public sealed partial class ModSuitSystem
             || !TryComp<ModPartComponent>(part, out var partComp))
             return false;
 
-        if (!force && ent.Comp.State != ModSuitState.Inactive)
+        if (!force && ent.Comp.State is not (ModSuitState.Inactive or ModSuitState.Active))
         {
             PopupFail(ent, user, "modsuit-deactivate-first");
             return false;
@@ -193,6 +202,8 @@ public sealed partial class ModSuitSystem
 
         if (partComp.Sealed)
             SetPartSealed((part, partComp), ent, false, true);
+
+        DeactivateModulesRequiringPart(ent, slot);
 
         var wearer = ent.Comp.Wearer;
         var suitStorage = wearer != null ? StashSuitStorage(wearer.Value, slot) : null;
@@ -211,6 +222,7 @@ public sealed partial class ModSuitSystem
             DropStoredClothing((part, partComp));
 
         Dirty(ent);
+        RefreshPassiveModules(ent);
         return true;
     }
 
@@ -303,5 +315,6 @@ public sealed partial class ModSuitSystem
         _container.Insert(ent.Owner, suit.PartsContainer);
         RestoreStoredClothing(ent, args.Equipee, ent.Comp.Slot);
         Dirty(suitUid, suit);
+        RefreshPassiveModules(suitEnt);
     }
 }

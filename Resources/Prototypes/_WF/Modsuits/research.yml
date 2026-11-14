@@ -137,8 +137,6 @@
   tier: 2
   cost: 10000
   recipeUnlocks:
-  - ModsuitModuleStorageBluespace
-  - ModsuitCoreStandardMicroreactor
   - ModsuitModuleVisorSecurity
   - ModsuitModuleHolster
   - ModsuitModuleMegaphone

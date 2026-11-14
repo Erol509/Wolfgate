@@ -128,8 +128,10 @@
   components:
   - type: ModSuit
     startingModules:
-    - ModsuitModuleFlashlight
     - ModsuitModuleStorageCompact
+    - ModsuitModuleFlashlight
+    - ModsuitModuleWaddle
+    - ModsuitModuleBikeHorn
   - type: ItemSlots
     slots:
       mod-core:
