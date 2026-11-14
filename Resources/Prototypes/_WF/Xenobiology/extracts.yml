@@ -73,10 +73,11 @@
         - !type:XenobioSpawnEntity
           entity: MobSlimeXenobioBabyGreySpawner
           number: 3
+    # Injected only: blood splashed across a lab floor set off every loose extract, and showers nearby rehydrated
+    # the cubes into monkeys, a monkey farm that ran itself.
     - reagents:
       - Blood
       methods:
-      - Touch
       - Injection
       effects:
       - !type:XenobioReaction
