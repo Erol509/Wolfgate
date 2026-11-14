@@ -246,6 +246,9 @@ tool selector is ported under `RadialSelector`, and the EMP ward and glove trans
   - the native module system sets its own sealed appearance
   - MODsuit boots add no slowdown; the chestplate and control unit carry the suit's cap
 - [`Resources/Prototypes/_NF/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Machines/lathe.yml): departmental MOD module recipes
+- [`Resources/Prototypes/Entities/Objects/Power/powercells.yml`](../../../Resources/Prototypes/Entities/Objects/Power/powercells.yml)
+  - MODsuit cores reject medium power cages.
+  - MODsuit cores reject high power cages.
 - [`Resources/Prototypes/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/lathe.yml)
   - module recipes
   - departmental MOD module recipes

@@ -214,6 +214,38 @@ public sealed class ModsuitModuleTest
     }
 
     [Test]
+    public async Task CoreRejectsMediumAndHighPowerCages()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var itemSlots = entMan.System<ItemSlotsSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var maps = entMan.System<SharedMapSystem>();
+            maps.CreateMap(out var mapId);
+            var coords = new MapCoordinates(0, 0, mapId);
+
+            var core = entMan.SpawnEntity("ModsuitCoreStandard", coords);
+            var small = entMan.SpawnEntity("PowerCageSmall", coords);
+            Assert.That(itemSlots.TryInsert(core, "cell_slot", small, null), Is.True,
+                "a small power cage should fit a MODsuit core");
+            Assert.That(itemSlots.TryEject(core, "cell_slot", null, out _), Is.True);
+
+            var medium = entMan.SpawnEntity("PowerCageMedium", coords);
+            Assert.That(itemSlots.TryInsert(core, "cell_slot", medium, null), Is.False,
+                "a medium power cage gives a MODsuit core too much energy");
+
+            var high = entMan.SpawnEntity("PowerCageHigh", coords);
+            Assert.That(itemSlots.TryInsert(core, "cell_slot", high, null), Is.False,
+                "a high power cage gives a MODsuit core too much energy");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task RemovingStorageModuleDropsContentsAndRemovesStorage()
     {
         await using var pair = await PoolManager.GetServerClient();
