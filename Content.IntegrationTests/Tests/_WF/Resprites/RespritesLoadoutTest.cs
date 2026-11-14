@@ -34,7 +34,7 @@ public sealed class RespritesLoadoutTest
 
             foreach (var groupId in role.Groups)
             {
-                if (!proto.TryIndex(groupId, out LoadoutGroupPrototype? group))
+                if (!proto.TryIndex(groupId, out var group))
                     continue;
 
                 foreach (var loadout in group.Loadouts)

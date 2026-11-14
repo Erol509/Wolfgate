@@ -1,5 +1,4 @@
 using Content.Client.Items;
-using Content.Client._WF.ItemSwitch.UI;
 using Content.Shared._WF.ItemSwitch;
 using Content.Shared._WF.ItemSwitch.Components;
 using Robust.Client.GameObjects;

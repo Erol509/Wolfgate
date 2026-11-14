@@ -98,7 +98,7 @@ public sealed class ItemSwitchTest
             {
                 foreach (var loadout in group.Loadouts)
                 {
-                    if (proto.TryIndex(loadout, out LoadoutPrototype? protoLoadout)
+                    if (proto.TryIndex(loadout, out var protoLoadout)
                         && protoLoadout.Equipment.TryGetValue("neck", out var neck))
                         offered.Add(neck.Id);
                 }

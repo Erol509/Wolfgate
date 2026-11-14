@@ -263,27 +263,27 @@
     showLabel: true
     states:
       cloakblackmantle: !type:ItemSwitchState
-        verb: cloakblack&mantle
+        verb: itemswitch-state-cloakblackmantle
         sprite:
           sprite: _WF/Blueshield/Clothing/Neck/Ensembles/bso.rsi
           state: icon
       cloakwhitemantle: !type:ItemSwitchState
-        verb: cloakwhite&mantle
+        verb: itemswitch-state-cloakwhitemantle
         sprite:
           sprite: _WF/Blueshield/Clothing/Neck/Ensembles/bso.rsi
           state: cloakwhitemantle-icon
       cloakwhite: !type:ItemSwitchState
-        verb: cloakwhite
+        verb: itemswitch-state-cloakwhite
         sprite:
           sprite: _WF/Blueshield/Clothing/Neck/Ensembles/bso.rsi
           state: cloakwhite-icon
       cloakblack: !type:ItemSwitchState
-        verb: cloakblack
+        verb: itemswitch-state-cloakblack
         sprite:
           sprite: _WF/Blueshield/Clothing/Neck/Ensembles/bso.rsi
           state: cloakblack-icon
       mantle: !type:ItemSwitchState
-        verb: mantle
+        verb: itemswitch-state-mantle
         sprite:
           sprite: _WF/Blueshield/Clothing/Neck/Ensembles/bso.rsi
           state: mantle-icon

@@ -27,17 +27,17 @@
     showLabel: true
     states:
       both: !type:ItemSwitchState
-        verb: both
+        verb: itemswitch-state-both
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/ChiefEngineer/whitece.rsi
           state: icon
       mantle: !type:ItemSwitchState
-        verb: mantle
+        verb: itemswitch-state-mantle
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/ChiefEngineer/whitece.rsi
           state: mantle-icon
       cloak: !type:ItemSwitchState
-        verb: cloak
+        verb: itemswitch-state-cloak
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/ChiefEngineer/whitece.rsi
           state: cloak-icon
@@ -69,17 +69,17 @@
     showLabel: true
     states:
       both: !type:ItemSwitchState
-        verb: both
+        verb: itemswitch-state-both
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/ChiefEngineer/greence.rsi
           state: icon
       mantle: !type:ItemSwitchState
-        verb: mantle
+        verb: itemswitch-state-mantle
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/ChiefEngineer/greence.rsi
           state: mantle-icon
       cloak: !type:ItemSwitchState
-        verb: cloak
+        verb: itemswitch-state-cloak
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/ChiefEngineer/greence.rsi
           state: cloak-icon
@@ -111,37 +111,37 @@
     showLabel: true
     states:
       all: !type:ItemSwitchState
-        verb: all
+        verb: itemswitch-state-all
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/cmo.rsi
           state: icon
       mantle: !type:ItemSwitchState
-        verb: mantle
+        verb: itemswitch-state-mantle
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/cmo.rsi
           state: mantle-icon
       cloak: !type:ItemSwitchState
-        verb: cloak
+        verb: itemswitch-state-cloak
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/cmo.rsi
           state: cloak-icon
       wings: !type:ItemSwitchState
-        verb: wings
+        verb: itemswitch-state-wings
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/cmo.rsi
           state: wings-icon
       cloakmantle: !type:ItemSwitchState
-        verb: cloak&mantle
+        verb: itemswitch-state-cloakmantle
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/cmo.rsi
           state: cloakmantle-icon
       cloakwings: !type:ItemSwitchState
-        verb: cloak&wings
+        verb: itemswitch-state-cloakwings
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/cmo.rsi
           state: cloakwings-icon
       mantlewings: !type:ItemSwitchState
-        verb: mantle&wings
+        verb: itemswitch-state-mantlewings
         sprite:
           sprite: _WF/Resprites/Goobstation/Clothing/Neck/Ensembles/cmo.rsi
           state: mantlewings-icon

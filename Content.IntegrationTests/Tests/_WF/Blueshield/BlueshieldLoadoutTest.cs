@@ -49,7 +49,7 @@ public sealed class BlueshieldLoadoutTest
             // The catalog offers a group's own loadouts and those of its subgroups, one level deep.
             foreach (var groupId in role.Groups)
             {
-                if (!proto.TryIndex(groupId, out LoadoutGroupPrototype? group))
+                if (!proto.TryIndex(groupId, out var group))
                     continue;
 
                 foreach (var loadout in group.Loadouts)
@@ -57,7 +57,7 @@ public sealed class BlueshieldLoadoutTest
 
                 foreach (var subgroupId in group.Subgroups)
                 {
-                    if (!proto.TryIndex(subgroupId, out LoadoutGroupPrototype? subgroup))
+                    if (!proto.TryIndex(subgroupId, out var subgroup))
                         continue;
 
                     foreach (var loadout in subgroup.Loadouts)

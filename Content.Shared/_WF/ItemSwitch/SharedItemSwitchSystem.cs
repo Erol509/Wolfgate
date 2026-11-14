@@ -7,6 +7,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.Power.Components;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
@@ -65,7 +66,12 @@ public abstract class SharedItemSwitchSystem : EntitySystem
 
     private void OnSwitchAttempt(EntityUid uid, ItemSwitchComponent comp, ref ItemSwitchAttemptEvent args)
     {
-        if (comp.IsPowered || !comp.NeedsPower || comp.State != comp.DefaultState)
+        if (!comp.NeedsPower
+            || !comp.States.TryGetValue(args.State, out var target)
+            || !TryComp<BatteryComponent>(uid, out var battery))
+            return;
+
+        if (battery.CurrentCharge >= target.EnergyPerUse)
             return;
 
         args.Popup = Loc.GetString("item-switch-failed-no-power");
@@ -116,7 +122,10 @@ public abstract class SharedItemSwitchSystem : EntitySystem
 
     private void OnActivate(Entity<ItemSwitchComponent> ent, ref ActivateInWorldEvent args)
     {
-        if (args.Handled || !ent.Comp.OnActivate || ent.Comp is { IsPowered: false, NeedsPower: true })
+        if (args.Handled
+            || !ent.Comp.OnActivate
+            || ent.Comp is { IsPowered: false, NeedsPower: true }
+            || ent.Comp.States.Count == 0)
             return;
 
         args.Handled = true;
@@ -163,20 +172,6 @@ public abstract class SharedItemSwitchSystem : EntitySystem
         };
         RaiseLocalEvent(uid, ref attempt);
 
-        var nextAttack = new TimeSpan(0);
-        if (TryComp<MeleeWeaponComponent>(ent, out var meleeComp))
-            nextAttack = meleeComp.NextAttack;
-
-        if (ent.Comp.States.TryGetValue(ent.Comp.State, out var prevState)
-            && prevState is { RemoveComponents: true, Components: not null })
-            EntityManager.RemoveComponents(ent, prevState.Components);
-
-        if (state.Components is not null)
-            EntityManager.AddComponents(ent, state.Components);
-
-        if (TryComp(ent, out meleeComp) && nextAttack.Ticks != 0)
-            meleeComp.NextAttack = nextAttack;
-
         if (!comp.Predictable)
             predicted = false;
 
@@ -197,6 +192,20 @@ public abstract class SharedItemSwitchSystem : EntitySystem
 
             return false;
         }
+
+        var nextAttack = new TimeSpan(0);
+        if (TryComp<MeleeWeaponComponent>(ent, out var meleeComp))
+            nextAttack = meleeComp.NextAttack;
+
+        if (ent.Comp.States.TryGetValue(ent.Comp.State, out var prevState)
+            && prevState is { RemoveComponents: true, Components: not null })
+            EntityManager.RemoveComponents(ent, prevState.Components);
+
+        if (state.Components is not null)
+            EntityManager.AddComponents(ent, state.Components);
+
+        if (TryComp(ent, out meleeComp) && nextAttack.Ticks != 0)
+            meleeComp.NextAttack = nextAttack;
 
         if (predicted)
             _audio.PlayPredicted(state.SoundStateActivate, uid, user);

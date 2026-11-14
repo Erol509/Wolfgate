@@ -56,7 +56,9 @@ public sealed class ItemSwitchSystem : SharedItemSwitchSystem
 
     private void OnMeleeAttack(Entity<ItemSwitchComponent> ent, ref MeleeHitEvent args)
     {
-        if (!ent.Comp.NeedsPower
+        // Examining a melee weapon raises this event with IsHit false; do not spend power on it.
+        if (!args.IsHit
+            || !ent.Comp.NeedsPower
             || !ent.Comp.States.TryGetValue(ent.Comp.State, out var state)
             || state.EnergyPerUse <= 0)
             return;
