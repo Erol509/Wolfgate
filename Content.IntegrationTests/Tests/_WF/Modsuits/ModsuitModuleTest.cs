@@ -435,7 +435,6 @@ public sealed class ModsuitModuleTest
         var containers = entMan.System<SharedContainerSystem>();
         var inventory = entMan.System<InventorySystem>();
         var modSuit = entMan.System<ModSuitSystem>();
-        var transform = entMan.System<SharedTransformSystem>();
 
         EntityUid wearer = default, suit = default;
         await server.WaitPost(() =>
@@ -450,7 +449,8 @@ public sealed class ModsuitModuleTest
             batteries.SetCharge(battery!.Value.Owner, 0f, battery.Value.Comp);
 
             var charger = entMan.SpawnEntity("BorgCharger", map.GridCoords);
-            transform.AnchorEntity(charger);
+            Assert.That(entMan.GetComponent<TransformComponent>(charger).Anchored, Is.True,
+                "the cyborg recharger should spawn anchored");
             var receiver = entMan.EnsureComponent<ApcPowerReceiverComponent>(charger);
             receiver.NeedsPower = false;
             receiver.Powered = true;
