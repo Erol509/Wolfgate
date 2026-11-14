@@ -11,10 +11,13 @@ namespace Content.Shared._WF.Surgery;
 public sealed partial class SurgicalOperationDoAfterEvent : DoAfterEvent
 {
     [DataField]
-    public EntProtoId Operation = default!;
+    public ProtoId<SurgicalOperationPrototype> Operation = default!;
 
     [DataField]
     public NetEntity TargetEntity;
+
+    [DataField]
+    public NetEntity? Part;
 
     [DataField]
     public NetEntity? UsedTool;
@@ -32,6 +35,7 @@ public sealed partial class SurgicalOperationDoAfterEvent : DoAfterEvent
     {
         Operation = Operation,
         TargetEntity = TargetEntity,
+        Part = Part,
         UsedTool = UsedTool,
         Organ = Organ,
         Inserting = Inserting,

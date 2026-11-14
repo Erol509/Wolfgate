@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Content.Shared._WF.Surgery;
+using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -10,6 +11,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.Utility;
 
 namespace Content.Client._WF.Surgery;
@@ -99,6 +101,8 @@ public partial class SurgicalRadialBui : BoundUserInterface
         _organWindow.SetOptions(state);
         if (!_organWindow.IsOpen)
             _organWindow.OpenCentered();
+        else
+            _organWindow.Visible = true;
     }
 
     private void OnOrganChosen(NetEntity? organ, bool inserting)
@@ -115,6 +119,9 @@ public partial class SurgicalRadialBui : BoundUserInterface
     {
         if (_menu == null || State is not SurgicalRadialState state)
             return;
+
+        if (_organWindow is { Visible: true })
+            _organWindow.Visible = false;
 
         if (!_menu.Visible)
             _menu.Visible = true;
@@ -146,8 +153,15 @@ public partial class SurgicalRadialBui : BoundUserInterface
                     : $"{option.Name}\n{option.Description}",
             };
 
-            var index = option.Index;
-            button.OnButtonDown += _ => SendMessage(new SurgicalRadialChooseMessage(index));
+            var key = option.Key;
+            button.OnButtonDown += args =>
+            {
+                if (args.Event.Function != EngineKeyFunctions.UIClick &&
+                    args.Event.Function != ContentKeyFunctions.AltActivateItemInWorld)
+                    return;
+
+                SendMessage(new SurgicalRadialChooseMessage(key));
+            };
             button.AddChild(Icon(option.Icon));
             container.AddChild(button);
         }
@@ -160,8 +174,12 @@ public partial class SurgicalRadialBui : BoundUserInterface
                 ToolTip = Loc.GetString("surgery-radial-next-page", ("page", _page + 1), ("pages", pages)),
             };
 
-            next.OnButtonDown += _ =>
+            next.OnButtonDown += args =>
             {
+                if (args.Event.Function != EngineKeyFunctions.UIClick &&
+                    args.Event.Function != ContentKeyFunctions.AltActivateItemInWorld)
+                    return;
+
                 _page = (_page + 1) % pages;
                 Build();
             };

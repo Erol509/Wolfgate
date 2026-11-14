@@ -5,6 +5,7 @@ using Content.Client._WF.Surgery;
 
 namespace Content.Client._Shitmed.Medical.Surgery;
 
+// WOLFGATE(Surgery): the registered type is the radial wheel's client half.
 /// <summary>The registered surgery interface: the state-driven radial wheel.</summary>
 public sealed class SurgeryBui : SurgicalRadialBui
 {

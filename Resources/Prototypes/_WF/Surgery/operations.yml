@@ -181,6 +181,7 @@
   surgery: WFSurgeryMendSkin
   step: WFSurgeryStepMendSkin
   requirePreviousSteps: false
+  storedStateOnly: true
   time: 2.4
   anyRequiredStates: [SkinCut, SkinOpen]
   priority: -1
@@ -201,6 +202,7 @@
   surgery: WFSurgeryFixBones
   step: WFSurgeryStepFixBones
   requirePreviousSteps: false
+  storedStateOnly: true
   time: 4
   requiredStates: [SkinOpen]
   anyRequiredStates: [BoneSawed, BoneDrilled]

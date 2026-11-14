@@ -59,6 +59,7 @@ public enum SurgicalRadialUiKey
 public sealed class SurgicalRadialOption
 {
     public int Index;
+    public string Key = string.Empty;
     public string Name = string.Empty;
     public string Description = string.Empty;
     public string Tool = string.Empty;
@@ -72,6 +73,7 @@ public sealed class SurgicalRadialOption
     public SurgicalRadialOption(int index, SurgicalOperationOption option)
     {
         Index = index;
+        Key = option.Key;
         Name = option.Name;
         Description = option.Description;
         Tool = option.ToolName;
@@ -104,11 +106,11 @@ public sealed class SurgicalRadialState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class SurgicalRadialChooseMessage : BoundUserInterfaceMessage
 {
-    public int Index;
+    public string Key;
 
-    public SurgicalRadialChooseMessage(int index)
+    public SurgicalRadialChooseMessage(string key)
     {
-        Index = index;
+        Key = key;
     }
 }
 
@@ -157,15 +159,12 @@ public sealed class SurgicalOrganChooseMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class SurgicalOrganCancelMessage : BoundUserInterfaceMessage;
 
-/// <summary>
-/// Raised when a technology unlocks a surgical operation. Put on a technology's generic unlocks to make the
-/// operation available station-wide.
-/// </summary>
+/// <summary>Raised when a technology unlocks a surgical operation.</summary>
 public sealed class SurgicalUnlockEvent : EntityEventArgs
 {
-    public EntProtoId Operation;
+    public ProtoId<SurgicalOperationPrototype> Operation;
 
-    public SurgicalUnlockEvent(EntProtoId operation)
+    public SurgicalUnlockEvent(ProtoId<SurgicalOperationPrototype> operation)
     {
         Operation = operation;
     }

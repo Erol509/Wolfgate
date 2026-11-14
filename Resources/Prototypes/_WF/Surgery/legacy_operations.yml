@@ -21,6 +21,7 @@
   zones:
   - Torso
   - Groin
+  featurePart: Hand
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachHead_SurgeryStepInsertFeature
@@ -42,6 +43,7 @@
   zones:
   - Torso
   - Groin
+  featurePart: Head
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachLeftArm_SurgeryStepInsertFeature
@@ -63,6 +65,8 @@
   zones:
   - Torso
   - Groin
+  featurePart: Arm
+  featureSymmetry: Left
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachLeftFoot_SurgeryStepInsertFeature
@@ -84,6 +88,8 @@
   zones:
   - LeftLeg
   - RightLeg
+  featurePart: Foot
+  featureSymmetry: Left
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachLeftHand_SurgeryStepInsertFeature
@@ -105,6 +111,8 @@
   zones:
   - LeftArm
   - RightArm
+  featurePart: Hand
+  featureSymmetry: Left
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachLeftLeg_SurgeryStepInsertFeature
@@ -126,6 +134,8 @@
   zones:
   - Torso
   - Groin
+  featurePart: Leg
+  featureSymmetry: Left
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachRightArm_SurgeryStepInsertFeature
@@ -147,6 +157,8 @@
   zones:
   - Torso
   - Groin
+  featurePart: Arm
+  featureSymmetry: Right
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachRightFoot_SurgeryStepInsertFeature
@@ -168,6 +180,8 @@
   zones:
   - LeftLeg
   - RightLeg
+  featurePart: Foot
+  featureSymmetry: Right
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachRightHand_SurgeryStepInsertFeature
@@ -189,6 +203,8 @@
   zones:
   - LeftArm
   - RightArm
+  featurePart: Hand
+  featureSymmetry: Right
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryAttachRightLeg_SurgeryStepInsertFeature
@@ -210,6 +226,8 @@
   zones:
   - Torso
   - Groin
+  featurePart: Leg
+  featureSymmetry: Right
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpSurgeryCorticalBorerRemoval_SurgeryStepRemoveCorticalBorer
@@ -289,7 +307,7 @@
   kind: Default
   priority: 10
   tools:
-  - anyItem: true
+  - component: Organ
     speed: 1.0
   partType: Torso
   zones:

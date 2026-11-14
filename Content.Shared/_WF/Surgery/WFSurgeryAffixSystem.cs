@@ -22,7 +22,7 @@ public sealed partial class WFSurgeryAffixSystem : EntitySystem
 
     private void OnStep(Entity<WFSurgeryAffixOnCloseComponent> ent, ref SurgeryStepEvent args)
     {
-        foreach (var (part, _) in _body.GetBodyChildren(args.Part))
+        foreach (var (part, _) in _body.GetBodyPartChildren(args.Part))
         {
             if (!HasComp<BodyPartReattachedComponent>(part))
                 continue;

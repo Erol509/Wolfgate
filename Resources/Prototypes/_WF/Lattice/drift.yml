@@ -2,6 +2,7 @@
 - type: entity
   parent: SurgeryBase
   id: WFSurgeryCutTwistedArm
+  name: Cut Twisted Arm
   categories: [ HideSpawnMenu ]
   components:
   - type: Surgery
@@ -16,6 +17,7 @@
 - type: entity
   parent: SurgeryStepBase
   id: WFLatticeStepCutTwistedArm
+  name: Cut away the twisted arm
   categories: [ HideSpawnMenu ]
   components:
   - type: SurgeryStep

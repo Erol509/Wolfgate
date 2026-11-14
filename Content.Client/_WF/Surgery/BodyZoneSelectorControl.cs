@@ -127,6 +127,14 @@ public sealed class BodyZoneSelectorControl : Control
         if (y < 1f)
             return null;
 
+        if (y < 4f)
+        {
+            if (x > 10f && x < 15f)
+                return TargetBodyPart.RightFoot;
+            if (x > 17f && x < 22f)
+                return TargetBodyPart.LeftFoot;
+        }
+
         if (y < 10f)
         {
             if (x > 10f && x < 15f)
@@ -137,11 +145,11 @@ public sealed class BodyZoneSelectorControl : Control
         else if (y < 13f)
         {
             if (x > 8f && x < 11f)
-                return TargetBodyPart.RightArm;
+                return TargetBodyPart.RightHand;
             if (x > 12f && x < 20f)
                 return TargetBodyPart.Groin;
             if (x > 21f && x < 24f)
-                return TargetBodyPart.LeftArm;
+                return TargetBodyPart.LeftHand;
         }
         else if (y < 22f)
         {

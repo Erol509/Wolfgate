@@ -150,6 +150,13 @@ public sealed partial class SurgicalOperationPrototype : IPrototype
     public bool RequirePreviousSteps = true;
 
     /// <summary>
+    /// Gate on markers actually stored on the part, not states implied by missing skin, bones or vessels.
+    /// Used by the mending operations, which must not appear on an intact skinless or boneless part.
+    /// </summary>
+    [DataField]
+    public bool StoredStateOnly;
+
+    /// <summary>
     /// Completing this step ends the legacy procedure because no procedure-specific step follows it.
     /// Wolfmed keeps a procedure listed while it is in progress so its closing step is reachable; this
     /// clears that marker when the generic closing operation replaces the legacy closing step.
@@ -204,6 +211,14 @@ public sealed partial class SurgicalOperationPrototype : IPrototype
     /// <summary>When set with <see cref="PartType"/>, restricts the target to this symmetry.</summary>
     [DataField]
     public BodyPartSymmetry? Symmetry;
+
+    /// <summary>The body part type a held attach-part item must be (for insert-part operations).</summary>
+    [DataField]
+    public BodyPartType? FeaturePart;
+
+    /// <summary>The side a held attach-part item must be on, when the slot is side-specific.</summary>
+    [DataField]
+    public BodyPartSymmetry? FeatureSymmetry;
 
     /// <summary>Only offer this operation when one of the selected zones is chosen.</summary>
     [DataField]

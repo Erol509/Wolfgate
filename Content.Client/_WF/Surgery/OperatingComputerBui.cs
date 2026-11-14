@@ -68,7 +68,11 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
 
         // The initial state may be assigned directly by the UI system without a UpdateState call.
         if (State is OperatingComputerState initialState)
+        {
             _state = initialState;
+            if (!_hideMechanicTouched && initialState.HasPatient)
+                _hideMechanic = !initialState.PatientMechanical;
+        }
 
         _window = new OperatingComputerWindow();
         _window.OnClose += Close;
@@ -529,6 +533,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
             return;
 
         _catalogList.DisposeAllChildren();
+        _catalogEntries.Clear();
 
         var operations = CatalogOperations()
             .Where(operation => operation.InList)

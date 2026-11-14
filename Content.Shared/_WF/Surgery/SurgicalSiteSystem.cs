@@ -202,6 +202,13 @@ public sealed partial class SurgicalSiteSystem : EntitySystem
     {
         if (TryComp<SurgicalSiteComponent>(part, out var site) && site.HasVessels is { } vessels)
             return vessels;
+
+        if (TryComp<BodyPartComponent>(part, out var bodyPart) && bodyPart.Species.Length > 0 &&
+            _prototypes.TryIndex<SurgicalAnatomyPrototype>(bodyPart.Species, out var anatomy))
+        {
+            return anatomy.HasVessels;
+        }
+
         return !IsMechanical(part);
     }
 
@@ -317,7 +324,7 @@ public sealed partial class SurgicalSiteSystem : EntitySystem
     public List<string> GetReadableState(EntityUid part)
     {
         var lines = new List<string>();
-        var state = GetEffectiveState(part);
+        var state = GetState(part);
 
         if (!HasBones(part))
             lines.Add(Loc.GetString("surgery-state-lacks-bones"));

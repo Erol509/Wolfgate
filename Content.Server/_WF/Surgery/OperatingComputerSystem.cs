@@ -28,6 +28,7 @@ public sealed partial class OperatingComputerSystem : EntitySystem
     [Dependency] private SurgicalOperationSystem _surgery = default!;
     [Dependency] private SurgicalSiteSystem _sites = default!;
     [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
 
     private float _updateAccumulator;
     private const float UpdateInterval = 0.5f;
@@ -103,7 +104,10 @@ public sealed partial class OperatingComputerSystem : EntitySystem
         Dirty(ent);
 
         if (TryComp<TargetingComponent>(args.Actor, out var targeting))
+        {
             targeting.Target = zone;
+            Dirty(args.Actor, targeting);
+        }
 
         SendState(ent, force: true);
     }
@@ -116,6 +120,8 @@ public sealed partial class OperatingComputerSystem : EntitySystem
         ent.Comp.Table = null;
         var xform = Transform(ent.Owner);
         var query = EntityQueryEnumerator<OperatingTableComponent, TransformComponent>();
+        EntityUid? nearest = null;
+        var nearestDistance = float.MaxValue;
 
         while (query.MoveNext(out var table, out _, out var tableXform))
         {
@@ -123,12 +129,18 @@ public sealed partial class OperatingComputerSystem : EntitySystem
                 continue;
 
             var distance = (tableXform.WorldPosition - xform.WorldPosition).Length();
-            if (distance > 1.6f)
+            if (distance > 1.6f || distance >= nearestDistance)
                 continue;
 
-            ent.Comp.Table = table;
-            break;
+            // The computer must actually see the table; a table behind a wall is not its table.
+            if (!_interaction.InRangeUnobstructed(ent.Owner, table, 1.6f, overlapCheck: false))
+                continue;
+
+            nearest = table;
+            nearestDistance = distance;
         }
+
+        ent.Comp.Table = nearest;
     }
 
     private void UpdatePatient(Entity<OperatingComputerComponent> ent)
@@ -207,7 +219,7 @@ public sealed partial class OperatingComputerSystem : EntitySystem
         // The catalog is part of the same state: a second state type would be overwritten before it is sent.
         FillOperations(state, patient, part);
 
-        var signature = BuildSignature(state);
+        var signature = BuildSignature(state, patient);
         if (!force && _signatures.TryGetValue(ent.Owner, out var last) && last == signature)
             return;
 
@@ -215,13 +227,18 @@ public sealed partial class OperatingComputerSystem : EntitySystem
         _ui.SetUiState(ent.Owner, OperatingComputerUiKey.Key, state);
     }
 
-    private static string BuildSignature(OperatingComputerState state)
+    private static string BuildSignature(OperatingComputerState state, EntityUid? patient)
     {
         var builder = new System.Text.StringBuilder();
-        builder.Append(state.HasTable).Append('|').Append(state.HasPatient).Append('|').Append(state.Zone);
-        builder.Append('|').Append(state.PatientState).Append('|').Append((int) state.Health);
-        builder.Append('|').Append((int) state.BloodLevel).Append('|').Append((int) state.Brute);
-        builder.Append('|').Append((int) state.Burn).Append('|').Append((int) state.Toxin).Append('|').Append((int) state.Oxy);
+        builder.Append(patient?.ToString() ?? "-");
+        builder.Append('|').Append(state.HasTable).Append('|').Append(state.HasPatient).Append('|').Append(state.Zone);
+        builder.Append('|').Append(state.PatientState).Append('|').Append(state.PatientStateColor);
+        builder.Append('|').Append((int) state.Health).Append('|').Append((int) state.MaxHealth);
+        builder.Append('|').Append((int) state.MinHealth).Append('|').Append(state.BloodType);
+        builder.Append('|').Append(state.PatientMechanical);
+        builder.Append('|').Append((int) state.BloodLevel).Append('|').Append((int) state.StandardBloodLevel);
+        builder.Append('|').Append((int) state.Brute).Append('|').Append((int) state.Burn);
+        builder.Append('|').Append((int) state.Toxin).Append('|').Append((int) state.Oxy);
         builder.Append('|').Append(string.Join(',', state.SurgeryState));
 
         foreach (var operation in state.Operations)

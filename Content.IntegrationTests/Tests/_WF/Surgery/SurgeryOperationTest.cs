@@ -284,6 +284,7 @@ public sealed class SurgeryOperationTest : WolfmedGameTest
             var wounds = SEntMan.System<WoundSystem>();
             var host = SEntMan.GetComponent<WoundHostComponent>(patient);
             stumpWound = wounds.CreateOrMergeWound(torso, host.AmputationConsequenceWound, 20);
+            Assert.That(stumpWound, Is.Not.Null, "the test could not create the stump wound.");
 
             SEntMan.EnsureComponent<IncisionOpenComponent>(torso);
             SEntMan.EnsureComponent<SkinRetractedComponent>(torso);
@@ -308,9 +309,6 @@ public sealed class SurgeryOperationTest : WolfmedGameTest
         {
             Assert.That(Body.GetBodyChildrenOfType(patient, BodyPartType.Arm, symmetry: BodyPartSymmetry.Left),
                 Is.Not.Empty, "the attached left arm is not part of the body again.");
-
-            if (stumpWound == null)
-                return;
 
             var host = SEntMan.GetComponent<WoundHostComponent>(patient);
             Assert.That(SEntMan.System<WoundSystem>().GetWounds(torso)

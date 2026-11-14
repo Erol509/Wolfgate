@@ -141,11 +141,12 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
         EntityUid user,
         EntityUid target,
         EntityUid? tool,
-        EntProtoId operationId,
+        ProtoId<SurgicalOperationPrototype> operationId,
         NetEntity? organ,
         bool inserting,
         SurgicalHealMode healMode,
-        out SurgicalOperationOption option)
+        out SurgicalOperationOption option,
+        NetEntity? part = null)
     {
         option = default!;
         if (!_prototypes.TryIndex(operationId, out SurgicalOperationPrototype? prototype))
@@ -154,6 +155,9 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
         foreach (var candidate in GetAvailableOperations(user, target, tool))
         {
             if (candidate.Operation != prototype)
+                continue;
+
+            if (part is { } netPart && GetNetEntity(candidate.Part) != netPart)
                 continue;
 
             if (candidate.Inserting != inserting || candidate.HealMode != healMode)
@@ -196,7 +200,12 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
         }
 
         var type = operation.PartType ?? ZoneToPartType(zone);
-        var symmetry = operation.Symmetry ?? (operation.PartType == null ? ZoneToSymmetry(zone) : null);
+        var symmetry = operation.Symmetry;
+        if (symmetry == null &&
+            (operation.PartType == null || operation.PartType == ZoneToPartType(zone)))
+        {
+            symmetry = ZoneToSymmetry(zone);
+        }
 
         foreach (var (id, bodyPart) in _body.GetBodyChildren(target))
         {
@@ -230,7 +239,7 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
         if (operation.Zones is { } zones && (zones & zone) == 0)
             return false;
 
-        var state = _sites.GetEffectiveState(part);
+        var state = operation.StoredStateOnly ? _sites.GetState(part) : _sites.GetEffectiveState(part);
         if (!state.HasAll(operation.RequiredStates))
             return false;
         if (operation.AnyRequiredStates != SurgeryState.None && !state.HasAny(operation.AnyRequiredStates))
@@ -240,6 +249,23 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
 
         if (requireTool && !TryMatchTool(operation, tool, out _, out _))
             return false;
+
+        if (operation.FeaturePart is { } featurePart)
+        {
+            if (tool is not { } heldPartEntity ||
+                !TryComp<BodyPartComponent>(heldPartEntity, out var heldPart) ||
+                heldPart.PartType != featurePart ||
+                operation.FeatureSymmetry is { } featureSymmetry && heldPart.Symmetry != featureSymmetry)
+            {
+                return false;
+            }
+        }
+
+        if (tool is { } organTool && operation.OrganComponents.Count > 0 &&
+            HasComp<OrganComponent>(organTool) && !MatchesOrganFilter(operation, organTool))
+        {
+            return false;
+        }
 
         if (!detached)
         {
@@ -410,7 +436,7 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
             heldOrgan.Body == null &&
             !OrganSlotOccupied(part, heldOrgan.SlotId) &&
             HasOrganSlot(part, heldOrgan.SlotId) &&
-            (!operation.BonesLockChestOrgans || CanReachChestOrgans(part)))
+            (!operation.BonesLockChestOrgans || !IsChestOrgan(held, heldOrgan) || CanReachChestOrgans(part)))
         {
             var name = Loc.GetString("surgery-option-insert-organ", ("organ", Name(held)));
             var desc = Loc.GetString("surgery-option-insert-organ-desc", ("organ", Name(held)));
@@ -711,7 +737,7 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
         if (operation.Flags.HasFlag(SurgicalOperationFlags.Locked) && !IsOperationUnlocked(operation))
             return false;
 
-        var state = GetEffectiveStateSafe(part);
+        var state = operation.StoredStateOnly ? _sites.GetState(part) : GetEffectiveStateSafe(part);
         if (!state.HasAll(operation.RequiredStates))
             return false;
         if (operation.AnyRequiredStates != SurgeryState.None && !state.HasAny(operation.AnyRequiredStates))

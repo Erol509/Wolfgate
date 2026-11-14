@@ -3,8 +3,9 @@
 State-driven surgery, reproducing /tg/station's surgical gameplay on Wolfgate's anatomy. A body part carries
 an anatomical surgical state (skin cut or open, vessels clamped, bone sawed or drilled, organs incised, cavity
 widened, and so on). Holding a tool and using it on a patient offers the operations the patient's actual state
-permits, through a radial wheel. The old fixed step window is gone; operations are available because the body
-is in the right condition, not because the surgeon reached a numbered step.
+permits: one available operation starts immediately, and several open the radial wheel. The old fixed step
+window is gone; operations are available because the body is in the right condition, not because the surgeon
+reached a numbered step.
 
 Entry points: `SurgicalOperationSystem` (availability, do-after, failure, effects), `SharedSurgicalOperationSystem`
 (state gates and radial options), `SurgicalSiteSystem` (part state), `OperatingComputerSystem` and
@@ -26,8 +27,8 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
   per-surgery seal-wound steps) are skipped so the wheel does not repeat them. Run it after editing a legacy surgery.
 - The operating computer tracks the patient buckled to an adjacent operating table and publishes vitals, the
   selected zone's surgical state and every operation the state permits. It opens on a hand click or with a
-  surgical tool; the table itself has no UI. Operations become available when the station
-  researches the technology named in a `surgicalResearch` prototype.
+  surgical tool; the table itself has no UI. Only operations marked `Locked` need the station to research the
+  technology named in a `surgicalResearch` prototype; basic operations such as `WFInciseSkin` stay available.
 
 ## Compatibility notes
 
@@ -142,7 +143,9 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 
 ## Non-modular edits
 
-- [`Content.Client/_Shitmed/Medical/Surgery/SurgeryBui.cs`](../../../Content.Client/_Shitmed/Medical/Surgery/SurgeryBui.cs): the step window is now the radial
+- [`Content.Client/_Shitmed/Medical/Surgery/SurgeryBui.cs`](../../../Content.Client/_Shitmed/Medical/Surgery/SurgeryBui.cs)
+  - the step window is now the radial
+  - the registered type is the radial wheel's client half.
 - [`Content.Server/_Shitmed/Medical/Surgery/SurgerySystem.cs`](../../_Shitmed/Medical/Surgery/SurgerySystem.cs): replaced by the state-driven radial
 - [`Content.Shared/_Shitmed/Surgery/SharedSurgerySystem.Steps.cs`](../../../Content.Shared/_Shitmed/Surgery/SharedSurgerySystem.Steps.cs)
   - replaces the step-selection UI

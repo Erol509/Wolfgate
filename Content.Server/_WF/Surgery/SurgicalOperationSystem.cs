@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared._Shitmed.Medical.Surgery;
+using Content.Shared._Shitmed.Medical.Surgery.Conditions;
 using Content.Shared._Shitmed.Medical.Surgery.Steps;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared._Shitmed.Medical.Surgery.Steps.Parts;
@@ -91,7 +92,7 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
 
             foreach (var operation in research.Operations)
             {
-                if (_unlocked.Add(operation))
+                if (_unlocked.Add(operation.Id))
                     RaiseLocalEvent(new SurgicalUnlockEvent(operation));
             }
         }
@@ -114,6 +115,9 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
         ["SurgeryStepCloseIncision"] = "WFMendSkin",
         ["SurgeryStepSealTendWound"] = "WFMendSkin",
         ["SurgeryStepSealWounds"] = "WFMendSkin",
+        ["SurgeryStepSealOrganWound"] = "WFMendSkin",
+        ["SurgeryStepRemoveOrgan"] = "WFOrganManipulation",
+        ["SurgeryStepInsertOrgan"] = "WFOrganManipulation",
     };
 
     private void OnLegacyStepChosenBody(Entity<SurgeryTargetComponent> ent, ref SurgeryStepChosenBuiMsg args) =>
@@ -155,9 +159,26 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
         if (operation == null)
             return;
 
-        var option = GetAvailableOperations(user, body, tool)
-            .FirstOrDefault(candidate => candidate.Operation == operation);
+        var candidates = GetAvailableOperations(user, body, tool)
+            .Where(candidate => candidate.Operation == operation);
 
+        if (operation.Kind == SurgicalOperationKind.OrganManipulation)
+        {
+            var inserting = args.Step.Id == "SurgeryStepInsertOrgan";
+            candidates = candidates.Where(candidate => candidate.Inserting == inserting);
+
+            // Autodoc names the organ through the legacy surgery's condition; pick that organ's option.
+            if (!inserting && GetSingleton(args.Surgery) is { } surgeryEnt &&
+                TryComp<SurgeryOrganConditionComponent>(surgeryEnt, out var condition) &&
+                condition.Organ is { } registry)
+            {
+                var organType = registry.Values.First().Component.GetType();
+                candidates = candidates.Where(candidate =>
+                    candidate.Organ is { } organ && HasComp(organ, organType));
+            }
+        }
+
+        var option = candidates.FirstOrDefault();
         if (option != null)
             StartOperation(user, body, tool, option, legacyTiming: true);
     }
@@ -328,18 +349,13 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
     {
         var user = args.Actor;
         var tool = _handsSystem.GetActiveItem(user);
+        var key = args.Key;
 
-        var options = GetAvailableOperations(user, ent.Owner, tool, collapseOrganOptions: true);
-        if (args.Index < 0 || args.Index >= options.Count)
+        var chosen = GetAvailableOperations(user, ent.Owner, tool, collapseOrganOptions: true)
+            .FirstOrDefault(option => option.Key == key);
+        if (chosen == null)
             return;
 
-        options.Sort((a, b) =>
-        {
-            var priority = a.Operation.Priority.CompareTo(b.Operation.Priority);
-            return priority != 0 ? priority : string.Compare(a.Name, b.Name, StringComparison.Ordinal);
-        });
-
-        var chosen = options[args.Index];
         if (IsOrganPickerOption(chosen))
         {
             OpenOrganPicker(ent.Owner, user, chosen.Part);
@@ -400,6 +416,7 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
             {
                 Operation = option.Operation.ID,
                 TargetEntity = GetNetEntity(target),
+                Part = GetNetEntity(option.Part),
                 Organ = option.Organ is { } organ ? GetNetEntity(organ) : null,
                 Inserting = option.Inserting,
                 HealMode = option.HealMode,
@@ -515,7 +532,7 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
 
         var target = eventTarget;
 
-        if (!_prototypes.TryIndex(args.Operation.Id, out SurgicalOperationPrototype? operation))
+        if (!_prototypes.TryIndex(args.Operation, out SurgicalOperationPrototype? operation))
             return;
 
         if (!HasComp<SurgeryTargetComponent>(target) && !HasComp<BodyPartComponent>(target))
@@ -526,7 +543,7 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
             : _handsSystem.GetActiveItem(args.User);
 
         if (!TryResolveOption(args.User, target, tool, operation.ID, args.Organ, args.Inserting, args.HealMode,
-                out var option))
+                out var option, args.Part))
         {
             _popup.PopupEntity(Loc.GetString("surgery-popup-invalid"), args.User, args.User, PopupType.MediumCaution);
             return;
@@ -535,8 +552,6 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
         option.Tool = tool;
 
         var speed = GetSpeedModifier(option, args.User, target);
-        if (args.User == target && !option.Operation.Flags.HasFlag(SurgicalOperationFlags.SelfOperable))
-            speed += 1.5f;
 
         if (args.User == target && TryComp<SurgerySpeedModifierComponent>(args.User, out var _))
             speed = MathF.Max(speed, 1f);

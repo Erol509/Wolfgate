@@ -367,7 +367,7 @@ def tools_for(step):
             quality, speed = TOOL_QUALITY[tool]
             entries.append({"quality": quality, "speed": speed})
 
-    if step["id"] in ("SurgeryStepInsertFeature", "SurgeryStepInsertOrgan"):
+    if step["id"] in ("SurgeryStepInsertFeature", "SurgeryStepInsertOrgan", "SurgeryStepInsertPump"):
         entries.insert(0, {"component": "BodyPart" if "Feature" in step["id"] else "Organ", "speed": 1.0})
 
     if not entries:
@@ -590,6 +590,13 @@ def main():
                 operation["flags"] = flags
             if organ_types:
                 operation["organComponents"] = organ_types
+            if step_id == "SurgeryStepInsertFeature":
+                removed = components_of(surgery["entity"], "SurgeryPartRemovedCondition")
+                if removed:
+                    if removed.get("part"):
+                        operation["featurePart"] = removed["part"]
+                    if removed.get("symmetry"):
+                        operation["featureSymmetry"] = removed["symmetry"]
             if step["repeatable"]:
                 operation["flags"] = operation.get("flags", []) + ["Looping"]
 

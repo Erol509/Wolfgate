@@ -14,5 +14,5 @@ public sealed partial class SurgicalResearchPrototype : IPrototype
 
     /// <summary>Operations unlocked when the technology is researched.</summary>
     [DataField]
-    public List<string> Operations = new();
+    public List<ProtoId<SurgicalOperationPrototype>> Operations = new();
 }
