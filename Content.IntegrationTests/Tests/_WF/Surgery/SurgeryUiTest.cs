@@ -160,14 +160,14 @@ public sealed class SurgeryUiTest : GameTest
             var labelText = string.Join(" | ", labels.Select(label => label.Text));
             var buttonText = string.Join(" | ", buttons.Select(button => button.Text));
 
-            var stateLabels = labels.Where(label => label.Text.Contains("Skin is cut")).ToList();
+            var stateLabels = labels.Where(label => label.Text?.Contains("Skin is cut") == true).ToList();
             Assert.That(stateLabels, Is.Not.Empty,
                 $"the patient state is not rendered. Labels: {labelText}");
             Assert.That(stateLabels.Any(label => label.Size.X > 4f), Is.True,
                 $"the patient state label was laid out with no width. Sizes: {string.Join(", ", stateLabels.Select(label => label.Size))}");
 
             var operationButtons = buttons
-                .Where(button => button.Text.Contains("retract skin", StringComparison.OrdinalIgnoreCase))
+                .Where(button => button.Text?.Contains("retract skin", StringComparison.OrdinalIgnoreCase) == true)
                 .ToList();
             Assert.That(operationButtons, Is.Not.Empty,
                 $"the next operations are not rendered. Buttons: {buttonText}");
