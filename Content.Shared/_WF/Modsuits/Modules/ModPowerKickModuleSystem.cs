@@ -33,7 +33,9 @@ public sealed partial class ModPowerKickModuleSystem : EntitySystem
     [Dependency] private SharedGravitySystem _gravity = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedStunSystem _stun = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private ThrowingSystem _throwing = default!;
+
     private void OnKickAction(Entity<ModPowerKickModuleComponent> ent, ref ModPowerKickActionEvent args)
     {
         if (args.Handled)
@@ -46,12 +48,19 @@ public sealed partial class ModPowerKickModuleSystem : EntitySystem
 
         _audio.PlayPredicted(ent.Comp.ChargeSound, user, user);
         _popup.PopupPredicted(Loc.GetString(ent.Comp.ChargePopup), user, user);
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, ent.Comp.ChargeTime, new ModPowerKickDoAfterEvent(GetNetCoordinates(args.Target)), ent)
+
+        var range = TryComp<BaseTargetActionComponent>(args.Action.Owner, out var targetAction)
+            ? targetAction.Range
+            : (float?) null;
+
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, ent.Comp.ChargeTime,
+            new ModPowerKickDoAfterEvent(GetNetCoordinates(args.Coords ?? Transform(user).Coordinates), GetNetEntity(args.Entity), range), ent)
         {
-            BreakOnMove = true,
-            BreakOnDamage = true,
+            BreakOnMove = false,
+            BreakOnDamage = false,
         });
     }
+
     private void OnKickDoAfter(Entity<ModPowerKickModuleComponent> ent, ref ModPowerKickDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
@@ -68,8 +77,23 @@ public sealed partial class ModPowerKickModuleSystem : EntitySystem
         kicking.Module = ent;
         Dirty(user, kicking);
 
+        var target = args.Target is { } targetEnt
+            && TryGetEntity(targetEnt, out var targetUid)
+            && !TerminatingOrDeleted(targetUid.Value)
+                ? Transform(targetUid.Value).Coordinates
+                : GetCoordinates(args.Coordinates);
+
+        if (args.Range is { } range)
+        {
+            var from = _transform.GetMapCoordinates(user);
+            var to = _transform.ToMapCoordinates(target);
+            var offset = to.Position - from.Position;
+            if (to.MapId == from.MapId && offset.Length() > range)
+                target = _transform.ToCoordinates(new MapCoordinates(from.Position + offset.Normalized() * range, from.MapId));
+        }
+
         _throwing.TryThrow(user,
-            GetCoordinates(args.Coordinates),
+            target,
             ent.Comp.ThrowSpeed,
             user,
             pushbackRatio: 0f,
@@ -87,6 +111,7 @@ public sealed partial class ModPowerKickModuleSystem : EntitySystem
         _popup.PopupClient(Loc.GetString("modsuit-power-kick-weightless"), user, user);
         return true;
     }
+
     private void OnKickHit(Entity<ModPowerKickingComponent> ent, ref ThrowDoHitEvent args)
     {
         if (ent.Comp.Module is not { } module || !TryComp<ModPowerKickModuleComponent>(module, out var kick))
@@ -102,13 +127,14 @@ public sealed partial class ModPowerKickModuleSystem : EntitySystem
         _audio.PlayPredicted(kick.HitSound, args.Target, ent);
         RemCompDeferred<ModPowerKickingComponent>(ent);
     }
+
     private void OnKickStop(Entity<ModPowerKickingComponent> ent, ref StopThrowEvent args)
     {
         RemCompDeferred<ModPowerKickingComponent>(ent);
     }
 }
 
-public sealed partial class ModPowerKickActionEvent : WorldTargetActionEvent;
+public sealed partial class ModPowerKickActionEvent : EntityWorldTargetActionEvent;
 
 [Serializable, NetSerializable]
 public sealed partial class ModPowerKickDoAfterEvent : DoAfterEvent
@@ -116,11 +142,19 @@ public sealed partial class ModPowerKickDoAfterEvent : DoAfterEvent
     [DataField(required: true)]
     public NetCoordinates Coordinates { get; private set; }
 
+    [DataField]
+    public NetEntity? Target { get; private set; }
+
+    [DataField]
+    public float? Range { get; private set; }
+
     private ModPowerKickDoAfterEvent() { }
 
-    public ModPowerKickDoAfterEvent(NetCoordinates coordinates)
+    public ModPowerKickDoAfterEvent(NetCoordinates coordinates, NetEntity? target, float? range)
     {
         Coordinates = coordinates;
+        Target = target;
+        Range = range;
     }
 
     public override DoAfterEvent Clone()

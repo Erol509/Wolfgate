@@ -264,6 +264,7 @@
       - ModsuitModuleBuiltinInsulation
       - ModsuitModuleBuiltinAutoInjector
       - ModsuitModuleBuiltinInstrument
+      - ModsuitModuleBuiltinSphereTransformCorporate
     - type: ItemSlots
       slots:
         mod-core:

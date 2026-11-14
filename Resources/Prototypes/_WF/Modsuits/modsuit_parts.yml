@@ -394,6 +394,8 @@
         blacklist:
           components:
           - BatterySelfRecharger
+          tags:
+          - ModsuitCellBlocked
   - type: ContainerContainer
     containers:
       bodypart: !type:Container
@@ -419,6 +421,8 @@
         blacklist:
           components:
           - BatterySelfRecharger
+          tags:
+          - ModsuitCellBlocked
 
 - type: entity
   parent: ModsuitCoreStandard
@@ -436,6 +440,8 @@
         blacklist:
           components:
           - BatterySelfRecharger
+          tags:
+          - ModsuitCellBlocked
 
 - type: entity
   parent: PartModsuit

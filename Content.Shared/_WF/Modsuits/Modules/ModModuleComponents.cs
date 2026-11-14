@@ -66,7 +66,7 @@ public sealed partial class ModLightModuleComponent : Component
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ModDeviceModuleComponent : Component
 {
-    [DataField(required: true)]
+    [DataField(required: true), AutoNetworkedField]
     public EntProtoId Device;
 
     [DataField, AutoNetworkedField]
@@ -176,8 +176,14 @@ public sealed partial class ModSoundModuleComponent : Component
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ModSpawnModuleComponent : Component
 {
-    [DataField(required: true)]
-    public EntProtoId Prototype;
+    [DataField]
+    public EntProtoId? Prototype;
+
+    [DataField]
+    public List<EntProtoId> RandomPrototypes = new();
+
+    [DataField]
+    public bool ToHand;
 }
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
@@ -232,6 +238,9 @@ public sealed partial class ModPatientTransportComponent : Component
     public EntProtoId BagPrototype = "ModsuitHardlightBag";
 
     [DataField]
+    public bool RequireRestrained;
+
+    [DataField]
     public TimeSpan CaptureDelay = TimeSpan.FromSeconds(1.5);
 
     [DataField, AutoNetworkedField]
@@ -246,6 +255,16 @@ public sealed partial class ModHardlightBagComponent : Component
 {
     [DataField, AutoNetworkedField]
     public EntityUid? Projector;
+}
+
+[RegisterComponent, NetworkedComponent]
+public sealed partial class ModCaptureBagComponent : Component
+{
+    [DataField]
+    public ComponentRegistry CaptiveComponents = new();
+
+    [ViewVariables]
+    public Dictionary<EntityUid, List<string>> Added = new();
 }
 
 [RegisterComponent, NetworkedComponent]

@@ -200,3 +200,10 @@ modsuit-ui-part-slot = {$part} Slot
 modsuit-ui-deploy = Deploy
 modsuit-ui-retract = Retract
 modsuit-ui-no-modules-detected = No Modules Detected
+
+modsuit-hat-slot = Hat
+modsuit-recycler-empty = The recycler is empty!
+modsuit-capture-not-restrained = They need to be restrained first!
+modsuit-shooting-mode-off = Shooting assistant off.
+modsuit-shooting-mode-stormtrooper = Stormtrooper mode enabled.
+modsuit-shooting-mode-sharpshooter = Sharpshooter mode enabled.

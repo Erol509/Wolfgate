@@ -4,3 +4,8 @@
   id: ModSphere
   kind: source
   path: /Textures/_WF/Modsuits/Shaders/mod_sphere.swsl
+
+- type: shader
+  id: ModDampenerField
+  kind: source
+  path: /Textures/_WF/Modsuits/Shaders/mod_dampener_field.swsl

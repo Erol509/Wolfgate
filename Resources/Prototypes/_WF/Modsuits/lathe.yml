@@ -165,6 +165,8 @@
     Uranium: 300
     Gold: 100
     Plasma: 200
+    UraniumFissile: 300
+    Diamond: 200
 
 - type: latheRecipe
   parent: BaseModsuitModuleRecipe
@@ -204,7 +206,8 @@
     Silver: 500
     Plasma: 500
     Uranium: 150
-    Diamond: 200
+    Diamond: 400
+    Bluespace: 500
 
 - type: latheRecipe
   parent: BaseModsuitModuleRecipe
@@ -530,6 +533,237 @@
     Glass: 200
     Plastic: 200
 
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleStorageCase
+  result: ModsuitModuleStorageCase
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleStorageHolding
+  result: ModsuitModuleStorageHolding
+  materials:
+    Steel: 2000
+    Silver: 750
+    Plasma: 1500
+    Uranium: 150
+    Diamond: 600
+    Bluespace: 1500
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleJetpackAdvanced
+  result: ModsuitModuleJetpackAdvanced
+  materials:
+    Steel: 1000
+    Plasma: 500
+    Gold: 200
+    Silver: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleThermalVisor
+  result: ModsuitModuleThermalVisor
+  materials:
+    Steel: 400
+    Glass: 400
+    Gold: 150
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleNightVisor
+  result: ModsuitModuleNightVisor
+  materials:
+    Steel: 400
+    Glass: 400
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleQuickCarryAdvanced
+  result: ModsuitModuleQuickCarryAdvanced
+  materials:
+    Steel: 600
+    Plastic: 300
+    Gold: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleShockAbsorber
+  result: ModsuitModuleShockAbsorber
+  materials:
+    Steel: 600
+    Plastic: 400
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleBurgerDispenser
+  result: ModsuitModuleBurgerDispenser
+  materials:
+    Steel: 400
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModulePaperDispenser
+  result: ModsuitModulePaperDispenser
+  materials:
+    Steel: 200
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleBalloonBlower
+  result: ModsuitModuleBalloonBlower
+  materials:
+    Steel: 200
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleStamper
+  result: ModsuitModuleStamper
+  materials:
+    Steel: 200
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleFishingGlove
+  result: ModsuitModuleFishingGlove
+  materials:
+    Steel: 300
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleMagbootsAdvanced
+  result: ModsuitModuleMagbootsAdvanced
+  materials:
+    Steel: 1000
+    Silver: 300
+    Gold: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleKinesis
+  result: ModsuitModuleKinesis
+  materials:
+    Steel: 1500
+    Silver: 500
+    Plasma: 500
+    Uranium: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleJumpJet
+  result: ModsuitModuleJumpJet
+  materials:
+    Steel: 1000
+    Plasma: 400
+    Gold: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleEmpShieldAdvanced
+  result: ModsuitModuleEmpShieldAdvanced
+  materials:
+    Steel: 800
+    Glass: 300
+    Gold: 200
+    Uranium: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleJointTorsion
+  result: ModsuitModuleJointTorsion
+  materials:
+    Steel: 400
+    Gold: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleGloveTranslator
+  result: ModsuitModuleGloveTranslator
+  materials:
+    Steel: 300
+    Glass: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModulePlasmaStabilizer
+  result: ModsuitModulePlasmaStabilizer
+  materials:
+    Plasma: 300
+    Glass: 300
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleHatStabilizer
+  result: ModsuitModuleHatStabilizer
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleRecycler
+  result: ModsuitModuleRecycler
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleDonkRecycler
+  result: ModsuitModuleDonkRecycler
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plastic: 400
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleCriminalCapture
+  result: ModsuitModuleCriminalCapture
+  materials:
+    Steel: 500
+    Glass: 300
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleMagneticHarness
+  result: ModsuitModuleMagneticHarness
+  materials:
+    Steel: 800
+    Silver: 200
+    Gold: 100
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleProjectileDampener
+  result: ModsuitModuleProjectileDampener
+  materials:
+    Steel: 1000
+    Silver: 300
+    Diamond: 300
+    Bluespace: 500
+
+- type: latheRecipe
+  parent: BaseModsuitModuleRecipe
+  id: ModsuitModuleShootingAssistant
+  result: ModsuitModuleShootingAssistant
+  materials:
+    Steel: 1000
+    Silver: 200
+    Gold: 100
+    Diamond: 50
+
 - type: latheRecipePack
   id: ModsuitModules
   recipes:
@@ -539,6 +773,15 @@
   - ModsuitModuleStorageCompact
   - ModsuitModuleStorageLarge
   - ModsuitModuleStorageBluespace
+  - ModsuitModuleStorageHolding
+  - ModsuitModuleStorageCase
+  - ModsuitModuleKinesis
+  - ModsuitModuleJointTorsion
+  - ModsuitModuleGloveTranslator
+  - ModsuitModulePlasmaStabilizer
+  - ModsuitModuleHatStabilizer
+  - ModsuitModuleRecycler
+  - ModsuitModuleDonkRecycler
   - ModsuitModuleFlashlight
   - ModsuitModuleWelding
   - ModsuitModuleThermalRegulator
@@ -560,6 +803,10 @@
   - ModsuitModuleRadProtection
   - ModsuitModuleResinMister
   - ModsuitModuleAntiGravity
+  - ModsuitModuleJetpackAdvanced
+  - ModsuitModuleMagbootsAdvanced
+  - ModsuitModuleJumpJet
+  - ModsuitModuleEmpShieldAdvanced
 
 - type: latheRecipePack
   id: ModsuitMedical
@@ -571,6 +818,8 @@
   - ModsuitModuleInjector
   - ModsuitModuleDefibrillator
   - ModsuitModulePatientTransport
+  - ModsuitModuleQuickCarryAdvanced
+  - ModsuitModuleNightVisor
 - type: latheRecipePack
   id: ModsuitSecurity
   recipes:
@@ -583,6 +832,13 @@
   - ModsuitModuleRestraintAssist
   - ModsuitModuleBulwark
   - ModsuitModuleEmpShield
+  - ModsuitModuleThermalVisor
+  - ModsuitModuleNightVisor
+  - ModsuitModuleShockAbsorber
+  - ModsuitModuleCriminalCapture
+  - ModsuitModuleMagneticHarness
+  - ModsuitModuleProjectileDampener
+  - ModsuitModuleShootingAssistant
 
 - type: latheRecipePack
   id: ModsuitService
@@ -591,6 +847,11 @@
   - ModsuitModuleWaddle
   - ModsuitModuleJanitorMister
   - ModsuitModuleMouthhole
+  - ModsuitModuleBurgerDispenser
+  - ModsuitModulePaperDispenser
+  - ModsuitModuleBalloonBlower
+  - ModsuitModuleStamper
+  - ModsuitModuleFishingGlove
 
 - type: latheRecipePack
   id: ModsuitSupply

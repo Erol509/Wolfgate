@@ -4,6 +4,9 @@
   id: ModsuitBoots
 
 - type: Tag
+  id: ModsuitCellBlocked
+
+- type: Tag
   id: ModsuitChestplate
 
 - type: Tag

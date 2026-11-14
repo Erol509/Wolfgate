@@ -16,6 +16,7 @@
   - ModsuitPlatingExternal
   - ModsuitCoreStandard
   - ModsuitModuleStorageCompact
+  - ModsuitModuleStorageCase
   - ModsuitModuleFlashlight
   position: -4,-2
   technologyPrerequisites:
@@ -33,11 +34,19 @@
   - ModsuitCoreStandardMicroreactor
   - ModsuitModuleStorageLarge
   - ModsuitModuleStorageBluespace
+  - ModsuitModuleStorageHolding
   - ModsuitModuleWelding
   - ModsuitModuleThermalRegulator
   - ModsuitModuleGps
   - ModsuitModuleVisorDiagnostic
   - ModsuitModuleReagentScanner
+  - ModsuitModuleJointTorsion
+  - ModsuitModuleGloveTranslator
+  - ModsuitModulePlasmaStabilizer
+  - ModsuitModuleHatStabilizer
+  - ModsuitModuleRecycler
+  - ModsuitModuleDonkRecycler
+  - ModsuitModuleKinesis
   position: -5,-2
   technologyPrerequisites:
   - ModsuitsTech
@@ -73,6 +82,10 @@
   - ModsuitModuleRadProtection
   - ModsuitModuleResinMister
   - ModsuitModuleAntiGravity
+  - ModsuitModuleJetpackAdvanced
+  - ModsuitModuleMagbootsAdvanced
+  - ModsuitModuleJumpJet
+  - ModsuitModuleEmpShieldAdvanced
   position: -3,-5
   technologyPrerequisites:
   - ModsuitEngineeringTech
@@ -109,6 +122,8 @@
   - ModsuitModuleInjector
   - ModsuitModuleDefibrillator
   - ModsuitModulePatientTransport
+  - ModsuitModuleQuickCarryAdvanced
+  - ModsuitModuleNightVisor
   position: 3,6
   technologyPrerequisites:
   - ModsuitsTech
@@ -125,6 +140,11 @@
   - ModsuitModuleWaddle
   - ModsuitModuleJanitorMister
   - ModsuitModuleMouthhole
+  - ModsuitModuleBurgerDispenser
+  - ModsuitModulePaperDispenser
+  - ModsuitModuleBalloonBlower
+  - ModsuitModuleStamper
+  - ModsuitModuleFishingGlove
   position: 4,7
   technologyPrerequisites:
   - ModsuitsTech
@@ -144,6 +164,12 @@
   - ModsuitModuleRestraintAssist
   - ModsuitModuleBulwark
   - ModsuitModuleEmpShield
+  - ModsuitModuleThermalVisor
+  - ModsuitModuleShockAbsorber
+  - ModsuitModuleCriminalCapture
+  - ModsuitModuleMagneticHarness
+  - ModsuitModuleProjectileDampener
+  - ModsuitModuleShootingAssistant
   - ModsuitPlatingSecurity
   - ModsuitPlatingBrigMed
   position: 4,1

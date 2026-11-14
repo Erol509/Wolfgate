@@ -4,6 +4,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared._WF.Modsuits.Modules;
@@ -129,6 +130,39 @@ public sealed partial class ModDeviceModuleSystem : EntitySystem
         ent.Comp.DeviceEntity = device;
         Dirty(ent);
         return device;
+    }
+
+    public void SetDevice(Entity<ModDeviceModuleComponent> ent, EntProtoId device)
+    {
+        if (ent.Comp.Device == device)
+            return;
+
+        if (!_modSuit.TryGetModuleSuit(ent, out var suit))
+            return;
+
+        var wasActive = TryComp<ModModuleComponent>(ent, out var moduleBase) && moduleBase.Active;
+
+        if (wasActive)
+            _modSuit.SetModuleActive(suit, (ent.Owner, moduleBase!), false);
+
+        if (ent.Comp.DeviceEntity is { } old)
+        {
+            _pendingReturn.Remove(old);
+            ent.Comp.DeviceEntity = null;
+            PredictedQueueDel(old);
+        }
+
+        if (ent.Comp.DeviceContainer.ContainedEntity is { } contained)
+        {
+            _container.Remove(contained, ent.Comp.DeviceContainer);
+            PredictedQueueDel(contained);
+        }
+
+        ent.Comp.Device = device;
+        Dirty(ent);
+
+        if (wasActive)
+            _modSuit.SetModuleActive(suit, (ent.Owner, moduleBase!), true);
     }
 
     private void Deactivate(Entity<ModDeviceModuleComponent> ent)

@@ -42,10 +42,11 @@
   description: Launch yourself at a target with a devastating kick.
   categories: [ HideSpawnMenu ]
   components:
-  - type: WorldTargetAction
+  - type: EntityWorldTargetAction
     checkCanInteract: true
     itemIconStyle: BigItem
     checkCanAccess: false
+    canTargetSelf: false
     range: 7
     event: !type:ModPowerKickActionEvent
 
@@ -55,10 +56,11 @@
   description: Charge the hydraulic arms and launch yourself at a target.
   categories: [ HideSpawnMenu ]
   components:
-  - type: WorldTargetAction
+  - type: EntityWorldTargetAction
     checkCanInteract: true
     itemIconStyle: BigItem
     checkCanAccess: false
+    canTargetSelf: false
     range: 10
     event: !type:ModPowerKickActionEvent
 
@@ -90,3 +92,36 @@
     checkCanAccess: false
     range: 8
     event: !type:ModSphereMissileActionEvent
+
+- type: entity
+  id: ActionModRecyclerUnload
+  name: Unload recycler
+  description: Dump everything the recycler has collected at your feet.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    checkCanInteract: false
+    event: !type:ModRecyclerUnloadActionEvent
+
+- type: entity
+  id: ActionModShootingMode
+  name: Cycle shooting mode
+  description: Switch the shooting assistant between off, stormtrooper and sharpshooter modes.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    checkCanInteract: false
+    event: !type:ModShootingModeActionEvent
+
+- type: entity
+  id: ActionModSelectDevice
+  name: Select module tool
+  description: Choose which tool this MOD module deploys.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    checkCanInteract: false
+    event: !type:ModSelectDeviceActionEvent
