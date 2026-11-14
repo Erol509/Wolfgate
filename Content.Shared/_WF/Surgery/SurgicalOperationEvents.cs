@@ -44,7 +44,7 @@ public sealed class SurgicalOperationOption
     public bool Priority;
 
     /// <summary>Identifies this option within the current availability list.</summary>
-    public string Key => $"{Operation.ID}|{(Organ is { } organ ? organ.Id.ToString() : "-")}|{(Inserting ? "in" : "out")}|{(byte) HealMode}";
+    public string Key => $"{Operation.ID}|{Part.Id}|{(Organ is { } organ ? organ.Id.ToString() : "-")}|{(Inserting ? "in" : "out")}|{(byte) HealMode}";
 }
 
 /// <summary>Bound user interface key for the surgical radial.</summary>

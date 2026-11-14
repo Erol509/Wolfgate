@@ -316,18 +316,28 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
                 return false;
             }
 
-            if (!CheckStepCanPerform(user, body, part, step, tool))
+            if (!CheckStepCanPerform(user, body, part, step, tool,
+                    operation.Flags.HasFlag(SurgicalOperationFlags.IgnoreClothes)))
+            {
                 return false;
+            }
         }
 
         return true;
     }
 
     /// <summary>Runs the legacy step's own pre-flight checks (operating table, armor, extra tool handlers).</summary>
-    private bool CheckStepCanPerform(EntityUid user, EntityUid body, EntityUid part, EntityUid step, EntityUid? tool)
+    private bool CheckStepCanPerform(
+        EntityUid user,
+        EntityUid body,
+        EntityUid part,
+        EntityUid step,
+        EntityUid? tool,
+        bool ignoreClothes)
     {
         var tools = GetToolList(user, tool);
-        var can = new SurgeryCanPerformStepEvent(user, body, tools, GetSlotFlags(part))
+        var slots = ignoreClothes ? SlotFlags.NONE : GetSlotFlags(part);
+        var can = new SurgeryCanPerformStepEvent(user, body, tools, slots)
         {
             ToolValidated = true,
         };
@@ -385,6 +395,7 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
             Organ = organ,
             Inserting = inserting,
             HealMode = healMode,
+            Tool = tool,
             Name = name ?? Loc.GetString(operation.Name),
             Description = description ?? Loc.GetString(operation.Description),
             ToolName = operation.RecommendedTool is { } rec ? Loc.GetString(rec) : GetRecommendedToolName(operation),
@@ -890,11 +901,28 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
             if (surgeryStep == stepId)
                 break;
 
+            // A skinless, boneless or vesselless part skips the corresponding generic opener step; its
+            // effective state carries the equivalent state even though no marker component exists.
+            if (IsAnatomySkippedStep(part, surgeryStep))
+                continue;
+
             if (!IsLegacyStepComplete(body, part, surgeryStep, surgery.Owner))
                 return false;
         }
 
         return true;
+    }
+
+    private bool IsAnatomySkippedStep(EntityUid part, EntProtoId stepId)
+    {
+        return stepId.Id switch
+        {
+            "SurgeryStepOpenIncisionScalpel" or "SurgeryStepCarefulIncisionScalpel" or
+                "SurgeryStepRetractSkin" => !_sites.HasSkin(part),
+            "SurgeryStepClampBleeders" => !_sites.HasVessels(part),
+            "SurgeryStepSawBones" => !_sites.HasBones(part),
+            _ => false,
+        };
     }
 
     /// <summary>Whether a legacy step's own completion check passes.</summary>

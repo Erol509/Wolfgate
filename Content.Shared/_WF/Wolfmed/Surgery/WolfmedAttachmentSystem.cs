@@ -30,8 +30,13 @@ public sealed partial class WolfmedAttachmentSystem : EntitySystem
 
         foreach (var wound in _wounds.GetWounds(parent).ToArray())
         {
-            if (wound.Comp.Prototype == host.AmputationConsequenceWound)
-                _wounds.RemoveWound(wound.Owner);
+            if (wound.Comp.Prototype == host.AmputationConsequenceWound &&
+                _wounds.RemoveWound(wound.Owner))
+            {
+                // One stump wound belongs to the limb that was just attached; leave the others for the
+                // remaining missing limbs.
+                break;
+            }
         }
     }
 }

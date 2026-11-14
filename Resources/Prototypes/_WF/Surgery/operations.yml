@@ -161,7 +161,6 @@
   requiredStates: [SkinOpen, OrgansCut]
   priority: 5
   kind: OrganManipulation
-  flags: [Organic]
   bonesLockChestOrgans: true
   tools:
   - component: Tweezers

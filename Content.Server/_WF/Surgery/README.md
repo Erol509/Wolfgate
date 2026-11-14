@@ -137,8 +137,6 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 
 ### Tools
 
-- [`Tools/_WF/Surgery/extract_radial_icons.py`](../../../Tools/_WF/Surgery/extract_radial_icons.py)
-- [`Tools/_WF/Surgery/extract_radial_ui.py`](../../../Tools/_WF/Surgery/extract_radial_ui.py)
 - [`Tools/_WF/Surgery/generate_operations.py`](../../../Tools/_WF/Surgery/generate_operations.py)
 
 ## Non-modular edits

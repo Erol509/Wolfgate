@@ -318,6 +318,55 @@ public sealed class SurgeryOperationTest : WolfmedGameTest
     }
 
     [Test]
+    public async Task SkeletonCanAttachALimbThroughImpliedAnatomy()
+    {
+        var map = await CreateTestMap();
+        EntityUid skeleton = default;
+        EntityUid surgeon = default;
+        EntityUid torso = default;
+        EntityUid arm = default;
+
+        await Server.WaitAssertion(() =>
+        {
+            skeleton = SEntMan.SpawnEntity("MobSkeletonPerson", map.GridCoords);
+            torso = Body.GetBodyChildrenOfType(skeleton, BodyPartType.Torso).First().Id;
+            arm = Body.GetBodyChildrenOfType(skeleton, BodyPartType.Arm, symmetry: BodyPartSymmetry.Left).First().Id;
+            Standing.Down(skeleton, playSound: false, dropHeldItems: false);
+
+            Assert.That(Body.DetachPart(torso, "left arm", arm), Is.True);
+            Assert.That(Sites.HasSkin(torso), Is.False, "the skeleton's torso should not require a skin incision.");
+
+            surgeon = SEntMan.SpawnEntity("MobHuman", map.GridCoords);
+            if (SEntMan.TryGetComponent<TargetingComponent>(surgeon, out var targeting))
+                targeting.Target = TargetBodyPart.Torso;
+            Assert.That(Hands.TryPickupAnyHand(surgeon, arm), Is.True);
+
+            var options = Surgery.GetAvailableOperations(surgeon, skeleton, arm);
+            Assert.That(options.Any(option => option.Operation.ID.Contains("AttachLeftArm")), Is.True,
+                "a skeleton's implied open skin should satisfy the generic incision prerequisites.");
+        });
+    }
+
+    [Test]
+    public async Task DetachedPartOptionsDoNotUseAnInvalidBody()
+    {
+        var (surgeon, patient, torso) = await SpawnPair();
+        EntityUid arm = default;
+        EntityUid scalpel = default;
+
+        await Server.WaitAssertion(() =>
+        {
+            arm = Body.GetBodyChildrenOfType(patient, BodyPartType.Arm, symmetry: BodyPartSymmetry.Left).First().Id;
+            Assert.That(Body.DetachPart(torso, "left arm", arm), Is.True);
+            scalpel = SEntMan.SpawnEntity("Scalpel", SEntMan.GetComponent<TransformComponent>(patient).Coordinates);
+            Hands.TryPickupAnyHand(surgeon, scalpel);
+
+            Assert.DoesNotThrow(() => Surgery.GetAvailableOperations(surgeon, arm, scalpel),
+                "validating a detached part must not dispatch to a patient-only body.");
+        });
+    }
+
+    [Test]
     public async Task OtherPartOperationsAreNotOffered()
     {
         var (_, patient, torso) = await SpawnPair();

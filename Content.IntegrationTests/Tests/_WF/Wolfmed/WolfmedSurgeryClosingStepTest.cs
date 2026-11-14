@@ -60,8 +60,8 @@ public sealed class WolfmedSurgeryClosingStepTest : WolfmedGameTest
         await Server.WaitAssertion(() =>
         {
             Assert.That(Wound(torso, "WFWolfmedCharringWound"), Is.False, "the graft did not take the charring.");
-            Assert.That(Valid(body, torso, "WFSurgeryGraftSkin"), Is.True,
-                "the graft stopped being a procedure once it removed the charring, so it cannot be sealed.");
+            Assert.That(Valid(body, torso, "WFSurgeryGraftSkin"), Is.False,
+                "the graft is complete once it removed the charring; the generic close seals the incision.");
         });
 
         await Perform(body, torso, surgeon, "WFMendSkin", "Cautery");
