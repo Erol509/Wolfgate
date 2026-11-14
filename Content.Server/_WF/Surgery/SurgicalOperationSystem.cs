@@ -48,6 +48,7 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
     [Dependency] private SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private WolfmedSurgeryConditionSystem _wolfmedConditions = default!;
+    [Dependency] private Content.Shared._WF.Genitals.Systems.GenitalConsentSystem _genitalConsent = default!;
 
     private readonly HashSet<string> _unlocked = new();
 
@@ -373,6 +374,17 @@ public sealed partial class SurgicalOperationSystem : SharedSurgicalOperationSys
         EntityUid? organ = null;
         if (args.Organ is { } netOrgan && TryGetEntity(netOrgan, out var organUid))
             organ = organUid;
+
+        var forbidden = (organ is { } chosenOrgan &&
+                         HasComp<Content.Shared._WF.Genitals.Components.GenitalOrganComponent>(chosenOrgan)) ||
+                        (args.Inserting && tool is { } heldOrgan &&
+                         HasComp<Content.Shared._WF.Genitals.Components.GenitalOrganComponent>(heldOrgan));
+
+        if (forbidden && !_genitalConsent.CanOperate(user, ent.Owner))
+        {
+            _ui.CloseUi(ent.Owner, SurgeryUIKey.Key, user);
+            return;
+        }
 
         foreach (var option in GetAvailableOperations(user, ent.Owner, tool))
         {

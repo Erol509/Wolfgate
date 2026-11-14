@@ -52,6 +52,7 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
     [Dependency] protected StandingStateSystem _standing = default!;
     [Dependency] protected SharedToolSystem _tools = default!;
     [Dependency] protected SurgicalSiteSystem _sites = default!;
+    [Dependency] protected Content.Shared._WF.Genitals.Systems.GenitalConsentSystem _genitalConsent = default!;
 
     private readonly Dictionary<EntProtoId, EntityUid> _singletons = new();
     private readonly List<SurgicalOperationPrototype> _operations = new();
@@ -250,7 +251,7 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
         if (requireTool && !TryMatchTool(operation, tool, out _, out _))
             return false;
 
-        if (operation.FeaturePart is { } featurePart)
+        if (requireTool && operation.FeaturePart is { } featurePart)
         {
             if (tool is not { } heldPartEntity ||
                 !TryComp<BodyPartComponent>(heldPartEntity, out var heldPart) ||
@@ -421,10 +422,11 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
             if (!MatchesOrganFilter(operation, organId))
                 continue;
 
-            // WOLFGATE(Genitals): anatomy organs are gated by their own per-organ surgeries and consent
-            // conditions; the catch-all manipulation operation must not bypass them.
+            // WOLFGATE(Genitals): the catch-all operation includes genital organs only when the surgeon is
+            // allowed to operate on this patient; without consent they stay hidden.
             if (operation.OrganComponents.Count == 0 &&
-                HasComp<Content.Shared._WF.Genitals.Components.GenitalOrganComponent>(organId))
+                HasComp<Content.Shared._WF.Genitals.Components.GenitalOrganComponent>(organId) &&
+                !_genitalConsent.CanOperate(user, body))
             {
                 continue;
             }
@@ -443,7 +445,8 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
             TryComp(held, out OrganComponent? heldOrgan) &&
             MatchesOrganFilter(operation, held) &&
             (operation.OrganComponents.Count > 0 ||
-             !HasComp<Content.Shared._WF.Genitals.Components.GenitalOrganComponent>(held)) &&
+             !HasComp<Content.Shared._WF.Genitals.Components.GenitalOrganComponent>(held) ||
+             _genitalConsent.CanOperate(user, body)) &&
             heldOrgan.Body == null &&
             !OrganSlotOccupied(part, heldOrgan.SlotId) &&
             HasOrganSlot(part, heldOrgan.SlotId) &&
