@@ -7382,3 +7382,90 @@ Entries:
   id: 100467
   time: '2026-11-14T14:53:11.0000000+00:00'
   url: https://github.com/VanguardControl/Wolfgate/pull/638
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: >-
+        [638][646][695][718][719][774][791][868][930] Walls and objects on
+        planet levels no longer vanish after you leave a level and come back.
+    - type: Fix
+      message: >-
+        [813][860][939][866] Photographers get their scrapbook and camera again,
+        including with paid loadout items or a crew spawn.
+    - type: Fix
+      message: >-
+        [940] Starting items meant for your bag are no longer lost when you wear
+        something without storage on your back.
+    - type: Fix
+      message: >-
+        [932][933] Items from free vending machines no longer sell for full
+        price.
+    - type: Fix
+      message: >-
+        [941] Supplying your own faction's contract no longer hands the goods
+        back to you.
+    - type: Fix
+      message: >-
+        [911] A repair voucher is no longer refunded once the drydock has
+        started repairing.
+    - type: Fix
+      message: '[888] Wielding an energy gun no longer also switches its fire mode.'
+    - type: Fix
+      message: '[903] Failed organs can be healed with the organ heal surgery again.'
+    - type: Fix
+      message: >-
+        [884] Water washes acid off felionoids, tajarans, felinids, arachnids,
+        dionas, skeletons, slime people and goblins.
+    - type: Fix
+      message: '[907] An AI that uses a shuttle console keeps its remote eye afterwards.'
+    - type: Fix
+      message: '[871] Wall lights no longer stop you wrenching down machines under them.'
+    - type: Fix
+      message: >-
+        [882] Expedition sites come back a while after being cleared, so the
+        console offers more than Carcinoma.
+    - type: Fix
+      message: >-
+        [713] Spilled blood no longer turns loose grey slime extracts into
+        monkey cubes.
+    - type: Fix
+      message: '[604][598] Clothing on mothroaches no longer shows stray art.'
+    - type: Fix
+      message: '[900] The drydock rebuilds destroyed LAPC substations.'
+    - type: Fix
+      message: >-
+        [852] Long ship names no longer push the company licence buttons off the
+        window.
+    - type: Fix
+      message: '[775] The ore magnet collects exotic matter.'
+    - type: Fix
+      message: >-
+        [881] Master of the House slowly restores a hemophage's blood as
+        described.
+    - type: Fix
+      message: '[916] Using a drug baggie in hand tells you how to get the powder out.'
+    - type: Fix
+      message: '[752] Synths and IPCs understand each other''s machine languages.'
+    - type: Fix
+      message: '[770] Repaired borgs and objects lose the repair tool''s damage tint.'
+    - type: Fix
+      message: '[811] Reattached hands keep their side in the hands bar.'
+    - type: Fix
+      message: '[724] Admins who join later see which ahelps were resolved.'
+    - type: Fix
+      message: >-
+        [756] Lifting off no longer carries the planet's marker away on your
+        ship.
+    - type: Fix
+      message: >-
+        [835] Synthetic characters no longer rubberband when their battery runs
+        low.
+    - type: Fix
+      message: '[863] The chameleon projector works on items you were hovering over.'
+    - type: Fix
+      message: >-
+        Radio voice lines no longer stop working for the whole server after a
+        radio is destroyed.
+  id: 100468
+  time: '2026-11-14T16:11:47.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/659
