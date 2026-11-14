@@ -1,6 +1,8 @@
 using System.Numerics;
 using Content.Client._WF.InteractionParticles;
 using Content.Shared._WF.InteractionParticles;
+using Content.Shared.Interaction;
+using Robust.Client.Graphics;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -27,6 +29,8 @@ public sealed partial class InteractionParticleSystem : EntitySystem
     [Dependency] private TransformSystem _xform = default!;
     [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IEyeManager _eye = default!;
+    [Dependency] private SharedInteractionSystem _interaction = default!;
 
     private InteractionParticleMode _interactionParticleMode;
     private const string AnimateKey = "particle-animation";
@@ -71,15 +75,9 @@ public sealed partial class InteractionParticleSystem : EntitySystem
         if (performerXform.MapID == MapId.Nullspace || targetXform.MapID == MapId.Nullspace)
             return;
 
-        // If the interaction happens across parent boundaries (in-hand, in a bag, ...) the regular particle would be
-        // pointing from a container to the container's parent, so play an in-hand particle instead.
-        if (performerXform.ParentUid != targetXform.ParentUid)
-        {
-            if (type == InteractionParticleType.Pull)
-                return;
-
+        // Something the actor holds, wears or carries gets the in-hand particle; the server normally decides this.
+        if (type != InteractionParticleType.Pull && _interaction.IsPrivateInteraction(actor, target))
             type = InteractionParticleType.InHand;
-        }
 
         if (!ShouldShowParticle(type, actor))
             return;
@@ -92,7 +90,9 @@ public sealed partial class InteractionParticleSystem : EntitySystem
             RemComp<InteractionParticleTrackerComponent>(performer);
         }
 
-        var performerTargetDelta = targetXform.LocalPosition - performerXform.LocalPosition;
+        // NoRotation sprites draw their offset in eye space, so turn the world delta by the eye's rotation.
+        var worldDelta = _xform.GetWorldPosition(targetXform) - _xform.GetWorldPosition(performerXform);
+        var performerTargetDelta = _eye.CurrentEye.Rotation.RotateVec(worldDelta);
         var inHandDelta = new Vector2(0, 0.75f);
         var particle = Spawn(InteractionParticleIds[type], performerXform.Coordinates);
 
@@ -222,7 +222,7 @@ public sealed partial class InteractionParticleSystem : EntitySystem
                     {
                         new AnimationTrackProperty.KeyFrame(color, 0f),
                         new AnimationTrackProperty.KeyFrame(color, (float) offsetLength.TotalSeconds),
-                        new AnimationTrackProperty.KeyFrame(endColor, (float) rotationLength.TotalSeconds, Easings.InOutCirc),
+                        new AnimationTrackProperty.KeyFrame(endColor, (float) (rotationLength - offsetLength).TotalSeconds, Easings.InOutCirc),
                     },
                 },
             },

@@ -54,6 +54,11 @@
   id: EffectFlashBluespace
   categories: [ HideSpawnMenu ]
   components:
+  # Same flash as the plain EffectFlashBluespaceSimple; lockers and events that spawn this keep their light.
+  - type: PointLight
+    radius: 10.5
+    energy: 15
+    color: "#18abf5"
   - type: ESTimedDespawn
     lifetime: 1
   - type: EmitSoundOnSpawn

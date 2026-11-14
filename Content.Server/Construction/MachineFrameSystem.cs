@@ -54,7 +54,7 @@ public sealed partial class MachineFrameSystem : EntitySystem
         if (args.Handled)
             return;
 
-        _interactionSystem.DoContactInteraction(args.User, uid, args.Used, false); // WOLFGATE(InteractionParticles)
+        _interactionSystem.SpawnInteractionParticle(args.User, uid, args.Used, false); // WOLFGATE(InteractionParticles): machine frames run on the server only
 
         if (!component.HasBoard)
         {

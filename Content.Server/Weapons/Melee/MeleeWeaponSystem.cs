@@ -129,7 +129,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
         }
 
-        Interaction.DoContactInteraction(user, target, null, true); // WOLFGATE(InteractionParticles)
+        Interaction.DoContactInteraction(user, target, null, false); // WOLFGATE(InteractionParticles): the client does not predict disarms
 
         var attemptEvent = new DisarmAttemptEvent(target, user, inTargetHand);
 

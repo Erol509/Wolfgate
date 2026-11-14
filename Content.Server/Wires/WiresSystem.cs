@@ -618,8 +618,6 @@ public sealed partial class WiresSystem : SharedWiresSystem
         if (wire == null)
             return;
 
-        _interactionSystem.DoContactInteraction(user, target, toolEntity, false); // WOLFGATE(InteractionParticles)
-
         switch (action)
         {
             case WiresAction.Cut:
@@ -666,6 +664,7 @@ public sealed partial class WiresSystem : SharedWiresSystem
                 break;
         }
 
+        _interactionSystem.SpawnInteractionParticle(user, target, toolEntity, false); // WOLFGATE(InteractionParticles): only once the action is accepted
         wires.WiresQueue.Add(id);
 
         if (_toolTime > 0f)

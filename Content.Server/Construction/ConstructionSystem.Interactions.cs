@@ -282,8 +282,8 @@ namespace Content.Server.Construction
                     if (validation)
                         return HandleResult.Validated;
 
-                    if (doAfterState == DoAfterState.None) // WOLFGATE(InteractionParticles)
-                        _interactionSystem.DoContactInteraction(interactUsing.User, uid, interactUsing.Used, false); // WOLFGATE(InteractionParticles)
+                    if (doAfterState == DoAfterState.None) // WOLFGATE(InteractionParticles): construction runs on the server only
+                        _interactionSystem.SpawnInteractionParticle(interactUsing.User, uid, interactUsing.Used, false); // WOLFGATE(InteractionParticles)
 
                     // If we still haven't completed this step's DoAfter...
                     if (doAfterState == DoAfterState.None && insertStep.DoAfter > 0)
@@ -375,7 +375,7 @@ namespace Content.Server.Construction
                         TimeSpan.FromSeconds(toolInsertStep.DoAfter));
                     RaiseLocalEvent(uid, ref durationEvent);
 
-                    _interactionSystem.DoContactInteraction(interactUsing.User, uid, interactUsing.Used, false); // WOLFGATE(InteractionParticles)
+                    _interactionSystem.SpawnInteractionParticle(interactUsing.User, uid, interactUsing.Used, false); // WOLFGATE(InteractionParticles): construction runs on the server only
                     var result  = _toolSystem.UseTool(
                         interactUsing.Used,
                         interactUsing.User,

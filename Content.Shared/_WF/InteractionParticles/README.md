@@ -10,8 +10,12 @@ The player picks between all particles, every particle except in-hand ones, and 
 someone is doing inside their own inventory.
 
 Entry points: `InteractionParticleSystem` (client), `InteractionParticleEvent`, `InteractionParticleCVars` and
-`PortalBlacklistComponent`. `SharedInteractionSystem.DoContactInteraction` is the shared origin of every particle, and
-the `InteractionParticle` fields on the interaction events let a handler suppress one. The spark effects the port uses
+`PortalBlacklistComponent`. `SharedInteractionSystem.SpawnInteractionParticle` (in this module's partial) sends every
+particle. The long `DoContactInteraction` overload calls it after the contact; the old three-argument overload plays
+none, so upstream contact calls stay as they were. Server-only hooks (construction, machine frames, wires, disarm) pass
+`predicted: false` so the actor gets the particle too, and hooks that should not leave fingerprints (stripping) call
+`SpawnInteractionParticle` directly. The `InteractionParticle` fields on the interaction events let a handler suppress
+one. An interaction is private (in-hand) when the target sits inside the actor, not merely on another grid. The spark effects the port uses
 come from the ES spark system already under `Content.Shared/_ES/Sparks`; `ESSparksTriggerSystem` adds its missing
 `ESSparkOnTrigger` hookup, since the trigger event only exists on the server.
 
@@ -25,6 +29,7 @@ come from the ES spark system already under `Content.Shared/_ES/Sparks`; `ESSpar
 - [`Content.Shared/_WF/InteractionParticles/InteractionParticleCVars.cs`](InteractionParticleCVars.cs)
 - [`Content.Shared/_WF/InteractionParticles/InteractionParticleEvent.cs`](InteractionParticleEvent.cs)
 - [`Content.Shared/_WF/InteractionParticles/PortalBlacklistComponent.cs`](PortalBlacklistComponent.cs)
+- [`Content.Shared/_WF/InteractionParticles/SharedInteractionSystem.Particles.cs`](SharedInteractionSystem.Particles.cs)
 
 ### Client
 
@@ -58,16 +63,17 @@ come from the ES spark system already under `Content.Shared/_ES/Sparks`; `ESSpar
 
 - [`Content.Client/Doors/DoorSystem.cs`](../../../Content.Client/Doors/DoorSystem.cs)
   - settle on the final sprite once the open/close animation finishes
-  - do not stop every animation for no reason
+  - only stop animations that belong to another state
+  - a door that reverses mid-animation must not run both animations at once
 - [`Content.Client/Options/UI/Tabs/GraphicsTab.xaml`](../../../Content.Client/Options/UI/Tabs/GraphicsTab.xaml): interaction particle visibility
 - [`Content.Client/Options/UI/Tabs/GraphicsTab.xaml.cs`](../../../Content.Client/Options/UI/Tabs/GraphicsTab.xaml.cs)
 - [`Content.Server/_ES/Sparks/ESSparksTriggerSystem.cs`](../../../Content.Server/_ES/Sparks/ESSparksTriggerSystem.cs): sparks when triggered, ported from Starlight's Visual Overdose
 - [`Content.Server/Anomaly/Components/BluespaceAnomalyComponent.cs`](../../../Content.Server/Anomaly/Components/BluespaceAnomalyComponent.cs): the sound is replaced by the bluespace effect, which sparks
 - [`Content.Server/Anomaly/Effects/BluespaceAnomalySystem.cs`](../../../Content.Server/Anomaly/Effects/BluespaceAnomalySystem.cs)
-- [`Content.Server/Construction/ConstructionSystem.Interactions.cs`](../../../Content.Server/Construction/ConstructionSystem.Interactions.cs)
-- [`Content.Server/Construction/MachineFrameSystem.cs`](../../../Content.Server/Construction/MachineFrameSystem.cs)
-- [`Content.Server/Weapons/Melee/MeleeWeaponSystem.cs`](../../../Content.Server/Weapons/Melee/MeleeWeaponSystem.cs)
-- [`Content.Server/Wires/WiresSystem.cs`](../../../Content.Server/Wires/WiresSystem.cs)
+- [`Content.Server/Construction/ConstructionSystem.Interactions.cs`](../../../Content.Server/Construction/ConstructionSystem.Interactions.cs): construction runs on the server only
+- [`Content.Server/Construction/MachineFrameSystem.cs`](../../../Content.Server/Construction/MachineFrameSystem.cs): machine frames run on the server only
+- [`Content.Server/Weapons/Melee/MeleeWeaponSystem.cs`](../../../Content.Server/Weapons/Melee/MeleeWeaponSystem.cs): the client does not predict disarms
+- [`Content.Server/Wires/WiresSystem.cs`](../../../Content.Server/Wires/WiresSystem.cs): only once the action is accepted
 - [`Content.Shared/_ES/Sparks/Components/ESSparkOnTriggerComponent.cs`](../../_ES/Sparks/Components/ESSparkOnTriggerComponent.cs): sparks when triggered, ported from Starlight's Visual Overdose
 - [`Content.Shared/Buckle/SharedBuckleSystem.Interaction.cs`](../../Buckle/SharedBuckleSystem.Interaction.cs)
 - [`Content.Shared/Doors/Components/DoorComponent.cs`](../../Doors/Components/DoorComponent.cs): one animation key per door state so animations do not stop each other
@@ -76,7 +82,9 @@ come from the ES spark system already under `Content.Shared/_ES/Sparks`; `ESSpar
 - [`Content.Shared/Interaction/InteractHand.cs`](../../Interaction/InteractHand.cs): set to false when the interaction should not play a particle
 - [`Content.Shared/Interaction/InteractUsing.cs`](../../Interaction/InteractUsing.cs): set to false when the interaction should not play a particle
 - [`Content.Shared/Interaction/SharedInteractionSystem.cs`](../../Interaction/SharedInteractionSystem.cs)
-  - callers that do not track a used entity or prediction
+  - the target contact below shows the particle
+  - one particle per click
+  - callers that do not know about particles keep the plain contact
   - ported from Starlight's interaction particles
 - [`Content.Shared/Movement/Pulling/Systems/PullingSystem.cs`](../../Movement/Pulling/Systems/PullingSystem.cs)
 - [`Content.Shared/Placeable/PlaceableSurfaceSystem.cs`](../../Placeable/PlaceableSurfaceSystem.cs)

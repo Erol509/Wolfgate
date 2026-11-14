@@ -120,13 +120,39 @@ public sealed partial class DoorSystem : SharedDoorSystem
         if (AppearanceSystem.TryGetData<string>(entity, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
             UpdateSpriteLayers((entity.Owner, args.Sprite), baseRsi);
 
-        // WOLFGATE(InteractionParticles) START: do not stop every animation for no reason
+        // WOLFGATE(InteractionParticles) START: only stop animations that belong to another state
         //if (_animationSystem.HasRunningAnimation(entity, DoorComponent.AnimationKey))
         //    _animationSystem.Stop(entity.Owner, DoorComponent.AnimationKey);
+        StopOtherDoorAnimations(entity, state);
         // WOLFGATE END
 
         UpdateAppearanceForDoorState(entity, args.Sprite, state);
     }
+
+    // WOLFGATE(InteractionParticles) START: a door that reverses mid-animation must not run both animations at once
+    private static readonly string[] WfDoorAnimationKeys =
+    {
+        DoorComponent.OpenKey, DoorComponent.CloseKey, DoorComponent.DenyKey, DoorComponent.EmagKey,
+    };
+
+    private void StopOtherDoorAnimations(EntityUid door, DoorState state)
+    {
+        var keep = state switch
+        {
+            DoorState.Open or DoorState.Opening => DoorComponent.OpenKey,
+            DoorState.Closed or DoorState.Closing => DoorComponent.CloseKey,
+            DoorState.Denying => DoorComponent.DenyKey,
+            DoorState.Emagging => DoorComponent.EmagKey,
+            _ => null,
+        };
+
+        foreach (var key in WfDoorAnimationKeys)
+        {
+            if (key != keep && _animationSystem.HasRunningAnimation(door, key))
+                _animationSystem.Stop(door, key);
+        }
+    }
+    // WOLFGATE END
 
     private void UpdateAppearanceForDoorState(Entity<DoorComponent> entity, SpriteComponent sprite, DoorState state)
     {

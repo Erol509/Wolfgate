@@ -311,7 +311,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         if (!stealth)
         {
-            _interactionSystem.DoContactInteraction(user, target, null, true); // WOLFGATE(InteractionParticles)
+            _interactionSystem.SpawnInteractionParticle(user, target, null, true); // WOLFGATE(InteractionParticles)
             if (IsStripHidden(slotDef, user))
                 _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), target, target, PopupType.Large);
             else
@@ -522,7 +522,7 @@ public abstract partial class SharedStrippableSystem : EntitySystem
 
         if (!stealth)
         {
-            _interactionSystem.DoContactInteraction(user, target, null, true); // WOLFGATE(InteractionParticles)
+            _interactionSystem.SpawnInteractionParticle(user, target, null, true); // WOLFGATE(InteractionParticles)
             _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", item)), target, target);
         } // WOLFGATE(InteractionParticles)
 
@@ -673,6 +673,8 @@ public abstract partial class SharedStrippableSystem : EntitySystem
                 Loc.GetString("strip-menu-viewing-message", ("user", Identity.Entity(user, EntityManager))),
                 Transform(user).Coordinates,
                 target.Owner);
+
+            _interactionSystem.SpawnInteractionParticle(user, target, null, true);
         }
         // WOLFGATE END
 

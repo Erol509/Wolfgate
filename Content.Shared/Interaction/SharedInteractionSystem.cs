@@ -18,7 +18,6 @@ using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Inventory.VirtualItem; // WOLFGATE(InteractionParticles)
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Systems;
@@ -1068,7 +1067,7 @@ namespace Content.Shared.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
             RaiseLocalEvent(target, interactUsingEvent, true);
-            DoContactInteraction(user, used, null, true, interactUsingEvent, interactionParticles: interactUsingEvent.InteractionParticle); // WOLFGATE(InteractionParticles)
+            DoContactInteraction(user, used, null, true, interactUsingEvent, interactionParticles: false); // WOLFGATE(InteractionParticles): the target contact below shows the particle
             DoContactInteraction(user, target, used, true, interactUsingEvent, interactionParticles: interactUsingEvent.InteractionParticle); // WOLFGATE(InteractionParticles)
             // Contact interactions are currently only used for forensics, so we don't raise used -> target
             if (interactUsingEvent.Handled)
@@ -1101,7 +1100,7 @@ namespace Content.Shared.Interaction
 
             var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(used, afterInteractEvent);
-            DoContactInteraction(user, used, null, true, afterInteractEvent, interactionParticles: afterInteractEvent.SpawnInteractionParticles); // WOLFGATE(InteractionParticles)
+            DoContactInteraction(user, used, null, true, afterInteractEvent, interactionParticles: afterInteractEvent.SpawnInteractionParticles && !(canReach && target != null)); // WOLFGATE(InteractionParticles): one particle per click
             if (canReach)
             {
                 DoContactInteraction(user, target, used, true, afterInteractEvent, interactionParticles: afterInteractEvent.SpawnInteractionParticles); // WOLFGATE(InteractionParticles)
@@ -1122,7 +1121,7 @@ namespace Content.Shared.Interaction
             var afterInteractUsingEvent = new AfterInteractUsingEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(target.Value, afterInteractUsingEvent);
 
-            DoContactInteraction(user, used, null, true, afterInteractUsingEvent, interactionParticles: afterInteractUsingEvent.SpawnInteractionParticles); // WOLFGATE(InteractionParticles)
+            DoContactInteraction(user, used, null, true, afterInteractUsingEvent, interactionParticles: afterInteractUsingEvent.SpawnInteractionParticles && !canReach); // WOLFGATE(InteractionParticles): one particle per click
             if (canReach)
             {
                 DoContactInteraction(user, target, used, true, afterInteractUsingEvent, interactionParticles: afterInteractUsingEvent.SpawnInteractionParticles); // WOLFGATE(InteractionParticles)
@@ -1432,10 +1431,10 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Simple convenience function to raise contact events (disease, forensics, etc).
         /// </summary>
-        // WOLFGATE(InteractionParticles) START: callers that do not track a used entity or prediction
+        // WOLFGATE(InteractionParticles) START: callers that do not know about particles keep the plain contact
         public void DoContactInteraction(EntityUid uidA, EntityUid? uidB, HandledEntityEventArgs? args = null)
         {
-            DoContactInteraction(uidA, uidB, null, true, args);
+            DoContactInteraction(uidA, uidB, null, true, args, interactionParticles: false);
         }
         // WOLFGATE END
 
@@ -1471,43 +1470,8 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(uidB.Value, ev);
 
             // WOLFGATE(InteractionParticles) START: ported from Starlight's interaction particles
-            if (!interactionParticles || HasComp<VirtualItemComponent>(uidB))
-                return;
-
-            var particleType = interactionParticleType;
-
-            // Determine this at the source so the server knows that the event is private.
-            // The client system retains the same check as a fallback.
-            if (particleType != InteractionParticleType.Pull &&
-                Transform(uidA).ParentUid != Transform(uidB.Value).ParentUid)
-            {
-                particleType = InteractionParticleType.InHand;
-            }
-
-            var particleEvent = new InteractionParticleEvent(GetNetEntity(uidA), GetNetEntity(used), GetNetEntity(uidB.Value), !_net.IsServer, particleType);
-
-            if (_net.IsServer)
-            {
-                if (particleType == InteractionParticleType.InHand)
-                {
-                    // Predicted actions already produced the local client's particle.
-                    // For a non-predicted action, send it only to the actor.
-                    if (!predicted)
-                        RaiseNetworkEvent(particleEvent, Filter.Entities(uidA));
-
-                    return;
-                }
-
-                var filter = predicted
-                    ? Filter.PvsExcept(uidA, entityManager: EntityManager)
-                    : Filter.Pvs(uidA, entityManager: EntityManager);
-
-                RaiseNetworkEvent(particleEvent, filter);
-            }
-            else if (_gameTiming.IsFirstTimePredicted)
-            {
-                RaiseLocalEvent(particleEvent);
-            }
+            if (interactionParticles)
+                SpawnInteractionParticle(uidA, uidB.Value, used, predicted, interactionParticleType);
             // WOLFGATE END
         }
 
