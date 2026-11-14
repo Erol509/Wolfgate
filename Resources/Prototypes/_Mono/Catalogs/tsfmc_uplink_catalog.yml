@@ -282,6 +282,36 @@
       tags:
       - FactionStaticUplinkTsf
 
+- type: listing
+  id: UplinkSecurityT1Voucher
+  name:  uplink-security-t1-voucher-name
+  description: uplink-security-t1-voucher-desc
+  productEntity: ShipVoucherTsfT1
+  cost:
+    FederationMilitaryCredit: 90
+  categories:
+  - UplinkSecurityVouchers
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkTsf
+
+- type: listing
+  id: UplinkSecurityT2Voucher
+  name:  uplink-security-t2-voucher-name
+  description: uplink-security-t2-voucher-desc
+  productEntity: ShipVoucherTsfT2
+  cost:
+    FederationMilitaryCredit: 150
+  categories:
+  - UplinkSecurityVouchers
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - FactionStaticUplinkTsf
+
 # Misc
 
 - type: listing
@@ -419,7 +449,7 @@
   description: uplink-faction-materials-exotic-desc
   productEntity: CrateMaterialsExoticFilledTsf
   cost:
-    FederationMilitaryCredit: 175 # WOLFGATE: PDV pack, price 125->175
+    FederationMilitaryCredit: 130 # WOLFGATE: TSF Balance Pass; from 175 -> 130
   categories:
   - UplinkSecurityMaterials
   conditions:

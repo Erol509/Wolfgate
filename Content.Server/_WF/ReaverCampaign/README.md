@@ -8,7 +8,7 @@ the origin) sets a tier from None to Overrun; a rise is announced at once, a fal
 threshold. The sector map shows held cells and a legend line with the tier, strongholds, cells and current bounty.
 The sector watch banners only capital moments: a rising tier, the first stronghold and a regroup, the citadel setting out,
 raised and fallen, and the defeat. Everything else is a line on the Common channel (a falling tier, later strongholds and
-their fall, convoys, blockades, kills, retakes); reinforcements, growth, funding and response packs say nothing, and a
+their fall, convoys, blockades, kills, retakes, smuggling funding); reinforcements, growth and response packs say nothing, and a
 ship a patrol or raid turns on is warned aboard only.
 A cell where a campaign ship and a crewed player ship meet is disputed: the map hatches it, and the stronghold's
 reinforcement clock, the convoy and reinforcement deadlines there hold until one side leaves or dies; spread skips it.
@@ -124,10 +124,12 @@ and counted for the round summary. `wf_reavers respond <q> <r>` sends one by han
 Smuggling funds the Reavers (`.Funding`). Each smuggling crate (the market's `contrabandGoods`) sold at an open chute,
 and each crate of NPC freight (a manifest seal) fenced at a `sealedOnlyChutes` chute (the Underground fence), banks
 toward a war chest, and so does every `fundingGoodsValue` (5,000) of `fundingGoodsTag` goods (narcotics) sold on a
-cargo pallet (`WFPalletSaleEvent`); every `fundingCrates` (5) pays out, bringing every stronghold's next reinforcement and the next
-spread forward by `fundingShare` (a quarter) of their intervals, unannounced. The chest holds one
-payout at most and spends it once a stronghold stands, the campaign isn't held and `fundingCooldown` (20 minutes) has
-passed since the last payout; `wf_reavers status` shows it.
+cargo pallet (`WFPalletSaleEvent`); every `fundingCrates` (4) make a payout, bringing every stronghold's next
+reinforcement and the next spread forward by `fundingShare` (a quarter) of their intervals and sending a patrol from the
+stronghold with fewest out, up to `fundingPatrols` past the usual patrol cap and without moving that stronghold's own
+patrol clock. Each payout is announced on the common channel. The chest banks up to `fundingBank` (3) payouts, so a bulk
+run keeps paying, and spends one whenever a stronghold stands, the campaign isn't held and `fundingCooldown` (5 minutes)
+has passed since the last; `wf_reavers status` shows it.
 
 Ship raids favour laden ships (up to three times the weight for a hold worth 100,000, through
 `WFCargoValueQueryEvent`), and `RecentlyRaided` tells the market which stations a raid was just sent at.

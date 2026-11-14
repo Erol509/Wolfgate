@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Shared._Mono.Store;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server._Mono.Cargo;
@@ -239,8 +240,11 @@ public sealed class SaleLimitTest
             {
                 var item = entMan.SpawnEntity(Limited, setup.Pad);
                 var comp = entMan.AddComponent<CurrencyInjectionOnSellComponent>(item);
-                comp.Company = "PDV";
-                comp.Amount = new Dictionary<string, FixedPoint2> { ["Doubloon"] = 10 };
+                comp.Injection = new CurrencyInjection
+                {
+                    Company = "PDV",
+                    Amount = new Dictionary<string, FixedPoint2> { ["Doubloon"] = 10 },
+                };
                 comps.Add(comp);
             }
 
@@ -251,7 +255,7 @@ public sealed class SaleLimitTest
 
             foreach (var comp in comps)
             {
-                Assert.That(comp.Amount["Doubloon"], Is.EqualTo(FixedPoint2.New(10)));
+                Assert.That(comp.Injection.Amount["Doubloon"], Is.EqualTo(FixedPoint2.New(10)));
             }
         });
 

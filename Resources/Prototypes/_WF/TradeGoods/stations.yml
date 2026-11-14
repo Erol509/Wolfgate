@@ -19,7 +19,7 @@
       TradeGoodScrap: SpaceCash4000
       TradeGoodShipComponents: SpaceCash7000
       TradeGoodFusionFuel: SpaceCash13000
-      WFTradeGoodContraband: WFSpaceCash40000
+      WFTradeGoodContraband: WFSpaceCashContraband
 
 # Anvilhold Drydock: a shipyard buys hull stock, parts and reactor fuel.
 - type: entity
@@ -40,7 +40,7 @@
       TradeGoodShipComponents: SpaceCash8000
       TradeGoodFissionFuel: SpaceCash20000
       TradeGoodFusionFuel: SpaceCash12000
-      WFTradeGoodContraband: WFSpaceCash40000
+      WFTradeGoodContraband: WFSpaceCashContraband
 
 - type: entity
   parent: VendingMachineTraderBaikal

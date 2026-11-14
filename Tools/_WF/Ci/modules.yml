@@ -85,6 +85,9 @@ unmarked:
   - path: Resources/Textures/_EinsteinEngines/Clothing/NanoTrasen/Modsuits/
     module: Modsuits
     reason: Einstein Engines emergency-response MODsuit sprites, ported from GoobStation along with their meta.json files.
+  - path: Resources/Textures/Mobs/Animals/mothroach/displacement.rsi/
+    module: null
+    reason: Displacement pixels whose source falls outside the frame are transparent, so worn items stop sampling neighbouring atlas art.
   - path: Resources/Textures/_NF/Clothing/Head/Hats/stc_cap.rsi/equipped-HELMET-vulpkanin.png
     module: null
     reason: The vulpkanin state was a winter coat hood; it now draws the cap itself.

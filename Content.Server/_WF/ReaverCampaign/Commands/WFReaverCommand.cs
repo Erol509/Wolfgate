@@ -154,6 +154,7 @@ public sealed partial class WFReaverCommand : LocalizedEntityCommands
             shell.WriteLine(Loc.GetString("cmd-wf_reavers-status-funding",
                 ("crates", state.Funding),
                 ("needed", campaign.FundingCrates),
+                ("chest", WFReaverCampaignSystem.FundingChest(campaign)),
                 ("funded", state.Funded)));
 
         if (_campaign.IsFinished(state))

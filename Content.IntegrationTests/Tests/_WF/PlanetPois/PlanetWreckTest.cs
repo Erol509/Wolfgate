@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Shared.CCVar;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -135,6 +136,8 @@ public sealed class PlanetWreckTest
             server.CfgMan.SetCVar(PlanetCVars.Bounds, true);
             server.CfgMan.SetCVar(PlanetCVars.Radius, radius);
             server.CfgMan.SetCVar(PlanetCVars.PoiTable, "WFPoisCarcinoma");
+            // Generation is under test: over a long preload the crew and wildlife otherwise wander off the layer or kill and eat each other.
+            server.CfgMan.SetCVar(CCVars.NPCEnabled, false);
             var surface = prototypes.Index<WFPlanetSurfacePrototype>("WFSurfaceCarcinoma");
             var network = server.System<WFPlanetNetworkSystem>().BuildNetwork(surface, Vector2.Zero, "WFSurfaceCarcinoma", null);
             Assert.That(network, Is.Not.Null);

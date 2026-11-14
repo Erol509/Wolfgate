@@ -104,9 +104,10 @@ public sealed partial class RadioSystem : EntitySystem
         EntityUid radioSource,
         int? frequency = null,
         LanguagePrototype? language = null,
-        bool escapeMarkup = true) // Frontier: added frequency
+        bool escapeMarkup = true,// Frontier: added frequency
+        bool jammable = true) // Mono: added jammable
     {
-        SendRadioMessage(messageSource, message, _prototype.Index(channel), radioSource, frequency: frequency, escapeMarkup: escapeMarkup, language: language); // Frontier: added frequency / Einstein Engines - Language
+        SendRadioMessage(messageSource, message, _prototype.Index(channel), radioSource, frequency: frequency, escapeMarkup: escapeMarkup, language: language, jammable: jammable); // Frontier: added frequency / Einstein Engines - Language / Mono: jammable
     }
 
     /// <summary>
@@ -121,7 +122,8 @@ public sealed partial class RadioSystem : EntitySystem
         EntityUid radioSource,
         int? frequency = null,
         LanguagePrototype? language = null,
-        bool escapeMarkup = true) // Nuclear-14: add frequency
+        bool escapeMarkup = true, // Nuclear-14: add frequency
+        bool jammable = true)  // Mono: add jammable
     {
         // Einstein Engines - Language begin
         if (language == null)
@@ -210,7 +212,8 @@ public sealed partial class RadioSystem : EntitySystem
         var sendAttemptEv = new RadioSendAttemptEvent(
             channel,
             radioSource,
-            transmitFrequency);
+            transmitFrequency,
+            jammable); // Mono
 
         RaiseLocalEvent(ref sendAttemptEv);
         RaiseLocalEvent(radioSource, ref sendAttemptEv);

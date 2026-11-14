@@ -60,6 +60,7 @@
     understands:
     - TauCetiBasic
     - RobotTalk
+    - Machine # WOLFGATE(Synthetics): synths and IPCs understand each other
   - type: HarpySinger
   - type: Instrument
     allowPercussion: true
@@ -89,6 +90,9 @@
         locked: true
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
+        blacklist: #Mono
+          tags:
+          - PowerCage
   - type: BatterySlotRequiresLock
     itemSlot: cell_slot
   - type: EncryptionHolderRequiresLock
@@ -194,6 +198,7 @@
   - type: WeldingHealable
   - type: WFChassisFilter # WOLFGATE(Synthetics): only contaminants stay in the chemical stream
   - type: RetroMonitorView # Mono
+  - type: DamagedSiliconAccent
 
 - type: entity
   save: false

@@ -13,7 +13,6 @@
       shader: unshaded
   - type: ShipyardVoucher
     destroyOnEmpty: true
-    consoleType: Custom
     companyName: WFAsf
     vessels:
     - WFAsfGleaner
@@ -35,7 +34,6 @@
       shader: unshaded
   - type: ShipyardVoucher
     destroyOnEmpty: true
-    consoleType: Custom
     companyName: WFAsf
     vessels:
     - WFAsfVigil
@@ -56,7 +54,6 @@
       shader: unshaded
   - type: ShipyardVoucher
     destroyOnEmpty: true
-    consoleType: Custom
     companyName: WFAsf
     vessels:
     - WFAsfLodestar

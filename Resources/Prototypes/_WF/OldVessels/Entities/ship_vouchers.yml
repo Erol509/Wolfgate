@@ -19,7 +19,6 @@
       shader: unshaded
   - type: ShipyardVoucher
     destroyOnEmpty: true
-    consoleType: Custom
     companyName: Colonial
     vessels:
     - Rook
@@ -45,7 +44,6 @@
       shader: unshaded
   - type: ShipyardVoucher
     destroyOnEmpty: true
-    consoleType: Custom
     vessels:
     - Rac-Man
     - Bow-Man
@@ -70,7 +68,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: true
     cooldown: 1800 # thirty minutes
-    consoleType: Custom
     companyName: USSP
     vessels:
     - Kopye
@@ -95,10 +92,9 @@
       color: "#05ffff"
       shader: unshaded
   - type: ShipyardVoucher
-    destroyOnEmpty: true
-    redemptionsLeft: 1
+    destroyOnEmpty: false # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
+    redemptionsLeft: 12 # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
     cooldown: 5100 # hour and 25 minutes
-    consoleType: Security
     companyName: TSF
     vessels:
     - Altair
@@ -121,10 +117,9 @@
       color: "#05ffff"
       shader: unshaded
   - type: ShipyardVoucher
-    destroyOnEmpty: true
-    redemptionsLeft: 1
+    destroyOnEmpty: false # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
+    redemptionsLeft: 12 # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
     cooldown: 5100 # hour and 25 minutes
-    consoleType: Security
     companyName: TSF
     vessels:
     - Andromeda
@@ -147,10 +142,9 @@
       color: "#05ffff"
       shader: unshaded
   - type: ShipyardVoucher
-    destroyOnEmpty: true
-    redemptionsLeft: 1
+    destroyOnEmpty: false # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
+    redemptionsLeft: 12 # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
     cooldown: 7200 # 2 hours
-    consoleType: Security
     companyName: TSF
     vessels:
     - Flyssa
@@ -175,7 +169,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 3600 # one hour
-    consoleType: USSP
     companyName: USSP
     vessels:
     - Sulak
@@ -200,7 +193,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 3600 # one hour
-    consoleType: USSP
     companyName: USSP
     vessels:
     - Remontnik
@@ -225,7 +217,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 7200 # 2 hours
-    consoleType: USSP
     companyName: USSP
     vessels:
     - Ledokol

@@ -160,3 +160,31 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+# Rock Walls for asteroid ships. PKA does increased damage to them, but doesn't mine them outright.
+# They have a high HP value but little armor thickness, so they're nowhere near as tanky as plastitanium
+- type: entity
+  id: WFWallHypercompactedRock
+  parent: BaseAltRock
+  description: A heavily compacted slab of asteroid rock. Even a PKA would struggle.
+  name: hypercompacted asteroid rock
+  suffix: Asteroid Ship Rock
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 4500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/break_stone.ogg
+          params:
+            volume: -6
+  - type: OreVein
+    oreChance: 0.33
+    oreRarityPrototypeId: RandomOreDistributionStandard
+  - type: ArmorThickness
+    thickness: 4

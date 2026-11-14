@@ -65,7 +65,7 @@ networked audio entity per cluster instead of one per rock. `GatherSoundThrottle
 - [`Content.Shared/_NF/Atmos/BUI/GasSaleConsoleBoundUserInterfaceState.cs`](../../../Content.Shared/_NF/Atmos/BUI/GasSaleConsoleBoundUserInterfaceState.cs): the appraisal shows the payout currency
 - [`Content.Shared/_NF/Bank/Components/MarketModifierComponent.cs`](../../../Content.Shared/_NF/Bank/Components/MarketModifierComponent.cs): a console can state its rate in its description instead
 - [`Content.Shared/_NF/Bank/MarketModifierSystem.cs`](../../../Content.Shared/_NF/Bank/MarketModifierSystem.cs): some consoles state their rate in their description instead
-- [`Resources/Locale/en-US/_Mono/store/uplink-catalog.ftl`](../../../Resources/Locale/en-US/_Mono/store/uplink-catalog.ftl): one fissile plate, matching the crate fill
+- [`Resources/Locale/en-US/_Mono/store/uplink-catalog.ftl`](../../../Resources/Locale/en-US/_Mono/store/uplink-catalog.ftl): two fissile plates, 10 plastitanium, matching the crate
 - [`Resources/Prototypes/_DV/Entities/Objects/Tools/lathe_upgrade_kits.yml`](../../../Resources/Prototypes/_DV/Entities/Objects/Tools/lathe_upgrade_kits.yml)
   - kits don't fit ore processors
   - the hyper-convection kit is the one kit that fits ore processors, so it drops the base kit's tag blacklist
@@ -79,7 +79,7 @@ networked audio entity per cluster instead of one per rock. `GatherSoundThrottle
   - drone plastitanium 10 -> 4 sheets
   - drone plastitanium 20 -> 8 sheets
   - drone plastitanium 40 -> 16 sheets
-- [`Resources/Prototypes/_Mono/Catalogs/Fills/Crates/materials.yml`](../../../Resources/Prototypes/_Mono/Catalogs/Fills/Crates/materials.yml): exotic crate fissile, 3 -> 1
+- [`Resources/Prototypes/_Mono/Catalogs/Fills/Crates/materials.yml`](../../../Resources/Prototypes/_Mono/Catalogs/Fills/Crates/materials.yml): exotic crate fissile, 3 -> 2
 - [`Resources/Prototypes/_Mono/Entities/Markers/Spawners/Random/scrap_processor.yml`](../../../Resources/Prototypes/_Mono/Entities/Markers/Spawners/Random/scrap_processor.yml): plastitanium is uncommon in the rare materials group (weight 0.6), so scrap doesn't undercut the crystallizer
 - [`Resources/Prototypes/_Mono/Entities/Materials/materials.yml`](../../../Resources/Prototypes/_Mono/Entities/Materials/materials.yml)
   - fissile 25000 -> 10000 per sheet, so the centrifuge isn't the best credit faucet

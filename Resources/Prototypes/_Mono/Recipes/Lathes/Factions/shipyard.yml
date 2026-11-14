@@ -37,9 +37,9 @@
   materials:
     WFShipParts: 50000 # WOLFGATE(TradeGoods): ship vouchers use ship parts from ship component crates
     Steel: 10000
-    Copper: 10000
+    Copper: 7500  # WOLFGATE: TSF Balance Pack; lowering the cost in copper/lithium a smidge to reduce the tedium (by a smidge)
     Plasteel: 5000
-    Lithium: 10000
+    Lithium: 7500  # WOLFGATE: TSF Balance Pack; lowering the cost in copper/lithium a smidge to reduce the tedium (by a smidge)
     Glass: 5000
     Plasma: 5000
     Gold: 5000
@@ -71,9 +71,9 @@
   materials:
     WFShipParts: 100000 # WOLFGATE(TradeGoods): ship vouchers use ship parts from ship component crates
     Steel: 15000
-    Copper: 15000
+    Copper: 12000 # WOLFGATE: TSF Balance Pack; lowering the cost in copper/lithium a smidge to reduce the tedium (by a smidge)
     Plasteel: 12000
-    Lithium: 15000
+    Lithium: 10000 # WOLFGATE: TSF Balance Pack; lowering the cost in copper/lithium a smidge to reduce the tedium (by a smidge)
     Glass: 5000
     Plasma: 5000
     Gold: 5000
@@ -91,9 +91,9 @@
   materials:
     WFShipParts: 200000 # WOLFGATE(TradeGoods): ship vouchers use ship parts from ship component crates
     Steel: 30000
-    Copper: 15000
+    Copper: 13000  # WOLFGATE: TSF Balance Pack; lowering the cost in copper/lithium a smidge to reduce the tedium (by a smidge)
     Plasteel: 25000
-    Lithium: 15000
+    Lithium: 12000  # WOLFGATE: TSF Balance Pack; lowering the cost in copper/lithium a smidge to reduce the tedium (by a smidge)
     Glass: 5000
     Plasma: 5000
     Gold: 5000

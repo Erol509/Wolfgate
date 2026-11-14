@@ -212,15 +212,35 @@ public sealed partial class WFTradeMarketPrototype : IPrototype
 
     /// <summary>Chance one contraband sale at an open chute gets the seller flagged.</summary>
     [DataField]
-    public float ContrabandWarrantChance = 0.05f;
+    public float ContrabandWarrantChance = 0.25f;
 
-    /// <summary>The warrant posted on a flagged seller.</summary>
+    /// <summary>What each flag adds to the seller's warrant.</summary>
     [DataField]
-    public int ContrabandWarrant = 10000;
+    public int ContrabandWarrant = 20000;
 
-    /// <summary>After a flag, how long before the same seller can be flagged again.</summary>
+    /// <summary>The most a seller's contraband warrant grows to.</summary>
     [DataField]
-    public TimeSpan ContrabandWarrantCooldown = TimeSpan.FromMinutes(30);
+    public int ContrabandWarrantCap = 300000;
+
+    /// <summary>After security hears of a seller, how long before a further flag on them is radioed again.</summary>
+    [DataField]
+    public TimeSpan ContrabandAlertCooldown = TimeSpan.FromMinutes(5);
+
+    /// <summary>Telecrystals a contraband sale at an open chute pays beside the cash; 0 pays none.</summary>
+    [DataField]
+    public int ContrabandTelecrystals = 2;
+
+    /// <summary>How long one open station stays the only one buying contraband before the drop moves; zero lets every open chute buy it.</summary>
+    [DataField]
+    public TimeSpan ContrabandDropInterval = TimeSpan.FromMinutes(30);
+
+    /// <summary>How long after the drop moves security is tipped off where it went.</summary>
+    [DataField]
+    public TimeSpan ContrabandDropLeak = TimeSpan.FromMinutes(10);
+
+    /// <summary>The colour of the drop's card under the Market app's Underground tab.</summary>
+    [DataField]
+    public Color ContrabandDropColor = Color.FromHex("#d84a4a");
 
     /// <summary>The radio channel security hears a flagged sale on.</summary>
     [DataField]

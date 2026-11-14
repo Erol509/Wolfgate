@@ -15,7 +15,7 @@ on:
 jobs:
   build:
     if: github.event.pull_request.draft == false
-    # WOLFGATE(Ci) START: split the integration tests over five runners; each builds and runs one shard
+    # WOLFGATE(Ci) START: split the integration tests over six runners; each builds and runs one shard
     # strategy:
     #   matrix:
     #     os: [ubuntu-latest]
@@ -25,7 +25,7 @@ jobs:
       matrix:
         # Pinned: on ubuntu-26.04 the cockpit and console label-width tests fail with the same code.
         os: [ubuntu-24.04]
-        shard: [ wf-heavy, wf-npc, wf-planets, wf-rest, core ]
+        shard: [ wf-heavy, wf-npc, wf-planets, wf-rest-a, wf-rest-b, core ]
         # Balanced on per-module times from the NUnit XML, about 8 minutes of tests each.
         include:
         - shard: wf-heavy
@@ -35,8 +35,11 @@ jobs:
         # Whole worlds built per test: on one runner with the rest they ran it out of memory.
         - shard: wf-planets
           where: "test =~ 'Tests[.]_WF[.](Planet[A-Za-z]*|Caverns|LivingWorld|SandMaw|ReaverCampaign|Administration)[.]'"
-        - shard: wf-rest
-          where: "test =~ 'Tests[.]_WF[.]' && test !~ 'Tests[.]_WF[.](Wolfmed|Vehicles|Remade|AdsIncursion|Encounters|NpcCrew|RoundSetup|Planet[A-Za-z]*|Caverns|LivingWorld|SandMaw|ReaverCampaign|Administration)[.]' && test !~ ShipyardTest"
+        # The rest of _WF, split by module name: as one shard (about 2,300 tests) it ran its runner out of memory.
+        - shard: wf-rest-a
+          where: "test =~ 'Tests[.]_WF[.][A-L]' && test !~ 'Tests[.]_WF[.](Wolfmed|Vehicles|Remade|AdsIncursion|Encounters|NpcCrew|RoundSetup|Planet[A-Za-z]*|Caverns|LivingWorld|SandMaw|ReaverCampaign|Administration)[.]' && test !~ ShipyardTest"
+        - shard: wf-rest-b
+          where: "test =~ 'Tests[.]_WF[.]' && test !~ 'Tests[.]_WF[.][A-L]' && test !~ 'Tests[.]_WF[.](Wolfmed|Vehicles|Remade|AdsIncursion|Encounters|NpcCrew|RoundSetup|Planet[A-Za-z]*|Caverns|LivingWorld|SandMaw|ReaverCampaign|Administration)[.]' && test !~ ShipyardTest"
         # Upstream and other forks; Content.Tests runs here too.
         - shard: core
           where: "test !~ 'Tests[.]_WF[.]' && test !~ ShipyardTest"

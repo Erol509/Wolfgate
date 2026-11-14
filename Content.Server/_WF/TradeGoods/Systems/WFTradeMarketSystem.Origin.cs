@@ -1,3 +1,4 @@
+using Content.Server._Mono.VendingMachine;
 using Content.Server._WF.Traders;
 using Content.Server.Shuttles.Events;
 using Content.Shared._NF.Shipyard.Components;
@@ -11,6 +12,9 @@ namespace Content.Server._WF.TradeGoods.Systems;
 /// </summary>
 public sealed partial class WFTradeMarketSystem
 {
+    [Dependency] private VendingMachinePurchaseSystem _vendingPurchase = default!;
+    [Dependency] private WFTradeContrabandSystem _contraband = default!;
+
     private static readonly TimeSpan SweepInterval = TimeSpan.FromSeconds(5);
 
     /// <summary>Crates not yet stamped, checked every sweep.</summary>
@@ -128,6 +132,21 @@ public sealed partial class WFTradeMarketSystem
     private static bool MadeAt(WFTradeOriginComponent origin, EntityUid? chuteGrid)
     {
         return chuteGrid is { } grid && (origin.Grid == grid || origin.Docked?.Contains(grid) == true);
+    }
+
+    /// <summary>
+    /// Why a chute refuses a seller's crate, or null if it takes it: its traders shun the seller, the crate was bought on
+    /// its grid, it wants a manifest seal, or the crate is contraband and this isn't the drop.
+    /// </summary>
+    public LocId? Refusal(EntityUid chute, EntityUid crate, EntityUid seller)
+    {
+        if (Shunned(chute, seller))
+            return "wf-trade-refuse-shunned";
+
+        if (Transform(chute).GridUid is { } grid && _vendingPurchase.WasPurchasedOnGrid(crate, grid))
+            return "wf-trade-chute-local-goods";
+
+        return CheckSeal(chute, crate) ?? _contraband.CheckDrop(chute, crate);
     }
 
     /// <summary>Why a sealed-only chute refuses a crate without a manifest seal, or null if the chute takes it.</summary>

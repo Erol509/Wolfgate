@@ -29,23 +29,23 @@
     # The USSP Ledokol capital and Buran frigate are favoured hubs: Ledokol is listed twice from tier 3.
     tiers:
     - minTier: 0
-      vessels: [ Balor, MClass, Intermission, WFHammerhead, Arkansaw, Claymore, Pelican, Saintie, Ledokol, Buran ]
+      vessels: [ Balor, MClass, Intermission, WFHammerhead, Arkansaw, Claymore, Pelican, Saintie, Ledokol, Buran, WFMinerva ]
       skills: [ Green ]
       retrofit: WFPirateRetrofitHubLight
     - minTier: 2
-      vessels: [ Balor, MClass, Intermission, WFHammerhead, Arkansaw, Claymore, Pelican, Saintie, Ledokol, Buran ]
+      vessels: [ Balor, MClass, Intermission, WFHammerhead, Arkansaw, Claymore, Pelican, Saintie, Ledokol, Buran, WFMinerva ]
       skills: [ Green, Regular ]
       retrofit: WFPirateRetrofitHubMedium
     - minTier: 3
-      vessels: [ MClass, Intermission, WFHammerhead, Arkansaw, Claymore, Saintie, Ledokol, Ledokol, Buran ]
+      vessels: [ MClass, Intermission, WFHammerhead, Arkansaw, Claymore, Saintie, Ledokol, Ledokol, Buran, WFMinerva ]
       skills: [ Regular ]
       retrofit: WFPirateRetrofitHubHeavy
     - minTier: 4
-      vessels: [ MClass, Intermission, WFHammerhead, Arkansaw, Claymore, Saintie, Ledokol, Ledokol, Buran ]
+      vessels: [ MClass, Intermission, WFHammerhead, Arkansaw, Claymore, Saintie, Ledokol, Ledokol, Buran, WFMinerva ]
       skills: [ Regular, Veteran ]
       retrofit: WFPirateRetrofitHubSiege
     - minTier: 5
-      vessels: [ MClass, Intermission, WFHammerhead, Arkansaw, Claymore, Saintie, Ledokol, Ledokol, Buran ]
+      vessels: [ MClass, Intermission, WFHammerhead, Arkansaw, Claymore, Saintie, Ledokol, Ledokol, Buran, WFMinerva ]
       skills: [ Veteran ]
       retrofit: WFPirateRetrofitHubSiege
     deckhands: 4
@@ -194,7 +194,7 @@
     distress: false
     company: WFAshfallReavers
     profile: WFCrewProfilePirate
-    vessels: [ Saintie, Vulture, Ganymede, Buran ]
+    vessels: [ Saintie, Vulture, Ganymede, Buran, WFMinerva ]
     deckhands: 3
     guards: 2
     fuelStores: 12

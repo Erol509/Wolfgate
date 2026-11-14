@@ -83,8 +83,8 @@
       TradeGoodFabric: SpaceCash2500
       TradeGoodMetals: SpaceCash2500
 
-# Contraband: a smuggling crate sold at the Underground. Open stations pay well for it, but customs flags some sellers,
-# and security can seize it for faction credits.
+# Contraband: a smuggling crate sold at the Underground. Open stations pay for it in cash and telecrystals, but customs
+# flags some sellers, and security can seize it for faction credits.
 - type: entity
   parent: BaseTradeItem
   id: WFTradeGoodContraband
@@ -99,7 +99,7 @@
     size: Ginormous
     sprite: _Mono/Objects/TradeGoods/trade.rsi
   - type: StaticPrice
-    vendPrice: 10000
+    vendPrice: 15000
   - type: Contraband
     severity: Class3General
     turnInValues:
@@ -113,17 +113,17 @@
     shape: hexagon
     visibleFromOtherGrids: true
 
-# What open chutes list a smuggling crate at; it pays well over any legal good to cover the risk.
+# What open chutes list a smuggling crate at, a modest margin over the fence's price; the telecrystals a sale pays come on top.
 - type: entity
   parent: SpaceCash
-  id: WFSpaceCash40000
-  suffix: 40000
+  id: WFSpaceCashContraband
+  suffix: 20000
   components:
   - type: Icon
     sprite: _NF/Objects/Economy/cash.rsi
-    state: cash_25000
+    state: cash_10000
   - type: Stack
-    count: 40000
+    count: 20000
 
 - type: entity
   parent: VendingMachineTraderBaikal

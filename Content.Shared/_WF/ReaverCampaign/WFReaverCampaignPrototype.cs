@@ -137,7 +137,11 @@ public sealed partial class WFReaverCampaignPrototype : IPrototype
 
     /// <summary>Smuggling crates sold at open chutes that make one funding payout; 0 turns funding off.</summary>
     [DataField]
-    public int FundingCrates = 5;
+    public int FundingCrates = 4;
+
+    /// <summary>Payouts the war chest banks at most; crates sold past that are lost to the Reavers.</summary>
+    [DataField]
+    public int FundingBank = 3;
 
     /// <summary>Goods with this tag fund the Reavers by value when sold on a cargo pallet.</summary>
     [DataField]
@@ -151,9 +155,13 @@ public sealed partial class WFReaverCampaignPrototype : IPrototype
     [DataField]
     public float FundingShare = 0.25f;
 
-    /// <summary>Shortest time between funding payouts; crates sold meanwhile wait in the full war chest.</summary>
+    /// <summary>Patrols a funding payout may send past the campaign's usual patrol cap.</summary>
     [DataField]
-    public TimeSpan FundingCooldown = TimeSpan.FromMinutes(20);
+    public int FundingPatrols = 1;
+
+    /// <summary>Shortest time between funding payouts; crates sold meanwhile wait in the war chest.</summary>
+    [DataField]
+    public TimeSpan FundingCooldown = TimeSpan.FromMinutes(5);
 
     /// <summary>The highest stronghold level reinforcements bring it to, by tier.</summary>
     [DataField]

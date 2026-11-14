@@ -25,6 +25,7 @@ were trimmed to the lit pixels.
 ### Prototypes
 
 - [`Resources/Prototypes/_WF/ReaverGear/clothing.yml`](../../../Resources/Prototypes/_WF/ReaverGear/clothing.yml)
+- [`Resources/Prototypes/_WF/ReaverGear/Weapons/Guns/Turrets/ballistics.yml`](../../../Resources/Prototypes/_WF/ReaverGear/Weapons/Guns/Turrets/ballistics.yml)
 
 ### Textures
 

@@ -177,6 +177,34 @@ public sealed class CarcinomaBreathTest
                                                $"of {lungs.MaxSaturation}, {lungs.SuffocationCycles} short breaths");
                 Assert.That(hurt > 0f || lungs.SuffocationCycles > 0, Is.True, "A human breathed Carcinoma's air without running short.");
             });
+
+            // The world's own clamps fire maws at the player. One still flying when the world goes leaves the client a
+            // maw it can't place, and the warning lands on whichever test takes this pair next.
+            await server.WaitPost(() =>
+            {
+                var awake = new List<EntityUid>();
+                var mobs = entMan.EntityQueryEnumerator<HTNComponent, TransformComponent>();
+                while (mobs.MoveNext(out var uid, out _, out var xform))
+                {
+                    if (xform.MapUid is { } map && layers.Contains(map))
+                        awake.Add(uid);
+                }
+
+                foreach (var uid in awake)
+                    entMan.RemoveComponent<HTNComponent>(uid);
+
+                var maws = new List<EntityUid>();
+                var all = entMan.EntityQueryEnumerator<MetaDataComponent>();
+                while (all.MoveNext(out var uid, out var meta))
+                {
+                    if (meta.EntityPrototype?.ID == "MobMawExpeditions")
+                        maws.Add(uid);
+                }
+
+                foreach (var uid in maws)
+                    entMan.DeleteEntity(uid);
+            });
+            await pair.RunTicksSync(5);
         }
         finally
         {

@@ -10610,7 +10610,7 @@ entities:
     - type: Transform
       parent: 1
       pos: -1.5,10.5
-- proto: ComputerTabletopCargoOrders
+- proto: ComputerTabletopCargoOrdersUnderground
   entities:
   - uid: 1640
     components:

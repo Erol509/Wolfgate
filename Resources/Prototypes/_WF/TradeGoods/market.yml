@@ -118,13 +118,18 @@
   hotCargoChutes: [ CargoChuteHideout, WFCargoChuteUnderground ]
   # The Underground fence only fences freight taken off NPC haulers.
   sealedOnlyChutes: [ WFCargoChuteUnderground ]
-  # Smuggling crates from the Underground: open chutes pay a fixed price that sales never glut, but customs flags some
-  # sellers with a warrant.
+  # Smuggling crates from the Underground: open chutes pay a fixed price that sales never glut, plus telecrystals, but
+  # customs flags some sellers, and each flag adds to their warrant up to the cap.
   contrabandGoods: [ WFTradeGoodContraband ]
-  contrabandWarrantChance: 0.05
-  contrabandWarrant: 10000
-  contrabandWarrantCooldown: 1800
+  contrabandWarrantChance: 0.25
+  contrabandWarrant: 20000
+  contrabandWarrantCap: 300000
+  contrabandAlertCooldown: 300
+  contrabandTelecrystals: 2
   contrabandAlertChannel: Nfsd
+  # Only one open station buys it at a time. The Underground hears where at once, security ten minutes later.
+  contrabandDropInterval: 1800
+  contrabandDropLeak: 600
   # Off the books: the app lists these under its Underground tab, shown only to the companies below.
   hiddenChutes: [ CargoChuteHideout, WFCargoChuteUnderground ]
   undergroundCompanies: [ PDV, PDVCivilian, PDVHighComm, WFUnderground ]

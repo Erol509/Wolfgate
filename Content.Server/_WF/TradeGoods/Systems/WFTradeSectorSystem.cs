@@ -6,6 +6,7 @@ using Content.Server._WF.Encounters.Systems;
 using Content.Server._WF.ReaverCampaign.Systems;
 using Content.Server._WF.SectorControl;
 using Content.Server._WF.SectorControl.Systems;
+using Content.Shared._Crescent.Dispenser;
 using Content.Shared._WF.Encounters;
 using Content.Shared._WF.SectorControl;
 using Content.Shared._WF.TradeGoods;
@@ -333,5 +334,23 @@ public sealed partial class WFTradeSectorSystem : EntitySystem
             if (IsBlockaded(grid))
                 yield return grid;
         }
+    }
+
+    /// <summary>
+    /// Chutes at the stations a public trade event may land on: not a hidden market, which an alert would name, a
+    /// wandering merchant, which leaves, or a blockaded station.
+    /// </summary>
+    public List<(EntityUid Chute, DispenserComponent Dispenser, EntityUid Grid)> OpenChutes()
+    {
+        var chutes = _market.Chutes();
+        var closed = chutes.Where(chute => _market.IsHiddenChute(chute.Chute)).Select(chute => chute.Grid).ToHashSet();
+        foreach (var grid in chutes.Select(chute => chute.Grid).Distinct())
+        {
+            if (!closed.Contains(grid) && (HasComp<WFEncounterGridComponent>(grid) || IsBlockaded(grid)))
+                closed.Add(grid);
+        }
+
+        chutes.RemoveAll(chute => closed.Contains(chute.Grid));
+        return chutes;
     }
 }

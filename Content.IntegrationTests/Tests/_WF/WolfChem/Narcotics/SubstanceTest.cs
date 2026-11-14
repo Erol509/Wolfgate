@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Reaction;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server._Mono.Cargo;
@@ -94,6 +95,8 @@ public sealed class SubstanceTest
 
         await server.WaitAssertion(() =>
         {
+            // A pooled pair keeps the optimum shifts its last round start rolled; the temperatures below are the unshifted optimums.
+            server.System<ChemicalReactionSystem>().WFOptimumShift.Clear();
             var lab = new Lab(server, map.GridCoords);
 
             Assert.Multiple(() =>

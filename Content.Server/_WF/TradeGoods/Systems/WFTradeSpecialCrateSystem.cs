@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server._WF.Encounters.Components;
 using Content.Server._WF.TradeGoods.Components;
 using Content.Server.GameTicking;
 using Content.Shared._WF.TradeGoods;
@@ -148,14 +147,7 @@ public sealed partial class WFTradeSpecialCrateSystem : EntitySystem
         if (profile.Consignments.Count == 0)
             return null;
 
-        var blockaded = _sector.Blockaded().ToHashSet();
-        var all = _market.Chutes();
-        var hidden = all.Where(chute => _market.IsHiddenChute(chute.Chute)).Select(chute => chute.Grid).ToHashSet();
-        var chutes = all
-            .Where(chute => !blockaded.Contains(chute.Grid)
-                            && !hidden.Contains(chute.Grid)
-                            && !HasComp<WFEncounterGridComponent>(chute.Grid))
-            .ToList();
+        var chutes = _sector.OpenChutes();
         var taken = new HashSet<EntityUid>();
         var query = EntityQueryEnumerator<WFConsignmentComponent>();
         while (query.MoveNext(out var existing))

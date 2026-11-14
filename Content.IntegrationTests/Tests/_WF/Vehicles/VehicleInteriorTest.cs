@@ -16,6 +16,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared._WF.Wolfmed.Consciousness;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -1752,7 +1753,7 @@ public sealed class VehicleInteriorTest
         await server.WaitAssertion(() =>
         {
             var seat = DriverSeat(pair, rig);
-            server.System<MobStateSystem>().ChangeMobState(victim, MobState.Critical);
+            server.System<SharedWolfmedConsciousnessSystem>().SetExternalPressure(victim, "test", 1f); // held out cold; a forced Critical is undone by the next consciousness check
             // Unhurt, Wolfmed's consciousness tick could bring a forced Critical back to Alive within the 10 ticks, and a
             // driver who comes round takes the wheel by design; a forced sleep keeps them out cold.
             entMan.EnsureComponent<Content.Shared.Bed.Sleep.ForcedSleepingComponent>(victim);
@@ -1801,7 +1802,7 @@ public sealed class VehicleInteriorTest
         await server.WaitAssertion(() =>
         {
             var seat = DriverSeat(pair, rig);
-            server.System<MobStateSystem>().ChangeMobState(victim, MobState.Critical);
+            server.System<SharedWolfmedConsciousnessSystem>().SetExternalPressure(victim, "test", 1f); // held out cold; a forced Critical is undone by the next consciousness check
             server.System<StandingStateSystem>().Stand(victim, force: true);
             server.System<SharedTransformSystem>().SetCoordinates(victim, entMan.GetComponent<TransformComponent>(seat).Coordinates);
             server.System<SharedTransformSystem>().SetCoordinates(helper, entMan.GetComponent<TransformComponent>(seat).Coordinates);
@@ -1819,7 +1820,7 @@ public sealed class VehicleInteriorTest
             }
 
 
-            server.System<MobStateSystem>().ChangeMobState(victim, MobState.Alive);
+            server.System<SharedWolfmedConsciousnessSystem>().SetExternalPressure(victim, "test", 0f);
         });
         await server.WaitRunTicks(5);
 
@@ -1868,7 +1869,7 @@ public sealed class VehicleInteriorTest
         await server.WaitAssertion(() =>
         {
             var seat = DriverSeat(pair, rig);
-            server.System<MobStateSystem>().ChangeMobState(victim, MobState.Critical);
+            server.System<SharedWolfmedConsciousnessSystem>().SetExternalPressure(victim, "test", 1f); // held out cold; a forced Critical is undone by the next consciousness check
             // Unhurt, Wolfmed's consciousness tick could bring a forced Critical back to Alive within the 10 ticks, and a
             // driver who comes round takes the wheel by design; a forced sleep keeps them out cold.
             entMan.EnsureComponent<Content.Shared.Bed.Sleep.ForcedSleepingComponent>(victim);
@@ -1888,7 +1889,7 @@ public sealed class VehicleInteriorTest
 
         await server.WaitAssertion(() =>
         {
-            server.System<MobStateSystem>().ChangeMobState(victim, MobState.Alive);
+            server.System<SharedWolfmedConsciousnessSystem>().SetExternalPressure(victim, "test", 0f);
         });
         await server.WaitRunTicks(5);
 

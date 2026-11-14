@@ -103,11 +103,17 @@ public static class TradeTestHelpers
     /// <summary>Spesos lying loose on a map, as cash stacks.</summary>
     public static int CashOnMap(IEntityManager entMan, MapId map)
     {
+        return StackOnMap(entMan, map, "SpaceCash");
+    }
+
+    /// <summary>The total count of loose stacks on a map whose prototype ID starts with a prefix.</summary>
+    public static int StackOnMap(IEntityManager entMan, MapId map, string prefix)
+    {
         var total = 0;
         var query = entMan.AllEntityQueryEnumerator<StackComponent, TransformComponent, MetaDataComponent>();
         while (query.MoveNext(out _, out var stack, out var xform, out var meta))
         {
-            if (xform.MapID == map && meta.EntityPrototype?.ID.StartsWith("SpaceCash") == true)
+            if (xform.MapID == map && meta.EntityPrototype?.ID.StartsWith(prefix) == true)
                 total += stack.Count;
         }
 

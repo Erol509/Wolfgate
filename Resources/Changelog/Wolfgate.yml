@@ -7282,3 +7282,190 @@ Entries:
   id: 100459
   time: '2026-11-13T16:12:32.0000000+00:00'
   url: https://github.com/VanguardControl/Wolfgate/pull/637
+- author: Balls2zawall
+  changes:
+    - type: Add
+      message: >-
+        Anvilhold has a new EVA drydock berth, the normal berths are 6 tiles
+        wider, and the cranes should be a little faster.
+  id: 100460
+  time: '2026-11-13T19:02:36.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/640
+- author: Happyowl93
+  changes:
+    - type: Tweak
+      message: >-
+        Smuggling crates now cost 15,000 and sell for 20,000, and each sale also
+        pays 2 telecrystals.
+    - type: Tweak
+      message: >-
+        Customs now flags 1 in 4 smuggling sales. Each flag adds 20,000 to the
+        seller's warrant, up to 300,000.
+    - type: Add
+      message: >-
+        Smuggling crates now sell at only one station at a time, and the drop
+        moves every 30 minutes. The Underground sees where in their Market app;
+        security is tipped off 10 minutes after each move.
+    - type: Tweak
+      message: >-
+        Smuggling money reaching the Ashfall Reavers now sends out extra patrols
+        and is announced on the radio.
+  id: 100461
+  time: '2026-11-13T19:41:36.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/636
+- author: NEWSUI
+  changes:
+    - type: Add
+      message: Added Dread
+  id: 100462
+  time: '2026-11-13T20:06:12.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/624
+- author: antanananat
+  changes:
+    - type: Add
+      message: RVR Minerva, the reaver asteroid ship.
+    - type: Add
+      message: >-
+        Reavers have finally figured out how to hack and override TSF turrets
+        and can now put them on their ships. Boarders beware.
+  id: 100463
+  time: '2026-11-13T20:58:47.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/635
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: The Anvilhold drydock's new west berth has a name on its console.
+  id: 100464
+  time: '2026-11-13T22:08:15.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/641
+- author: antanananat
+  changes:
+    - type: Tweak
+      message: >-
+        The price of the TSF exotic materials crate was adjusted from 175 to
+        130, and it now contains 2 fissile uranium instead of 1
+    - type: Tweak
+      message: Prices of PDV ready-to-buy vouchers increased slightly
+    - type: Tweak
+      message: >-
+        Costs of TSF ships have been adjusted, depleted uranium cost for T3 and
+        T4 ships went down but they gained a plastitanium cost. Copper and
+        lithium costs went down a little.
+    - type: Tweak
+      message: The TSF vouchers are renewable again
+  id: 100465
+  time: '2026-11-14T06:48:09.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/632
+- author: Gandalf2k15
+  changes:
+    - type: Tweak
+      message: Ported 25 Monolith changes; their entries are in the Monolith changelog.
+  id: 100466
+  time: '2026-11-14T09:41:17.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/653
+- author: ImogenOC
+  changes:
+    - type: Fix
+      message: >-
+        The Lupercal now spawns locked down; its doors can't be pried, its core
+        gates can't jam open, and its cameras, benches, shutters and carpets are
+        fixed.
+    - type: Add
+      message: >-
+        The Lupercal has hard-light barriers on its staff areas, sentry turrets
+        in its core, janitors, a warp point and named fax machines.
+    - type: Tweak
+      message: >-
+        Lupercal crew warn trespassers aloud, react to people dragging their
+        dead, patch their own wounds, avoid fires and repair the ship on their
+        own.
+  id: 100467
+  time: '2026-11-14T14:53:11.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/638
+- author: Gandalf2k15
+  changes:
+    - type: Fix
+      message: >-
+        [638][646][695][718][719][774][791][868][930] Walls and objects on
+        planet levels no longer vanish after you leave a level and come back.
+    - type: Fix
+      message: >-
+        [813][860][939][866] Photographers get their scrapbook and camera again,
+        including with paid loadout items or a crew spawn.
+    - type: Fix
+      message: >-
+        [940] Starting items meant for your bag are no longer lost when you wear
+        something without storage on your back.
+    - type: Fix
+      message: >-
+        [932][933] Items from free vending machines no longer sell for full
+        price.
+    - type: Fix
+      message: >-
+        [941] Supplying your own faction's contract no longer hands the goods
+        back to you.
+    - type: Fix
+      message: >-
+        [911] A repair voucher is no longer refunded once the drydock has
+        started repairing.
+    - type: Fix
+      message: '[888] Wielding an energy gun no longer also switches its fire mode.'
+    - type: Fix
+      message: '[903] Failed organs can be healed with the organ heal surgery again.'
+    - type: Fix
+      message: >-
+        [884] Water washes acid off felionoids, tajarans, felinids, arachnids,
+        dionas, skeletons, slime people and goblins.
+    - type: Fix
+      message: '[907] An AI that uses a shuttle console keeps its remote eye afterwards.'
+    - type: Fix
+      message: '[871] Wall lights no longer stop you wrenching down machines under them.'
+    - type: Fix
+      message: >-
+        [882] Expedition sites come back a while after being cleared, so the
+        console offers more than Carcinoma.
+    - type: Fix
+      message: >-
+        [713] Spilled blood no longer turns loose grey slime extracts into
+        monkey cubes.
+    - type: Fix
+      message: '[604][598] Clothing on mothroaches no longer shows stray art.'
+    - type: Fix
+      message: '[900] The drydock rebuilds destroyed LAPC substations.'
+    - type: Fix
+      message: >-
+        [852] Long ship names no longer push the company licence buttons off the
+        window.
+    - type: Fix
+      message: '[775] The ore magnet collects exotic matter.'
+    - type: Fix
+      message: >-
+        [881] Master of the House slowly restores a hemophage's blood as
+        described.
+    - type: Fix
+      message: '[916] Using a drug baggie in hand tells you how to get the powder out.'
+    - type: Fix
+      message: '[752] Synths and IPCs understand each other''s machine languages.'
+    - type: Fix
+      message: '[770] Repaired borgs and objects lose the repair tool''s damage tint.'
+    - type: Fix
+      message: '[811] Reattached hands keep their side in the hands bar.'
+    - type: Fix
+      message: '[724] Admins who join later see which ahelps were resolved.'
+    - type: Fix
+      message: >-
+        [756] Lifting off no longer carries the planet's marker away on your
+        ship.
+    - type: Fix
+      message: >-
+        [835] Synthetic characters no longer rubberband when their battery runs
+        low.
+    - type: Fix
+      message: '[863] The chameleon projector works on items you were hovering over.'
+    - type: Fix
+      message: >-
+        Radio voice lines no longer stop working for the whole server after a
+        radio is destroyed.
+  id: 100468
+  time: '2026-11-14T16:11:47.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/659

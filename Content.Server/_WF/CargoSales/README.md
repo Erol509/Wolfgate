@@ -36,7 +36,6 @@ Entry points: `CargoSystem.WfRefuseOverLimit`, called from `SellPallets` and `Up
   - the MaxPerSale check runs apart from the alert
   - a pallet sale event that leaves out contraband turn-ins
   - taxed goods inside an untaxed crate or bag pay their tax too
-  - adding to the component's own dictionary raised that item's payout on every appraisal
 - [`Resources/Locale/en-US/_Mono/cargo/sell-alert.ftl`](../../../Resources/Locale/en-US/_Mono/cargo/sell-alert.ftl): names the item and the limit
 
 <!-- WOLFGATE-GENERATED END -->

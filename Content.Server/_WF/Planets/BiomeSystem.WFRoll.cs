@@ -79,7 +79,8 @@ public sealed partial class BiomeSystem
         if (result == null)
             return false;
 
-        var uid = Spawn(result, _mapSystem.GridTileToLocal(map, grid, tile));
+        // Attached to the planet itself: a plain spawn joins whatever grid stands over the tile, such as a crashed ship.
+        var uid = SpawnAttachedTo(result, _mapSystem.GridTileToLocal(map, grid, tile));
 
         if (_xformQuery.TryGetComponent(uid, out var xform) && !xform.Anchored)
             _transform.AnchorEntity((uid, xform), (map, grid), tile);

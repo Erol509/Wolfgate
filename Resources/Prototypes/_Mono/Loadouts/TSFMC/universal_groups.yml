@@ -825,6 +825,7 @@
   loadouts:
   - TsfmcClothingOuterArmorBPVestLight
   - TsfmcClothingOuterArmorBPVestMedium
+  - TsfmcClothingOuterArmorWintercoat
   # WOLFGATE(RMCClothing) START: RMC-14 military clothing, written by Tools/_WF/RMCClothing/port.py
   - WFRMCLoadoutArmorM3
   - WFRMCLoadoutArmorM3L

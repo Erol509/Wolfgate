@@ -139,7 +139,10 @@ wf-reaver-reinforcement-destroyed = Reaver reinforcements bound for {$callsign} 
         } paid.
     }
 
-wf-reaver-raid-warning-pa = Reaver raiders are heading for {$ship}, bearing {$bearing}, {$range} km.
+# A smuggling funding payout
+wf-reaver-funded = Smuggling money is reaching the Ashfall Reavers. Expect more of their ships.
+
+wf-reaver-raid-warning-pa =Reaver raiders are heading for {$ship}, bearing {$bearing}, {$range} km.
 wf-reaver-raid-station-warning = Reaver raiders are heading for {$station}, bearing {$bearing}, {$range} km.
 wf-reaver-raid-hunting = Reaver raiders are hunting {$ship}, bearing {$bearing}, {$range} km.
 wf-reaver-intercept-warning = Reaver patrol turning to intercept {$ship}, bearing {$bearing}, {$range} km.
@@ -247,7 +250,7 @@ cmd-wf_reavers-status-counts = { $strongholds ->
     }.
 cmd-wf_reavers-status-clocks = Seconds to next spread: {$spread}. Seconds to next raid: {$raid}.
 cmd-wf_reavers-status-population = Population: {$population} (now {$live}), bracket from {$bracket} players.
-cmd-wf_reavers-status-funding = Smuggling funding: {$crates}/{$needed} crates toward the next payout, {$funded} paid out this round.
+cmd-wf_reavers-status-funding = Smuggling funding: {$crates} crates in the war chest (of {$chest}), {$needed} to a payout, {$funded} paid out this round.
 cmd-wf_reavers-no-stronghold = No stronghold stands. Run wf_reavers found to place one now.
 cmd-wf_reavers-status-switch-off = No stronghold stands and none will be founded: {$cvar} is off. Run wf_reavers found to place one anyway.
 cmd-wf_reavers-status-mode-off = No stronghold stands and none will be founded: the Contested Sector game mode is not running. Admins can force it with {$cvar} or by adding the rule (addgamerule WFReaverCampaignRule).

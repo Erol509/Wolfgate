@@ -4,6 +4,7 @@
   name: 'Skipjack'
   description: 'A small Vox runabout that works alongside the Vrakritatat, scraping wrecks and escorting its mothership.'
   price: 14500 # appraised at 13711
+  purchasable: false
   category: Micro # 58 tiles
   group: Custom
   mapchecker_group_override: Shipyard # bought from the Vrakritatat's console

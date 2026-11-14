@@ -12,8 +12,9 @@
     Plastic: 30000
     Glass: 10000
     Plasma: 5000
+    Plastitanium: 2500 # TSF Balance Pack: halving the price from 4000 -> 2000 so it needs only 4 exotic crates, but gaining a plastitanium requirement
     UraniumFissile: 600
-    UraniumDepleted: 4000
+    UraniumDepleted: 2000 # TSF Balance Pack: halving the price from 4000 -> 2000 so it needs only 4 exotic crates, but gaining a plastitanium requirement
     Silver: 10000
     Gold: 5000
 
@@ -29,8 +30,9 @@
     Plastic: 30000
     Glass: 10000
     Plasma: 5000
+    Plastitanium: 2500 # TSF Balance Pack: halving the price from 4000 -> 2000 so it needs only 4 exotic crates, but gaining a plastitanium requirement
     UraniumFissile: 600
-    UraniumDepleted: 4000
+    UraniumDepleted: 2000 # TSF Balance Pack: halving the price from 4000 -> 2000 so it needs only 4 exotic crates, but gaining a plastitanium requirement
     Silver: 10000
     Gold: 5000
 
@@ -45,8 +47,9 @@
     Plastic: 50000
     Glass: 9000
     Plasma: 500
+    Plastitanium: 3000 # TSF Balance Pack: decreasing the depleted uranium cost, but introducing a plastitanium cost to compensate as with the Altair and Polaris
     UraniumFissile: 1000
-    UraniumDepleted: 5000
+    UraniumDepleted: 3000 # TSF Balance Pack: decreasing the depleted uranium cost, but introducing a plastitanium cost to compensate as with the Altair and Polaris
     Silver: 5000
     Gold: 5000
 

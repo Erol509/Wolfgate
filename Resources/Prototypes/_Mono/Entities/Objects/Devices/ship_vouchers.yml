@@ -47,7 +47,6 @@
     vessels:
     - Guppy
     - Sandbox
-    consoleType: Shipyard
     destroyOnEmpty: true
 
 # Tsfmc
@@ -73,7 +72,6 @@
     heldPrefix: tsf
   - type: ShipyardVoucher
     destroyOnEmpty: true
-    consoleType: Security
     companyName: TSF
     vessels:
     - Shiv
@@ -94,9 +92,10 @@
     # WOLFGATE END
 
 - type: entity
-  parent: ShipVoucherTsfT0
+  parent: BaseShipLPCRenewable
   id: ShipVoucherTsfT1
   name: TSF T1 ship voucher
+  description: Allows for one free medium TSFMC ship purchase.
   components:
   - type: Sprite
     sprite: _Mono/Objects/Misc/lpcnew.rsi
@@ -108,9 +107,9 @@
       color: "#05ffff"
       shader: unshaded
   - type: ShipyardVoucher
-    destroyOnEmpty: true # WOLFGATE(Drydock): single use, so a drydock repair undercuts printing another card
+    destroyOnEmpty: false # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
+    redemptionsLeft: 12 # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
     cooldown: 1800 # 30 minutes
-    consoleType: Security
     companyName: TSF
     vessels:
     - Calypso
@@ -118,7 +117,7 @@
     - Fracture
 
 - type: entity
-  parent: ShipVoucherTsfT0
+  parent: ShipVoucherTsfT1
   id: ShipVoucherTsfT2
   name: TSF T2 ship voucher
   components:
@@ -132,9 +131,9 @@
       color: "#05ffff"
       shader: unshaded
   - type: ShipyardVoucher
-    destroyOnEmpty: true # WOLFGATE(Drydock): single use, so a drydock repair undercuts printing another card
+    destroyOnEmpty: false # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
+    redemptionsLeft: 12 # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
     cooldown: 3600 # one hour
-    consoleType: Security
     companyName: TSF
     vessels:
     - Fujian
@@ -166,10 +165,9 @@
   - type: Item
     heldPrefix: tsf
   - type: ShipyardVoucher
-    destroyOnEmpty: true # WOLFGATE(Drydock): single use, so a drydock repair undercuts printing another card
-    redemptionsLeft: 1 # WOLFGATE(Drydock)
+    destroyOnEmpty: false # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
+    redemptionsLeft: 12 # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
     cooldown: 5100 # hour and 25 minutes
-    consoleType: Security
     companyName: TSF
     vessels:
     - TSFNPolaris
@@ -192,9 +190,8 @@
   - type: Item
     heldPrefix: tsf
   - type: ShipyardVoucher
-    destroyOnEmpty: true # WOLFGATE(Drydock): single use, so a drydock repair undercuts printing another card
-    redemptionsLeft: 1 # WOLFGATE(Drydock)
-    consoleType: Security
+    destroyOnEmpty: false # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
+    redemptionsLeft: 12 # WOLFGATE: TSF Balance Pack, giving the TSF its renewable vouchers back
     companyName: TSF
     cooldown: 14400 # two hour
     vessels:
@@ -222,7 +219,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: true
     redemptionsLeft: 1 # WOLFGATE(Drydock): single use, so a drydock repair undercuts printing another card
-    consoleType: Custom
     companyName: TSF
     vessels:
     - ZephyrEC
@@ -250,7 +246,6 @@
     heldPrefix: pdv
   - type: ShipyardVoucher
     destroyOnEmpty: true
-    consoleType: BlackMarket
     companyName: PDV
     vessels:
     - Bazalt
@@ -268,10 +263,10 @@
     # WOLFGATE END
 
 - type: entity
-  parent: ShipVoucherPdvT0
+  parent: BaseShipLPCRenewable
   id: ShipVoucherPdvT1
   name: PDV T1 ship voucher
-  description: Allows for one medium PDV ship purchase. Destroyed on sale.
+  description: Allows for one medium PDV ship purchase.
   components:
   - type: Sprite
     sprite: _Mono/Objects/Misc/lpcnew.rsi
@@ -283,9 +278,9 @@
       color: "#1eff00"
       shader: unshaded
   - type: ShipyardVoucher
+    redemptionsLeft: 1 # WOLFGATE(Drydock): single use; the renewable parent would give 12
     destroyOnEmpty: false
     cooldown: 1800 # 30 minutes
-    consoleType: BlackMarket
     companyName: PDV
     vessels:
     - Layak
@@ -299,10 +294,9 @@
     # WOLFGATE END
 
 - type: entity
-  parent: ShipVoucherPdvT0
+  parent: ShipVoucherPdvT1
   id: ShipVoucherPdvT2
   name: PDV T2 ship voucher
-  description: Allows for one medium to large PDV ship purchase. Destroyed on sale.
   components:
   - type: Sprite
     sprite: _Mono/Objects/Misc/lpcnew.rsi
@@ -316,7 +310,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 3600 # one hour
-    consoleType: BlackMarket
     companyName: PDV
     vessels:
     - MotleyAnne
@@ -327,10 +320,10 @@
     # WOLFGATE END
 
 - type: entity
-  parent: ShipVoucherPdvT0
+  parent: ShipVoucherPdvT1
   id: ShipVoucherPdvT3
   name: PDV T3 ship voucher
-  description: Allows for one large PDV ship purchase. Destroyed on sale.
+  description: Allows for one large PDV ship purchase.
   components:
   - type: Sprite
     sprite: _Mono/Objects/Misc/lpcnew.rsi
@@ -344,7 +337,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 5400 # 1.5 hours
-    consoleType: BlackMarket
     companyName: PDV
     vessels:
     - KortikR
@@ -373,7 +365,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 5400 # 1 & 1/2 hours
-    consoleType: BlackMarket
     companyName: PDV
     vessels:
     - KortikR
@@ -400,7 +391,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 5400 # 1 & 1/2 hours
-    consoleType: BlackMarket
     companyName: PDV
     vessels:
     - Europa
@@ -426,7 +416,6 @@
     heldPrefix: pdv
   - type: ShipyardVoucher
     destroyOnEmpty: false
-    consoleType: BlackMarket
     companyName: PDV
     cooldown: 14400 # two hour
     vessels:
@@ -450,7 +439,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 1800 # 30 minutes
-    consoleType: Custom
     companyName: PDV
     vessels:
     - Mock
@@ -475,7 +463,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 1800 # 30 minutes
-    consoleType: Custom
     companyName: PDV
     vessels:
     - Inertia
@@ -500,7 +487,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 1800 # 30 minutes
-    consoleType: Custom
     companyName: PDV
     vessels:
     - Snakelet
@@ -528,7 +514,6 @@
     heldPrefix: ussp
   - type: ShipyardVoucher
     destroyOnEmpty: true
-    consoleType: USSP
     companyName: USSP
     vessels:
     - Strayk
@@ -560,7 +545,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 3600 # one hour
-    consoleType: USSP
     companyName: USSP
     vessels:
     - Drakon
@@ -585,7 +569,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 3600 # one hour
-    consoleType: USSP
     companyName: USSP
     vessels:
     - Tayfun
@@ -610,7 +593,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 5100 # hour and 25 minutes
-    consoleType: USSP
     companyName: USSP
     vessels:
     - Buran
@@ -637,7 +619,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 1800 # 30 minutes
-    consoleType: Mieyo
     companyName: MMC
     vessels:
     - Yukikaze
@@ -662,7 +643,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 1800 # 30 minutes
-    consoleType: Mieyo
     companyName: MMC
     vessels:
     - Senkusha
@@ -691,7 +671,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 3600 # one hour
-    consoleType: Viper
     companyName: TheViperGroup
     vessels:
     - Wolfsnake
@@ -716,7 +695,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 3600 # one hour
-    consoleType: Viper
     companyName: TheViperGroup
     vessels:
     - Keelback
@@ -741,7 +719,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 7200 # Two Hours.
-    consoleType: Viper
     companyName: TheViperGroup
     vessels:
     - Lancehead
@@ -766,7 +743,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 7200 # Two Hours.
-    consoleType: Viper
     companyName: TheViperGroup
     vessels:
     - Leviathan
@@ -793,7 +769,6 @@
       shader: unshaded
   - type: ShipyardVoucher
     destroyOnEmpty: true
-    consoleType: Sr
     companyName: Colonial
     vessels:
     - Hornet
@@ -818,7 +793,6 @@
   - type: ShipyardVoucher
     destroyOnEmpty: false
     cooldown: 1800 # 30 minutes
-    consoleType: Sr
     companyName: Colonial
     vessels:
     - Petra

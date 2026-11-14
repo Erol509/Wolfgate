@@ -95,7 +95,7 @@ public sealed class WFNetShellSystem : EntitySystem
         var now = _timing.RealTime;
         foreach (var (id, shell) in _shells)
         {
-            if (now > shell.Until || TerminatingOrDeleted(shell.Entity))
+            if (now > shell.Until || TerminatingOrDeleted(shell.Entity) || Transform(shell.Entity).MapUid == null)
             {
                 _expired.Add(id);
                 continue;

@@ -33,11 +33,11 @@
 
 - type: entity
   id: ShipRepairDevice
-  description: A Ship Repair Device that can reconstruct destroyed sections of ships. Holds 300 charges.
+  description: A Ship Repair Device that can reconstruct destroyed sections of ships. Holds 350 charges.
   parent: ShipRepairDeviceBase
   components:
   - type: LimitedCharges
-    maxCharges: 300
+    maxCharges: 350
     charges: 100
 
 - type: entity
@@ -50,13 +50,13 @@
 
 - type: entity
   id: ShipRepairDeviceRecharging
-  description: A Ship Repair Device that can reconstruct destroyed sections of ships. Holds 300 charges and slowly recharges.
+  description: A Ship Repair Device that can reconstruct destroyed sections of ships. Holds 350 charges and slowly recharges.
   parent: ShipRepairDeviceBase
   suffix: Recharging
   components:
   - type: LimitedCharges
-    maxCharges: 300
-    charges: 300 # WOLFGATE(Cyborgs): was 50, a 20 minute wait before a cyborg's first real repair
+    maxCharges: 350
+    charges: 350 # WOLFGATE(Cyborgs): was 50, a 20 minute wait before a cyborg's first real repair
   - type: AutoRecharge
     rechargeDuration: 5
 

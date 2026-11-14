@@ -826,6 +826,8 @@ public sealed class DrydockTest
                 consoleA = uid;
             else if (comp.Berth == "North")
                 consoleB = uid;
+            else
+                comp.Locked = true; // The EVA dock's small berth would take a small test ship before berth A.
         }
 
         Assert.That(consoleA.IsValid() && consoleB.IsValid(), "The drydock needs a console for each berth.");

@@ -50,7 +50,7 @@ public sealed partial class WFReaverCampaignSystem
     {
         var now = _timing.CurTime;
         var patrols = Patrols();
-        var cap = Math.Clamp(Players() / PlayersPerPatrol, 1, MaxPatrols);
+        var cap = PatrolCap();
         var each = ByTier(campaign.Patrols, state.Tier, 0) + Bracket(campaign, state).Patrols;
         var active = patrols.Count;
         foreach (var stronghold in Strongholds().OrderBy(entry => entry.Comp1.NextPatrol))
@@ -69,14 +69,23 @@ public sealed partial class WFReaverCampaignSystem
         }
     }
 
+    /// <summary>How many patrols may be out campaign-wide: one per <see cref="PlayersPerPatrol"/> players, within the cap.</summary>
+    private int PatrolCap()
+    {
+        return Math.Clamp(Players() / PlayersPerPatrol, 1, MaxPatrols);
+    }
+
     /// <summary>Sends a patrol from a stronghold now, whatever the caps, through held cells and home.</summary>
     public bool TryLaunchPatrol(EntityUid stronghold)
     {
         return TryLaunchPatrol(stronghold, out _);
     }
 
-    /// <summary>Sends a patrol from a stronghold now, whatever the caps, through held cells and home; gives its encounter.</summary>
-    private bool TryLaunchPatrol(EntityUid stronghold, out EntityUid uid)
+    /// <summary>
+    /// Sends a patrol from a stronghold now, whatever the caps, through held cells and home; gives its encounter. Unless
+    /// <paramref name="reschedule"/> is false, the stronghold's next own patrol waits a full interval.
+    /// </summary>
+    private bool TryLaunchPatrol(EntityUid stronghold, out EntityUid uid, bool reschedule = true)
     {
         uid = default;
         if (Campaign is not { } campaign || State() is { Finished: true }
@@ -116,7 +125,9 @@ public sealed partial class WFReaverCampaignSystem
         patrol.Route = route;
         patrol.Home = home;
         patrol.LastSeen = home;
-        comp.NextPatrol = _timing.CurTime + campaign.PatrolInterval;
+        if (reschedule)
+            comp.NextPatrol = _timing.CurTime + campaign.PatrolInterval;
+
         return true;
     }
 
@@ -313,7 +324,7 @@ public sealed partial class WFReaverCampaignSystem
     private bool PatrolRoom(WFReaverCampaignPrototype campaign, WFReaverCampaignComponent state, EntityUid stronghold,
         List<Entity<WFReaverPatrolComponent, WFEncounterComponent>> patrols)
     {
-        return patrols.Count < Math.Clamp(Players() / PlayersPerPatrol, 1, MaxPatrols)
+        return patrols.Count < PatrolCap()
             && patrols.Count(patrol => patrol.Comp1.Stronghold == stronghold) < ByTier(campaign.Patrols, state.Tier, 0) + Bracket(campaign, state).Patrols;
     }
 

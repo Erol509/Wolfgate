@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server._Mono.AlertLevel;
-using Content.Server._Mono.VendingMachine;
 using Content.Server._NF.Market.Systems;
 using Content.Server._WF.CargoLoad;
 using Content.Server._WF.Encounters.Components;
@@ -46,13 +45,13 @@ public sealed partial class WFMarketCartridgeSystem : EntitySystem
     [Dependency] private WFTradeRushSystem _rush = default!;
     [Dependency] private WFTradeSectorSystem _sector = default!;
     [Dependency] private WFTradeSpecialCrateSystem _special = default!;
+    [Dependency] private WFTradeContrabandSystem _contraband = default!;
     [Dependency] private WFTradeFreightSystem _freight = default!;
     [Dependency] private WFTradeEconomySystem _economy = default!;
     [Dependency] private WFSectorTerritorySystem _territory = default!;
     [Dependency] private WFCargoLoadSystem _cargo = default!;
     [Dependency] private WarLevelSystem _war = default!;
     [Dependency] private PopupSystem _popup = default!;
-    [Dependency] private VendingMachinePurchaseSystem _vendingPurchase = default!;
     [Dependency] private MarketSystem _stock = default!;
     [Dependency] private StationSystem _station = default!;
 
@@ -110,28 +109,27 @@ public sealed partial class WFMarketCartridgeSystem : EntitySystem
         interact.Handled = true;
         var message = BestSale(target, interact.User) is { } best
             ? Loc.GetString("wf-market-best-sale", ("item", target), ("station", best.Station), ("amount", best.Amount))
-            : Loc.GetString("wf-market-best-sale-none", ("item", target));
+            : DropHidden(MetaData(target).EntityPrototype?.ID, SeesUnderground(interact.User))
+                ? Loc.GetString("wf-market-best-sale-drop", ("item", target))
+                : Loc.GetString("wf-market-best-sale-none", ("item", target));
         _popup.PopupEntity(message, target, interact.User);
     }
 
     /// <summary>
-    /// The station paying a seller most for one crate now, skipping chutes that would refuse it. Hidden markets count only
-    /// for members of an underground company.
+    /// The station paying a seller most for one crate now, skipping chutes that would refuse it. Hidden markets, and the
+    /// contraband drop, count only for members of an underground company.
     /// </summary>
     public (string Station, int Amount)? BestSale(EntityUid crate, EntityUid seller)
     {
-        if (MetaData(crate).EntityPrototype?.ID is not { } good)
+        var underground = SeesUnderground(seller);
+        if (MetaData(crate).EntityPrototype?.ID is not { } good || DropHidden(good, underground))
             return null;
 
-        var underground = SeesUnderground(seller);
         var special = _special.IsSpecial(crate);
         (string Station, int Amount)? best = null;
-        foreach (var (chute, _, grid) in _market.Chutes())
+        foreach (var (chute, _, _) in _market.Chutes())
         {
-            if (!underground && _market.IsHiddenChute(chute)
-                || _market.Shunned(chute, seller)
-                || _vendingPurchase.WasPurchasedOnGrid(crate, grid)
-                || _market.CheckSeal(chute, crate) != null)
+            if (!underground && _market.IsHiddenChute(chute) || _market.Refusal(chute, crate, seller) != null)
                 continue;
 
             var amount = special ? _special.Price(chute, crate) : _market.Quote(chute, good, crate, seller)?.Amount;
@@ -140,6 +138,12 @@ public sealed partial class WFMarketCartridgeSystem : EntitySystem
         }
 
         return best;
+    }
+
+    /// <summary>Whether a good is contraband that sells at the drop alone, which only the Underground is told of, and the seller isn't one of them.</summary>
+    private bool DropHidden(string? good, bool underground)
+    {
+        return !underground && good != null && _contraband.AtDropOnly(good);
     }
 
     /// <summary>Whether someone belongs to an underground company, and so sees the hidden markets.</summary>
@@ -235,6 +239,7 @@ public sealed partial class WFMarketCartridgeSystem : EntitySystem
         var order = new Dictionary<EntityUid, int>();
         var hiddenChutes = new HashSet<EntityUid>();
         var chutes = _market.Chutes();
+        var dropCard = DropCard(profile);
         foreach (var (chute, dispenser, grid) in chutes)
         {
             var chuteId = MetaData(chute).EntityPrototype?.ID;
@@ -251,7 +256,8 @@ public sealed partial class WFMarketCartridgeSystem : EntitySystem
                 order[grid] = index >= 0 ? index : profile.MarketFactions.Count;
             }
 
-            if (chuteId != null && profile.HiddenChutes.Contains(chuteId))
+            var hidden = chuteId != null && profile.HiddenChutes.Contains(chuteId);
+            if (hidden)
             {
                 station.Underground = true;
                 hiddenChutes.Add(chute);
@@ -260,10 +266,20 @@ public sealed partial class WFMarketCartridgeSystem : EntitySystem
             var restocking = _market.ScarceGoods(grid).Where(good => !dispenser.Inventory.ContainsKey(good)).ToList();
             foreach (var good in dispenser.Inventory.Keys.Concat(restocking))
             {
-                if (_market.Quote(chute, good) is not { } quote || station.Prices.Any(price => price.Good == _market.GoodName(good)))
+                // Contraband that sells at the drop alone goes on the drop's own card, and on no open station's.
+                var card = station;
+                if (!hidden && _contraband.AtDropOnly(good))
+                {
+                    if (dropCard == null || grid != _contraband.DropPoint)
+                        continue;
+
+                    card = dropCard;
+                }
+
+                if (_market.Quote(chute, good) is not { } quote || card.Prices.Any(price => price.Good == _market.GoodName(good)))
                     continue;
 
-                station.Prices.Add(new WFMarketPrice(_market.GoodName(good), quote.Amount, quote.Factor,
+                card.Prices.Add(new WFMarketPrice(_market.GoodName(good), quote.Amount, quote.Factor,
                     Loc.GetString(quote.Reason), _cargo.GoodWeight(good), quote.Factor >= profile.Highlight, null, Shelf(grid, good, profile)));
             }
 
@@ -305,7 +321,12 @@ public sealed partial class WFMarketCartridgeSystem : EntitySystem
         // An alert naming a hidden market is off the books too.
         var hiddenNames = stations.Values.Where(station => station.Underground).Select(station => station.Name).ToHashSet();
         var alerts = new List<(WFMarketAlert, bool)>();
-        void Add(WFMarketAlert alert, string? station = null) => alerts.Add((alert, station != null && hiddenNames.Contains(station)));
+        void Add(WFMarketAlert alert, string? station = null) =>
+            alerts.Add((alert, station != null && hiddenNames.Contains(station)));
+
+        // The contraband drop is an open station, but only the Underground is told of it.
+        if (_contraband.DropActive && _contraband.DropPoint is { } drop)
+            alerts.Add((new WFMarketAlert(Loc.GetString("wf-market-alert-drop", ("station", Name(drop))), _contraband.DropEnds, true), true));
 
         foreach (var rush in _rush.Active)
         {
@@ -400,6 +421,8 @@ public sealed partial class WFMarketCartridgeSystem : EntitySystem
             .ThenBy(entry => entry.Value.Name)
             .Select(entry => entry.Value)
             .ToList();
+        if (dropCard is { Prices.Count: > 0 })
+            sorted.Insert(0, dropCard);
 
         var quotes = _stock.WfQuotes();
         var hiddenStations = chutes
@@ -408,6 +431,25 @@ public sealed partial class WFMarketCartridgeSystem : EntitySystem
             .ToHashSet();
         return new MarketSnapshot(sorted, alerts, chutes, hiddenChutes,
             Materials(quotes.Where(quote => !hiddenStations.Contains(quote.Station))), Materials(quotes), SectorGoods());
+    }
+
+    /// <summary>
+    /// An empty card for the contraband drop, listed first under the Underground tab once the station loop fills it with
+    /// the contraband prices the open cards leave out. Null when there is no drop.
+    /// </summary>
+    private WFMarketStation? DropCard(WFTradeMarketPrototype profile)
+    {
+        if (!_contraband.DropActive || _contraband.DropPoint is not { } drop)
+            return null;
+
+        var minutes = Math.Max(1, (int) Math.Ceiling((_contraband.DropEnds - _timing.CurTime).TotalMinutes));
+        return new WFMarketStation
+        {
+            Name = Name(drop),
+            Underground = true,
+            Faction = Loc.GetString("wf-market-faction-drop", ("minutes", minutes)),
+            FactionColor = profile.ContrabandDropColor,
+        };
     }
 
     /// <summary>A good's shelf at a station for its row's bar, or null where the station stands outside the sector economy.</summary>
