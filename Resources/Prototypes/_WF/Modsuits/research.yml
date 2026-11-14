@@ -109,7 +109,7 @@
   - ModsuitModuleInjector
   - ModsuitModuleDefibrillator
   - ModsuitModulePatientTransport
-  position: 3,7
+  position: 3,6
   technologyPrerequisites:
   - ModsuitsTech
 

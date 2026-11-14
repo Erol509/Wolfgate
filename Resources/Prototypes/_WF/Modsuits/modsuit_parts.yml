@@ -457,6 +457,7 @@
     maxCharge: 1080
     startingCharge: 1080
   - type: BatterySelfRecharger
+    autoRecharge: true
     autoRechargeRate: 3
   - type: PhysicalComposition
     materialComposition:
@@ -487,6 +488,7 @@
     maxCharge: 1440
     startingCharge: 1440
   - type: BatterySelfRecharger
+    autoRecharge: true
     autoRechargeRate: 4
   - type: PhysicalComposition
     materialComposition:
@@ -550,4 +552,5 @@
     maxCharge: 1000000
     startingCharge: 1000000
   - type: BatterySelfRecharger
+    autoRecharge: true
     autoRechargeRate: 1000

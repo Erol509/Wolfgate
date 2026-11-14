@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client._WF.Modsuits;
+using Content.Server.Medical.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared._WF.Modsuits;
@@ -11,7 +12,9 @@ using Content.Shared.Clothing;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
+using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Research.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Wires;
@@ -646,6 +649,77 @@ public sealed class ModsuitModuleTest
                 entMan.DeleteEntity(suitEntity);
             }
         });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The microreactor core slowly refills its own battery.</summary>
+    [Test]
+    public async Task MicroreactorCoreRechargesItself()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var map = await pair.CreateTestMap();
+        var batteries = entMan.System<BatterySystem>();
+
+        EntityUid core = default;
+        await server.WaitPost(() =>
+        {
+            core = entMan.SpawnEntity("ModsuitCoreStandardMicroreactor", map.GridCoords);
+            batteries.SetCharge(core, 0f);
+        });
+        await server.WaitRunTicks(pair.SecondsToTicks(3f));
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(entMan.GetComponent<BatteryComponent>(core).CurrentCharge, Is.GreaterThan(0f),
+                "the microreactor core did not recharge");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The MOD health analyzer scans no farther than normal interaction range.</summary>
+    [Test]
+    public async Task ModsuitHealthAnalyzerUsesInteractionRange()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var prototypes = server.ResolveDependency<IPrototypeManager>();
+        var factory = server.ResolveDependency<IComponentFactory>();
+
+        var proto = prototypes.Index<EntityPrototype>("ModsuitDeviceHealthAnalyzer");
+        Assert.That(proto.TryComp<HealthAnalyzerComponent>(out var analyzer, factory), Is.True);
+        Assert.That(analyzer!.MaxScanRange, Is.LessThanOrEqualTo(1.5f));
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>A cards drawn at the same spot hide each other, so MODsuit techs must keep clear of other research.</summary>
+    [Test]
+    public async Task ModsuitTechnologiesDoNotOverlapOtherResearch()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var prototypes = server.ResolveDependency<IPrototypeManager>();
+
+        var occupied = new Dictionary<Vector2i, string>();
+        var modsuitPositions = new Dictionary<Vector2i, string>();
+
+        foreach (var tech in prototypes.EnumeratePrototypes<TechnologyPrototype>())
+        {
+            if (!tech.ID.StartsWith("Modsuit", StringComparison.Ordinal))
+            {
+                occupied.TryAdd(tech.Position, tech.ID);
+                continue;
+            }
+
+            Assert.That(occupied.TryGetValue(tech.Position, out var other), Is.False,
+                $"{tech.ID} overlaps {other} at {tech.Position}");
+            Assert.That(modsuitPositions.TryAdd(tech.Position, tech.ID), Is.True,
+                $"{tech.ID} overlaps {modsuitPositions.GetValueOrDefault(tech.Position)} at {tech.Position}");
+        }
 
         await pair.CleanReturnAsync();
     }

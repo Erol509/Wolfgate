@@ -362,6 +362,9 @@
   id: ModsuitDeviceHealthAnalyzer
   name: MOD health analyzer
   categories: [ HideSpawnMenu ]
+  components:
+  - type: HealthAnalyzer
+    maxScanRange: 1.5
 
 - type: entity
   parent: HandheldGPSBasic
