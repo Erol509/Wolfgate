@@ -23,6 +23,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Spawners;
 
 namespace Content.IntegrationTests.Tests._WF.Modsuits;
 
@@ -681,6 +682,57 @@ public sealed class ModsuitModuleTest
                 entMan.DeleteEntity(suitEntity);
             }
         });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The Mono suits leave storage to their modules so a swapped module changes the space.</summary>
+    [Test]
+    public async Task MonoSuitsUseStorageModules()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var prototypes = server.ResolveDependency<IPrototypeManager>();
+        var factory = server.ResolveDependency<IComponentFactory>();
+
+        await server.WaitAssertion(() =>
+        {
+            foreach (var id in new[]
+                     {
+                         "ClothingModsuitRogue",
+                         "ClothingModsuitVolta",
+                         "ClothingModsuitMercenary",
+                     })
+            {
+                var proto = prototypes.Index<EntityPrototype>(id);
+                Assert.That(proto.TryComp<StorageComponent>(out _, factory), Is.False,
+                    $"{id} hard-codes Storage, which blocks its storage module");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The resin mister's foam leaves one wall per tile instead of stacking two.</summary>
+    [Test]
+    public async Task ResinMisterFoamLeavesOneWall()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var map = await pair.CreateTestMap();
+
+        await server.WaitPost(() =>
+        {
+            var foam = entMan.SpawnEntity("AluminiumMetalFoam", map.GridCoords);
+            entMan.EnsureComponent<TimedDespawnComponent>(foam).Lifetime = 0.1f;
+        });
+
+        await server.WaitRunTicks(pair.SecondsToTicks(1f));
+
+        var walls = entMan.AllEntities<MetaDataComponent>()
+            .Count(e => e.Comp.EntityPrototype?.ID == "FoamedAluminiumMetal");
+        Assert.That(walls, Is.EqualTo(1), "metal foam should leave exactly one wall");
 
         await pair.CleanReturnAsync();
     }

@@ -16,6 +16,7 @@ namespace Content.IntegrationTests.Tests._WF.Modsuits;
 public sealed class ModsuitModulesContentTest
 {
     private const string Pack = "ModsuitModules";
+    private const string PlatingPack = "ModsuitPlating";
     private static readonly string[] Technologies =
     {
         "ModsuitsTech",
@@ -62,6 +63,8 @@ public sealed class ModsuitModulesContentTest
                     $"recipe {recipeId} should produce a module or core");
             }
 
+            var unlockedModules = new List<ProtoId<LatheRecipePrototype>>();
+
             foreach (var techId in Technologies)
             {
                 Assert.That(prototypes.TryIndex<TechnologyPrototype>(techId, out var tech), Is.True,
@@ -70,8 +73,19 @@ public sealed class ModsuitModulesContentTest
 
                 foreach (var unlock in tech.RecipeUnlocks)
                 {
-                    Assert.That(prototypes.HasIndex<LatheRecipePrototype>(unlock),
+                    Assert.That(prototypes.TryIndex(unlock, out LatheRecipePrototype? recipe),
                         $"technology {techId} unlocks missing recipe {unlock}");
+                    if (recipe?.Result is not { } result
+                        || !prototypes.TryIndex(result, out EntityPrototype? resultProto))
+                    {
+                        continue;
+                    }
+
+                    if (resultProto!.TryComp<ModModuleComponent>(out _, factory)
+                        || resultProto.TryComp<ModCoreComponent>(out _, factory))
+                    {
+                        unlockedModules.Add(unlock);
+                    }
                 }
 
                 foreach (var prerequisite in tech.TechnologyPrerequisites)
@@ -81,10 +95,45 @@ public sealed class ModsuitModulesContentTest
                 }
             }
 
+            Assert.That(unlockedModules, Is.SubsetOf(recipes),
+                "every researched module should be printed at the exosuit fabricator");
+
+            Assert.That(prototypes.TryIndex<LatheRecipePackPrototype>(PlatingPack, out var platingPack), Is.True,
+                $"the {PlatingPack} recipe pack should exist");
+            Assert.That(platingPack!.Recipes, Is.Not.Empty, "the plating recipe pack should not be empty");
+
+            foreach (var recipeId in platingPack.Recipes)
+            {
+                Assert.That(prototypes.TryIndex(recipeId, out LatheRecipePrototype? recipe), Is.True,
+                    $"plating recipe {recipeId} should exist");
+                Assert.That(recipe!.Result, Is.Not.Null, $"plating recipe {recipeId} should produce an entity");
+
+                var result = recipe.Result!.Value;
+                Assert.That(prototypes.TryIndex(result, out EntityPrototype? resultProto), Is.True,
+                    $"plating recipe {recipeId} should produce existing prototype {result}");
+                Assert.That(resultProto!.ID.StartsWith("ModsuitPlating", StringComparison.Ordinal), Is.True,
+                    $"plating recipe {recipeId} should produce a MODsuit plating");
+            }
+
+            foreach (var oldPackId in new[]
+                     {
+                         "ModsuitEngineering",
+                         "ModsuitMedical",
+                         "ModsuitSecurity",
+                         "ModsuitSupply",
+                         "ModsuitService",
+                     })
+            {
+                Assert.That(prototypes.HasIndex<LatheRecipePackPrototype>(oldPackId), Is.False,
+                    $"{oldPackId} should have moved to the exosuit fabricator");
+            }
+
             Assert.That(prototypes.TryIndex(Fabricator, out var fabricator), Is.True);
             Assert.That(fabricator!.TryComp<LatheComponent>(out var lathe, factory), Is.True);
             Assert.That(lathe!.DynamicPacks, Does.Contain(new ProtoId<LatheRecipePackPrototype>(Pack)),
                 "the exosuit fabricator should use the module recipe pack");
+            Assert.That(lathe.DynamicPacks, Does.Contain(new ProtoId<LatheRecipePackPrototype>(PlatingPack)),
+                "the exosuit fabricator should use the plating recipe pack");
         });
 
         await pair.Client.WaitAssertion(() =>

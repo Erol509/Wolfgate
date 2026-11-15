@@ -764,6 +764,7 @@
     Gold: 100
     Diamond: 50
 
+# WOLFGATE(Modsuits) START: every module is printed at the exosuit fabricator
 - type: latheRecipePack
   id: ModsuitModules
   recipes:
@@ -788,12 +789,6 @@
   - ModsuitModuleGps
   - ModsuitModuleVisorDiagnostic
   - ModsuitModuleReagentScanner
-
-- type: latheRecipePack
-  id: ModsuitEngineering
-  recipes:
-  - ModsuitPlatingEngineer
-  - ModsuitPlatingAtmostech
   - ModsuitModuleMagboots
   - ModsuitModuleTRay
   - ModsuitModuleTether
@@ -807,11 +802,6 @@
   - ModsuitModuleMagbootsAdvanced
   - ModsuitModuleJumpJet
   - ModsuitModuleEmpShieldAdvanced
-
-- type: latheRecipePack
-  id: ModsuitMedical
-  recipes:
-  - ModsuitPlatingParamedic
   - ModsuitModuleHealthAnalyzer
   - ModsuitModuleVisorMedical
   - ModsuitModuleQuickCarry
@@ -820,11 +810,6 @@
   - ModsuitModulePatientTransport
   - ModsuitModuleQuickCarryAdvanced
   - ModsuitModuleNightVisor
-- type: latheRecipePack
-  id: ModsuitSecurity
-  recipes:
-  - ModsuitPlatingSecurity
-  - ModsuitPlatingBrigMed
   - ModsuitModuleVisorSecurity
   - ModsuitModuleHolster
   - ModsuitModuleMegaphone
@@ -833,16 +818,11 @@
   - ModsuitModuleBulwark
   - ModsuitModuleEmpShield
   - ModsuitModuleThermalVisor
-  - ModsuitModuleNightVisor
   - ModsuitModuleShockAbsorber
   - ModsuitModuleCriminalCapture
   - ModsuitModuleMagneticHarness
   - ModsuitModuleProjectileDampener
   - ModsuitModuleShootingAssistant
-
-- type: latheRecipePack
-  id: ModsuitService
-  recipes:
   - ModsuitModuleBikeHorn
   - ModsuitModuleWaddle
   - ModsuitModuleJanitorMister
@@ -852,12 +832,19 @@
   - ModsuitModuleBalloonBlower
   - ModsuitModuleStamper
   - ModsuitModuleFishingGlove
-
-- type: latheRecipePack
-  id: ModsuitSupply
-  recipes:
-  - ModsuitPlatingMining
   - ModsuitModuleCandelaSpool
   - ModsuitModuleDrill
   - ModsuitModuleOreBag
   - ModsuitModuleClamp
+# WOLFGATE END
+
+# Plating is printed at the exosuit fabricator alongside the modules.
+- type: latheRecipePack
+  id: ModsuitPlating
+  recipes:
+  - ModsuitPlatingParamedic
+  - ModsuitPlatingMining
+  - ModsuitPlatingEngineer
+  - ModsuitPlatingSecurity
+  - ModsuitPlatingBrigMed
+  - ModsuitPlatingAtmostech

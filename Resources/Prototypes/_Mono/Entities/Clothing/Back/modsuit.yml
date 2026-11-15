@@ -123,10 +123,12 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Back/Modsuits/rogue.rsi
-  - type: Storage # Extra space - Mono
-    grid:
-    - 0,0,7,3
-    maxItemSize: Huge
+  # WOLFGATE(Modsuits) START: the native module system owns suit storage
+  # - type: Storage # Extra space - Mono
+  #   grid:
+  #   - 0,0,7,3
+  #   maxItemSize: Huge
+  # WOLFGATE END
   # WOLFGATE(Modsuits) START: the native module system owns the suit parts
   # - type: ToggleableClothing
   #   clothingPrototypes:
@@ -192,10 +194,12 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Back/Modsuits/tsfmc-volta.rsi
-  - type: Storage # Extra space - Mono
-    grid:
-    - 0,0,7,3
-    maxItemSize: Huge
+  # WOLFGATE(Modsuits) START: the native module system owns suit storage
+  # - type: Storage # Extra space - Mono
+  #   grid:
+  #   - 0,0,7,3
+  #   maxItemSize: Huge
+  # WOLFGATE END
   # WOLFGATE(Modsuits) START: the native module system owns the suit parts
   # - type: ToggleableClothing
   #   clothingPrototypes:
@@ -276,10 +280,12 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Back/Modsuits/mercenary.rsi
-  - type: Storage # Extra space - Mono
-    grid:
-    - 0,0,7,3
-    maxItemSize: Huge
+  # WOLFGATE(Modsuits) START: the native module system owns suit storage
+  # - type: Storage # Extra space - Mono
+  #   grid:
+  #   - 0,0,7,3
+  #   maxItemSize: Huge
+  # WOLFGATE END
   # WOLFGATE(Modsuits) START: the native module system owns the suit parts
   # - type: ToggleableClothing
   #   clothingPrototypes:

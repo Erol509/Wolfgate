@@ -14,7 +14,34 @@
       visible: false
       map: [ "sealed" ]
 - type: entity
+  abstract: true
   parent: ClothingOuterBase
+  id: ClothingModsuitChestplateBase
+  components:
+  - type: AllowSuitStorage
+  - type: WFSuitTankStorage
+  - type: Storage
+    grid:
+    - 0,0,1,1
+    maxItemSize: Normal
+    whitelist:
+      components:
+      - GasTank
+    blacklist:
+      components:
+      - Jetpack
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      mod-part-stored: !type:ContainerSlot
+      storagebase: !type:Container
+        ents: []
+
+- type: entity
+  parent: ClothingModsuitChestplateBase
   id: ClothingModsuitChestplateStandard
   name: standard modsuit chestplate
   description: A special modular suit spaceproof cover designed for compact folding inside modular suit control.
@@ -33,9 +60,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ContainerContainer
-    containers:
-      mod-part-stored: !type:ContainerSlot
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -77,7 +101,7 @@
     reduction: 0.5
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingModsuitChestplateBase
   id: ClothingModsuitChestplateSecurity
   name: soldat modsuit chestplate
   description: A robust modular suit cover with ceramic inserts for extra protection.
@@ -99,9 +123,6 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.95
-  - type: ContainerContainer
-    containers:
-      mod-part-stored: !type:ContainerSlot
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -149,7 +170,7 @@
     reduction: 0.5
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingModsuitChestplateBase
   id: ClothingModsuitChestplateHeadOfSecurity
   name: bulwark modsuit chestplate
   description: A robust modular suit cover with EXTRA ceramic inserts for slightly more protection.
@@ -171,9 +192,6 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.95
-  - type: ContainerContainer
-    containers:
-      mod-part-stored: !type:ContainerSlot
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -222,7 +240,7 @@
     reduction: 0.5
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingModsuitChestplateBase
   id: ClothingModsuitChestplateParamedic
   name: sanitater modsuit chestplate
   description: A white and blue-ish-grey steel plate for keeping out the harsh void of space and the occasional bullet.
@@ -241,9 +259,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ContainerContainer
-    containers:
-      mod-part-stored: !type:ContainerSlot
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -292,7 +307,7 @@
     reduction: 0.5
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingModsuitChestplateBase
   id: ClothingModsuitChestplateEngineer
   name: sapper modsuit chestplate
   description: A tough armor plate to defend against harsh atmospheric conditions and shockwaves.
@@ -311,9 +326,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ContainerContainer
-    containers:
-      mod-part-stored: !type:ContainerSlot
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -363,7 +375,7 @@
     reduction: 0.7
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingModsuitChestplateBase
   id: ClothingModsuitChestplateAtmostech
   name: aeolus modsuit chestplate
   description: A fire-proof armor plate to defend against harsh atmospheric conditions.
@@ -382,9 +394,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ContainerContainer
-    containers:
-      mod-part-stored: !type:ContainerSlot
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -432,7 +441,7 @@
     reduction: 0.75
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingModsuitChestplateBase
   id: ClothingModsuitChestplateResearchDirector
   name: minerva modsuit chestplate
   description: A bulky bomb and bat proof chunk of steel.
@@ -451,9 +460,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ContainerContainer
-    containers:
-      mod-part-stored: !type:ContainerSlot
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -504,7 +510,7 @@
   - type: GroupExamine
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingModsuitChestplateBase
   id: ClothingModsuitChestplateCaptain
   name: magnate modsuit chestplate
   description: This shit is made out of DIAMONDS, man, this armor was forged with GEMS.
@@ -527,9 +533,6 @@
   - type: ClothingSpeedModifier
     walkModifier: 0.95
     sprintModifier: 0.95
-  - type: ContainerContainer
-    containers:
-      mod-part-stored: !type:ContainerSlot
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate
@@ -578,7 +581,7 @@
     reduction: 0.5
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingModsuitChestplateBase
   id: ClothingModsuitChestplateBrigMed
   name: trauma modsuit chestplate
   description: A robust modular suit cover with white ceramic inserts for extra drip.
@@ -597,9 +600,6 @@
     equipSound: /Audio/Mecha/mechmove03.ogg
     unequipSound: /Audio/Mecha/mechmove03.ogg
     slots: [ outerClothing ]
-  - type: ContainerContainer
-    containers:
-      mod-part-stored: !type:ContainerSlot
   - type: ModPart
     sealUpPopup: modsuit-part-seal-up-chestplate
     sealDownPopup: modsuit-part-seal-down-chestplate

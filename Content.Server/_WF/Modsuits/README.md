@@ -231,6 +231,7 @@ tool selector is ported under `RadialSelector`, and the EMP ward and glove trans
   - the native module system owns the suit parts
   - premade suits come with basic modules, crafted ones come empty
   - a MOD core replaces the power cell
+  - the native module system owns suit storage
   - the native module system sets its own sealed appearance
 - [`Resources/Prototypes/_Mono/Entities/Clothing/Hands/modsuit.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/Hands/modsuit.yml)
   - MODsuit parts use the native module system.
@@ -245,13 +246,12 @@ tool selector is ported under `RadialSelector`, and the EMP ward and glove trans
   - MODsuit parts use the native module system.
   - the native module system sets its own sealed appearance
   - MODsuit boots add no slowdown; the chestplate and control unit carry the suit's cap
-- [`Resources/Prototypes/_NF/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/_NF/Entities/Structures/Machines/lathe.yml): departmental MOD module recipes
 - [`Resources/Prototypes/Entities/Objects/Power/powercells.yml`](../../../Resources/Prototypes/Entities/Objects/Power/powercells.yml)
   - MODsuit cores reject medium power cages.
   - MODsuit cores reject high power cages.
 - [`Resources/Prototypes/Entities/Structures/Machines/lathe.yml`](../../../Resources/Prototypes/Entities/Structures/Machines/lathe.yml)
   - module recipes
-  - departmental MOD module recipes
+  - plating recipes
 - [`Resources/Textures/_EinsteinEngines/Clothing/NanoTrasen/Modsuits/`](../../../Resources/Textures/_EinsteinEngines/Clothing/NanoTrasen/Modsuits/): Einstein Engines emergency-response MODsuit sprites, ported from GoobStation along with their meta.json files.
 - [`Resources/Textures/_Goobstation/Clothing/Back/Modsuits/brigmed.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/Back/Modsuits/brigmed.rsi/): MODsuit sprites ported from GoobStation.
 - [`Resources/Textures/_Goobstation/Clothing/Hands/Modsuits/brigmed.rsi/`](../../../Resources/Textures/_Goobstation/Clothing/Hands/Modsuits/brigmed.rsi/): MODsuit sprites ported from GoobStation.

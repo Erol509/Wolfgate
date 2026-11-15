@@ -250,6 +250,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - closed UIs skip updates, so refresh on open
   - refresh the state on open; the update loop skips closed UIs
   - skip closed UIs; each update re-sent the whole UI component, a large radar state on admin ghosts
+- [`Content.Server/Spawners/Components/SpawnOnDespawnComponent.cs`](../../Content.Server/Spawners/Components/SpawnOnDespawnComponent.cs): default to one spawn so prototypes without a count do not duplicate
 - [`Content.Server/Spawners/EntitySystems/SpawnPointSystem.cs`](../../Content.Server/Spawners/EntitySystems/SpawnPointSystem.cs)
   - fallback ordering
   - prefer spawners that aren't another job's, e.g. not the godfather's office for a fugitive
