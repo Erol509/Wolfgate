@@ -2,7 +2,7 @@
 
 Anvilhold Drydock is a POI station (`WFDrydock`, `Resources/Maps/_WF/Drydock/drydock.yml`) that repairs and refits
 ships parked in its four berths, North, East, South and West. A pilot either pulls up to a berth console or hails the
-dockmaster from their helm (Hailing module) and books a berth. Any ship can also build a mobile drydock, which pays in
+dockmaster from their helm (Hailing module) and books a berth. A ship sold with a mobile drydock also works as one, paying in
 materials instead of credits. A `WFDrydockRepairVoucher` on the payer, in hand, a worn slot or a cyborg's put-away tool module, pays for one whole
 repair at a console that takes credits; it is used up when the work starts and handed back if the job aborts
 (`WFDrydockSystem.Vouchers.cs`). `IssueShipVouchers` (used by Reaver bounties) binds one to each helping ship, which it
@@ -141,7 +141,8 @@ the board unpaid if their body is deleted. A warrant posted while the board was 
 
 `WFComputerMobileDrydock` (board `WFComputerMobileDrydockCircuitboard`) and `WFMobileDrydockCrane` (board
 `WFMobileDrydockCraneMachineCircuitboard`, MV power, at stock parts a 26-tile berth starting 3 tiles past the machine, 13 tiles
-across). Both boards print at the circuit imprinter after Shuttlecraft research. The crane builds in a 2x2 machine
+across). Neither board can be printed: a mobile drydock comes with the ship that carries one, and both machines are
+bonded to that hull (HullBond module). The crane builds in a 2x2 machine
 frame, from 20 steel, 10 plasteel, 10 MV cable, 4 motors and 4 armor plates on top of its parts, and can be pulled
 while unbolted. To mirror a mobile crane, unbolt it,
 open its panel and cut with wirecutters for 2 s (`WFDrydockCraneMirrorSystem`). It works walk-in only and never on its
@@ -325,7 +326,6 @@ bought at a bargain less its discount, as a shipyard does.
 - [`Resources/Prototypes/_WF/Drydock/construction.yml`](../../../Resources/Prototypes/_WF/Drydock/construction.yml)
 - [`Resources/Prototypes/_WF/Drydock/cranes.yml`](../../../Resources/Prototypes/_WF/Drydock/cranes.yml)
 - [`Resources/Prototypes/_WF/Drydock/dockmaster.yml`](../../../Resources/Prototypes/_WF/Drydock/dockmaster.yml)
-- [`Resources/Prototypes/_WF/Drydock/lathe_recipes.yml`](../../../Resources/Prototypes/_WF/Drydock/lathe_recipes.yml)
 - [`Resources/Prototypes/_WF/Drydock/mobile.yml`](../../../Resources/Prototypes/_WF/Drydock/mobile.yml)
 - [`Resources/Prototypes/_WF/Drydock/poi.yml`](../../../Resources/Prototypes/_WF/Drydock/poi.yml)
 - [`Resources/Prototypes/_WF/Drydock/ports.yml`](../../../Resources/Prototypes/_WF/Drydock/ports.yml)
@@ -373,7 +373,5 @@ bought at a bargain less its discount, as a shipyard does.
 - [`Resources/Prototypes/Catalog/Cargo/cargo_engines.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_engines.yml): above the ~10k a drydock break pays for the controller, mostly its fissile; was 6000
 - [`Resources/Prototypes/Entities/Structures/Power/Generation/ame.yml`](../../../Resources/Prototypes/Entities/Structures/Power/Generation/ame.yml): build cost the drydock prices the controller's rebuild and salvage from
 - [`Resources/Prototypes/Recipes/Construction/Graphs/utilities/ame_shielding.yml`](../../../Resources/Prototypes/Recipes/Construction/Graphs/utilities/ame_shielding.yml): build cost the drydock prices the shielding's rebuild and salvage from; no recipe uses it
-- [`Resources/Prototypes/Recipes/Lathes/Packs/science.yml`](../../../Resources/Prototypes/Recipes/Lathes/Packs/science.yml): mobile drydock boards
-- [`Resources/Prototypes/Research/industrial.yml`](../../../Resources/Prototypes/Research/industrial.yml): mobile drydock boards
 
 <!-- WOLFGATE-GENERATED END -->

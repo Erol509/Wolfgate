@@ -68,6 +68,8 @@ predicted on their own client; this only cuts the audio entities other players r
 
 ### Audio
 
+- [`Resources/Audio/_WF/Weapons/Guns/attributions.yml`](../../../Resources/Audio/_WF/Weapons/Guns/attributions.yml)
+- [`Resources/Audio/_WF/Weapons/Guns/pulse_rifle.ogg`](../../../Resources/Audio/_WF/Weapons/Guns/pulse_rifle.ogg)
 - [`Resources/Audio/_WF/Weapons/Impacts/attributions.yml`](../../../Resources/Audio/_WF/Weapons/Impacts/attributions.yml)
 - [`Resources/Audio/_WF/Weapons/Impacts/impact_flesh_01.ogg`](../../../Resources/Audio/_WF/Weapons/Impacts/impact_flesh_01.ogg)
 - [`Resources/Audio/_WF/Weapons/Impacts/impact_flesh_02.ogg`](../../../Resources/Audio/_WF/Weapons/Impacts/impact_flesh_02.ogg)
@@ -234,6 +236,7 @@ predicted on their own client; this only cuts the audio entities other players r
 - [`Resources/Prototypes/_Mono/Research/Organizations/mieyo.yml`](../../../Resources/Prototypes/_Mono/Research/Organizations/mieyo.yml): the Sakura needs its .160 smart magazine
 - [`Resources/Prototypes/_Nuclear14/Entities/Structures/Decoration/floordecor.yml`](../../../Resources/Prototypes/_Nuclear14/Entities/Structures/Decoration/floordecor.yml): material bullet impacts
 - [`Resources/Prototypes/Entities/Mobs/base.yml`](../../../Resources/Prototypes/Entities/Mobs/base.yml): material bullet impacts
+- [`Resources/Prototypes/Entities/Objects/Weapons/Guns/Battery/battery_guns.yml`](../../../Resources/Prototypes/Entities/Objects/Weapons/Guns/Battery/battery_guns.yml): own pulse rifle shot
 - [`Resources/Prototypes/Entities/Objects/Weapons/Guns/Projectiles/projectiles.yml`](../../../Resources/Prototypes/Entities/Objects/Weapons/Guns/Projectiles/projectiles.yml): untagged targets sound like metal
 - [`Resources/Prototypes/Entities/Structures/barricades.yml`](../../../Resources/Prototypes/Entities/Structures/barricades.yml): material bullet impacts
 - [`Resources/Prototypes/Entities/Structures/Doors/MaterialDoors/material_doors.yml`](../../../Resources/Prototypes/Entities/Structures/Doors/MaterialDoors/material_doors.yml): material bullet impacts
