@@ -7,7 +7,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
 using Content.Shared.Popups;
-using Content.Shared.Power.Components;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Verbs;
@@ -25,7 +24,6 @@ namespace Content.Shared._WF.ItemSwitch;
 public enum SwitchableVisuals : byte
 {
     Switched,
-    Layer,
 }
 
 /// <summary>Switches an item between the appearance states listed in <see cref="ItemSwitchComponent"/>.</summary>
@@ -55,28 +53,12 @@ public abstract class SharedItemSwitchSystem : EntitySystem
         SubscribeLocalEvent<ItemSwitchComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ItemSwitchComponent, GetVerbsEvent<ActivationVerb>>(OnActivateVerb);
         SubscribeLocalEvent<ItemSwitchComponent, ActivateInWorldEvent>(OnActivate);
-        SubscribeLocalEvent<ItemSwitchComponent, ItemSwitchAttemptEvent>(OnSwitchAttempt);
         SubscribeLocalEvent<ClothingComponent, ItemSwitchedEvent>(UpdateClothingLayer);
     }
 
     private void OnInit(Entity<ItemSwitchComponent> ent, ref ComponentInit args)
     {
         Switch((ent, ent.Comp), ent.Comp.State, predicted: ent.Comp.Predictable);
-    }
-
-    private void OnSwitchAttempt(EntityUid uid, ItemSwitchComponent comp, ref ItemSwitchAttemptEvent args)
-    {
-        if (!comp.NeedsPower
-            || !comp.States.TryGetValue(args.State, out var target)
-            || !TryComp<BatteryComponent>(uid, out var battery))
-            return;
-
-        if (battery.CurrentCharge >= target.EnergyPerUse)
-            return;
-
-        args.Popup = Loc.GetString("item-switch-failed-no-power");
-        args.Cancelled = true;
-        Dirty(uid, comp);
     }
 
     private void OnUseInHand(Entity<ItemSwitchComponent> ent, ref UseInHandEvent args)
@@ -124,7 +106,6 @@ public abstract class SharedItemSwitchSystem : EntitySystem
     {
         if (args.Handled
             || !ent.Comp.OnActivate
-            || ent.Comp is { IsPowered: false, NeedsPower: true }
             || ent.Comp.States.Count == 0)
             return;
 
@@ -247,18 +228,12 @@ public abstract class SharedItemSwitchSystem : EntitySystem
         return true;
     }
 
-    public virtual void VisualsChanged(Entity<ItemSwitchComponent> ent, string key)
-    {
-    }
-
     protected virtual void UpdateVisuals(Entity<ItemSwitchComponent> ent, string key)
     {
         if (TryComp(ent, out AppearanceComponent? appearance))
             _appearance.SetData(ent, SwitchableVisuals.Switched, key, appearance);
 
         _item.SetHeldPrefix(ent, key);
-
-        VisualsChanged(ent, key);
     }
 
     private void UpdateClothingLayer(Entity<ClothingComponent> ent, ref ItemSwitchedEvent args)

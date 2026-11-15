@@ -1192,6 +1192,8 @@
   - WFMeridianLoadoutClothingNeckWreathIcewing
   - WFMeridianLoadoutClothingNeckWreathMagmawing
   # WOLFGATE END
+#  - ContractorClothingCloakCmo # Temp removed for MOM. Will return if replaced.
+#  - ContractorClothingNeckMantleCMO # Temp removed for MOM. Will return if replaced.
   # WOLFGATE(Resprites) START: CMO neckwear restored and the resprited HOS set added to the Vagrant neck group
   - ContractorClothingCloakCmo
   - ContractorClothingNeckMantleCMO

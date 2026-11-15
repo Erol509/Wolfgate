@@ -30,18 +30,6 @@ public sealed partial class ItemSwitchComponent : Component
     /// <summary>Whether the current state is shown in the item status UI.</summary>
     [DataField]
     public bool ShowLabel;
-
-    /// <summary>Whether the item needs battery power to sustain a state.</summary>
-    [DataField]
-    public bool NeedsPower;
-
-    /// <summary>Whether the item currently has enough power to sustain its state.</summary>
-    [DataField]
-    public bool IsPowered = true;
-
-    /// <summary>The state the item reverts to when out of power.</summary>
-    [DataField]
-    public string? DefaultState;
 }
 
 /// <summary>One appearance state of an <see cref="ItemSwitchComponent"/>.</summary>
@@ -68,10 +56,6 @@ public sealed partial class ItemSwitchState
 
     [DataField]
     public bool Hidden;
-
-    /// <summary>Energy consumed per use while in this state.</summary>
-    [DataField]
-    public int EnergyPerUse;
 }
 
 /// <summary>Raised on an entity before its item switch changes state.</summary>

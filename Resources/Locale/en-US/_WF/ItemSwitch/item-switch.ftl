@@ -1,5 +1,3 @@
-item-switch-failed-no-power = Not enough power!
-
 itemswitch-state-both = cloak and mantle
 itemswitch-state-mantle = mantle
 itemswitch-state-cloak = cloak
