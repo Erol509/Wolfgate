@@ -12,9 +12,6 @@ public partial class ShuttleNavControl
     /// <summary>Whether encounter markers, zones and NPC crew tags are drawn. The admin scanner can turn them off.</summary>
     public bool WfShowEncounters = true;
 
-    /// <summary>The labels placed so far this frame, so ships of one encounter do not draw over each other.</summary>
-    private readonly List<Box2> _encounterLabels = new();
-
     /// <summary>The ships of one side of one encounter, gathered for a frame.</summary>
     private readonly Dictionary<(NetEntity Encounter, string Side), (Vector2 Sum, int Count, bool Named, bool OnScope, Color Color, WFEncounterIcon Icon, WFEncounterCategory Category, float Warn, float Attack)> _encounterGroups = new();
 
@@ -54,7 +51,6 @@ public partial class ShuttleNavControl
         var centre = MidPointVector;
         var rim = MathF.Min(PixelSize.X, PixelSize.Y) / 2f - 20f * UIScale;
         var size = 6f * UIScale;
-        _encounterLabels.Clear();
         _encounterGroups.Clear();
         _encounterPoints.Clear();
         foreach (var marker in system.Markers)
@@ -85,14 +81,17 @@ public partial class ShuttleNavControl
                 if (!group.Named)
                 {
                     // Above the ship: its own IFF label hangs below and to the right, and the admin crew tag sits between.
-                    // The threat rank follows the name on the same line.
-                    var dimensions = handle.GetDimensions(Font, marker.Name, UIScale * 0.8f);
-                    var rank = dimensions.Y;
+                    // The threat rank follows the name on the same line, in a stack too.
+                    WfBeginTag(point, point + new Vector2(10f, -54f) * UIScale, 2);
+                    WfTagLine(handle, marker.Name, UIScale * 0.8f, color);
+                    var rank = handle.GetDimensions(Font, marker.Name, UIScale * 0.8f).Y;
                     var width = WFEncounterRanks.Width(marker.Threat, rank);
-                    var at = PlaceEncounterLabel(point + new Vector2(10f, -54f) * UIScale,
-                        dimensions + new Vector2(width > 0f ? width + 3f * UIScale : 0f, 0f));
-                    handle.DrawString(Font, at, marker.Name, UIScale * 0.8f, color);
-                    EncounterRanks.Draw(handle, at + new Vector2(dimensions.X + 3f * UIScale, 0f), marker.Threat, rank);
+                    if (width > 0f)
+                    {
+                        var threat = marker.Threat;
+                        WfTagHeadExtra(width + 3f * UIScale,
+                            (h, at) => EncounterRanks.Draw(h, at + new Vector2(3f * UIScale, 0f), threat, rank));
+                    }
                 }
             }
 
@@ -159,32 +158,6 @@ public partial class ShuttleNavControl
             WFEncounterCategory.Distress => WFEncounterIcon.Cross,
             _ => WFEncounterIcon.Crate,
         };
-    }
-
-    /// <summary>Moves a label down until it clears the ones already placed, and records where it ends up.</summary>
-    private Vector2 PlaceEncounterLabel(Vector2 position, Vector2 size)
-    {
-        for (var attempt = 0; attempt < 8; attempt++)
-        {
-            var box = Box2.FromDimensions(position, size);
-            var clear = true;
-            foreach (var placed in _encounterLabels)
-            {
-                if (!placed.Intersects(box))
-                    continue;
-
-                clear = false;
-                break;
-            }
-
-            if (clear)
-                break;
-
-            position.Y += size.Y + 2f * UIScale;
-        }
-
-        _encounterLabels.Add(Box2.FromDimensions(position, size));
-        return position;
     }
 
     /// <summary>

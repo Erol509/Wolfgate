@@ -2,7 +2,7 @@
 
 Anvilhold Drydock is a POI station (`WFDrydock`, `Resources/Maps/_WF/Drydock/drydock.yml`) that repairs and refits
 ships parked in its four berths, North, East, South and West. A pilot either pulls up to a berth console or hails the
-dockmaster from their helm (Hailing module) and books a berth. Any ship can also build a mobile drydock, which pays in
+dockmaster from their helm (Hailing module) and books a berth. A ship sold with a mobile drydock console also works as one, paying in
 materials instead of credits. A `WFDrydockRepairVoucher` on the payer, in hand, a worn slot or a cyborg's put-away tool module, pays for one whole
 repair at a console that takes credits; it is used up when the work starts and handed back if the job aborts
 (`WFDrydockSystem.Vouchers.cs`). `IssueShipVouchers` (used by Reaver bounties) binds one to each helping ship, which it
@@ -141,7 +141,9 @@ the board unpaid if their body is deleted. A warrant posted while the board was 
 
 `WFComputerMobileDrydock` (board `WFComputerMobileDrydockCircuitboard`) and `WFMobileDrydockCrane` (board
 `WFMobileDrydockCraneMachineCircuitboard`, MV power, at stock parts a 26-tile berth starting 3 tiles past the machine, 13 tiles
-across). Both boards print at the circuit imprinter after Shuttlecraft research. The crane builds in a 2x2 machine
+across). The console board can't be printed: a mobile drydock console comes with the ship that carries one, bonded to
+that hull (HullBond module). The crane board prints at the circuit imprinter after Shuttlecraft research, so such a ship
+can add cranes; a new crane bonds to the first hull it is bolted to. The crane builds in a 2x2 machine
 frame, from 20 steel, 10 plasteel, 10 MV cable, 4 motors and 4 armor plates on top of its parts, and can be pulled
 while unbolted. To mirror a mobile crane, unbolt it,
 open its panel and cut with wirecutters for 2 s (`WFDrydockCraneMirrorSystem`). It works walk-in only and never on its
@@ -357,17 +359,23 @@ bought at a bargain less its discount, as a shipyard does.
 
 ## Non-modular edits
 
+- [`Content.Client/_Mono/NaniteOverlay/NaniteOverlaySystem.cs`](../../../Content.Client/_Mono/NaniteOverlay/NaniteOverlaySystem.cs)
+  - a repaired entity drops out of the query, so its tint is undone here
+  - the condition was inverted, so a repaired entity kept its damage tint
+  - an entity deleted while tinted has no sprite to restore
+  - gives an entity back its own colour, once
 - [`Content.Server/_Crescent/Hardpoint/HardpointSystem.cs`](../../_Crescent/Hardpoint/HardpointSystem.cs): a queued grid with no fire control (a station, debris) returned instead of skipping,
 - [`Content.Shared/_Crescent/Hardpoints/SharedHardpointSystem.cs`](../../../Content.Shared/_Crescent/Hardpoints/SharedHardpointSystem.cs): a destroyed gun leaves a dead entry behind, which blocked rebuilt guns
 - [`Content.Shared/Construction/SharedFlatpackSystem.cs`](../../../Content.Shared/Construction/SharedFlatpackSystem.cs): salvaged hardware unpacks damaged
 - [`Resources/Prototypes/_Mono/Entities/Objects/Devices/ship_vouchers.yml`](../../../Resources/Prototypes/_Mono/Entities/Objects/Devices/ship_vouchers.yml)
   - single use, so a drydock repair undercuts printing another card
   - single use; the renewable parent would give 12
+- [`Resources/Prototypes/_Mono/Entities/Structures/Power/apc.yml`](../../../Resources/Prototypes/_Mono/Entities/Structures/Power/apc.yml): a drydock or repair tool rebuilds a destroyed LAPC like any APC
 - [`Resources/Prototypes/_Mono/Entities/Structures/Power/Generators/generators.yml`](../../../Resources/Prototypes/_Mono/Entities/Structures/Power/Generators/generators.yml): build cost the drydock prices the reactor's rebuild and salvage from
 - [`Resources/Prototypes/Catalog/Cargo/cargo_engines.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_engines.yml): above the ~10k a drydock break pays for the controller, mostly its fissile; was 6000
 - [`Resources/Prototypes/Entities/Structures/Power/Generation/ame.yml`](../../../Resources/Prototypes/Entities/Structures/Power/Generation/ame.yml): build cost the drydock prices the controller's rebuild and salvage from
 - [`Resources/Prototypes/Recipes/Construction/Graphs/utilities/ame_shielding.yml`](../../../Resources/Prototypes/Recipes/Construction/Graphs/utilities/ame_shielding.yml): build cost the drydock prices the shielding's rebuild and salvage from; no recipe uses it
-- [`Resources/Prototypes/Recipes/Lathes/Packs/science.yml`](../../../Resources/Prototypes/Recipes/Lathes/Packs/science.yml): mobile drydock boards
-- [`Resources/Prototypes/Research/industrial.yml`](../../../Resources/Prototypes/Research/industrial.yml): mobile drydock boards
+- [`Resources/Prototypes/Recipes/Lathes/Packs/science.yml`](../../../Resources/Prototypes/Recipes/Lathes/Packs/science.yml): extra cranes for ships sold with a mobile drydock
+- [`Resources/Prototypes/Research/industrial.yml`](../../../Resources/Prototypes/Research/industrial.yml): extra cranes for ships sold with a mobile drydock
 
 <!-- WOLFGATE-GENERATED END -->

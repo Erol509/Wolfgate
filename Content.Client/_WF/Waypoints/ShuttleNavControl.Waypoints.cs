@@ -226,7 +226,8 @@ public partial class ShuttleNavControl
             var labelX = view.X + size + 2f * UIScale + dimensions.X > PixelSize.X
                 ? view.X - size - 2f * UIScale - dimensions.X
                 : view.X + size + 2f * UIScale;
-            handle.DrawString(Font, new Vector2(labelX, view.Y - dimensions.Y / 2f), waypoint.Name, UIScale * 0.8f, WfWaypointColor);
+            WfBeginTag(view, new Vector2(labelX, view.Y - dimensions.Y / 2f), 2);
+            WfTagLine(handle, waypoint.Name, UIScale * 0.8f, WfWaypointColor);
         }
     }
 

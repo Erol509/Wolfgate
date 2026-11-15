@@ -492,8 +492,19 @@ public sealed class WFCockpitTest : InteractionTest
             }
             hud.SelectPage("wf-cockpit-shield-page");
             window.UpdateShieldShuntSnapshot(new WFShipShieldShuntState(false, false, 0, 0, 0, 0));
-            Assert.That(Descendants(hud).OfType<WFShipShieldShuntScreen>().Single().VisibleInTree, Is.True,
-                "Losing the generator must leave cockpit controls available.");
+            SyncHud(hud);
+            Layout(hud, new Vector2(1600, 900));
+            var shieldPanel = Named<Control>(hud, "CockpitShields");
+            var commsPanel = Named<Control>(hud, "CockpitComms");
+            Assert.That(shieldPanel.Visible, Is.False, "Without a shield generator the cockpit hides its shield controls.");
+            Assert.That(Named<Control>(hud, "CockpitMfdSelectors").Children.OfType<Button>()
+                    .Any(button => button.Visible && button.ToolTip == Loc.GetString("wf-cockpit-shield-page")), Is.False,
+                "Without a shield generator the shield MFD page is not offered.");
+            Assert.That(commsPanel.Width, Is.GreaterThan(shieldPanel.Width + 400),
+                "Communications take the lower row the shield panel left.");
+            window.UpdateShieldShuntSnapshot(new WFShipShieldShuntState(true, true, 0.76f, MathF.PI / 2f, 0.65f, MathF.PI / 2f));
+            SyncHud(hud);
+            Assert.That(shieldPanel.Visible, Is.True, "Installing a shield generator brings the shield controls back.");
             var cockpitShip = Named<ShipScreen>(hud, "ShipContainer");
             cockpitShip.UpdateStatus(new ShipStatusMessage(null, new List<ShipTileStatus>(),
                 new ShipStatusSummary { DamagedTiles = 3, WorstIntegrity = 0.5f }));
@@ -1117,7 +1128,8 @@ public sealed class WFCockpitTest : InteractionTest
             var (ui, _, viewport, chat, window, _, hud) = cockpit;
             var settings = Client.ResolveDependency<IConfigurationManager>();
             window.UpdateShieldShuntSnapshot(new WFShipShieldShuntState(true, true, 0.76f, MathF.PI / 2f, 0.65f, MathF.PI / 2f));
-            var pages = new[] { "wf-cockpit-nav", "wf-cockpit-ship", "wf-cockpit-map", "wf-cockpit-dock", "wf-cockpit-access", "wf-cockpit-shield-page", "wf-cockpit-systems", "wf-cockpit-alarms" };
+            SyncHud(hud);
+            var pages =new[] { "wf-cockpit-nav", "wf-cockpit-ship", "wf-cockpit-map", "wf-cockpit-dock", "wf-cockpit-access", "wf-cockpit-shield-page", "wf-cockpit-systems", "wf-cockpit-alarms" };
             var expand = Named<Button>(hud, "CockpitMfdExpand");
             foreach (var theme in new[] { WolfgateSkins.Retro.Id, WolfgateSkins.Futurist.Id })
             {
@@ -1247,7 +1259,7 @@ public sealed class WFCockpitTest : InteractionTest
             Assert.That((fresh.PanelsSwapped, fresh.MfdExpanded, fresh.MfdMaximised), Is.EqualTo((true, true, false)),
                 "A new cockpit opens in the arrangement the pilot last set.");
             Assert.That(Named<Control>(fresh, "CockpitMfdSelectors").Children.OfType<Button>().Where(button => button.Visible).Select(button => button.Pressed),
-                Is.EqualTo(new[] { false, false, true, false, false, false, false, false }),
+                Is.EqualTo(new[] { false, false, true, false, false, false, false }),
                 "A new cockpit opens on the MFD page the pilot last chose.");
         });
     }
@@ -1660,7 +1672,12 @@ public sealed class WFCockpitTest : InteractionTest
         });
     }
 
-    private bool AimOverlayPresent() => Client.ResolveDependency<IOverlayManager>().HasOverlay<WFCockpitAimOverlay>();
+    /// <summary>Runs the cockpit's per-frame refresh, which shows or hides the optional panels and pages.</summary>
+    private static void SyncHud(WFCockpitView hud) =>
+        typeof(WFCockpitView).GetMethod("FrameUpdate", BindingFlags.Instance | BindingFlags.NonPublic)!
+            .Invoke(hud, new object[] { new FrameEventArgs(0.016f) });
+
+    private bool AimOverlayPresent() =>Client.ResolveDependency<IOverlayManager>().HasOverlay<WFCockpitAimOverlay>();
 
     private sealed record CockpitSession(IUserInterfaceManager Ui, InGameScreen Screen, MainViewport Viewport, ChatBox Chat,
         ShuttleConsoleWindow Window, WFCockpitUIController Controller, WFCockpitView Hud);

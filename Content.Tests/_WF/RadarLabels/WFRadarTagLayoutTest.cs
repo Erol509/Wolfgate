@@ -1,0 +1,116 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using Content.Client._WF.RadarLabels;
+using NUnit.Framework;
+
+namespace Content.Tests._WF.RadarLabels;
+
+[TestFixture]
+[TestOf(typeof(WFRadarTagLayout))]
+public sealed class WFRadarTagLayoutTest
+{
+    private static readonly Vector2 Bounds = new(800, 800);
+
+    private static WFRadarTagLayout.Tag Tag(float x, float y, int priority = 0, float width = 60, float lines = 1)
+    {
+        return new WFRadarTagLayout.Tag
+        {
+            Anchor = new Vector2(x, y),
+            Position = new Vector2(x + 5, y - 6),
+            Size = new Vector2(width, 12 * lines),
+            HeadSize = new Vector2(width, 12),
+            Priority = priority,
+        };
+    }
+
+    [Test]
+    public void TagsWithRoomStandAlone()
+    {
+        var layout = new WFRadarTagLayout();
+        layout.Solve(new[] { Tag(100, 100), Tag(100, 200), Tag(400, 100) }, Bounds);
+
+        Assert.That(layout.Groups, Has.Count.EqualTo(3));
+        Assert.That(layout.Groups.All(group => !group.Stacked));
+    }
+
+    [Test]
+    public void OverlappingTagsStackTopToBottomByContact()
+    {
+        var layout = new WFRadarTagLayout();
+        layout.Solve(new[] { Tag(100, 108), Tag(110, 100) }, Bounds);
+
+        Assert.That(layout.Groups, Has.Count.EqualTo(1));
+        var stack = layout.Groups[0];
+        Assert.That(stack.Stacked);
+        Assert.That(stack.Rows, Is.EqualTo(new[] { 1, 0 }), "Rows follow their contacts down the scope, so leaders don't cross.");
+        Assert.That(stack.Box.Height, Is.EqualTo(24).Within(0.01f), "A stack lists only each tag's first line.");
+    }
+
+    [Test]
+    public void StackSplitsWhenZoomMakesRoom()
+    {
+        var layout = new WFRadarTagLayout();
+        var close = new[] { Tag(300, 300), Tag(305, 306), Tag(310, 312) };
+        layout.Solve(close, Bounds);
+        Assert.That(layout.Groups, Has.Count.EqualTo(1));
+
+        // Zooming in four times about the scope's middle spreads the contacts apart.
+        var centre = Bounds / 2;
+        var zoomed = close.Select(tag => Tag(centre.X + (tag.Anchor.X - centre.X) * 4, centre.Y + (tag.Anchor.Y - centre.Y) * 4)).ToArray();
+        layout.Solve(zoomed, Bounds);
+        Assert.That(layout.Groups, Has.Count.EqualTo(3));
+        Assert.That(layout.Groups.All(group => !group.Stacked));
+    }
+
+    [Test]
+    public void StackTakesInTagsItGrowsOnto()
+    {
+        var layout = new WFRadarTagLayout();
+        // The first two overlap; their stack grows down onto the third, which stood clear of each of them alone.
+        layout.Solve(new[] { Tag(100, 100), Tag(100, 104), Tag(100, 124) }, Bounds);
+
+        Assert.That(layout.Groups, Has.Count.EqualTo(1));
+        Assert.That(layout.Groups[0].All, Has.Count.EqualTo(3));
+    }
+
+    [Test]
+    public void TallTagsCountTheirWholeHeight()
+    {
+        var layout = new WFRadarTagLayout();
+        // A four-line IFF tag reaches down onto a tag below it that its first line alone would miss.
+        layout.Solve(new[] { Tag(100, 100, lines: 4), Tag(100, 130) }, Bounds);
+
+        Assert.That(layout.Groups, Has.Count.EqualTo(1));
+    }
+
+    [Test]
+    public void FullStackKeepsHighestPriorities()
+    {
+        var layout = new WFRadarTagLayout { MaxRows = 4 };
+        var tags = new List<WFRadarTagLayout.Tag>();
+        for (var i = 0; i < 7; i++)
+        {
+            tags.Add(Tag(200, 200 + i, priority: i == 5 ? 9 : 0));
+        }
+
+        layout.Solve(tags, Bounds);
+
+        var stack = layout.Groups.Single();
+        Assert.That(stack.Rows, Has.Count.EqualTo(4));
+        Assert.That(stack.Hidden, Is.EqualTo(3));
+        Assert.That(stack.Rows, Does.Contain(5), "The highest priority tag must make the cut.");
+    }
+
+    [Test]
+    public void StackStaysOnScreen()
+    {
+        var layout = new WFRadarTagLayout();
+        layout.Solve(new[] { Tag(790, 795, width: 120), Tag(792, 796, width: 120) }, Bounds);
+
+        var box = layout.Groups.Single().Box;
+        Assert.That(box.Right, Is.LessThanOrEqualTo(Bounds.X));
+        Assert.That(box.Top, Is.LessThanOrEqualTo(Bounds.Y));
+        Assert.That(box.Left, Is.GreaterThanOrEqualTo(0));
+    }
+}

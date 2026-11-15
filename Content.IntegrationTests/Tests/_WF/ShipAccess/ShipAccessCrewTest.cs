@@ -27,7 +27,7 @@ public sealed class ShipAccessCrewTest
             var readers = em.System<AccessReaderSystem>();
             var hands = em.System<SharedHandsSystem>();
             var door = em.SpawnEntity("AirlockShuttle", map.GridCoords);
-            var secure = em.SpawnEntity("LockableButtonCaptain", map.GridCoords);
+            var secure = em.SpawnEntity("LockableButtonArmory", map.GridCoords);
             var (owner, deed) = ShipAccessTest.SpawnPersonWithCard(em, hands, map, "Owner", 1);
             var (crew, card) = ShipAccessTest.SpawnPersonWithCard(em, hands, map, "Crew member", 2);
             var (guest, _) = ShipAccessTest.SpawnPersonWithCard(em, hands, map, "Guest", 3);

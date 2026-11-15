@@ -240,7 +240,8 @@ public partial class ShuttleNavControl
 
             var label = Loc.GetString(site.Name);
             var labelSize = handle.GetDimensions(Font, label, UIScale * 0.75f);
-            handle.DrawString(Font, point + new Vector2(size * 2f, -labelSize.Y / 2f), label, UIScale * 0.75f, colour);
+            WfBeginTag(point, point + new Vector2(size * 2f, -labelSize.Y / 2f), site.Kind == WFPlanetMapSiteKind.City || depot ? 1 : 0);
+            WfTagLine(handle, label, UIScale * 0.75f, colour);
         }
     }
 

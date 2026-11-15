@@ -91,22 +91,32 @@ public partial class ShuttleNavControl
             var mainLabel = lines[0];
 
             var labelOffset = new Vector2(blipSize, -handle.GetDimensions(Font, mainLabel, 0.9f).Y * 0.5f);
-            handle.DrawString(Font, (uiPosition + labelOffset) * UIScale, mainLabel, UIScale * 0.9f, color);
+            // WOLFGATE(RadarLabels) START: lines go to the scope's shared tag layout, which stacks overlapping tags.
+            // handle.DrawString(Font, (uiPosition + labelOffset) * UIScale, mainLabel, UIScale * 0.9f, color);
+            // WfDrawPlanetSignalTag(handle, uid, uiPosition, labelOffset, mainLabel); // WOLFGATE(PlanetSignals): what a world holds, over its name.
+            WfBeginTag(uiPosition * UIScale, (uiPosition + labelOffset) * UIScale);
+            WfTagLine(handle, mainLabel, UIScale * 0.9f, color);
             WfDrawPlanetSignalTag(handle, uid, uiPosition, labelOffset, mainLabel); // WOLFGATE(PlanetSignals): what a world holds, over its name.
+            // WOLFGATE END
 
             if (!ShowIFFDetailed)
                 continue;
 
-            var stackOffset = labelOffset.Y + handle.GetDimensions(Font, mainLabel, 0.9f).Y;
-
+            // WOLFGATE(RadarLabels) START: lines go to the scope's shared tag layout, which stacks overlapping tags.
+            // var stackOffset = labelOffset.Y + handle.GetDimensions(Font, mainLabel, 0.9f).Y;
+            //
+            // if (lines.Length > 1)
+            // {
+            //     handle.DrawString(Font, (uiPosition + new Vector2(labelOffset.X, stackOffset)) * UIScale, lines[1], UIScale * 0.7f, color);
+            //     stackOffset += handle.GetDimensions(Font, lines[1], 0.7f).Y;
+            // }
             if (lines.Length > 1)
-            {
-                handle.DrawString(Font, (uiPosition + new Vector2(labelOffset.X, stackOffset)) * UIScale, lines[1], UIScale * 0.7f, color);
-                stackOffset += handle.GetDimensions(Font, lines[1], 0.7f).Y;
-            }
+                WfTagLine(handle, lines[1], UIScale * 0.7f, color);
 
             var coordsText = $"({worldPos.X:0.0}, {worldPos.Y:0.0})";
-            handle.DrawString(Font, (uiPosition + new Vector2(labelOffset.X, stackOffset)) * UIScale, coordsText, UIScale * 0.7f, color);
+            // handle.DrawString(Font, (uiPosition + new Vector2(labelOffset.X, stackOffset)) * UIScale, coordsText, UIScale * 0.7f, color);
+            WfTagLine(handle, coordsText, UIScale * 0.7f, color);
+            // WOLFGATE END
         }
 
         NfDrawBlips(handle, _beaconBlips);
