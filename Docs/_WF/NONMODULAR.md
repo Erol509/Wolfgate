@@ -56,6 +56,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Client/Lobby/UI/Roles/TraitPreferenceSelector.xaml.cs`](../../Content.Client/Lobby/UI/Roles/TraitPreferenceSelector.xaml.cs): restore the licence header removed by Kill Spdx
 - [`Content.Client/MachineLinking/UI/SignalTimerBoundUserInterface.cs`](../../Content.Client/MachineLinking/UI/SignalTimerBoundUserInterface.cs): restore the licence header removed by Kill Spdx
 - [`Content.Client/MachineLinking/UI/SignalTimerWindow.xaml.cs`](../../Content.Client/MachineLinking/UI/SignalTimerWindow.xaml.cs): restore the licence header removed by Kill Spdx
+- [`Content.Client/NightVision/NightVisionSystem.cs`](../../Content.Client/NightVision/NightVisionSystem.cs): relayed gear sits on the item, so refresh the local wearer instead
 - [`Content.Client/Parallax/ParallaxSystem.cs`](../../Content.Client/Parallax/ParallaxSystem.cs): a map without a Parallax component falls back to this name, so load it or space is black
 - [`Content.Client/Polymorph/Systems/ChameleonProjectorSystem.cs`](../../Content.Client/Polymorph/Systems/ChameleonProjectorSystem.cs): the source's hover outline came along as a post-shader with no prototype, which threw on init
 - [`Content.Client/Projectiles/ProjectileSystem.cs`](../../Content.Client/Projectiles/ProjectileSystem.cs): restore the licence header removed by Kill Spdx
@@ -363,6 +364,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Content.Shared/Lightning/Components/SharedLightningComponent.cs`](../../Content.Shared/Lightning/Components/SharedLightningComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/MachineLinking/SharedSignalTimerComponent.cs`](../../Content.Shared/MachineLinking/SharedSignalTimerComponent.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/Maps/ContentTileDefinition.cs`](../../Content.Shared/Maps/ContentTileDefinition.cs): Monolith#4804 made this true, which draws weather inside ships and buildings
+- [`Content.Shared/NightVision/SharedNightVisionSystem.cs`](../../Content.Shared/NightVision/SharedNightVisionSystem.cs): clear the wearer's overlay when a removal takes the component away
 - [`Content.Shared/Pinpointer/SharedNavMapSystem.cs`](../../Content.Shared/Pinpointer/SharedNavMapSystem.cs): compare region seeds by content; the reference compare dirtied every nav map each second
 - [`Content.Shared/Polymorph/Systems/SharedChameleonProjectorSystem.cs`](../../Content.Shared/Polymorph/Systems/SharedChameleonProjectorSystem.cs)
   - unanchoring left the mob a Dynamic body

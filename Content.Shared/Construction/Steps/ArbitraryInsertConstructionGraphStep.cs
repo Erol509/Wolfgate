@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Examine;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
+using Robust.Shared.IoC; // WOLFGATE: step names may be loc keys or plain text
+using Robust.Shared.Localization; // WOLFGATE: step names may be loc keys or plain text
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Steps

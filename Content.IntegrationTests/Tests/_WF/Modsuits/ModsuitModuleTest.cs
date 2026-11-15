@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client._WF.Modsuits;
+using Content.Client.Overlays;
 using Content.Server.Medical.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -12,13 +13,16 @@ using Content.Shared.Clothing;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
+using Content.Shared.Mind;
 using Content.Shared.Movement.Components;
+using Content.Shared.Players;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Wires;
+using Robust.Client.Graphics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -738,6 +742,70 @@ public sealed class ModsuitModuleTest
             Assert.That(text, Does.Contain("MOD core"));
             Assert.That(text, Does.Not.Contain("construction-graph-tag-mod-core"));
         });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The built-in night vision module shows and clears the wearer's overlay when toggled.</summary>
+    [Test]
+    public async Task NightVisionModuleShowsOverlay()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var server = pair.Server;
+        var client = pair.Client;
+        var entMan = server.EntMan;
+        var modSuit = entMan.System<ModSuitSystem>();
+        var inventory = entMan.System<InventorySystem>();
+        var minds = entMan.System<SharedMindSystem>();
+        var session = server.PlayerMan.GetSessionById(client.Session!.UserId);
+        var map = await pair.CreateTestMap();
+
+        EntityUid wearer = default;
+        EntityUid suit = default;
+        EntityUid module = default;
+
+        await server.WaitPost(() =>
+        {
+            minds.WipeMind(session.ContentData()?.Mind);
+            wearer = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            minds.TransferTo(minds.CreateMind(session.UserId).Owner, wearer);
+            suit = entMan.SpawnEntity("ClothingModsuitSyndicate", map.GridCoords);
+            Assert.That(inventory.TryEquip(wearer, suit, "back", force: true), Is.True);
+        });
+        await server.WaitRunTicks(5);
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            module = comp.ModulesContainer.ContainedEntities.Single(m =>
+                entMan.GetComponent<MetaDataComponent>(m).EntityPrototype?.ID == "ModsuitModuleBuiltinNightVision");
+            modSuit.ToggleAllParts((suit, comp), wearer);
+        });
+        await server.WaitRunTicks(150);
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(modSuit.TryStartActivation((suit, comp), wearer), Is.True);
+        });
+        await server.WaitRunTicks(360);
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            Assert.That(comp.State, Is.EqualTo(ModSuitState.Active));
+            Assert.That(modSuit.TryUseModule(module, wearer), Is.True, "The night vision module didn't toggle on.");
+        });
+        await pair.RunTicksSync(20);
+
+        bool Overlay() => client.ResolveDependency<IOverlayManager>().HasOverlay<NightVisionOverlay>();
+        await client.WaitAssertion(() => Assert.That(Overlay(), Is.True, "The night vision module gave no overlay."));
+
+        await server.WaitAssertion(() =>
+            Assert.That(modSuit.TryUseModule(module, wearer), Is.True, "The night vision module didn't toggle off."));
+        await pair.RunTicksSync(20);
+
+        await client.WaitAssertion(() => Assert.That(Overlay(), Is.False, "The night vision overlay stayed on."));
 
         await pair.CleanReturnAsync();
     }
