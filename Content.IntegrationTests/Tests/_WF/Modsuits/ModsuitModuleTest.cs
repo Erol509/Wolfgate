@@ -10,6 +10,7 @@ using Content.Shared._WF.Modsuits.Components;
 using Content.Shared._WF.Modsuits.Systems;
 using Content.Shared.Armor;
 using Content.Shared.Clothing;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
@@ -22,6 +23,7 @@ using Content.Shared.Research.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Wires;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -369,6 +371,60 @@ public sealed class ModsuitModuleTest
                 Assert.That(entMan.HasComponent<ModCoreComponent>(core!.Value), Is.True,
                     $"{id} should use a MOD core");
                 Assert.That(modSuit.GetBattery((suit, comp)), Is.Not.Null, $"{id} should ship with a charged cell");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The RX-01 parts only name sprite states that exist in their RSIs.</summary>
+    [Test]
+    public async Task RogueModSuitPartsHaveAllSpriteStates()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var client = pair.Client;
+        var prototypes = client.ResolveDependency<IPrototypeManager>();
+        var factory = client.ResolveDependency<IComponentFactory>();
+
+        await client.WaitAssertion(() =>
+        {
+            foreach (var id in new[]
+                     {
+                         "ClothingModsuitHelmetRogue",
+                         "ClothingModsuitChestplateRogue",
+                         "ClothingModsuitGauntletsRogue",
+                         "ClothingModsuitBootsRogue",
+                     })
+            {
+                var proto = prototypes.Index<EntityPrototype>(id);
+                Assert.That(proto.TryGetComponent<SpriteComponent>(out var sprite, factory), Is.True,
+                    $"{proto.ID} has no sprite");
+                var rsi = sprite!.BaseRSI;
+                Assert.That(rsi, Is.Not.Null, $"{proto.ID} has no RSI");
+
+                if (proto.TryGetComponent<ModSuitSealedVisualsComponent>(out var sealedVisuals, factory))
+                {
+                    foreach (var layer in sealedVisuals!.ClothingVisuals.Values.SelectMany(l => l))
+                    {
+                        if (layer.RsiPath != null || layer.State is not { } state)
+                            continue;
+
+                        Assert.That(rsi!.TryGetState(state, out _), Is.True,
+                            $"{proto.ID} names missing sealed sprite state {state} in {rsi.Path}");
+                    }
+                }
+
+                if (proto.TryGetComponent<ClothingComponent>(out var clothing, factory))
+                {
+                    foreach (var layer in clothing!.ClothingVisuals.Values.SelectMany(l => l))
+                    {
+                        if (layer.RsiPath != null || layer.State is not { } state)
+                            continue;
+
+                        Assert.That(rsi!.TryGetState(state, out _), Is.True,
+                            $"{proto.ID} names missing clothing sprite state {state} in {rsi.Path}");
+                    }
+                }
             }
         });
 

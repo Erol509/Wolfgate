@@ -107,6 +107,26 @@
   components:
   - type: Sprite
     sprite: _Mono/Clothing/Head/Modsuits/rogue.rsi
+  # WOLFGATE(Modsuits) START: the rsi only has the default and vox states, so other species drew an error sprite
+  - type: Clothing
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
+    quickEquip: false
+    equippedPrefix: off
+    slots: [ HEAD ]
+    clothingVisuals:
+      head:
+      - state: equipped-HEAD
+      head-vox:
+      - state: equipped-HEAD-vox
+  - type: ModSuitSealedVisuals
+    spriteLayer: sealed
+    clothingVisuals:
+      head:
+      - state: equipped-HEAD-sealed
+      head-vox:
+      - state: equipped-HEAD-sealed-vox
+  # WOLFGATE END
   - type: Armor
     coverage: [Head] # WOLFGATE(Wolfmed): P6, P3-D6: locational armour coverage
     modifiers:
