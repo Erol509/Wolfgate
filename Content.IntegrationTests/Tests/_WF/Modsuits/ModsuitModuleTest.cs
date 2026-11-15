@@ -10,6 +10,7 @@ using Content.Shared._WF.Modsuits.Systems;
 using Content.Shared.Armor;
 using Content.Shared.Clothing;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Power.Components;
@@ -708,6 +709,34 @@ public sealed class ModsuitModuleTest
                 Assert.That(proto.TryComp<StorageComponent>(out _, factory), Is.False,
                     $"{id} hard-codes Storage, which blocks its storage module");
             }
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>Examining a MOD shell names its build steps instead of showing raw loc keys.</summary>
+    [Test]
+    public async Task ModsuitShellExamineUsesLocalizedBuildSteps()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var map = await pair.CreateTestMap();
+
+        EntityUid shell = default;
+        EntityUid viewer = default;
+
+        await server.WaitPost(() =>
+        {
+            viewer = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            shell = entMan.SpawnEntity("ModsuitShell", map.GridCoords);
+        });
+
+        await server.WaitAssertion(() =>
+        {
+            var text = entMan.System<ExamineSystemShared>().GetExamineText(shell, viewer).ToMarkup();
+            Assert.That(text, Does.Contain("MOD core"));
+            Assert.That(text, Does.Not.Contain("construction-graph-tag-mod-core"));
         });
 
         await pair.CleanReturnAsync();

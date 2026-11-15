@@ -74,6 +74,7 @@ modsuit-ui-part-shoes = Boots
 modsuit-ui-core = Core: {$core}
 modsuit-ui-core-none = Core: none
 modsuit-ui-modules = Modules
+modsuit-ui-hardware = Hardware
 modsuit-ui-no-modules = No modules installed.
 modsuit-ui-module-info = {$type} - complexity {$complexity} - {$power}/s
 modsuit-ui-module-type-passive = Passive

@@ -347,6 +347,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - whatever the piece replaced goes back on, instead of staying shut inside the piece
   - a suit deleted along with its wearer can't take the piece back
   - another suit's piece goes back to its suit, and what it covered is kept under this one
+- [`Content.Shared/Construction/Steps/ArbitraryInsertConstructionGraphStep.cs`](../../Content.Shared/Construction/Steps/ArbitraryInsertConstructionGraphStep.cs): step names may be loc keys or plain text
 - [`Content.Shared/Damage/Systems/DamageableSystem.cs`](../../Content.Shared/Damage/Systems/DamageableSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Shared/DisplacementMap/DisplacementData.cs`](../../Content.Shared/DisplacementMap/DisplacementData.cs): wizden#38042, the stencil one draws nothing in UI sprite views
 - [`Content.Shared/DoAfter/SharedDoAfterSystem.Update.cs`](../../Content.Shared/DoAfter/SharedDoAfterSystem.Update.cs)

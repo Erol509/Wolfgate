@@ -73,10 +73,10 @@ public sealed class ModsuitModulesContentTest
 
                 foreach (var unlock in tech.RecipeUnlocks)
                 {
-                    Assert.That(prototypes.TryIndex(unlock, out LatheRecipePrototype? recipe),
+                    Assert.That(prototypes.TryIndex(unlock, out var recipe),
                         $"technology {techId} unlocks missing recipe {unlock}");
                     if (recipe?.Result is not { } result
-                        || !prototypes.TryIndex(result, out EntityPrototype? resultProto))
+                        || !prototypes.TryIndex(result, out var resultProto))
                     {
                         continue;
                     }
@@ -104,12 +104,12 @@ public sealed class ModsuitModulesContentTest
 
             foreach (var recipeId in platingPack.Recipes)
             {
-                Assert.That(prototypes.TryIndex(recipeId, out LatheRecipePrototype? recipe), Is.True,
+                Assert.That(prototypes.TryIndex(recipeId, out var recipe), Is.True,
                     $"plating recipe {recipeId} should exist");
                 Assert.That(recipe!.Result, Is.Not.Null, $"plating recipe {recipeId} should produce an entity");
 
                 var result = recipe.Result!.Value;
-                Assert.That(prototypes.TryIndex(result, out EntityPrototype? resultProto), Is.True,
+                Assert.That(prototypes.TryIndex(result, out var resultProto), Is.True,
                     $"plating recipe {recipeId} should produce existing prototype {result}");
                 Assert.That(resultProto!.ID.StartsWith("ModsuitPlating", StringComparison.Ordinal), Is.True,
                     $"plating recipe {recipeId} should produce a MODsuit plating");
