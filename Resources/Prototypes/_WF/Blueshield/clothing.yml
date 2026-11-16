@@ -2,28 +2,28 @@
 
 # Back
 - type: entity
-  parent: [ClothingBackpack, BaseCentcommContraband]
+  parent: [ClothingBackpack]
   id: ClothingBackpackBlueshield
   components:
   - type: Sprite
     sprite: _WF/Blueshield/Clothing/Back/Backpacks/blueshield.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseCentcommContraband]
+  parent: [ClothingBackpackDuffel]
   id: ClothingBackpackDuffelBlueshield
   components:
   - type: Sprite
     sprite: _WF/Blueshield/Clothing/Back/Duffels/blueshield.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseCentcommContraband]
+  parent: [ClothingBackpackSatchel]
   id: ClothingBackpackSatchelBlueshield
   components:
   - type: Sprite
     sprite: _WF/Blueshield/Clothing/Back/Satchels/blueshield.rsi
 
 - type: entity
-  parent: [NFClothingMessenger, BaseCentcommContraband]
+  parent: [NFClothingMessenger]
   id: ClothingBackpackMessengerBlueshield
   components:
   - type: Sprite
@@ -60,7 +60,7 @@
 
 # Belt
 - type: entity
-  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseCentcommContraband]
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase]
   id: ClothingBeltMilitaryWebbingBSO
   suffix: Empty
   components:
@@ -73,7 +73,7 @@
 
 # Ears
 - type: entity
-  parent: [ClothingHeadsetAlt, BaseCentcommContraband]
+  parent: [ClothingHeadsetAlt]
   id: ClothingHeadsetAltBlueshield
   components:
   - type: ContainerFill
@@ -87,7 +87,7 @@
 
 # Eyes
 - type: entity
-  parent: [ClothingEyesBase, BaseCentcommContraband, ClothingEyesGlassesSunglasses]
+  parent: [ClothingEyesBase, ClothingEyesGlassesSunglasses]
   id: ClothingEyesGlassesBSO
   components:
   - type: Sprite
@@ -126,7 +126,7 @@
     damageCoefficient: 0.75
 
 - type: entity
-  parent: [WFClothingHeadHatArmoredCC, BaseCentcommContraband]
+  parent: [WFClothingHeadHatArmoredCC]
   id: ClothingHeadHatBeretBlueshield
   components:
   - type: Sprite
@@ -139,7 +139,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [WFClothingHeadHatArmoredCC, BaseCentcommContraband]
+  parent: [WFClothingHeadHatArmoredCC]
   id: ClothingHeadHatCowboyBlueshield
   components:
   - type: Sprite
@@ -152,7 +152,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [WFClothingHeadHatArmoredCC, BaseFoldable, BaseCentcommContraband]
+  parent: [WFClothingHeadHatArmoredCC, BaseFoldable]
   id: ClothingHeadHatUshankaBlueshield
   components:
   - type: Clothing
@@ -210,7 +210,7 @@
 
 # Mask
 - type: entity
-  parent: [ClothingMaskGas, BaseCentcommContraband]
+  parent: [ClothingMaskGas]
   id: ClothingBSOMaskGasSwat
   components:
   - type: Sprite
@@ -229,7 +229,7 @@
 
 # Neck
 - type: entity
-  parent: [ClothingNeckBase, BaseCentcommContraband]
+  parent: [ClothingNeckBase]
   id: ClothingNeckMantleBlueshield
   components:
   - type: Sprite
@@ -238,7 +238,7 @@
     sprite: _WF/Blueshield/Clothing/Neck/Mantle/bsomantle.rsi
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCentcommContraband]
+  parent: [ClothingNeckBase]
   id: ClothingNeckEnsembleBlueshield
   components:
   - type: Item
@@ -288,7 +288,7 @@
 
 # Outer clothing
 - type: entity
-  parent: [BaseCentcommContraband, ClothingOuterArmorCaptainCarapace]
+  parent: [ClothingOuterArmorCaptainCarapace]
   id: ClothingBlueshieldArmourVest
   components:
   - type: Sprite
@@ -317,7 +317,7 @@
     sprite: _WF/Blueshield/Clothing/OuterClothing/Armor/blueshield_cowboy_jacket.rsi
 
 - type: entity
-  parent: [BaseCentcommContraband, ClothingOuterArmorCaptainCarapace, ClothingOuterWinterCoatToggleable]
+  parent: [ClothingOuterArmorCaptainCarapace, ClothingOuterWinterCoatToggleable]
   id: ClothingOuterWinterBlueshield
   components:
   - type: Sprite
@@ -339,7 +339,7 @@
       head: ClothingHeadHatHoodWinterBso
 
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseCentcommContraband]
+  parent: [ClothingOuterHardsuitBase]
   id: ClothingOuterHardsuitBlueshieldLight
   components:
   - type: Sprite
@@ -372,7 +372,7 @@
 
 # Shoes
 - type: entity
-  parent: [ClothingShoesMilitaryBase, ClothingShoesBaseWinterBoots, BaseCentcommContraband]
+  parent: [ClothingShoesMilitaryBase, ClothingShoesBaseWinterBoots]
   id: ClothingShoesBootsWinterSnowjackBso
   components:
   - type: Sprite
