@@ -1,6 +1,6 @@
 # ShipAccess
 
-Owners select Private, Crew or (on company ships) Faction from the console access mode selector. Crew adds the linked crew's issued ID cards to default readers without granting ownership. The per-door Crew rule admits only owners and that crew, regardless of ship mode or lock state. Scenario ships link at launch; an owner in a spawned crew can also select Crew on another ship to link it. Crew credentials update on arrival, leaving and respawning, survive temporary disconnects, and stay separate from explicit guest permissions. Resale clears the link.
+Owners select Private, Crew or (on company ships) Faction from the console access mode selector. Crew adds the linked crew's issued ID cards to default readers without granting ownership. The per-door Crew rule admits only owners and that crew, regardless of ship mode or lock state. Scenario ships link at launch; an owner in a spawned crew can also select Crew on another ship to link it. Crew credentials update on arrival, leaving and respawning, survive temporary disconnects, and stay separate from explicit guest permissions. Resale clears the link. Public is a mode only staff set, from Shipmaster: every door without a rule of its own admits anyone, locked ship or not, while lockers stay as they were; the console lists it only while it is on, so the owner can switch away from it.
 
 Per-card access control for purchased ships, built on the normal airlock access system: every door, locker and
 lockable button on the ship is gated by its own access reader (an airlock's door electronics), and this module
@@ -163,6 +163,7 @@ shut out of a helm that ended up on a broken-off section.
 - [`Content.Server/_WF/ShipAccess/WFShipAccessServerSystem.Crew.cs`](WFShipAccessServerSystem.Crew.cs)
 - [`Content.Server/_WF/ShipAccess/WFShipAccessServerSystem.cs`](WFShipAccessServerSystem.cs)
 - [`Content.Server/_WF/ShipAccess/WFShipAccessServerSystem.Doors.cs`](WFShipAccessServerSystem.Doors.cs)
+- [`Content.Server/_WF/ShipAccess/WFShipAccessServerSystem.Owners.cs`](WFShipAccessServerSystem.Owners.cs)
 - [`Content.Server/_WF/ShipAccess/WFShipAccessServerSystem.Readers.cs`](WFShipAccessServerSystem.Readers.cs)
 - [`Content.Server/_WF/ShipAccess/WFShipAccessServerSystem.Stations.cs`](WFShipAccessServerSystem.Stations.cs)
 - [`Content.Server/_WF/ShipAccess/WFShipGridLockSplitSystem.cs`](WFShipGridLockSplitSystem.cs)

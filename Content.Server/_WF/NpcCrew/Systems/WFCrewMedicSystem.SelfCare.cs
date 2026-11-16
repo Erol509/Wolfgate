@@ -48,15 +48,7 @@ public sealed partial class WFCrewMedicSystem
                 continue;
 
             _nextSelfCare[uid] = now + SelfCareGap;
-            foreach (var item in SelfCareItems)
-            {
-                if (SelfSupply(item) is not { } supply || !TryComp<HealingComponent>(supply, out var healing)
-                    || !_healing.IsWoundDamaged((uid, damageable), healing, null))
-                    continue;
-
-                _woundHealing.TryApplyHealing(uid, null, (supply, healing), uid, out _, out _);
-                break;
-            }
+            TreatSelf(uid, damageable);
         }
 
         foreach (var uid in new List<EntityUid>(_nextSelfCare.Keys))
@@ -64,6 +56,25 @@ public sealed partial class WFCrewMedicSystem
             if (TerminatingOrDeleted(uid))
                 _nextSelfCare.Remove(uid);
         }
+    }
+
+    /// <summary>The crewman treats his worst wound with one self-care item, bleeding first. False if nothing needed it.</summary>
+    public bool TreatSelf(EntityUid uid, DamageableComponent? damageable = null)
+    {
+        if (!Resolve(uid, ref damageable, false))
+            return false;
+
+        foreach (var item in SelfCareItems)
+        {
+            if (SelfSupply(item) is not { } supply || !TryComp<HealingComponent>(supply, out var healing)
+                || !_healing.IsWoundDamaged((uid, damageable), healing, null))
+                continue;
+
+            _woundHealing.TryApplyHealing(uid, null, (supply, healing), uid, out _, out _);
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>A crewman hurt badly enough to want a medic, though still on his feet.</summary>

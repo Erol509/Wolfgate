@@ -23,6 +23,10 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - the medical assembler is a lathe now, so show its lathe recipe
 - [`Content.Client/_RMC14/Weapons/Ranged/Prediction/GunPredictionSystem.cs`](../../Content.Client/_RMC14/Weapons/Ranged/Prediction/GunPredictionSystem.cs): restore the licence header removed by Kill Spdx
 - [`Content.Client/Atmos/EntitySystems/FireVisualizerSystem.cs`](../../Content.Client/Atmos/EntitySystems/FireVisualizerSystem.cs): a mob that arrives burning would get its light child before it is initialised itself; the appearance update queued at startup lays it.
+- [`Content.Client/Atmos/Monitor/UI/Widgets/SensorInfo.xaml.cs`](../../Content.Client/Atmos/Monitor/UI/Widgets/SensorInfo.xaml.cs)
+  - a device whose threshold list lacks this gas crashed the window
+  - use the checked threshold
+  - threshold is looked up above
 - [`Content.Client/Cargo/Systems/CargoSystem.Telepad.cs`](../../Content.Client/Cargo/Systems/CargoSystem.Telepad.cs): Stop() raises this mid-OnChangeData; re-entering it played the beam twice and crashed the client
 - [`Content.Client/Changelog/ChangelogTab.xaml.cs`](../../Content.Client/Changelog/ChangelogTab.xaml.cs): a stray bracket in one entry no longer empties the whole changelog
 - [`Content.Client/CharacterInfo/CharacterInfoSystem.cs`](../../Content.Client/CharacterInfo/CharacterInfoSystem.cs)
@@ -430,6 +434,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
   - the map has one UndergroundVend, not four; its roles are wanted, not kill on sight
 - [`Resources/Locale/en-US/_Mono/prototypes/access/accesses.ftl`](../../Resources/Locale/en-US/_Mono/prototypes/access/accesses.ftl): Monolith#4816 shipped the Underground access levels without names
 - [`Resources/Locale/en-US/_Mono/store/pdv-uplink-catalog.ftl`](../../Resources/Locale/en-US/_Mono/store/pdv-uplink-catalog.ftl): the uplink had no 5.56 for the Vympel it sells
+- [`Resources/Locale/en-US/_Mono/weapons/gun.ftl`](../../Resources/Locale/en-US/_Mono/weapons/gun.ftl): Caelestinus Expansion I (#675) reverted
 - [`Resources/Locale/en-US/_NF/advertisements/vending/fuelvend.ftl`](../../Resources/Locale/en-US/_NF/advertisements/vending/fuelvend.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
 - [`Resources/Locale/en-US/_NF/shipyard/shipyard-console-component.ftl`](../../Resources/Locale/en-US/_NF/shipyard/shipyard-console-component.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
 - [`Resources/Locale/en-US/ame/components/ame-controller-component.ftl`](../../Resources/Locale/en-US/ame/components/ame-controller-component.ftl): the engine is the IRE everywhere else in game, so these lines say IRE too
@@ -446,6 +451,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Maps/_Mono/Crocus/jianghui_industrial_1.yml`](../../Resources/Maps/_Mono/Crocus/jianghui_industrial_1.yml): Removed every chasm.
 - [`Resources/Maps/_Mono/Monolithic/monolithicasteroidsmallship.yml`](../../Resources/Maps/_Mono/Monolithic/monolithicasteroidsmallship.yml): Hardpoint mapped under the asteroid ship's AK570 so gunnery links it.
 - [`Resources/Maps/_Mono/Outpost/caelestinus_central.yml`](../../Resources/Maps/_Mono/Outpost/caelestinus_central.yml): Sector map entity gets its Parallax component and Colossus Sector name back after the
+- [`Resources/Maps/_Mono/POI/anomalouslab.yml`](../../Resources/Maps/_Mono/POI/anomalouslab.yml): Caelestinus Expansion I (#675) reverted.
 - [`Resources/Maps/_Mono/POI/Dungeons/zvezda.yml`](../../Resources/Maps/_Mono/POI/Dungeons/zvezda.yml): Zvezda lighting re-work and power generation.
 - [`Resources/Maps/_Mono/POI/pdvhelios.yml`](../../Resources/Maps/_Mono/POI/pdvhelios.yml): Helios mapping fixes for lighting, wallmounts and small layout tweaks.
 - [`Resources/Maps/_Mono/POI/tsfmc_industry.yml`](../../Resources/Maps/_Mono/POI/tsfmc_industry.yml): Stellar Blessing lighting, colour-coded distro, fire suit lockers and extinguishers.
@@ -481,6 +487,7 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/_Mono/Catalogs/tsfmc_uplink_catalog.yml`](../../Resources/Prototypes/_Mono/Catalogs/tsfmc_uplink_catalog.yml): TSF Balance Pass; from 175 -> 130
 - [`Resources/Prototypes/_Mono/Catalogs/VendingMachines/Inventories/ussp.yml`](../../Resources/Prototypes/_Mono/Catalogs/VendingMachines/Inventories/ussp.yml): the loaded magazine is class-3 contraband worth 10 FMC since Monolith#4816
 - [`Resources/Prototypes/_Mono/Claws/reptilian.yml`](../../Resources/Prototypes/_Mono/Claws/reptilian.yml): huge claws never stop a lizard shooting; they take the worst spread instead
+- [`Resources/Prototypes/_Mono/disciplines.yml`](../../Resources/Prototypes/_Mono/disciplines.yml): Caelestinus Expansion I (#675) reverted
 - [`Resources/Prototypes/_Mono/Entities/Mobs/NPCs/mothroaches.yml`](../../Resources/Prototypes/_Mono/Entities/Mobs/NPCs/mothroaches.yml): OwO accent removed
 - [`Resources/Prototypes/_Mono/Entities/Objects/Devices/Circuitboards/Machine/turrets.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Devices/Circuitboards/Machine/turrets.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/Objects/Devices/flatpack.yml`](../../Resources/Prototypes/_Mono/Entities/Objects/Devices/flatpack.yml): restore the licence header removed by Kill Spdx
@@ -501,14 +508,17 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/Kinetic/thantos_launcher.yml`](../../Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/Kinetic/thantos_launcher.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/Missile/mpssm.yml`](../../Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/Missile/mpssm.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/Missile/projectiles.yml`](../../Resources/Prototypes/_Mono/Entities/SpaceArtillery/SpaceArtillery/Missile/projectiles.yml): restore the licence header removed by Kill Spdx
+- [`Resources/Prototypes/_Mono/Entities/Structures/Decoration/banners.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Decoration/banners.yml): Caelestinus Expansion I (#675) reverted
 - [`Resources/Prototypes/_Mono/Entities/Structures/gates.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/gates.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/Structures/Machines/CrocusVendors/crocus_vendors.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Machines/CrocusVendors/crocus_vendors.yml): label matches the item's name
+- [`Resources/Prototypes/_Mono/Entities/Structures/Machines/faction_servers.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Machines/faction_servers.yml): Caelestinus Expansion I (#675) reverted
 - [`Resources/Prototypes/_Mono/Entities/Structures/Machines/FireControl/gunnery.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Machines/FireControl/gunnery.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/Structures/Machines/ftldrive.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Machines/ftldrive.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/Structures/Machines/shield_generator.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Machines/shield_generator.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Entities/Structures/Shuttles/capital_thrusters.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Shuttles/capital_thrusters.yml): PDV pack, capital thruster 400->600
 - [`Resources/Prototypes/_Mono/Entities/Structures/Shuttles/thrusters_nfsd.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Shuttles/thrusters_nfsd.yml): PDV pack, 0.33x of the 150 default; cant be upgraded with parts
 - [`Resources/Prototypes/_Mono/Entities/Structures/Shuttles/thrusters_rogue.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Shuttles/thrusters_rogue.yml): PDV pack, 0.33x of the 150 default; cant be upgraded with parts
+- [`Resources/Prototypes/_Mono/Entities/Structures/Specific/Atmospherics/storagesensors.yml`](../../Resources/Prototypes/_Mono/Entities/Structures/Specific/Atmospherics/storagesensors.yml): a gas missing from this list crashed the air alarm UI
 - [`Resources/Prototypes/_Mono/Guidebook/rules.yml`](../../Resources/Prototypes/_Mono/Guidebook/rules.yml)
   - rule 0 is listed in the ruleset, nest it so Symphony doesn't show it as its own ruleset
   - erotic roleplay rule removed, PR #27
@@ -517,16 +527,20 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/_Mono/Loadouts/MedicalDispatch/universal_groups.yml`](../../Resources/Prototypes/_Mono/Loadouts/MedicalDispatch/universal_groups.yml): the ER PDAs, was MedicalDoctorPDA and ContractorSeniorPhysicianPDA, whose ID resets to medical doctor access
 - [`Resources/Prototypes/_Mono/Loadouts/PDV/role_loadouts_rogue.yml`](../../Resources/Prototypes/_Mono/Loadouts/PDV/role_loadouts_rogue.yml): PDV roles had no PDA cartridges
 - [`Resources/Prototypes/_Mono/PointsOfInterest/tsfmcindustry.yml`](../../Resources/Prototypes/_Mono/PointsOfInterest/tsfmcindustry.yml): its cargo request computer needs an order database or it opens blank
+- [`Resources/Prototypes/_Mono/Recipes/Construction/furniture.yml`](../../Resources/Prototypes/_Mono/Recipes/Construction/furniture.yml): Caelestinus Expansion I (#675) reverted
 - [`Resources/Prototypes/_Mono/Recipes/Construction/Graphs/Mechs/broadsword_construction.yml`](../../Resources/Prototypes/_Mono/Recipes/Construction/Graphs/Mechs/broadsword_construction.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Recipes/Construction/Graphs/Mechs/flail_construction.yml`](../../Resources/Prototypes/_Mono/Recipes/Construction/Graphs/Mechs/flail_construction.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Recipes/Construction/Graphs/Mechs/halberd_construction.yml`](../../Resources/Prototypes/_Mono/Recipes/Construction/Graphs/Mechs/halberd_construction.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Recipes/Construction/Graphs/Mechs/mace_construction.yml`](../../Resources/Prototypes/_Mono/Recipes/Construction/Graphs/Mechs/mace_construction.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Recipes/Construction/Graphs/Mechs/spyglass_construction.yml`](../../Resources/Prototypes/_Mono/Recipes/Construction/Graphs/Mechs/spyglass_construction.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Recipes/Construction/tools.yml`](../../Resources/Prototypes/_Mono/Recipes/Construction/tools.yml): restore the licence header removed by Kill Spdx
+- [`Resources/Prototypes/_Mono/Recipes/Lathes/Ammo/pistol_6.35x40mm.yml`](../../Resources/Prototypes/_Mono/Recipes/Lathes/Ammo/pistol_6.35x40mm.yml): Caelestinus Expansion I (#675) reverted
+- [`Resources/Prototypes/_Mono/Recipes/Lathes/Factions/ranged_weapons.yml`](../../Resources/Prototypes/_Mono/Recipes/Lathes/Factions/ranged_weapons.yml): Caelestinus Expansion I (#675) reverted
 - [`Resources/Prototypes/_Mono/Recipes/Lathes/Factions/shipyard.yml`](../../Resources/Prototypes/_Mono/Recipes/Lathes/Factions/shipyard.yml)
   - TSF Balance Pack; lowering the cost in copper/lithium a smidge to reduce the tedium (by a smidge)
   - PDV pack, composite cost 12000->9000
   - PDV pack, composite cost 23000->18000
+- [`Resources/Prototypes/_Mono/Recipes/Lathes/Packs/Factions/caelestinus.yml`](../../Resources/Prototypes/_Mono/Recipes/Lathes/Packs/Factions/caelestinus.yml): Caelestinus Expansion I (#675) reverted
 - [`Resources/Prototypes/_Mono/Recipes/Lathes/Packs/Factions/phaethon_dynasty.yml`](../../Resources/Prototypes/_Mono/Recipes/Lathes/Packs/Factions/phaethon_dynasty.yml): its tech disk promised it, but the lathes never listed it
 - [`Resources/Prototypes/_Mono/Recipes/Lathes/Packs/Factions/tsfmc.yml`](../../Resources/Prototypes/_Mono/Recipes/Lathes/Packs/Factions/tsfmc.yml): its tech disk promised it, but the lathes never listed it
 - [`Resources/Prototypes/_Mono/Recipes/Lathes/Packs/mechs.yml`](../../Resources/Prototypes/_Mono/Recipes/Lathes/Packs/mechs.yml): restore the licence header removed by Kill Spdx
@@ -537,11 +551,15 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/_Mono/Roles/Jobs/TSFMC/civilian.yml`](../../Resources/Prototypes/_Mono/Roles/Jobs/TSFMC/civilian.yml): TSF contractors speak and understand Sol Common
 - [`Resources/Prototypes/_Mono/Traits/physical.yml`](../../Resources/Prototypes/_Mono/Traits/physical.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/_Mono/Turf/plating.yml`](../../Resources/Prototypes/_Mono/Turf/plating.yml): restore the licence header removed by Kill Spdx
+- [`Resources/Prototypes/_NF/Catalog/Fills/Lockers/heads.yml`](../../Resources/Prototypes/_NF/Catalog/Fills/Lockers/heads.yml): Caelestinus Expansion I (#675) reverted
 - [`Resources/Prototypes/_NF/Catalog/VendingMachines/Inventories/engivend.yml`](../../Resources/Prototypes/_NF/Catalog/VendingMachines/Inventories/engivend.yml): radiation suits buyable from the EngiVend
 - [`Resources/Prototypes/_NF/Entities/Objects/Consumable/Food/meals.yml`](../../Resources/Prototypes/_NF/Entities/Objects/Consumable/Food/meals.yml): OwO accent removed
 - [`Resources/Prototypes/_NF/Entities/Objects/Weapons/Guns/Ammunition/Projectiles/misc.yml`](../../Resources/Prototypes/_NF/Entities/Objects/Weapons/Guns/Ammunition/Projectiles/misc.yml): a flare that lands inside a wall still lights the room
 - [`Resources/Prototypes/_NF/Entities/Objects/Weapons/Guns/expedition_guns.yml`](../../Resources/Prototypes/_NF/Entities/Objects/Weapons/Guns/expedition_guns.yml): was WeaponSubMachineGunTypewriter, class-3 contraband since Monolith#4816
-- [`Resources/Prototypes/_NF/Entities/Structures/Machines/Computers/computers_tabletop.yml`](../../Resources/Prototypes/_NF/Entities/Structures/Machines/Computers/computers_tabletop.yml): Medical Dispatch staff are Colonial since Monolith#4807
+- [`Resources/Prototypes/_NF/Entities/Structures/atm.yml`](../../Resources/Prototypes/_NF/Entities/Structures/atm.yml): the access refactor took the payroll console from Fireteam Leaders
+- [`Resources/Prototypes/_NF/Entities/Structures/Machines/Computers/computers_tabletop.yml`](../../Resources/Prototypes/_NF/Entities/Structures/Machines/Computers/computers_tabletop.yml)
+  - the access refactor took the payroll console from Fireteam Leaders
+  - Medical Dispatch staff are Colonial since Monolith#4807
 - [`Resources/Prototypes/_NF/Events/events.yml`](../../Resources/Prototypes/_NF/Events/events.yml)
   - gas leak event disabled
   - vent clog event disabled
@@ -559,9 +577,11 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/Catalog/VendingMachines/Inventories/engivend.yml`](../../Resources/Prototypes/Catalog/VendingMachines/Inventories/engivend.yml): radiation suits buyable from the EngiVend
 - [`Resources/Prototypes/Damage/modifier_sets.yml`](../../Resources/Prototypes/Damage/modifier_sets.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/Entities/Clothing/Back/specific.yml`](../../Resources/Prototypes/Entities/Clothing/Back/specific.yml): Frontier hid ClothingBackpack, so it was never a valid chameleon pick and the menu got no state
+- [`Resources/Prototypes/Entities/Clothing/Head/hardsuit-helmets.yml`](../../Resources/Prototypes/Entities/Clothing/Head/hardsuit-helmets.yml): Caelestinus Expansion I (#675) reverted
 - [`Resources/Prototypes/Entities/Clothing/Head/hoods.yml`](../../Resources/Prototypes/Entities/Clothing/Head/hoods.yml): radiation hood blocks more radiation (was 0.65)
 - [`Resources/Prototypes/Entities/Clothing/Head/misc.yml`](../../Resources/Prototypes/Entities/Clothing/Head/misc.yml): OwO accent removed
 - [`Resources/Prototypes/Entities/Clothing/OuterClothing/hardsuits.yml`](../../Resources/Prototypes/Entities/Clothing/OuterClothing/hardsuits.yml)
+  - Caelestinus Expansion I (#675) reverted
   - PDV gear the TSF can turn in for FMC, like the Phaethon
   - CBURN cleanup suit blocks as much radiation as the radiation suit (was 0.1)
 - [`Resources/Prototypes/Entities/Clothing/OuterClothing/suits.yml`](../../Resources/Prototypes/Entities/Clothing/OuterClothing/suits.yml)
@@ -580,10 +600,12 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/Entities/Structures/Lighting/base_lighting.yml`](../../Resources/Prototypes/Entities/Structures/Lighting/base_lighting.yml): draw over posters at the same depth instead of flickering with them
 - [`Resources/Prototypes/Entities/Structures/Lighting/strobe_lighting.yml`](../../Resources/Prototypes/Entities/Structures/Lighting/strobe_lighting.yml): draw over posters at the same depth instead of flickering with them
 - [`Resources/Prototypes/Entities/Structures/Machines/Computers/computers.yml`](../../Resources/Prototypes/Entities/Structures/Machines/Computers/computers.yml): restore the licence header removed by Kill Spdx
+- [`Resources/Prototypes/Entities/Structures/Specific/Atmospherics/vox.yml`](../../Resources/Prototypes/Entities/Structures/Specific/Atmospherics/vox.yml): a gas missing from this list crashed the air alarm UI
 - [`Resources/Prototypes/GameRules/pests.yml`](../../Resources/Prototypes/GameRules/pests.yml)
   - pest events were crowding out the rest of the table (was 6)
   - each pest event at most once per 90 minutes
 - [`Resources/Prototypes/Guidebook/rules.yml`](../../Resources/Prototypes/Guidebook/rules.yml): upstream rulesets are unused, only MonolithRuleset is shown in-game and on Symphony
+- [`Resources/Prototypes/Nyanotrasen/Roles/Jobs/Civilian/service_worker.yml`](../../Resources/Prototypes/Nyanotrasen/Roles/Jobs/Civilian/service_worker.yml): Caelestinus Expansion I (#675) reverted
 - [`Resources/Prototypes/Nyanotrasen/Species/felinid.yml`](../../Resources/Prototypes/Nyanotrasen/Species/felinid.yml): mrrow
 - [`Resources/Prototypes/Recipes/Construction/Graphs/tools/logic_gate.yml`](../../Resources/Prototypes/Recipes/Construction/Graphs/tools/logic_gate.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/Recipes/Construction/Graphs/utilities/atmos_binary.yml`](../../Resources/Prototypes/Recipes/Construction/Graphs/utilities/atmos_binary.yml): restore the licence header removed by Kill Spdx
@@ -693,6 +715,8 @@ Standalone edits outside `_WF` that serve no module: files with an untagged `WOL
 - [`Resources/Textures/_Goobstation/Structures/Machines/StationRadio/stationradioserver.rsi/`](../../Resources/Textures/_Goobstation/Structures/Machines/StationRadio/stationradioserver.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.
 - [`Resources/Textures/_Goobstation/Structures/Machines/StationRadio/tapedeck.rsi/`](../../Resources/Textures/_Goobstation/Structures/Machines/StationRadio/tapedeck.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.
 - [`Resources/Textures/_Goobstation/Structures/Machines/StationRadio/vinylplayer.rsi/`](../../Resources/Textures/_Goobstation/Structures/Machines/StationRadio/vinylplayer.rsi/): Licence corrected to CC-BY-NC-SA-3.0, as the sprite is taken from Goonstation, whose assets are BY-NC-SA.
+- [`Resources/Textures/_Mono/Structures/Decoration/banner.rsi/`](../../Resources/Textures/_Mono/Structures/Decoration/banner.rsi/): Caelestinus Expansion I (#675) reverted.
+- [`Resources/Textures/_Mono/Structures/Machines/server.rsi/`](../../Resources/Textures/_Mono/Structures/Machines/server.rsi/): Caelestinus Expansion I (#675) reverted.
 - [`Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd.rsi/`](../../Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd.rsi/): Licence and credit set as in HardLight 0fc067be74.
 - [`Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd_combat.rsi/`](../../Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd_combat.rsi/): Licence and credit set as in HardLight 0fc067be74.
 - [`Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd_command.rsi/`](../../Resources/Textures/_NF/Clothing/Head/Hardsuits/nfsd_command.rsi/): Licence and credit set as in HardLight 0fc067be74.

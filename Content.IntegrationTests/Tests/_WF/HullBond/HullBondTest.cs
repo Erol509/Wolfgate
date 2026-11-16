@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Content.IntegrationTests.Pair;
+using Content.Server._Mono.ShipRepair;
 using Content.Server._WF.HullBond;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction.Components;
+using Content.Shared._Mono.ShipRepair.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
 using Robust.Server.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -222,6 +226,60 @@ public sealed class HullBondTest
 
             Carry(pair, rebuilt, alpha, 2, 2);
             Assert.That(Refused(pair, rebuilt), Is.False, "The rebuilt fitting still bolts down on its own hull.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>
+    /// The mobile drydock crane spawns loose, so an SRD rebuild once left it unbolted and unbonded, free to carry to
+    /// another ship.
+    /// </summary>
+    [Test]
+    public async Task SrdRebuildsFittingBoltedAndBonded()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var map = await pair.CreateTestMap();
+        var alpha = EntityUid.Invalid;
+        var bravo = EntityUid.Invalid;
+        var user = EntityUid.Invalid;
+        var tool = EntityUid.Invalid;
+
+        await server.WaitAssertion(() =>
+        {
+            alpha = CreateHull(pair, map.MapId, new Vector2(40, 40), "Alpha");
+            bravo = CreateHull(pair, map.MapId, new Vector2(60, 60), "Bravo");
+            var crane = entMan.SpawnEntity(Crane, At(alpha, 1, 2));
+            Bolt(pair, crane);
+            server.System<ShipRepairSystem>().GenerateRepairData(alpha);
+            entMan.DeleteEntity(crane);
+
+            user = entMan.SpawnEntity("MobHuman", At(alpha, 0, 0));
+            tool = entMan.SpawnEntity("ShipRepairDeviceRecharging", At(alpha, 0, 0));
+            Assert.That(server.System<SharedHandsSystem>().TryPickupAnyHand(user, tool), Is.True);
+            entMan.GetComponent<ShipRepairToolComponent>(tool).RepairTimeMultiplier = 0.03f;
+        });
+        await server.WaitRunTicks(1);
+
+        await server.WaitPost(() =>
+            entMan.EventBus.RaiseLocalEvent(tool, new AfterInteractEvent(user, tool, null, At(alpha, 1, 2), true)));
+        await server.WaitRunTicks(pair.SecondsToTicks(1f));
+
+        await server.WaitAssertion(() =>
+        {
+            var rebuilt = SingleOn<WFHullBondComponent, MetaDataComponent>(pair, alpha);
+            Assert.Multiple(() =>
+            {
+                Assert.That(entMan.GetComponent<TransformComponent>(rebuilt).Anchored, Is.True,
+                    "The SRD should rebuild a fitting bolted down, as the snapshot had it.");
+                Assert.That(entMan.GetComponent<WFHullBondComponent>(rebuilt).Hull, Is.Not.Null.And.EqualTo(HullId(pair, alpha)),
+                    "A fitting the SRD rebuilds should bond to the hull it was rebuilt on.");
+            });
+
+            Carry(pair, rebuilt, bravo, 1, 2);
+            Assert.That(Refused(pair, rebuilt), Is.True, "A rebuilt fitting must not bolt down on another hull.");
         });
 
         await pair.CleanReturnAsync();

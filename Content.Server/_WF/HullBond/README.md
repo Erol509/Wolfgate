@@ -6,13 +6,15 @@ around its own ship as before; a wrench refuses to bolt it down on any other hul
 names the ship it is bonded to.
 
 A fitting takes the bond by having `WFHullBond` on its prototype: every ship shield generator
-(`ShieldGeneratorBase`), the CTLA bluespace drives (`MachineFTLDrive`), and the mobile drydock crane and console.
+(`ShieldGeneratorBase`), the CTLA bluespace drives (`MachineFTLDrive`), the ammo loaders (`AmmoLoader`,
+`AmmoLoaderSmall`), and the mobile drydock crane and console.
 Adding it to another machine is all a new fitting needs.
 
 `WFHullBondSystem` holds the rules:
 
-- A fitting bonds when it map-inits bolted down, or when a wrench first bolts it down. A hull loaded from a save
-  never map-inits, so its fittings bond on the first unbolt, board removal or examine instead.
+- A fitting bonds when it map-inits bolted down, or when it is first bolted down, by a wrench or by an SRD or drydock
+  rebuilding it. A hull loaded from a save never map-inits, so its fittings bond on the first unbolt, board removal
+  or examine instead.
 - The bond is a hull id (`WFHullBondId` on the grid), not an entity reference, so it survives a used-ship resale and
   never matches a hull from another round. The pieces of a split hull share its id.
 - A board taken out of a bonded fitting (prying, destruction, a drydock break) carries the bond. A machine built from
@@ -43,6 +45,7 @@ bolted to. The refusal is server-side, so the client may show the wrench startin
 
 ## Non-modular edits
 
+- [`Resources/Prototypes/_Mono/Entities/Clothing/AmmoLoader/ammo_loader.yml`](../../../Resources/Prototypes/_Mono/Entities/Clothing/AmmoLoader/ammo_loader.yml): an ammo loader only bolts down on its first hull
 - [`Resources/Prototypes/_Mono/Entities/Structures/Machines/ftldrive.yml`](../../../Resources/Prototypes/_Mono/Entities/Structures/Machines/ftldrive.yml): a bluespace drive only bolts down on its first hull
 - [`Resources/Prototypes/_Mono/Entities/Structures/Machines/shield_generator.yml`](../../../Resources/Prototypes/_Mono/Entities/Structures/Machines/shield_generator.yml): a shield generator only bolts down on its first hull
 

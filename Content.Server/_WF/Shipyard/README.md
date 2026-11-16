@@ -32,6 +32,7 @@ share from its slot, or from the counter of a trader hosting it (`ShipyardHostCa
 - [`Content.Server/_WF/Shipyard/DeviceNetworkSystem.Wolfgate.cs`](DeviceNetworkSystem.Wolfgate.cs)
 - [`Content.Server/_WF/Shipyard/PowerChargeSystem.Wolfgate.cs`](PowerChargeSystem.Wolfgate.cs)
 - [`Content.Server/_WF/Shipyard/ShipyardSystem.WolfgateDeed.cs`](ShipyardSystem.WolfgateDeed.cs)
+- [`Content.Server/_WF/Shipyard/ShipyardSystem.WolfgateOwnership.cs`](ShipyardSystem.WolfgateOwnership.cs)
 - [`Content.Server/_WF/Shipyard/ShipyardSystem.WolfgateTrader.cs`](ShipyardSystem.WolfgateTrader.cs)
 - [`Content.Server/_WF/Shipyard/ShipyardSystem.WolfgateUnsavable.cs`](ShipyardSystem.WolfgateUnsavable.cs)
 - [`Content.Server/_WF/Shipyard/ShipyardWolfgateEvents.cs`](ShipyardWolfgateEvents.cs)

@@ -248,6 +248,10 @@ tool selector is ported under `RadialSelector`, and the EMP ward and glove trans
   - MODsuit parts use the native module system.
   - the native module system sets its own sealed appearance
   - MODsuit boots add no slowdown; the chestplate and control unit carry the suit's cap
+- [`Resources/Prototypes/_Mono/Loadouts/MedicalDispatch/bags.yml`](../../../Resources/Prototypes/_Mono/Loadouts/MedicalDispatch/bags.yml)
+  - Adjust price for loadouts
+  - Add sanitater and standard modsuit to loadouts
+- [`Resources/Prototypes/_NF/Loadouts/contractor_loadout_groups.yml`](../../../Resources/Prototypes/_NF/Loadouts/contractor_loadout_groups.yml): Add sanitater and standard modsuit to loadouts
 - [`Resources/Prototypes/Entities/Objects/Power/powercells.yml`](../../../Resources/Prototypes/Entities/Objects/Power/powercells.yml)
   - MODsuit cores reject medium power cages.
   - MODsuit cores reject high power cages.

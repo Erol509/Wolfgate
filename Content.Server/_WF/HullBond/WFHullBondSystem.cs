@@ -23,6 +23,7 @@ public sealed partial class WFHullBondSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<WFHullBondComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<WFHullBondComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<WFHullBondComponent, AnchorAttemptEvent>(OnAnchorAttempt);
         SubscribeLocalEvent<WFHullBondComponent, UserAnchoredEvent>(OnUserAnchored);
         SubscribeLocalEvent<WFHullBondComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
@@ -55,6 +56,13 @@ public sealed partial class WFHullBondSystem : EntitySystem
 
         _transform.Unanchor(ent, xform);
         _popup.PopupEntity(RefusalText(ent), ent, PopupType.MediumCaution);
+    }
+
+    private void OnAnchorChanged(Entity<WFHullBondComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        // Bolted down by anything but a wrench, such as a repair rebuilding it. Map init handles a fitting still loading.
+        if (args.Anchored && LifeStage(ent) >= EntityLifeStage.MapInitialized)
+            BondIfBolted(ent);
     }
 
     private void OnAnchorAttempt(Entity<WFHullBondComponent> ent, ref AnchorAttemptEvent args)

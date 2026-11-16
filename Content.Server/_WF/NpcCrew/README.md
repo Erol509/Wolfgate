@@ -78,7 +78,7 @@ or fires a gun is seen for 60 s, and a ship reported attacking for 120 s. A thef
 
 A Warn crew gives a stranger it notices aboard `WarnTime` (30 s) to leave; if he stays, or strikes any crewman, the
 crew's fighters (on-sight crew, marines, the captain and radio officer; not the helm or the guns) take him on as
-their own attacker, by the usual rules: in sight, and one man hunting him unseen. A when-attacked hand answers only
+their own attacker, by the usual rules: in sight, and a hunt party sized by skill going after him unseen. A when-attacked hand answers only
 his own attacker, and an attacker is remembered while he is aboard and seen or reported, then for 30 s more. Only a
 blow to a crewman himself sends him straight after someone he cannot see. Crew who never fight, including the
 cowards a profile's `cowards` chance makes (half the hauler deckhands), drop their work, run for the bridge and lie
@@ -232,6 +232,21 @@ holstered in favor of a loaded sidearm, melee weapon, or empty hands; no ammunit
 `InfiniteAmmo` (a commanded ship's roster sets it), when his magazine refills in place. Two-handed guns are wielded
 when drawn and after a reload, for their wielded spread.
 
+Skill (`WFCrewSkills`) sets how crew fight as well as how well. The crew's skill is the baseline; a profile's
+`skillOffsets` raise or lower it per loadout (reaver hands a tier below, officers a tier above), clamped to
+Green..Elite. A crewman who regains sight of a target he saw within six seconds, or braced for, fires after his
+re-acquire delay instead of the full shoot delay (`NPCCombatSystem.Crew.cs`). From Regular up, a crewman who knows of
+a hostile aboard but may not hunt it braces: weapon drawn and loaded, facing its way, for up to 90 s without sight of
+it (`WFCrewWeaponSystem.Brace.cs`). Regulars and up also throw a grenade they carry (any slot item with a use timer;
+reaver riflemen carry one `ExGrenade`) at a known hostile out of sight for three seconds within nine tiles: shouted
+first, cooked by skill but always with 1.5 s of fuse left on landing, never with a crewmate or bystander in the
+blast, once per crew every 20 s, and nobody hunts into it until it has gone off (`WFCrewGrenadeSystem`). The cooldown
+is checked again as he arms it, and the blast and flight path (anything a thrown item hits, loose crates included)
+again as it leaves his hand: with someone or something now in the way he picks
+another spot, or holds on while the fuse allows. Veterans and
+elites hunt in pairs, sidestep between shots (upstream `NPCJukeComponent`) and, once a minute, fall back out of the
+hostile's sight past 50 damage to patch up for up to eight seconds (`WFCrewFallBackSystem`).
+
 Since the Lupercal's first playtest: a crewman who sees a trespasser on a Warn ship names him and the zone aloud,
 points him out (`PointingSystem.TryNpcPoint`) and gives him his time, gives a last warning ten seconds before it runs
 out and says he is engaging when the fighters turn (`WFCrewSecuritySystem.Challenge.cs`). A player seen pulling or
@@ -336,6 +351,7 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Server/_WF/NpcCrew/Commands/WFCrewCommand.Arena.cs`](Commands/WFCrewCommand.Arena.cs)
 - [`Content.Server/_WF/NpcCrew/Commands/WFCrewCommand.cs`](Commands/WFCrewCommand.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCaptainComponent.cs`](Components/WFCaptainComponent.cs)
+- [`Content.Server/_WF/NpcCrew/Components/WFCrewArmedGrenadeComponent.cs`](Components/WFCrewArmedGrenadeComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewComponent.cs`](Components/WFCrewComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewEngineerComponent.cs`](Components/WFCrewEngineerComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFCrewGrabberComponent.cs`](Components/WFCrewGrabberComponent.cs)
@@ -362,11 +378,15 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Server/_WF/NpcCrew/Components/WFHoldFireComponent.cs`](Components/WFHoldFireComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFPilotDutyComponent.cs`](Components/WFPilotDutyComponent.cs)
 - [`Content.Server/_WF/NpcCrew/Components/WFRadioOperatorComponent.cs`](Components/WFRadioOperatorComponent.cs)
+- [`Content.Server/_WF/NpcCrew/HTN/WFCrewBraceOperator.cs`](HTN/WFCrewBraceOperator.cs)
+- [`Content.Server/_WF/NpcCrew/HTN/WFCrewFallBackOperator.cs`](HTN/WFCrewFallBackOperator.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewGrabOperator.cs`](HTN/WFCrewGrabOperator.cs)
+- [`Content.Server/_WF/NpcCrew/HTN/WFCrewGrenadeOperator.cs`](HTN/WFCrewGrenadeOperator.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewLoadedGunPrecondition.cs`](HTN/WFCrewLoadedGunPrecondition.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewMayFightPrecondition.cs`](HTN/WFCrewMayFightPrecondition.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewMedicOperator.cs`](HTN/WFCrewMedicOperator.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewReturnOperator.cs`](HTN/WFCrewReturnOperator.cs)
+- [`Content.Server/_WF/NpcCrew/HTN/WFCrewSidestepOperator.cs`](HTN/WFCrewSidestepOperator.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewTargetOperator.cs`](HTN/WFCrewTargetOperator.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFCrewWorkOperator.cs`](HTN/WFCrewWorkOperator.cs)
 - [`Content.Server/_WF/NpcCrew/HTN/WFDrawWeaponOperator.cs`](HTN/WFDrawWeaponOperator.cs)
@@ -399,8 +419,10 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewConductSystem.cs`](Systems/WFCrewConductSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewEscortSystem.cs`](Systems/WFCrewEscortSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewEvaSystem.cs`](Systems/WFCrewEvaSystem.cs)
+- [`Content.Server/_WF/NpcCrew/Systems/WFCrewFallBackSystem.cs`](Systems/WFCrewFallBackSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewFriendlyFireSystem.cs`](Systems/WFCrewFriendlyFireSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewGrabberSystem.cs`](Systems/WFCrewGrabberSystem.cs)
+- [`Content.Server/_WF/NpcCrew/Systems/WFCrewGrenadeSystem.cs`](Systems/WFCrewGrenadeSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewMedicSystem.Cloning.cs`](Systems/WFCrewMedicSystem.Cloning.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewMedicSystem.cs`](Systems/WFCrewMedicSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewMedicSystem.SelfCare.cs`](Systems/WFCrewMedicSystem.SelfCare.cs)
@@ -423,6 +445,7 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewStealthSystem.cs`](Systems/WFCrewStealthSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewSystem.cs`](Systems/WFCrewSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewUiDiagnosticsSystem.cs`](Systems/WFCrewUiDiagnosticsSystem.cs)
+- [`Content.Server/_WF/NpcCrew/Systems/WFCrewWeaponSystem.Brace.cs`](Systems/WFCrewWeaponSystem.Brace.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewWeaponSystem.cs`](Systems/WFCrewWeaponSystem.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewWeaponSystem.Reload.cs`](Systems/WFCrewWeaponSystem.Reload.cs)
 - [`Content.Server/_WF/NpcCrew/Systems/WFCrewWorkSystem.cs`](Systems/WFCrewWorkSystem.cs)
@@ -523,6 +546,7 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Sleep.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Sleep.cs)
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Spared.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Spared.cs)
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Stations.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Stations.cs)
+- [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Tactics.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Tactics.cs)
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.TargetLifetime.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.TargetLifetime.cs)
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Titles.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Titles.cs)
 - [`Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Work.cs`](../../../Content.IntegrationTests/Tests/_WF/NpcCrew/WFCrewTest.Work.cs)
@@ -599,6 +623,7 @@ crew never turns on what it carries, such as the Remade aboard a flesh ship.
 - [`Content.Server/NPC/Pathfinding/PathFlags.cs`](../../NPC/Pathfinding/PathFlags.cs): can we shove a loose crate out of the way.
 - [`Content.Server/NPC/Systems/NPCCombatSystem.Ranged.cs`](../../NPC/Systems/NPCCombatSystem.Ranged.cs)
   - no shooting while Downed, crit, stunned or asleep
+  - crew fire sooner on a target they saw moments ago or braced for
   - Crew miss by their skill level.
   - crew pull a semi-automatic's trigger at a person's pace
 - [`Content.Server/NPC/Systems/NPCRetaliationSystem.cs`](../../NPC/Systems/NPCRetaliationSystem.cs): a crewman's ship may let an attacker off, such as its Boss

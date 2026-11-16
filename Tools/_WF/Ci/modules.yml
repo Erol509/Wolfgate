@@ -16,6 +16,15 @@ external:
 # Edits outside _WF that can't hold a WOLFGATE marker: JSON, images, audio, rich-text .txt and map files.
 # Each entry has a path (a file, a folder or a glob), the module it serves (null for a standalone edit) and a reason.
 unmarked:
+  - path: Resources/Maps/_Mono/POI/anomalouslab.yml
+    module: null
+    reason: Caelestinus Expansion I (#675) reverted.
+  - path: Resources/Textures/_Mono/Structures/Decoration/banner.rsi/
+    module: null
+    reason: Caelestinus Expansion I (#675) reverted.
+  - path: Resources/Textures/_Mono/Structures/Machines/server.rsi/
+    module: null
+    reason: Caelestinus Expansion I (#675) reverted.
   - path: Resources/Audio/_Goobstation/Items/Modsuit/ballin.ogg
     module: Modsuits
     reason: MODsuit module sounds ported from GoobStation.

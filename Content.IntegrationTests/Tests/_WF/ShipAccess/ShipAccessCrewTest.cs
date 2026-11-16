@@ -118,6 +118,13 @@ public sealed class ShipAccessCrewTest
             Assert.That(ship.Comp.Mode, Is.EqualTo(WFShipAccessMode.Crew), "Invalid or unavailable modes preserve the selected mode.");
             Send(new WFShipAccessSetAllDoorRulesMessage((WFDoorAccessRule) 255), owner);
             Assert.That(em.System<WFShipAccessSystem>().GetRule(door), Is.EqualTo(WFDoorAccessRule.Crew));
+
+            // Public is staff's to set: the owner's console can't ask for it, but can leave it.
+            Send(new WFShipAccessSetModeMessage(WFShipAccessMode.Public), owner);
+            Assert.That(ship.Comp.Mode, Is.EqualTo(WFShipAccessMode.Crew), "An owner can't make the ship public from the console.");
+            Assert.That(access.SetMode(ship, WFShipAccessMode.Public), Is.True);
+            Send(new WFShipAccessSetModeMessage(WFShipAccessMode.Private), owner);
+            Assert.That(ship.Comp.Mode, Is.EqualTo(WFShipAccessMode.Private), "The owner can switch a public ship back.");
         });
         await pair.CleanReturnAsync();
     }

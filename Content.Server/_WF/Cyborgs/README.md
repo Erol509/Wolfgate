@@ -70,6 +70,7 @@ and `BorgShipAccessTest` a crew door admitting it.
 - [`Content.IntegrationTests/Tests/_WF/Cyborgs/BorgShipAccessTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Cyborgs/BorgShipAccessTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Cyborgs/BorgShipPurchaseTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Cyborgs/BorgShipPurchaseTest.cs)
 - [`Content.IntegrationTests/Tests/_WF/Cyborgs/BorgStackRefillTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Cyborgs/BorgStackRefillTest.cs)
+- [`Content.IntegrationTests/Tests/_WF/Cyborgs/FactionBorgCardTest.cs`](../../../Content.IntegrationTests/Tests/_WF/Cyborgs/FactionBorgCardTest.cs)
 
 ### Prototypes
 
@@ -91,6 +92,8 @@ and `BorgShipAccessTest` a crew door admitting it.
   - was 2, too few to fit a printed kit
   - the treatment module carries the defibrillator
 - [`Resources/Prototypes/_Mono/Entities/Objects/Tools/repair.yml`](../../../Resources/Prototypes/_Mono/Entities/Objects/Tools/repair.yml): was 50, a 20 minute wait before a cyborg's first real repair
+- [`Resources/Prototypes/_Mono/Roles/Jobs/PDV/borg.yml`](../../../Resources/Prototypes/_Mono/Roles/Jobs/PDV/borg.yml): stamped on the issued card so the PDV shipyard sells to it
+- [`Resources/Prototypes/_Mono/Roles/Jobs/TSFMC/borg.yml`](../../../Resources/Prototypes/_Mono/Roles/Jobs/TSFMC/borg.yml): stamped on the issued card so the TSFMC shipyard sells to it
 - [`Resources/Prototypes/borg_types.yml`](../../../Resources/Prototypes/borg_types.yml): the treatment module carries the defibrillator
 - [`Resources/Prototypes/Entities/Mobs/Cyborgs/base_borg_chassis.yml`](../../../Resources/Prototypes/Entities/Mobs/Cyborgs/base_borg_chassis.yml)
   - the built-in PDA's window and ringtone picker

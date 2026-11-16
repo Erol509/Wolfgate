@@ -656,7 +656,7 @@
     requiredCompanies:
     - TSF
   - type: AccessReader
-    access: [["TsfmcCaptain"]]
+    access: [["TsfmcCaptain"], ["TsfmcArmory"]] # WOLFGATE: the access refactor took the payroll console from Fireteam Leaders
 
 - type: entity
   parent: BaseComputerTabletopStationAdminBankATM
