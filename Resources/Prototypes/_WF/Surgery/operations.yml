@@ -140,12 +140,34 @@
   time: 2.4
   requiredStates: [SkinOpen]
   blockedStates: [OrgansCut]
+  zones: [Head, Torso, Groin]
   priority: 4
   flags: [Organic, NoPatient]
   tools:
   - component: Scalpel
   - quality: Slicing
     speed: 1.5
+
+- type: surgicalOperation
+  id: WFClampInternalBleedersLimbs
+  icon:
+    sprite: _WF/Surgery/RadialIcons.rsi
+    state: clamp_bleeders
+  name: wf-surgery-op-clamp-internal-bleeders-limbs
+  description: wf-surgery-op-clamp-internal-bleeders-limbs-desc
+  surgery: WFSurgeryClampInternalBleeders
+  step: SurgeryStepClampInternalBleeders
+  requirePreviousSteps: false
+  time: 2
+  requiredStates: [SkinOpen]
+  blockedStates: [OrgansCut]
+  zones: [LeftArm, RightArm, LeftHand, RightHand, LeftLeg, RightLeg, LeftFoot, RightFoot]
+  priority: 4
+  flags: [Organic, NoPatient]
+  tools:
+  - component: Hemostat
+  - quality: Cutting
+    speed: 1.67
 
 - type: surgicalOperation
   id: WFOrganManipulation

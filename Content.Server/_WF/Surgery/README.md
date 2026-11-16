@@ -128,9 +128,13 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
 - [`Resources/Textures/_WF/Surgery/BodyZones/groin.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/groin.png)
 - [`Resources/Textures/_WF/Surgery/BodyZones/head.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/head.png)
 - [`Resources/Textures/_WF/Surgery/BodyZones/l_arm.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/l_arm.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/l_foot.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/l_foot.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/l_hand.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/l_hand.png)
 - [`Resources/Textures/_WF/Surgery/BodyZones/l_leg.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/l_leg.png)
 - [`Resources/Textures/_WF/Surgery/BodyZones/mouth.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/mouth.png)
 - [`Resources/Textures/_WF/Surgery/BodyZones/r_arm.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/r_arm.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/r_foot.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/r_foot.png)
+- [`Resources/Textures/_WF/Surgery/BodyZones/r_hand.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/r_hand.png)
 - [`Resources/Textures/_WF/Surgery/BodyZones/r_leg.png`](../../../Resources/Textures/_WF/Surgery/BodyZones/r_leg.png)
 - [`Resources/Textures/_WF/Surgery/RadialIcons.rsi/`](../../../Resources/Textures/_WF/Surgery/RadialIcons.rsi/)
 - [`Resources/Textures/_WF/Surgery/RadialUI.rsi/`](../../../Resources/Textures/_WF/Surgery/RadialUI.rsi/)
@@ -150,5 +154,6 @@ the effect layer, so every existing Wolfgate wound, organ, limb and synthetic pr
   - caller-validated tools skip the step's list
 - [`Content.Shared/_Shitmed/Surgery/Steps/SurgeryCanPerformStepEvent.cs`](../../../Content.Shared/_Shitmed/Surgery/Steps/SurgeryCanPerformStepEvent.cs): caller-validated tools
 - [`Content.Shared/_Shitmed/Surgery/SurgeryStepEvent.cs`](../../../Content.Shared/_Shitmed/Surgery/SurgeryStepEvent.cs): caller-validated tools
+- [`Resources/Prototypes/_Shitmed/Entities/Surgery/surgery_steps.yml`](../../../Resources/Prototypes/_Shitmed/Entities/Surgery/surgery_steps.yml): a reattached limb is secured immediately; closing the skin only seals the incision.
 
 <!-- WOLFGATE-GENERATED END -->

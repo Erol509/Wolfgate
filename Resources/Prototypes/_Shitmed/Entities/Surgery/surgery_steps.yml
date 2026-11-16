@@ -213,6 +213,8 @@
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/manipulation.rsi
     state: insertion
   - type: SurgeryAddPartStep
+  # WOLFGATE(Surgery): a reattached limb is secured immediately; closing the skin only seals the incision.
+  - type: WFSurgeryAffixOnClose
 
 - type: entity
   parent: SurgeryStepBase

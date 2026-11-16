@@ -535,6 +535,8 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: SurgeryStep
+    tool:
+    - type: BoneSetter
     duration: 5
   - type: Sprite
     sprite: _Shitmed/Objects/Specific/Medical/Surgery/bonesetter.rsi

@@ -163,6 +163,8 @@ public partial class SurgicalRadialBui : BoundUserInterface
                 SendMessage(new SurgicalRadialChooseMessage(key));
             };
             button.AddChild(Icon(option.Icon));
+            if (option.OverlayIcon != null)
+                button.AddChild(Icon(option.OverlayIcon, scale: 1f));
             container.AddChild(button);
         }
 
@@ -187,28 +189,26 @@ public partial class SurgicalRadialBui : BoundUserInterface
             container.AddChild(next);
         }
 
-        if (!_menu.IsOpen)
-        {
-            var viewport = _display.ScreenSize;
-            var position = _input.MouseScreenPosition.Position / viewport;
+        var viewport = _display.ScreenSize;
+        var position = _input.MouseScreenPosition.Position / viewport;
 
-            if (EntMan.TryGetEntity(state.Target, out var target) && target is { } targetUid)
-                position = _eye.WorldToScreen(_transform.GetMapCoordinates(targetUid).Position) / viewport;
-            else if (_player.LocalEntity is { } local)
-                position = _eye.WorldToScreen(_transform.GetMapCoordinates(local).Position) / viewport;
+        if (EntMan.TryGetEntity(state.Target, out var target) && target is { } targetUid)
+            position = _eye.WorldToScreen(_transform.GetMapCoordinates(targetUid).Position) / viewport;
+        else if (_player.LocalEntity is { } local)
+            position = _eye.WorldToScreen(_transform.GetMapCoordinates(local).Position) / viewport;
 
-            _menu.OpenCenteredAt(position);
-        }
+        // CreateWindow may already have centred the window; reposition it on the patient every rebuild.
+        _menu.OpenCenteredAt(position);
     }
 
-    private TextureRect Icon(SpriteSpecifier? specifier, Texture? texture = null)
+    private TextureRect Icon(SpriteSpecifier? specifier, Texture? texture = null, float scale = 2f)
     {
         return new TextureRect
         {
             VerticalAlignment = Control.VAlignment.Center,
             HorizontalAlignment = Control.HAlignment.Center,
             Texture = texture ?? _sprites.Frame0(specifier ?? DefaultIcon),
-            TextureScale = new Vector2(2f, 2f),
+            TextureScale = new Vector2(scale, scale),
         };
     }
 

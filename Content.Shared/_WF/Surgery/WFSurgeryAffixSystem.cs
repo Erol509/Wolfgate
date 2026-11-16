@@ -1,5 +1,4 @@
 using Content.Shared._Shitmed.Body.Events;
-using Content.Shared._Shitmed.Medical.Surgery;
 using Content.Shared._Shitmed.Medical.Surgery.Steps.Parts;
 using Content.Shared.Body.Systems;
 
@@ -13,26 +12,20 @@ public sealed partial class WFSurgeryAffixSystem : EntitySystem
 {
     [Dependency] private SharedBodySystem _body = default!;
 
-    public override void Initialize()
+    /// <summary>Clears the reattached markers on the operated part after the step that inserted them.</summary>
+    public void Affix(EntityUid part)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<WFSurgeryAffixOnCloseComponent, SurgeryStepEvent>(OnStep);
-    }
-
-    private void OnStep(Entity<WFSurgeryAffixOnCloseComponent> ent, ref SurgeryStepEvent args)
-    {
-        foreach (var (part, _) in _body.GetBodyPartChildren(args.Part))
+        foreach (var (child, _) in _body.GetBodyPartChildren(part))
         {
-            if (!HasComp<BodyPartReattachedComponent>(part))
+            if (!HasComp<BodyPartReattachedComponent>(child))
                 continue;
 
-            RemComp<BodyPartReattachedComponent>(part);
+            RemComp<BodyPartReattachedComponent>(child);
             var enabled = new BodyPartEnableChangedEvent(true);
-            RaiseLocalEvent(part, ref enabled);
+            RaiseLocalEvent(child, ref enabled);
         }
 
-        foreach (var (organ, _) in _body.GetPartOrgans(args.Part))
+        foreach (var (organ, _) in _body.GetPartOrgans(part))
         {
             if (HasComp<OrganReattachedComponent>(organ))
                 RemComp<OrganReattachedComponent>(organ);

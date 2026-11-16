@@ -196,6 +196,10 @@ public sealed partial class SurgicalOperationPrototype : IPrototype
     [DataField]
     public SpriteSpecifier? Icon;
 
+    /// <summary>Small icon drawn in the centre of the radial slot, such as the organ a repair operation treats.</summary>
+    [DataField]
+    public SpriteSpecifier? OverlayIcon;
+
     /// <summary>Behaviour flags.</summary>
     [DataField]
     public SurgicalOperationFlags Flags;

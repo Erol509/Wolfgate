@@ -75,6 +75,16 @@
 
 - type: entity
   parent: SurgeryBase
+  id: WFSurgeryClampInternalBleeders
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Surgery
+    steps:
+    - SurgeryStepClampInternalBleeders
+  - type: SurgeryPartPresentCondition
+
+- type: entity
+  parent: SurgeryBase
   id: WFSurgeryMendSkin
   categories: [ HideSpawnMenu ]
   components:

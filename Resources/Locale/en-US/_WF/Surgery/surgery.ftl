@@ -10,6 +10,7 @@ surgery-state-bone-sawed = Bone is sawed
 surgery-state-plastic-applied = Plastic is applied
 surgery-state-prosthetic-unsecured = Prosthetic is unsecured
 surgery-state-cavity-widened = Cavity is opened wide
+surgery-state-feature-sawed = Feature is sawed through
 
 surgery-state-lacks-skin = Bodypart lacks skin (counts as open)
 surgery-state-lacks-bones = Bodypart lacks bones (counts as sawed)
@@ -32,6 +33,8 @@ wf-surgery-op-drill-bone = drill limb bone
 wf-surgery-op-drill-bone-desc = Drill through a patient's bones. Causes "bone drilled" surgical state.
 wf-surgery-op-incise-organs = incise organs
 wf-surgery-op-incise-organs-desc = Make an incision in the patient's internal organ tissue. Causes "organs cut" surgical state.
+wf-surgery-op-clamp-internal-bleeders-limbs = clamp internal bleeders
+wf-surgery-op-clamp-internal-bleeders-limbs-desc = Clamp the limb's internal bleeders before amputating it.
 wf-surgery-op-organ-manipulation = organ manipulation
 wf-surgery-op-organ-manipulation-desc = Remove an organ from the patient, or insert the organ you are holding.
 wf-surgery-op-mend-skin = mend skin incision

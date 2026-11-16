@@ -166,6 +166,7 @@
     - type: RibcageOpen
     - type: BoneDrilled
     - type: CavityWidened
+    - type: BodyPartSawed
     duration: 2.4
   - type: WFSurgeryAffixOnClose
   - type: WolfmedSurgeryPainEffect

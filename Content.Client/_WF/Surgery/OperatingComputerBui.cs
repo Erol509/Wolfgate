@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -9,6 +10,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.Client._WF.Surgery;
 
@@ -194,7 +196,7 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
             _patientScroll = null;
             _host.AddChild(BuildPatient());
             if (_patientScroll != null)
-                _patientScroll.VScroll = scroll;
+                RestoreScroll(_patientScroll, scroll);
             return;
         }
 
@@ -216,7 +218,20 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         var scroll = _catalogScroll?.VScroll ?? 0f;
         RefreshCatalogList();
         if (_catalogScroll != null)
-            _catalogScroll.VScroll = scroll;
+            RestoreScroll(_catalogScroll, scroll);
+    }
+
+    /// <summary>Restores a scroll offset after the rebuilt list has been laid out and has its real range.</summary>
+    private static void RestoreScroll(ScrollContainer scroll, float value)
+    {
+        if (value <= 0f)
+            return;
+
+        Timer.Spawn(TimeSpan.FromMilliseconds(1), () =>
+        {
+            if (scroll.Parent != null)
+                scroll.VScroll = value;
+        });
     }
 
     private string CatalogSignature()
@@ -262,6 +277,17 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         ContentMarginRightOverride = 5,
         ContentMarginTopOverride = 5,
         ContentMarginBottomOverride = 5,
+    };
+
+    private static StyleBoxFlat TileBox() => new()
+    {
+        BackgroundColor = new Color(0, 0, 0, 40),
+        BorderColor = new Color(255, 255, 255, 55),
+        BorderThickness = new Thickness(1),
+        ContentMarginLeftOverride = 6,
+        ContentMarginRightOverride = 6,
+        ContentMarginTopOverride = 4,
+        ContentMarginBottomOverride = 4,
     };
 
     private Control BuildTabs()
@@ -576,7 +602,6 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
             HorizontalExpand = true,
-            Margin = new Thickness(0, 0, 0, 8),
         };
 
         var header = new BoxContainer
@@ -688,7 +713,15 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
 
         bodyBox.AddChild(inner);
         entry.AddChild(bodyBox);
-        return entry;
+
+        var tile = new PanelContainer
+        {
+            PanelOverride = TileBox(),
+            HorizontalExpand = true,
+            Margin = new Thickness(0, 0, 0, 3),
+        };
+        tile.AddChild(entry);
+        return tile;
     }
 
     private Control BuildExperiments()
@@ -702,11 +735,12 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
     {
         return new Label
         {
-            Text = Loc.GetString("operating-computer-footer"),
+            Text = Wrap(Loc.GetString("operating-computer-footer"), 56),
             FontColorOverride = MutedColor,
             StyleClasses = { "LabelSmall" },
+            HorizontalExpand = true,
             HorizontalAlignment = Control.HAlignment.Right,
-            Margin = new Thickness(0, 4, 0, 0),
+            Margin = new Thickness(6, 4, 6, 2),
         };
     }
 
@@ -715,10 +749,10 @@ public sealed partial class OperatingComputerBui : BoundUserInterface
         var pinned = _pins.Contains(operation.Name);
         var button = new Button
         {
-            Text = $"{(operation.Priority ? "! " : string.Empty)}{operation.Name}    —    {operation.Tool}",
+            Text = $"{(operation.Priority ? "! " : string.Empty)}{operation.Name}    -    {operation.Tool}",
             HorizontalExpand = true,
             ModulateSelfOverride = operation.Priority ? CautionColor : pinned ? DangerColor : PrimaryColor,
-            Label = { FontColorOverride = TextColor },
+            Label = { FontColorOverride = TextColor, ClipText = true },
             ToolTip = $"{operation.Description}\n{Loc.GetString("operating-computer-left-click-pin")}\n{Loc.GetString("operating-computer-right-click-info")}",
         };
 

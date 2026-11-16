@@ -3,7 +3,8 @@
     CloseButtonStyleClass="RadialMenuCloseButton"
     VerticalExpand="True"
     HorizontalExpand="True"
-    MinSize="450 450">
-    <ui:RadialContainer Name="Main" InitialRadius="58">
+    MinSize="450 450"
+    SetSize="450 450">
+    <ui:RadialContainer Name="Main" InitialRadius="58" HorizontalExpand="True" VerticalExpand="True">
     </ui:RadialContainer>
 </ui:RadialMenu>

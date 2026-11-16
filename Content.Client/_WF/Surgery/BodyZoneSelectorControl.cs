@@ -77,10 +77,14 @@ public sealed class BodyZoneSelectorControl : Control
             TargetBodyPart.Head => "head",
             TargetBodyPart.Torso => "chest",
             TargetBodyPart.Groin => "groin",
-            TargetBodyPart.LeftArm or TargetBodyPart.LeftHand => "l_arm",
-            TargetBodyPart.RightArm or TargetBodyPart.RightHand => "r_arm",
-            TargetBodyPart.LeftLeg or TargetBodyPart.LeftFoot => "l_leg",
-            TargetBodyPart.RightLeg or TargetBodyPart.RightFoot => "r_leg",
+            TargetBodyPart.LeftArm => "l_arm",
+            TargetBodyPart.RightArm => "r_arm",
+            TargetBodyPart.LeftHand => "l_hand",
+            TargetBodyPart.RightHand => "r_hand",
+            TargetBodyPart.LeftLeg => "l_leg",
+            TargetBodyPart.RightLeg => "r_leg",
+            TargetBodyPart.LeftFoot => "l_foot",
+            TargetBodyPart.RightFoot => "r_foot",
             _ => null,
         };
 

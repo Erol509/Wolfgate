@@ -39,6 +39,9 @@ public enum SurgeryState : ushort
 
     /// <summary>The chest cavity has been widened for implants.</summary>
     CavityWidened = 1 << 9,
+
+    /// <summary>A feature (limb) has been sawed through and is ready to be amputated.</summary>
+    FeatureSawed = 1 << 10,
 }
 
 /// <summary>
@@ -59,7 +62,8 @@ public static class SurgeryStateExtensions
     public const SurgeryState AllOrgans = SurgeryState.OrgansCut;
 
     /// <summary>States cleared when an incision is closed.</summary>
-    public const SurgeryState ClearedOnClose = AllSkin | AllVessels | AllBones | AllOrgans | SurgeryState.CavityWidened;
+    public const SurgeryState ClearedOnClose = AllSkin | AllVessels | AllBones | AllOrgans |
+                                               SurgeryState.CavityWidened | SurgeryState.FeatureSawed;
 
     /// <summary>States a skinless part always counts as having.</summary>
     public const SurgeryState SkinlessStates = SurgeryState.SkinOpen;
@@ -89,5 +93,6 @@ public static class SurgeryStateExtensions
         (SurgeryState.PlasticApplied, "surgery-state-plastic-applied"),
         (SurgeryState.ProstheticUnsecured, "surgery-state-prosthetic-unsecured"),
         (SurgeryState.CavityWidened, "surgery-state-cavity-widened"),
+        (SurgeryState.FeatureSawed, "surgery-state-feature-sawed"),
     };
 }

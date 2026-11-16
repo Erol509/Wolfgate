@@ -94,6 +94,7 @@ MARKER_TO_STATE = {
     "RibcageSawed": "BoneSawed",
     "RibcageOpen": "BoneSawed",
     "BoneDrilled": "BoneDrilled",
+    "BodyPartSawed": "FeatureSawed",
     "PlasticApplied": "PlasticApplied",
     "ProstheticUnsecured": "ProstheticUnsecured",
     "CavityWidened": "CavityWidened",
@@ -327,6 +328,7 @@ def state_requirements(surgery, step, markers):
             if translated and translated in (
                 "OrgansCut",
                 "BoneDrilled",
+                "FeatureSawed",
                 "PlasticApplied",
                 "CavityWidened",
             ):
@@ -340,6 +342,7 @@ def state_requirements(surgery, step, markers):
             "BoneSawed": ["BoneSawed"],
             "BoneDrilled": ["BoneDrilled"],
             "OrgansCut": ["OrgansCut"],
+            "FeatureSawed": ["FeatureSawed"],
             "CavityWidened": ["CavityWidened"],
         }
         result = []
@@ -386,6 +389,19 @@ def organ_components(surgery):
             names.append(entry["type"])
     return names
 
+
+ORGAN_OVERLAY = {
+    "WFSurgeryStepHealBrain": ("Mobs/Species/Human/organs.rsi", "brain"),
+    "WFSurgeryStepRepairBrain": ("Mobs/Species/Human/organs.rsi", "brain"),
+    "WFSurgeryStepHealEyes": ("Mobs/Species/Human/organs.rsi", "eyeball-l"),
+    "WFSurgeryStepHealHeart": ("Mobs/Species/Human/organs.rsi", "heart-on"),
+    "WFSurgeryStepHealLungs": ("Mobs/Species/Human/organs.rsi", "lung-l"),
+    "WFSurgeryStepHealLiver": ("Mobs/Species/Human/organs.rsi", "liver"),
+    "WFSurgeryStepHealStomach": ("Mobs/Species/Human/organs.rsi", "stomach"),
+    "WFSurgeryStepHealKidneys": ("Mobs/Species/Human/organs.rsi", "kidney-l"),
+    "WFSurgeryStepHealSlimeCore": ("Mobs/Species/Slime/organs.rsi", "brain-slime"),
+    "WFSurgeryStepRepairSlimeCore": ("Mobs/Species/Slime/organs.rsi", "brain-slime"),
+}
 
 ICON_BY_STEP = {
     "SurgeryStepOpenIncisionScalpel": ("_WF/Surgery/RadialIcons.rsi", "make_incision"),
@@ -590,6 +606,9 @@ def main():
                 operation["flags"] = flags
             if organ_types:
                 operation["organComponents"] = organ_types
+            if step_id in ORGAN_OVERLAY:
+                overlay_sprite, overlay_state = ORGAN_OVERLAY[step_id]
+                operation["overlayIcon"] = {"sprite": overlay_sprite, "state": overlay_state}
             if step_id == "SurgeryStepInsertFeature":
                 removed = components_of(surgery["entity"], "SurgeryPartRemovedCondition")
                 if removed:

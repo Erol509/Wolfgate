@@ -358,6 +358,8 @@
     speed: 1.0
   requiredStates:
   - SkinOpen
+  blockedStates:
+  - FeatureSawed
 - type: surgicalOperation
   id: WFOpSurgeryRemovePart_SurgeryStepRemoveFeature
   icon:
@@ -720,6 +722,9 @@
   partType: Head
   zones:
   - Head
+  overlayIcon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: brain
   flags:
   - Looping
   finishProcedure: true
@@ -743,6 +748,9 @@
   partType: Head
   zones:
   - Head
+  overlayIcon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: eyeball-l
   flags:
   - Looping
   finishProcedure: true
@@ -767,6 +775,9 @@
   zones:
   - Torso
   - Groin
+  overlayIcon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: heart-on
   flags:
   - Looping
   finishProcedure: true
@@ -791,6 +802,9 @@
   zones:
   - Torso
   - Groin
+  overlayIcon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: kidney-l
   flags:
   - Looping
   finishProcedure: true
@@ -815,6 +829,9 @@
   zones:
   - Torso
   - Groin
+  overlayIcon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: liver
   flags:
   - Looping
   finishProcedure: true
@@ -839,6 +856,9 @@
   zones:
   - Torso
   - Groin
+  overlayIcon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: lung-l
   flags:
   - Looping
   finishProcedure: true
@@ -863,6 +883,9 @@
   zones:
   - Torso
   - Groin
+  overlayIcon:
+    sprite: Mobs/Species/Slime/organs.rsi
+    state: brain-slime
   flags:
   - Looping
   finishProcedure: true
@@ -887,6 +910,9 @@
   zones:
   - Torso
   - Groin
+  overlayIcon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
   flags:
   - Looping
   finishProcedure: true
@@ -987,8 +1013,10 @@
   kind: Default
   priority: 10
   tools:
-  - anyItem: true
+  - component: BoneSetter
     speed: 1.0
+  - quality: Anchoring
+    speed: 2.0
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRemoveEmbeddedObjects_WFSurgeryStepExtractEmbedded
@@ -1099,6 +1127,9 @@
   partType: Head
   zones:
   - Head
+  overlayIcon:
+    sprite: Mobs/Species/Human/organs.rsi
+    state: brain
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairChassisEyes_WFSurgeryStepOpenServicePanel
@@ -1305,6 +1336,9 @@
   zones:
   - Torso
   - Groin
+  overlayIcon:
+    sprite: Mobs/Species/Slime/organs.rsi
+    state: brain-slime
   finishProcedure: true
 - type: surgicalOperation
   id: WFOpWFSurgeryRepairSynthCore_WFSurgeryStepUnseatCore

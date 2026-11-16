@@ -52,6 +52,7 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
     [Dependency] protected StandingStateSystem _standing = default!;
     [Dependency] protected SharedToolSystem _tools = default!;
     [Dependency] protected SurgicalSiteSystem _sites = default!;
+    [Dependency] protected WFSurgeryAffixSystem _affix = default!;
     [Dependency] protected Content.Shared._WF.Genitals.Systems.GenitalConsentSystem _genitalConsent = default!;
 
     private readonly Dictionary<EntProtoId, EntityUid> _singletons = new();
@@ -401,6 +402,7 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
             Description = description ?? Loc.GetString(operation.Description),
             ToolName = operation.RecommendedTool is { } rec ? Loc.GetString(rec) : GetRecommendedToolName(operation),
             Icon = operation.Icon ?? GetStepIcon(operation),
+            OverlayIcon = operation.OverlayIcon,
             Priority = operation.Flags.HasFlag(SurgicalOperationFlags.PriorityNextStep),
         };
     }
@@ -923,6 +925,7 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
             "SurgeryStepOpenIncisionScalpel" or "SurgeryStepCarefulIncisionScalpel" or
                 "SurgeryStepRetractSkin" => !_sites.HasSkin(part),
             "SurgeryStepClampBleeders" => !_sites.HasVessels(part),
+            "SurgeryStepClampInternalBleeders" => !_sites.HasVessels(part),
             "SurgeryStepSawBones" => !_sites.HasBones(part),
             _ => false,
         };
@@ -972,5 +975,10 @@ public abstract partial class SharedSurgicalOperationSystem : EntitySystem
         // YAML damage/heal effects on the step are part of its authored result.
         var damage = new SurgeryStepDamageChangeEvent(user, body, part, step);
         RaiseLocalEvent(step, ref damage);
+
+        // After the step handlers have attached the part, secure it so the limb is usable and the
+        // attachment operation stops being offered.
+        if (HasComp<WFSurgeryAffixOnCloseComponent>(step))
+            _affix.Affix(part);
     }
 }

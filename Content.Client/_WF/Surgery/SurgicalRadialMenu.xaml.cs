@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 
@@ -15,6 +16,10 @@ public sealed partial class SurgicalRadialMenu : RadialMenu
     {
         RobustXamlLoader.Load(this);
 
+        // Keep the wheel square and fixed: the ring and the central button share one centre.
+        SetSize = new Vector2(450, 450);
+        Resizable = false;
+
         // The contextual centre button closes the wheel, drawn like the operation slots.
         var rsi = IoCManager.Resolve<IResourceCache>().GetResource<RSIResource>(RsiPath).RSI;
         var normal = rsi["radial_center"].Frame0;
@@ -23,6 +28,8 @@ public sealed partial class SurgicalRadialMenu : RadialMenu
         {
             Texture = normal,
             SetSize = new Vector2(64, 64),
+            HorizontalAlignment = Control.HAlignment.Center,
+            VerticalAlignment = Control.VAlignment.Center,
             MouseFilter = MouseFilterMode.Ignore,
         };
 
@@ -30,5 +37,13 @@ public sealed partial class SurgicalRadialMenu : RadialMenu
         ContextualButton.ToolTip = Loc.GetString("surgery-radial-close");
         ContextualButton.OnMouseEntered += _ => icon.Texture = focus;
         ContextualButton.OnMouseExited += _ => icon.Texture = normal;
+    }
+
+    protected override Vector2 ArrangeOverride(Vector2 finalSize)
+    {
+        var result = base.ArrangeOverride(finalSize);
+        var center = finalSize * 0.5f;
+        LayoutContainer.SetPosition(ContextualButton, center - ContextualButton.Size * 0.5f);
+        return result;
     }
 }

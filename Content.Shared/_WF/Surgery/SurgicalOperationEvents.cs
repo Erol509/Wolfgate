@@ -41,6 +41,9 @@ public sealed class SurgicalOperationOption
     /// <summary>Radial icon.</summary>
     public SpriteSpecifier? Icon;
 
+    /// <summary>Small centre icon, such as the organ a repair operation treats.</summary>
+    public SpriteSpecifier? OverlayIcon;
+
     public bool Priority;
 
     /// <summary>Identifies this option within the current availability list.</summary>
@@ -64,6 +67,7 @@ public sealed class SurgicalRadialOption
     public string Description = string.Empty;
     public string Tool = string.Empty;
     public SpriteSpecifier? Icon;
+    public SpriteSpecifier? OverlayIcon;
     public bool Priority;
 
     public SurgicalRadialOption()
@@ -78,6 +82,7 @@ public sealed class SurgicalRadialOption
         Description = option.Description;
         Tool = option.ToolName;
         Icon = option.Icon;
+        OverlayIcon = option.OverlayIcon;
         Priority = option.Priority;
     }
 }

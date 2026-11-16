@@ -11,6 +11,7 @@ using Content.Shared._Shitmed.Targeting;
 using Content.Shared._WF.Surgery;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Standing;
 using NUnit.Framework;
@@ -307,13 +308,118 @@ public sealed class SurgeryOperationTest : WolfmedGameTest
 
         await Server.WaitAssertion(() =>
         {
-            Assert.That(Body.GetBodyChildrenOfType(patient, BodyPartType.Arm, symmetry: BodyPartSymmetry.Left),
-                Is.Not.Empty, "the attached left arm is not part of the body again.");
+            var attached = Body.GetBodyChildrenOfType(patient, BodyPartType.Arm, symmetry: BodyPartSymmetry.Left);
+            Assert.That(attached, Is.Not.Empty, "the attached left arm is not part of the body again.");
+            Assert.That(SEntMan.HasComponent<BodyPartReattachedComponent>(attached.First().Id), Is.False,
+                "attaching the limb should secure it immediately.");
+
+            Assert.That(Surgery.GetAvailableOperations(surgeon, patient, arm)
+                    .Any(option => option.Operation.ID.Contains("AttachLeftArm")),
+                Is.False, "a reattached arm should stop being offered for attachment.");
+
+            var coords = SEntMan.GetComponent<TransformComponent>(patient).Coordinates;
+            var scalpel = SEntMan.SpawnEntity("Scalpel", coords);
+            Hands.TryPickupAnyHand(surgeon, scalpel);
+            if (SEntMan.TryGetComponent<TargetingComponent>(surgeon, out var targeting))
+                targeting.Target = TargetBodyPart.LeftArm;
+
+            Assert.That(Surgery.GetAvailableOperations(surgeon, patient, scalpel)
+                    .Any(option => option.Operation.ID == "WFInciseSkin"),
+                Is.True, "the reattached limb should be operable again.");
 
             var host = SEntMan.GetComponent<WoundHostComponent>(patient);
             Assert.That(SEntMan.System<WoundSystem>().GetWounds(torso)
                     .Any(wound => wound.Comp.Prototype == host.AmputationConsequenceWound),
                 Is.False, "reattaching the limb should clear the stump wound.");
+        });
+    }
+
+    [Test]
+    public async Task AmputationStillWorksAfterSawing()
+    {
+        var (surgeon, patient, torso) = await SpawnPair();
+        EntityUid arm = default;
+        EntityUid saw = default;
+        EntityUid hemostat = default;
+
+        void SetActive(EntityUid item)
+        {
+            if (!SEntMan.TryGetComponent<HandsComponent>(surgeon, out var hands))
+                return;
+
+            foreach (var hand in hands.Hands.Values)
+            {
+                if (hand.HeldEntity != item)
+                    continue;
+
+                Hands.SetActiveHand(surgeon, hand);
+                return;
+            }
+        }
+
+        await Server.WaitAssertion(() =>
+        {
+            var coords = SEntMan.GetComponent<TransformComponent>(patient).Coordinates;
+            arm = Body.GetBodyChildrenOfType(patient, BodyPartType.Arm, symmetry: BodyPartSymmetry.Left).First().Id;
+            saw = SEntMan.SpawnEntity("Saw", coords);
+            hemostat = SEntMan.SpawnEntity("Hemostat", coords);
+            Assert.That(Hands.TryPickupAnyHand(surgeon, saw), Is.True);
+            Assert.That(Hands.TryPickupAnyHand(surgeon, hemostat), Is.True);
+            SetActive(saw);
+
+            SEntMan.EnsureComponent<IncisionOpenComponent>(arm);
+            SEntMan.EnsureComponent<SkinRetractedComponent>(arm);
+            SEntMan.EnsureComponent<BleedersClampedComponent>(arm);
+            Sites.Recalculate(arm);
+
+            if (SEntMan.TryGetComponent<TargetingComponent>(surgeon, out var targeting))
+                targeting.Target = TargetBodyPart.LeftArm;
+
+            var sawOption = Surgery.GetAvailableOperations(surgeon, patient, saw)
+                .FirstOrDefault(option => option.Operation.ID.Contains("SawFeature"));
+            Assert.That(sawOption, Is.Not.Null, "sawing the limb should still be offered.");
+            SetActive(saw);
+            Assert.That(Hands.GetActiveItem(surgeon), Is.EqualTo(saw), "the saw is not the active item.");
+            Surgery.StartOperation(surgeon, patient, saw, sawOption!);
+            Assert.That(SEntMan.HasComponent<Content.Shared.DoAfter.ActiveDoAfterComponent>(surgeon), Is.True,
+                "the saw do-after did not start.");
+        });
+
+        await RunSeconds(10);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(SEntMan.HasComponent<BodyPartSawedComponent>(arm), Is.True,
+                "the saw step did not leave its marker on the limb.");
+
+            var clamp = Surgery.GetAvailableOperations(surgeon, patient, hemostat)
+                .FirstOrDefault(option => option.Operation.ID == "WFClampInternalBleedersLimbs");
+            Assert.That(clamp, Is.Not.Null, "the limb's internal bleeders must be clampable after sawing.");
+            SetActive(hemostat);
+            Surgery.StartOperation(surgeon, patient, hemostat, clamp!);
+        });
+
+        await RunSeconds(6);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(SEntMan.HasComponent<InternalBleedersClampedComponent>(arm), Is.True,
+                "the clamp step did not leave its marker on the limb.");
+
+            var remove = Surgery.GetAvailableOperations(surgeon, patient, saw)
+                .FirstOrDefault(option => option.Operation.ID.Contains("RemoveFeature"));
+            Assert.That(remove, Is.Not.Null,
+                $"amputating the sawed limb should be offered after clamping. Options: {string.Join(", ", Surgery.GetAvailableOperations(surgeon, patient, saw).Select(option => option.Operation.ID))}");
+            SetActive(saw);
+            Surgery.StartOperation(surgeon, patient, saw, remove!);
+        });
+
+        await RunSeconds(20);
+
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(Body.GetBodyChildrenOfType(patient, BodyPartType.Arm, symmetry: BodyPartSymmetry.Left),
+                Is.Empty, "the amputated arm is still attached.");
         });
     }
 
@@ -363,6 +469,35 @@ public sealed class SurgeryOperationTest : WolfmedGameTest
 
             Assert.DoesNotThrow(() => Surgery.GetAvailableOperations(surgeon, arm, scalpel),
                 "validating a detached part must not dispatch to a patient-only body.");
+        });
+    }
+
+    [Test]
+    public async Task OrganIncisionIsNotOfferedOnLimbs()
+    {
+        var (surgeon, patient, torso) = await SpawnPair();
+
+        await Server.WaitAssertion(() =>
+        {
+            var arm = Body.GetBodyChildrenOfType(patient, BodyPartType.Arm, symmetry: BodyPartSymmetry.Left).First().Id;
+            SEntMan.EnsureComponent<SkinRetractedComponent>(arm);
+            Sites.Recalculate(arm);
+            if (SEntMan.TryGetComponent<TargetingComponent>(surgeon, out var targeting))
+                targeting.Target = TargetBodyPart.LeftArm;
+
+            var scalpel = SEntMan.SpawnEntity("Scalpel", SEntMan.GetComponent<TransformComponent>(patient).Coordinates);
+            Assert.That(Surgery.GetAvailableOperations(surgeon, patient, scalpel)
+                    .Any(option => option.Operation.ID == "WFInciseOrgans"),
+                Is.False, "organ incision belongs on the head or torso, not on a limb.");
+
+            SEntMan.EnsureComponent<SkinRetractedComponent>(torso);
+            Sites.Recalculate(torso);
+            if (SEntMan.TryGetComponent<TargetingComponent>(surgeon, out targeting))
+                targeting.Target = TargetBodyPart.Torso;
+
+            Assert.That(Surgery.GetAvailableOperations(surgeon, patient, scalpel)
+                    .Any(option => option.Operation.ID == "WFInciseOrgans"),
+                Is.True, "organ incision should still be offered on the torso.");
         });
     }
 

@@ -43,7 +43,22 @@ public sealed class SurgeryUiTest : GameTest
         await Client.WaitPost(() =>
         {
             var menu = new SurgicalRadialMenu();
-            Assert.That(menu.FindControl<Content.Client.UserInterface.Controls.RadialContainer>("Main"), Is.Not.Null);
+            var container = menu.FindControl<Content.Client.UserInterface.Controls.RadialContainer>("Main");
+            Assert.That(container, Is.Not.Null);
+
+            menu.Arrange(new Robust.Shared.Maths.UIBox2(0, 0, 450, 450));
+            var menuCenter = menu.Size / 2f;
+            var buttonCenter = menu.ContextualButton.Position + menu.ContextualButton.Size / 2f;
+            var ringCenter = container!.Position + container.Size / 2f;
+
+            Assert.That(buttonCenter.X, Is.EqualTo(menuCenter.X).Within(1f),
+                "the close button is not horizontally centred.");
+            Assert.That(buttonCenter.Y, Is.EqualTo(menuCenter.Y).Within(1f),
+                "the close button is not vertically centred.");
+            Assert.That(ringCenter.X, Is.EqualTo(menuCenter.X).Within(1f),
+                "the ring is not centred in the window.");
+            Assert.That(ringCenter.Y, Is.EqualTo(menuCenter.Y).Within(1f),
+                "the ring is not centred in the window.");
             menu.Dispose();
         });
     }
@@ -59,6 +74,9 @@ public sealed class SurgeryUiTest : GameTest
             {
                 if (operation.Icon != null)
                     Assert.DoesNotThrow(() => sprites.Frame0(operation.Icon), $"{operation.ID} icon does not resolve.");
+                if (operation.OverlayIcon != null)
+                    Assert.DoesNotThrow(() => sprites.Frame0(operation.OverlayIcon),
+                        $"{operation.ID} overlay icon does not resolve.");
             }
         });
     }
@@ -173,6 +191,8 @@ public sealed class SurgeryUiTest : GameTest
                 $"the next operations are not rendered. Buttons: {buttonText}");
             Assert.That(operationButtons.Any(button => button.Size.Y > 4f), Is.True,
                 $"the next operation button was laid out with no height. Sizes: {string.Join(", ", operationButtons.Select(button => button.Size))}");
+            Assert.That(operationButtons.Any(button => button.Label.Size.X > 4f), Is.True,
+                $"the next operation text was laid out with no width. Sizes: {string.Join(", ", operationButtons.Select(button => button.Label.Size))}");
         });
     }
 

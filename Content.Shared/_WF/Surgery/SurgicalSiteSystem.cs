@@ -49,6 +49,7 @@ public sealed partial class SurgicalSiteSystem : EntitySystem
         SubscribeMarker<RibcageSawedComponent>();
         SubscribeMarker<RibcageOpenComponent>();
         SubscribeMarker<BoneDrilledComponent>();
+        SubscribeMarker<BodyPartSawedComponent>();
         SubscribeMarker<PlasticAppliedComponent>();
         SubscribeMarker<ProstheticUnsecuredComponent>();
         SubscribeMarker<CavityWidenedComponent>();
@@ -124,6 +125,8 @@ public sealed partial class SurgicalSiteSystem : EntitySystem
             state |= SurgeryState.VesselsUnclamped;
         if (HasComp<RibcageSawedComponent>(part) || HasComp<RibcageOpenComponent>(part))
             state |= SurgeryState.BoneSawed;
+        if (HasComp<BodyPartSawedComponent>(part))
+            state |= SurgeryState.FeatureSawed;
         if (HasComp<BoneDrilledComponent>(part))
             state |= SurgeryState.BoneDrilled;
         if (HasComp<InternalBleedersClampedComponent>(part))
@@ -268,6 +271,9 @@ public sealed partial class SurgicalSiteSystem : EntitySystem
                 break;
             case SurgeryState.BoneDrilled:
                 SetMarker<BoneDrilledComponent>(part, value);
+                break;
+            case SurgeryState.FeatureSawed:
+                SetMarker<BodyPartSawedComponent>(part, value);
                 break;
             case SurgeryState.PlasticApplied:
                 SetMarker<PlasticAppliedComponent>(part, value);
