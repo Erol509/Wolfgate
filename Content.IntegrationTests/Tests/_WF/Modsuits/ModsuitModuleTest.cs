@@ -3,7 +3,9 @@ using System.Linq;
 using System.Numerics;
 using Content.Client._WF.Modsuits;
 using Content.Client.Overlays;
+using Content.Server.Damage.Systems;
 using Content.Server.Medical.Components;
+using Content.Server.Weapons.Melee;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared._WF.ArmorSpecialization;
@@ -15,7 +17,10 @@ using Content.Shared.Actions;
 using Content.Shared.Armor;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -32,6 +37,7 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Wires;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -387,9 +393,9 @@ public sealed class ModsuitModuleTest
         await pair.CleanReturnAsync();
     }
 
-    /// <summary>The RX-01 parts only name sprite states that exist in their RSIs.</summary>
+    /// <summary>The Monolith control units and parts only name sprite states that exist in their RSIs.</summary>
     [Test]
-    public async Task RogueModSuitPartsHaveAllSpriteStates()
+    public async Task MonoModSuitPartsHaveAllSpriteStates()
     {
         await using var pair = await PoolManager.GetServerClient();
         var client = pair.Client;
@@ -398,12 +404,35 @@ public sealed class ModsuitModuleTest
 
         await client.WaitAssertion(() =>
         {
+            var missing = new List<string>();
+
             foreach (var id in new[]
                      {
+                         "ClothingModsuitUSSPVaryag",
+                         "ClothingModsuitUSSPZastavnik",
+                         "ClothingModsuitRogue",
+                         "ClothingModsuitVolta",
+                         "ClothingModsuitMercenary",
+                         "ClothingModsuitHelmetUSSPVaryag",
+                         "ClothingModsuitHelmetUSSPZastavnik",
                          "ClothingModsuitHelmetRogue",
+                         "ClothingModsuitHelmetVolta",
+                         "ClothingModsuitHelmetMercenary",
+                         "ClothingModsuitChestplateUSSPVaryag",
+                         "ClothingModsuitChestplateUSSPZastavnik",
                          "ClothingModsuitChestplateRogue",
+                         "ClothingModsuitChestplateVolta",
+                         "ClothingModsuitChestplateMercenary",
+                         "ClothingModsuitGauntletsUSSPVaryag",
+                         "ClothingModsuitGauntletsUSSPZastavnik",
                          "ClothingModsuitGauntletsRogue",
+                         "ClothingModsuitGauntletsVolta",
+                         "ClothingModsuitGauntletsMercenary",
+                         "ClothingModsuitBootsUSSPVaryag",
+                         "ClothingModsuitBootsUSSPZastavnik",
                          "ClothingModsuitBootsRogue",
+                         "ClothingModsuitBootsVolta",
+                         "ClothingModsuitBootsMercenary",
                      })
             {
                 var proto = prototypes.Index<EntityPrototype>(id);
@@ -419,8 +448,8 @@ public sealed class ModsuitModuleTest
                         if (layer.RsiPath != null || layer.State is not { } state)
                             continue;
 
-                        Assert.That(rsi!.TryGetState(state, out _), Is.True,
-                            $"{proto.ID} names missing sealed sprite state {state} in {rsi.Path}");
+                        if (!rsi!.TryGetState(state, out _))
+                            missing.Add($"{proto.ID} names missing sealed sprite state {state} in {rsi.Path}");
                     }
                 }
 
@@ -431,11 +460,13 @@ public sealed class ModsuitModuleTest
                         if (layer.RsiPath != null || layer.State is not { } state)
                             continue;
 
-                        Assert.That(rsi!.TryGetState(state, out _), Is.True,
-                            $"{proto.ID} names missing clothing sprite state {state} in {rsi.Path}");
+                        if (!rsi!.TryGetState(state, out _))
+                            missing.Add($"{proto.ID} names missing clothing sprite state {state} in {rsi.Path}");
                     }
                 }
             }
+
+            Assert.That(missing, Is.Empty, string.Join("\n", missing));
         });
 
         await pair.CleanReturnAsync();
@@ -987,6 +1018,9 @@ public sealed class ModsuitModuleTest
     /// <summary>Installing an action module into a worn suit hands its action to the wearer.</summary>
     [Test]
     public async Task ActionModulesInstallOnAWornSuit()
+    /// <summary>The sanitater suit's built-in passive gives its gauntlets a free, unremovable healing punch.</summary>
+    [Test]
+    public async Task ParamedicSuitGrantsHealingGauntlets()
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
@@ -998,6 +1032,9 @@ public sealed class ModsuitModuleTest
         var map = await pair.CreateTestMap();
 
         EntityUid human = default;
+        var map = await pair.CreateTestMap();
+
+        EntityUid wearer = default;
         EntityUid suit = default;
 
         await server.WaitPost(() =>
@@ -1227,6 +1264,23 @@ public sealed class ModsuitModuleTest
             Assert.That(hands.TryDrop(mob, gun, checkActionBlocker: false), Is.True);
         });
 
+            wearer = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            suit = entMan.SpawnEntity("ClothingModsuitParamedicPowerCell", map.GridCoords);
+            Assert.That(inventory.TryEquip(wearer, suit, "back", force: true), Is.True);
+        });
+        await server.WaitRunTicks(5);
+
+        await server.WaitAssertion(() =>
+        {
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            var module = comp.ModulesContainer.ContainedEntities.Single(m =>
+                entMan.GetComponent<MetaDataComponent>(m).EntityPrototype?.ID == "ModsuitModuleBuiltinHealingHands");
+            var moduleComp = entMan.GetComponent<ModModuleComponent>(module);
+            Assert.That(moduleComp.Removable, Is.False, "The healing hands module should be built in.");
+            Assert.That(moduleComp.IdlePower, Is.Zero);
+            Assert.That(moduleComp.ActivePower, Is.Zero);
+            Assert.That(modSuit.TryDeployPart((suit, comp), "gloves", wearer), Is.True);
+        });
         await server.WaitRunTicks(60);
 
         await server.WaitAssertion(() =>
@@ -1262,6 +1316,26 @@ public sealed class ModsuitModuleTest
 
             Assert.That(hands.TryDrop(mob, gun, checkActionBlocker: false), Is.True);
             Assert.That(entMan.GetComponent<GunComponent>(gun).Holder, Is.Null);
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            var gloves = modSuit.GetPart((suit, comp), "gloves");
+            Assert.That(gloves, Is.Not.Null);
+            Assert.That(entMan.TryGetComponent<MeleeWeaponComponent>(gloves!.Value, out var melee), Is.True,
+                "The healing hands module did not give the gauntlets a melee attack.");
+            Assert.That(melee!.Damage.GetTotal() < 0, Is.True,
+                "The gauntlets should heal on hit, not deal positive damage.");
+
+            var target = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            entMan.System<SharedCombatModeSystem>().SetInCombatMode(wearer, true);
+            var damageable = entMan.System<DamageableSystem>();
+            damageable.TryChangeDamage(target,
+                new DamageSpecifier { DamageDict = { ["Blunt"] = 20 } }, ignoreResistances: true);
+            var hurt = entMan.GetComponent<DamageableComponent>(target).TotalDamage;
+
+            Assert.That(entMan.System<MeleeWeaponSystem>()
+                    .AttemptLightAttack(wearer, gloves.Value, melee, target),
+                Is.True, "The healing gauntlets refused the punch.");
+            var healed = entMan.GetComponent<DamageableComponent>(target).TotalDamage;
+            Assert.That(healed, Is.LessThan(hurt), "The punch did not heal the target.");
         });
 
         await pair.CleanReturnAsync();
