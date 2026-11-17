@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Client._WF.Modsuits;
 using Content.Client.Overlays;
 using Content.Server.Medical.Components;
@@ -20,6 +21,8 @@ using Content.Shared.Explosion.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Players;
 using Content.Shared.Power.Components;
@@ -873,6 +876,114 @@ public sealed class ModsuitModuleTest
         await pair.CleanReturnAsync();
     }
 
+    /// <summary>A wearer who stops being able to interact cannot start a kinesis grab.</summary>
+    [Test]
+    public async Task KinesisRejectsGrabsWhileIncapacitated()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var kinesis = entMan.System<ModKinesisSystem>();
+        var mobs = entMan.System<MobStateSystem>();
+        var map = await pair.CreateTestMap();
+
+        await server.WaitAssertion(() =>
+        {
+            var user = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            var target = entMan.SpawnEntity("WeaponPistolMk58", map.GridCoords);
+            var module = entMan.SpawnEntity("ModsuitModuleKinesis", map.GridCoords);
+            var comp = entMan.GetComponent<ModKinesisModuleComponent>(module);
+
+            Assert.That(kinesis.CanGrab((module, comp), user, target), Is.True,
+                "a healthy wearer should be able to grab");
+
+            mobs.ChangeMobState(user, MobState.Critical);
+
+            Assert.That(kinesis.CanGrab((module, comp), user, target), Is.False,
+                "a critical wearer grabbed an object");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>Client cursor coordinates that do not resolve to a finite map position are rejected.</summary>
+    [Test]
+    public async Task KinesisRejectsInvalidCursorCoordinates()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var kinesis = entMan.System<ModKinesisSystem>();
+        var map = await pair.CreateTestMap();
+
+        await server.WaitAssertion(() =>
+        {
+            var netMap = entMan.GetNetEntity(map.MapUid);
+
+            Assert.That(kinesis.TryGetCursor(new NetCoordinates(netMap, new Vector2(float.NaN, 0f)), out _),
+                Is.False, "a NaN cursor was accepted");
+            Assert.That(kinesis.TryGetCursor(new NetCoordinates(netMap, new Vector2(1f, 2f)), out var cursor),
+                Is.True, "a valid cursor was rejected");
+            Assert.That(cursor.Position, Is.EqualTo(new Vector2(1f, 2f)));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The kinesis highlight tints a held sprite and puts its colour back on release.</summary>
+    [Test]
+    public async Task KinesisHighlightTintsAndRestoresHeldSprite()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var server = pair.Server;
+        var client = pair.Client;
+        var entMan = server.EntMan;
+        var cEntMan = client.EntMan;
+        var minds = entMan.System<SharedMindSystem>();
+        var session = server.PlayerMan.GetSessionById(client.Session!.UserId);
+        var map = await pair.CreateTestMap();
+
+        NetEntity gun = default;
+
+        await server.WaitPost(() =>
+        {
+            minds.WipeMind(session.ContentData()?.Mind);
+            var wearer = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            minds.TransferTo(minds.CreateMind(session.UserId).Owner, wearer);
+            gun = entMan.GetNetEntity(entMan.SpawnEntity("WeaponPistolMk58", map.GridCoords));
+        });
+        await pair.RunTicksSync(20);
+
+        Color original = default;
+        await client.WaitAssertion(() =>
+        {
+            Assert.That(cEntMan.TryGetEntity(gun, out var item), Is.True, "the client never received the held item");
+            original = cEntMan.GetComponent<SpriteComponent>(item!.Value).Color;
+        });
+
+        await server.WaitPost(() =>
+            entMan.AddComponent<ModKinesisHeldComponent>(entMan.GetEntity(gun)));
+        await pair.RunTicksSync(5);
+
+        await client.WaitAssertion(() =>
+        {
+            var sprite = cEntMan.GetComponent<SpriteComponent>(cEntMan.GetEntity(gun));
+            Assert.That(sprite.Color, Is.Not.EqualTo(original), "the held sprite was not highlighted");
+        });
+
+        await server.WaitPost(() =>
+            entMan.RemoveComponent<ModKinesisHeldComponent>(entMan.GetEntity(gun)));
+        await pair.RunTicksSync(5);
+
+        await client.WaitAssertion(() =>
+        {
+            var sprite = cEntMan.GetComponent<SpriteComponent>(cEntMan.GetEntity(gun));
+            Assert.That(sprite.Color, Is.EqualTo(original), "the held sprite kept its highlight after release");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
     /// <summary>Installing an action module into a worn suit hands its action to the wearer.</summary>
     [Test]
     public async Task ActionModulesInstallOnAWornSuit()
@@ -1034,7 +1145,8 @@ public sealed class ModsuitModuleTest
 
             var balloon = hands.EnumerateHeld(user).Single();
             Assert.That(entMan.GetComponent<MetaDataComponent>(balloon).EntityPrototype?.ID, Does.StartWith("ModsuitBalloon"));
-            Assert.That(entMan.GetComponent<TagComponent>(balloon).Tags, Does.Contain("Balloon"));
+            Assert.That(entMan.System<TagSystem>().HasTag(balloon, "Balloon"), Is.True,
+                "the balloon module should spawn something tagged as a balloon");
         });
 
         await pair.CleanReturnAsync();
