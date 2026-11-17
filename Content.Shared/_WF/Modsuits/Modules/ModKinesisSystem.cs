@@ -32,7 +32,18 @@ public sealed partial class ModKinesisSystem : VirtualController
     private const float LeashSlack = 1.5f;
     private const float ThrowDistanceFactor = 0.6f;
 
-    [SubscribeLocalEvent]
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ModKinesisModuleComponent, ModModuleActivatedEvent>(OnActivated);
+        SubscribeLocalEvent<ModKinesisModuleComponent, ModModuleDeactivatedEvent>(OnDeactivated);
+        SubscribeLocalEvent<ModKinesisModuleComponent, ModSuitWearerChangedEvent>(OnWearerChanged);
+        SubscribeNetworkEvent<ModKinesisGrabEvent>(OnGrab);
+        SubscribeNetworkEvent<ModKinesisCursorEvent>(OnCursor);
+        SubscribeNetworkEvent<ModKinesisReleaseEvent>(OnRelease);
+    }
+
     private void OnActivated(Entity<ModKinesisModuleComponent> ent, ref ModModuleActivatedEvent args)
     {
         if (_timing.ApplyingState || args.Wearer is not { } wearer)
@@ -46,13 +57,11 @@ public sealed partial class ModKinesisSystem : VirtualController
         Dirty(ent);
     }
 
-    [SubscribeLocalEvent]
     private void OnDeactivated(Entity<ModKinesisModuleComponent> ent, ref ModModuleDeactivatedEvent args)
     {
         Stop(ent);
     }
 
-    [SubscribeLocalEvent]
     private void OnWearerChanged(Entity<ModKinesisModuleComponent> ent, ref ModSuitWearerChangedEvent args)
     {
         Stop(ent);
@@ -74,7 +83,6 @@ public sealed partial class ModKinesisSystem : VirtualController
         Dirty(ent);
     }
 
-    [SubscribeNetworkEvent]
     private void OnGrab(ModKinesisGrabEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { } user
@@ -104,7 +112,6 @@ public sealed partial class ModKinesisSystem : VirtualController
         module.Comp.HoldStream = _audio.PlayPvs(module.Comp.HoldSound, target.Value)?.Entity;
     }
 
-    [SubscribeNetworkEvent]
     private void OnCursor(ModKinesisCursorEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { } user || !TryGetModule(user, out var module))
@@ -113,7 +120,6 @@ public sealed partial class ModKinesisSystem : VirtualController
         module.Comp.Cursor = TransformSystem.ToMapCoordinates(GetCoordinates(msg.Cursor));
     }
 
-    [SubscribeNetworkEvent]
     private void OnRelease(ModKinesisReleaseEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is { } user && TryGetModule(user, out var module))

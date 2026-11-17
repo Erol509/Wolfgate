@@ -5,14 +5,19 @@ using Content.Client.Overlays;
 using Content.Server.Medical.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared._WF.ArmorSpecialization;
 using Content.Shared._WF.Modsuits;
 using Content.Shared._WF.Modsuits.Components;
+using Content.Shared._WF.Modsuits.Modules;
 using Content.Shared._WF.Modsuits.Systems;
+using Content.Shared.Actions;
 using Content.Shared.Armor;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Movement.Components;
@@ -22,6 +27,8 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Tag;
+using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Wires;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -862,6 +869,288 @@ public sealed class ModsuitModuleTest
         await pair.RunTicksSync(20);
 
         await client.WaitAssertion(() => Assert.That(Overlay(), Is.False, "The night vision overlay stayed on."));
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>Installing an action module into a worn suit hands its action to the wearer.</summary>
+    [Test]
+    public async Task ActionModulesInstallOnAWornSuit()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var modSuit = entMan.System<ModSuitSystem>();
+        var inventory = entMan.System<InventorySystem>();
+        var wires = entMan.System<SharedWiresSystem>();
+        var actions = entMan.System<SharedActionsSystem>();
+        var map = await pair.CreateTestMap();
+
+        EntityUid human = default;
+        EntityUid suit = default;
+
+        await server.WaitPost(() =>
+        {
+            human = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            suit = entMan.SpawnEntity("ClothingModsuitStandardPowerCell", map.GridCoords);
+            Assert.That(inventory.TryEquip(human, suit, "back", silent: true, force: true));
+        });
+
+        await server.WaitRunTicks(1);
+
+        await server.WaitAssertion(() =>
+        {
+            var panel = entMan.GetComponent<WiresPanelComponent>(suit);
+            Assert.That(wires.TogglePanel(suit, panel, true, human));
+
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+            EntityUid Install(string proto)
+            {
+                var module = entMan.SpawnEntity(proto, map.GridCoords);
+                Assert.That(modSuit.TryInstallModule((suit, comp), module, human), Is.True,
+                    $"installing {proto} failed");
+                return module;
+            }
+
+            var recycler = Install("ModsuitModuleRecycler");
+            var recyclerComp = entMan.GetComponent<ModRecyclerModuleComponent>(recycler);
+            Assert.That(actions.TryGetActionData(recyclerComp.UnloadActionEntity, out var unload), Is.True,
+                "the recycler should create its unload action");
+            Assert.That(unload!.AttachedEntity, Is.EqualTo(human), "the recycler action should belong to the wearer");
+
+            var assistant = Install("ModsuitModuleShootingAssistant");
+            var assistantComp = entMan.GetComponent<ModShootingAssistantModuleComponent>(assistant);
+            Assert.That(actions.TryGetActionData(assistantComp.CycleActionEntity, out var cycle), Is.True,
+                "the shooting assistant should create its cycle action");
+            Assert.That(cycle!.AttachedEntity, Is.EqualTo(human), "the assistant action should belong to the wearer");
+
+            var stamper = entMan.SpawnEntity("ModsuitModuleStamper", map.GridCoords);
+            var selectorComp = entMan.GetComponent<ModDeviceSelectorComponent>(stamper);
+            Assert.That(selectorComp.SelectActionEntity, Is.Not.Null, "the stamper should create its action on spawn");
+            Assert.That(modSuit.TryInstallModule((suit, comp), stamper, human), Is.True, "installing the stamper failed");
+            Assert.That(actions.TryGetActionData(selectorComp.SelectActionEntity, out var select), Is.True,
+                "the stamper should create its select action");
+            Assert.That(select!.AttachedEntity, Is.EqualTo(human), "the stamper action should belong to the wearer");
+
+            Install("ModsuitModuleHatStabilizer");
+            Assert.That(entMan.HasComponent<ModHatHolderComponent>(comp.PartEntities["head"]), Is.True,
+                "the hat stabilizer should add its hat slot to the helmet");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The department MODsuit chestplates keep their old hardsuit armor specializations.</summary>
+    [Test]
+    public async Task DepartmentChestplatesKeepArmorSpecializations()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var prototypes = server.ResolveDependency<IPrototypeManager>();
+        var factory = server.ResolveDependency<IComponentFactory>();
+
+        await server.WaitAssertion(() =>
+        {
+            void Has<T>(string id) where T : IComponent
+            {
+                var proto = prototypes.Index<EntityPrototype>(id);
+                Assert.That(proto.HasComp(typeof(T), factory), Is.True,
+                    $"{id} lost its {typeof(T).Name}");
+            }
+
+            Has<WFWoundWardComponent>("ClothingModsuitChestplateStandard");
+            Has<WFWoundWardComponent>("ClothingModsuitChestplateSecurity");
+            Has<WFBlastLinerComponent>("ClothingModsuitChestplateHeadOfSecurity");
+            Has<WFWoundWardComponent>("ClothingModsuitChestplateHeadOfSecurity");
+            Has<WFSteadyHandsComponent>("ClothingModsuitChestplateParamedic");
+            Has<WFStasisWeaveComponent>("ClothingModsuitChestplateParamedic");
+            Has<WFPlasmaReserveComponent>("ClothingModsuitChestplateParamedic");
+            Has<WFServoAssistComponent>("ClothingModsuitChestplateEngineer");
+            Has<WFWoundWardComponent>("ClothingModsuitChestplateEngineer");
+            Has<WFAblativeCoatComponent>("ClothingModsuitChestplateAtmostech");
+            Has<WFWoundWardComponent>("ClothingModsuitChestplateAtmostech");
+            Has<WFEmpHardenedComponent>("ClothingModsuitChestplateResearchDirector");
+            Has<WFDeconCoatingComponent>("ClothingModsuitChestplateResearchDirector");
+            Has<WFEmpHardenedComponent>("ClothingModsuitChestplateCaptain");
+            Has<WFWoundWardComponent>("ClothingModsuitChestplateCaptain");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The controller-based modules receive activation events and set up their state.</summary>
+    [Test]
+    public async Task ControllerModulesActivate()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var map = await pair.CreateTestMap();
+
+        await server.WaitAssertion(() =>
+        {
+            var wearer = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            var suit = entMan.SpawnEntity("ClothingModsuitStandardPowerCell", map.GridCoords);
+            var activated = new ModModuleActivatedEvent(suit, wearer);
+
+            var kinesis = entMan.SpawnEntity("ModsuitModuleKinesis", map.GridCoords);
+            entMan.EventBus.RaiseLocalEvent(kinesis, ref activated);
+            Assert.That(entMan.HasComponent<ModKinesisUserComponent>(wearer), Is.True,
+                "The kinesis module did not register its user.");
+
+            var dampener = entMan.SpawnEntity("ModsuitModuleProjectileDampener", map.GridCoords);
+            entMan.EventBus.RaiseLocalEvent(dampener, ref activated);
+            Assert.That(entMan.HasComponent<ModDampenerFieldComponent>(wearer), Is.True,
+                "The projectile dampener did not create its field.");
+
+            var assistant = entMan.SpawnEntity("ModsuitModuleShootingAssistant", map.GridCoords);
+            entMan.EventBus.RaiseLocalEvent(assistant, ref activated);
+            Assert.That(entMan.HasComponent<ModShootingAssistantComponent>(wearer), Is.True,
+                "The shooting assistant did not attach to the wearer.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The balloon blower spawns a real balloon, not a copy of its own module.</summary>
+    [Test]
+    public async Task BalloonBlowerSpawnsBalloons()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var hands = entMan.System<SharedHandsSystem>();
+        var map = await pair.CreateTestMap();
+
+        await server.WaitAssertion(() =>
+        {
+            var user = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            var suit = entMan.SpawnEntity("ClothingModsuitStandardPowerCell", map.GridCoords);
+            var module = entMan.SpawnEntity("ModsuitModuleBalloonBlower", map.GridCoords);
+
+            var used = new ModModuleUsedEvent(suit, user);
+            entMan.EventBus.RaiseLocalEvent(module, ref used);
+            Assert.That(used.Handled, Is.True);
+
+            var balloon = hands.EnumerateHeld(user).Single();
+            Assert.That(entMan.GetComponent<MetaDataComponent>(balloon).EntityPrototype?.ID, Does.StartWith("ModsuitBalloon"));
+            Assert.That(entMan.GetComponent<TagComponent>(balloon).Tags, Does.Contain("Balloon"));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The pepper shoulders module releases tear gas, not capsaicin oil.</summary>
+    [Test]
+    public async Task PepperShouldersUseTearGas()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var prototypes = pair.Server.ResolveDependency<IPrototypeManager>();
+        var factory = pair.Server.ResolveDependency<IComponentFactory>();
+
+        await pair.Server.WaitAssertion(() =>
+        {
+            var proto = prototypes.Index<EntityPrototype>("ModsuitPepperSmokeEffect");
+            Assert.That(proto.TryGetComponent<SmokeOnTriggerComponent>(out var smoke, factory), Is.True);
+            Assert.That(smoke!.Solution.Contents.Any(c => c.Reagent.Prototype == "TearGas"), Is.True,
+                "The pepper shoulders module should release TearGas.");
+            Assert.That(smoke.Solution.Contents.Any(c => c.Reagent.Prototype == "CapsaicinOil"), Is.False,
+                "The pepper shoulders module should no longer release CapsaicinOil.");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The joint torsion description promises stacking, and the module must allow it.</summary>
+    [Test]
+    public async Task JointTorsionModulesStack()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var modSuit = entMan.System<ModSuitSystem>();
+        var containers = entMan.System<SharedContainerSystem>();
+        var map = await pair.CreateTestMap();
+
+        await server.WaitAssertion(() =>
+        {
+            var suit = entMan.SpawnEntity("ClothingModsuitStandardPowerCell", map.GridCoords);
+            var first = entMan.SpawnEntity("ModsuitModuleJointTorsion", map.GridCoords);
+            var second = entMan.SpawnEntity("ModsuitModuleJointTorsion", map.GridCoords);
+            var comp = entMan.GetComponent<ModSuitComponent>(suit);
+
+            Assert.That(containers.Insert(first, comp.ModulesContainer), Is.True);
+            Assert.That(modSuit.CanInstallModule((suit, comp),
+                (second, entMan.GetComponent<ModModuleComponent>(second)), out var reason, ignorePanel: true),
+                Is.True, $"a second joint torsion module should install: {reason}");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>A magnetic harness catches a gun dropped from the hand in suit storage.</summary>
+    [Test]
+    public async Task MagneticHarnessCatchesDroppedGun()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var hands = entMan.System<SharedHandsSystem>();
+        var inventory = entMan.System<InventorySystem>();
+        var map = await pair.CreateTestMap();
+
+        EntityUid mob = default;
+        EntityUid gun = default;
+
+        await server.WaitPost(() =>
+        {
+            mob = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            gun = entMan.SpawnEntity("WeaponPistolMk58", map.GridCoords);
+            entMan.EnsureComponent<ModMagneticHarnessComponent>(mob);
+
+            Assert.That(hands.TryPickupAnyHand(mob, gun), Is.True);
+            Assert.That(entMan.TryGetComponent<ModMagnetizedGunComponent>(gun, out var magnetized), Is.True);
+            Assert.That(magnetized!.Slot, Is.EqualTo("suitstorage"));
+
+            Assert.That(hands.TryDrop(mob, gun, checkActionBlocker: false), Is.True);
+        });
+
+        await server.WaitRunTicks(60);
+
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(inventory.TryGetSlotEntity(mob, "suitstorage", out var caught), Is.True,
+                "The magnetic harness did not put the dropped gun into suit storage.");
+            Assert.That(caught, Is.EqualTo(gun));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>The shooting assistant needs the gun's holder set while the gun is in hand.</summary>
+    [Test]
+    public async Task ShootingAssistantSeesGunHolder()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var hands = entMan.System<SharedHandsSystem>();
+        var map = await pair.CreateTestMap();
+
+        EntityUid mob = default;
+        EntityUid gun = default;
+
+        await server.WaitPost(() =>
+        {
+            mob = entMan.SpawnEntity("MobHuman", map.GridCoords);
+            gun = entMan.SpawnEntity("WeaponPistolMk58", map.GridCoords);
+
+            Assert.That(hands.TryPickupAnyHand(mob, gun), Is.True);
+            Assert.That(entMan.GetComponent<GunComponent>(gun).Holder, Is.EqualTo(mob));
+
+            Assert.That(hands.TryDrop(mob, gun, checkActionBlocker: false), Is.True);
+            Assert.That(entMan.GetComponent<GunComponent>(gun).Holder, Is.Null);
+        });
 
         await pair.CleanReturnAsync();
     }
