@@ -7888,3 +7888,36 @@ Entries:
   id: 100501
   time: '2026-11-17T13:22:37.0000000+00:00'
   url: https://github.com/VanguardControl/Wolfgate/pull/715
+- author: Happyowl93
+  changes:
+    - type: Add
+      message: >-
+        Narcotics buyers remember who sells to them. Sell too much at once and
+        the price drops, and the buyer's manner hints at how close you are.
+    - type: Add
+      message: >-
+        Narcotics and smuggling sales tip off Caelestinus Security, the TSF and
+        the PDV. Heavy sellers get described, and customs puts a paying warrant
+        on the heaviest.
+    - type: Add
+      message: A large narcotics stockpile aboard a ship shows on radar.
+    - type: Tweak
+      message: >-
+        Smuggling crates sell for 30,000 thlr, up from 20,000, and draw the same
+        heat as narcotics.
+    - type: Tweak
+      message: Narcotics hand in at a contraband pallet for more the more they hold.
+    - type: Remove
+      message: Customs no longer flags smuggling crate sales at random.
+  id: 100502
+  time: '2026-11-18T09:32:24.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/721
+- author: ImogenOC
+  changes:
+    - type: Tweak
+      message: >-
+        Status alerts move to the left of the chat box when it is expanded, so
+        they never get pushed off screen.
+  id: 100503
+  time: '2026-11-18T11:03:48.0000000+00:00'
+  url: https://github.com/VanguardControl/Wolfgate/pull/712

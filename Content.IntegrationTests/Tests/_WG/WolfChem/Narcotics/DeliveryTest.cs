@@ -1,4 +1,3 @@
-using Content.Server._Mono.Cargo;
 using Content.Server._WG.WolfChem.Narcotics;
 using Content.Server._WG.WolfChem.Neuroware;
 using Content.Server.Body.Components;
@@ -139,7 +138,7 @@ public sealed class DeliveryTest
 
     /// <summary>
     /// Anything holding a street drug, a beaker or a storage tank as much as a baggie, and a blank stick that takes a copy, is a
-    /// narcotic like the ready-made ones: tagged, contraband and reported on sale. Emptied, or holding something
+    /// narcotic like the ready-made ones: tagged, contraband and counted as stock. Emptied, or holding something
     /// harmless, it is not.
     /// </summary>
     [Test]
@@ -158,7 +157,7 @@ public sealed class DeliveryTest
             bool Marked(EntityUid uid)
             {
                 var tagged = tags.HasTag(uid, WGNarcoticGoodsSystem.Tag);
-                Assert.That(entMan.HasComponent<SoldAlertComponent>(uid), Is.EqualTo(tagged));
+                Assert.That(entMan.HasComponent<WGNarcoticStockComponent>(uid), Is.EqualTo(tagged));
                 Assert.That(entMan.HasComponent<ContrabandComponent>(uid), Is.EqualTo(tagged));
                 Assert.That(entMan.HasComponent<ItemTaxComponent>(uid), Is.EqualTo(tagged));
                 return tagged;

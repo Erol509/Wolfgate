@@ -611,6 +611,9 @@ Standalone edits outside `_WG` that serve no module: files with an untagged `WOL
 - [`Resources/Prototypes/Recipes/Construction/Graphs/utilities/atmos_binary.yml`](../../Resources/Prototypes/Recipes/Construction/Graphs/utilities/atmos_binary.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/Recipes/Construction/Graphs/utilities/atmos_trinary.yml`](../../Resources/Prototypes/Recipes/Construction/Graphs/utilities/atmos_trinary.yml): restore the licence header removed by Kill Spdx
 - [`Resources/Prototypes/Recipes/Construction/structures.yml`](../../Resources/Prototypes/Recipes/Construction/structures.yml): restore the licence header removed by Kill Spdx
+- [`Resources/Prototypes/Recipes/Reactions/pyrotechnic.yml`](../../Resources/Prototypes/Recipes/Reactions/pyrotechnic.yml)
+  - only a batch overheated past 400 K explodes, so a controlled one can be made
+  - the explosion popup shows only when it explodes
 - [`Resources/Prototypes/Shaders/displacement.yml`](../../Resources/Prototypes/Shaders/displacement.yml): wizden#38042, displacement without the stencil test, which hid displaced layers in UI sprite views
 - [`Resources/ServerInfo/_Mono/Guidebook/Rules/Conflict/Four_PortStriking.xml`](../../Resources/ServerInfo/_Mono/Guidebook/Rules/Conflict/Four_PortStriking.xml)
   - fixed broken link, was MonolithRuleRoleplayEightSafeZones
