@@ -38,6 +38,7 @@
     - ModsuitModuleHeadProtector
     inbuiltModules:
     - ModsuitModuleBuiltinInsulation
+    - ModsuitModuleVoidBoots
   # WOLFGATE(Modsuits): a MOD core replaces the power cell
   - type: ItemSlots
     slots:
@@ -117,8 +118,6 @@
   components:
   - type: Sprite
     sprite: _WG/Asf/Clothing/Shoes/modsuit.rsi
-  - type: Magboots # voidboots: hold on outside a grid too
-    requiresGrid: false
 
 # Aegis: same armour, plus a hardlight personal shield in the control unit; grey armour so it reads apart
 
@@ -166,6 +165,7 @@
     inbuiltModules:
     - ModsuitModuleBuiltinInsulation
     - ModsuitModuleBuiltinAegisShield
+    - ModsuitModuleVoidBoots
   # WOLFGATE(Modsuits): a MOD core replaces the power cell
   - type: ItemSlots
     slots:

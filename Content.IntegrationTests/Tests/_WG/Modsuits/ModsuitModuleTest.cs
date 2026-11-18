@@ -1434,9 +1434,18 @@ public sealed class ModsuitModuleTest
             }
 
             HasModule("WGAsfClothingModsuitFieldPowerCell", "ModsuitModuleBuiltinInsulation");
+            HasModule("WGAsfClothingModsuitFieldPowerCell", "ModsuitModuleVoidBoots");
             HasModule("WGAsfClothingModsuitAegisPowerCell", "ModsuitModuleBuiltinInsulation");
             HasModule("WGAsfClothingModsuitAegisPowerCell", "ModsuitModuleBuiltinAegisShield");
+            HasModule("WGAsfClothingModsuitAegisPowerCell", "ModsuitModuleVoidBoots");
             HasModule("ClothingModsuitVoltaPowerCell", "ModsuitModuleBuiltinInsulation");
+
+            foreach (var suitId in new[] { "WGAsfClothingModsuitFieldPowerCell", "WGAsfClothingModsuitAegisPowerCell" })
+            {
+                var suit = entMan.SpawnEntity(suitId, map.GridCoords);
+                Assert.That(entMan.HasComponent<MagbootsComponent>(entMan.GetComponent<ModSuitComponent>(suit).PartEntities["shoes"]),
+                    Is.False, $"{suitId} has permanent voidboots on its boots");
+            }
             IsBuiltIn("ModsuitModuleBuiltinInsulation");
             IsBuiltIn("ModsuitModuleBuiltinAegisShield");
         });
@@ -1486,6 +1495,10 @@ public sealed class ModsuitModuleTest
             Assert.That(comp.State, Is.EqualTo(ModSuitState.Active));
             Assert.That(entMan.HasComponent<PersonalShieldComponent>(suit), Is.True,
                 "the Aegis shield module did not grant its hardlight shield");
+
+            var actionCount = entMan.GetComponent<ActionsComponent>(human).Actions.Count(action =>
+                entMan.GetComponent<MetaDataComponent>(action).EntityPrototype?.ID == "ActionActivatePersonalShield");
+            Assert.That(actionCount, Is.EqualTo(1), "the Aegis shield module granted the shield action more than once");
 
             var toggle = entMan.System<ItemToggleSystem>();
             Assert.That(toggle.TryActivate(suit), Is.True, "the Aegis shield would not switch on");

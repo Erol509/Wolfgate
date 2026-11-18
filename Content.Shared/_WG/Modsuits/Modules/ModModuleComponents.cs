@@ -96,6 +96,16 @@ public sealed partial class ModEmpShieldModuleComponent : Component
     public bool RequireActive = true;
 }
 
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class ModShieldActionModuleComponent : Component
+{
+    [DataField]
+    public EntProtoId Action = "ActionActivatePersonalShield";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? ActionEntity;
+}
+
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ModMouthholeModuleComponent : Component
 {
