@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
@@ -179,8 +180,8 @@ public sealed partial class ModSuitWindow : FancyWindow
         }
 
         ChargeText.Text = Loc.GetString("modsuit-ui-charge-bar",
-            ("current", (int) MathF.Round(suit.Comp.Charge)),
-            ("max", (int) MathF.Round(suit.Comp.MaxCharge)),
+            ("current", (suit.Comp.Charge / 1_000f).ToString("0", CultureInfo.InvariantCulture)),
+            ("max", (suit.Comp.MaxCharge / 1_000f).ToString("0", CultureInfo.InvariantCulture)),
             ("percent", (int) MathF.Round(ratio * 100f)));
     }
 
@@ -363,9 +364,9 @@ public sealed partial class ModSuitWindow : FancyWindow
         StyleButton(row.Pin, module.Pinned ? GoodColor : PrimaryColor);
 
         row.Heading.Label.FontColorOverride = module.Active ? GoodColor : Color.White;
-        var idlePower = module.IdlePower;
-        var activePower = module.ActivePower;
-        var usePower = module.UsePower;
+        var idlePower = module.IdlePower * ModSuitSystem.PowerDrainScale;
+        var activePower = module.ActivePower * ModSuitSystem.PowerDrainScale;
+        var usePower = module.UsePower * ModSuitSystem.PowerDrainScale;
         var complexity = module.Complexity;
         row.Idle.Text = idlePower.ToString("0.##");
         row.ActivePower.Text = activePower.ToString("0.##");

@@ -12,6 +12,13 @@ namespace Content.Shared._WG.Modsuits.Systems;
 public sealed partial class ModSuitSystem
 {
     private static readonly TimeSpan PowerAlertInterval = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// Converts the port's TG-derived drain numbers to TG watts: the 0.8 theme drain becomes 50 W, so a
+    /// TG-sized MOD cell lasts as long as it does on TG station.
+    /// </summary>
+    public const float PowerDrainScale = 62.5f;
+
     private TimeSpan _nextPowerAlertUpdate;
 
     public EntityUid? GetCore(Entity<ModSuitComponent> ent)
@@ -108,7 +115,7 @@ public sealed partial class ModSuitSystem
 
         var drain = GetThemeDrain(ent);
         if (ent.Comp.State != ModSuitState.Active)
-            return drain;
+            return drain * PowerDrainScale;
 
         foreach (var module in ent.Comp.ModulesContainer.ContainedEntities)
         {
@@ -120,7 +127,7 @@ public sealed partial class ModSuitSystem
                 drain += moduleComp.ActivePower;
         }
 
-        return drain;
+        return drain * PowerDrainScale;
     }
 
     /// <summary>Wolfgate's batteries have no charge-rate hook, so the drain is applied in <see cref="UpdatePowerDrain"/>.</summary>
@@ -235,7 +242,7 @@ public sealed partial class ModSuitSystem
         var charge = GetCharge(battery);
         if (charge <= 0f)
         {
-            SetPowered(ent, false);
+            DepletePower(ent);
             return;
         }
 
@@ -244,7 +251,18 @@ public sealed partial class ModSuitSystem
             return;
 
         if (!_battery.TryUseCharge(battery.AsNullable(), drain) || GetCharge(battery) <= 0f)
-            SetPowered(ent, false);
+            DepletePower(ent);
+    }
+
+    /// <summary>Cuts the modules and unseals the suit once its core is empty.</summary>
+    private void DepletePower(Entity<ModSuitComponent> ent)
+    {
+        SetPowered(ent, false);
+
+        if (ent.Comp.State == ModSuitState.Active)
+            StartDeactivation(ent);
+        else if (ent.Comp.State == ModSuitState.Activating)
+            ForceDeactivate(ent, false);
     }
 
     private void UpdatePowerAlert(Entity<ModSuitComponent> ent)

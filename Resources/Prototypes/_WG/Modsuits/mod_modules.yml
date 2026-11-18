@@ -191,6 +191,44 @@
     sprintModifier: 1
 
 - type: entity
+  parent: BaseModsuitModule
+  id: ModsuitModuleVoidBoots
+  name: MOD voidboots module
+  description: A set of bluespace-tethered boots that grip the void itself, letting the wearer walk in space as if the suit's boots were magnetic stability boots on a hull.
+  components:
+  - type: Sprite
+    state: magnet
+  - type: ModModule
+    moduleType: Toggle
+    complexity: 3
+    activePower: 0.5
+    requiredParts:
+    - shoes
+    incompatible:
+      tags:
+      - ModsuitModuleGravity
+  - type: Tag
+    tags:
+    - ModsuitModule
+    - ModsuitModuleGravity
+  - type: ModGrantComponentsModule
+    slot: shoes
+    toggleItem: true
+    components:
+    - type: ItemToggle
+      onUse: false
+      onActivate: false
+    - type: Magboots
+      requiresGrid: false
+      enabledPrefix: null
+    - type: ComponentToggler
+      components:
+      - type: NoSlip
+  - type: ModSpeedModule
+    walkModifier: 0.85
+    sprintModifier: 0.85
+
+- type: entity
   abstract: true
   parent: BaseModsuitModule
   id: BaseModsuitModuleVisor
@@ -554,6 +592,63 @@
     slot: gloves
     components:
     - type: Insulated
+
+- type: entity
+  parent: BaseModsuitModuleBuiltin
+  id: ModsuitModuleBuiltinAegisShield
+  name: integrated hardlight shield
+  description: A hardlight projector built into the Aegis control unit. Alt-use the unit while the suit is sealed to raise a personal shield.
+  components:
+  - type: Sprite
+    state: module
+  - type: ModModule
+    removable: false
+  - type: ModGrantComponentsModule
+    target: Suit
+    components:
+    - type: PersonalShield
+      visuals:
+        fillLevel: 0.15
+        hexDensity: 3
+        pixelGrid: 96
+        color: "#A66BE0"
+        scale: 2.0
+      shield:
+        requiredSlot: BACK
+        maxCharge: 250
+        regenRate: 5
+        spinupTime: 1
+        breakCooldown: 20
+        powerDraw: 0.5
+        blockModifier:
+          coefficients:
+            Heat: 1.25
+            Radiation: 1.5
+    - type: ItemToggle
+      onUse: false
+      onAltUse: true
+      onActivate: false
+      soundActivate:
+        path: /Audio/Weapons/ebladeon.ogg
+      soundDeactivate:
+        path: /Audio/Weapons/ebladeoff.ogg
+      soundFailToActivate:
+        path: /Audio/Machines/button.ogg
+        params:
+          variation: 0.250
+    - type: Battery
+      maxCharge: 100
+      startingCharge: 100
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 5
+      autoRechargePauseTime: 5
+    - type: ActionGrant
+      actions:
+      - ActionActivatePersonalShield
+    - type: ItemActionGrant
+      actions:
+      - ActionActivatePersonalShield
 
 - type: entity
   parent: BaseModsuitModuleBuiltin
