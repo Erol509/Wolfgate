@@ -48,8 +48,10 @@ public sealed partial class ModSuitWindow : FancyWindow
     private Label? _aiValue;
 
     private const int ActionButtonWidth = 42;
-    private const int ValueColumnWidth = 34;
+    private const int ValueColumnWidth = 40;
     private const int LabelColumnWidth = 96;
+    // The name column is whatever the fixed columns leave at the 600-wide minimum window.
+    private const int NameColumnMaxWidth = 240;
     private static readonly ResPath IconRsiPath = new("/Textures/_WG/Modsuits/icons.rsi");
 
     private static readonly Color PrimaryColor = Color.FromHex("#3E5774");
@@ -310,13 +312,18 @@ public sealed partial class ModSuitWindow : FancyWindow
         {
             MinHeight = 18,
             StyleBoxOverride = new StyleBoxFlat(new Color(0, 0, 0, 0)),
+            ToolTip = meta.EntityName,
         };
         heading.Label.FontColorOverride = Color.White;
+        // Keep long names from widening the row and shifting the power columns.
+        heading.Label.ClipText = true;
+        heading.Label.HorizontalExpand = true;
 
         var body = new CollapsibleBody();
         var description = new RichTextLabel
         {
             HorizontalExpand = true,
+            MaxWidth = NameColumnMaxWidth,
             Margin = new Thickness(12, 2, 0, 2),
         };
         description.SetMessage(meta.EntityDescription);
@@ -408,6 +415,7 @@ public sealed partial class ModSuitWindow : FancyWindow
         {
             Texture = GetIcon(icon),
             MinSize = new Vector2(ValueColumnWidth, 20),
+            MaxSize = new Vector2(ValueColumnWidth, 20),
             Stretch = TextureRect.StretchMode.KeepAspectCentered,
             VerticalAlignment = VAlignment.Center,
             ToolTip = Loc.GetString(tooltip),
@@ -535,6 +543,7 @@ public sealed partial class ModSuitWindow : FancyWindow
         return new Label
         {
             MinWidth = ValueColumnWidth,
+            MaxWidth = ValueColumnWidth,
             HorizontalAlignment = HAlignment.Center,
             VerticalAlignment = VAlignment.Center,
             ClipText = true,
