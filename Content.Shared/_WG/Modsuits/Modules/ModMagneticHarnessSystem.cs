@@ -162,6 +162,14 @@ public sealed partial class ModMagneticHarnessSystem : VirtualController
 
     private bool TryCatch(EntityUid gun, ModMagnetizedGunComponent magnetized, EntityUid owner, ModMagneticHarnessComponent harness)
     {
+        // TG's magnetic harness spends 1.0 DEFAULT_CHARGE_DRAIN on every successful catch. Pay before
+        // touching the gun so a short suit balance cannot let the catch through unpaid.
+        if (harness.Module is { } moduleUid
+            && TryComp<ModModuleComponent>(moduleUid, out var module)
+            && _modSuit.TryGetModuleSuit(moduleUid, out var suit)
+            && !_modSuit.TryUseCharge(suit, module.UsePower * ModSuitSystem.PowerDrainScale))
+            return false;
+
         if (TryComp<PhysicsComponent>(gun, out var body))
             PhysicsSystem.SetBodyStatus(gun, body, BodyStatus.OnGround);
 
@@ -182,15 +190,7 @@ public sealed partial class ModMagneticHarnessSystem : VirtualController
             caught = _hands.TryPickupAnyHand(owner, gun, checkActionBlocker: false);
 
         if (caught)
-        {
             _audio.PlayPvs(harness.CatchSound, owner);
-
-            // TG's magnetic harness spends 1.0 DEFAULT_CHARGE_DRAIN on every successful catch.
-            if (harness.Module is { } moduleUid
-                && TryComp<ModModuleComponent>(moduleUid, out var module)
-                && _modSuit.TryGetModuleSuit(moduleUid, out var suit))
-                _modSuit.TryUseCharge(suit, module.UsePower * ModSuitSystem.PowerDrainScale);
-        }
 
         return caught;
     }

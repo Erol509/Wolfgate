@@ -20,6 +20,8 @@
       gloves: WGAsfClothingModsuitGauntletsField
       outerClothing: WGAsfClothingModsuitChestplateField
       shoes: WGAsfClothingModsuitBootsField
+    inbuiltModules:
+    - ModsuitModuleVoidBoots
   - type: StaticPrice
     price: 5000
 
@@ -141,6 +143,9 @@
       gloves: WGAsfClothingModsuitGauntletsAegis
       outerClothing: WGAsfClothingModsuitChestplateAegis
       shoes: WGAsfClothingModsuitBootsAegis
+    inbuiltModules:
+    - ModsuitModuleBuiltinAegisShield
+    - ModsuitModuleVoidBoots
   - type: ExtendDescription
     descriptionList:
     - description: wg-asf-modsuit-aegis-shield-hint

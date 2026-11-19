@@ -100,8 +100,9 @@ public sealed class ModSuitWindowTest
                 }
 
                 var last = row.GetChild(row.ChildCount - 1);
-                Assert.That(last.Position.X + last.Size.X, Is.LessThanOrEqualTo(row.Size.X + 0.5f),
-                    "the power values run past the row and the default window width");
+                Assert.That(last.GlobalPosition.X + last.Width,
+                    Is.LessThanOrEqualTo(window.GlobalPosition.X + window.Width + 0.5f),
+                    "the power values run past the default window width");
 
                 var nameBox = (BoxContainer) row.GetChild(3);
                 var collapsible = (Collapsible) nameBox.GetChild(0);

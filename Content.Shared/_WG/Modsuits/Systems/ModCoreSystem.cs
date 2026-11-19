@@ -54,23 +54,33 @@ public sealed partial class ModCoreSystem : EntitySystem
     /// </summary>
     private void OnCellInteractUsing(Entity<ModCoreComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled
-            || _net.IsClient
-            || !HasComp<PowerCellComponent>(args.Used)
-            || !TryComp<PowerCellSlotComponent>(ent, out var slotInfo)
+        if (args.Handled || _net.IsClient)
+            return;
+
+        if (!TryComp<PowerCellSlotComponent>(ent, out var slotInfo)
             || !_itemSlots.TryGetSlot(ent.Owner, slotInfo.CellSlotId, out var slot))
             return;
+
+        if (!HasComp<PowerCellComponent>(args.Used))
+        {
+            args.Handled = true;
+            var message = slot.WhitelistFailPopup is { } popup
+                ? Loc.GetString(popup)
+                : Loc.GetString("modsuit-cell-slot-wrong-item");
+            _popup.PopupEntity(message, ent, args.User);
+            return;
+        }
 
         args.Handled = true;
 
         if (slot.HasItem)
         {
-            _popup.PopupClient(Loc.GetString("modsuit-cell-slot-occupied"), ent, args.User);
+            _popup.PopupEntity(Loc.GetString("modsuit-cell-slot-occupied"), ent, args.User);
             return;
         }
 
         if (!_itemSlots.TryInsert(ent.Owner, slot, args.Used, args.User))
-            _popup.PopupClient(Loc.GetString("modsuit-cell-slot-wrong-item"), ent, args.User);
+            _popup.PopupEntity(Loc.GetString("modsuit-cell-slot-wrong-item"), ent, args.User);
     }
 
     private void OnCellInserted(Entity<ModCoreComponent> ent, ref EntInsertedIntoContainerMessage args)

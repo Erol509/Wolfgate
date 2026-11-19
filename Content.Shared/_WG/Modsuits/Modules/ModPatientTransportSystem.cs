@@ -141,14 +141,18 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
     }
     private void OnBagShutdown(Entity<ModHardlightBagComponent> ent, ref ComponentShutdown args)
     {
-        if (ent.Comp.Projector is not { } projector
-            || !TryComp<ModPatientTransportComponent>(projector, out var transport)
+        if (ent.Comp.Projector is not { } projector)
+            return;
+
+        // Clear the drain even if the projector lost its transport component before the bag did.
+        ResetLinkedIdlePower(projector);
+
+        if (!TryComp<ModPatientTransportComponent>(projector, out var transport)
             || transport.LinkedBag != ent.Owner)
             return;
 
         transport.LinkedBag = null;
         Dirty(projector, transport);
-        SetLinkedIdlePower((projector, transport), linked: false);
     }
     private void OnStasisInserted(Entity<ModStasisContainerComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
@@ -218,19 +222,28 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
         _modSuit.SetModuleIdlePower(moduleUid, linked ? ent.Comp.LinkedIdlePower : 0f);
     }
 
+    /// <summary>Clears the linked-bag idle drain through the device, even without the transport component.</summary>
+    private void ResetLinkedIdlePower(EntityUid projector)
+    {
+        if (TryComp<ModDeviceItemComponent>(projector, out var item) && item.Module is { } moduleUid)
+            _modSuit.SetModuleIdlePower(moduleUid, 0f);
+    }
+
     private void Dissolve(EntityUid bag)
     {
         if (_net.IsClient || TerminatingOrDeleted(bag) || EntityManager.IsQueuedForDeletion(bag))
             return;
 
-        if (TryComp<ModHardlightBagComponent>(bag, out var bagComp)
-            && bagComp.Projector is { } projector
-            && TryComp<ModPatientTransportComponent>(projector, out var transport))
+        if (TryComp<ModHardlightBagComponent>(bag, out var bagComp) && bagComp.Projector is { } projector)
         {
-            transport.LinkedBag = null;
-            Dirty(projector, transport);
-            SetLinkedIdlePower((projector, transport), linked: false);
-            _audio.PlayPvs(transport.Sound, bag);
+            ResetLinkedIdlePower(projector);
+
+            if (TryComp<ModPatientTransportComponent>(projector, out var transport))
+            {
+                transport.LinkedBag = null;
+                Dirty(projector, transport);
+                _audio.PlayPvs(transport.Sound, bag);
+            }
         }
 
         _entityStorage.EmptyContents(bag);

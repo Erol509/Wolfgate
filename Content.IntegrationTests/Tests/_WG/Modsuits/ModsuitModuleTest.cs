@@ -1291,12 +1291,23 @@ public sealed class ModsuitModuleTest
             Assert.That(entMan.HasComponent<ModEmpWardComponent>(human), Is.True,
                 "the advanced EMP module did not ward its wearer");
 
-            var gun = entMan.SpawnEntity("WeaponPistolMk58", map.GridCoords);
             var container = containers.EnsureContainer<Container>(human, "test-emp-ward");
-            Assert.That(containers.Insert(gun, container), Is.True);
+            var wardedBattery = entMan.SpawnEntity("PowerCellHigh", map.GridCoords);
+            var controlBattery = entMan.SpawnEntity("PowerCellHigh", map.GridCoords);
+            Assert.That(containers.Insert(wardedBattery, container), Is.True);
 
-            Assert.That(emp.TryEmpEffects(gun, 500f, TimeSpan.FromSeconds(1)), Is.False,
+            var wardedCharge = modSuit.GetCharge((wardedBattery, entMan.GetComponent<BatteryComponent>(wardedBattery)));
+            var controlCharge = modSuit.GetCharge((controlBattery, entMan.GetComponent<BatteryComponent>(controlBattery)));
+
+            Assert.That(emp.TryEmpEffects(controlBattery, 500f, TimeSpan.FromSeconds(1)), Is.True,
+                "an unwarded battery should react to the EMP");
+            Assert.That(modSuit.GetCharge((controlBattery, entMan.GetComponent<BatteryComponent>(controlBattery))),
+                Is.LessThan(controlCharge), "the unwarded EMP did not drain the battery");
+
+            Assert.That(emp.TryEmpEffects(wardedBattery, 500f, TimeSpan.FromSeconds(1)), Is.False,
                 "the advanced EMP ward did not shield contained equipment");
+            Assert.That(modSuit.GetCharge((wardedBattery, entMan.GetComponent<BatteryComponent>(wardedBattery))),
+                Is.EqualTo(wardedCharge), "the warded battery lost charge");
 
             var torso = entMan.GetComponent<BodyComponent>(human).RootContainer.ContainedEntity;
             Assert.That(torso, Is.Not.Null);

@@ -2139,7 +2139,6 @@
     - gloves
   - type: ModKinesisModule
     range: 8
-    grabPower: 10
     blacklist:
       components:
       - MobState

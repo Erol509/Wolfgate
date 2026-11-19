@@ -24,10 +24,10 @@ public sealed partial class ModCoreComponent : Component
 [RegisterComponent]
 public sealed partial class ModsuitCellComponent : Component
 {
-    [ViewVariables]
+    [DataField, ViewVariables]
     public float OriginalMaxCharge;
 
-    [ViewVariables]
+    [DataField, ViewVariables]
     public float ScaledMaxCharge;
 }
 
