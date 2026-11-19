@@ -250,6 +250,10 @@ public sealed partial class ModPatientTransportComponent : Component
     [DataField]
     public bool RequireRestrained;
 
+    /// <summary>Idle drain while a bag is linked; TG's criminal capture uses 3.0 DEFAULT_CHARGE_DRAIN.</summary>
+    [DataField]
+    public float LinkedIdlePower;
+
     [DataField]
     public TimeSpan CaptureDelay = TimeSpan.FromSeconds(1.5);
 
@@ -326,8 +330,9 @@ public sealed partial class ModEnergyShieldModuleComponent : Component
     [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan NextCharge;
 
+    /// <summary>Joules spent per block; TG's energy shield charges 2.0 DEFAULT_CHARGE_DRAIN.</summary>
     [DataField]
-    public float BlockPower = 30f;
+    public float BlockPower = 100f;
 
     [DataField]
     public SoundSpecifier? BlockSound = new SoundPathSpecifier("/Audio/Weapons/block_metal1.ogg");

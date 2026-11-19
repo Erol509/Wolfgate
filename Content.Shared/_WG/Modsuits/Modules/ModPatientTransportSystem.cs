@@ -1,3 +1,5 @@
+using Content.Shared._WG.Modsuits.Components;
+using Content.Shared._WG.Modsuits.Systems;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Damage.Components;
@@ -36,6 +38,7 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
     }
 
     [Dependency] private INetManager _net = default!;
+    [Dependency] private ModSuitSystem _modSuit = default!;
     [Dependency] private PullingSystem _pulling = default!;
     [Dependency] private SharedCuffableSystem _cuffable = default!;
     [Dependency] private StaminaSystem _stamina = default!;
@@ -122,6 +125,7 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
 
         ent.Comp.LinkedBag = bag;
         Dirty(ent);
+        SetLinkedIdlePower(ent, linked: true);
 
         _audio.PlayPvs(ent.Comp.Sound, bag);
         _pendingPulls.Add((args.User, bag));
@@ -144,6 +148,7 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
 
         transport.LinkedBag = null;
         Dirty(projector, transport);
+        SetLinkedIdlePower((projector, transport), linked: false);
     }
     private void OnStasisInserted(Entity<ModStasisContainerComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
@@ -204,6 +209,15 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
             _stamina.TakeStaminaDamage(args.Entity, stamina.CritThreshold, stamina, immediate: true);
     }
 
+    /// <summary>Applies the extra idle drain a linked bag costs; TG keeps criminal capture at 3.0.</summary>
+    private void SetLinkedIdlePower(Entity<ModPatientTransportComponent> ent, bool linked)
+    {
+        if (!TryComp<ModDeviceItemComponent>(ent, out var item) || item.Module is not { } moduleUid)
+            return;
+
+        _modSuit.SetModuleIdlePower(moduleUid, linked ? ent.Comp.LinkedIdlePower : 0f);
+    }
+
     private void Dissolve(EntityUid bag)
     {
         if (_net.IsClient || TerminatingOrDeleted(bag) || EntityManager.IsQueuedForDeletion(bag))
@@ -215,6 +229,7 @@ public sealed partial class ModPatientTransportSystem : EntitySystem
         {
             transport.LinkedBag = null;
             Dirty(projector, transport);
+            SetLinkedIdlePower((projector, transport), linked: false);
             _audio.PlayPvs(transport.Sound, bag);
         }
 

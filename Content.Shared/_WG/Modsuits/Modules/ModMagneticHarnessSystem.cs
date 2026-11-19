@@ -1,4 +1,6 @@
 using System.Numerics;
+using Content.Shared._WG.Modsuits.Components;
+using Content.Shared._WG.Modsuits.Systems;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
@@ -18,6 +20,7 @@ public sealed partial class ModMagneticHarnessSystem : VirtualController
 {
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private INetManager _net = default!;
+    [Dependency] private ModSuitSystem _modSuit = default!;
     [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private SharedContainerSystem _container = default!;
@@ -179,7 +182,15 @@ public sealed partial class ModMagneticHarnessSystem : VirtualController
             caught = _hands.TryPickupAnyHand(owner, gun, checkActionBlocker: false);
 
         if (caught)
+        {
             _audio.PlayPvs(harness.CatchSound, owner);
+
+            // TG's magnetic harness spends 1.0 DEFAULT_CHARGE_DRAIN on every successful catch.
+            if (harness.Module is { } moduleUid
+                && TryComp<ModModuleComponent>(moduleUid, out var module)
+                && _modSuit.TryGetModuleSuit(moduleUid, out var suit))
+                _modSuit.TryUseCharge(suit, module.UsePower * ModSuitSystem.PowerDrainScale);
+        }
 
         return caught;
     }

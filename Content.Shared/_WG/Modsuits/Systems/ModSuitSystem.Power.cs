@@ -16,8 +16,15 @@ public sealed partial class ModSuitSystem
     /// <summary>
     /// Converts the port's TG-derived drain numbers to TG watts: the 0.8 theme drain becomes 50 W, so a
     /// TG-sized MOD cell lasts as long as it does on TG station.
+    /// Module costs are authored as the TG value times <see cref="TgCostUnit"/>.
     /// </summary>
     public const float PowerDrainScale = 62.5f;
+
+    /// <summary>
+    /// TG expresses module costs as multiples of DEFAULT_CHARGE_DRAIN; the port's theme baseline is 0.8,
+    /// so a TG cost of X is written as 0.8X and drains 50X joules per second.
+    /// </summary>
+    public const float TgCostUnit = 0.8f;
 
     private TimeSpan _nextPowerAlertUpdate;
 
@@ -101,6 +108,18 @@ public sealed partial class ModSuitSystem
         ent.Comp.MaxCharge = max;
         ent.Comp.HasBattery = hasBattery;
         Dirty(ent);
+    }
+
+    /// <summary>Sets a module's idle drain and replicates it, for costs that change with the module's state.</summary>
+    public void SetModuleIdlePower(EntityUid moduleUid, float power)
+    {
+        if (TerminatingOrDeleted(moduleUid)
+            || !TryComp<ModModuleComponent>(moduleUid, out var module)
+            || module.IdlePower == power)
+            return;
+
+        module.IdlePower = power;
+        Dirty(moduleUid, module);
     }
 
     public float GetThemeDrain(Entity<ModSuitComponent> ent)
