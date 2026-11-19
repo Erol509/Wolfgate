@@ -71,7 +71,11 @@ public sealed class WGNarcoticsCVars
     public static readonly CVarDef<float> StockSignature =
         CVarDef.Create("wg.narcotics.stock_signature", 200000f, CVar.SERVERONLY);
 
-    /// <summary>Street value that adds one point to a narcotic's contraband hand-in reward; 0 leaves the flat reward.</summary>
+    /// <summary>
+    /// Street value that adds one point to a narcotic's contraband hand-in reward; 0 leaves the flat reward. A point
+    /// cashes for 2,000, so 15,000 pays about 13% of the value: keep it under <see cref="HeatFloor"/>, or handing in
+    /// beats selling hot.
+    /// </summary>
     public static readonly CVarDef<float> TurnInValue =
-        CVarDef.Create("wg.narcotics.turn_in_value", 5000f, CVar.SERVERONLY);
+        CVarDef.Create("wg.narcotics.turn_in_value", 15000f, CVar.SERVERONLY);
 }
