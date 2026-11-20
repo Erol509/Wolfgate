@@ -273,7 +273,8 @@ public sealed partial class ModGunModulesSystem : VirtualController
 
     private void RemoveAssistant(Entity<ModShootingAssistantModuleComponent> ent, EntityUid wearer)
     {
-        SetAssistantIdlePower(ent, 0f);
+        if (!_timing.ApplyingState)
+            SetAssistantIdlePower(ent, 0f);
 
         if (_timing.ApplyingState
             || TerminatingOrDeleted(wearer)

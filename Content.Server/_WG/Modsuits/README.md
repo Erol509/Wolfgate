@@ -70,6 +70,7 @@ module that grips the void like magboots grip a hull.
 - [`Content.Server/_WG/Modsuits/ModPlasmaStabilizerSystem.cs`](ModPlasmaStabilizerSystem.cs)
 - [`Content.Server/_WG/Modsuits/ModRecyclerSystem.cs`](ModRecyclerSystem.cs)
 - [`Content.Server/_WG/Modsuits/ModStasisMetabolismSystem.cs`](ModStasisMetabolismSystem.cs)
+- [`Content.Server/_WG/Modsuits/ModsuitCellPriceSystem.cs`](ModsuitCellPriceSystem.cs)
 - [`Content.Server/_WG/Modsuits/ModSuitChargingSystem.cs`](ModSuitChargingSystem.cs)
 - [`Content.Server/_WG/Modsuits/ModThermalRegulatorModuleSystem.cs`](ModThermalRegulatorModuleSystem.cs)
 

@@ -61,15 +61,9 @@ public sealed partial class ModCoreSystem : EntitySystem
             || !_itemSlots.TryGetSlot(ent.Owner, slotInfo.CellSlotId, out var slot))
             return;
 
+        // Leave other items unhandled so bags, labelers and price guns still work on a loose core.
         if (!HasComp<PowerCellComponent>(args.Used))
-        {
-            args.Handled = true;
-            var message = slot.WhitelistFailPopup is { } popup
-                ? Loc.GetString(popup)
-                : Loc.GetString("modsuit-cell-slot-wrong-item");
-            _popup.PopupEntity(message, ent, args.User);
             return;
-        }
 
         args.Handled = true;
 
@@ -80,7 +74,12 @@ public sealed partial class ModCoreSystem : EntitySystem
         }
 
         if (!_itemSlots.TryInsert(ent.Owner, slot, args.Used, args.User))
-            _popup.PopupEntity(Loc.GetString("modsuit-cell-slot-wrong-item"), ent, args.User);
+        {
+            var message = slot.WhitelistFailPopup is { } popup
+                ? Loc.GetString(popup)
+                : Loc.GetString("modsuit-cell-slot-wrong-item");
+            _popup.PopupEntity(message, ent, args.User);
+        }
     }
 
     private void OnCellInserted(Entity<ModCoreComponent> ent, ref EntInsertedIntoContainerMessage args)

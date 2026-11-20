@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client._WG.Modsuits;
 using Content.Client.Overlays;
+using Content.Server.Cargo.Systems;
 using Content.Server.Damage.Systems;
 using Content.Server.Medical.Components;
 using Content.Server.Weapons.Melee;
@@ -1384,6 +1385,7 @@ public sealed class ModsuitModuleTest
         var server = pair.Server;
         var entMan = server.EntMan;
         var itemSlots = entMan.System<ItemSlotsSystem>();
+        var pricing = entMan.System<PricingSystem>();
         var map = await pair.CreateTestMap();
 
         await server.WaitAssertion(() =>
@@ -1402,9 +1404,12 @@ public sealed class ModsuitModuleTest
                 "the cell kept its MOD-sized capacity outside the core");
 
             var high = entMan.SpawnEntity("PowerCellHigh", map.GridCoords);
+            var highPrice = pricing.GetPrice(high);
             Assert.That(itemSlots.TryInsert(core, "cell_slot", high, null), Is.True);
             Assert.That(GetMaxCharge(entMan, high), Is.EqualTo(100_000f).Within(0.1f),
                 "a high cell did not become a TG high MOD cell in a core");
+            Assert.That(pricing.GetPrice(high), Is.EqualTo(highPrice).Within(0.01),
+                "a core raised the sale price of the cell it scaled");
 
             var stockCore = entMan.SpawnEntity("ModsuitCoreStandardHighCapacity", map.GridCoords);
             var stockSlots = entMan.GetComponent<ItemSlotsComponent>(stockCore);
