@@ -236,6 +236,16 @@ namespace Content.Server.PDA
 
             var programs = _cartridgeLoader.GetAvailablePrograms(uid, loader);
             var id = CompOrNull<IdCardComponent>(pda.ContainedId);
+            // WOLFGATE(PdaStorage) START: system updates have no actor; keep the balance of the player using the PDA
+            if (actor_uid == null)
+            {
+                foreach (var actor in _ui.GetActors(uid, PdaUiKey.Key))
+                {
+                    actor_uid = actor;
+                    break;
+                }
+            }
+            // WOLFGATE END
             var balance = 0; // frontier
             if (actor_uid != null && TryComp<BankAccountComponent>(actor_uid, out var account)) // frontier
                 balance = account.Balance; // frontier

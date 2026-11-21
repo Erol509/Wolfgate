@@ -5,13 +5,13 @@
     <PanelContainer StyleClasses="BackgroundDark"/>
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
         <BoxContainer Name="TabBar" Orientation="Horizontal" Margin="4 0"/>
+        <Label Name="ErrorLabel" Visible="False" Margin="6 2 6 4"/>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="4">
             <ScrollContainer Name="StoreView" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False">
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <ui:PdaSection Name="StoreHeader" Title="{Loc 'pda-store-title-store'}">
                         <ui:PdaTaskProgress Name="CapacityBar" HorizontalExpand="True" MinHeight="22" Margin="6 4 6 4"/>
                         <LineEdit Name="Search" PlaceHolder="{Loc 'pda-store-search'}" Margin="6 2 6 4"/>
-                        <Label Name="ErrorLabel" Visible="False" Margin="6 2 6 4"/>
                     </ui:PdaSection>
                     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" Margin="0 2 0 0">
                         <BoxContainer Name="CategoryBar" Orientation="Vertical" MinWidth="118" Margin="0 0 4 0"/>

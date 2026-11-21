@@ -58,6 +58,8 @@ public sealed class PdaDiskTest
             // Exercise the media install path rather than the insert-time auto install.
             entMan.GetComponent<CartridgeComponent>(medTekCartridge).AutoInstall = false;
             Assert.That(slots.TryInsert(pda, CartridgeLoaderComponent.CartridgeSlotId, medTekCartridge, null), Is.True);
+            Assert.That(HasInstalled(entMan, cartridges, pda, "MedTekCartridge"), Is.False,
+                "the program is not installed before the media action");
             Raise(entMan, store, pda, new PdaStoreMessage(PdaStoreAction.InstallFromMedia,
                 program: entMan.GetNetEntity(medTekCartridge)));
 

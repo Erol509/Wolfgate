@@ -1,4 +1,4 @@
-﻿# The Lattice status display: the anchors, the hex field, Central's anchor, the flesh ships and the band you are in.
+# The Lattice status display: the anchors, the hex field, Central's anchor, the flesh ships and the band you are in.
 # As a PDA app and as a console; both read the networked field.
 - type: entity
   parent: NFBasePDACartridge
@@ -15,7 +15,6 @@
     ui: !type:WGLatticeStatusUi
   - type: Cartridge
     programName: wg-lattice-status-program-name
-    readonly: true
     size: 32
     icon:
       sprite: Structures/Machines/Anomaly/adv_anomaly_vessel.rsi
@@ -118,3 +117,4 @@
     Steel: 1500
     Glass: 800
     Gold: 100
+

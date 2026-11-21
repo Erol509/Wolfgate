@@ -47,6 +47,12 @@ public sealed class PdaAppRegistryTest
                 Assert.That(cartridge!.Size, Is.GreaterThan(0).And.MultipleOf(8),
                     $"{app.ID}: size {cartridge.Size} follows the 8 GQ step");
 
+                if (app.AvailableInStore)
+                {
+                    Assert.That(cartridge.Readonly, Is.False,
+                        $"{app.ID}: store apps must be removable so their storage can be refunded");
+                }
+
                 Assert.That(app.Devices.HasFlag(PdaDeviceFlags.Pda), Is.True,
                     $"{app.ID}: lists the PDA as a supported device");
 

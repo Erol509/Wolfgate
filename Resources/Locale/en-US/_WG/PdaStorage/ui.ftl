@@ -47,3 +47,4 @@ pda-disk-examine = It holds {$used} of {$capacity} GQ.
 pda-store-free-of = {$free} GQ free of {$capacity} GQ
 pda-store-system = SYSTEM
 pda-store-refresh = Refresh
+pda-store-download-percent = {$percent}%

@@ -6,6 +6,7 @@ using Content.Server.CartridgeLoader;
 using Content.Shared._WG.PdaStorage;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
@@ -50,8 +51,8 @@ public sealed class PdaStoreTest
             Assert.That(entMan.HasComponent<PdaDownloadComponent>(pda), Is.False,
                 "rejected requests do not leave a download behind");
 
-            // Access-gated app on a PDA with no security access.
-            Raise(entMan, store, pda, new PdaStoreMessage(PdaStoreAction.Install, "WantedList"));
+            // Access-gated app on a PDA with no engineering access.
+            Raise(entMan, store, pda, new PdaStoreMessage(PdaStoreAction.Install, "LatticeStatus"));
             Assert.That(entMan.HasComponent<PdaDownloadComponent>(pda), Is.False,
                 "access is checked before the download starts");
 
@@ -107,6 +108,8 @@ public sealed class PdaStoreTest
             var media = entMan.SpawnEntity("NetProbeCartridge", MapCoordinates.Nullspace);
             entMan.GetComponent<CartridgeComponent>(media).AutoInstall = false;
             Assert.That(slots.TryInsert(pda, CartridgeLoaderComponent.CartridgeSlotId, media, null), Is.True);
+            Assert.That(IsInstalled(entMan, cartridges, pda, "NetProbeCartridge"), Is.False,
+                "nothing is installed before the media action");
 
             Raise(entMan, store, pda, new PdaStoreMessage(PdaStoreAction.InstallFromMedia,
                 program: entMan.GetNetEntity(media)));
@@ -117,6 +120,53 @@ public sealed class PdaStoreTest
                 "installing from disposable media consumes only that media");
             Assert.That(entMan.HasComponent<PdaDownloadComponent>(pda), Is.False,
                 "media copies do not start a network download");
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task ClosingPdaCancelsDownloadTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.ResolveDependency<IEntityManager>();
+        var cartridges = entMan.System<CartridgeLoaderSystem>();
+
+        EntityUid pda = default;
+        EntityUid store = default;
+        await server.WaitPost(() =>
+        {
+            pda = entMan.SpawnEntity("PassengerPDA", MapCoordinates.Nullspace);
+            store = cartridges.GetInstalled(pda)
+                .First(uid => entMan.HasComponent<PdaStoreCartridgeComponent>(uid));
+            cartridges.ActivateProgram(pda, store);
+        });
+
+        await server.WaitPost(() =>
+            Raise(entMan, store, pda, new PdaStoreMessage(PdaStoreAction.Install, "MedTek")));
+
+        await pair.RunTicksSync(2);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(entMan.HasComponent<PdaDownloadComponent>(pda), Is.True, "the download started");
+        });
+
+        await server.WaitPost(() =>
+            entMan.EventBus.RaiseLocalEvent(pda, new BoundUIClosedEvent(PdaUiKey.Key, pda, pda)));
+
+        await pair.RunTicksSync(3);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(entMan.HasComponent<PdaDownloadComponent>(pda), Is.False,
+                "closing the PDA screen cancels the download");
+        });
+
+        await pair.RunTicksSync(60);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(IsInstalled(entMan, cartridges, pda, "MedTekCartridge"), Is.False,
+                "a cancelled download never installs");
         });
 
         await pair.CleanReturnAsync();
@@ -134,6 +184,7 @@ public sealed class PdaStoreTest
             entMan.GetComponent<MetaDataComponent>(uid).EntityPrototype?.ID == prototype);
     }
 }
+
 
 
 

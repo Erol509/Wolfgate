@@ -18,10 +18,10 @@ loadout uses this to ship one preloaded disk instead of several loose cartridges
 its program in the storage tab for a local copy.
 
 Removal policy: preinstalled programs are marked as system apps and do not consume the 128 GQ user capacity.
-Redownloadable apps (news, crew list, art catalogue, market, game hub, net probe, log probe, ...) can be removed and
-downloaded again; core apps (notepad, ColoTalk, the store itself) and role-restricted tools (wanted list, bench/judge
-line, lattice status) carry `readonly` and stay locked.
-
+Redownloadable apps (news, crew list, art catalogue, market, game hub, net probe, log probe, lattice status, ...) can
+be removed and downloaded again; core apps (notepad, ColoTalk, the store itself) and role tools that are not sold in
+the store (wanted list, bench/judge line) carry `readonly` and stay locked. Store listings never point at a readonly
+program, so a download can always be uninstalled to refund its space.
 Media handling: installing from a cartridge consumes only disposable media, and only the cartridge that was installed
 from. Store downloads and disk copies never touch the cartridge slot. The store fragment keeps its live UI across
 repeated setup calls, so progress and storage updates continue to reach the visible screen.
@@ -76,6 +76,7 @@ prototypes in `Resources/Prototypes/_WG/PdaStorage`.
 
 ### Localization
 
+- [`Resources/Locale/en-US/_WG/PdaStorage/entities.ftl`](../../../Resources/Locale/en-US/_WG/PdaStorage/entities.ftl)
 - [`Resources/Locale/en-US/_WG/PdaStorage/store.ftl`](../../../Resources/Locale/en-US/_WG/PdaStorage/store.ftl)
 - [`Resources/Locale/en-US/_WG/PdaStorage/ui.ftl`](../../../Resources/Locale/en-US/_WG/PdaStorage/ui.ftl)
 
@@ -93,6 +94,7 @@ prototypes in `Resources/Prototypes/_WG/PdaStorage`.
   - pass the loader, not the program
 - [`Content.Server/PDA/PdaSystem.cs`](../../PDA/PdaSystem.cs)
   - refresh HasDisk
+  - system updates have no actor; keep the balance of the player using the PDA
   - data disk inserted
 - [`Content.Shared/CartridgeLoader/CartridgeComponent.cs`](../../../Content.Shared/CartridgeLoader/CartridgeComponent.cs)
   - storage footprint in GQ. Capacity is checked against this on install.

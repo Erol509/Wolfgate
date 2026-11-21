@@ -3,6 +3,7 @@
   program: NotekeeperCartridge
   description: pda-store-app-notekeeper-desc
   category: pdaUtility
+  availableInStore: false
   sortOrder: 0
 
 - type: pdaApp
@@ -31,6 +32,7 @@
   program: NanoChatCartridge
   description: pda-store-app-nanochat-desc
   category: pdaUtility
+  availableInStore: false
   sortOrder: 4
 
 - type: pdaApp
@@ -82,6 +84,7 @@
   program: WantedListCartridge
   description: pda-store-app-wanted-desc
   category: pdaSecurity
+  availableInStore: false
   downloadAccess:
   - Security
   sortOrder: 1
@@ -91,6 +94,7 @@
   program: WGBenchCartridge
   description: pda-store-app-bench-desc
   category: pdaSecurity
+  availableInStore: false
   downloadAccess:
   - Security
   sortOrder: 2
@@ -100,6 +104,7 @@
   program: WGJudgeLineCartridge
   description: pda-store-app-judgeline-desc
   category: pdaSecurity
+  availableInStore: false
   downloadAccess:
   - Security
   sortOrder: 3
@@ -145,3 +150,4 @@
   description: pda-store-app-market-desc
   category: pdaCargo
   sortOrder: 5
+

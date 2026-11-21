@@ -8,6 +8,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.PDA;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -58,6 +59,7 @@ public sealed class PdaStoreSystem : EntitySystem
         SubscribeLocalEvent<PdaStoreCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<PdaStoreCartridgeComponent, CartridgeMessageEvent>(OnStoreMessage);
         SubscribeLocalEvent<PdaStoreCartridgeComponent, CartridgeDeactivatedEvent>(OnDeactivated);
+        SubscribeLocalEvent<PdaComponent, BoundUIClosedEvent>(OnPdaUiClosed);
     }
 
     public override void Update(float frameTime)
@@ -91,6 +93,16 @@ public sealed class PdaStoreSystem : EntitySystem
     {
         if (TryComp<PdaDownloadComponent>(args.Loader, out var download) && download.StoreProgram == ent.Owner)
             RemCompDeferred<PdaDownloadComponent>(args.Loader);
+    }
+
+    /// <summary>Closing the PDA screen aborts a download, like closing the store program does.</summary>
+    private void OnPdaUiClosed(EntityUid uid, PdaComponent pda, BoundUIClosedEvent args)
+    {
+        if (!PdaUiKey.Key.Equals(args.UiKey))
+            return;
+
+        if (HasComp<PdaDownloadComponent>(uid))
+            RemCompDeferred<PdaDownloadComponent>(uid);
     }
 
     private void OnStoreMessage(Entity<PdaStoreCartridgeComponent> ent, ref CartridgeMessageEvent args)
@@ -223,7 +235,8 @@ public sealed class PdaStoreSystem : EntitySystem
         }
 
         RemCompDeferred<PdaDownloadComponent>(loaderUid);
-        SendState(storeProgram, loaderUid, error, loader);
+        // The removal is deferred, so exclude the finished job from the completion snapshot.
+        SendState(storeProgram, loaderUid, error, loader, completed: download);
     }
 
     private void InstallFromMedia(EntityUid storeProgram, EntityUid loaderUid, NetEntity mediaNet, CartridgeLoaderComponent loader)
@@ -400,16 +413,17 @@ public sealed class PdaStoreSystem : EntitySystem
 
     /// <summary>Rebuilds and sends the store state to the UI hosted on <paramref name="storeProgram"/>.</summary>
     private void SendState(EntityUid storeProgram, EntityUid loaderUid, PdaStoreError error = PdaStoreError.None,
-        CartridgeLoaderComponent? loader = null)
+        CartridgeLoaderComponent? loader = null, PdaDownloadComponent? completed = null)
     {
         if (!Resolve(loaderUid, ref loader))
             return;
 
-        var state = BuildState(storeProgram, loaderUid, loader, error);
+        var state = BuildState(storeProgram, loaderUid, loader, error, completed);
         _cartridges.UpdateCartridgeUiState(loaderUid, state);
     }
 
-    private PdaStoreUiState BuildState(EntityUid storeProgram, EntityUid loaderUid, CartridgeLoaderComponent loader, PdaStoreError error)
+    private PdaStoreUiState BuildState(EntityUid storeProgram, EntityUid loaderUid, CartridgeLoaderComponent loader,
+        PdaStoreError error, PdaDownloadComponent? completed = null)
     {
         var state = new PdaStoreUiState
         {
@@ -418,7 +432,7 @@ public sealed class PdaStoreSystem : EntitySystem
             Error = error,
         };
 
-        if (TryComp<PdaDownloadComponent>(loaderUid, out var download))
+        if (TryComp<PdaDownloadComponent>(loaderUid, out var download) && download != completed)
         {
             state.Downloading = true;
             state.DownloadAppId = download.AppId;

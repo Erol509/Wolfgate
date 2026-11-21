@@ -155,7 +155,8 @@ public sealed partial class PdaStoreUiFragment : BoxContainer
                 ? 1f
                 : Math.Clamp(state.DownloadProgress / state.DownloadSize, 0f, 1f);
 
-            card.ShowProgress(fraction, $"{MathF.Floor(fraction * 100f):0}%");
+            var percent = (int) MathF.Floor(fraction * 100f);
+            card.ShowProgress(fraction, Loc.GetString("pda-store-download-percent", ("percent", percent)));
         }
     }
 

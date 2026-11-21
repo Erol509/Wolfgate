@@ -1,8 +1,8 @@
 - type: entity
   parent: NFBasePDACartridge
   id: PdaAppStoreCartridge
-  name: app store cartridge
-  description: A catalogue of approved PDA software. Downloads are validated by the device.
+  name: ent-PdaAppStoreCartridge
+  description: ent-PdaAppStoreCartridge-desc
   components:
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
