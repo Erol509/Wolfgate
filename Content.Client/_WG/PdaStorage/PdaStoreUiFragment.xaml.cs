@@ -18,6 +18,12 @@ public sealed partial class PdaStoreUiFragment : BoxContainer
 {
     public event Action<PdaStoreAction, string, NetEntity>? OnAction;
 
+    /// <summary>Replaces the action sink when the same live fragment is reused by a new interface.</summary>
+    public void SetActionHandler(Action<PdaStoreAction, string, NetEntity>? handler)
+    {
+        OnAction = handler;
+    }
+
     private readonly List<(PdaStoreAppEntry Entry, PdaStoreAppCard Card)> _appCards = new();
     private readonly List<PdaIconButton> _categoryButtons = new();
 

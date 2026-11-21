@@ -18,12 +18,21 @@ public sealed partial class PdaStoreUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new PdaStoreUiFragment();
-        _fragment.OnAction += (action, appId, program) =>
+        void Send(PdaStoreAction action, string appId, NetEntity program)
         {
-            var message = new PdaStoreMessage(action, appId, program);
-            userInterface.SendMessage(new CartridgeUiMessage(message));
-        };
+            userInterface.SendMessage(new CartridgeUiMessage(new PdaStoreMessage(action, appId, program)));
+        }
+
+        // The loader calls Setup again when the same store is reopened; keep the live fragment and only
+        // point it at the current interface. A disposed root needs a fresh fragment.
+        if (_fragment is { Disposed: false })
+        {
+            _fragment.SetActionHandler(Send);
+            return;
+        }
+
+        _fragment = new PdaStoreUiFragment();
+        _fragment.SetActionHandler(Send);
     }
 
     public override void UpdateState(BoundUserInterfaceState state)

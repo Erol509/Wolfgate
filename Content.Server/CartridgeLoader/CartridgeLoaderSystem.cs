@@ -182,7 +182,14 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         // For anyone stumbling onto this: Do not do this or I will cut you.
         var prototypeId = Prototype(cartridgeUid)?.ID;
-        return prototypeId != null && InstallProgram(loaderUid, prototypeId, loader: loader);
+        if (prototypeId == null || !InstallProgram(loaderUid, prototypeId, loader: loader))
+            return false;
+
+        // WOLFGATE(PdaStorage): only the cartridge that was just installed from is consumed.
+        if (loadedCartridge.Disposable)
+            QueueDel(cartridgeUid);
+
+        return true;
     }
 
     /// <summary>
@@ -233,9 +240,6 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         RaiseLocalEvent(installedProgram, new CartridgeAddedEvent(loaderUid));
         UpdateUserInterfaceState(loaderUid, loader);
-
-        if (cartridge.Disposable) // Frontier: Delete the cartridge after install if its disposable.
-            QueueDel(loader.CartridgeSlot.ContainerSlot!.ContainedEntity); // Frontier
 
         return true;
     }
@@ -366,7 +370,7 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             return;
 
         if (!loader.BackgroundPrograms.Contains(programUid))
-            RaiseLocalEvent(programUid, new CartridgeDeactivatedEvent(programUid));
+            RaiseLocalEvent(programUid, new CartridgeDeactivatedEvent(loaderUid)); // WOLFGATE(PdaStorage): pass the loader, not the program
 
         loader.ActiveProgram = default;
         UpdateUserInterfaceState(loaderUid, loader);

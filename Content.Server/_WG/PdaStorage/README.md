@@ -22,6 +22,10 @@ Redownloadable apps (news, crew list, art catalogue, market, game hub, net probe
 downloaded again; core apps (notepad, ColoTalk, the store itself) and role-restricted tools (wanted list, bench/judge
 line, lattice status) carry `readonly` and stay locked.
 
+Media handling: installing from a cartridge consumes only disposable media, and only the cartridge that was installed
+from. Store downloads and disk copies never touch the cartridge slot. The store fragment keeps its live UI across
+repeated setup calls, so progress and storage updates continue to reach the visible screen.
+
 Entry points: `PdaStoreSystem` (catalogue, timed downloads, install/uninstall/copy), `DataDiskSystem` (disk containers
 and examine text), `PdaStoreInstallerSystem` (store on every PDA), `ProgramStorage` (size/used/duplicate maths),
 `PdaStoreUi` + `PdaStoreUiFragment` (XAML, built on the Part 1 `PdaUi` controls), and the `pdaApp` / `pdaAppCategory`
@@ -79,12 +83,14 @@ prototypes in `Resources/Prototypes/_WG/PdaStorage`.
 
 - [`Content.Client/PDA/PdaBoundUserInterface.cs`](../../../Content.Client/PDA/PdaBoundUserInterface.cs)
 - [`Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs`](../../CartridgeLoader/CartridgeLoaderSystem.cs)
+  - only the cartridge that was just installed from is consumed.
   - preinstalled programs are firmware; only the readonly prototypes are locked.
   - whether a program prototype can be installed into the loader's storage.
   - installed user storage in GQ (preinstalled firmware excluded).\</summary>
   - remaining storage in GQ.\</summary>
   - readonly programs are not removable, even through a crafted client message.
   - detach first so freed capacity and the program list update in the same tick.
+  - pass the loader, not the program
 - [`Content.Server/PDA/PdaSystem.cs`](../../PDA/PdaSystem.cs)
   - refresh HasDisk
   - data disk inserted

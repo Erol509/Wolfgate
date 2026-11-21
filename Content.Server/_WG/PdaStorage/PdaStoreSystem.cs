@@ -256,6 +256,13 @@ public sealed class PdaStoreSystem : EntitySystem
             return;
         }
 
+        // WOLFGATE(PdaStorage): installing from media consumes only disposable media, never downloads or disk copies.
+        if (cartridge.Disposable)
+        {
+            _containers.RemoveEntity(loaderUid, media);
+            QueueDel(media);
+        }
+
         SendState(storeProgram, loaderUid, error: PdaStoreError.None, loader: loader);
     }
 

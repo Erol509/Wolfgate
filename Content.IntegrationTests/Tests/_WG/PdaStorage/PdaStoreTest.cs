@@ -29,6 +29,7 @@ public sealed class PdaStoreTest
 
         EntityUid pda = default;
         EntityUid store = default;
+        EntityUid bystander = default;
         await server.WaitPost(() =>
         {
             pda = entMan.SpawnEntity("PassengerPDA", MapCoordinates.Nullspace);
@@ -53,6 +54,11 @@ public sealed class PdaStoreTest
             Raise(entMan, store, pda, new PdaStoreMessage(PdaStoreAction.Install, "WantedList"));
             Assert.That(entMan.HasComponent<PdaDownloadComponent>(pda), Is.False,
                 "access is checked before the download starts");
+
+            // Insert unrelated disposable media; a download must not consume it.
+            var slots = entMan.System<ItemSlotsSystem>();
+            bystander = entMan.SpawnEntity("NotekeeperCartridge", MapCoordinates.Nullspace);
+            Assert.That(slots.TryInsert(pda, CartridgeLoaderComponent.CartridgeSlotId, bystander, null), Is.True);
         });
 
         // A permitted app starts a timed download and installs when it completes.
@@ -74,6 +80,8 @@ public sealed class PdaStoreTest
             Assert.That(IsInstalled(entMan, cartridges, pda, "MedTekCartridge"), Is.True,
                 "the app installs once the download completes");
             Assert.That(entMan.HasComponent<PdaDownloadComponent>(pda), Is.False);
+            Assert.That(entMan.EntityExists(bystander), Is.True,
+                "a download must not delete inserted cartridge media");
         });
 
         // Uninstalling through the store frees the program and the space.
@@ -92,9 +100,12 @@ public sealed class PdaStoreTest
             Raise(entMan, store, pda, new PdaStoreMessage(PdaStoreAction.Uninstall, program: entMan.GetNetEntity(store)));
             Assert.That(entMan.EntityExists(store), Is.True);
 
-            // Media install: insert a cartridge and copy its program, no download needed.
-            var media = entMan.SpawnEntity("NetProbeCartridge", MapCoordinates.Nullspace);
+            // Media install: eject the bystander, insert a non-auto-install cartridge and copy its program.
             var slots = entMan.System<ItemSlotsSystem>();
+            Assert.That(slots.TryEject(pda, CartridgeLoaderComponent.CartridgeSlotId, null, out _), Is.True);
+
+            var media = entMan.SpawnEntity("NetProbeCartridge", MapCoordinates.Nullspace);
+            entMan.GetComponent<CartridgeComponent>(media).AutoInstall = false;
             Assert.That(slots.TryInsert(pda, CartridgeLoaderComponent.CartridgeSlotId, media, null), Is.True);
 
             Raise(entMan, store, pda, new PdaStoreMessage(PdaStoreAction.InstallFromMedia,
@@ -102,6 +113,8 @@ public sealed class PdaStoreTest
 
             Assert.That(IsInstalled(entMan, cartridges, pda, "NetProbeCartridge"), Is.True,
                 "a program can be installed from inserted cartridge media");
+            Assert.That(entMan.IsQueuedForDeletion(media), Is.True,
+                "installing from disposable media consumes only that media");
             Assert.That(entMan.HasComponent<PdaDownloadComponent>(pda), Is.False,
                 "media copies do not start a network download");
         });
@@ -121,6 +134,7 @@ public sealed class PdaStoreTest
             entMan.GetComponent<MetaDataComponent>(uid).EntityPrototype?.ID == prototype);
     }
 }
+
 
 
 
