@@ -54,7 +54,8 @@ namespace Content.Client.PDA
                 SendPredictedMessage(new ItemSlotButtonPressedEvent(PdaComponent.PdaPaiSlotId));
             };
 
-            _menu.EjectDiskButton.OnPressed += _ => // WOLFGATE(PdaStorage)
+            // WOLFGATE(PdaStorage): eject the inserted data disk
+            _menu.EjectDiskButton.OnPressed += _ =>
             {
                 SendPredictedMessage(new ItemSlotButtonPressedEvent(PdaComponent.PdaDiskSlotId));
             };
@@ -79,14 +80,15 @@ namespace Content.Client.PDA
                 SendMessage(new PdaLockUplinkMessage());
             };
 
-            _menu.NotificationsButton.OnPressed += _ => // WOLFGATE(PdaUi)
+            // WOLFGATE(PdaUi): program notification toggle
+            _menu.NotificationsButton.OnPressed += _ =>
             {
                 SendMessage(new PdaToggleNotificationsMessage());
             };
 
+            // WOLFGATE(PdaUi) START: reopen the running program instead of asking the server again
             _menu.OnProgramItemPressed += uid =>
             {
-                // WOLFGATE(PdaUi): reopen the running program instead of asking the server for it again.
                 if (uid == ActiveProgram)
                 {
                     var title = EntMan.GetComponentOrNull<CartridgeComponent>(uid)?.ProgramName;
@@ -98,6 +100,7 @@ namespace Content.Client.PDA
 
                 ActivateCartridge(uid);
             };
+            // WOLFGATE END
             _menu.OnInstallButtonPressed += InstallCartridge;
             _menu.OnUninstallButtonPressed += UninstallCartridge;
             _menu.ProgramCloseButton.OnPressed += _ => DeactivateActiveCartridge();
@@ -130,7 +133,7 @@ namespace Content.Client.PDA
         protected override void AttachCartridgeUI(Control cartridgeUIFragment, string? title)
         {
             _menu?.ProgramView.AddChild(cartridgeUIFragment);
-            // WOLFGATE(PdaUi): restyle the fragment's stock controls to the PDA surface.
+            // WOLFGATE(PdaUi) START: restyle the fragment's stock controls and title it with its own icon
             PdaAppTheme.Apply(cartridgeUIFragment);
 
             var programName = ActiveProgram is { } active
@@ -140,6 +143,7 @@ namespace Content.Client.PDA
             _menu?.ToProgramView(
                 title ?? Loc.GetString("comp-pda-io-program-fallback-title"),
                 programName is null ? null : PdaProgramIcons.Get(programName));
+            // WOLFGATE END
         }
 
         protected override void DetachCartridgeUI(Control cartridgeUIFragment)

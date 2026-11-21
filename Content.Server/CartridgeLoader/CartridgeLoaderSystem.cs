@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.PDA;
-using Content.Shared._WG.PdaStorage;
+using Content.Shared._WG.PdaStorage; // WOLFGATE(PdaStorage)
 using Content.Shared.CartridgeLoader;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Interaction;
@@ -11,7 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes; // WOLFGATE(PdaStorage)
 
 namespace Content.Server.CartridgeLoader;
 
@@ -20,7 +20,7 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     [Dependency] private ContainerSystem _containerSystem = default!;
     [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private PdaSystem _pda = default!;
-    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!; // WOLFGATE(PdaStorage)
 
     public override void Initialize()
     {
@@ -181,17 +181,19 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         //the data on the cartridge to carry over when installing
 
         // For anyone stumbling onto this: Do not do this or I will cut you.
+        // WOLFGATE(PdaStorage) START: consume only the cartridge that was installed from
         var prototypeId = Prototype(cartridgeUid)?.ID;
         if (prototypeId == null || !InstallProgram(loaderUid, prototypeId, loader: loader))
             return false;
 
-        // WOLFGATE(PdaStorage): only the cartridge that was just installed from is consumed.
         if (loadedCartridge.Disposable)
             QueueDel(cartridgeUid);
 
         return true;
+        // WOLFGATE END
     }
 
+    // WOLFGATE(PdaStorage) START: capacity, duplicate and firmware-aware installation
     /// <summary>
     /// Installs a program by its prototype
     /// </summary>
@@ -243,9 +245,11 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         return true;
     }
+    // WOLFGATE END
 
+    // WOLFGATE(PdaStorage) START: server-authoritative install validation
     /// <summary>
-    /// WOLFGATE(PdaStorage): whether a program prototype can be installed into the loader's storage.
+    /// Whether a program prototype can be installed into the loader's storage.
     /// Does not run <see cref="ProgramInstallationAttempt"/>; install itself re-checks after that event.
     /// </summary>
     public ProgramInstallCheck CheckInstall(EntityUid loaderUid, string prototype, CartridgeLoaderComponent? loader = default!, bool builtin = false)
@@ -280,8 +284,10 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         return ProgramInstallCheck.Ok;
     }
+    // WOLFGATE END
 
-    /// <summary>WOLFGATE(PdaStorage): installed user storage in GQ (preinstalled firmware excluded).</summary>
+    // WOLFGATE(PdaStorage) START: storage readouts for the store UI
+    /// <summary>Installed user storage in GQ (preinstalled firmware excluded).</summary>
     public int GetUsedCapacity(EntityUid loaderUid, CartridgeLoaderComponent? loader = default!, ContainerManagerComponent? containerManager = default!)
     {
         if (!_containerSystem.TryGetContainer(loaderUid, InstalledContainerId, out var container, containerManager))
@@ -290,7 +296,7 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         return ProgramStorage.UsedUserStorage(EntityManager, container);
     }
 
-    /// <summary>WOLFGATE(PdaStorage): remaining storage in GQ.</summary>
+    /// <summary>Remaining storage in GQ.</summary>
     public int GetFreeCapacity(EntityUid loaderUid, CartridgeLoaderComponent? loader = default!, ContainerManagerComponent? containerManager = default!)
     {
         if (!Resolve(loaderUid, ref loader))
@@ -301,6 +307,7 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         return Math.Max(0, loader.StorageCapacity - ProgramStorage.UsedUserStorage(EntityManager, container));
     }
+    // WOLFGATE END
 
     /// <summary>
     /// Uninstalls a program using its uid
