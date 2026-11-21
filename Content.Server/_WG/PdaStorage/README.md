@@ -115,6 +115,7 @@ prototypes in `Resources/Prototypes/_WG/PdaStorage`.
   - removable store app
 - [`Resources/Prototypes/_NF/Loadouts/contractor_loadout_groups.yml`](../../../Resources/Prototypes/_NF/Loadouts/contractor_loadout_groups.yml): one preloaded software disk instead of loose cartridges
 - [`Resources/Prototypes/_NF/Loadouts/Jobs/Contractor/cartridge.yml`](../../../Resources/Prototypes/_NF/Loadouts/Jobs/Contractor/cartridge.yml): the contractor program choices ship as one disk
+- [`Resources/Prototypes/Entities/Mobs/Cyborgs/base_borg_chassis.yml`](../../../Resources/Prototypes/Entities/Mobs/Cyborgs/base_borg_chassis.yml): the built-in PDA gets the app store too
 - [`Resources/Prototypes/Entities/Objects/Devices/cartridges.yml`](../../../Resources/Prototypes/Entities/Objects/Devices/cartridges.yml)
   - core or role application lock
   - storage footprint in GQ

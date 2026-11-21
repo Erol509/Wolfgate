@@ -10,6 +10,9 @@
   - type: Icon
     sprite: Nyanotrasen/Objects/Specific/Research/datadisk.rsi
     state: icon
+  - type: ContainerContainer
+    containers:
+      data: !type:Container
   - type: DataDisk
     capacity: 32
   - type: StaticPrice

@@ -161,6 +161,9 @@
       locked: true
   - type: WGBorgPda
   - type: WGGameHubInstaller
+  # WOLFGATE(PdaStorage): the built-in PDA gets the app store too
+  - type: PdaAppStoreInstaller
+    program: PdaAppStoreCartridge
   - type: Ringer
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
