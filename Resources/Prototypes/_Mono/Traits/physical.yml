@@ -411,27 +411,30 @@
   description: trait-nanite-repair-drones-desc
   category: Physical
   cost: 8
-  speciesBlacklist:
-  - Human
-  - Chitinid
-  - Oni
-  - Vulpkanin
-  - WGCanine # WOLFGATE(Species): Canine is a Vulpkanin copy
-  - Vox
-  - Diona
-  - Moth
-  - Goblin
-  - Arachnid
-  - Resomi
-  - Harpy
-  - Reptilian
-  - Hydrakin
-  - Rodentia
-  - Dwarf
-  - SlimePerson
-  - Felinid
-  - Tajaran
-  - Feroxi
+# WOLFGATE(Biotype) START: any synthetic body can take this and no organic one, whatever the species
+#  speciesBlacklist:
+#  - Human
+#  - Chitinid
+#  - Oni
+#  - Vulpkanin
+#  - Vox
+#  - Diona
+#  - Moth
+#  - Goblin
+#  - Arachnid
+#  - Resomi
+#  - Harpy
+#  - Reptilian
+#  - Hydrakin
+#  - Rodentia
+#  - Dwarf
+#  - SlimePerson
+#  - Felinid
+#  - Tajaran
+#  - Feroxi
+  biotypeBlacklist:
+  - Organic
+# WOLFGATE END
   blacklist:
     components:
     - BorgChassis
