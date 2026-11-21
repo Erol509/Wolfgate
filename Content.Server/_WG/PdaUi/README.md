@@ -89,8 +89,9 @@ states. The title mark is the `paw` glyph in `ui_icons.rsi`, tinted by the windo
 - [`Content.Client/CartridgeLoader/CartridgeLoaderBoundUserInterface.cs`](../../../Content.Client/CartridgeLoader/CartridgeLoaderBoundUserInterface.cs): expose the hosted cartridge to the PDA shell
 - [`Content.Client/PDA/PdaBoundUserInterface.cs`](../../../Content.Client/PDA/PdaBoundUserInterface.cs)
   - TGUI-style shell
-  - reopen the running program instead of asking the server for it again.
-  - restyle the fragment's stock controls to the PDA surface.
+  - program notification toggle
+  - reopen the running program instead of asking the server again
+  - restyle the fragment's stock controls and title it with its own icon
 - [`Content.Server/PDA/PdaSystem.cs`](../../PDA/PdaSystem.cs): program notification setting
 - [`Content.Shared/PDA/PdaUpdateState.cs`](../../../Content.Shared/PDA/PdaUpdateState.cs): program notification setting
 

@@ -81,13 +81,13 @@ prototypes in `Resources/Prototypes/_WG/PdaStorage`.
 
 ## Non-modular edits
 
-- [`Content.Client/PDA/PdaBoundUserInterface.cs`](../../../Content.Client/PDA/PdaBoundUserInterface.cs)
+- [`Content.Client/PDA/PdaBoundUserInterface.cs`](../../../Content.Client/PDA/PdaBoundUserInterface.cs): eject the inserted data disk
 - [`Content.Server/CartridgeLoader/CartridgeLoaderSystem.cs`](../../CartridgeLoader/CartridgeLoaderSystem.cs)
-  - only the cartridge that was just installed from is consumed.
+  - consume only the cartridge that was installed from
+  - capacity, duplicate and firmware-aware installation
   - preinstalled programs are firmware; only the readonly prototypes are locked.
-  - whether a program prototype can be installed into the loader's storage.
-  - installed user storage in GQ (preinstalled firmware excluded).\</summary>
-  - remaining storage in GQ.\</summary>
+  - server-authoritative install validation
+  - storage readouts for the store UI
   - readonly programs are not removable, even through a crafted client message.
   - detach first so freed capacity and the program list update in the same tick.
   - pass the loader, not the program
