@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.PDA;
+using Content.Shared._WG.PdaStorage;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Interaction;
@@ -10,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.CartridgeLoader;
 
@@ -18,6 +20,7 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     [Dependency] private ContainerSystem _containerSystem = default!;
     [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private PdaSystem _pda = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
 
     public override void Initialize()
     {
@@ -195,10 +198,7 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (!Resolve(loaderUid, ref loader))
             return false;
 
-        if (!_containerSystem.TryGetContainer(loaderUid, InstalledContainerId, out var container))
-            return false;
-
-        if (container.Count >= loader.DiskSpace)
+        if (CheckInstall(loaderUid, prototype, loader, builtin: !deinstallable) != ProgramInstallCheck.Ok)
             return false;
 
         var ev = new ProgramInstallationAttempt(loaderUid, prototype);
@@ -207,25 +207,95 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (ev.Cancelled)
             return false;
 
-        var installedProgram = Spawn(prototype, new EntityCoordinates(loaderUid, 0, 0));
-        if (!TryComp(installedProgram, out CartridgeComponent? cartridge))
+        // A listener may have changed the storage while handling the attempt event.
+        if (CheckInstall(loaderUid, prototype, loader, builtin: !deinstallable) != ProgramInstallCheck.Ok)
             return false;
 
+        if (!_containerSystem.TryGetContainer(loaderUid, InstalledContainerId, out var container))
+            return false;
+
+        var installedProgram = Spawn(prototype, new EntityCoordinates(loaderUid, 0, 0));
+        if (!TryComp(installedProgram, out CartridgeComponent? cartridge))
+        {
+            QueueDel(installedProgram);
+            return false;
+        }
+
+        // WOLFGATE(PdaStorage): preinstalled programs are firmware; only the readonly prototypes are locked.
+        cartridge.SystemApp = !deinstallable;
         _containerSystem.Insert(installedProgram, container);
 
-        UpdateCartridgeInstallationStatus(installedProgram, deinstallable ? InstallationStatus.Installed : InstallationStatus.Readonly, cartridge);
+        UpdateCartridgeInstallationStatus(
+            installedProgram,
+            cartridge.Readonly ? InstallationStatus.Readonly : InstallationStatus.Installed,
+            cartridge);
         cartridge.LoaderUid = loaderUid;
 
         RaiseLocalEvent(installedProgram, new CartridgeAddedEvent(loaderUid));
         UpdateUserInterfaceState(loaderUid, loader);
 
-        if (cartridge.Readonly) // Frontier: Block uninstall
-            cartridge.InstallationStatus = InstallationStatus.Readonly; // Frontier
-
         if (cartridge.Disposable) // Frontier: Delete the cartridge after install if its disposable.
             QueueDel(loader.CartridgeSlot.ContainerSlot!.ContainedEntity); // Frontier
 
         return true;
+    }
+
+    /// <summary>
+    /// WOLFGATE(PdaStorage): whether a program prototype can be installed into the loader's storage.
+    /// Does not run <see cref="ProgramInstallationAttempt"/>; install itself re-checks after that event.
+    /// </summary>
+    public ProgramInstallCheck CheckInstall(EntityUid loaderUid, string prototype, CartridgeLoaderComponent? loader = default!, bool builtin = false)
+    {
+        if (!Resolve(loaderUid, ref loader))
+            return ProgramInstallCheck.Blocked;
+
+        if (!_containerSystem.TryGetContainer(loaderUid, InstalledContainerId, out var container))
+            return ProgramInstallCheck.Blocked;
+
+        if (!_prototypes.TryIndex<EntityPrototype>(prototype, out var entityPrototype))
+            return ProgramInstallCheck.UnknownPrototype;
+
+        if (!entityPrototype.TryGetComponent<CartridgeComponent>(out var program))
+            return ProgramInstallCheck.NotProgram;
+
+        if (container.Count >= loader.DiskSpace)
+            return ProgramInstallCheck.CountLimit;
+
+        if (ProgramStorage.TryFindByName(EntityManager, container, program.ProgramName, out _)
+            || ProgramStorage.ContainsPrototype(EntityManager, container, prototype))
+        {
+            return ProgramInstallCheck.Duplicate;
+        }
+
+        // Preinstalled firmware does not consume user storage.
+        if (!builtin
+            && ProgramStorage.UsedUserStorage(EntityManager, container) + Math.Max(0, program.Size) > loader.StorageCapacity)
+        {
+            return ProgramInstallCheck.NoSpace;
+        }
+
+        return ProgramInstallCheck.Ok;
+    }
+
+    /// <summary>WOLFGATE(PdaStorage): installed user storage in GQ (preinstalled firmware excluded).</summary>
+    public int GetUsedCapacity(EntityUid loaderUid, CartridgeLoaderComponent? loader = default!, ContainerManagerComponent? containerManager = default!)
+    {
+        if (!_containerSystem.TryGetContainer(loaderUid, InstalledContainerId, out var container, containerManager))
+            return 0;
+
+        return ProgramStorage.UsedUserStorage(EntityManager, container);
+    }
+
+    /// <summary>WOLFGATE(PdaStorage): remaining storage in GQ.</summary>
+    public int GetFreeCapacity(EntityUid loaderUid, CartridgeLoaderComponent? loader = default!, ContainerManagerComponent? containerManager = default!)
+    {
+        if (!Resolve(loaderUid, ref loader))
+            return 0;
+
+        if (!_containerSystem.TryGetContainer(loaderUid, InstalledContainerId, out var container, containerManager))
+            return 0;
+
+        return Math.Max(0, loader.StorageCapacity - ProgramStorage.UsedUserStorage(EntityManager, container));
     }
 
     /// <summary>
@@ -244,12 +314,20 @@ public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             return false;
 
         if (TryComp(programUid, out CartridgeComponent? cartridge))
+        {
+            // WOLFGATE(PdaStorage): readonly programs are not removable, even through a crafted client message.
+            if (cartridge.InstallationStatus == InstallationStatus.Readonly || cartridge.Readonly)
+                return false;
+
             cartridge.LoaderUid = null;
+        }
 
         if (loader.ActiveProgram == programUid)
             loader.ActiveProgram = null;
 
         loader.BackgroundPrograms.Remove(programUid);
+        // WOLFGATE(PdaStorage): detach first so freed capacity and the program list update in the same tick.
+        _containerSystem.RemoveEntity(loaderUid, programUid);
         QueueDel(programUid);
         UpdateUserInterfaceState(loaderUid, loader);
         return true;
@@ -531,3 +609,4 @@ public sealed class CartridgeAfterInteractEvent : EntityEventArgs
 /// </summary>
 [ByRefEvent]
 public record struct ProgramInstallationAttempt(EntityUid LoaderUid, string Prototype, bool Cancelled = false);
+

@@ -137,7 +137,8 @@ namespace Content.Server.PDA
 
         protected override void OnItemRemoved(EntityUid uid, PdaComponent pda, EntRemovedFromContainerMessage args)
         {
-            if (args.Container.ID != pda.IdSlot.ID && args.Container.ID != pda.PenSlot.ID && args.Container.ID != pda.PaiSlot.ID)
+            if (args.Container.ID != pda.IdSlot.ID && args.Container.ID != pda.PenSlot.ID
+                && args.Container.ID != pda.PaiSlot.ID && args.Container.ID != pda.DiskSlot.ID) // WOLFGATE(PdaStorage): refresh HasDisk
                 return;
 
             // TODO: This is super cursed just use compstates please.
@@ -282,7 +283,9 @@ namespace Content.Server.PDA
                 pda.StationName,
                 showUplink,
                 hasInstrument,
-                address);
+                address,
+                loader.NotificationsEnabled, // WOLFGATE(PdaUi): program notification setting
+                pda.DiskSlot.HasItem); // WOLFGATE(PdaStorage): data disk inserted
 
             _ui.SetUiState(uid, PdaUiKey.Key, state);
         }

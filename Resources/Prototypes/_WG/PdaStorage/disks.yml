@@ -1,0 +1,53 @@
+- type: entity
+  parent: BaseItem
+  id: PdaDataDisk
+  name: data disk
+  description: A removable disk for PDA programs. Slide it into a PDA to read or copy its contents.
+  components:
+  - type: Sprite
+    sprite: Nyanotrasen/Objects/Specific/Research/datadisk.rsi
+    state: icon
+  - type: Icon
+    sprite: Nyanotrasen/Objects/Specific/Research/datadisk.rsi
+    state: icon
+  - type: DataDisk
+    capacity: 32
+  - type: StaticPrice
+    price: 60
+
+- type: entity
+  parent: PdaDataDisk
+  id: PdaDataDiskAdvanced
+  name: advanced data disk
+  description: A high-capacity removable disk for PDA programs.
+  components:
+  - type: DataDisk
+    capacity: 64
+  - type: StaticPrice
+    price: 120
+
+- type: entity
+  parent: PdaDataDisk
+  id: PdaDataDiskSuper
+  name: super data disk
+  description: An extra-capacity removable disk for PDA programs.
+  components:
+  - type: DataDisk
+    capacity: 128
+  - type: StaticPrice
+    price: 240
+
+- type: entity
+  parent: PdaDataDiskAdvanced
+  id: PdaDataDiskContractor
+  name: contractor software disk
+  description: A preloaded disk with common contractor PDA programs. Install them or discard it.
+  components:
+  - type: DataDisk
+    capacity: 64
+    startingPrograms:
+    - AppraisalCartridge
+    - MedTekCartridge
+    - NetProbeCartridge
+    - LogProbeCartridge
+
