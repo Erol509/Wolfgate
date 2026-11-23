@@ -159,6 +159,8 @@
       locked: true
     paiSlot:
       locked: true
+    diskSlot:
+      locked: true
   - type: WGBorgPda
   - type: WGGameHubInstaller
   # WOLFGATE(PdaStorage): the built-in PDA gets the app store too
