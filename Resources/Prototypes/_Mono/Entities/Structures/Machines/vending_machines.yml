@@ -196,6 +196,17 @@
     mod: 8
   # WOLFGATE(TradeGoods): trade goods cost the station's live price
   - type: WGTradeVendor
+  # WOLFGATE(BulkCargo): bulk crate orders trickle in from this vendor
+  - type: WGCargoBulkVendor
+  # WOLFGATE(BulkCargo): crate vendors open the bulk order window
+  - type: UserInterface
+    interfaces:
+      enum.WGCargoBulkUiKey.Key:
+        type: WGCargoBulkVendorBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: ActivatableUI
+    key: enum.WGCargoBulkUiKey.Key
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/robotics.rsi
     layers:

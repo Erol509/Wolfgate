@@ -1,0 +1,36 @@
+# One corner of a cargo delivery zone; two paired markers open the rectangle between them.
+
+- type: entity
+  id: WGCargoZoneProjector
+  name: cargo zone projector
+  description: Places the two markers that open a cargo delivery zone. Dropping it destroys it.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    state: icon
+  - type: Item
+    size: Small
+  - type: WGCargoZoneProjector
+
+- type: entity
+  id: WGCargoZoneField
+  name: cargo delivery field
+  description: A faint orange energy field marking a cargo delivery zone.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WGCargoZoneField
+  - type: Transform
+    noRot: true
+
+- type: entity
+  id: WGCargoZoneCorner
+  name: cargo zone corner
+  description: One corner of a cargo delivery zone. Place two to open the space between them.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Markers/cross.rsi
+    state: pink
+  - type: WGCargoZoneCorner
+  - type: InteractionOutline

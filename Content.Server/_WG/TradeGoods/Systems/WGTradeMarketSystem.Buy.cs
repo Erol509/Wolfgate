@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server._WG.BulkCargo;
 using Content.Server._WG.TradeGoods.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared._Crescent.Dispenser;
@@ -91,25 +92,7 @@ public sealed partial class WGTradeMarketSystem
         }
 
         var stock = MathF.Max(1f, LevelFactor(profile, PricedLevel(grid, good)));
-
-        var ev = new WGTradeBuyQuoteEvent(grid, good);
-        RaiseLocalEvent(ev);
-
-        var raise = 1f;
-        var top = 1f;
-        LocId? raiseReason = null;
-        foreach (var modifier in ev.Modifiers)
-        {
-            if (modifier.Factor <= 1f)
-                continue;
-
-            raise *= modifier.Factor;
-            if (modifier.Factor > top)
-            {
-                top = modifier.Factor;
-                raiseReason = modifier.Reason;
-            }
-        }
+        var raise = BuyRaise(grid, good, out var raiseReason);
 
         reason = raiseReason ?? (stock >= 1f + SteadyBand ? "wg-trade-reason-scarce" : "wg-trade-reason-steady");
         return MathF.Min(stock * Math.Min(raise, profile.ModifierCap), profile.PriceCap);
@@ -133,6 +116,10 @@ public sealed partial class WGTradeMarketSystem
     /// <summary>A trade good bought from a vendor comes off its station's shelf now and reaches its price later; contraband does neither.</summary>
     private void OnPurchased(Entity<VendingMachinePurchaseComponent> ent, ref ComponentStartup args)
     {
+        // A bulk order took its crates off the shelf when it was paid for; the delivered crate only records the sale.
+        if (HasComp<WGBulkPurchasedComponent>(ent))
+            return;
+
         if (!HasComp<WGTradeOriginComponent>(ent)
             || Transform(ent).GridUid is not { } grid
             || MetaData(ent).EntityPrototype?.ID is not { } good

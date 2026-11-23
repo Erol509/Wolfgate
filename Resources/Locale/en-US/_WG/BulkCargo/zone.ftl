@@ -1,0 +1,11 @@
+wg-bulk-zone-corner-set = First corner set. Place the opposite corner.
+wg-bulk-zone-space = A marker can't stand on space.
+wg-bulk-zone-too-far = That tile is too far away.
+wg-bulk-zone-other-grid = The first corner is on another grid.
+wg-bulk-zone-too-large = Those markers would open a zone that is too large.
+wg-bulk-zone-too-many = This grid already holds the maximum number of delivery zones.
+wg-bulk-zone-limit = The round already holds the maximum number of delivery zones.
+wg-bulk-zone-failed = Those markers can't open a zone.
+wg-bulk-zone-formed = Zone opened: { $free } tiles free, { $blocked } blocked.
+wg-bulk-zone-projector-dropped = The projector shatters when dropped.
+wg-bulk-zone-removed = Marker removed.
