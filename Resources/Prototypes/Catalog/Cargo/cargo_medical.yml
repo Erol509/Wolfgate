@@ -22,7 +22,7 @@
 - type: cargoProduct
   id: MedicalChemistryVials
   icon:
-    sprite: Objects/Specific/Chemistry/vial.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/vial.rsi # WOLFGATE(Resprites): funky resprite batch
     state: vial
   product: CrateChemistryVials
   cost: 1000

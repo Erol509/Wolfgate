@@ -35,7 +35,7 @@
   id: SecuritySupplies
   abstract: true # Frontier
   icon:
-    sprite: Objects/Storage/boxes.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi # WOLFGATE(Resprites): funky resprite
     state: box_security
   product: CrateSecuritySupplies
   cost: 500

@@ -450,10 +450,10 @@
   id: TrashBananiumPeel
   components:
   - type: Sprite
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: peel
   - type: Item
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     heldPrefix: peel
   - type: Slippery
 

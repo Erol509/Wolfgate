@@ -9,7 +9,7 @@
   - type: Item
     size: Tiny
   - type: Sprite
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: gold
   - type: WGHeavyVehicleLicence

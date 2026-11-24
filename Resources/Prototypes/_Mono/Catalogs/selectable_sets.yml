@@ -79,7 +79,7 @@
   name: selectable-set-pdvinfiltrator-sabotage-kit-name
   description: selectable-set-pdvinfiltrator-sabotage-kit-desc
   sprite:
-    sprite: Objects/Tools/jaws_of_life.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/jaws_of_life.rsi # WOLFGATE(Resprites): funky resprite batch
     state: jaws_pry
   content:
   - NFShovel

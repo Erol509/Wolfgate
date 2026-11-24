@@ -13,12 +13,12 @@
     containers:
       parcel-contents: !type:Container
   - type: Item
-    sprite: Objects/Storage/boxes.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi # WOLFGATE(Resprites): funky resprite
     size: Large
     shape:
     - 0,0,2,2
   - type: Sprite
-    sprite: Objects/Storage/boxes.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi # WOLFGATE(Resprites): funky resprite
     state: boxwide
   - type: EmitSoundOnPickup
     sound:

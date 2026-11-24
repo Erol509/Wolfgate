@@ -1,0 +1,453 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcluwne made by brainfood1183 (github) for ss14, idbrigmedic made by PuroSlavKing (Github), pirate made by brainfood1183 (github), idadmin made by Arimah (github), idvisitor by IProduceWidgets (Github), idintern-service by spanky-spanky (Github) | service icons darkened by frobnic8 (Discord and Github), wizard and idwizard by ScarKy0",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "default"
+    },
+    {
+      "name": "centcom"
+    },
+    {
+      "name": "admin"
+    },
+    {
+      "name": "ert_chaplain"
+    },
+    {
+      "name": "ert_commander"
+    },
+    {
+      "name": "ert_engineer"
+    },
+    {
+      "name": "ert_janitor"
+    },
+    {
+      "name": "ert_medic"
+    },
+    {
+      "name": "ert_security"
+    },
+    {
+      "name": "gold"
+    },
+    {
+      "name": "idpassenger"
+    },
+    {
+      "name": "idatmospherictechnician"
+    },
+    {
+      "name": "idbartender"
+    },
+    {
+      "name": "idbotanist"
+    },
+    {
+      "name": "idboxer"
+    },
+    {
+      "name": "idcaptain"
+    },
+    {
+      "name": "idcargotechnician"
+    },
+    {
+      "name": "idcentcom"
+    },
+    {
+      "name": "idchaplain"
+    },
+    {
+      "name": "idchemist"
+    },
+    {
+      "name": "idchiefengineer"
+    },
+    {
+      "name": "idchiefmedicalofficer"
+    },
+    {
+      "name": "idclown"
+    },
+    {
+      "name": "idcook"
+    },
+    {
+      "name": "idcurator"
+    },
+    {
+      "name": "iddetective"
+    },
+    {
+      "name": "idgeneticist"
+    },
+    {
+      "name": "idheadofpersonnel"
+    },
+    {
+      "name": "idheadofsecurity"
+    },
+    {
+      "name": "idbrigmedic"
+    },
+    {
+      "name": "idjanitor"
+    },
+    {
+      "name": "idlawyer"
+    },
+    {
+      "name": "idmedicaldoctor"
+    },
+    {
+      "name": "idmime"
+    },
+    {
+      "name": "idparamedic"
+    },
+    {
+      "name": "idpsychologist"
+    },
+    {
+      "name": "idreporter"
+    },
+    {
+      "name": "idprisoner"
+    },
+    {
+      "name": "idquartermaster"
+    },
+    {
+      "name": "idresearchdirector"
+    },
+    {
+      "name": "idroboticist"
+    },
+    {
+      "name": "idscientist"
+    },
+    {
+      "name": "idsecurityofficer"
+    },
+    {
+      "name": "idshaftminer"
+    },
+    {
+      "name": "idstationengineer"
+    },
+    {
+      "name": "idunknown"
+    },
+    {
+      "name": "idvirologist"
+    },
+    {
+      "name": "idvisitor"
+    },
+    {
+      "name": "idwarden"
+    },
+    {
+      "name": "idmusician"
+    },
+    {
+      "name": "idzookeeper"
+    },
+    {
+      "name": "idintern-sci"
+    },
+    {
+      "name": "idintern-cadet"
+    },
+    {
+      "name": "idintern-med"
+    },
+    {
+      "name": "idintern-service"
+    },
+    {
+      "name": "idintern-tech"
+    },
+    {
+      "name": "idadmin"
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "pirate"
+    },
+    {
+      "name": "prisoner_001"
+    },
+    {
+      "name": "prisoner_002"
+    },
+    {
+      "name": "prisoner_003"
+    },
+    {
+      "name": "prisoner_004"
+    },
+    {
+      "name": "prisoner_005"
+    },
+    {
+      "name": "prisoner_006"
+    },
+    {
+      "name": "prisoner_007"
+    },
+    {
+      "name": "silver"
+    },
+    {
+      "name": "syndie"
+    },
+    {
+      "name": "idcluwne"
+    },
+    {
+      "name": "idseniorengineer"
+    },
+    {
+      "name": "idseniorresearcher"
+    },
+    {
+      "name": "idseniorphysician"
+    },
+    {
+      "name": "idseniorofficer"
+    },
+    {
+      "name": "wizard"
+    },
+    {
+      "name": "idwizard"
+    },
+    {
+      "name": "gold-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "gold-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "default-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "default-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "silver-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "silver-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "orange-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "orange-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "blue-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "blue-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "green-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "green-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cc-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "cc-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cc"
+    },
+    {
+      "name": "decal-admin"
+    },
+    {
+      "name": "decal-discriminator-cc"
+    },
+    {
+      "name": "decal-discriminator-command"
+    },
+    {
+      "name": "decal-discriminator-deathsquad"
+    },
+    {
+      "name": "decal-discriminator-ert"
+    },
+    {
+      "name": "decal-discriminator-security"
+    },
+    {
+      "name": "decal-stripe-cargo"
+    },
+    {
+      "name": "decal-stripe-cc"
+    },
+    {
+      "name": "decal-stripe-civillian"
+    },
+    {
+      "name": "decal-stripe-cluwne"
+    },
+    {
+      "name": "decal-stripe-command"
+    },
+    {
+      "name": "decal-stripe-criminal"
+    },
+    {
+      "name": "decal-stripe-engineering"
+    },
+    {
+      "name": "decal-stripe-medical"
+    },
+    {
+      "name": "decal-stripe-party"
+    },
+    {
+      "name": "decal-stripe-pirate"
+    },
+    {
+      "name": "decal-stripe-rainbow"
+    },
+    {
+      "name": "decal-stripe-science"
+    },
+    {
+      "name": "decal-stripe-security"
+    },
+    {
+      "name": "decal-stripe-service"
+    },
+    {
+      "name": "decal-stripe-stripes"
+    },
+    {
+      "name": "decal-stripe-syndicate"
+    },
+    {
+      "name": "decal-stripe-wizard"
+    },
+    {
+      "name": "future-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "future-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "future"
+    },
+    {
+      "name": "helldiver-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "helldiver-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "helldiver"
+    },
+    {
+      "name": "nt-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "nt-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "nt"
+    },
+    {
+      "name": "pirate-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pirate-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "prison-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "prison-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "prison"
+    },
+    {
+      "name": "retro"
+    },
+    {
+      "name": "retro_engineering"
+    },
+    {
+      "name": "retro_medical"
+    },
+    {
+      "name": "retro_nanotrasen"
+    },
+    {
+      "name": "retro_research"
+    },
+    {
+      "name": "retro_security"
+    },
+    {
+      "name": "syndicate-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "syndicate-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "syndicate"
+    },
+    {
+      "name": "wizard-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wizard-inhand-right",
+      "directions": 4
+    }
+  ]
+}

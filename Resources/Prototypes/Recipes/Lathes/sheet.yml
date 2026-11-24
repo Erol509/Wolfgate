@@ -257,7 +257,7 @@
   id: MaterialDiamond
   name: materials-diamond
   icon:
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: diamond
   materialResult:
     Diamond: 100
@@ -313,7 +313,7 @@
   id: MaterialBananium1
   name: materials-bananium
   icon:
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: bananium
   materialResult:
     Bananium: 100

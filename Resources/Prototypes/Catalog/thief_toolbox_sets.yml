@@ -25,7 +25,7 @@
   name: thief-backpack-category-tools-name
   description: thief-backpack-category-tools-description
   sprite:
-    sprite: Objects/Tools/jaws_of_life.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/jaws_of_life.rsi # WOLFGATE(Resprites): funky resprite batch
     state: jaws_pry
   content:
   - WelderIndustrialAdvanced

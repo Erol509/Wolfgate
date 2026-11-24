@@ -24,7 +24,7 @@
   id: FoodMRE
   abstract: true # Frontier
   icon:
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     state: nutribrick
   product: CrateFoodMRE
   cost: 1000
@@ -46,7 +46,7 @@
   id: FoodDinnerware
   abstract: true # Frontier
   icon:
-    sprite: Objects/Consumable/Food/plates.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/plates.rsi # WOLFGATE(Resprites): funky resprite
     state: tin
   product: CrateFoodDinnerware
   cost: 750

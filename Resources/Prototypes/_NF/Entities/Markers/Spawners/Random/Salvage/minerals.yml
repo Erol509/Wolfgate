@@ -47,7 +47,7 @@
     - sprite: Structures/Walls/rock.rsi
       state: rock
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -94,7 +94,7 @@
     - sprite: Structures/Walls/cobblebrick.rsi
       state: full
     - state: green
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -125,9 +125,9 @@
     - sprite: Structures/Walls/cobblebrick.rsi
       state: full
     - state: green
-    - sprite: Objects/Materials/materials.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
       state: diamond
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -185,7 +185,7 @@
     - sprite: Structures/Walls/rock.rsi
       state: rock_snow
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -234,7 +234,7 @@
     - sprite: Structures/Walls/ice.rsi
       state: full
     - state: green
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -265,9 +265,9 @@
     - sprite: Structures/Walls/ice.rsi
       state: full
     - state: green
-    - sprite: Objects/Materials/materials.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
       state: diamond
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -325,7 +325,7 @@
     - sprite: Structures/Walls/rock.rsi
       state: rock_andesite
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -374,7 +374,7 @@
     - sprite: Structures/Walls/cobblebrick_andesite.rsi
       state: full
     - state: green
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -405,9 +405,9 @@
     - sprite: Structures/Walls/cobblebrick_andesite.rsi
       state: full
     - state: green
-    - sprite: Objects/Materials/materials.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
       state: diamond
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -465,7 +465,7 @@
     - sprite: Structures/Walls/rock.rsi
       state: rock_wall
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -514,7 +514,7 @@
     - sprite: Structures/Walls/cobblebrick_basalt.rsi
       state: full
     - state: green
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -545,9 +545,9 @@
     - sprite: Structures/Walls/cobblebrick_basalt.rsi
       state: full
     - state: green
-    - sprite: Objects/Materials/materials.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
       state: diamond
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -605,7 +605,7 @@
     - sprite: Structures/Walls/rock.rsi
       state: rock_sand
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -654,7 +654,7 @@
     - sprite: Structures/Walls/sandstone.rsi
       state: full
     - state: green
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -685,9 +685,9 @@
     - sprite: Structures/Walls/sandstone.rsi
       state: full
     - state: green
-    - sprite: Objects/Materials/materials.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
       state: diamond
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -745,7 +745,7 @@
     - sprite: Structures/Walls/rock.rsi
       state: rock_chromite
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -794,7 +794,7 @@
     - sprite: Structures/Walls/cobblebrick_chromite.rsi
       state: full
     - state: green
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -825,9 +825,9 @@
     - sprite: Structures/Walls/cobblebrick_chromite.rsi
       state: full
     - state: green
-    - sprite: Objects/Materials/materials.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
       state: diamond
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -885,7 +885,7 @@
     - sprite: Structures/Walls/rock.rsi
       state: rock_asteroid
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -934,7 +934,7 @@
     - sprite: Structures/Walls/necropolis.rsi
       state: full
     - state: green
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -965,9 +965,9 @@
     - sprite: Structures/Walls/necropolis.rsi
       state: full
     - state: green
-    - sprite: Objects/Materials/materials.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
       state: diamond
-    - sprite: Objects/Tools/handdrilldiamond.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
       state: handdrill
   - type: EntityTableSpawner
     offset: 0
@@ -1023,7 +1023,7 @@
     - sprite: _NF/Structures/Walls/rock.rsi
       state: scraprock01
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0

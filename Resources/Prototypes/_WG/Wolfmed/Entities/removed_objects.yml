@@ -8,7 +8,7 @@
   description: A deformed bullet, dug out of someone. Still warm.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi # WOLFGATE(Resprites): funky resprite batch
     state: base-spent
   - type: Item
     size: Tiny

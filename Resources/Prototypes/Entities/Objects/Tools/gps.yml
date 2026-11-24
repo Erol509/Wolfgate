@@ -5,12 +5,12 @@
   description: Helping lost spacemen find their way through the planets since 2016.
   components:
   - type: Sprite
-    sprite: Objects/Devices/gps.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Devices/gps.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: icon
     - state: active
   - type: Item
-    sprite: Objects/Devices/gps.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Devices/gps.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: HandheldGPS
   - type: PhysicalComposition
     materialComposition:

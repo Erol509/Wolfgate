@@ -201,7 +201,7 @@
       - tag: Multitool
         name: multitool
         icon:
-          sprite: Objects/Tools/multitool.rsi
+          sprite: _WG/Resprites/Wizden/Objects/Tools/multitool.rsi # WOLFGATE(Resprites): funky resprite
           state: icon
         doAfter: 5
   - node: screwing
@@ -234,7 +234,7 @@
         doAfter: 2
         name: id card
         icon:
-          sprite: Objects/Misc/id_cards.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
           state: idpassenger
       - tool: Pulsing
         doAfter: 8
@@ -242,7 +242,7 @@
         doAfter: 2
         name: id card
         icon:
-          sprite: Objects/Misc/id_cards.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
           state: idpassenger
       - tool: Pulsing
         doAfter: 8
@@ -362,7 +362,7 @@
       - tag: Multitool
         name: multitool
         icon:
-          sprite: Objects/Tools/multitool.rsi
+          sprite: _WG/Resprites/Wizden/Objects/Tools/multitool.rsi # WOLFGATE(Resprites): funky resprite
           state: icon
         doAfter: 5
   - node: mid

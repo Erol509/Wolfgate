@@ -9,7 +9,7 @@
     size: Ginormous
   - type: Sprite
     scale: 0.8, 0.8
-    sprite: _NF/Objects/Specific/Mail/mail_large.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Mail/mail_large.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: icon
       map: ["enum.MailVisualLayers.Icon"]

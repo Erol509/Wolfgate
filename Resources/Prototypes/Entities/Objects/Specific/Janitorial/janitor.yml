@@ -319,7 +319,7 @@
   description: For cleaning up messes, you suppose.
   components:
     - type: Sprite
-      sprite: Objects/Specific/Janitorial/rag.rsi
+      sprite: _WG/Resprites/Funkystation/Objects/Specific/Janitorial/rag.rsi # WOLFGATE(Resprites): funky resprite batch
       layers:
       - state: rag
       - map: ["enum.SolutionContainerLayers.Fill"]
@@ -339,7 +339,7 @@
           Blunt: 0
     - type: Item
       size: Small
-      sprite: Objects/Specific/Janitorial/rag.rsi
+      sprite: _WG/Resprites/Funkystation/Objects/Specific/Janitorial/rag.rsi # WOLFGATE(Resprites): funky resprite batch
     - type: Absorbent
       pickupAmount: 15
     - type: Construction

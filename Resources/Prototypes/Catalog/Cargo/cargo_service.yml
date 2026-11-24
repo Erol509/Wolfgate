@@ -11,7 +11,7 @@
 - type: cargoProduct
   id: ServiceLightsReplacement
   icon:
-    sprite: Objects/Power/light_bulb.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi # WOLFGATE(Resprites): funky resprite batch
     state: normal
   product: CrateServiceReplacementLights
   cost: 600
@@ -22,7 +22,7 @@
   id: ServiceLightsHoliday
   abstract: true # Frontier
   icon:
-    sprite: Objects/Power/light_bulb.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi # WOLFGATE(Resprites): funky resprite batch
     state: normal
   product: CrateServiceHolidayLights
   cost: 800
@@ -95,7 +95,7 @@
   id: ServicePersonnel
   abstract: true # Frontier
   icon:
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
     state: default
   product: CrateServicePersonnel
   cost: 1000
@@ -147,7 +147,7 @@
 - type: cargoProduct
   id: ServiceBoxes
   icon:
-    sprite: Objects/Storage/boxes.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi # WOLFGATE(Resprites): funky resprite
     state: box
   product: CrateServiceBox
   cost: 400
@@ -229,7 +229,7 @@
 - type: cargoProduct
   id: CrateMRE
   icon: 
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     state: nutribrick
   product: CrateFoodMRE
   cost: 6000

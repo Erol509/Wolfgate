@@ -7,9 +7,9 @@
   description: Can hold various things.
   components:
   - type: Sprite
-    sprite: Clothing/Belt/utility.rsi
+    sprite: _WG/Resprites/Funkystation/Clothing/Belt/utility.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Clothing
-    sprite: Clothing/Belt/utility.rsi
+    sprite: _WG/Resprites/Funkystation/Clothing/Belt/utility.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Storage
       #maxItemSize: Normal# Frontier
       # TODO: Fill this out more.
@@ -88,9 +88,9 @@
   description: Holds tools, looks snazzy.
   components:
   - type: Sprite
-    sprite: Clothing/Belt/ce.rsi
+    sprite: _WG/Resprites/Funkystation/Clothing/Belt/ce.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Clothing
-    sprite: Clothing/Belt/ce.rsi
+    sprite: _WG/Resprites/Funkystation/Clothing/Belt/ce.rsi # WOLFGATE(Resprites): funky resprite batch
     #- type: Storage # Frontier
     #grid: # Frontier
     #- 0,0,9,1 # Frontier
@@ -209,9 +209,9 @@
   description: A belt used to hold most janitorial supplies.
   components:
   - type: Sprite
-    sprite: Clothing/Belt/janitor.rsi
+    sprite: _WG/Resprites/Funkystation/Clothing/Belt/janitor.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Clothing
-    sprite: Clothing/Belt/janitor.rsi
+    sprite: _WG/Resprites/Funkystation/Clothing/Belt/janitor.rsi # WOLFGATE(Resprites): funky resprite batch
       #- type: Storage # Frontier
       # whitelist: # Frontier: commented out whitelist
       # tags:
@@ -390,9 +390,9 @@
   description: A belt used to hold kitchen knives and condiments for quick access.
   components:
   - type: Sprite
-    sprite: Clothing/Belt/chef.rsi
+    sprite: _WG/Resprites/Funkystation/Clothing/Belt/chef.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Clothing
-    sprite: Clothing/Belt/chef.rsi
+    sprite: _WG/Resprites/Funkystation/Clothing/Belt/chef.rsi # WOLFGATE(Resprites): funky resprite batch
       # - type: Storage # Frontier: commented out whitelist
       # whitelist:
       # tags:

@@ -5,9 +5,9 @@
   description: A raw material.
   components:
   - type: Sprite
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Item
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     size: Normal
   - type: Tag
     tags:
@@ -349,7 +349,7 @@
   name: bear hide
   components:
   - type: Sprite
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: bearpelt
@@ -377,7 +377,7 @@
   description: Luxury pelt used in only the most elite fashion. Rumors say this is found when a corgi is sent to the nice farm.
   components:
   - type: Sprite
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: corgihide
   - type: Item
     heldPrefix: corgihide

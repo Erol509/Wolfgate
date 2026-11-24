@@ -4,9 +4,9 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Objects/Storage/boxes.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi # WOLFGATE(Resprites): funky resprite
   - type: Item
-    sprite: Objects/Storage/boxes.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi # WOLFGATE(Resprites): funky resprite
     size: Large
     shape:
     - 0,0,2,2

@@ -144,7 +144,7 @@
       prize: 2500
       weight: 900
     # Slag: fills cells, pays nothing.
-    - icon: { sprite: Objects/Materials/materials.rsi, state: ash }
+    - icon: { sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi, state: ash } # WOLFGATE(Resprites): funky resprite batch
     - icon: { sprite: Objects/Materials/ore.rsi, state: coal }
 
 # High tier, 10000 thalers: wins about one time in eight, never less than 2.5 times the price, up to 500 times it.

@@ -406,7 +406,7 @@
     - type: WolfmedHullPlate
     duration: 5
   - type: Sprite
-    sprite: Objects/Tools/wrench.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/wrench.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: WolfmedSurgeryIncisionTreatmentEffect
     wound: WGWolfmedChassisBreachWound
@@ -426,7 +426,7 @@
     - type: WolfmedHullWeld
     duration: 8
   - type: Sprite
-    sprite: Objects/Tools/welder.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/welder.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: WolfmedSurgeryCloseEviscerationEffect
     woundPrototype: WGWolfmedChassisBreachWound
@@ -450,7 +450,7 @@
     - type: WolfmedHullWeld
     duration: 3
   - type: Sprite
-    sprite: Objects/Tools/welder.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/welder.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: WolfmedSurgeryWeldChassisEffect
     wounds:
@@ -558,7 +558,7 @@
     - type: WolfmedCoreHousingOpen
     duration: 4
   - type: Sprite
-    sprite: Objects/Tools/wrench.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/wrench.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: SurgeryStepEmoteEffect
 
@@ -592,6 +592,6 @@
     - type: WolfmedCoreHousingOpen
     duration: 4
   - type: Sprite
-    sprite: Objects/Tools/welder.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/welder.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: SurgeryStepEmoteEffect

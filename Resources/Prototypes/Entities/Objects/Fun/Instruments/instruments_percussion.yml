@@ -56,11 +56,11 @@
       "Ooh": {53: 0}
       "Kweh": {4: 1}
   - type: Sprite
-    sprite: Objects/Fun/Instruments/microphone.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/Instruments/microphone.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: Item
     size: Small
-    sprite: Objects/Fun/Instruments/microphone.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/Instruments/microphone.rsi # WOLFGATE(Resprites): funky resprite batch
 
 - type: entity
   parent: BaseHandheldInstrument

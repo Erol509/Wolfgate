@@ -72,7 +72,7 @@
     - type: WolfmedServicePanelOpen
     duration: 3
   - type: Sprite
-    sprite: Objects/Tools/wrench.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/wrench.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: SurgeryStepEmoteEffect
 
@@ -136,6 +136,6 @@
     - type: WolfmedServicePanelOpen
     duration: 3
   - type: Sprite
-    sprite: Objects/Tools/welder.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/welder.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: SurgeryStepEmoteEffect

@@ -229,7 +229,7 @@
   description: A surgical program for an autodoc. S.A.M. reads it once and remembers.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Research/researchdisk.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Research/researchdisk.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: StaticPrice
     price: 150 # prints for about 100
@@ -300,7 +300,7 @@
   description: A triage module for an autodoc. With one installed the pod decides for itself what a patient needs, and does it.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Research/researchdisk.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Research/researchdisk.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
     color: "#6fd6ff"
   - type: AutodocAutofixModule

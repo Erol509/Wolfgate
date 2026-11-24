@@ -238,7 +238,7 @@
   - type: Spillable
     solution: beaker
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/beaker_cryostasis.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
       - state: beakernoreact
   - type: SolutionContainerVisuals
@@ -345,7 +345,7 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/syringe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/syringe.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
       - state: syringe1
         map: ["enum.SolutionContainerLayers.Fill"]
@@ -353,11 +353,11 @@
       - state: syringe_base0
         map: ["enum.SolutionContainerLayers.Base"]
   - type: Icon
-    sprite: Objects/Specific/Chemistry/syringe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/syringe.rsi # WOLFGATE(Resprites): funky resprite batch
     state: "syringe_base0"
   - type: Item
     size: Tiny
-    sprite: Objects/Specific/Chemistry/syringe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/syringe.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: SolutionContainerManager
     solutions:
       injector:
@@ -399,7 +399,7 @@
   id: MiniSyringe
   components:
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/syringe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/syringe.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
       - state: minisyringe1
         map: ["enum.SolutionContainerLayers.Fill"]
@@ -482,7 +482,7 @@
     - state: bluespace_base0
       map: ["enum.SolutionContainerLayers.Base"]
   - type: Icon
-    sprite: Objects/Specific/Chemistry/syringe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/syringe.rsi # WOLFGATE(Resprites): funky resprite batch
     state: bluespace_base0
   - type: SolutionContainerManager
     solutions:
@@ -513,7 +513,7 @@
     - state: cryo_base0
       map: ["enum.SolutionContainerLayers.Base"]
   - type: Icon
-    sprite: Objects/Specific/Chemistry/syringe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/syringe.rsi # WOLFGATE(Resprites): funky resprite batch
     state: cryo_base0
   - type: SolutionContainerManager
     solutions:

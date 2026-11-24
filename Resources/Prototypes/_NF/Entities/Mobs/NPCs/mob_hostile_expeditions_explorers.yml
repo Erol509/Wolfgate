@@ -111,7 +111,7 @@
       state: equipped-head-light
       color: "#47f8ff"
     # Weapons
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: wielded-inhand-right
     # Fluff
     - sprite: Objects/Tools/lantern.rsi
@@ -186,9 +186,9 @@
     - sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
       state: inhand-right
     # Fluff
-    - sprite: Objects/Tools/flashlight.rsi
+    - sprite: _WG/Resprites/Wizden/Objects/Tools/flashlight.rsi # WOLFGATE(Resprites): funky resprite
       state: inhand-left
-    - sprite: Objects/Tools/flashlight.rsi
+    - sprite: _WG/Resprites/Wizden/Objects/Tools/flashlight.rsi # WOLFGATE(Resprites): funky resprite
       state: inhand-left-light
       shader: unshaded
   - type: RechargeBasicEntityAmmo
@@ -343,9 +343,9 @@
     - sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
       state: equipped-OUTERCLOTHING
     # Weapons
-    - sprite: Objects/Tools/handdrill.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrill.rsi # WOLFGATE(Resprites): funky resprite batch
       state: inhand-right
-    - sprite: Objects/Tools/handdrill.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrill.rsi # WOLFGATE(Resprites): funky resprite batch
       state: inhand-left
     # Fluff
     - sprite: Objects/Tools/lantern.rsi

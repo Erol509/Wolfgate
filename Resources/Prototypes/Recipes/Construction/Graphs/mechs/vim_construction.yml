@@ -9,7 +9,7 @@
       - tag: VoiceTrigger
         name: a voice trigger
         icon:
-          sprite: "Objects/Devices/voice.rsi"
+          sprite: "_WG/Resprites/Funkystation/Objects/Devices/voice.rsi" # WOLFGATE(Resprites): funky resprite batch
           state: "voice"
         completed:
         - !type:VisualizerDataInt

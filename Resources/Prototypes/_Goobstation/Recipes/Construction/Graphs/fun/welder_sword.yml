@@ -52,7 +52,7 @@
       - tag: Welder
         name: welding tool
         icon:
-          sprite: Objects/Tools/welder.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Tools/welder.rsi # WOLFGATE(Resprites): funky resprite batch
           state: icon
         doAfter: 5
 
@@ -114,7 +114,7 @@
       - tag: WelderIndustrial
         name: industrial welding tool
         icon:
-          sprite: Objects/Tools/welder_industrial.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Tools/welder_industrial.rsi # WOLFGATE(Resprites): funky resprite batch
           state: icon
         doAfter: 7
       - material: ReinforcedGlass
@@ -178,7 +178,7 @@
       - tag: WelderExperimental
         name: experimental welding tool
         icon:
-          sprite: Objects/Tools/welder_experimental.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Tools/welder_experimental.rsi # WOLFGATE(Resprites): funky resprite batch
           state: icon
         doAfter: 10
 

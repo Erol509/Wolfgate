@@ -8,7 +8,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Objects/Specific/Medical/medical.rsi
+        - sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/medical.rsi # WOLFGATE(Resprites): funky resprite
           state: brutepack
     - type: RandomSpawner
       rarePrototypes:

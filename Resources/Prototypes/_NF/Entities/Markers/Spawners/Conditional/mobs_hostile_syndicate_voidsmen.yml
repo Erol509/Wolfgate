@@ -38,7 +38,7 @@
         state: equipped-OUTERCLOTHING
       - sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
         state: inhand-left
-      - sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
+      - sprite: _WG/Resprites/Wizden/Objects/Tools/Toolboxes/toolbox_syn.rsi # WOLFGATE(Resprites): funky resprite
         state: inhand-right
   - type: ConditionalSpawner
     prototypes:

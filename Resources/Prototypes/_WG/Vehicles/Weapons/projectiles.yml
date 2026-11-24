@@ -36,7 +36,7 @@
   categories: [ HideSpawnMenu, WGVehicles ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/large_casing.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Guns/Ammunition/Casings/large_casing.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
@@ -394,7 +394,7 @@
   categories: [ HideSpawnMenu, WGVehicles ]
   components:
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - state: flare_base
     - state: flare_burn

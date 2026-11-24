@@ -16,7 +16,7 @@
       state: equipped-MASK
     - sprite: _NF/Clothing/Head/Hats/pilot.rsi
       state: equipped-HELMET
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: wielded-inhand-right
   - type: RandomSpawner
     prototypes:
@@ -45,7 +45,7 @@
       state: equipped-OUTERCLOTHING
     - sprite: Clothing/Head/Hardsuits/spatiohelm.rsi
       state: equipped-head
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: wielded-inhand-right
   - type: RandomSpawner
     prototypes:
@@ -74,7 +74,7 @@
       state: equipped-OUTERCLOTHING
     - sprite: Clothing/Head/Hardsuits/salvage.rsi
       state: off-equipped-HELMET
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: wielded-inhand-right
   - type: RandomSpawner
     prototypes:

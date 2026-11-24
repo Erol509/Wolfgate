@@ -5,7 +5,7 @@
   description: A hand-held scanner built to collect information on various anomalous objects.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Research/anomalyscanner.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Research/anomalyscanner.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
@@ -30,7 +30,7 @@
   suffix: Unpowered
   components:
   - type: Sprite
-    sprite: Objects/Specific/Research/anomalylocator.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Research/anomalylocator.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
       - state: icon
       - state: screen
@@ -92,7 +92,7 @@
   suffix: Unpowered
   components:
   - type: Sprite
-    sprite: Objects/Specific/Research/anomalylocatorwide.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Research/anomalylocatorwide.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Beeper
     minBeepInterval: 0.15
     maxBeepInterval: 2.0

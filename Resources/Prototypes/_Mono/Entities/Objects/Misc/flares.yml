@@ -28,7 +28,7 @@
         volume: -10
         maxDistance: 5
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -41,10 +41,10 @@
       state: flare_unlit
       color: "#FF0000"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   - type: Appearance
@@ -127,7 +127,7 @@
   description: A flare that produces a very bright light and an IFF signal for a short while, used for communications in high-intensity situations.
   components:
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -140,10 +140,10 @@
       state: flare_unlit
       color: "#FF0000"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   #- type: TriggerOnActivate
@@ -188,7 +188,7 @@
         volume: -10
         maxDistance: 5
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -201,10 +201,10 @@
       state: flare_unlit
       color: "#FF0000"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   - type: PointLight
@@ -259,7 +259,7 @@
     turnOnBehaviourID: turn_on
     fadeOutBehaviourID: fade_out
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -272,10 +272,10 @@
       state: flare_unlit
       color: "#3fc40a"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   - type: PointLight
@@ -297,7 +297,7 @@
   description: A flare that produces a very bright light and an IFF signal for a short while. Indicates friendly intent.
   components:
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -310,10 +310,10 @@
       state: flare_unlit
       color: "#3fc40a"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   #- type: SpawnOnTrigger
@@ -336,7 +336,7 @@
     turnOnBehaviourID: turn_on
     fadeOutBehaviourID: fade_out
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -349,10 +349,10 @@
       state: flare_unlit
       color: "#f5ffff"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   - type: PointLight
@@ -374,7 +374,7 @@
   description: A flare that produces a very bright light and an IFF signal for a short while. Indicates neutral intent, or, in combat, surrender.
   components:
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -387,10 +387,10 @@
       state: flare_unlit
       color: "#f5ffff"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   #- type: SpawnOnTrigger
@@ -413,7 +413,7 @@
     turnOnBehaviourID: turn_on
     fadeOutBehaviourID: fade_out
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -426,10 +426,10 @@
       state: flare_unlit
       color: "#e62e43"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   - type: PointLight
@@ -451,7 +451,7 @@
   description: A flare that produces a very bright light and an IFF signal for a short while. Indicates hostile intent.
   components:
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -464,10 +464,10 @@
       state: flare_unlit
       color: "#e62e43"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   #- type: SpawnOnTrigger
@@ -490,7 +490,7 @@
     turnOnBehaviourID: turn_on
     fadeOutBehaviourID: fade_out
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -503,10 +503,10 @@
       state: flare_unlit
       color: "#f0b548"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   - type: PointLight
@@ -528,7 +528,7 @@
   description: A flare that produces a very bright light and an IFF signal for a short while. Indicates a miscellaneous signal.
   components:
   - type: Sprite
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - map: [ enum.ExpendableLightVisualLayers.Base ]
       state: flare_base
@@ -541,10 +541,10 @@
       state: flare_unlit
       color: "#f0b548"
   - type: Icon
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
-    sprite: Objects/Misc/flare.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: unlit
     size: Tiny
   #- type: SpawnOnTrigger

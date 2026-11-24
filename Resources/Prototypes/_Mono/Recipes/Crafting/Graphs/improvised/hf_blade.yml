@@ -15,7 +15,7 @@
       - tag: Igniter
         name: igniter
         icon:
-          sprite: Objects/Devices/igniter.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Devices/igniter.rsi # WOLFGATE(Resprites): funky resprite batch
           state: icon
         doAfter: 1
       - tag: SmallAIChip

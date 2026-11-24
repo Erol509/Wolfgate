@@ -11,7 +11,7 @@
     tags:
       - FoodSnack
   - type: Sprite
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
   - type: SolutionContainerManager
     solutions:
       food:
@@ -20,7 +20,7 @@
         - ReagentId: Nutriment
           Quantity: 10
   - type: Item
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: packet
     size: Tiny
   - type: StaticPrice
@@ -104,7 +104,7 @@
   description: Tastes like cardboard.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     state: chocolatebar
   - type: Item
     heldPrefix: chocolatebar
@@ -410,7 +410,7 @@
         - ReagentId: Nutriment
           Quantity: 1
   - type: Item
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: packet
     size: Tiny
   - type: Food
@@ -429,7 +429,7 @@
     tags:
       - FoodSnack
   - type: Sprite
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     state: nutribrick
   - type: SpawnItemsOnUse
     items:
@@ -474,7 +474,7 @@
   description: A precisely mixed brownie, made to withstand blunt trauma and harsh conditions. Tastes like shit.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     state: mre-brownie
   - type: Tag
     tags:
@@ -520,9 +520,9 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
   - type: Item
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: packet
     size: Tiny
   - type: Tag

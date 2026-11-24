@@ -13,7 +13,7 @@
         name: medkit
       - tag: DiscreteHealthAnalyzer
         icon:
-          sprite: Objects/Specific/Medical/healthanalyzer.rsi
+          sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/healthanalyzer.rsi # WOLFGATE(Resprites): funky resprite
           state: analyzer
         name: health analyzer
         doAfter: 2

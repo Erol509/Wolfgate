@@ -114,7 +114,7 @@
   - type: Item
     size: Tiny
   - type: Sprite
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: ash
   - type: Tag
     tags:

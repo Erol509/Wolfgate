@@ -74,7 +74,7 @@
     tags:
     - SpiderCraft
   icon:
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: cloth_3
   objectType: Item
 

@@ -9,7 +9,7 @@
   - type: Item
     size: Normal
   - type: Sprite
-    sprite: Objects/Storage/boxes.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi # WOLFGATE(Resprites): funky resprite
   - type: EmitSoundOnPickup
     sound:
       path: /Audio/_Goobstation/Items/handling/ammobox_pickup.ogg

@@ -12,32 +12,34 @@
   description: Mmm, Donuts.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/Baked/donut.rsi
-    state: box
+    # WOLFGATE(Resprites) START: funky donut box resprite
+    sprite: _WG/Resprites/Impstation/Objects/Storage/donut_box.rsi
+    state: icon
     layers:
-    - state: box
+    - state: icon
       map: ["closeLayer"]
-    - state: box-open
+    - state: icon-open
       map: ["openLayer"]
       visible: false
     - state: box1
       map: ["box1"]
       visible: false
-    - state: pink-box2
+    - state: box2
       map: ["pink-box2"]
       visible: false
     - state: box3
       map: ["box3"]
       visible: false
-    - state: pink-box4
+    - state: box4
       map: ["pink-box4"]
       visible: false
     - state: box5
       map: ["box5"]
       visible: false
-    - state: pink-box6
+    - state: box6
       map: ["pink-box6"]
       visible: false
+    # WOLFGATE END
   - type: Storage
     grid:
     - 0,0,5,0
@@ -45,9 +47,12 @@
       tags:
       - Donut
   - type: Item
-    sprite: Objects/Consumable/Food/Baked/donut.rsi
-    size: Small
-    heldPrefix: box
+    # WOLFGATE(Resprites) START: funky donut box resprite
+    sprite: _WG/Resprites/Impstation/Objects/Storage/donut_box.rsi
+    size: Normal
+    shape:
+    - 0,0,2,1
+    # WOLFGATE END
   - type: StorageFill
     contents:
     - id: FoodDonutPink

@@ -9,7 +9,7 @@
     layers:
       - state: green
         scale: 0.7, 0.7
-      - sprite: Objects/Specific/Medical/healthanalyzer.rsi
+      - sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/healthanalyzer.rsi # WOLFGATE(Resprites): funky resprite
         state: icon
       - sprite: _NF/Markers/general.rsi
         state: questionmark
@@ -239,7 +239,7 @@
     layers:
       - state: green
         scale: 0.7, 0.7
-      - sprite: Objects/Specific/Medical/medipen.rsi
+      - sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/medipen.rsi # WOLFGATE(Resprites): funky resprite
         state: firstaid
       - sprite: _NF/Markers/general.rsi
         state: questionmark
@@ -273,7 +273,7 @@
     layers:
       - state: green
         scale: 0.7, 0.7
-      - sprite: Objects/Specific/Medical/medical.rsi
+      - sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/medical.rsi # WOLFGATE(Resprites): funky resprite
         state: gauze
       - sprite: _NF/Markers/general.rsi
         state: questionmark
@@ -303,7 +303,7 @@
     layers:
       - state: green
         scale: 0.7, 0.7
-      - sprite: Objects/Specific/Medical/medical.rsi
+      - sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/medical.rsi # WOLFGATE(Resprites): funky resprite
         state: gauze
       - sprite: _NF/Markers/general.rsi
         state: questionmark
@@ -391,7 +391,7 @@
     layers:
       - state: green
         scale: 0.7, 0.7
-      - sprite: Objects/Specific/Chemistry/syringe.rsi
+      - sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/syringe.rsi # WOLFGATE(Resprites): funky resprite batch
         state: syringe_base0
       - sprite: _NF/Markers/general.rsi
         state: questionmark

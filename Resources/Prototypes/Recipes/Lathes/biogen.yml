@@ -22,7 +22,7 @@
   categories:
   - Materials
   icon:
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: cloth
   completetime: 1
   materials:
@@ -34,7 +34,7 @@
   categories:
   - Materials
   icon:
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: cardboard
   completetime: 1
   materials:
@@ -113,7 +113,7 @@
   categories:
   - Chemicals
   icon:
-    sprite: Objects/Specific/Chemistry/bottle.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/bottle.rsi # WOLFGATE(Resprites): funky resprite batch
     state: bottle-1
   completetime: 1
   materials:
@@ -126,7 +126,7 @@
   categories:
   - Chemicals
   icon:
-    sprite: Objects/Specific/Chemistry/bottle.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/bottle.rsi # WOLFGATE(Resprites): funky resprite batch
     state: bottle-1
   completetime: 1
   materials:
@@ -139,7 +139,7 @@
   categories:
   - Chemicals
   icon:
-    sprite: Objects/Specific/Chemistry/bottle.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/bottle.rsi # WOLFGATE(Resprites): funky resprite batch
     state: bottle-1
   completetime: 1
   materials:

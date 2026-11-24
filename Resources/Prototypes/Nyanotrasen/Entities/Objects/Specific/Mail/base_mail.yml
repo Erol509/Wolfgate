@@ -11,7 +11,7 @@
   - type: AccessReader
   - type: Sprite
     scale: 0.7, 0.7 # Frontier
-    sprite: Nyanotrasen/Objects/Specific/Mail/mail.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Mail/mail_mailer.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: icon
       map: ["enum.MailVisualLayers.Icon"]

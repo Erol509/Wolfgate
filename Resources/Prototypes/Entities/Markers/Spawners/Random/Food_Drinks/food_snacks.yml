@@ -9,7 +9,7 @@
   - type: Sprite
     layers:
       - state: red
-      - sprite: Objects/Consumable/Food/snacks.rsi
+      - sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
         state: cheesiehonkers
   - type: RandomSpawner
   #small item

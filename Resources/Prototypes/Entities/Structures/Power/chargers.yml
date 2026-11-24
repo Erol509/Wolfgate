@@ -152,7 +152,7 @@
   name: recharger
   components:
   - type: Sprite
-    sprite: Structures/Power/recharger.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Power/recharger.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Machine
     board: WeaponCapacitorRechargerCircuitboard
   # no powercellslot since stun baton etc arent powercells
@@ -173,7 +173,7 @@
   description: An overclocked recharger that's been adapted with a global port.
   components:
   - type: Sprite
-    sprite: Structures/Power/turbo_recharger.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Power/turbo_recharger.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Machine
     board: TurboItemRechargerCircuitboard
   - type: Charger

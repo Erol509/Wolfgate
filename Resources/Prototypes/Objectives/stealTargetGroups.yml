@@ -53,7 +53,7 @@
   id: CaptainIDCard
   name: steal-target-groups-captain-id-card
   sprite:
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
     state: ert_commander #no one will know the difference.
 
 - type: stealTargetGroup
@@ -81,7 +81,7 @@
   id: WeaponEnergyShotgun
   name: steal-target-groups-weapon-energy-shot-gun
   sprite:
-    sprite: Objects/Weapons/Guns/Battery/energy_shotgun.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Weapons/Guns/Battery/energy_shotgun.rsi # WOLFGATE(Resprites): funky resprite
     state: base
 
 # Thief Collection
@@ -132,7 +132,7 @@
   id: IDCard
   name: steal-target-groups-id-cards
   sprite:
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
     state: default
 
 - type: stealTargetGroup
@@ -204,7 +204,7 @@
   id: FireAxe
   name: steal-target-groups-fire-axe
   sprite:
-    sprite: Objects/Weapons/Melee/fireaxe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/fireaxe.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
 
 - type: stealTargetGroup

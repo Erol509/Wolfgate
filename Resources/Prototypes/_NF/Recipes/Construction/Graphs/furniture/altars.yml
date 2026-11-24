@@ -30,7 +30,7 @@
         name: toolbox (any)
         store: altar_component
         icon:
-          sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+          sprite: _WG/Resprites/Wizden/Objects/Tools/Toolboxes/toolbox_blue.rsi # WOLFGATE(Resprites): funky resprite
           state: icon
       - material: Cloth
         store: altar_cloth
@@ -244,7 +244,7 @@
         name: ID card (any)
         store: altar_component
         icon:
-          sprite: Objects/Misc/id_cards.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
           state: default
       - material: Cloth
         store: altar_cloth
@@ -319,7 +319,7 @@
         name: mail (any)
         store: altar_component
         icon:
-          sprite: Nyanotrasen/Objects/Specific/Mail/mail.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Specific/Mail/mail_mailer.rsi # WOLFGATE(Resprites): funky resprite batch
           state: icon
       - material: Cloth
         store: altar_cloth

@@ -19,7 +19,7 @@
   description: A gimbal collar, a downward bell and an afternoon of work, in a box. Use it on an anchored thruster.
   components:
   - type: Sprite
-    sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/Toolboxes/toolbox_blue.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: Item
   - type: WGLandingThrusterKit

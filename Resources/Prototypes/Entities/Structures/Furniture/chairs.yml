@@ -22,7 +22,7 @@
         mask:
         - TableMask
   - type: Sprite
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     noRot: true
   - type: Strap
     position: Stand

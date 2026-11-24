@@ -9,10 +9,10 @@
       stackType: InflatableWall
       count: 10
     - type: Sprite
-      sprite: Objects/Misc/inflatable_wall.rsi
+      sprite: _WG/Resprites/Funkystation/Objects/Misc/inflatables.rsi # WOLFGATE(Resprites): funky resprite batch
       state: item_wall
     - type: Item
-      sprite: Objects/Misc/inflatable_wall.rsi
+      sprite: _WG/Resprites/Funkystation/Objects/Misc/inflatables.rsi # WOLFGATE(Resprites): funky resprite batch
       size: Small
     - type: SpawnAfterInteract
       prototype: InflatableWall
@@ -33,10 +33,10 @@
       stackType: InflatableDoor
       count: 4
     - type: Sprite
-      sprite: Objects/Misc/inflatable_door.rsi
+      sprite: _WG/Resprites/Funkystation/Objects/Misc/inflatables.rsi # WOLFGATE(Resprites): funky resprite batch
       state: item_door
     - type: Item
-      sprite: Objects/Misc/inflatable_door.rsi
+      sprite: _WG/Resprites/Funkystation/Objects/Misc/inflatables.rsi # WOLFGATE(Resprites): funky resprite batch
       size: Small
     - type: SpawnAfterInteract
       prototype: InflatableDoor

@@ -6,11 +6,11 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Clothing
     slots:
     - idcard
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Item
     size: Small
     heldPrefix: default
@@ -59,8 +59,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idpassenger
+    - state: default #base
+    - state: decal-stripe-civillian #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Passenger
   - type: PresetIdCard
     job: Passenger
 
@@ -73,8 +76,11 @@
     job: TechnicalAssistant
   - type: Sprite
     layers:
-    - state: default
-    - state: idintern-tech
+    - state: default #base
+    - state: decal-stripe-engineering #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: TechnicalAssistant
 
 - type: entity
   parent: PassengerIDCard
@@ -85,8 +91,11 @@
     job: MedicalIntern
   - type: Sprite
     layers:
-    - state: default
-    - state: idintern-med
+    - state: default #base
+    - state: decal-stripe-medical #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: MedicalIntern
 
 - type: entity
   parent: PassengerIDCard
@@ -97,8 +106,11 @@
     job: ResearchAssistant
   - type: Sprite
     layers:
-    - state: default
-    - state: idintern-sci
+    - state: default #base
+    - state: decal-stripe-science #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: ResearchAssistant
 
 - type: entity
   parent: PassengerIDCard
@@ -109,8 +121,11 @@
     job: SecurityCadet
   - type: Sprite
     layers:
-    - state: default
-    - state: idintern-cadet
+    - state: default #base
+    - state: decal-stripe-security #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: SecurityCadet
 
 - type: entity
   parent: PassengerIDCard
@@ -131,8 +146,11 @@
   components:
   - type: Sprite
     layers:
-    - state: gold
-    - state: idcaptain
+    - state: gold #base
+    - state: decal-stripe-command #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Captain
   - type: Item
     heldPrefix: gold
   - type: PresetIdCard
@@ -154,8 +172,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idsecurityofficer
+    - state: default #base
+    - state: decal-stripe-security #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: SecurityOfficer
   - type: PresetIdCard
     job: SecurityOfficer
 
@@ -164,12 +185,15 @@
   id: WardenIDCard
   name: warden ID card
   components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: idwarden
-    - type: PresetIdCard
-      job: Warden
+  - type: Sprite
+    layers:
+    - state: default #base
+    - state: decal-stripe-security #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Warden
+  - type: PresetIdCard
+    job: Warden
 
 - type: entity
   parent: IDCardStandard
@@ -178,8 +202,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idstationengineer
+    - state: default #base
+    - state: decal-stripe-engineering #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: StationEngineer
   - type: PresetIdCard
     job: StationEngineer
 
@@ -190,8 +217,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idmedicaldoctor
+    - state: default #base
+    - state: decal-stripe-medical #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: MedicalDoctor
   - type: PresetIdCard
     job: MedicalDoctor
 
@@ -202,8 +232,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idparamedic
+    - state: default #base
+    - state: decal-stripe-medical #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Paramedic
   - type: PresetIdCard
     job: Paramedic
 
@@ -214,8 +247,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idchemist
+    - state: default #base
+    - state: decal-stripe-medical #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Chemist
   - type: PresetIdCard
     job: Chemist
 
@@ -226,8 +262,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idcargotechnician
+    - state: default #base
+    - state: decal-stripe-cargo #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: CargoTechnician
   - type: PresetIdCard
     job: CargoTechnician
 
@@ -238,8 +277,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idshaftminer
+    - state: default #base
+    - state: decal-stripe-cargo #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: ShaftMiner
   - type: PresetIdCard
     job: SalvageSpecialist
 
@@ -248,14 +290,18 @@
   id: QuartermasterIDCard
   name: quartermaster ID card
   components:
-    - type: Sprite
-      layers:
-        - state: silver
-        - state: idquartermaster
-    - type: Item
-      heldPrefix: silver
-    - type: PresetIdCard
-      job: Quartermaster
+  - type: Sprite
+    layers:
+    - state: silver #base
+    - state: decal-stripe-cargo #decal
+    - state: decal-discriminator-command #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: QuarterMaster
+  - type: Item
+    heldPrefix: silver
+  - type: PresetIdCard
+    job: Quartermaster
 
 - type: entity
   parent: IDCardStandard
@@ -264,8 +310,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idscientist
+    - state: default #base
+    - state: decal-stripe-science #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Scientist
   - type: PresetIdCard
     job: Scientist
 
@@ -276,8 +325,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idclown
+    - state: default #base
+    - state: decal-stripe-rainbow #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Clown
   - type: PresetIdCard
     job: Clown
 
@@ -288,8 +340,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idmime
+    - state: default #base
+    - state: decal-stripe-stripes #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Mime
   - type: PresetIdCard
     job: Mime
 
@@ -298,12 +353,15 @@
   id: ChaplainIDCard
   name: chaplain ID card
   components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: idchaplain
-    - type: PresetIdCard
-      job: Chaplain
+  - type: Sprite
+    layers:
+    - state: default #base
+    - state: decal-stripe-civillian #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Chaplain
+  - type: PresetIdCard
+    job: Chaplain
 
 - type: entity
   parent: IDCardStandard
@@ -313,8 +371,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idjanitor
+    - state: default #base
+    - state: decal-stripe-civillian #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Janitor
   - type: PresetIdCard
     job: Janitor
 
@@ -325,8 +386,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idbartender
+    - state: default #base
+    - state: decal-stripe-service #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Bartender
   - type: PresetIdCard
     job: Bartender
 
@@ -335,16 +399,19 @@
   id: PunPunIDCard
   name: pun pun ID card
   components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: idbartender
-    - type: PresetIdCard
-      job: Bartender
-      name: Pun Pun
-    - type: Tag #  Ignore Chameleon tags
-      tags:
-      - DoorBumpOpener
+  - type: Sprite
+    layers:
+    - state: default #base
+    - state: decal-stripe-service #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Bartender
+  - type: PresetIdCard
+    job: Bartender
+    name: Pun Pun
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener
 
 - type: entity
   parent: IDCardStandard
@@ -353,8 +420,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idcook
+    - state: default #base
+    - state: decal-stripe-service #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Chef
   - type: PresetIdCard
     job: Chef
 
@@ -363,36 +433,45 @@
   id: BotanistIDCard
   name: botanist ID card
   components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: idbotanist
-    - type: PresetIdCard
-      job: Botanist
+  - type: Sprite
+    layers:
+    - state: default #base
+    - state: decal-stripe-service #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Botanist
+  - type: PresetIdCard
+    job: Botanist
 
 - type: entity
   parent: IDCardStandard
   id: LibrarianIDCard
   name: librarian ID card
   components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: idcurator
-    - type: PresetIdCard
-      job: Librarian
+  - type: Sprite
+    layers:
+    - state: default #base
+    - state: decal-stripe-civillian #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Librarian
+  - type: PresetIdCard
+    job: Librarian
 
 - type: entity
   parent: IDCardStandard
   id: LawyerIDCard
   name: lawyer ID card
   components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: idlawyer
-    - type: PresetIdCard
-      job: Lawyer
+  - type: Sprite
+    layers:
+    - state: default #base
+    - state: decal-stripe-civillian #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Lawyer
+  - type: PresetIdCard
+    job: Lawyer
 
 - type: entity
   parent: IDCardStandard
@@ -401,8 +480,12 @@
   components:
   - type: Sprite
     layers:
-    - state: silver
-    - state: idheadofpersonnel
+    - state: silver #base
+    - state: decal-stripe-service #decal
+    - state: decal-discriminator-command #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: HeadOfPersonnel
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -415,8 +498,12 @@
   components:
   - type: Sprite
     layers:
-    - state: silver
-    - state: idchiefengineer
+    - state: silver #base
+    - state: decal-stripe-engineering #decal
+    - state: decal-discriminator-command #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: ChiefEngineer
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -429,8 +516,12 @@
   components:
   - type: Sprite
     layers:
-    - state: silver
-    - state: idchiefmedicalofficer
+    - state: silver #base
+    - state: decal-stripe-medical #decal
+    - state: decal-discriminator-command #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: ChiefMedicalOfficer
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -443,8 +534,12 @@
   components:
   - type: Sprite
     layers:
-    - state: silver
-    - state: idresearchdirector
+    - state: silver #base
+    - state: decal-stripe-science #decal
+    - state: decal-discriminator-command #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: ResearchDirector
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -457,8 +552,12 @@
   components:
   - type: Sprite
     layers:
-    - state: silver
-    - state: idheadofsecurity
+    - state: silver #base
+    - state: decal-stripe-security #decal
+    - state: decal-discriminator-command #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: HeadOfSecurity
   - type: Item
     heldPrefix: silver
   - type: PresetIdCard
@@ -471,8 +570,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idvisitor
+    - state: default #base
+    - state: decal-stripe-civillian #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Visitor
   - type: IdCard
     jobTitle: job-title-visitor
     jobIcon: JobIconVisitor
@@ -512,8 +614,12 @@
   components:
   - type: Sprite
     layers:
-    - state: gold
-    - state: ert_commander
+    - state: gold #base
+    - state: decal-stripe-cc #decal
+    - state: decal-discriminator-ert #decal
+    - sprite: _WG/Resprites/Funkystation/Interface/Misc/job_icons.rsi #icon
+      offset: "-0.125, 0.09375"
+      state: ERT-Leader
   - type: PresetIdCard
     job: ERTLeader
   - type: Item
@@ -586,12 +692,15 @@
   id: MusicianIDCard
   name: musician ID card
   components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: idmusician
-    - type: PresetIdCard
-      job: Musician
+  - type: Sprite
+    layers:
+    - state: default #base
+    - state: decal-stripe-civillian #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Musician
+  - type: PresetIdCard
+    job: Musician
 
 - type: entity
   parent: IDCardStandard
@@ -660,8 +769,11 @@
   components:
   - type: Sprite
     layers:
-    - state: orange
-    - state: idatmospherictechnician
+    - state: default #base
+    - state: decal-stripe-engineering #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: AtmosphericTechnician
   - type: PresetIdCard
     job: AtmosphericTechnician
 
@@ -672,7 +784,13 @@
   components:
   - type: Sprite
     layers:
-    - state: syndie
+    - state: syndicate #base
+    - state: decal-stripe-syndicate #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Syndicate
+  - type: Item
+    heldPrefix: syndicate
   - type: Access
     tags:
     - NuclearOperative
@@ -686,7 +804,13 @@
   components:
   - type: Sprite
     layers:
-    - state: pirate
+    - state: pirate #base
+    - state: decal-stripe-pirate #decal
+    - sprite: _WG/Resprites/Funkystation/Interface/Misc/job_icons.rsi #icon
+      offset: "-0.125, 0.09375"
+      state: Pirate
+  - type: Item
+    heldPrefix: pirate
   - type: Access
     tags:
     - NuclearOperative
@@ -699,8 +823,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idpsychologist
+    - state: default #base
+    - state: decal-stripe-medical #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Psychologist
   - type: PresetIdCard
     job: Psychologist
 
@@ -711,8 +838,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idreporter
+    - state: default #base
+    - state: decal-stripe-service #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Reporter
   - type: PresetIdCard
     job: Reporter
 
@@ -723,8 +853,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idboxer
+    - state: default #base
+    - state: decal-stripe-civillian #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Boxer
   - type: PresetIdCard
     job: Boxer
 
@@ -735,8 +868,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idzookeeper
+    - state: default #base
+    - state: decal-stripe-service #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Zookeeper
   - type: PresetIdCard
     job: Zookeeper
 
@@ -747,8 +883,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: iddetective
+    - state: default #base
+    - state: decal-stripe-security #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: Detective
   - type: PresetIdCard
     job: Detective
 
@@ -774,8 +913,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idcluwne
+    - state: default #base
+    - state: decal-stripe-cluwne #decal
+    - sprite: _WG/Resprites/Funkystation/Interface/Misc/job_icons.rsi #icon
+      offset: "-0.125, 0.09375"
+      state: Cluwne
   - type: IdCard
     jobTitle: job-title-cluwne
   - type: Unremoveable
@@ -787,8 +929,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idseniorengineer
+    - state: default #base
+    - state: decal-stripe-engineering #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: SeniorEngineer
 
 - type: entity
   parent: ResearchIDCard
@@ -797,8 +942,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idseniorresearcher
+    - state: default #base
+    - state: decal-stripe-science #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: SeniorResearcher
 
 - type: entity
   parent: MedicalIDCard
@@ -807,8 +955,11 @@
   components:
   - type: Sprite
     layers:
-    - state: default
-    - state: idseniorphysician
+    - state: default #base
+    - state: decal-stripe-medical #decal
+    - sprite: _WG/Resprites/Wizden/Interface/Misc/job_icons.rsi # WOLFGATE(Resprites): funky resprite
+      offset: "-0.125, 0.09375"
+      state: SeniorPhysician
 
 - type: entity
   parent: SecurityIDCard
@@ -829,8 +980,13 @@
   components:
   - type: Sprite
     layers:
-    - state: wizard
-    - state: idwizard
+    - state: wizard #base
+    - state: decal-stripe-wizard #decal
+    - sprite: _WG/Resprites/Funkystation/Interface/Misc/job_icons.rsi #icon
+      offset: "-0.125, 0.09375"
+      state: Wizard
+  - type: Item
+    heldPrefix: wizard
   - type: Access
     tags:
     - Wizard
@@ -871,12 +1027,12 @@
   description: An ID card that gives you access beyond your wildest dreams.
   components:
   - type: Sprite
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: admin
     - state: idadmin
   - type: Clothing
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Item
     heldPrefix: green
   - type: IdCard

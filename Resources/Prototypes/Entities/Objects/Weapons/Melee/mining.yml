@@ -19,7 +19,7 @@
     tags:
     - Pickaxe
   - type: Sprite
-    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
     state: pickaxe
   - type: MeleeWeapon
     autoAttack: true #Mono
@@ -47,7 +47,7 @@
     shape:
     - 0,0,2,0
     - 1,1,1,2
-    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
     storedRotation: -45
   - type: UseDelay
 
@@ -63,7 +63,7 @@
     tags:
     - Pickaxe
   - type: Sprite
-    sprite: Objects/Tools/handdrill.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrill.rsi # WOLFGATE(Resprites): funky resprite batch
     state: handdrill
   - type: MeleeWeapon
     autoAttack: true
@@ -86,7 +86,7 @@
   description: A significantly more efficient mining drill tipped with diamond.
   components:
   - type: Sprite
-    sprite: Objects/Tools/handdrilldiamond.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/handdrilldiamond.rsi # WOLFGATE(Resprites): funky resprite batch
     state: handdrill
   - type: MeleeWeapon
     autoAttack: true

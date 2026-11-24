@@ -5,10 +5,10 @@
   description: An item which uses magnets to easily replace broken lights. Refill By adding more lights into the replacer.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Janitorial/light_replacer.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Janitorial/light_replacer.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: Item
-    sprite: Objects/Specific/Janitorial/light_replacer.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Janitorial/light_replacer.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: LightReplacer
     contents:
     - id: LightTube

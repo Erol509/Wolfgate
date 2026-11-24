@@ -17,21 +17,21 @@
   name: tool-quality-screwing-name
   toolName: tool-quality-screwing-tool-name
   spawn: Screwdriver
-  icon: { sprite: Objects/Tools/screwdriver.rsi, state: screwdriver-map }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Tools/screwdriver.rsi, state: screwdriver-map } # WOLFGATE(Resprites): funky resprite
 
 - type: tool
   id: Cutting
   name: tool-quality-cutting-name
   toolName: tool-quality-cutting-tool-name
   spawn: Wirecutter
-  icon: { sprite: Objects/Tools/wirecutters.rsi, state: cutters-map }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Tools/wirecutters.rsi, state: cutters-map } # WOLFGATE(Resprites): funky resprite
 
 - type: tool
   id: Welding
   name: tool-quality-welding-name
   toolName: tool-quality-welding-tool-name
   spawn: Welder
-  icon: { sprite: Objects/Tools/welder.rsi, state: icon }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Tools/welder.rsi, state: icon } # WOLFGATE(Resprites): funky resprite batch
 
 - type: tool
   id: Pulsing

@@ -294,7 +294,7 @@
   name:  uplink-security-key-name
   description: uplink-security-key-desc
   productEntity: BoxEncryptionKeyNfsd
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -526,7 +526,7 @@
   name:  uplink-security-thrusterkit-name
   description: uplink-security-thrusterkit-desc
   productEntity: BoxT3SuperCapacitor
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box}
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box} # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 15 # WOLFGATE(FactionBalance): same price as the PDV thruster kit
   categories:
@@ -542,7 +542,7 @@
   name:  uplink-security-Magazine9x19mmPistolFMJ-name
   description: uplink-security-Magazine9x19mmPistolFMJ-desc
   productEntity: BoxMagazine9x19mmFMJ
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -558,7 +558,7 @@
   name:  uplink-security-5-56x45mmMagazine-name
   description: uplink-security-5-56x45mmMagazine-desc
   productEntity: BoxMagazine556x45mmFMJ
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -574,7 +574,7 @@
   name:  uplink-security-7-62x51mmMagazine-name
   description: uplink-security-7-62x51mmMagazine-desc
   productEntity: BoxMagazine762x51mmFMJ
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -590,7 +590,7 @@
   name: uplink-security-7-62x51mmMagazine-rubber-name
   description: uplink-security-7-62x51mmMagazine-rubber-desc
   productEntity: BoxMagazine762x51mmRubber
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -606,7 +606,7 @@
   name:  uplink-security-7-62x39mmMagazine-name
   description: uplink-security-7-62x39mmMagazine-desc
   productEntity: BoxMagazine762x39mmFMJ
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -622,7 +622,7 @@
   name:  uplink-security-wt550magazine-name
   description: uplink-security-wt550magazine-desc
   productEntity: BoxMagazine46x30mmSubMachineGunTopMountedFMJ
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -638,7 +638,7 @@
   name:  uplink-security-Magazine9x19mmPistolFMJ-rubber-name
   description: uplink-security-Magazine9x19mmPistolFMJ-rubber-desc
   productEntity: BoxMagazine9x19mmRubber
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -654,7 +654,7 @@
   name: uplink-security-5-56x45mmMagazine-rubber-name
   description: uplink-security-5-56x45mmMagazine-rubber-desc
   productEntity: BoxMagazine556x45mmRubber
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -670,7 +670,7 @@
   name: uplink-security-7-62x39mmMagazine-rubber-name
   description: uplink-security-7-62x39mmMagazine-rubber-desc
   productEntity: BoxMagazine762x39mmRubber
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -706,7 +706,7 @@
   name:  uplink-security-ambuzol-name
   description: uplink-security-ambuzol-desc
   productEntity: SyringeAmbuzol
-  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe_base0 }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Specific/Chemistry/syringe.rsi, state: syringe_base0 } # WOLFGATE(Resprites): funky resprite batch
   cost:
     FederationMilitaryCredit: 15 # mono: 5 -> 15 (1 FMC per 1 unit)
   categories:
@@ -987,7 +987,7 @@
   name:  uplink-security-shotlethal-name
   description: uplink-security-shotlethal-desc
   productEntity: AmmoBox12_gaugeBuckshot
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -1003,7 +1003,7 @@
   name:  uplink-security-shotbeanbag-name
   description: uplink-security-shotbeanbag-desc
   productEntity: AmmoBox12_gaugeBeanbag
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -1019,7 +1019,7 @@
   name:  uplink-security-shotincend-name
   description: uplink-security-shotincend-desc
   productEntity: AmmoBox12_gaugeIncendiary
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 10
   categories:
@@ -1035,7 +1035,7 @@
   name:  uplink-security-shotslug-name
   description: uplink-security-shotslug-desc
   productEntity: AmmoBox12_gaugeSlug
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -1310,7 +1310,7 @@
   name:  uplink-security-emp-ammo-name
   description: uplink-security-emp-ammo-desc
   productEntity: BoxEmpGrenadesAmmo
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:
@@ -1326,7 +1326,7 @@
   name:  uplink-security-trackingdart-ammo-name
   description: uplink-security-trackingdart-ammo-desc
   productEntity: NFBoxDartsTracking
-  icon: { sprite: Objects/Storage/boxes.rsi, state: box }
+  icon: { sprite: _WG/Resprites/Wizden/Objects/Storage/boxes.rsi, state: box } # WOLFGATE(Resprites): funky resprite
   cost:
     FederationMilitaryCredit: 5
   categories:

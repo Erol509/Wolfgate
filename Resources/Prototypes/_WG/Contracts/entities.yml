@@ -215,11 +215,11 @@
   description: A tamper-sealed parcel with a contract barcode. Only the addressee can open it.
   components:
   - type: Sprite
-    sprite: _NF/Objects/Specific/Mail/mail_large.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Mail/mail_large.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: Item
     size: Normal
-    sprite: _NF/Objects/Specific/Mail/mail_large.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Mail/mail_large.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: StaticPrice
     price: 0
 
@@ -230,7 +230,7 @@
   description: A tamper-sealed parcel stamped FRAGILE in three languages. Only the addressee can open it.
   components:
   - type: Sprite
-    sprite: _NF/Objects/Specific/Mail/mail_large.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Mail/mail_large.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: icon
     - state: fragile
@@ -242,7 +242,7 @@
   description: A tamper-sealed parcel with a red priority band. Only the addressee can open it.
   components:
   - type: Sprite
-    sprite: _NF/Objects/Specific/Mail/mail_large.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Mail/mail_large.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: icon
     - state: priority

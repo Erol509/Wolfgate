@@ -31,7 +31,7 @@
   - type: Sprite
     layers:
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -71,7 +71,7 @@
   - type: Sprite
     layers:
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -111,7 +111,7 @@
   - type: Sprite
     layers:
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -151,7 +151,7 @@
   - type: Sprite
     layers:
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0
@@ -191,7 +191,7 @@
   - type: Sprite
     layers:
     - state: green
-    - sprite: Objects/Weapons/Melee/pickaxe.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/pickaxe.rsi # WOLFGATE(Resprites): funky resprite batch
       state: pickaxe
   - type: EntityTableSpawner
     offset: 0

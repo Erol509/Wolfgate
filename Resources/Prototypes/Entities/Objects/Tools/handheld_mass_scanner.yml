@@ -6,7 +6,7 @@
   components:
   - type: Item
   - type: Sprite
-    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/handheld_mass_scanner.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
     layers:
       - state: icon
@@ -55,7 +55,7 @@
           tags:
           - PowerCage
   - type: Sprite
-    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/handheld_mass_scanner.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
     layers:
       - state: icon

@@ -14,7 +14,7 @@
   description: A configurable timer.
   components:
   - type: Sprite
-    sprite: Objects/Devices/timer.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Devices/timer.rsi # WOLFGATE(Resprites): funky resprite batch
     state: timer
   - type: Item
     size: Small
@@ -38,7 +38,7 @@
   description: Adds a machine link that is triggered by signals.
   components:
   - type: Sprite
-    sprite: Objects/Devices/signaltrigger.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Devices/signaltrigger.rsi # WOLFGATE(Resprites): funky resprite batch
     state: signaltrigger
   - type: StaticPrice
     price: 40
@@ -62,7 +62,7 @@
   description: Adds a machine link that is triggered by vocal keywords.
   components:
   - type: Sprite
-    sprite: Objects/Devices/voice.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Devices/voice.rsi # WOLFGATE(Resprites): funky resprite batch
     state: voice
   - type: StaticPrice
     price: 40

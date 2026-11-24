@@ -215,7 +215,7 @@
   resultReagents:
     CocoaPowder: 10
   icon:
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     state: chocolatebar
 
 - type: latheRecipe

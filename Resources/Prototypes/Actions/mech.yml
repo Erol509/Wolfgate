@@ -44,7 +44,7 @@
   - type: InstantAction
     itemIconStyle: NoItem
     icon:
-      sprite: Objects/Tools/handheld_mass_scanner.rsi
+      sprite: _WG/Resprites/Wizden/Objects/Tools/handheld_mass_scanner.rsi # WOLFGATE(Resprites): funky resprite
       state: icon
     event: !type:MechRadarUiEvent
     useDelay: 0.5

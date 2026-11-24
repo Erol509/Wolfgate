@@ -178,7 +178,7 @@
   - type: Sprite
     layers:
     - state: pink
-    - sprite: Objects/Materials/materials.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
       state: diamond
   - type: EntityTableSpawner
     offset: 0.4
@@ -248,7 +248,7 @@
   - type: Sprite
     layers:
     - state: pink
-    - sprite: Objects/Materials/materials.rsi
+    - sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
       state: diamond
   - type: EntityTableSpawner
     offset: 0.4

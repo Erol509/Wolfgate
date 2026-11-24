@@ -493,7 +493,7 @@
     - state: solution1
       map: ["enum.SolutionContainerLayers.Fill"]
       visible: false
-    - sprite: Objects/Misc/flare.rsi
+    - sprite: _WG/Resprites/Wizden/Objects/Misc/flare.rsi # WOLFGATE(Resprites): funky resprite
       state: flare_burn
       shader: unshaded
       scale: 0.4,0.4

@@ -8,7 +8,7 @@
   category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: chair
   objectType: Structure
   placementMode: SnapgridCenter
@@ -25,7 +25,7 @@
   category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: stool
   objectType: Structure
   placementMode: SnapgridCenter
@@ -42,7 +42,7 @@
   category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: bar
   objectType: Structure
   placementMode: SnapgridCenter
@@ -59,7 +59,7 @@
   category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: brass_chair
   objectType: Structure
   placementMode: SnapgridCenter
@@ -76,7 +76,7 @@
   category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: office-white
   objectType: Structure
   placementMode: SnapgridCenter
@@ -93,7 +93,7 @@
   category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: office-dark
   objectType: Structure
   placementMode: SnapgridCenter
@@ -110,7 +110,7 @@
   category: construction-category-furniture
   description: It looks comfy.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: comfy
   objectType: Structure
   placementMode: SnapgridCenter
@@ -127,7 +127,7 @@
   category: construction-category-furniture
   description: Fit for a captain.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: shuttle
   objectType: Structure
   placementMode: SnapgridCenter
@@ -144,7 +144,7 @@
   category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: wooden
   objectType: Structure
   placementMode: SnapgridCenter
@@ -161,7 +161,7 @@
   category: construction-category-furniture
   description: Uncomfortably sweaty.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: meat
   objectType: Structure
   placementMode: SnapgridCenter
@@ -178,7 +178,7 @@
   category: construction-category-furniture
   description: A strangely carved chair.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: ritual
   objectType: Structure
   placementMode: SnapgridCenter
@@ -212,7 +212,7 @@
   category: construction-category-furniture
   description: A long chair made for a metro. Really standard design.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: steel-bench
   objectType: Structure
   placementMode: SnapgridCenter
@@ -229,7 +229,7 @@
   category: construction-category-furniture
   description: Did you get a splinter? Well, at least it’s eco friendly.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky resprite
     state: wooden-bench
   objectType: Structure
   placementMode: SnapgridCenter

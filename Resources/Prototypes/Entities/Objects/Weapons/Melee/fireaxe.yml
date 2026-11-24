@@ -11,7 +11,7 @@
   - type: Execution
     doAfterDuration: 4.0
   - type: Sprite
-    sprite: Objects/Weapons/Melee/fireaxe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/fireaxe.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: MeleeWeapon
     heavyStaminaCost: 15 # goob edit
@@ -34,7 +34,7 @@
   - type: Item
     size: Ginormous
   - type: Clothing
-    sprite: Objects/Weapons/Melee/fireaxe.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/fireaxe.rsi # WOLFGATE(Resprites): funky resprite batch
     quickEquip: false
     slots:
     - back

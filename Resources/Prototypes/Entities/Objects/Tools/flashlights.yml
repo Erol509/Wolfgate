@@ -51,7 +51,7 @@
           tags:
           - PowerCage
   - type: Sprite
-    sprite: Objects/Tools/flashlight.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/flashlight.rsi # WOLFGATE(Resprites): funky resprite
     layers:
       - state: flashlight
       - state: flashlight-overlay
@@ -59,7 +59,7 @@
         visible: false
         map: [ "light" ]
   - type: Item
-    sprite: Objects/Tools/flashlight.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/flashlight.rsi # WOLFGATE(Resprites): funky resprite
     storedRotation: -90
   - type: PointLight
     enabled: false
@@ -74,7 +74,7 @@
     stealGroup:
     - LAMP
   - type: Clothing
-    sprite: Objects/Tools/flashlight.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/flashlight.rsi # WOLFGATE(Resprites): funky resprite
     quickEquip: false
     slots:
       - Belt
@@ -119,7 +119,7 @@
       - state: inhand-right-light
         shader: unshaded
   - type: Sprite
-    sprite: Objects/Tools/seclite.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/seclite.rsi # WOLFGATE(Resprites): funky resprite
     layers:
       - state: seclite
       - state: seclite-overlay
@@ -134,12 +134,12 @@
     soundHit:
       collection: MetalThud
   - type: Item
-    sprite: Objects/Tools/seclite.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/seclite.rsi # WOLFGATE(Resprites): funky resprite
   - type: PointLight
     enabled: false
     radius: 8
   - type: Clothing
-    sprite: Objects/Tools/seclite.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/seclite.rsi # WOLFGATE(Resprites): funky resprite
     quickEquip: false
     slots:
       - Belt

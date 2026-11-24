@@ -57,7 +57,7 @@
   id: MaterialTextiles
   abstract: true # Frontier
   icon:
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: cloth_3
   product: CrateMaterialTextiles
   cost: 2000 # Frontier: 1500<2000
@@ -79,7 +79,7 @@
   id: CardboardMaterial
   abstract: true # Frontier
   icon:
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: cardboard_3
   product: CrateMaterialCardboard
   cost: 750

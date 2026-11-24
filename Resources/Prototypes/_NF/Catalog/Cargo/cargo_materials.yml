@@ -13,7 +13,7 @@
   id: MaterialWood
   abstract: true
   icon:
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: wood_3
   product: CrateMaterialWood
   cost: 7000 # Wood cost alot to import to space, also allow people to still grow and sell it.

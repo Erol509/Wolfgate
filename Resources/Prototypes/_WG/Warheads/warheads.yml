@@ -210,7 +210,7 @@
   description: A grip trigger. Once squeezed, letting go for any reason sets off whatever it is linked to.
   components:
   - type: Sprite
-    sprite: Objects/Devices/signaltrigger.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Devices/signaltrigger.rsi # WOLFGATE(Resprites): funky resprite batch
     state: signaltrigger
   - type: Item
     size: Small

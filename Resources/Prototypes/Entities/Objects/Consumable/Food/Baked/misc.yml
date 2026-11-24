@@ -8,7 +8,7 @@
   components:
   - type: Food
   - type: Sprite
-    sprite: Objects/Consumable/Food/Baked/misc.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/Baked/misc.rsi # WOLFGATE(Resprites): funky resprite
   - type: SolutionContainerManager
     solutions:
       food:
@@ -34,7 +34,7 @@
     trash:
     - FoodPlateMuffinTin
   - type: Sprite
-    sprite: Objects/Consumable/Food/Baked/misc.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/Baked/misc.rsi # WOLFGATE(Resprites): funky resprite
     state: muffin
   - type: SolutionContainerManager
     solutions:
@@ -741,7 +741,7 @@
       - sweet
       - chocolate
   - type: Sprite
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     state: mre-brownie-open
   - type: SolutionContainerManager
     solutions:
@@ -800,7 +800,7 @@
       - magical
       - chocolate
   - type: Sprite
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     state: mre-brownie-open
   - type: SolutionContainerManager
     solutions:
@@ -923,7 +923,7 @@
       - cheesy
       - bread
   - type: Sprite
-    sprite: Objects/Consumable/Food/Baked/misc.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/Baked/misc.rsi # WOLFGATE(Resprites): funky resprite
     state: grilled-cheese
   - type: SolutionContainerManager
     solutions:

@@ -86,11 +86,11 @@
   - type: PresetIdCard
     job: TsfMarsoc
   - type: Sprite
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: centcom
   - type: Clothing
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Item
     heldPrefix: blue
 
@@ -255,7 +255,7 @@
     - state: vgbase
     - state: id_infanteer
   - type: Clothing
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Item
     heldPrefix: default
 
@@ -272,7 +272,7 @@
     - state: vgbase
     - state: id_lieutenant
   - type: Clothing
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Item
     heldPrefix: default
 
@@ -289,7 +289,7 @@
     - state: vgbase
     - state: id_commander
   - type: Clothing
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Item
     heldPrefix: default
 
@@ -307,7 +307,7 @@
     - state: mieyobase
     - state: id_mieyo_employee
   - type: Clothing
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Item
     heldPrefix: default
 
@@ -324,7 +324,7 @@
     - state: mieyobase
     - state: id_mieyo_security
   - type: Clothing
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Item
     heldPrefix: default
 
@@ -341,7 +341,7 @@
     - state: mieyobase
     - state: id_mieyo_liason
   - type: Clothing
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: Item
     heldPrefix: default
 

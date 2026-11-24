@@ -113,12 +113,12 @@
   description: A light and compact fibreglass-framed model fire extinguisher. It holds less water than its bigger brother.
   components:
   - type: Sprite
-    sprite: Objects/Misc/fire_extinguisher_mini.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/fire_extinguisher_mini.rsi # WOLFGATE(Resprites): funky resprite
     layers:
         - state: fire_extinguisher_closed
           map: [ "enabled" ]
   - type: Item
-    sprite: Objects/Misc/fire_extinguisher_mini.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Misc/fire_extinguisher_mini.rsi # WOLFGATE(Resprites): funky resprite
     size: Small
   - type: SolutionContainerManager
     solutions:

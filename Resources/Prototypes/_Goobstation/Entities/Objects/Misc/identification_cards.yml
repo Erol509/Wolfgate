@@ -80,7 +80,7 @@
   name: Winter Solstice HiCom's ID card
   components:
   - type: Sprite
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: ert_security
   - type: IdCard
@@ -100,7 +100,7 @@
   name: Winter Solstice Officer's ID card
   components:
   - type: Sprite
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: ert_security
   - type: IdCard
@@ -120,7 +120,7 @@
   name: Winter Solstice Special Operations Officer's ID card
   components:
   - type: Sprite
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: ert_security
   - type: IdCard
@@ -140,7 +140,7 @@
   name: TSF Diplomat's ID card
   components:
   - type: Sprite
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/id_cards.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
     - state: ert_security
   - type: IdCard

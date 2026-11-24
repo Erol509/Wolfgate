@@ -263,7 +263,7 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Objects/Consumable/Food/plates.rsi
+    - sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/plates.rsi # WOLFGATE(Resprites): funky resprite
       state: plate
     - sprite: Objects/Consumable/Food/noodles.rsi
       state: tomato
@@ -295,7 +295,7 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Objects/Consumable/Food/plates.rsi
+    - sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/plates.rsi # WOLFGATE(Resprites): funky resprite
       state: plate
     - sprite: Objects/Consumable/Food/noodles.rsi
       state: meatball

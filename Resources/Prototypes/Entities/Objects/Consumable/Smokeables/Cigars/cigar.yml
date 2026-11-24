@@ -8,7 +8,7 @@
   description: "A brown roll of tobacco and... well, you're not quite sure."
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Consumable/Smokeables/Cigars/cigar.rsi # WOLFGATE(Resprites): funky resprite batch
     state: unlit-icon
   - type: Tag
     tags:
@@ -16,12 +16,12 @@
       - Trash
       - PetWearable
   - type: Clothing
-    sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Consumable/Smokeables/Cigars/cigar.rsi # WOLFGATE(Resprites): funky resprite batch
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
     size: Tiny
-    sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Consumable/Smokeables/Cigars/cigar.rsi # WOLFGATE(Resprites): funky resprite batch
     heldPrefix: unlit
 
 - type: entity
@@ -58,10 +58,10 @@
   description: A cigar fit for only the best of the best.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi # WOLFGATE(Resprites): funky resprite batch
     state: unlit-icon
   - type: Clothing
-    sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi # WOLFGATE(Resprites): funky resprite batch
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item

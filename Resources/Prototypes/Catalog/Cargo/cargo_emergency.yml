@@ -57,7 +57,7 @@
   id: EmergencyInflatablewall
   abstract: true # Frontier
   icon:
-    sprite: Objects/Misc/inflatable_wall.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/inflatables.rsi # WOLFGATE(Resprites): funky resprite batch
     state: item_wall
   product: CrateEmergencyInflatablewall
   cost: 500

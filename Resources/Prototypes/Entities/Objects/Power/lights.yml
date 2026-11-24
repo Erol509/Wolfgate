@@ -8,7 +8,7 @@
       Brute:
         collection: GlassSmash
   - type: Sprite
-    sprite: Objects/Power/light_bulb.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
       - map: [ enum.LightBulbVisualLayers.Base ]
         state: normal
@@ -76,7 +76,7 @@
   abstract: true
   components:
   - type: Sprite
-    sprite:  Objects/Power/light_tube.rsi
+    sprite:  _WG/Resprites/Funkystation/Objects/Power/light_tube.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: LightBulb
     bulb: Tube
   - type: Destructible

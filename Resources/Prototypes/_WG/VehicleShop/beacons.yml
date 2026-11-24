@@ -87,9 +87,9 @@
   components:
   - type: Item
     size: Normal
-    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/Toolboxes/toolbox_yellow.rsi # WOLFGATE(Resprites): funky resprite
   - type: Sprite
-    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/Toolboxes/toolbox_yellow.rsi # WOLFGATE(Resprites): funky resprite
     state: icon
   - type: WGVehicleRepairKit
   - type: StaticPrice

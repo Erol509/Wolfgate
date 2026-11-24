@@ -20,7 +20,7 @@
     - PlantSampleTaker
     - Wirecutter
   - type: Sprite
-    sprite: Objects/Tools/wirecutters.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/wirecutters.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - state: cutters
       map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -43,7 +43,7 @@
     - enum.DamageStateVisualLayers.Base:
         cutters: Rainbow
   - type: Item
-    sprite: Objects/Tools/wirecutters.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/wirecutters.rsi # WOLFGATE(Resprites): funky resprite
     storedRotation: -90
   - type: ToolTileCompatible
   - type: PhysicalComposition
@@ -88,13 +88,13 @@
     tags:
     - Screwdriver
   - type: Sprite
-    sprite: Objects/Tools/screwdriver.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/screwdriver.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - state: screwdriver
       map: [ "enum.DamageStateVisualLayers.Base" ]
     - state: screwdriver-screwybits
   - type: Item
-    sprite: Objects/Tools/screwdriver.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/screwdriver.rsi # WOLFGATE(Resprites): funky resprite
     storedRotation: -90
   - type: MeleeWeapon
     wideAnimationRotation: -90
@@ -283,7 +283,7 @@
     sound:
       path: /Audio/Items/multitool_drop.ogg
   - type: Sprite
-    sprite: Objects/Tools/network_configurator.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/network_configurator.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - state: icon
     - state: mode-link
@@ -292,7 +292,7 @@
   - type: Item
     size: Small
   - type: Clothing
-    sprite: Objects/Tools/network_configurator.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Tools/network_configurator.rsi # WOLFGATE(Resprites): funky resprite
     quickEquip: false
     slots:
     - Belt
@@ -346,10 +346,10 @@
     tags:
     - Powerdrill
   - type: Sprite
-    sprite: Objects/Tools/drill.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/drill.rsi # WOLFGATE(Resprites): funky resprite batch
     state: drill_screw
   - type: Item
-    sprite: Objects/Tools/drill.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/drill.rsi # WOLFGATE(Resprites): funky resprite batch
     size: Small
   - type: Tool
     qualities:
@@ -361,7 +361,7 @@
     entries:
     - behavior: Screwing
       sprite:
-        sprite: Objects/Tools/drill.rsi
+        sprite: _WG/Resprites/Funkystation/Objects/Tools/drill.rsi # WOLFGATE(Resprites): funky resprite batch
         state: drill_screw
       useSound:
         path: /Audio/Items/drill_use.ogg
@@ -369,7 +369,7 @@
         path: /Audio/Items/change_drill.ogg
     - behavior: Anchoring
       sprite:
-        sprite: Objects/Tools/drill.rsi
+        sprite: _WG/Resprites/Funkystation/Objects/Tools/drill.rsi # WOLFGATE(Resprites): funky resprite batch
         state: drill_bolt
       useSound:
         path: /Audio/Items/drill_use.ogg
@@ -718,7 +718,7 @@
     completeExternalSelfExecutionMessage: wolfmed-execution-bludgeon-self-complete-external
   # WOLFGATE END
   - type: Sprite
-    sprite: Objects/Tools/shovel.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/shovel.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: MeleeWeapon
     wideAnimationRotation: 45
@@ -729,7 +729,7 @@
       collection: MetalThud
   - type: Item
     size: Normal
-    sprite: Objects/Tools/shovel.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/shovel.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: PhysicalComposition
     materialComposition:
       Steel: 100

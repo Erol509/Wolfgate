@@ -6,7 +6,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light tube containing a cyan crystal.
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_tube.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -17,7 +17,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light tube containing a blue crystal.
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_tube.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -28,7 +28,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light tube containing a pink crystal.
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_tube.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -39,7 +39,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light tube containing an orange crystal.
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_tube.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -50,7 +50,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light tube containing a red crystal.
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_tube.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -61,7 +61,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light tube containing a green crystal.
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_tube.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -72,7 +72,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light bulb containing a cyan crystal.
-  icon: { sprite: Objects/Power/light_bulb.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -83,7 +83,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light bulb containing a blue crystal.
-  icon: { sprite: Objects/Power/light_bulb.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -94,7 +94,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light bulb containing a pink crystal.
-  icon: { sprite: Objects/Power/light_bulb.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -105,7 +105,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light bulb containing an orange crystal.
-  icon: { sprite: Objects/Power/light_bulb.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -116,7 +116,7 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light bulb containing a red crystal.
-  icon: { sprite: Objects/Power/light_bulb.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item
 
 - type: construction
@@ -127,5 +127,5 @@
   targetNode: icon
   category: construction-category-utilities
   description: A high powered light bulb containing a green crystal.
-  icon: { sprite: Objects/Power/light_bulb.rsi, state: normal }
+  icon: { sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi, state: normal } # WOLFGATE(Resprites): funky resprite batch
   objectType: Item

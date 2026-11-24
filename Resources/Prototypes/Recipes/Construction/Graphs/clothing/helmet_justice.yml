@@ -18,7 +18,7 @@
       - tag: LightBulb
         name: light bulb
         icon:
-          sprite: Objects/Power/light_bulb.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi # WOLFGATE(Resprites): funky resprite batch
           state: normal
         doAfter: 5
   - node: helmet

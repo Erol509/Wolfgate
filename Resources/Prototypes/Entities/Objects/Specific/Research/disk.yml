@@ -22,7 +22,7 @@
         volume: -6
   # Goobstation edit end
   - type: Sprite
-    sprite: Objects/Specific/Research/researchdisk.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Research/researchdisk.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: ResearchDisk
     points: 10000

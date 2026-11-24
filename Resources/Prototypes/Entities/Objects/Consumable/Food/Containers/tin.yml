@@ -35,7 +35,7 @@
       behaviors:
       - !type:OpenBehavior
   - type: Item
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: packet
     size: Tiny
   - type: DamageOnLand
@@ -61,7 +61,7 @@
   - type: Sprite
     state: trash
   - type: Item
-    sprite: Objects/Consumable/Food/snacks.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Consumable/Food/snacks.rsi # WOLFGATE(Resprites): funky resprite
     heldPrefix: packet
     size: Tiny
   - type: PhysicalComposition

@@ -82,7 +82,7 @@
   objectType: Item
   description: When you've really got nothing left.
   icon:
-    sprite: Objects/Specific/Medical/medical.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/medical.rsi # WOLFGATE(Resprites): funky resprite
     state: gauze
 
 - type: construction
@@ -121,7 +121,7 @@
   objectType: Item
   description: A damp rag to clean up the ground. Better than slipping around all day.
   icon:
-    sprite: Objects/Specific/Janitorial/rag.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Janitorial/rag.rsi # WOLFGATE(Resprites): funky resprite batch
     state: rag
 
 - type: construction
@@ -147,7 +147,7 @@
   objectType: Item
   description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi # WOLFGATE(Resprites): funky resprite batch
     state: improvised
 
 - type: construction
@@ -185,7 +185,7 @@
   category: construction-category-misc
   description: "A homemade piece of cotton cloth, it feels coarse."
   icon:
-    sprite: Objects/Materials/materials.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Materials/materials.rsi # WOLFGATE(Resprites): funky resprite batch
     state: cloth_3
   objectType: Item
 

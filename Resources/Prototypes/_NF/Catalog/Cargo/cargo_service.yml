@@ -32,7 +32,7 @@
 - type: cargoProduct
   id: ServiceColoredLightsReplacement
   icon:
-    sprite: Objects/Power/light_bulb.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Power/light_bulb.rsi # WOLFGATE(Resprites): funky resprite batch
     state: normal
   product: CrateServiceReplacementColoredLights
   cost: 600

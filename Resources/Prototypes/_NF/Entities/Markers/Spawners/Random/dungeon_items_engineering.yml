@@ -91,7 +91,7 @@
     layers:
       - state: green
         scale: 0.7, 0.7
-      - sprite: Objects/Tools/drill.rsi
+      - sprite: _WG/Resprites/Funkystation/Objects/Tools/drill.rsi # WOLFGATE(Resprites): funky resprite batch
         state: drill_screw
       - sprite: _NF/Markers/general.rsi
         state: questionmark
@@ -124,7 +124,7 @@
     layers:
       - state: green
         scale: 0.7, 0.7
-      - sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+      - sprite: _WG/Resprites/Wizden/Objects/Tools/Toolboxes/toolbox_yellow.rsi # WOLFGATE(Resprites): funky resprite
         state: icon
       - sprite: _NF/Markers/general.rsi
         state: questionmark

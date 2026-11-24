@@ -5,11 +5,11 @@
   description: Broadcasts your speech directly to your listeners' radios.
   components:
   - type: Sprite
-    sprite: Objects/Fun/Instruments/microphone.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/Instruments/microphone.rsi # WOLFGATE(Resprites): funky resprite batch
     state: icon
   - type: Item
     size: Small
-    sprite: Objects/Fun/Instruments/microphone.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/Instruments/microphone.rsi # WOLFGATE(Resprites): funky resprite batch
   - type: StationRadioServer
   - type: TelecomExempt
   - type: RadioMicrophone

@@ -28,12 +28,12 @@
     tags:
     - JawsOfLife
   - type: Sprite
-    sprite: Objects/Tools/jaws_of_life.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/jaws_of_life.rsi # WOLFGATE(Resprites): funky resprite batch
     state: jaws_pry
   - type: Item
     size: Normal
   - type: Clothing
-    sprite: Objects/Tools/jaws_of_life.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/jaws_of_life.rsi # WOLFGATE(Resprites): funky resprite batch
     quickEquip: false
     slots:
       - Belt
@@ -54,13 +54,13 @@
     entries:
       - behavior: Prying
         sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Tools/jaws_of_life.rsi # WOLFGATE(Resprites): funky resprite batch
           state: jaws_pry
         useSound: /Audio/Items/jaws_pry.ogg
         changeSound: /Audio/Items/change_jaws.ogg
       - behavior: Cutting
         sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Tools/jaws_of_life.rsi # WOLFGATE(Resprites): funky resprite batch
           state: jaws_cutter
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg
@@ -81,7 +81,7 @@
   description: Useful for entering the station or its departments.
   components:
   - type: Sprite
-    sprite: Objects/Tools/jaws_of_life.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Tools/jaws_of_life.rsi # WOLFGATE(Resprites): funky resprite batch
     state: syn_jaws_pry
   - type: Item
     inhandVisuals:
@@ -96,13 +96,13 @@
     entries:
       - behavior: Prying
         sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Tools/jaws_of_life.rsi # WOLFGATE(Resprites): funky resprite batch
           state: syn_jaws_pry
         useSound: /Audio/Items/jaws_pry.ogg
         changeSound: /Audio/Items/change_jaws.ogg
       - behavior: Cutting
         sprite:
-          sprite: Objects/Tools/jaws_of_life.rsi
+          sprite: _WG/Resprites/Funkystation/Objects/Tools/jaws_of_life.rsi # WOLFGATE(Resprites): funky resprite batch
           state: syn_jaws_cutter
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg

@@ -397,7 +397,7 @@
         state: equipped-HAND
         map: [ "gloves_decor" ]
       # Weapon
-      - sprite: Objects/Weapons/Melee/fireaxe.rsi
+      - sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/fireaxe.rsi # WOLFGATE(Resprites): funky resprite batch
         state: wielded-inhand-right
 
 - type: entity

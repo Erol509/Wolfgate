@@ -5,7 +5,7 @@
   description: A hand-held environmental scanner which reports current gas levels.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Atmos/gasanalyzer.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Specific/Atmos/gasanalyzer.rsi # WOLFGATE(Resprites): funky resprite batch
     layers:
       - state: icon
         map: ["analyzer"]

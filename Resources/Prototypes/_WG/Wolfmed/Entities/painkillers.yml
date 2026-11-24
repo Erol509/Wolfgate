@@ -46,7 +46,7 @@
   description: Thirty seconds on your feet, and then the bill. For walking out of somewhere, not for staying.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/medipen.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - state: medipen
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -75,7 +75,7 @@
   description: A quick shot of plain painkiller. Gets you off the floor if pain is all that keeps you there; heals nothing, and does nothing for blood loss.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/medipen.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - state: medipen
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -103,7 +103,7 @@
   description: A measured shot of opiate. Lifts even a pain faint for about half a minute and slows you down while it works. Do not stack them.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/medipen.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - state: medipen
       map: ["enum.SolutionContainerLayers.Fill"]
@@ -133,7 +133,7 @@
   description: Reverses a painkiller overdose. Takes the sedation off and gets the patient breathing; the pain comes back with it.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/medipen.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Specific/Medical/medipen.rsi # WOLFGATE(Resprites): funky resprite
     layers:
     - state: medipen
       map: ["enum.SolutionContainerLayers.Fill"]
