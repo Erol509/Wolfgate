@@ -8,9 +8,9 @@
   components:
   - type: Item
     size: Normal
-    sprite: Objects/Power/AME/ame_jar.rsi
+sprite: _WG/Resprites/Wizden/Objects/Power/AME/ame_jar.rsi # WOLFGATE(Resprites): funky AME fuel jar resprite
   - type: Sprite
-    sprite: Objects/Power/AME/ame_jar.rsi
+sprite: _WG/Resprites/Wizden/Objects/Power/AME/ame_jar.rsi # WOLFGATE(Resprites): funky AME fuel jar resprite
     state: jar
   - type: AmeFuelContainer
   - type: StaticPrice

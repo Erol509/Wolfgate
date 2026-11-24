@@ -6,7 +6,7 @@ GoobStation's command cloak, mantle and quartermaster beret resprites are here t
 
 The chief engineer's white and green ensembles and the chief medical officer's ensemble are ported with the ItemSwitch module, so they switch between cloak, mantle and combined forms.
 
-Funky Station resprites are the second batch. They cover bureaucracy (paper, folders, pens, stamps, clipboards, hand labelers, energy daggers), chairs, desk lamps and floodlights, intercoms, light tubes, APCs and air/fire alarms, disposal and mailing units, atmospheric pipes, pumps, filters, mixers, sensors, vents, scrubbers and thermomachines, chemistry machines (reagent grinder, centrifuge, electrolyzer), cell chargers, SMES and substations, stasis beds, linoleum floors, tables, game boards, crayons, bike horns, bedsheets, beds, dressers, sinks, racks, mirrors, MMIs and posibrains, fax machines, AME controls, suit storage units and departmental suit storage lockers, the bio-fabricator, and anomaly vessels, A.P.E.s and artifact analyzers. Textures live under `Resources/Textures/_WG/Resprites/Funkystation`, plus `.../Wizden` for vanilla-path RSIs and `.../Shitmed` for the bio-fabricator. Where funky's art covered a sprite Wolfgate had already taken from Frontier (vents and scrubbers) or Impstation (thermomachine, stasis bed, fax machine, suit storage), the funky sprite replaced it.
+Funky Station resprites are the second batch. They cover bureaucracy (paper, folders, pens, stamps, clipboards, hand labelers, energy daggers), chairs, desk lamps and floodlights, intercoms, light tubes, APCs and air/fire alarms, disposal and mailing units, atmospheric pipes, pumps, filters, mixers, sensors, vents, scrubbers and thermomachines, chemistry machines (reagent grinder, centrifuge, electrolyzer), cell chargers, SMES and substations, stasis beds, linoleum floors, tables, game boards, crayons, bike horns, bedsheets, beds, dressers, sinks, racks, mirrors, MMIs and posibrains, fax machines, AME controls and fuel jars, suit storage units and departmental suit storage lockers, the bio-fabricator, and anomaly vessels, A.P.E.s and artifact analyzers. Textures live under `Resources/Textures/_WG/Resprites/Funkystation`, plus `.../Wizden` for vanilla-path RSIs and `.../Shitmed` for the bio-fabricator. Where funky's art covered a sprite Wolfgate had already taken from Frontier (vents and scrubbers) or Impstation (thermomachine, stasis bed, fax machine, suit storage), the funky sprite replaced it.
 
 `Resources/Maps/_WG/Resprites/resprite_test.yml` is a showcase map with the resprited machines, objects and items laid out in rows. Load it in a running server with `loadmap <free map id> /Maps/_WG/Resprites/resprite_test.yml`, then `warp resprites`.
 
@@ -167,6 +167,7 @@ Funky Station resprites are the second batch. They cover bureaucracy (paper, fol
 - [`Resources/Textures/_WG/Resprites/Goobstation/Clothing/Neck/Mantle/qmmantle.rsi/`](../../../Resources/Textures/_WG/Resprites/Goobstation/Clothing/Neck/Mantle/qmmantle.rsi/)
 - [`Resources/Textures/_WG/Resprites/Goobstation/Clothing/Neck/Mantle/rdmantle.rsi/`](../../../Resources/Textures/_WG/Resprites/Goobstation/Clothing/Neck/Mantle/rdmantle.rsi/)
 - [`Resources/Textures/_WG/Resprites/Shitmed/Structures/Machines/limbgrower.rsi/`](../../../Resources/Textures/_WG/Resprites/Shitmed/Structures/Machines/limbgrower.rsi/)
+- [`Resources/Textures/_WG/Resprites/Wizden/Objects/Power/AME/ame_jar.rsi/`](../../../Resources/Textures/_WG/Resprites/Wizden/Objects/Power/AME/ame_jar.rsi/)
 - [`Resources/Textures/_WG/Resprites/Wizden/Objects/Specific/Robotics/mmi.rsi/`](../../../Resources/Textures/_WG/Resprites/Wizden/Objects/Specific/Robotics/mmi.rsi/)
 - [`Resources/Textures/_WG/Resprites/Wizden/Storage/Closets/antag-secure-syndicate.rsi/`](../../../Resources/Textures/_WG/Resprites/Wizden/Storage/Closets/antag-secure-syndicate.rsi/)
 - [`Resources/Textures/_WG/Resprites/Wizden/Storage/Closets/antag-syndicate.rsi/`](../../../Resources/Textures/_WG/Resprites/Wizden/Storage/Closets/antag-syndicate.rsi/)
@@ -553,7 +554,9 @@ Funky Station resprites are the second batch. They cover bureaucracy (paper, fol
   - GoobStation mantle resprite renamed the chief engineer's mantle
 - [`Resources/Prototypes/Actions/types.yml`](../../../Resources/Prototypes/Actions/types.yml): funky game board, furniture, sink and rack resprites
 - [`Resources/Prototypes/Catalog/Cargo/cargo_engineering.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_engineering.yml): RCD sprite without the old one drawn underneath
-- [`Resources/Prototypes/Catalog/Cargo/cargo_engines.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_engines.yml): funky MMI, fax and AME resprites
+- [`Resources/Prototypes/Catalog/Cargo/cargo_engines.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_engines.yml)
+  - funky AME fuel jar resprite
+  - funky MMI, fax and AME resprites
 - [`Resources/Prototypes/Catalog/Cargo/cargo_fun.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_fun.yml): funky game board, furniture, sink and rack resprites
 - [`Resources/Prototypes/Catalog/Cargo/cargo_service.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_service.yml)
   - funky bureaucracy, chair, light and intercom resprites
@@ -588,6 +591,7 @@ Funky Station resprites are the second batch. They cover bureaucracy (paper, fol
 - [`Resources/Prototypes/Entities/Objects/Misc/paper.yml`](../../../Resources/Prototypes/Entities/Objects/Misc/paper.yml): funky bureaucracy, chair, light and intercom resprites
 - [`Resources/Prototypes/Entities/Objects/Misc/pen.yml`](../../../Resources/Prototypes/Entities/Objects/Misc/pen.yml): funky bureaucracy, chair, light and intercom resprites
 - [`Resources/Prototypes/Entities/Objects/Misc/rubber_stamp.yml`](../../../Resources/Prototypes/Entities/Objects/Misc/rubber_stamp.yml): funky bureaucracy, chair, light and intercom resprites
+- [`Resources/Prototypes/Entities/Objects/Power/antimatter_jar.yml`](../../../Resources/Prototypes/Entities/Objects/Power/antimatter_jar.yml): funky AME fuel jar resprite
 - [`Resources/Prototypes/Entities/Objects/Specific/Forensics/forensics.yml`](../../../Resources/Prototypes/Entities/Objects/Specific/Forensics/forensics.yml): funky bureaucracy, chair, light and intercom resprites
 - [`Resources/Prototypes/Entities/Objects/Specific/Robotics/mmi.yml`](../../../Resources/Prototypes/Entities/Objects/Specific/Robotics/mmi.yml): funky MMI, fax and AME resprites
 - [`Resources/Prototypes/Entities/Objects/Tools/hand_labeler.yml`](../../../Resources/Prototypes/Entities/Objects/Tools/hand_labeler.yml): funky bureaucracy, chair, light and intercom resprites

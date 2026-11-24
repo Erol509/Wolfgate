@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: EngineAmeShielding
   icon:
-    sprite: Objects/Power/AME/ame_jar.rsi
+sprite: _WG/Resprites/Wizden/Objects/Power/AME/ame_jar.rsi # WOLFGATE(Resprites): funky AME fuel jar resprite
     state: jar
   product: CrateEngineeringAMEShielding
   cost: 15000 # Frontier - Up the price
@@ -12,7 +12,7 @@
   id: EngineAmeJar
   abstract: true # Frontier
   icon:
-    sprite: Objects/Power/AME/ame_jar.rsi
+sprite: _WG/Resprites/Wizden/Objects/Power/AME/ame_jar.rsi # WOLFGATE(Resprites): funky AME fuel jar resprite
     state: jar
   product: CrateEngineeringAMEJar
   cost: 10000 # Frontier - Up the price

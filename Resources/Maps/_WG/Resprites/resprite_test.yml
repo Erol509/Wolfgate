@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 11/24/2026 12:56:42
-  entityCount: 519
+  entityCount: 520
 maps:
 - 1
 grids:
@@ -10984,4 +10984,12 @@ entities:
     - type: Transform
       parent: 1
       pos: 70.5,10.5
+- proto: AmeJar
+  entities:
+  - uid: 520
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 74.5,14.5
 ...
