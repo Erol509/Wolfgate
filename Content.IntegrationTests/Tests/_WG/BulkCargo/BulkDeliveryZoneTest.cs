@@ -49,6 +49,13 @@ public sealed class BulkDeliveryZoneTest
             Assert.That(zones.FreeCount(zone), Is.EqualTo(12), "A clear floor should take a crate on every tile.");
             Assert.That(zones.ZonesOn(grid), Has.Count.EqualTo(1));
 
+            // One drawn corner is turned to face into the rectangle: the low marker is south-west, the high one
+            // north-east, relative to the marker art's north-west base.
+            Assert.That(em.GetComponent<TransformComponent>(first).LocalRotation.Theta,
+                Is.EqualTo(Math.PI / 2).Within(0.001));
+            Assert.That(em.GetComponent<TransformComponent>(second).LocalRotation.Theta,
+                Is.EqualTo(-Math.PI / 2).Within(0.001));
+
             // The zone is painted on the floor: corners, edge lines and a fill.
             var painted = decals.GetDecalsInRange(grid, new Vector2(0, 0), 20f);
             Assert.That(painted, Is.Not.Empty, "A formed zone should paint its warning decals.");
@@ -67,6 +74,8 @@ public sealed class BulkDeliveryZoneTest
             zones.Unpair(second);
             Assert.That(zones.TryZone(id, out _), Is.False, "Losing a corner should drop the zone.");
             Assert.That(zones.ZonesOn(grid), Is.Empty);
+            Assert.That(em.GetComponent<TransformComponent>(first).LocalRotation.Theta,
+                Is.EqualTo(0).Within(0.001), "A freed marker returns to its base orientation.");
             Assert.That(decals.GetDecalsInRange(grid, new Vector2(0, 0), 20f), Is.Empty,
                 "Removing the zone should remove its floor markings.");
             Assert.That(em.IsQueuedForDeletion(fieldUid), Is.True, "Removing the zone should remove its energy field.");

@@ -7,7 +7,7 @@
   parent: BaseItem
   components:
   - type: Sprite
-    sprite: Markers/cross.rsi
+    sprite: _NF/Objects/Devices/Holoprojectors/nfsd.rsi
     state: icon
   - type: Item
     size: Small
@@ -30,7 +30,8 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Markers/cross.rsi
-    state: pink
+    sprite: _WG/BulkCargo/corner.rsi
+    state: corner
+    scale: 0.5, 0.5
   - type: WGCargoZoneCorner
   - type: InteractionOutline

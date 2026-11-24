@@ -7,6 +7,7 @@ using Content.Shared.Physics;
 using Content.Server.Decals;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server._WG.BulkCargo;
@@ -52,6 +53,7 @@ public sealed partial class WGCargoDeliveryZoneSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private TurfSystem _turf = default!;
     [Dependency] private DecalSystem _decals = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     /// <summary>Most tiles one zone may cover, so a stray pair of markers can't claim half the station.</summary>
     public const int MaxCells = 256;
@@ -165,6 +167,7 @@ public sealed partial class WGCargoDeliveryZoneSystem : EntitySystem
         Place((first, a), grid, gridComp, id);
         Place((second, b), grid, gridComp, id);
         PaintZone(id);
+        AlignCorners(id);
         return true;
     }
 
@@ -173,6 +176,41 @@ public sealed partial class WGCargoDeliveryZoneSystem : EntitySystem
         corner.Comp.Zone = zone;
         corner.Comp.Grid = grid;
         corner.Comp.Tile = _map.TileIndicesFor(grid, gridComp, Transform(corner).Coordinates);
+    }
+
+    /// <summary>Turns both markers so their one drawn corner faces into the rectangle.</summary>
+    private void AlignCorners(Guid id)
+    {
+        if (!TryZone(id, out var zone))
+            return;
+
+        if (TryComp<WGCargoZoneCornerComponent>(zone.First, out var first))
+            Rotate(zone.First, CornerAngle(first.Tile, zone));
+
+        if (TryComp<WGCargoZoneCornerComponent>(zone.Second, out var second))
+            Rotate(zone.Second, CornerAngle(second.Tile, zone));
+    }
+
+    /// <summary>The rotation that turns the north-west marker art into the corner at this tile.</summary>
+    private static Angle CornerAngle(Vector2i tile, WGCargoZone zone)
+    {
+        var west = tile.X == zone.Min.X;
+        var south = tile.Y == zone.Min.Y;
+
+        if (west && !south)
+            return Angle.Zero;
+        if (!west && !south)
+            return Angle.FromDegrees(-90);
+        if (!west)
+            return Angle.FromDegrees(180);
+
+        return Angle.FromDegrees(90);
+    }
+
+    private void Rotate(EntityUid corner, Angle angle)
+    {
+        if (!TerminatingOrDeleted(corner) && TryComp<TransformComponent>(corner, out var xform))
+            _transform.SetLocalRotation(corner, angle, xform);
     }
 
     /// <summary>Takes a corner out of its zone; its partner is left waiting for a new one.</summary>
@@ -216,6 +254,7 @@ public sealed partial class WGCargoDeliveryZoneSystem : EntitySystem
 
         comp.Zone = Guid.Empty;
         comp.Grid = null;
+        Rotate(corner, Angle.Zero);
     }
 
     /// <summary>

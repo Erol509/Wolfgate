@@ -15,11 +15,13 @@ tunes a vendor's interval, blocked timeout and arrival effect; the trade vendor 
 
 A vendor's bulk screen is the existing vending machine: the same machine, stock and prices, with a cart and a delivery
 zone picker. The marked bay itself shows a pass-through orange energy field in the world, drawn as one rippling overlay
-pass per zone, with warning corners and edge decals around it. Its second tab is a live ship plot: the hull's floor,
-walls and doors drawn as an orange blueprint, the chosen bay boxed in amber, and the paid order's crates filling in one
-at a time. It may deliver to its own station's zones and to zones on ships whose hull lies within reach of the counter,
-measured from the hull so a long hauler docked at the near end still qualifies; a berth on the far side of a station is
-not enough. An order accepted for a ship keeps to that ship's grid after undocking.
+pass per zone, with animated L-shaped corner markers and edge decals around it. The markers are one drawn north-west
+corner turned by the server to face into the rectangle; the zone projector uses the NFSD holoprojector sprite. Its second
+tab is a live ship plot: the hull's floor, walls and doors drawn as an orange blueprint, the chosen bay boxed in amber,
+and the paid order's crates filling in one at a time. It may deliver to its own station's zones and to zones on ships
+whose hull lies within reach of the counter, measured from the hull so a long hauler docked at the near end still
+qualifies; a berth on the far side of a station is not enough. An order accepted for a ship keeps to that ship's grid
+after undocking.
 
 Zones are capped at 256 tiles, 16 per grid and 256 per round, and a buyer at 10 live orders, so marker spam and order
 floods can't grow without bound. Closing a zone stops its orders at once and refunds the crates that never arrived; a
@@ -77,6 +79,10 @@ forever.
 
 - [`Resources/Locale/en-US/_WG/BulkCargo/ui.ftl`](../../../Resources/Locale/en-US/_WG/BulkCargo/ui.ftl)
 - [`Resources/Locale/en-US/_WG/BulkCargo/zone.ftl`](../../../Resources/Locale/en-US/_WG/BulkCargo/zone.ftl)
+
+### Textures
+
+- [`Resources/Textures/_WG/BulkCargo/corner.rsi/`](../../../Resources/Textures/_WG/BulkCargo/corner.rsi/)
 
 ## Non-modular edits
 
