@@ -22,7 +22,7 @@
 - type: cargoProduct
   id: EngineAmeControl
   icon:
-    sprite: Structures/Power/Generation/ame.rsi
+    sprite: _WG/Resprites/Wizden/Structures/Power/Generation/ame.rsi # WOLFGATE(Resprites): funky MMI, fax and AME resprites
     state: control
   product: CrateEngineeringAMEControl
   # WOLFGATE(Drydock): above the ~10k a drydock break pays for the controller, mostly its fissile; was 6000

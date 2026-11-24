@@ -53,7 +53,7 @@
     reactionTypes:
     - Electrolysis
   - type: Sprite
-    sprite: Structures/Machines/Medical/electrolysis.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/Medical/electrolysis.rsi # WOLFGATE(Resprites): funky chemistry machine resprites
     offset: "0.0,0.4"
     layers:
     - state: base
@@ -92,7 +92,7 @@
     reactionTypes:
     - Centrifuge
   - type: Sprite
-    sprite: Structures/Machines/Medical/centrifuge.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/Medical/centrifuge.rsi # WOLFGATE(Resprites): funky chemistry machine resprites
     offset: "0.0,0.4"
     layers:
     - state: base

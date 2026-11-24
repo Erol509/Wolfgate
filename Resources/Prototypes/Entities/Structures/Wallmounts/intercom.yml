@@ -43,7 +43,7 @@
   - type: Sprite
     noRot: false
     drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/intercom.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Wallmounts/intercom.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     offset: 0, -0.25
     layers:
     - state: base
@@ -139,7 +139,7 @@
   - type: InteractionOutline
   - type: Sprite
     drawdepth: SmallObjects
-    sprite: Structures/Wallmounts/intercom.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Wallmounts/intercom.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     offset: 0, -0.25
     layers:
     - state: build

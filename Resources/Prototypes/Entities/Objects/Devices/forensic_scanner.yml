@@ -57,7 +57,7 @@
   description: Circumstantial evidence, at best.
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/bureaucracy.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     layers:
     - state: paper_receipt_horizontal
     - state: paper_receipt_horizontal_words

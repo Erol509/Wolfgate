@@ -18,7 +18,7 @@
             - tag: BikeHorn
               name: bike horn
               icon:
-                sprite: Objects/Fun/bikehorn.rsi
+                sprite: _WG/Resprites/Funkystation/Objects/Fun/bikehorn.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
                 state: icon
               doAfter: 1
     - node: bananiumHorn

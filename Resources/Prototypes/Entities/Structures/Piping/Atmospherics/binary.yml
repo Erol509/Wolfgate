@@ -24,9 +24,9 @@
         pipeDirection: South
   - type: AtmosPipeLayers
     spriteRsiPaths:
-      Primary: Structures/Piping/Atmospherics/pump.rsi
-      Secondary: Structures/Piping/Atmospherics/pump_alt1.rsi
-      Tertiary: Structures/Piping/Atmospherics/pump_alt2.rsi
+      Primary: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
+      Secondary: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
+      Tertiary: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
 
 - type: entity
   parent: GasBinaryBase
@@ -50,9 +50,9 @@
     - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     drawdepth: FloorObjects #imp
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressure
@@ -116,9 +116,9 @@
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects #imp
-      sprite: Structures/Piping/Atmospherics/pump.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpVolume
@@ -181,9 +181,9 @@
     visibleLayers:
     - enum.SubfloorLayers.FirstLayer
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressureRegulator
@@ -239,9 +239,9 @@
       visibleLayers:
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
-      sprite: Structures/Piping/Atmospherics/pump.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpPassiveGate
@@ -282,10 +282,10 @@
       visibleLayers:
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
-      sprite: Structures/Piping/Atmospherics/pump.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       drawdepth: FloorObjects #imp
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
           state: pipeStraight
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpManualValve
@@ -345,9 +345,9 @@
     - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     drawdepth: FloorObjects #imp
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpSignalValve
@@ -417,9 +417,9 @@
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects #imp
-      sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gascanisterport.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
           state: pipeUnaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasCanisterPort
@@ -457,9 +457,9 @@
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects
-      sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
+      sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/vent.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
           state: pipeBinaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: vent_off
@@ -521,7 +521,7 @@
   - type: Sprite
     sprite: Structures/Machines/gasrecycler.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       state: pipeBinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: running
@@ -530,9 +530,9 @@
   - type: AtmosPipeLayers
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:
-        Primary: Structures/Piping/Atmospherics/pipe.rsi
-        Secondary: Structures/Piping/Atmospherics/pipe_alt1.rsi
-        Tertiary: Structures/Piping/Atmospherics/pipe_alt2.rsi
+        Primary: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
+        Secondary: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
+        Tertiary: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -592,9 +592,9 @@
   - type: Transform
     noRot: false
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/heatexchanger.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: heStraight
@@ -638,7 +638,7 @@
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       layers:
-      - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
         state: pipeBend
         map: [ "enum.PipeVisualLayers.Pipe" ]
       - state: heBend

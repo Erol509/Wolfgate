@@ -5,7 +5,7 @@
   description: 'A piece of white paper.'
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/bureaucracy.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     layers:
     - state: paper
     - state: paper_words
@@ -326,10 +326,10 @@
   name: nuclear code folder
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/bureaucracy.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     layers:
     - state: folder-colormap
-      color: "#cc2323"
+      color: "#c52d55" # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     - state: folder-base
     - state: folder-stamp-inverse
       color: "#1dff00"
@@ -347,7 +347,7 @@
   description: A folder filled with top secret paperwork.
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/bureaucracy.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     layers:
     - state: folder-colormap
     - state: folder-base
@@ -364,7 +364,7 @@
 #      black: "#3f3f3f"
 #      green: "#43bc38"
   - type: Item
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/bureaucracy.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     size: Small
     shape: null
   - type: Storage
@@ -405,7 +405,7 @@
   - type: Sprite
     layers:
     - state: folder-colormap
-      color: "#cc2323"
+      color: "#c52d55" # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     - state: folder-base
 
 - type: entity
@@ -416,7 +416,7 @@
   - type: Sprite
     layers:
     - state: folder-colormap
-      color: "#355d99"
+      color: "#2b4e95" # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     - state: folder-base
 
 - type: entity
@@ -427,7 +427,7 @@
   - type: Sprite
     layers:
     - state: folder-colormap
-      color: "#b38e3c"
+      color: "#d6a851" # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     - state: folder-base
 
 - type: entity
@@ -448,7 +448,7 @@
   - type: Sprite
     layers:
     - state: folder-colormap
-      color: "#999999"
+      color: "#a69e9a" # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     - state: folder-base
 
 - type: entity
@@ -459,7 +459,7 @@
   - type: Sprite
     layers:
     - state: folder-colormap
-      color: "#3f3f3f"
+      color: "#373334" # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     - state: folder-base
 
 - type: entity
@@ -470,7 +470,7 @@
   - type: Sprite
     layers:
     - state: folder-colormap
-      color: "#43bc38"
+      color: "#42a459" # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     - state: folder-base
 
 - type: entity
@@ -666,7 +666,7 @@
   description: 'A small envelope for keeping prying eyes off of your sensitive documents.'
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/bureaucracy.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     layers:
     - state: envelope_open
       map: ["enum.EnvelopeVisualLayers.Open"]

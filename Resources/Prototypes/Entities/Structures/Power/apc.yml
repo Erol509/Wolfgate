@@ -25,7 +25,7 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Power/apc.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Power/apc.rsi # WOLFGATE(Resprites): funky light tube, APC and alarm resprites
     offset: 0, -0.25
     layers:
     - state: base
@@ -75,7 +75,7 @@
     sourceNode: input
     loadNode: output
     collectionName: apc
-    sprite: Structures/Power/apc.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Power/apc.rsi # WOLFGATE(Resprites): funky light tube, APC and alarm resprites
     state: static
   - type: BatteryCharger
     voltage: Medium
@@ -169,7 +169,7 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Power/apc.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Power/apc.rsi # WOLFGATE(Resprites): funky light tube, APC and alarm resprites
     offset: 0, -0.25
     state: frame
   - type: Construction

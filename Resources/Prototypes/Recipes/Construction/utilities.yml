@@ -366,7 +366,7 @@
   category: construction-category-structures
   description: An air sensor. Senses air.
   icon:
-    sprite: Structures/Specific/Atmospherics/sensor.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Specific/Atmospherics/sensor.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: gsensor1
   placementMode: SnapgridCenter
   objectType: Structure
@@ -384,12 +384,12 @@
   objectType: Structure
   canRotate: true
   icon:
-    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gas_pipe_sensor.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: base
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gas_pipe_sensor.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: base
   alternativePrototypes:
   - GasPipeSensor
@@ -407,12 +407,12 @@
   objectType: Structure
   canRotate: true
   icon:
-    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: base
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: base
   alternativePrototypes:
   - GasPipeSensor
@@ -430,12 +430,12 @@
   objectType: Structure
   canRotate: true
   icon:
-    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: base
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: base
   alternativePrototypes:
   - GasPipeSensor
@@ -454,7 +454,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeHalf
   alternativePrototypes:
   - GasPipeHalf
@@ -471,7 +471,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeHalf
   alternativePrototypes:
   - GasPipeHalf
@@ -488,7 +488,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeHalf
   alternativePrototypes:
   - GasPipeHalf
@@ -506,7 +506,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
   alternativePrototypes:
   - GasPipeStraight
@@ -523,7 +523,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
   alternativePrototypes:
   - GasPipeStraight
@@ -540,7 +540,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
   alternativePrototypes:
   - GasPipeStraight
@@ -558,7 +558,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeBend
   alternativePrototypes:
   - GasPipeBend
@@ -575,7 +575,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeBend
   alternativePrototypes:
   - GasPipeBend
@@ -592,7 +592,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeBend
   alternativePrototypes:
   - GasPipeBend
@@ -610,7 +610,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeTJunction
   alternativePrototypes:
   - GasPipeTJunction
@@ -627,7 +627,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeTJunction
   alternativePrototypes:
   - GasPipeTJunction
@@ -644,7 +644,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeTJunction
   alternativePrototypes:
   - GasPipeTJunction
@@ -662,7 +662,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeFourway
   alternativePrototypes:
   - GasPipeFourway
@@ -679,7 +679,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeFourway
   alternativePrototypes:
   - GasPipeFourway
@@ -696,7 +696,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeFourway
   alternativePrototypes:
   - GasPipeFourway
@@ -714,7 +714,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
   icon:
-    sprite: Structures/Piping/Atmospherics/manifold.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/manifold.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeManifold
 
 # ATMOS UNARY
@@ -729,12 +729,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/vent.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: vent_off
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeHalf
-  - sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/vent.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: vent_off
   conditions:
   - !type:NoUnstackableInTile
@@ -750,12 +750,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/vent.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: vent_passive
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeHalf
-  - sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/vent.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: vent_passive
   conditions:
   - !type:NoUnstackableInTile
@@ -771,12 +771,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: _NF/Structures/Piping/Atmospherics/scrubber.rsi # Frontier
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/scrubber.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: scrub_off
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeHalf
-  - sprite: _NF/Structures/Piping/Atmospherics/scrubber.rsi # Frontier
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/scrubber.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: scrub_off
   conditions:
   - !type:NoUnstackableInTile
@@ -792,12 +792,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/outletinjector.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/outletinjector.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: injector
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeHalf
-  - sprite: Structures/Piping/Atmospherics/outletinjector.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/outletinjector.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: injector
   conditions:
   - !type:NoUnstackableInTile
@@ -814,12 +814,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressure
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressure
   conditions:
   - !type:NoUnstackableInTile
@@ -838,12 +838,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressure
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressure
   conditions:
   - !type:NoUnstackableInTile
@@ -862,12 +862,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressure
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressure
   conditions:
   - !type:NoUnstackableInTile
@@ -887,12 +887,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpVolume
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpVolume
   conditions:
   - !type:NoUnstackableInTile
@@ -911,12 +911,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpVolume
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpVolume
   conditions:
   - !type:NoUnstackableInTile
@@ -935,12 +935,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpVolume
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpVolume
   conditions:
   - !type:NoUnstackableInTile
@@ -960,12 +960,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPassiveGate
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPassiveGate
   conditions:
   - !type:NoUnstackableInTile
@@ -984,12 +984,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPassiveGate
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPassiveGate
   conditions:
   - !type:NoUnstackableInTile
@@ -1008,12 +1008,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPassiveGate
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPassiveGate
   conditions:
   - !type:NoUnstackableInTile
@@ -1033,12 +1033,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressureRegulator
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressureRegulator
   conditions:
   - !type:NoUnstackableInTile
@@ -1057,12 +1057,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressureRegulator
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressureRegulator
   conditions:
   - !type:NoUnstackableInTile
@@ -1081,12 +1081,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressureRegulator
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpPressureRegulator
   conditions:
   - !type:NoUnstackableInTile
@@ -1106,12 +1106,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpManualValve
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpManualValve
   conditions:
     - !type:NoUnstackableInTile
@@ -1130,12 +1130,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpManualValve
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpManualValve
   conditions:
     - !type:NoUnstackableInTile
@@ -1154,12 +1154,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpManualValve
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpManualValve
   conditions:
     - !type:NoUnstackableInTile
@@ -1179,12 +1179,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpSignalValve
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpSignalValve
   conditions:
   - !type:NoUnstackableInTile
@@ -1203,12 +1203,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpSignalValve
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpSignalValve
   conditions:
     - !type:NoUnstackableInTile
@@ -1227,12 +1227,12 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpSignalValve
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pump_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pumpSignalValve
   conditions:
     - !type:NoUnstackableInTile
@@ -1252,12 +1252,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gascanisterport.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: gasCanisterPort
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeHalf
-  - sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gascanisterport.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: gasCanisterPort
   conditions:
     - !type:NoUnstackableInTile
@@ -1273,12 +1273,12 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/vent.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: vent_off
   layers:
-  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: pipeStraight
-  - sprite: _NF/Structures/Piping/Atmospherics/vent.rsi # Frontier
+  - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/vent.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: vent_off
 
 - type: construction
@@ -1292,7 +1292,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/heatexchanger.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: heStraight
 
 - type: construction
@@ -1306,7 +1306,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/heatexchanger.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: heBend
 
 # ATMOS TRINARY
@@ -1321,7 +1321,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gasfilter.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: gasFilter
   mirror: GasFilterFlipped
   conditions:
@@ -1339,7 +1339,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gasfilter.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: gasFilterF
   mirror: GasFilter
   conditions:
@@ -1356,7 +1356,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/gasmixer.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gasmixer.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: gasMixer
   mirror: GasMixerFlipped
   conditions:
@@ -1374,7 +1374,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/gasmixer.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gasmixer.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: gasMixerF
   mirror: GasMixer
   conditions:
@@ -1391,7 +1391,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pneumaticvalve.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: off
   conditions:
     - !type:NoUnstackableInTile

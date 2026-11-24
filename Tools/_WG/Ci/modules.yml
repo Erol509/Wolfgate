@@ -2424,7 +2424,7 @@ unmarked:
     reason: Generic_mob_burning and Standing replaced with TauCeti fire sprites; Standing_underlay added.
   - path: Resources/Textures/_Impstation/Structures/
     module: Resprites
-    reason: Impstation structure resprites (thermomachines, cryo pod, cryosleep, hydro tray, conveyor, fax, stasis bed, suit storage).
+    reason: Impstation structure resprites (hellfire thermomachines, cryo pod, cryosleep, hydro tray, conveyor).
   - path: Resources/Audio/_Goobstation/RadioStation/
     module: null
     reason: Radio host tracks (Monolith#4833) re-encoded to mono Vorbis q0 to cut download size.

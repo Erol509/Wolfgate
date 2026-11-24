@@ -8,7 +8,7 @@
   - type: Transform
     anchored: false
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/bureaucracy.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     layers:
       - state: folder-base
       - state: folder-colormap

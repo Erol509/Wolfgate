@@ -16,7 +16,7 @@
   - type: InteractionOutline
   - type: PlaceableSurface
   - type: Sprite
-    sprite: Structures/Furniture/furniture.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/furniture.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     state: rack
     snapCardinals: true
   - type: Fixtures
@@ -78,7 +78,7 @@
   - type: InteractionOutline
   - type: PlaceableSurface
   - type: Sprite
-    sprite: Structures/Furniture/furniture.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/furniture.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     state: rackblack
     snapCardinals: true
   - type: Climbable

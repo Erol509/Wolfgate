@@ -6,9 +6,9 @@
   description: Pieces of metal that make the frame of a table.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/frame.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/frame.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/frame.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/frame.rsi # WOLFGATE(Resprites): funky table and vent resprites
     state: full
   - type: Fixtures
     fixtures:
@@ -63,9 +63,9 @@
   components:
   - type: SpriteFade
   - type: Sprite
-    sprite: Structures/Furniture/Tables/frame.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/frame.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/frame.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/frame.rsi # WOLFGATE(Resprites): funky table and vent resprites
     state: full
   - type: Fixtures
     fixtures:
@@ -120,9 +120,9 @@
   description: Pieces of metal that make the frame of a table.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/frame.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/frame.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/frame.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/frame.rsi # WOLFGATE(Resprites): funky table and vent resprites
     state: full
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -165,9 +165,9 @@
   description: A square piece of metal standing on four metal legs.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/generic.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/generic.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/generic.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/generic.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
@@ -226,9 +226,9 @@
   description: A square piece of metal standing on four metal legs. Extra robust.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/reinforced.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/reinforced.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/reinforced.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/reinforced.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Destructible
     thresholds:
     - trigger:
@@ -295,9 +295,9 @@
       Brute:
         collection: WGBulletImpactGlass # WOLFGATE(Weapons)
   - type: Sprite
-    sprite: Structures/Furniture/Tables/glass.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/glass.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/glass.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/glass.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: GlassTable
     climberDamage:
       types:
@@ -353,9 +353,9 @@
       Brute:
         collection: WGBulletImpactGlass # WOLFGATE(Weapons)
   - type: Sprite
-    sprite: Structures/Furniture/Tables/r_glass.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/r_glass.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/r_glass.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/r_glass.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: GlassTable
     climberDamage:
       types:
@@ -537,9 +537,9 @@
       Brute:
         collection: WGBulletImpactWood # WOLFGATE(Weapons)
   - type: Sprite
-    sprite: Structures/Furniture/Tables/wood.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/wood.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/wood.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/wood.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Damageable
     damageModifierSet: Wood
   - type: Destructible
@@ -586,9 +586,9 @@
   description: Play em' cowboy.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/carpet.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/carpet.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/carpet.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/carpet.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Damageable
     damageModifierSet: Wood
   - type: Destructible
@@ -920,9 +920,9 @@
       Brute:
         collection: WGBulletImpactWood # WOLFGATE(Weapons)
   - type: Sprite
-    sprite: Structures/Furniture/Tables/counterwood.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/counterwood.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/counterwood.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/counterwood.rsi # WOLFGATE(Resprites): funky table and vent resprites
     state: full
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -966,9 +966,9 @@
   description: Looks like a good place to put a drink down.
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Tables/countermetal.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/countermetal.rsi # WOLFGATE(Resprites): funky table and vent resprites
   - type: Icon
-    sprite: Structures/Furniture/Tables/countermetal.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/Tables/countermetal.rsi # WOLFGATE(Resprites): funky table and vent resprites
     state: full
   - type: Damageable
     damageContainer: StructuralInorganic

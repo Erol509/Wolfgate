@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     noRot: true
-    sprite: Structures/Machines/Anomaly/anomaly_vessel.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/anomaly_vessel.rsi # WOLFGATE(Resprites): funky anomaly vessel, A.P.E. and artifact analyzer resprites
     layers:
     - state: base
     - state: powered-1
@@ -95,7 +95,7 @@
   description: An advanced anomaly vessel capable of greater research potential at the cost of increased volatility and low-level radioactive decay into the environment.
   components:
   - type: Sprite
-    sprite: Structures/Machines/Anomaly/adv_anomaly_vessel.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/adv_anomaly_vessel.rsi # WOLFGATE(Resprites): funky anomaly vessel, A.P.E. and artifact analyzer resprites
     offset: 0,0.5
     drawdepth: Mobs
   - type: SpriteFade
@@ -122,7 +122,7 @@
   components:
   - type: Sprite
     noRot: true
-    sprite: Structures/Machines/Anomaly/ape.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/ape.rsi # WOLFGATE(Resprites): funky anomaly vessel, A.P.E. and artifact analyzer resprites
     layers:
     - state: base
     - state: unshaded

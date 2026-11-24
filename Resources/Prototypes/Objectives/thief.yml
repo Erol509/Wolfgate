@@ -513,6 +513,6 @@
   - type: Objective
     difficulty: 1.3
     icon:
-      sprite: Structures/Furniture/chairs.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Furniture/chairs.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
       state: shuttle
   - type: EscapeShuttleCondition

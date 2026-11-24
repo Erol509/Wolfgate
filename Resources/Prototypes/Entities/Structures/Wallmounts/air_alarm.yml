@@ -46,14 +46,15 @@
     - AirSensor
     - GasVent
     - GasScrubber
+  # WOLFGATE(Resprites) START: funky air alarm art is a separate body and indicator layer
   - type: AtmosAlarmableVisuals
-    layerMap: "airAlarmBase"
+    layerMap: "airAlarmState"
     alarmStates:
       Normal: alarm0
       Warning: alarm2
       Danger: alarm1
-    setOnDepowered:
-      airAlarmBase: alarmp
+    hideOnDepowered: [ "airAlarmState" ]
+  # WOLFGATE END
   - type: Tag
     tags:
       - AirAlarm
@@ -84,10 +85,15 @@
   - type: Appearance
   - type: WiresVisuals
   - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Wallmounts/air_monitors.rsi # WOLFGATE(Resprites): funky light tube, APC and alarm resprites
     layers:
-    - state: alarm0
-      map: ["airAlarmBase"] # TODO: fire alarm enum
+    # WOLFGATE(Resprites) START: funky air alarm art is a separate body and indicator layer
+    - state: alarmp
+      map: ["airAlarmBase"]
+    - state: alarm0 # WOLFGATE(Resprites): funky light tube, APC and alarm resprites
+      map: ["airAlarmState"]
+      shader: unshaded
+    # WOLFGATE END
     - state: alarmx
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Transform
@@ -139,7 +145,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Wallmounts/air_monitors.rsi # WOLFGATE(Resprites): funky light tube, APC and alarm resprites
     layers:
     - state: alarm_b1
       map: [ "enum.ConstructionVisuals.Layer" ]

@@ -5,13 +5,13 @@
   description: A horn off of a bicycle.
   components:
   - type: Sprite
-    sprite: Objects/Fun/bikehorn.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/bikehorn.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     state: icon
   - type: Item
-    sprite: Objects/Fun/bikehorn.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/bikehorn.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     size: Tiny
   - type: Clothing
-    sprite: Objects/Fun/bikehorn.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/bikehorn.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     slots: [Belt]
     quickEquip: false
   - type: UseDelay
