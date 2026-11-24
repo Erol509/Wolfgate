@@ -225,7 +225,6 @@
   components:
     - type: Sprite
       sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/thermomachine.rsi # WOLFGATE(Resprites): funky atmospherics resprites
-      snapCardinals: true
     - type: Appearance
     - type: PipeColorVisuals
     - type: Rotatable
@@ -287,9 +286,6 @@
         # WOLFGATE(Resprites) START: Imp Sprite Ports
         - state: freezerOn
           map: ["enum.PowerDeviceVisualLayers.Powered"]
-        - state: freezer-Unshaded
-          shader: unshaded
-          map: ["freezing"]
         # WOLFGATE END
         - state: freezerPanelOpen
           map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
@@ -303,9 +299,6 @@
           #  True: { state: freezerOn } # WOLFGATE(Resprites): Imp Sprite Ports
           #  False: { state: freezerOff } # WOLFGATE(Resprites): Imp Sprite Ports
           # WOLFGATE(Resprites) START: Imp Sprite Ports
-            True: { visible: true }
-            False: { visible: false }
-          freezing:
             True: { visible: true }
             False: { visible: false }
           # WOLFGATE END
@@ -354,9 +347,6 @@
         # WOLFGATE(Resprites) START: Imp Sprite Ports
         - state: heaterOn
           map: ["enum.PowerDeviceVisualLayers.Powered"]
-        - state: heater-Unshaded
-          shader: unshaded
-          map: ["heating"]
         # WOLFGATE END
         - state: heaterPanelOpen
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
@@ -370,9 +360,6 @@
             #True: { state: heaterOn } # WOLFGATE(Resprites): Imp Sprite Ports
             #False: { state: heaterOff } # WOLFGATE(Resprites): Imp Sprite Ports
           # WOLFGATE(Resprites) START: Imp Sprite Ports
-            True: { visible: true }
-            False: { visible: false }
-          heating:
             True: { visible: true }
             False: { visible: false }
           # WOLFGATE END

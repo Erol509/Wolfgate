@@ -5,7 +5,7 @@ meta:
   forkId: ""
   forkVersion: ""
   time: 11/24/2026 12:56:42
-  entityCount: 520
+  entityCount: 561
 maps:
 - 1
 grids:
@@ -10992,4 +10992,332 @@ entities:
     - type: Transform
       parent: 1
       pos: 74.5,14.5
+- proto: CrateGeneric
+  entities:
+  - uid: 521
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 2.5,18.5
+- proto: CrateGenericSteel
+  entities:
+  - uid: 522
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 4.5,18.5
+- proto: CratePlastic
+  entities:
+  - uid: 523
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 6.5,18.5
+- proto: CrateFreezer
+  entities:
+  - uid: 524
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 8.5,18.5
+- proto: CrateHydroponics
+  entities:
+  - uid: 525
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 10.5,18.5
+- proto: CrateMedical
+  entities:
+  - uid: 526
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 12.5,18.5
+- proto: CrateRadiation
+  entities:
+  - uid: 527
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 14.5,18.5
+- proto: CrateInternals
+  entities:
+  - uid: 528
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 16.5,18.5
+- proto: CrateElectrical
+  entities:
+  - uid: 529
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 18.5,18.5
+- proto: CrateEngineering
+  entities:
+  - uid: 530
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 20.5,18.5
+- proto: CrateScience
+  entities:
+  - uid: 531
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 22.5,18.5
+- proto: CrateSurgery
+  entities:
+  - uid: 532
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 24.5,18.5
+- proto: CrateWeb
+  entities:
+  - uid: 533
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 26.5,18.5
+- proto: CrateSecgear
+  entities:
+  - uid: 534
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 28.5,18.5
+- proto: CrateEngineeringSecure
+  entities:
+  - uid: 535
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 30.5,18.5
+- proto: CrateMedicalSecure
+  entities:
+  - uid: 536
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 32.5,18.5
+- proto: CrateChemistrySecure
+  entities:
+  - uid: 537
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 34.5,18.5
+- proto: CratePrivateSecure
+  entities:
+  - uid: 538
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 36.5,18.5
+- proto: CrateScienceSecure
+  entities:
+  - uid: 539
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 38.5,18.5
+- proto: CratePlasma
+  entities:
+  - uid: 540
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 40.5,18.5
+- proto: CrateSecure
+  entities:
+  - uid: 541
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 42.5,18.5
+- proto: CrateHydroSecure
+  entities:
+  - uid: 542
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 44.5,18.5
+- proto: CrateWeaponSecure
+  entities:
+  - uid: 543
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 46.5,18.5
+- proto: CrateContrabandStorageSecure
+  entities:
+  - uid: 544
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 48.5,18.5
+- proto: CrateCommandSecure
+  entities:
+  - uid: 545
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 50.5,18.5
+- proto: CrateLivestock
+  entities:
+  - uid: 546
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 52.5,18.5
+- proto: CrateRodentCage
+  entities:
+  - uid: 547
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 54.5,18.5
+- proto: CrateToyBox
+  entities:
+  - uid: 548
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 56.5,18.5
+- proto: CrateCoffin
+  entities:
+  - uid: 549
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 58.5,18.5
+- proto: CrateWoodenGrave
+  entities:
+  - uid: 550
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 60.5,18.5
+- proto: CrateStoneGrave
+  entities:
+  - uid: 551
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 62.5,18.5
+- proto: CrateSyndicate
+  entities:
+  - uid: 552
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 64.5,18.5
+- proto: CrateTrashCart
+  entities:
+  - uid: 553
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 66.5,18.5
+- proto: CrateTrashCartJani
+  entities:
+  - uid: 554
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 68.5,18.5
+- proto: CrateArtifactContainer
+  entities:
+  - uid: 555
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 70.5,18.5
+- proto: CrateEngineeringAMEShielding
+  entities:
+  - uid: 556
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 72.5,18.5
+- proto: CrateEngineeringAMEJar
+  entities:
+  - uid: 557
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 74.5,18.5
+- proto: CrateEngineeringAMEControl
+  entities:
+  - uid: 558
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 76.5,18.5
+- proto: ShieldGenerator
+  entities:
+  - uid: 559
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 2.5,22.5
+- proto: ShieldGeneratorMedium
+  entities:
+  - uid: 560
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 6.5,22.5
+- proto: ShieldGeneratorSmall
+  entities:
+  - uid: 561
+    mapInit: true
+    components:
+    - type: Transform
+      parent: 1
+      pos: 10.5,22.5
 ...

@@ -18,7 +18,6 @@
   - type: Sprite
     sprite: _WG/Resprites/Funkystation/Structures/Furniture/furniture.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     state: rack
-    snapCardinals: true
   - type: Fixtures
     fixtures:
       fix1:
@@ -80,7 +79,6 @@
   - type: Sprite
     sprite: _WG/Resprites/Funkystation/Structures/Furniture/furniture.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     state: rackblack
-    snapCardinals: true
   - type: Climbable
   - type: StaticPrice
     price: 22 # Frontier: 30<22 - TODO: material value rework

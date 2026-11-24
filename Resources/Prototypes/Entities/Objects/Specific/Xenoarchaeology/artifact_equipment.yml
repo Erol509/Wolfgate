@@ -12,7 +12,7 @@
     - type: ResistLocker
     - type: Sprite
       drawdepth: Objects
-      sprite: Structures/Storage/Crates/artifact.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Storage/Crates/artifact.rsi # WOLFGATE(Resprites): funky crate resprites
       layers:
       - state: artifact_container
         map: ["enum.StorageVisualLayers.Base"]
@@ -40,7 +40,7 @@
           layer:
           - MachineLayer
     - type: Icon
-      sprite: Structures/Storage/Crates/artifact.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Storage/Crates/artifact.rsi # WOLFGATE(Resprites): funky crate resprites
       state: artifact_container_icon
     - type: EntityStorage
       capacity: 1

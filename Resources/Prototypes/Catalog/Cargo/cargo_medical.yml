@@ -131,7 +131,7 @@
 - type: cargoProduct
   id: ChemistryP
   icon:
-    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Storage/Crates/chemcrate_secure.rsi # WOLFGATE(Resprites): funky crate resprites
     state: icon
   product: CrateChemistryP
   cost: 850
@@ -141,7 +141,7 @@
 - type: cargoProduct
   id: ChemistryS
   icon:
-    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Storage/Crates/chemcrate_secure.rsi # WOLFGATE(Resprites): funky crate resprites
     state: icon
   product: CrateChemistryS
   cost: 750
@@ -151,7 +151,7 @@
 - type: cargoProduct
   id: CrateChemistryD
   icon:
-    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Storage/Crates/chemcrate_secure.rsi # WOLFGATE(Resprites): funky crate resprites
     state: icon
   product: CrateChemistryD
   cost: 750

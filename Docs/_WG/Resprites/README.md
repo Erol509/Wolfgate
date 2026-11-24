@@ -6,7 +6,7 @@ GoobStation's command cloak, mantle and quartermaster beret resprites are here t
 
 The chief engineer's white and green ensembles and the chief medical officer's ensemble are ported with the ItemSwitch module, so they switch between cloak, mantle and combined forms.
 
-Funky Station resprites are the second batch. They cover bureaucracy (paper, folders, pens, stamps, clipboards, hand labelers, energy daggers), chairs, desk lamps and floodlights, intercoms, light tubes, APCs and air/fire alarms, disposal and mailing units, atmospheric pipes, pumps, filters, mixers, sensors, vents, scrubbers and thermomachines, chemistry machines (reagent grinder, centrifuge, electrolyzer), cell chargers, SMES and substations, stasis beds, linoleum floors, tables, game boards, crayons, bike horns, bedsheets, beds, dressers, sinks, racks, mirrors, MMIs and posibrains, fax machines, AME controls and fuel jars, suit storage units and departmental suit storage lockers, the bio-fabricator, and anomaly vessels, A.P.E.s and artifact analyzers. Textures live under `Resources/Textures/_WG/Resprites/Funkystation`, plus `.../Wizden` for vanilla-path RSIs and `.../Shitmed` for the bio-fabricator. Where funky's art covered a sprite Wolfgate had already taken from Frontier (vents and scrubbers) or Impstation (thermomachine, stasis bed, fax machine, suit storage), the funky sprite replaced it.
+Funky Station resprites are the second batch. They cover bureaucracy (paper, folders, pens, stamps, clipboards, hand labelers, energy daggers), chairs, desk lamps and floodlights, intercoms, light tubes, APCs and air/fire alarms, disposal and mailing units, atmospheric pipes, pumps, filters, mixers, sensors, vents, scrubbers and thermomachines, chemistry machines (reagent grinder, centrifuge, electrolyzer), cell chargers, SMES and substations, stasis beds, linoleum floors, tables, game boards, crayons, bike horns, bedsheets, beds, dressers, sinks, racks, mirrors, MMIs and posibrains, fax machines, AME controls and fuel jars, crates and their labels, suit storage units and departmental suit storage lockers, the bio-fabricator, and anomaly vessels, A.P.E.s and artifact analyzers. Textures live under `Resources/Textures/_WG/Resprites/Funkystation`, plus `.../Wizden` for vanilla-path RSIs and `.../Shitmed` for the bio-fabricator. Where funky's art covered a sprite Wolfgate had already taken from Frontier (vents and scrubbers) or Impstation (thermomachine, stasis bed, fax machine, suit storage), the funky sprite replaced it. The shield generators use Triad Sector's sprites under `Resources/Textures/_WG/Resprites/Triad`.
 
 `Resources/Maps/_WG/Resprites/resprite_test.yml` is a showcase map with the resprited machines, objects and items laid out in rows. Load it in a running server with `loadmap <free map id> /Maps/_WG/Resprites/resprite_test.yml`, then `warp resprites`.
 
@@ -132,6 +132,43 @@ Funky Station resprites are the second batch. They cover bureaucracy (paper, fol
 - [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Power/substation.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Power/substation.rsi/)
 - [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Specific/Atmospherics/sensor.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Specific/Atmospherics/sensor.rsi/)
 - [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/cabinets.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/cabinets.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/artifact.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/artifact.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/cage.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/cage.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/chemcrate_secure.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/chemcrate_secure.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/coffin.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/coffin.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/command.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/command.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/electrical.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/electrical.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/engicrate_secure.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/engicrate_secure.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/engineering.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/engineering.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/freezer.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/freezer.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/generic.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/generic.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/hydro_secure.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/hydro_secure.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/hydroponics.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/hydroponics.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/labels.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/labels.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/livestock.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/livestock.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/lockbox.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/lockbox.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/medical.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/medical.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/medicalcrate_secure.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/medicalcrate_secure.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/o2.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/o2.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/piratechest.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/piratechest.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/plasma.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/plasma.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/plastic.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/plastic.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/privatecrate_secure.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/privatecrate_secure.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/radiation.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/radiation.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/scicrate_secure.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/scicrate_secure.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/science.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/science.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/sec_gear.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/sec_gear.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/secure.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/secure.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/stone_grave.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/stone_grave.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/surgery.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/surgery.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/syndicate.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/syndicate.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/syndicate_secure.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/syndicate_secure.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/toybox.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/toybox.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/trashcart.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/trashcart.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/trashcart_jani.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/trashcart_jani.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/weapon.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/weapon.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/web.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/web.rsi/)
+- [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/wooden_grave.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Crates/wooden_grave.rsi/)
 - [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Lockers/suit_storage_atmos.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Lockers/suit_storage_atmos.rsi/)
 - [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Lockers/suit_storage_captain.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Lockers/suit_storage_captain.rsi/)
 - [`Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Lockers/suit_storage_CE.rsi/`](../../../Resources/Textures/_WG/Resprites/Funkystation/Structures/Storage/Lockers/suit_storage_CE.rsi/)
@@ -167,6 +204,7 @@ Funky Station resprites are the second batch. They cover bureaucracy (paper, fol
 - [`Resources/Textures/_WG/Resprites/Goobstation/Clothing/Neck/Mantle/qmmantle.rsi/`](../../../Resources/Textures/_WG/Resprites/Goobstation/Clothing/Neck/Mantle/qmmantle.rsi/)
 - [`Resources/Textures/_WG/Resprites/Goobstation/Clothing/Neck/Mantle/rdmantle.rsi/`](../../../Resources/Textures/_WG/Resprites/Goobstation/Clothing/Neck/Mantle/rdmantle.rsi/)
 - [`Resources/Textures/_WG/Resprites/Shitmed/Structures/Machines/limbgrower.rsi/`](../../../Resources/Textures/_WG/Resprites/Shitmed/Structures/Machines/limbgrower.rsi/)
+- [`Resources/Textures/_WG/Resprites/Triad/Structure/Shuttles/shield.rsi/`](../../../Resources/Textures/_WG/Resprites/Triad/Structure/Shuttles/shield.rsi/)
 - [`Resources/Textures/_WG/Resprites/Wizden/Objects/Power/AME/ame_jar.rsi/`](../../../Resources/Textures/_WG/Resprites/Wizden/Objects/Power/AME/ame_jar.rsi/)
 - [`Resources/Textures/_WG/Resprites/Wizden/Objects/Specific/Robotics/mmi.rsi/`](../../../Resources/Textures/_WG/Resprites/Wizden/Objects/Specific/Robotics/mmi.rsi/)
 - [`Resources/Textures/_WG/Resprites/Wizden/Storage/Closets/antag-secure-syndicate.rsi/`](../../../Resources/Textures/_WG/Resprites/Wizden/Storage/Closets/antag-secure-syndicate.rsi/)
@@ -532,6 +570,7 @@ Funky Station resprites are the second batch. They cover bureaucracy (paper, fol
 - [`Resources/Prototypes/_Mono/Entities/Objects/Tools/repair.yml`](../../../Resources/Prototypes/_Mono/Entities/Objects/Tools/repair.yml)
   - SRD uses the shipyard RCD sprite
   - keep the old SRD inhands, the base now uses the shipyard RCD
+- [`Resources/Prototypes/_Mono/Entities/Structures/Machines/shield_generator.yml`](../../../Resources/Prototypes/_Mono/Entities/Structures/Machines/shield_generator.yml): Triad shield generator resprites
 - [`Resources/Prototypes/_Mono/Turf/generated.yml`](../../../Resources/Prototypes/_Mono/Turf/generated.yml)
   - Port floor sprite updates from upstream respritening batches.
   - Repathed
@@ -557,7 +596,11 @@ Funky Station resprites are the second batch. They cover bureaucracy (paper, fol
 - [`Resources/Prototypes/Catalog/Cargo/cargo_engines.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_engines.yml)
   - funky AME fuel jar resprite
   - funky MMI, fax and AME resprites
-- [`Resources/Prototypes/Catalog/Cargo/cargo_fun.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_fun.yml): funky game board, furniture, sink and rack resprites
+- [`Resources/Prototypes/Catalog/Cargo/cargo_fun.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_fun.yml)
+  - funky game board, furniture, sink and rack resprites
+  - funky crate resprites
+- [`Resources/Prototypes/Catalog/Cargo/cargo_medical.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_medical.yml): funky crate resprites
+- [`Resources/Prototypes/Catalog/Cargo/cargo_science.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_science.yml): funky crate resprites
 - [`Resources/Prototypes/Catalog/Cargo/cargo_service.yml`](../../../Resources/Prototypes/Catalog/Cargo/cargo_service.yml)
   - funky bureaucracy, chair, light and intercom resprites
   - funky MMI, fax and AME resprites
@@ -574,6 +617,7 @@ Funky Station resprites are the second batch. They cover bureaucracy (paper, fol
   - GoobStation mantle resprite
   - GoobStation mantle resprites; the old chief engineer's mantle is now the white one, with an orange variant alongside.
 - [`Resources/Prototypes/Entities/Markers/Spawners/Random/bedsheet.yml`](../../../Resources/Prototypes/Entities/Markers/Spawners/Random/bedsheet.yml): funky game board, furniture, sink and rack resprites
+- [`Resources/Prototypes/Entities/Markers/Spawners/Random/crates.yml`](../../../Resources/Prototypes/Entities/Markers/Spawners/Random/crates.yml): funky crate resprites
 - [`Resources/Prototypes/Entities/Markers/Spawners/Random/folders.yml`](../../../Resources/Prototypes/Entities/Markers/Spawners/Random/folders.yml): funky bureaucracy, chair, light and intercom resprites
 - [`Resources/Prototypes/Entities/Objects/Devices/forensic_scanner.yml`](../../../Resources/Prototypes/Entities/Objects/Devices/forensic_scanner.yml): funky bureaucracy, chair, light and intercom resprites
 - [`Resources/Prototypes/Entities/Objects/Fun/bike_horn.yml`](../../../Resources/Prototypes/Entities/Objects/Fun/bike_horn.yml): funky game board, furniture, sink and rack resprites
@@ -594,6 +638,7 @@ Funky Station resprites are the second batch. They cover bureaucracy (paper, fol
 - [`Resources/Prototypes/Entities/Objects/Power/antimatter_jar.yml`](../../../Resources/Prototypes/Entities/Objects/Power/antimatter_jar.yml): funky AME fuel jar resprite
 - [`Resources/Prototypes/Entities/Objects/Specific/Forensics/forensics.yml`](../../../Resources/Prototypes/Entities/Objects/Specific/Forensics/forensics.yml): funky bureaucracy, chair, light and intercom resprites
 - [`Resources/Prototypes/Entities/Objects/Specific/Robotics/mmi.yml`](../../../Resources/Prototypes/Entities/Objects/Specific/Robotics/mmi.yml): funky MMI, fax and AME resprites
+- [`Resources/Prototypes/Entities/Objects/Specific/Xenoarchaeology/artifact_equipment.yml`](../../../Resources/Prototypes/Entities/Objects/Specific/Xenoarchaeology/artifact_equipment.yml): funky crate resprites
 - [`Resources/Prototypes/Entities/Objects/Tools/hand_labeler.yml`](../../../Resources/Prototypes/Entities/Objects/Tools/hand_labeler.yml): funky bureaucracy, chair, light and intercom resprites
 - [`Resources/Prototypes/Entities/Objects/Tools/tools.yml`](../../../Resources/Prototypes/Entities/Objects/Tools/tools.yml): RCD sprite without the old one drawn underneath
 - [`Resources/Prototypes/Entities/Objects/Weapons/Guns/Projectiles/magic.yml`](../../../Resources/Prototypes/Entities/Objects/Weapons/Guns/Projectiles/magic.yml): Port closet sprite mappings from upstream respritening batches.
@@ -645,6 +690,8 @@ Funky Station resprites are the second batch. They cover bureaucracy (paper, fol
 - [`Resources/Prototypes/Entities/Structures/Storage/Closets/Lockers/lockers.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/Lockers/lockers.yml): Port closet sprite mappings from upstream respritening batches.
 - [`Resources/Prototypes/Entities/Structures/Storage/Closets/wall_lockers.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/wall_lockers.yml): Port closet sprite mappings from upstream respritening batches.
 - [`Resources/Prototypes/Entities/Structures/Storage/Closets/wardrobe.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Closets/wardrobe.yml): Port closet sprite mappings from upstream respritening batches.
+- [`Resources/Prototypes/Entities/Structures/Storage/Crates/base_structurecrates.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Crates/base_structurecrates.yml): funky crate resprites
+- [`Resources/Prototypes/Entities/Structures/Storage/Crates/crates.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/Crates/crates.yml): funky crate resprites
 - [`Resources/Prototypes/Entities/Structures/Storage/filing_cabinets.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/filing_cabinets.yml): funky bureaucracy, chair, light and intercom resprites
 - [`Resources/Prototypes/Entities/Structures/Storage/paper_bin.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/paper_bin.yml): funky bureaucracy, chair, light and intercom resprites
 - [`Resources/Prototypes/Entities/Structures/Storage/storage.yml`](../../../Resources/Prototypes/Entities/Structures/Storage/storage.yml): funky game board, furniture, sink and rack resprites

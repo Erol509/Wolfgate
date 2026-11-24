@@ -21,15 +21,17 @@
     sound:
       path: /Audio/Ambience/Objects/anomaly_generator.ogg
   - type: Sprite
-    sprite: _Mono/Structures/ShuttleComponents/shield.rsi
+    # WOLFGATE(Resprites) START: Triad shield generator resprites
+    sprite: _WG/Resprites/Triad/Structure/Shuttles/shield.rsi
     snapCardinals: true
     layers:
-    - state: control
-    - state: control_on
+    - state: ms_100_base
+    - state: ms_100_emissive
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
       visible: false
       color: "#FF3333"
+    # WOLFGATE END
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
@@ -422,15 +424,16 @@
     shieldColor: "#9933FF"
     collisionResistanceMultiplier: 0.6
   - type: Sprite
-    sprite: _Mono/Structures/ShuttleComponents/shield.rsi
+    # WOLFGATE(Resprites) START: Triad shield generator resprites
+    sprite: _WG/Resprites/Triad/Structure/Shuttles/shield.rsi
     snapCardinals: true
     layers:
-    - state: control
-    - state: control_on
+    - state: ms_250_base
+    - state: ms_250_emissive
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
       visible: false
-      color: "#9933FF"
+    # WOLFGATE END
   - type: Destructible
     thresholds:
     - trigger:
@@ -509,15 +512,16 @@
     shieldColor: "#3399FF"
     collisionResistanceMultiplier: 0.5
   - type: Sprite
-    sprite: _Mono/Structures/ShuttleComponents/shield.rsi
+    # WOLFGATE(Resprites) START: Triad shield generator resprites
+    sprite: _WG/Resprites/Triad/Structure/Shuttles/shield.rsi
     snapCardinals: true
     layers:
-    - state: control
-    - state: control_on
+    - state: ms_100_base
+    - state: ms_100_emissive
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
       visible: false
-      color: "#3399FF"
+    # WOLFGATE END
   - type: Destructible
     thresholds:
     - trigger:

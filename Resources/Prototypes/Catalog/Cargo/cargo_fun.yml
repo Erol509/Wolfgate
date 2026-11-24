@@ -166,7 +166,7 @@
   id: FunPirate
   abstract: true # Frontier
   icon:
-    sprite: Structures/Storage/Crates/piratechest.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Storage/Crates/piratechest.rsi # WOLFGATE(Resprites): funky crate resprites
     state: crate_icon
   product: CrateFunPirate
   cost: 400
@@ -176,7 +176,7 @@
 - type: cargoProduct
   id: FunToyBox
   icon:
-    sprite: Structures/Storage/Crates/toybox.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Storage/Crates/toybox.rsi # WOLFGATE(Resprites): funky crate resprites
     state: crate_icon
   product: CrateFunToyBox
   cost: 900
