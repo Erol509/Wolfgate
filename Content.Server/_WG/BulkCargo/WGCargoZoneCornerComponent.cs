@@ -10,14 +10,14 @@ namespace Content.Server._WG.BulkCargo;
 public sealed partial class WGCargoZoneCornerComponent : Component
 {
     /// <summary>The zone both corners share, or empty while the corner waits for its partner.</summary>
-    [DataField]
+    [ViewVariables]
     public Guid Zone;
 
     /// <summary>The grid the corner was placed on.</summary>
-    [DataField]
+    [ViewVariables]
     public EntityUid? Grid;
 
     /// <summary>The tile the corner was placed on, in grid-local coordinates.</summary>
-    [DataField]
+    [ViewVariables]
     public Vector2i Tile;
 }
