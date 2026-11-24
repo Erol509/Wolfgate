@@ -13,7 +13,7 @@
         name: happy honk meal
       - tag: BikeHorn
         icon:
-            sprite: Objects/Fun/bikehorn.rsi
+            sprite: _WG/Resprites/Funkystation/Objects/Fun/bikehorn.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
             state: icon
         name: bike horn
         doAfter: 2

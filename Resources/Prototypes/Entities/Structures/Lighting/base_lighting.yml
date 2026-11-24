@@ -28,7 +28,7 @@
     graph: LightFixture
     node: tubeLight
   - type: Sprite
-    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Wallmounts/Lighting/light_tube.rsi # WOLFGATE(Resprites): funky light tube, APC and alarm resprites
     offset: 0, 1
     drawdepth: WallMountedItems
     layers:
@@ -113,7 +113,7 @@
   parent: AlwaysPoweredWallLight
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Wallmounts/Lighting/light_tube.rsi # WOLFGATE(Resprites): funky light tube, APC and alarm resprites
     offset: 0, 1
     state: empty
   - type: PointLight

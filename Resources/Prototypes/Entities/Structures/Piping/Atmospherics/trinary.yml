@@ -41,9 +41,9 @@
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects #imp
-      sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gasfilter.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
           state: pipeTrinaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasFilter
@@ -100,9 +100,9 @@
     - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     drawdepth: FloorObjects #imp
-    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gasfilter.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasFilterF
@@ -149,9 +149,9 @@
       - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects #imp
-      sprite: Structures/Piping/Atmospherics/gasmixer.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gasmixer.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
           state: pipeTrinaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasMixer
@@ -199,9 +199,9 @@
   components:
   - type: Sprite
     drawdepth: FloorObjects #imp
-    sprite: Structures/Piping/Atmospherics/gasmixer.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gasmixer.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasMixerF
@@ -266,9 +266,9 @@
           pipeDirection: South
     - type: Sprite
       drawdepth: FloorObjects #imp
-      sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pneumaticvalve.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       layers:
-        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+        - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
           state: pipeTrinaryConnectors
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: off

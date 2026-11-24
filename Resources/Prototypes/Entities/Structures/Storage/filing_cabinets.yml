@@ -15,7 +15,7 @@
         - Folder
         - Write
   - type: Sprite
-    sprite: Structures/Storage/cabinets.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Storage/cabinets.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     noRot: true
   - type: Appearance
   - type: UserInterface

@@ -163,7 +163,7 @@
     - type: Execution
       doAfterDuration: 4.0
   - type: Sprite
-    sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/e_dagger_loud.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     layers:
     - state: e_sword
     - state: e_sword_blade
@@ -181,7 +181,7 @@
         Blunt: 1
   - type: Item
     size: Tiny
-    sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/e_dagger_loud.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
   - type: PointLight
     enabled: false
     radius: 1.5
@@ -229,7 +229,7 @@
     - type: Execution
       doAfterDuration: 4.0
   - type: Sprite
-    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/e_dagger.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     layers:
     - state: e_sword
     - state: e_sword_blade
@@ -239,7 +239,7 @@
       map: [ "blade" ]
   - type: Item
     size: Tiny
-    sprite: Objects/Weapons/Melee/e_dagger.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Weapons/Melee/e_dagger.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
   - type: PointLight
     enabled: false
     radius: 1.5

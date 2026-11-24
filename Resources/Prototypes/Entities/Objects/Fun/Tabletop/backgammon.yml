@@ -5,7 +5,7 @@
   description: Old fashioned game of dice and pieces.
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/backgammon.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/Tabletop/backgammon.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     state: board
   - type: TabletopGame
     boardName: tabletop-backgammon-board-name

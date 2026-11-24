@@ -70,7 +70,7 @@
   id: UplinkEnergyDagger
   name: uplink-edagger-name
   description: uplink-edagger-desc
-  icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
+  icon: { sprite: /Textures/_WG/Resprites/Funkystation/Objects/Weapons/Melee/e_dagger.rsi, state: icon } # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
   productEntity: EnergyDaggerBox
   discountCategory: rareDiscounts
   discountDownTo:
@@ -369,7 +369,7 @@
   id: UplinkExplodingPen
   name: uplink-exploding-pen-name
   description: uplink-exploding-pen-desc
-  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
+  icon: { sprite: /Textures/_WG/Resprites/Funkystation/Objects/Misc/pens.rsi, state: pen } # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
   productEntity: PenExplodingBox
   discountCategory: usualDiscounts
   discountDownTo:
@@ -558,7 +558,7 @@
   id: UplinkHypopen
   name: uplink-hypopen-name
   description: uplink-hypopen-desc
-  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
+  icon: { sprite: /Textures/_WG/Resprites/Funkystation/Objects/Misc/pens.rsi, state: pen } # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
   productEntity: HypopenBox
   discountCategory: rareDiscounts
   discountDownTo:

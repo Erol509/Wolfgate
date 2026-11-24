@@ -8,7 +8,7 @@
       steps:
       - tag: Pipe
         icon:
-          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
           state: pipeStraight
         name: pipe
       - tag: ModularReceiver

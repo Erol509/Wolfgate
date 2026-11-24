@@ -5,10 +5,10 @@
   description: A dark ink pen.
   components:
   - type: Sprite
-    sprite: Objects/Misc/pens.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/pens.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     state: pen
   - type: Item
-    sprite: Objects/Misc/pens.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/pens.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     heldPrefix: pen
     size: Tiny
   - type: Tag

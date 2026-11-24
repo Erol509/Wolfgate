@@ -69,12 +69,15 @@
     boardName: wires-board-name-firealarm
     layoutId: FireAlarm
   - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Wallmounts/air_monitors.rsi # WOLFGATE(Resprites): funky light tube, APC and alarm resprites
     layers:
     - state: fire0
       map: ["fireAlarmBase"]
+    # WOLFGATE(Resprites) START: funky fire alarm resprite lights the state layer
     - state: fire_off
       map: ["fireAlarmState"]
+      shader: unshaded
+    # WOLFGATE END
     - state: fire_b2
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Transform
@@ -122,7 +125,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Wallmounts/air_monitors.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Wallmounts/air_monitors.rsi # WOLFGATE(Resprites): funky light tube, APC and alarm resprites
     layers:
     - state: fire_b1
       map: [ "enum.ConstructionVisuals.Layer" ]

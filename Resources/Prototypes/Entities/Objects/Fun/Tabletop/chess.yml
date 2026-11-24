@@ -6,7 +6,7 @@
   description: A chessboard. Pieces included!
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/chessboard.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/Tabletop/chessboard.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     state: chessboard
   - type: TabletopGame
     boardName: tabletop-chess-board-name

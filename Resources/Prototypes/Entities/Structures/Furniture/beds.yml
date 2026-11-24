@@ -26,7 +26,7 @@
         mask:
         - TableMask
   - type: Sprite
-    sprite: Structures/Furniture/furniture.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/furniture.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     state: bed
     noRot: true
   - type: Strap

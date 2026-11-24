@@ -5,7 +5,7 @@
   description: A machine able to facilitate communication between a biological brain and electronics, enabling crew to continue to provide value after work-related incidents.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Robotics/mmi.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Specific/Robotics/mmi.rsi # WOLFGATE(Resprites): funky MMI, fax and AME resprites
     layers:
     - state: mmi_brain
       map: ["enum.MMIVisualLayers.Brain"]
@@ -84,7 +84,7 @@
   description: An artificial brain capable of spontaneous neural activity.
   components:
     - type: Sprite
-      sprite: Objects/Specific/Robotics/mmi.rsi
+      sprite: _WG/Resprites/Wizden/Objects/Specific/Robotics/mmi.rsi # WOLFGATE(Resprites): funky MMI, fax and AME resprites
       layers:
       - state: posibrain
         map: ["base"]

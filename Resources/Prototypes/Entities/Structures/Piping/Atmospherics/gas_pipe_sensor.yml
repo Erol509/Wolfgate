@@ -7,10 +7,10 @@
     mode: AlignAtmosPipeLayers
   components:
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gas_pipe_sensor.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     drawdepth: BelowFloor
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/pipe.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       map: [ "enum.PipeVisualLayers.Pipe" ]
       state: pipeStraight
     - map: ["base"]
@@ -20,9 +20,9 @@
       shader: unshaded
   - type: AtmosPipeLayers
     spriteRsiPaths:
-      Primary: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
-      Secondary: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
-      Tertiary: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
+      Primary: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gas_pipe_sensor.rsi # WOLFGATE(Resprites): funky atmospherics resprites
+      Secondary: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi # WOLFGATE(Resprites): funky atmospherics resprites
+      Tertiary: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     alternativePrototypes:
       Primary: GasPipeSensor
       Secondary: GasPipeSensorAlt1

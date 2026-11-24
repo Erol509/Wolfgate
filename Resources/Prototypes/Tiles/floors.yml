@@ -730,8 +730,8 @@
 - type: tile
   id: FloorLino
   name: tiles-linoleum-floor
-  # WOLFGATE(Resprites) START: Wizden resprite; variant count kept so saved maps don't show error tiles.
-  sprite: /Textures/_WG/Resprites/Wizden/Tiles/lino.png
+  # WOLFGATE(Resprites) START: funky resprite; variant count kept so saved maps don't show error tiles.
+  sprite: /Textures/_WG/Resprites/Funkystation/Tiles/lino.png
   variants: 1
   placementVariants:
   - 1.0

@@ -894,7 +894,7 @@
   description: Produces organs and other organic matter that can be surgically grafted onto patients with biomass.
   components:
   - type: Sprite
-    sprite: _Shitmed/Structures/Machines/limbgrower.rsi
+    sprite: _WG/Resprites/Shitmed/Structures/Machines/limbgrower.rsi # WOLFGATE(Resprites): funky bio-fabricator resprite
     snapCardinals: true
     layers:
     - state: limbgrower_idleoff

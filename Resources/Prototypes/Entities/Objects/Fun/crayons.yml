@@ -6,9 +6,9 @@
   description: A colourful crayon. Looks tasty. Mmmm...
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/crayons.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/crayons.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     size: Tiny
   - type: Tag
     tags:
@@ -268,14 +268,14 @@
   description: It's a box of crayons.
   components:
   - type: Sprite
-    sprite: Objects/Fun/crayons.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/crayons.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     state: box
   - type: Storage
     grid:
     - 0,0,7,0
     maxItemSize: Tiny
   - type: Item
-    sprite: Objects/Fun/crayons.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/crayons.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     size: Small
     heldPrefix: box
   - type: StorageFill

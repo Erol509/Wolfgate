@@ -5,7 +5,7 @@
   description: A black card with a mysterious red S on it. There's something written on the back.
   components:
     - type: Sprite
-      sprite: Objects/Misc/bureaucracy.rsi
+      sprite: _WG/Resprites/Funkystation/Objects/Misc/bureaucracy.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
       layers:
       - state: syndicate_card
       - state: syndicate_card

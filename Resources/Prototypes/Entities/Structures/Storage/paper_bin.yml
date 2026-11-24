@@ -6,13 +6,13 @@
   suffix: Empty
   components:
   - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/bureaucracy.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     state: paper_bin0
     drawdepth: SmallObjects
     noRot: true
   - type: Appearance
   - type: ItemMapper
-    sprite: Objects/Misc/bureaucracy.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/bureaucracy.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     mapLayers:
       paper_bin1:
         whitelist:

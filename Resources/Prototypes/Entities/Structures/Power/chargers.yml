@@ -74,7 +74,7 @@
   name: cell recharger
   components:
   - type: Sprite
-    sprite: Structures/Power/cell_recharger.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Power/cell_recharger.rsi # WOLFGATE(Resprites): funky chemistry machine resprites
     layers:
     - map: ["enum.PowerChargerVisualLayers.Base"]
       state: "empty"
