@@ -43,6 +43,8 @@ public sealed class TradeBulkPriceTest
             var profile = market.Profile(grid);
             var vendor = entMan.SpawnEntity(Vendor, map.GridCoords);
             market.SetVendorStock(grid, Fabric, (int) profile.StockTarget);
+            var available = market.AvailableStock(grid, Fabric);
+            Assert.That(available, Is.GreaterThan(0));
 
             var unit = market.BuyQuote(vendor, Fabric)!.Value.Amount;
             Assert.That(unit, Is.GreaterThan(0));
@@ -61,14 +63,14 @@ public sealed class TradeBulkPriceTest
             Assert.That(ten.Total - nine.Total, Is.EqualTo(ten.Lines[0].Last), "Each crate should be priced on its own.");
             Assert.That(ten.Total - nine.Total, Is.GreaterThanOrEqualTo(nine.Lines[0].Last));
 
-            // A full hold: the curve still ends far above the first crate, under the station's price cap.
-            var many = market.CartQuote(vendor, Line(Fabric, (int) profile.StockTarget))!;
-            Assert.That(many.Crates, Is.EqualTo((int) profile.StockTarget));
-            Assert.That(many.Lines[0].Last, Is.GreaterThan(many.Lines[0].First * 2));
+            // A full saleable hold: the curve climbs toward the reserved scarcity level, under the station's price cap.
+            var many = market.CartQuote(vendor, Line(Fabric, available))!;
+            Assert.That(many.Crates, Is.EqualTo(available));
+            Assert.That(many.Lines[0].Last, Is.GreaterThan(many.Lines[0].First));
             Assert.That(many.Lines[0].Last, Is.LessThanOrEqualTo((int) (unit * profile.PriceCap)));
 
             // Quoting leaves the shelf alone.
-            Assert.That(market.AvailableStock(grid, Fabric), Is.EqualTo((int) profile.StockTarget));
+            Assert.That(market.AvailableStock(grid, Fabric), Is.EqualTo(available));
 
             // The vendor's own menu price for one crate is unchanged by bulk pricing.
             Assert.That(market.BuyPrice(vendor, server.ProtoMan.Index<EntityPrototype>(Fabric), unit), Is.EqualTo(unit));
@@ -91,11 +93,13 @@ public sealed class TradeBulkPriceTest
         {
             var grid = map.Grid.Owner;
             var vendor = entMan.SpawnEntity(Vendor, map.GridCoords);
-            market.SetVendorStock(grid, Fabric, 5);
+            var profile = market.Profile(grid);
+            var reserve = (int) (profile.StockTarget * profile.ScarceLevel);
+            market.SetVendorStock(grid, Fabric, reserve + 5);
 
             Assert.That(market.AvailableStock(grid, Fabric), Is.EqualTo(5));
             Assert.That(market.CartQuote(vendor, Line(Fabric, 5)), Is.Not.Null);
-            Assert.That(market.CartQuote(vendor, Line(Fabric, 6)), Is.Null, "A cart can't order more than the shelf holds.");
+            Assert.That(market.CartQuote(vendor, Line(Fabric, 6)), Is.Null, "A cart can't order more than the shelf sells.");
 
             // A good the vendor doesn't stock, or one that never runs out, isn't sold by the crate.
             Assert.That(market.CartQuote(vendor, Line(FissionFuel, 1)), Is.Null);
@@ -222,20 +226,21 @@ public sealed class TradeBulkPriceTest
             var target = (int) profile.StockTarget;
             var vendor = entMan.SpawnEntity(Vendor, map.GridCoords);
             market.SetVendorStock(grid, Fabric, target);
+            var available = market.AvailableStock(grid, Fabric);
 
             Assert.That(market.TryTakeStock(grid, Fabric, 10), Is.True);
             market.RefreshStock(grid);
-            Assert.That(market.AvailableStock(grid, Fabric), Is.EqualTo(target - 10),
-                "A paid order should come off the shelf at once.");
-            Assert.That(MenuStock(entMan, vendor, Fabric), Is.EqualTo((uint) (target - 10)),
-                "The vendor's menu should show what the station has left.");
+            Assert.That(market.AvailableStock(grid, Fabric), Is.EqualTo(available - 10),
+                "A paid order should come off what the shelf sells at once.");
+            Assert.That(MenuStock(entMan, vendor, Fabric), Is.EqualTo((uint) (available - 10)),
+                "The vendor's menu should show what the station has for sale left.");
 
-            Assert.That(market.TryTakeStock(grid, Fabric, target), Is.False, "The shelf can't sell more than it holds.");
-            Assert.That(market.AvailableStock(grid, Fabric), Is.EqualTo(target - 10));
+            Assert.That(market.TryTakeStock(grid, Fabric, available), Is.False, "The shelf can't sell its reserve.");
+            Assert.That(market.AvailableStock(grid, Fabric), Is.EqualTo(available - 10));
 
             market.ReturnStock(grid, Fabric, 10);
             market.RefreshStock(grid);
-            Assert.That(market.AvailableStock(grid, Fabric), Is.EqualTo(target), "A refund should put the crates back.");
+            Assert.That(market.AvailableStock(grid, Fabric), Is.EqualTo(available), "A refund should put the crates back.");
         });
 
         await pair.CleanReturnAsync();

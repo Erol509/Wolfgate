@@ -82,6 +82,7 @@ public sealed class BulkDeliveryQueueTest
             (var vendor, var zone) = World(em, map, zones, out var grid);
             var target = (int) market.Profile(grid).StockTarget;
             market.SetVendorStock(grid, Good, target);
+            var start = market.AvailableStock(grid, Good);
 
             var cart = new[] { new WGTradeBulkLine(Good, 3) };
             var priced = market.CartQuote(vendor, cart)!;
@@ -106,7 +107,7 @@ public sealed class BulkDeliveryQueueTest
             var cells = CrateCells(em, grid);
             Assert.That(cells, Has.Count.EqualTo(3));
             Assert.That(cells.Distinct().Count(), Is.EqualTo(3), "One crate per tile.");
-            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(target - 3),
+            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(start - 3),
                 "Delivered crates must not take stock a second time.");
             bank.TryGetBalance(buyer, out var after);
             Assert.That(after, Is.EqualTo(before - priced.Total), "The order costs exactly the quoted total.");
@@ -133,6 +134,7 @@ public sealed class BulkDeliveryQueueTest
             (var vendor, var zone) = World(em, map, zones, out var grid);
             var target = (int) market.Profile(grid).StockTarget;
             market.SetVendorStock(grid, Good, target);
+            var start = market.AvailableStock(grid, Good);
 
             var cart = new[] { new WGTradeBulkLine(Good, 3) };
             var priced = market.CartQuote(vendor, cart)!;
@@ -147,7 +149,7 @@ public sealed class BulkDeliveryQueueTest
             Assert.That(after, Is.EqualTo(before - firstPrice),
                 "Only the crate that arrived stays paid for; the rest is refunded.");
             Assert.That(CrateCells(em, grid), Has.Count.EqualTo(1), "The delivered crate stays.");
-            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(target - 1),
+            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(start - 1),
                 "Only the crate that arrived stays off the shelf.");
         });
 
@@ -186,6 +188,7 @@ public sealed class BulkDeliveryQueueTest
             Assert.That(zones.TryPair(first, second, out var zone), Is.True);
             var target = (int) market.Profile(grid).StockTarget;
             market.SetVendorStock(grid, Good, target);
+            var start = market.AvailableStock(grid, Good);
 
             var cart = new[] { new WGTradeBulkLine(Good, 2) };
             var priced = market.CartQuote(vendor, cart)!;
@@ -204,7 +207,7 @@ public sealed class BulkDeliveryQueueTest
 
             Assert.That(orders.DeliverNext(orderId), Is.False, "An order that can't land is stopped.");
             Assert.That(CrateCells(em, grid), Is.Empty);
-            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(target), "Its crates return to the shelf.");
+            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(start), "Its crates return to the shelf.");
             bank.TryGetBalance(buyer, out var after);
             Assert.That(after, Is.EqualTo(before), "Its whole cost is refunded.");
         });
@@ -241,6 +244,7 @@ public sealed class BulkDeliveryQueueTest
             Assert.That(zones.TryPair(first, second, out var zone), Is.True);
             var target = (int) market.Profile(grid).StockTarget;
             market.SetVendorStock(grid, Good, target);
+            var start = market.AvailableStock(grid, Good);
 
             var cart = new[] { new WGTradeBulkLine(Good, 3) };
             var priced = market.CartQuote(vendor, cart)!;
@@ -259,7 +263,7 @@ public sealed class BulkDeliveryQueueTest
             Assert.That(orders.DeliverNext(orderId), Is.True);
             Assert.That(orders.TryGetOrder(orderId, out _), Is.False);
             Assert.That(CrateCells(em, grid), Has.Count.EqualTo(3));
-            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(target - 3));
+            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(start - 3));
         });
 
         await pair.CleanReturnAsync();
@@ -319,6 +323,7 @@ public sealed class BulkDeliveryQueueTest
             (var vendor, var zone) = World(em, map, zones, out var grid);
             var target = (int) market.Profile(grid).StockTarget;
             market.SetVendorStock(grid, Good, target);
+            var start = market.AvailableStock(grid, Good);
 
             var cart = new[] { new WGTradeBulkLine(Good, 3) };
             var priced = market.CartQuote(vendor, cart)!;
@@ -337,7 +342,7 @@ public sealed class BulkDeliveryQueueTest
             Assert.That(after, Is.EqualTo(before - firstPrice),
                 "Only the crate that arrived stays paid for.");
             Assert.That(CrateCells(em, grid), Has.Count.EqualTo(1));
-            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(target - 1),
+            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(start - 1),
                 "The undelivered crates go back on the shelf.");
         });
 

@@ -7,6 +7,7 @@ using Content.Shared._Mono.Traits.Physical;
 using Content.Shared._WG.TradeGoods;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -73,6 +74,11 @@ public sealed partial class WGCargoBulkOrderSystem : EntitySystem
     private readonly HashSet<EntityUid> _pendingPushes = new();
     private TimeSpan _nextPush;
 
+    /// <summary>Refunds a bank refused, kept by payer id so a new body can still collect after the old one is gone.</summary>
+    private readonly Dictionary<NetUserId, int> _unpaidRefunds = new();
+    private readonly List<NetUserId> _refundUsers = new();
+    private TimeSpan _nextRefundPayout;
+
     /// <summary>Cached destination sets for the current tick, so a state push or quote does not re-scan every dock.</summary>
     private readonly Dictionary<EntityUid, HashSet<EntityUid>> _destinations = new();
 
@@ -85,6 +91,7 @@ public sealed partial class WGCargoBulkOrderSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnCleanup);
         SubscribeLocalEvent<WGCargoZoneRemovedEvent>(OnZoneRemoved);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
         InitializeUi();
     }
 
@@ -97,6 +104,9 @@ public sealed partial class WGCargoBulkOrderSystem : EntitySystem
         _zoneStops.Clear();
         _pendingPushes.Clear();
         _nextPush = TimeSpan.Zero;
+        _unpaidRefunds.Clear();
+        _refundUsers.Clear();
+        _nextRefundPayout = TimeSpan.Zero;
         _nextProjector.Clear();
         _nextQuote.Clear();
         _nextRefresh.Clear();
@@ -128,12 +138,23 @@ public sealed partial class WGCargoBulkOrderSystem : EntitySystem
         }
     }
 
+    /// <summary>When a payer gets a body, hand them any refund their old body could not take.</summary>
+    private void OnPlayerSpawned(PlayerSpawnCompleteEvent args)
+    {
+        if (!_unpaidRefunds.TryGetValue(args.Player.UserId, out var amount))
+            return;
+
+        if (_bank.TryBankDeposit(args.Mob, amount, tax: false))
+            _unpaidRefunds.Remove(args.Player.UserId);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
         ExpireQuotes();
         Deliver();
         PushDue();
+        PayoutRefunds();
     }
 
     /// <summary>Drops quotes nobody confirmed in time.</summary>

@@ -54,13 +54,6 @@ public sealed class WGCargoBulkOrder
     /// <summary>When the next crate first found its tile unusable, or null while it has a place to go.</summary>
     public TimeSpan? BlockedSince;
 
-    /// <summary>A refund that couldn't reach the buyer's account yet, retried until it can.</summary>
-    public int PendingRefund;
-    public TimeSpan NextRefundAt;
-
-    /// <summary>How many times the pending refund has been attempted, so a deleted buyer can't hold it forever.</summary>
-    public int RefundAttempts;
-
     /// <summary>What the undelivered crates would refund.</summary>
     public int Refund
     {

@@ -25,9 +25,6 @@ public sealed partial class WGCargoBulkOrderSystem
     /// <summary>How long between attempts to pay a refund the buyer's account refused.</summary>
     private static readonly TimeSpan RefundRetry = TimeSpan.FromSeconds(10);
 
-    /// <summary>How many refund attempts before a failed one is dropped and logged, so orders can't accumulate.</summary>
-    private const int MaxRefundAttempts = 30;
-
     /// <summary>How long a blocked crate waits before the zone is scanned for a new cell again.</summary>
     private static readonly TimeSpan BlockedRetry = TimeSpan.FromSeconds(1);
 
@@ -38,7 +35,7 @@ public sealed partial class WGCargoBulkOrderSystem
     private readonly List<WGCargoBulkOrder> _deliverBuffer = new();
     private readonly List<EntityUid> _pushBuffer = new();
 
-    /// <summary>Ticks every order: pays a waiting refund, then sends the next crate that is due.</summary>
+    /// <summary>Ticks every order and sends the next crate that is due.</summary>
     private void Deliver()
     {
         if (_orders.Count == 0)
@@ -49,12 +46,6 @@ public sealed partial class WGCargoBulkOrderSystem
         _deliverBuffer.AddRange(_orders.Values);
         foreach (var order in _deliverBuffer)
         {
-            if (order.Status == WGCargoBulkOrderStatus.Cancelled)
-            {
-                RetryRefund(order, now);
-                continue;
-            }
-
             if (order.Status != WGCargoBulkOrderStatus.Delivering || order.NextAt > now)
                 continue;
 
@@ -190,7 +181,9 @@ public sealed partial class WGCargoBulkOrderSystem
             for (var x = zone.Min.X; x <= zone.Max.X; x++)
             {
                 var candidate = new Vector2i(x, y);
-                if (order.Cells.Contains(candidate))
+
+                // Only the crate still due and those after it are protected; a tile whose crate has landed is free.
+                if (order.Cells.IndexOf(candidate, order.Delivered) >= 0)
                     continue;
 
                 if (_zones.Classify(zone, candidate, order.Id) != WGCargoCellState.Free)
@@ -251,15 +244,16 @@ public sealed partial class WGCargoBulkOrderSystem
             orders.Remove(order.Id);
 
         var refund = order.Refund;
-        if (!refundPaid
-            && refund > 0
-            && (TerminatingOrDeleted(order.Buyer) || !_bank.TryBankDeposit(order.Buyer, refund, tax: false)))
+        var paid = refund <= 0 || refundPaid;
+        if (!paid && !TerminatingOrDeleted(order.Buyer))
+            paid = _bank.TryBankDeposit(order.Buyer, refund, tax: false);
+
+        if (!paid && refund > 0)
         {
-            order.PendingRefund = refund;
-            order.NextRefundAt = _timing.CurTime + RefundRetry;
-            order.RefundAttempts = 0;
+            _unpaidRefunds[order.BuyerId] = _unpaidRefunds.GetValueOrDefault(order.BuyerId) + refund;
             _admin.Add(LogType.Action, LogImpact.Medium,
-                $"Bulk order {order.Id} stopped with {order.Goods.Count - order.Delivered} crates undelivered; {refund} spesos owed to {ToPrettyString(order.Buyer)}");
+                $"Bulk order {order.Id} stopped with {order.Goods.Count - order.Delivered} crates undelivered; {refund} spesos owed to {order.BuyerName}");
+            _orders.Remove(order.Id);
             return;
         }
 
@@ -268,29 +262,26 @@ public sealed partial class WGCargoBulkOrderSystem
             $"Bulk order {order.Id} stopped with {order.Goods.Count - order.Delivered} crates refunded ({refund} spesos)");
     }
 
-    /// <summary>Pays a refund the buyer's account refused when the order stopped.</summary>
-    private void RetryRefund(WGCargoBulkOrder order, TimeSpan now)
+    /// <summary>Pays refunds whose buyer body was gone or whose bank refused at the time, at most once per interval.</summary>
+    private void PayoutRefunds()
     {
-        if (order.NextRefundAt > now)
+        if (_unpaidRefunds.Count == 0 || _timing.CurTime < _nextRefundPayout)
             return;
 
-        // A deleted body can never take the money, and a round can't keep retrying forever.
-        if (TerminatingOrDeleted(order.Buyer) || ++order.RefundAttempts > MaxRefundAttempts)
+        _nextRefundPayout = _timing.CurTime + RefundRetry;
+        _refundUsers.Clear();
+        _refundUsers.AddRange(_unpaidRefunds.Keys);
+
+        foreach (var user in _refundUsers)
         {
-            _orders.Remove(order.Id);
-            _admin.Add(LogType.Action, LogImpact.High,
-                $"Bulk order {order.Id} dropped with {order.PendingRefund} spesos unrefunded: {order.BuyerName} could not be paid");
-            return;
-        }
+            if (!_players.TryGetSessionById(user, out var session)
+                || session.AttachedEntity is not { } body
+                || TerminatingOrDeleted(body))
+                continue;
 
-        if (!_bank.TryBankDeposit(order.Buyer, order.PendingRefund, tax: false))
-        {
-            order.NextRefundAt = now + RefundRetry;
-            return;
+            if (_bank.TryBankDeposit(body, _unpaidRefunds[user], tax: false))
+                _unpaidRefunds.Remove(user);
         }
-
-        order.PendingRefund = 0;
-        _orders.Remove(order.Id);
     }
 
     /// <summary>A vendor's delivery settings, or the defaults when its prototype has none.</summary>

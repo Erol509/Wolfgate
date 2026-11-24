@@ -25,10 +25,13 @@ public sealed class WGTradeBulkQuote
 /// </summary>
 public sealed partial class WGTradeMarketSystem
 {
-    /// <summary>Whole crates of a good a station's shelf holds now.</summary>
+    /// <summary>
+    /// Whole crates of a good a station's vendors will sell now: its shelf above the level it keeps as scarce, so a bulk
+    /// order cannot buy the reserve the upstream economy protects.
+    /// </summary>
     public int AvailableStock(EntityUid grid, string good)
     {
-        return (int) MathF.Floor(Row(grid, good).Stock + 0.001f);
+        return ForSale(grid, good);
     }
 
     /// <summary>
@@ -47,6 +50,7 @@ public sealed partial class WGTradeMarketSystem
         var profile = Profile(grid);
         var quote = new WGTradeBulkQuote();
         var left = new Dictionary<string, int>(cart.Count);
+        var shelf = new Dictionary<string, float>(cart.Count);
 
         foreach (var line in cart)
         {
@@ -58,13 +62,19 @@ public sealed partial class WGTradeMarketSystem
                 || VendorBasePrice(vendor, proto) is not { } basePrice)
                 return null;
 
-            if (!left.TryGetValue(line.Good, out var stock))
+            if (!left.TryGetValue(line.Good, out var available))
             {
-                stock = AvailableStock(grid, line.Good);
-                left[line.Good] = stock;
+                available = AvailableStock(grid, line.Good);
+                left[line.Good] = available;
             }
 
-            if (line.Quantity > stock)
+            if (!shelf.TryGetValue(line.Good, out var stock))
+            {
+                stock = Row(grid, line.Good).Stock;
+                shelf[line.Good] = stock;
+            }
+
+            if (line.Quantity > available)
                 return null;
 
             var raise = BuyRaise(grid, line.Good, out _);
@@ -76,7 +86,7 @@ public sealed partial class WGTradeMarketSystem
 
             for (var i = 0; i < line.Quantity; i++)
             {
-                // The shelf after i crates of this line have left it.
+                // The shelf after i crates of this line have left it, reserve included.
                 var level = MathF.Max(0f, (stock - i) / profile.StockTarget);
                 var price = Math.Max(unit, BuyPriceAt(basePrice, profile, level, raise));
                 if (i == 0)
@@ -86,7 +96,8 @@ public sealed partial class WGTradeMarketSystem
                 prices.Add(price);
             }
 
-            left[line.Good] = stock - line.Quantity;
+            left[line.Good] = available - line.Quantity;
+            shelf[line.Good] = stock - line.Quantity;
             quote.Lines.Add(new WGTradeBulkLineQuote(line.Good, line.Quantity, first, last, subtotal, prices));
             quote.Crates += line.Quantity;
             quote.Total += subtotal;

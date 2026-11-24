@@ -92,6 +92,9 @@ public sealed class WGCargoBulkQuoteRequestMessage : BoundUserInterfaceMessage
 {
     public Dictionary<string, int> Items = new();
     public Guid Zone;
+
+    /// <summary>Client-side request counter; a reply only applies while it is still the newest.</summary>
+    public int Revision;
 }
 
 /// <summary>The vendor's answer: a single-use quote to confirm, or a localized reason it refused.</summary>
@@ -103,6 +106,9 @@ public sealed class WGCargoBulkQuoteMessage : BoundUserInterfaceMessage
     public int Total;
     public int Crates;
     public string? Error;
+
+    /// <summary>The request revision this reply answers.</summary>
+    public int Revision;
 }
 
 /// <summary>Confirms a quote at the total the buyer was shown.</summary>

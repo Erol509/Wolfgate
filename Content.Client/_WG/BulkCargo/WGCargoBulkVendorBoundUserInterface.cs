@@ -18,8 +18,8 @@ public sealed class WGCargoBulkVendorBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<WGCargoBulkVendorWindow>();
-        _window.OnQuoteRequested += (items, zone) =>
-            SendMessage(new WGCargoBulkQuoteRequestMessage { Items = items, Zone = zone });
+        _window.OnQuoteRequested += (items, zone, revision) =>
+            SendMessage(new WGCargoBulkQuoteRequestMessage { Items = items, Zone = zone, Revision = revision });
         _window.OnOrderPressed += (quote, total) =>
             SendMessage(new WGCargoBulkPlaceOrderMessage { Quote = quote, ExpectedTotal = total });
         _window.OnCancelPressed += order =>

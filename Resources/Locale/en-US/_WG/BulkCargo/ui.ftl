@@ -65,6 +65,7 @@ wg-bulk-error-cancel = That order couldn't be cancelled.
 wg-bulk-error-dispense = The projector isn't ready yet.
 wg-bulk-error-far = Stand at the vendor.
 wg-bulk-error-quote = That estimate expired. A fresh one is coming.
+wg-bulk-error-wait = The vendor is still pricing your last cart.
 wg-bulk-error-price = Prices moved while you were ordering. Review the new estimate.
 wg-bulk-error-funds = Your bank can't cover that order.
 wg-bulk-error-stock = The shelf ran short. Lower the quantity.

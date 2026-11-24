@@ -29,7 +29,7 @@ public sealed class WGCargoBulkVendorWindow : FancyWindow
     [Dependency] private IResourceCache _cache = default!;
     [Dependency] private IGameTiming _timing = default!;
 
-    public event Action<Dictionary<string, int>, Guid>? OnQuoteRequested;
+    public event Action<Dictionary<string, int>, Guid, int>? OnQuoteRequested;
     public event Action<Guid, int>? OnOrderPressed;
     public event Action<Guid>? OnCancelPressed;
     public event Action? OnDispensePressed;
@@ -93,6 +93,7 @@ public sealed class WGCargoBulkVendorWindow : FancyWindow
 
     private bool _quoteDirty;
     private double _quoteWait;
+    private int _quoteRevision;
     private bool _rebuildingZones;
     private bool _rebuildingProducts;
     private string? _productKey;
@@ -539,9 +540,12 @@ public sealed class WGCargoBulkVendorWindow : FancyWindow
         RebuildProducts();
 
         if (_selectedZone == Guid.Empty || state.Zones.TrueForAll(zone => zone.Id != _selectedZone))
-            _selectedZone = state.Zones.FirstOrDefault(zone => !zone.Ship)?.Id
+        {
+            var preferred = state.Zones.FirstOrDefault(zone => !zone.Ship)?.Id
                             ?? state.Zones.FirstOrDefault()?.Id
                             ?? Guid.Empty;
+            SelectZone(preferred);
+        }
 
         RebuildZones();
         UpdateZoneNote();
@@ -568,6 +572,16 @@ public sealed class WGCargoBulkVendorWindow : FancyWindow
 
     public void UpdateQuote(WGCargoBulkQuoteMessage message)
     {
+        // A reply for a cart or request that has since changed must not re-enable PLACE ORDER.
+        if (message.Revision != _quoteRevision)
+            return;
+
+        if (message.Error == "wg-bulk-error-wait")
+        {
+            MarkQuoteDirty();
+            return;
+        }
+
         _quoteId = message.Quote;
         _quoteTotal = message.Total;
         _quoteCrates = message.Crates;
@@ -807,9 +821,12 @@ public sealed class WGCargoBulkVendorWindow : FancyWindow
         }
         else
         {
-            if (_state?.Products.FirstOrDefault(product => product.Id == id) is { } product &&
-                (next > product.Stock || _cart.Values.Sum() + 1 > _state.MaxCrates))
-                return;
+            if (_state?.Products.FirstOrDefault(product => product.Id == id) is { } product)
+            {
+                var total = _cart.Values.Sum() - count + next;
+                if (next > count && (next > product.Stock || total > _state.MaxCrates))
+                    return;
+            }
 
             _cart[id] = next;
         }
@@ -820,6 +837,7 @@ public sealed class WGCargoBulkVendorWindow : FancyWindow
 
     private void ClearCart(bool keepNotice = false)
     {
+        _quoteRevision++;
         _cart.Clear();
         _cartOrder.Clear();
         _lineQuotes.Clear();
@@ -836,6 +854,7 @@ public sealed class WGCargoBulkVendorWindow : FancyWindow
 
     private void MarkQuoteDirty()
     {
+        _quoteRevision++;
         _quoteDirty = true;
         _quoteWait = 0;
         _quoteError = null;
@@ -858,11 +877,12 @@ public sealed class WGCargoBulkVendorWindow : FancyWindow
             return;
         }
 
-        OnQuoteRequested?.Invoke(new Dictionary<string, int>(_cart), _selectedZone);
+        OnQuoteRequested?.Invoke(new Dictionary<string, int>(_cart), _selectedZone, _quoteRevision);
     }
 
     private void ResetQuote()
     {
+        _quoteRevision++;
         _lineQuotes.Clear();
         _quoteId = Guid.Empty;
         _quoteTotal = 0;
@@ -1052,9 +1072,10 @@ public sealed class WGCargoBulkVendorWindow : FancyWindow
 
         if (_state.Zones.TrueForAll(zone => zone.Id != _selectedZone))
         {
-            _selectedZone = Guid.Empty;
-            if (_state.Zones.Count > 0)
-                SelectZone(_state.Zones[0].Id);
+            var preferred = _state.Zones.FirstOrDefault(zone => !zone.Ship)?.Id
+                            ?? _state.Zones.FirstOrDefault()?.Id
+                            ?? Guid.Empty;
+            SelectZone(preferred);
         }
 
         UpdateZoneNote();

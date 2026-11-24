@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Hands.Systems;
+using Content.Server.VendingMachines;
 using Content.Server._WG.TradeGoods.Systems;
 using Content.Shared._WG.BulkCargo;
 using Content.Shared._WG.TradeGoods;
@@ -29,6 +30,7 @@ public sealed partial class WGCargoBulkOrderSystem
     [Dependency] private AccessReaderSystem _access = default!;
     [Dependency] private HandsSystem _hands = default!;
     [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private VendingMachineSystem _vending = default!;
     [Dependency] private IPrototypeManager _proto = default!;
 
     private static readonly EntProtoId Projector = "WGCargoZoneProjector";
@@ -58,6 +60,22 @@ public sealed partial class WGCargoBulkOrderSystem
         SubscribeLocalEvent<WGTradeVendorComponent, WGCargoBulkCancelMessage>(OnCancelMessage);
         SubscribeLocalEvent<WGTradeVendorComponent, WGCargoBulkDispenseMessage>(OnDispenseMessage);
         SubscribeLocalEvent<WGTradeVendorComponent, WGCargoBulkRefreshMessage>(OnRefreshMessage);
+
+        // The bulk window shows the vendor's ordinary supplies too; route its buy clicks through the vending system.
+        Subs.BuiEvents<WGTradeVendorComponent>(WGCargoBulkUiKey.Key, subs =>
+        {
+            subs.Event<VendingMachineEjectMessage>(OnBulkEjectMessage);
+        });
+    }
+
+    private void OnBulkEjectMessage(Entity<WGTradeVendorComponent> ent, ref VendingMachineEjectMessage args)
+    {
+        if (!CanUse(ent.Owner, args.Actor)
+            || !TryComp<VendingMachineComponent>(ent.Owner, out var machine))
+            return;
+
+        _vending.AuthorizedVend(ent.Owner, args.Actor, args.Type, args.ID, machine, args.Colors);
+        SchedulePush(ent.Owner);
     }
 
     private void OnRefreshMessage(Entity<WGTradeVendorComponent> ent, ref WGCargoBulkRefreshMessage args)
@@ -308,11 +326,15 @@ public sealed partial class WGCargoBulkOrderSystem
 
         var now = _timing.CurTime;
         if (_nextQuote.TryGetValue(args.Actor, out var ready) && ready > now)
+        {
+            _ui.ServerSendUiMessage(ent.Owner, WGCargoBulkUiKey.Key,
+                new WGCargoBulkQuoteMessage { Error = "wg-bulk-error-wait", Revision = args.Revision }, args.Actor);
             return;
+        }
 
         _nextQuote[args.Actor] = now + QuoteRequestInterval;
 
-        var reply = new WGCargoBulkQuoteMessage();
+        var reply = new WGCargoBulkQuoteMessage { Revision = args.Revision };
 
         // Bound what one message can make the server price, before touching the market.
         long total = 0;

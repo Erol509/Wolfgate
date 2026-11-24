@@ -74,7 +74,7 @@ public sealed class BulkVendorUiTest
             var product = state.Products.FirstOrDefault(entry => entry.Id == Good);
             Assert.That(product, Is.Not.Null, "The vendor should list its trade goods.");
             Assert.That(product!.UnitPrice, Is.EqualTo(market.BuyQuote(vendor, Good)!.Value.Amount));
-            Assert.That(product.Stock, Is.EqualTo(target));
+            Assert.That(product.Stock, Is.EqualTo(market.AvailableStock(grid, Good)));
             Assert.That(state.Interval, Is.GreaterThan(TimeSpan.Zero));
             Assert.That(state.MaxCrates, Is.GreaterThan(0));
 

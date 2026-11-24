@@ -47,6 +47,8 @@ public sealed class BulkOrderTransactionTest
             var target = (int) profile.StockTarget;
             market.SetVendorStock(grid, Good, target);
             market.SetVendorStock(grid, Other, target);
+            var startGood = market.AvailableStock(grid, Good);
+            var startOther = market.AvailableStock(grid, Other);
 
             var first = BulkCargoTestWorld.Marker(em, grid, 0, 0);
             var second = BulkCargoTestWorld.Marker(em, grid, 5, 3);
@@ -79,8 +81,8 @@ public sealed class BulkOrderTransactionTest
             Assert.That(order.Cells.Distinct().Count(), Is.EqualTo(14), "One crate per tile.");
             Assert.That(order.Delivered, Is.Zero);
 
-            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(target - 10));
-            Assert.That(market.AvailableStock(grid, Other), Is.EqualTo(target - 4));
+            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(startGood - 10));
+            Assert.That(market.AvailableStock(grid, Other), Is.EqualTo(startOther - 4));
             Assert.That(zones.FreeCount(area), Is.EqualTo(10), "The order's cells are spoken for.");
 
             bank.TryGetBalance(buyer, out var paid);
@@ -95,8 +97,8 @@ public sealed class BulkOrderTransactionTest
             Assert.That(orders.TryCancel(buyer, id.Value), Is.True);
             bank.TryGetBalance(buyer, out var refunded);
             Assert.That(refunded, Is.EqualTo(before), "A cancelled order refunds exactly what it charged.");
-            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(target));
-            Assert.That(market.AvailableStock(grid, Other), Is.EqualTo(target));
+            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(startGood));
+            Assert.That(market.AvailableStock(grid, Other), Is.EqualTo(startOther));
             Assert.That(zones.FreeCount(area), Is.EqualTo(24), "Cancelling releases every reserved cell.");
             Assert.That(orders.TryGetOrder(id.Value, out _), Is.False);
         });
@@ -127,6 +129,7 @@ public sealed class BulkOrderTransactionTest
             var profile = market.Profile(grid);
             var target = (int) profile.StockTarget;
             market.SetVendorStock(grid, Good, target);
+            var start = market.AvailableStock(grid, Good);
 
             var first = BulkCargoTestWorld.Marker(em, grid, 0, 0);
             var second = BulkCargoTestWorld.Marker(em, grid, 3, 3);
@@ -144,7 +147,7 @@ public sealed class BulkOrderTransactionTest
             Assert.That(staleError, Is.EqualTo("wg-bulk-error-price"));
             bank.TryGetBalance(buyer, out var afterStale);
             Assert.That(afterStale, Is.EqualTo(before));
-            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(target));
+            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(start));
             Assert.That(zones.FreeCount(area), Is.EqualTo(16));
 
             // The refused quote is spent, so the same id can't be confirmed later.
@@ -162,7 +165,7 @@ public sealed class BulkOrderTransactionTest
             var broke = orders.Quote(vendor, buyer, cart, zone)!.Value;
             Assert.That(orders.PlaceOrder(vendor, buyer, broke, priced.Total, out var brokeError), Is.Null);
             Assert.That(brokeError, Is.EqualTo("wg-bulk-error-funds"));
-            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(target));
+            Assert.That(market.AvailableStock(grid, Good), Is.EqualTo(start));
             Assert.That(zones.FreeCount(area), Is.EqualTo(16));
 
             // Prices moving between the estimate and the confirmation are named, not charged silently.
@@ -228,6 +231,7 @@ public sealed class BulkOrderTransactionTest
             var profile = market.Profile(grid);
             var target = (int) profile.StockTarget;
             market.SetVendorStock(grid, Good, target);
+            var start = market.AvailableStock(grid, Good);
 
             var first = BulkCargoTestWorld.Marker(em, grid, 0, 0);
             var second = BulkCargoTestWorld.Marker(em, grid, 3, 3);
@@ -242,7 +246,7 @@ public sealed class BulkOrderTransactionTest
             Assert.That(orders.TryGetOrder(id!.Value, out var order), Is.True);
 
             var left = market.AvailableStock(grid, Good);
-            Assert.That(left, Is.EqualTo(target - 2));
+            Assert.That(left, Is.EqualTo(start - 2));
 
             // The delivered crate records the sale; the shelf already lost those crates at payment.
             var crate = em.SpawnEntity(Good, new EntityCoordinates(grid, 0.5f, 0.5f));
