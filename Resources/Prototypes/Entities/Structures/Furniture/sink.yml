@@ -9,7 +9,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Structures/Furniture/sink.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/sink.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     layers:
       - state: sink_stem
       - map: [ "enum.SolutionContainerLayers.Fill" ]
@@ -88,7 +88,7 @@
   parent: Sink
   components:
     - type: Sprite
-      sprite: Structures/Furniture/sink.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Furniture/sink.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
       layers:
         - state: sink_wide
         - map: [ "enum.SolutionContainerLayers.Fill" ]
@@ -107,7 +107,7 @@
   parent: SinkEmpty
   components:
   - type: Sprite
-    sprite: Structures/Furniture/sink.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Furniture/sink.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     layers:
       - state: sink
       - map: [ "enum.SolutionContainerLayers.Fill" ]

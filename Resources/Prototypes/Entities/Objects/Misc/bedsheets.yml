@@ -10,7 +10,7 @@
     - Bed
   components:
   - type: Sprite
-    sprite: Objects/Misc/bedsheets.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/bedsheets.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     noRot: true
   - type: Item
     size: Small

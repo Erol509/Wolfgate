@@ -5,10 +5,10 @@
   description: A hand labeler, used to label items and objects.
   components:
     - type: Sprite
-      sprite: Objects/Tools/hand_labeler.rsi
+      sprite: _WG/Resprites/Funkystation/Objects/Tools/hand_labeler.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
       state: hand_labeler
     - type: Item
-      sprite: Objects/Tools/hand_labeler.rsi
+      sprite: _WG/Resprites/Funkystation/Objects/Tools/hand_labeler.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
       storedRotation: -90
     - type: UseDelay
       delay: 2.0

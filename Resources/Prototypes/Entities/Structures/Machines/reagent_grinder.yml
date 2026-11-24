@@ -19,8 +19,8 @@
     visuals:
       enum.ReagentGrinderVisualState.BeakerAttached:
         grinder:
-          True: {state: "juicer1"}
-          False: {state: "juicer0"}
+          True: {state: "grinder_beaker_attached"} # WOLFGATE(Resprites): funky chemistry machine resprites
+          False: {state: "grinder_empty"} # WOLFGATE(Resprites): funky chemistry machine resprites
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -33,13 +33,14 @@
         layer:
         - TabletopMachineLayer
   - type: Sprite
-    sprite: Structures/Machines/juicer.rsi
-    drawdepth: SmallObjects
-    snapCardinals: true
-    offset: "0.0,0.4"
+    # WOLFGATE(Resprites) START: funky chemistry machine resprites
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/grinder.rsi
+    drawdepth: Objects
+    offset: "0.0,0.15"
     layers:
     - map: [ "grinder" ]
-      state: "juicer0"
+      state: "grinder_empty"
+    # WOLFGATE END
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: AutomationSlots # Goobstation

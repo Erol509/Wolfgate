@@ -68,7 +68,7 @@
   id: FunArtSupplies
   abstract: true # Frontier
   icon:
-    sprite: Objects/Fun/crayons.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Fun/crayons.rsi # WOLFGATE(Resprites): funky game board, furniture, sink and rack resprites
     state: box
   product: CrateFunArtSupplies
   cost: 500

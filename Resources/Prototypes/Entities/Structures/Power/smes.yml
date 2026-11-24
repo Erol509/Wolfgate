@@ -15,7 +15,7 @@
       sound:
         path: /Audio/Ambience/Objects/periodic_beep.ogg
     - type: Sprite
-      sprite: Structures/Power/smes.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Power/smes.rsi # WOLFGATE(Resprites): funky SMES, substation and stasis bed resprites
       snapCardinals: true
       layers:
         - state: smes
@@ -50,7 +50,7 @@
       sourceNode: input
       loadNode: output
       collectionName: smes
-      sprite: Structures/Power/smes.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Power/smes.rsi # WOLFGATE(Resprites): funky SMES, substation and stasis bed resprites
       state: static
     - type: BatteryDischarger
       voltage: High
@@ -211,7 +211,7 @@
   description: An even-higher-capacity superconducting magnetic energy storage (SMES) unit.
   components:
   - type: Sprite
-    sprite: Structures/Power/smes.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Power/smes.rsi # WOLFGATE(Resprites): funky SMES, substation and stasis bed resprites
     snapCardinals: true
     layers:
     - state: advancedsmes
@@ -237,7 +237,7 @@
     sourceNode: input
     loadNode: output
     collectionName: smes
-    sprite: Structures/Power/smes.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Power/smes.rsi # WOLFGATE(Resprites): funky SMES, substation and stasis bed resprites
     state: advancedsmes-static
   # Frontier: upgradable SMES
   - type: UpgradeBattery

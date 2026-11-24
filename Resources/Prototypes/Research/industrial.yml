@@ -146,7 +146,7 @@
   id: AtmosphericTech
   name: research-technology-atmospheric-tech
   icon:
-    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi # WOLFGATE(Resprites): Imp Sprite Ports
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/thermomachine.rsi # WOLFGATE(Resprites): funky atmospherics resprites
     state: freezerOff
   discipline: Industrial
   tier: 1

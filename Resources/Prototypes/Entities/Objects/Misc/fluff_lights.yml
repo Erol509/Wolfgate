@@ -38,9 +38,9 @@
     containers:
       cell_slot: !type:ContainerSlot
   - type: Sprite
-    sprite: Objects/Misc/Lights/lights.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/Lights/lights.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
   - type: Item
-    sprite: Objects/Misc/Lights/lights.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/Lights/lights.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     size: Normal
     heldPrefix: off
   - type: PointLight
@@ -65,7 +65,7 @@
   description: A light emitting device.
   components:
   - type: Sprite
-    sprite: Objects/Misc/Lights/lamp.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/Lights/lamp.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     layers:
       - state: lamp
         map: [ "base" ]
@@ -74,7 +74,7 @@
         visible: false
         map: [ "light" ]
   - type: Item
-    sprite: Objects/Misc/Lights/lamp.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/Lights/lamp.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
   - type: HolidayVisuals
     holidays:
       festive:
@@ -108,7 +108,7 @@
   description: A light emitting device that would look great on a desk.
   components:
   - type: Sprite
-    sprite: Objects/Misc/Lights/lampgreen.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/Lights/lampgreen.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     layers:
       - state: lampgreen
         map: [ "base" ]
@@ -117,7 +117,7 @@
         visible: false
         map: [ "light" ]
   - type: Item
-    sprite: Objects/Misc/Lights/lampgreen.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/Lights/lampgreen.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
   - type: HolidayVisuals
     holidays:
       festive:
@@ -127,11 +127,11 @@
       enum.HolidayVisuals.Holiday:
         base:
           festive:
-            sprite: Objects/Misc/Lights/lamp.rsi
+            sprite: _WG/Resprites/Funkystation/Objects/Misc/Lights/lamp.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
             state: christmaslamp
         light:
           festive:
-            sprite: Objects/Misc/Lights/lamp.rsi
+            sprite: _WG/Resprites/Funkystation/Objects/Misc/Lights/lamp.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
             state: christmaslamp-on
 
 - type: entity
@@ -206,7 +206,7 @@
   - type: Sprite
     layers:
       - state: floodlight
-      - state: floodlight_on
+      - state: floodlight-on # WOLFGATE(Resprites): funky floodlight resprite
         shader: unshaded
         visible: false
         map: [ "light" ]
@@ -225,6 +225,7 @@
     enabled: false
     radius: 8
     energy: 5
+    color: '#ffe0b7' # WOLFGATE(Resprites): funky floodlight resprite glass tint
   - type: HandheldLight
     wattage: 0 # Mono
   - type: ItemSlots
@@ -263,8 +264,8 @@
   description: A pole with powerful mounted lights on it. It's broken.
   components:
   - type: Sprite
-    sprite: Objects/Misc/Lights/lights.rsi
-    state: floodlight_broken
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/Lights/lights.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
+    state: floodlight-broken # WOLFGATE(Resprites): funky floodlight resprite
   - type: Anchorable
   - type: Damageable
     damageContainer: StructuralInorganic

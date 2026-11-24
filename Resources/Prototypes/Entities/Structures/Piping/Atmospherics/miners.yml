@@ -23,7 +23,7 @@
       anchored: true
     - type: Pullable
     - type: Sprite
-      sprite: Structures/Piping/Atmospherics/miners.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Piping/Atmospherics/miners.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       state: miner
     - type: AtmosDevice
     - type: GasMiner

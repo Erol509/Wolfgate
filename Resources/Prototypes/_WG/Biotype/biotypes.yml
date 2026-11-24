@@ -10,7 +10,7 @@
   name: wg-biotype-synthetic
   description: wg-biotype-synthetic-desc
   icon:
-    sprite: Objects/Specific/Robotics/mmi.rsi
+    sprite: _WG/Resprites/Wizden/Objects/Specific/Robotics/mmi.rsi # WOLFGATE(Resprites): funky MMI, fax and AME resprites
     state: posibrain
   body: IPC
   remove:

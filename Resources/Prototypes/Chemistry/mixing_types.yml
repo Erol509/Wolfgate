@@ -12,15 +12,15 @@
   id: DummyGrind
   verbText: mixing-verb-default-grind
   icon:
-    sprite: Structures/Machines/juicer.rsi
-    state: juicer0
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/grinder.rsi # WOLFGATE(Resprites): funky chemistry machine resprites
+    state: grinder_empty # WOLFGATE(Resprites): funky chemistry machine resprites
 
 - type: mixingCategory
   id: DummyJuice
   verbText: mixing-verb-default-juice
   icon:
-    sprite: Structures/Machines/juicer.rsi
-    state: juicer0
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/grinder.rsi # WOLFGATE(Resprites): funky chemistry machine resprites
+    state: grinder_empty # WOLFGATE(Resprites): funky chemistry machine resprites
 
 - type: mixingCategory
   id: DummyCondense
@@ -35,14 +35,14 @@
   id: Centrifuge
   verbText: mixing-verb-centrifuge
   icon:
-    sprite: Structures/Machines/Medical/centrifuge.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/Medical/centrifuge.rsi # WOLFGATE(Resprites): funky chemistry machine resprites
     state: base
 
 - type: mixingCategory
   id: Electrolysis
   verbText: mixing-verb-electrolysis
   icon:
-    sprite: Structures/Machines/Medical/electrolysis.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/Medical/electrolysis.rsi # WOLFGATE(Resprites): funky chemistry machine resprites
     state: base
 
 - type: mixingCategory

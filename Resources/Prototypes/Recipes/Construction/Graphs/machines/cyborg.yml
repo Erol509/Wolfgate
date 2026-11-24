@@ -126,7 +126,7 @@
        - tag: Posibrain
          name: postrionic brain
          icon:
-           sprite: Objects/Specific/Robotics/mmi.rsi
+           sprite: _WG/Resprites/Wizden/Objects/Specific/Robotics/mmi.rsi # WOLFGATE(Resprites): funky MMI, fax and AME resprites
            state: posibrain
            
      - to: boardLoaded

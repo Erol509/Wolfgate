@@ -87,7 +87,7 @@
     - type: Appearance
     - type: Sprite
       drawdepth: FloorObjects
-      sprite: Structures/Specific/Atmospherics/sensor.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Specific/Atmospherics/sensor.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       layers:
         - state: gsensor1
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
@@ -112,6 +112,6 @@
       node: assembly
     - type: Sprite
       drawdepth: FloorObjects
-      sprite: Structures/Specific/Atmospherics/sensor.rsi
+      sprite: _WG/Resprites/Funkystation/Structures/Specific/Atmospherics/sensor.rsi # WOLFGATE(Resprites): funky atmospherics resprites
       layers:
         - state: gsensor0

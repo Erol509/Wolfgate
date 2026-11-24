@@ -11,7 +11,7 @@
   - type: Climbable
     vaultable: false
   - type: Sprite
-    sprite: Structures/Piping/disposal.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/disposal.rsi # WOLFGATE(Resprites): funky disposal and mailing unit resprites
     layers:
     - state: condisposal
       map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
@@ -104,7 +104,7 @@
   name: disposal unit
   components:
   - type: Sprite
-    sprite: Structures/Piping/disposal.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/disposal.rsi # WOLFGATE(Resprites): funky disposal and mailing unit resprites
     snapCardinals: true
   - type: Construction
     graph: DisposalMachine
@@ -128,7 +128,7 @@
   description: A pneumatic mail delivery unit.
   components:
   - type: Sprite
-    sprite: Structures/Piping/disposal.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Piping/disposal.rsi # WOLFGATE(Resprites): funky disposal and mailing unit resprites
     snapCardinals: true
     layers:
       - state: conmailing
@@ -145,7 +145,7 @@
         map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
       - state: dispover-full
         map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
-      - state: mailover-handle
+      - state: dispover-handle # WOLFGATE(Resprites): funky disposal and mailing unit resprites
         map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
   - type: Construction
     graph: DisposalMachine

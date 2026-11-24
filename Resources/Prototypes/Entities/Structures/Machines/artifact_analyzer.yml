@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     noRot: true
-    sprite: Structures/Machines/artifact_analyzer.rsi
+    sprite: _WG/Resprites/Funkystation/Structures/Machines/artifact_analyzer.rsi # WOLFGATE(Resprites): funky anomaly vessel, A.P.E. and artifact analyzer resprites
     drawdepth: HighFloorObjects
     layers:
     - state: icon

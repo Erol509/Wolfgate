@@ -74,7 +74,7 @@
 - type: cargoProduct
   id: ServiceBureaucracy
   icon:
-    sprite: Objects/Misc/pens.rsi
+    sprite: _WG/Resprites/Funkystation/Objects/Misc/pens.rsi # WOLFGATE(Resprites): funky bureaucracy, chair, light and intercom resprites
     state: pen
   product: CrateServiceBureaucracy
   cost: 1000
@@ -84,7 +84,7 @@
 - type: cargoProduct
   id: ServiceFaxMachine
   icon:
-    sprite: _Impstation/Structures/Machines/fax_machine.rsi # WOLFGATE(Resprites): Imp Sprite Ports
+    sprite: _WG/Resprites/Wizden/Structures/Machines/fax_machine.rsi # WOLFGATE(Resprites): funky MMI, fax and AME resprites
     state: icon
   product: CrateServiceFaxMachine
   cost: 2000
