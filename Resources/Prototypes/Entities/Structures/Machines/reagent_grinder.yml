@@ -36,7 +36,7 @@
     # WOLFGATE(Resprites) START: funky chemistry machine resprites
     sprite: _WG/Resprites/Funkystation/Structures/Machines/grinder.rsi
     drawdepth: Objects
-    offset: "0.0,0.15"
+    offset: "0.0,0.15"S
     layers:
     - map: [ "grinder" ]
       state: "grinder_empty"
