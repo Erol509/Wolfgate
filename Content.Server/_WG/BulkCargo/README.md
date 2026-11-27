@@ -3,7 +3,8 @@
 Buy crates in bulk from a station's trade vendors instead of vending them one at a time. A cart of several products is
 priced crate by crate down the market's own shelf curve (`WGTradeMarketSystem.CartQuote`), paid from the buyer's bank as
 one transaction, and delivered a crate at a time into a rectangular zone that two placed markers define. Every tile takes
-one crate, and a zone is saved in grid-local tiles so it follows a ship as it moves.
+one crate, and a zone is saved in grid-local tiles so it follows a ship as it moves. Several products can share one cart,
+and several queued orders can share one zone, while their reserved tiles fit; a new zone may not overlap an existing one.
 
 The cart pricing and stock primitives live in the TradeGoods module (`WGTradeMarketSystem.Bulk.cs`), since they are the
 market's own curve. This module owns the rest: the zone corners and their cell classification and reservations

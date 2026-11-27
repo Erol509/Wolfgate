@@ -3,6 +3,7 @@ wg-bulk-zone-space = A marker can't stand on space.
 wg-bulk-zone-too-far = That tile is too far away.
 wg-bulk-zone-other-grid = The first corner is on another grid.
 wg-bulk-zone-too-large = Those markers would open a zone that is too large.
+wg-bulk-zone-overlap = That area overlaps a delivery zone that already exists.
 wg-bulk-zone-too-many = This grid already holds the maximum number of delivery zones.
 wg-bulk-zone-limit = The round already holds the maximum number of delivery zones.
 wg-bulk-zone-failed = Those markers can't open a zone.

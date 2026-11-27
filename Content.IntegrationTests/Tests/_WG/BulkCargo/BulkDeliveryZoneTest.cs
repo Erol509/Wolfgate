@@ -113,10 +113,50 @@ public sealed class BulkDeliveryZoneTest
                 Assert.That(zones.TryPair(a, b, out _), Is.True, $"Zone {i} should open.");
             }
 
-            var extraA = BulkCargoTestWorld.Marker(em, grid, 10, 18);
-            var extraB = BulkCargoTestWorld.Marker(em, grid, 10, 19);
+            var extraA = BulkCargoTestWorld.Marker(em, grid, 17, 18);
+            var extraB = BulkCargoTestWorld.Marker(em, grid, 17, 19);
             Assert.That(zones.TryPair(extraA, extraB, out _, out error), Is.False);
             Assert.That(error, Is.EqualTo("wg-bulk-zone-too-many"));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task ZonesCannotOverlap()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = false });
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var em = server.EntMan;
+        var zones = em.System<WGCargoDeliveryZoneSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var grid = map.Grid.Owner;
+            BulkCargoTestWorld.Floor(em, grid, map.Tile.Tile, 8, 8);
+
+            var first = BulkCargoTestWorld.Marker(em, grid, 0, 0);
+            var second = BulkCargoTestWorld.Marker(em, grid, 3, 2);
+            Assert.That(zones.TryPair(first, second, out _), Is.True);
+
+            // A second zone crossing the first is refused, whether it overlaps or sits wholly inside it.
+            var crossA = BulkCargoTestWorld.Marker(em, grid, 2, 1);
+            var crossB = BulkCargoTestWorld.Marker(em, grid, 5, 4);
+            Assert.That(zones.TryPair(crossA, crossB, out _, out var error), Is.False);
+            Assert.That(error, Is.EqualTo("wg-bulk-zone-overlap"));
+
+            var insideA = BulkCargoTestWorld.Marker(em, grid, 1, 1);
+            var insideB = BulkCargoTestWorld.Marker(em, grid, 2, 2);
+            Assert.That(zones.TryPair(insideA, insideB, out _, out error), Is.False);
+            Assert.That(error, Is.EqualTo("wg-bulk-zone-overlap"));
+            Assert.That(zones.ZonesOn(grid), Has.Count.EqualTo(1));
+
+            // Touching at the edge is allowed.
+            var besideA = BulkCargoTestWorld.Marker(em, grid, 4, 0);
+            var besideB = BulkCargoTestWorld.Marker(em, grid, 6, 2);
+            Assert.That(zones.TryPair(besideA, besideB, out _), Is.True);
+            Assert.That(zones.ZonesOn(grid), Has.Count.EqualTo(2));
         });
 
         await pair.CleanReturnAsync();

@@ -149,6 +149,17 @@ public sealed partial class WGCargoDeliveryZoneSystem : EntitySystem
             return false;
         }
 
+        var min = Vector2i.ComponentMin(tileA, tileB);
+        var max = Vector2i.ComponentMax(tileA, tileB);
+        foreach (var existing in ZonesOn(grid))
+        {
+            if (!Overlaps(min, max, existing.Min, existing.Max))
+                continue;
+
+            error = "wg-bulk-zone-overlap";
+            return false;
+        }
+
         if (_zones.Count >= MaxZones)
         {
             error = "wg-bulk-zone-limit";
@@ -189,6 +200,15 @@ public sealed partial class WGCargoDeliveryZoneSystem : EntitySystem
 
         if (TryComp<WGCargoZoneCornerComponent>(zone.Second, out var second))
             Rotate(zone.Second, CornerAngle(second.Tile, zone));
+    }
+
+    /// <summary>Whether two inclusive tile rectangles share any tile.</summary>
+    private static bool Overlaps(Vector2i minA, Vector2i maxA, Vector2i minB, Vector2i maxB)
+    {
+        return minA.X <= maxB.X
+               && maxA.X >= minB.X
+               && minA.Y <= maxB.Y
+               && maxA.Y >= minB.Y;
     }
 
     /// <summary>The rotation that turns the north-west marker art into the corner at this tile.</summary>

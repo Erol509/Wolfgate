@@ -350,6 +350,94 @@ public sealed class BulkDeliveryQueueTest
     }
 
     [Test]
+    public async Task QueuesSeveralCrateTypesInOneZone()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var em = server.EntMan;
+        var market = em.System<WGTradeMarketSystem>();
+        var zones = em.System<WGCargoDeliveryZoneSystem>();
+        var orders = em.System<WGCargoBulkOrderSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var buyer = BulkCargoTestWorld.Payer(pair, map.MapId);
+            (var vendor, var zone) = World(em, map, zones, out var grid);
+            var target = (int) market.Profile(grid).StockTarget;
+            market.SetVendorStock(grid, Good, target);
+            market.SetVendorStock(grid, BulkCargoTestWorld.Ammo, target);
+
+            var cart = new[]
+            {
+                new WGTradeBulkLine(Good, 3),
+                new WGTradeBulkLine(BulkCargoTestWorld.Ammo, 2),
+            };
+            var priced = market.CartQuote(vendor, cart)!;
+            Assert.That(priced.Crates, Is.EqualTo(5));
+            var orderId = orders.PlaceOrder(vendor, buyer, orders.Quote(vendor, buyer, cart, zone)!.Value, priced.Total)!.Value;
+
+            Assert.That(orders.TryGetOrder(orderId, out var order), Is.True);
+            Assert.That(order.Goods.Distinct(), Is.EquivalentTo(new[] { Good, BulkCargoTestWorld.Ammo }),
+                "One order should keep every crate type from its cart.");
+            Assert.That(order.Cells, Has.Count.EqualTo(5), "Both types share the one zone's reserved cells.");
+
+            for (var i = 0; i < 5; i++)
+                Assert.That(orders.DeliverNext(orderId), Is.True);
+
+            Assert.That(orders.TryGetOrder(orderId, out _), Is.False);
+            Assert.That(CrateCells(em, grid), Has.Count.EqualTo(5));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task TwoOrdersShareAZoneWhenTheyFit()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        var server = pair.Server;
+        var map = await pair.CreateTestMap();
+        var em = server.EntMan;
+        var market = em.System<WGTradeMarketSystem>();
+        var zones = em.System<WGCargoDeliveryZoneSystem>();
+        var orders = em.System<WGCargoBulkOrderSystem>();
+
+        await server.WaitAssertion(() =>
+        {
+            var buyer = BulkCargoTestWorld.Payer(pair, map.MapId);
+            (var vendor, var zone) = World(em, map, zones, out var grid);
+            var target = (int) market.Profile(grid).StockTarget;
+            market.SetVendorStock(grid, Good, target);
+            market.SetVendorStock(grid, BulkCargoTestWorld.Ammo, target);
+
+            var fabric = new[] { new WGTradeBulkLine(Good, 2) };
+            var ammo = new[] { new WGTradeBulkLine(BulkCargoTestWorld.Ammo, 2) };
+            var fabricPrice = market.CartQuote(vendor, fabric)!;
+            var ammoPrice = market.CartQuote(vendor, ammo)!;
+            var fabricOrder = orders.PlaceOrder(vendor, buyer,
+                orders.Quote(vendor, buyer, fabric, zone)!.Value, fabricPrice.Total)!.Value;
+            var ammoOrder = orders.PlaceOrder(vendor, buyer,
+                orders.Quote(vendor, buyer, ammo, zone)!.Value, ammoPrice.Total)!.Value;
+
+            Assert.That(orders.TryGetOrder(fabricOrder, out var first), Is.True);
+            Assert.That(orders.TryGetOrder(ammoOrder, out var second), Is.True);
+            Assert.That(first.Cells.Intersect(second.Cells), Is.Empty,
+                "Two queued orders must not reserve the same crate tile.");
+
+            for (var i = 0; i < 2; i++)
+            {
+                Assert.That(orders.DeliverNext(fabricOrder), Is.True);
+                Assert.That(orders.DeliverNext(ammoOrder), Is.True);
+            }
+
+            Assert.That(CrateCells(em, grid), Has.Count.EqualTo(4));
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task QueueRunsOnItsOwn()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
