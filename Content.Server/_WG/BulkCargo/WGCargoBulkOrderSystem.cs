@@ -4,6 +4,7 @@ using Content.Server._NF.Bank;
 using Content.Server.Shuttles.Components;
 using Content.Server._WG.TradeGoods.Systems;
 using Content.Shared._Mono.Traits.Physical;
+using Content.Shared._WG.BulkCargo;
 using Content.Shared._WG.TradeGoods;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -202,16 +203,26 @@ public sealed partial class WGCargoBulkOrderSystem : EntitySystem
         if (cart.Count == 0
             || cart.Count > MaxCartLines
             || !HasComp<WGTradeVendorComponent>(vendor)
-            || Transform(vendor).GridUid is not { } grid
-            || !_zones.TryZone(zone, out var area)
-            || !Destinations(vendor).Contains(area.Grid))
+            || Transform(vendor).GridUid is not { } grid)
             return null;
+
+        var counter = zone == WGCargoBulkDestinations.Counter;
+        var area = default(WGCargoZone);
+        if (counter)
+        {
+            if (CounterCells(vendor, grid).Count == 0)
+                return null;
+        }
+        else if (!_zones.TryZone(zone, out area) || !Destinations(vendor).Contains(area.Grid))
+        {
+            return null;
+        }
 
         priced = _market.CartQuote(vendor, cart);
         if (priced is null || priced.Crates <= 0 || priced.Crates > MaxCratesPerOrder)
             return null;
 
-        if (_zones.FreeCount(area) < priced.Crates)
+        if (!counter && _zones.FreeCount(area) < priced.Crates)
             return null;
 
         if (_actorQuote.Remove(buyer, out var previous))

@@ -10,6 +10,13 @@ public enum WGCargoBulkUiKey : byte
     Key,
 }
 
+/// <summary>Virtual destinations the bulk screen can choose in addition to placed zones.</summary>
+public static class WGCargoBulkDestinations
+{
+    /// <summary>Dispense into the free floor tiles around the vendor, with no zone markers.</summary>
+    public static readonly Guid Counter = new("c0a1b2c3-d4e5-4f60-8a7b-000000000001");
+}
+
 /// <summary>One line the vendor sells: a crate priced by the market, or the odd supply it vends normally.</summary>
 [Serializable, NetSerializable]
 public sealed class WGCargoBulkProduct

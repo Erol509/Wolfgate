@@ -45,6 +45,9 @@ public sealed class WGCargoBulkOrder
     /// <summary>The reserved cells, in delivery order.</summary>
     public List<Vector2i> Cells = new();
 
+    /// <summary>Floor tiles beside the vendor for a counter order; empty for zone orders.</summary>
+    public List<Vector2i> CounterCells = new();
+
     public int Delivered;
     public WGCargoBulkOrderStatus Status = WGCargoBulkOrderStatus.Delivering;
 

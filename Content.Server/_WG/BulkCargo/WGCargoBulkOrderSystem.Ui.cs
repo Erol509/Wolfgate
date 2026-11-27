@@ -194,6 +194,49 @@ public sealed partial class WGCargoBulkOrderSystem
             }
         }
 
+        // The counter is always offered, even when every marker zone has been used or hidden by the view cap.
+        var counterCells = CounterCells(vendor, grid);
+        var counterFree = new List<Vector2i>();
+        var counterBlocked = new List<Vector2i>();
+        var counterMin = new Vector2i(0, 0);
+        var counterMax = new Vector2i(0, 0);
+        for (var i = 0; i < counterCells.Count; i++)
+        {
+            var tile = counterCells[i];
+            if (i == 0)
+            {
+                counterMin = tile;
+                counterMax = tile;
+            }
+            else
+            {
+                counterMin = Vector2i.ComponentMin(counterMin, tile);
+                counterMax = Vector2i.ComponentMax(counterMax, tile);
+            }
+
+            if (_zones.ClassifyCell(grid, tile) == WGCargoCellState.Free)
+                counterFree.Add(tile);
+            else
+                counterBlocked.Add(tile);
+        }
+
+        var counterZone = new WGCargoZone(default, default, grid, WGCargoBulkDestinations.Counter,
+            counterMin, counterMax);
+        var counterLanded = LandedIn(grid, counterZone);
+        state.Zones.Add(new WGCargoBulkZone
+        {
+            Id = WGCargoBulkDestinations.Counter,
+            Grid = GetNetEntity(grid),
+            Label = Loc.GetString("wg-bulk-zone-counter", ("vendor", Name(vendor))),
+            Ship = false,
+            Min = counterMin,
+            Max = counterMax,
+            Free = counterFree,
+            Blocked = counterBlocked.Where(tile => !counterLanded.Contains(tile)).ToList(),
+            Reserved = new List<Vector2i>(),
+            Landed = counterLanded,
+        });
+
         return state;
     }
 
@@ -268,6 +311,31 @@ public sealed partial class WGCargoBulkOrderSystem
         return zone.Grid == vendorGrid
             ? Loc.GetString("wg-bulk-zone-station", ("ship", Name(zone.Grid)), ("x", zone.Min.X), ("y", zone.Min.Y))
             : Loc.GetString("wg-bulk-zone-ship", ("ship", Name(zone.Grid)));
+    }
+
+    /// <summary>Floor tiles in the one-tile ring around a vendor, the spots a counter order may use.</summary>
+    private List<Vector2i> CounterCells(EntityUid vendor, EntityUid grid)
+    {
+        var cells = new List<Vector2i>(8);
+        if (!TryComp<MapGridComponent>(grid, out var gridComp)
+            || !TryComp<TransformComponent>(vendor, out var xform))
+            return cells;
+
+        var centre = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
+        for (var x = -1; x <= 1; x++)
+        {
+            for (var y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0)
+                    continue;
+
+                var tile = new Vector2i(centre.X + x, centre.Y + y);
+                if (_map.TryGetTileRef(grid, gridComp, tile, out var tileRef) && !tileRef.Tile.IsEmpty)
+                    cells.Add(tile);
+            }
+        }
+
+        return cells;
     }
 
     /// <summary>

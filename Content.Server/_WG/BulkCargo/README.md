@@ -24,6 +24,10 @@ whose hull lies within reach of the counter, measured from the hull so a long ha
 qualifies; a berth on the far side of a station is not enough. An order accepted for a ship keeps to that ship's grid
 after undocking.
 
+The screen always offers the counter as a destination too. That mode has no markers: it keeps the vendor's one-tile ring
+of floor tiles, sends one crate per interval to a free tile, and waits until one frees when they are all occupied. The
+candidate tiles are computed once at acceptance and only classified on delivery, so it costs no zone scan.
+
 Zones are capped at 256 tiles, 16 per grid and 256 per round, and a buyer at 10 live orders, so marker spam and order
 floods can't grow without bound. Closing a zone stops its orders at once and refunds the crates that never arrived; a
 refund the buyer's body can't take is kept against their player account and paid when they next spawn or their bank

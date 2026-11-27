@@ -3,6 +3,7 @@ using Content.Server._NF.Bank;
 using Content.Server._WG.TradeGoods.Systems;
 using Content.Shared._Mono.Traits.Physical;
 using Content.Shared._NF.Bank.BUI;
+using Content.Shared._WG.BulkCargo;
 using Content.Shared.Database;
 using Content.Shared.VendingMachines;
 using Robust.Shared.Player;
@@ -62,9 +63,25 @@ public sealed partial class WGCargoBulkOrderSystem
             return null;
         }
 
-        if (Transform(vendor).GridUid is not { } grid
-            || !_zones.TryZone(hold.Zone, out var area)
-            || !Destinations(vendor).Contains(area.Grid))
+        if (Transform(vendor).GridUid is not { } grid)
+        {
+            error = "wg-bulk-error-zone";
+            return null;
+        }
+
+        var counter = hold.Zone == WGCargoBulkDestinations.Counter;
+        var area = default(WGCargoZone);
+        var counterCells = new List<Vector2i>();
+        if (counter)
+        {
+            counterCells = CounterCells(vendor, grid);
+            if (counterCells.Count == 0)
+            {
+                error = "wg-bulk-error-zone";
+                return null;
+            }
+        }
+        else if (!_zones.TryZone(hold.Zone, out area) || !Destinations(vendor).Contains(area.Grid))
         {
             error = "wg-bulk-error-zone";
             return null;
@@ -91,7 +108,7 @@ public sealed partial class WGCargoBulkOrderSystem
             return null;
         }
 
-        if (_zones.FreeCount(area) < priced.Crates)
+        if (!counter && _zones.FreeCount(area) < priced.Crates)
         {
             error = "wg-bulk-error-zone";
             return null;
@@ -123,7 +140,8 @@ public sealed partial class WGCargoBulkOrderSystem
         }
 
         var id = Guid.NewGuid();
-        if (!_zones.TryReserve(id, area, priced.Crates, out var cells))
+        var cells = new List<Vector2i>();
+        if (!counter && !_zones.TryReserve(id, area, priced.Crates, out cells))
         {
             Rollback(buyer, priced.Total, grid, taken);
             error = "wg-bulk-error-zone";
@@ -141,9 +159,12 @@ public sealed partial class WGCargoBulkOrderSystem
             BuyerId = session.UserId,
             BuyerName = Name(buyer),
             Zone = hold.Zone,
-            ZoneGrid = area.Grid,
-            ZoneLabel = ZoneLabel(grid, area),
+            ZoneGrid = counter ? grid : area.Grid,
+            ZoneLabel = counter
+                ? Loc.GetString("wg-bulk-zone-counter", ("vendor", Name(vendor)))
+                : ZoneLabel(grid, area),
             Cells = new List<Vector2i>(cells),
+            CounterCells = counter ? new List<Vector2i>(counterCells) : new List<Vector2i>(),
             PlacedAt = _timing.CurTime,
             NextAt = _timing.CurTime,
         };

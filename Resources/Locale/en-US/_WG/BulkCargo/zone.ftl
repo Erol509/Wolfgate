@@ -10,3 +10,4 @@ wg-bulk-zone-failed = Those markers can't open a zone.
 wg-bulk-zone-formed = Zone opened: { $free } tiles free, { $blocked } blocked.
 wg-bulk-zone-projector-dropped = The projector shatters when dropped.
 wg-bulk-zone-removed = Marker removed.
+wg-bulk-zone-counter = Next to { $vendor }

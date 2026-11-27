@@ -1,6 +1,7 @@
 using Content.Server._Mono.VendingMachine;
 using Content.Server.Power.EntitySystems;
 using Content.Server._WG.TradeGoods.Systems;
+using Content.Shared._WG.BulkCargo;
 using Content.Shared.Database;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -112,9 +113,7 @@ public sealed partial class WGCargoBulkOrderSystem
     /// <summary>Sends the next due crate; false when the order can't go on and must be refunded.</summary>
     private bool TryDeliver(WGCargoBulkOrder order, TimeSpan now)
     {
-        if (!TryComp<MapGridComponent>(order.ZoneGrid, out var gridComp)
-            || !_zones.TryZone(order.Zone, out var area)
-            || area.Grid != order.ZoneGrid)
+        if (!TryComp<MapGridComponent>(order.ZoneGrid, out var gridComp))
             return false;
 
         if (order.Delivered >= order.Goods.Count)
@@ -122,6 +121,12 @@ public sealed partial class WGCargoBulkOrderSystem
             Finish(order);
             return true;
         }
+
+        if (order.Zone == WGCargoBulkDestinations.Counter)
+            return TryDeliverCounter(order, now, gridComp);
+
+        if (!_zones.TryZone(order.Zone, out var area) || area.Grid != order.ZoneGrid)
+            return false;
 
         var tile = order.Cells[order.Delivered];
         if (tile.X < area.Min.X || tile.X > area.Max.X || tile.Y < area.Min.Y || tile.Y > area.Max.Y)
@@ -141,6 +146,30 @@ public sealed partial class WGCargoBulkOrderSystem
             order.Cells[order.Delivered] = tile;
         }
 
+        if (!SpawnCrate(order, tile, gridComp, now))
+            return false;
+
+        _zones.ReleaseCell(order.Id, order.ZoneGrid, tile);
+        return true;
+    }
+
+    /// <summary>Dispenses into a free floor tile beside the vendor, waiting when they are all occupied.</summary>
+    private bool TryDeliverCounter(WGCargoBulkOrder order, TimeSpan now, MapGridComponent gridComp)
+    {
+        foreach (var tile in order.CounterCells)
+        {
+            if (_zones.ClassifyCell(order.ZoneGrid, tile) == WGCargoCellState.Free)
+                return SpawnCrate(order, tile, gridComp, now);
+        }
+
+        order.BlockedSince ??= now;
+        order.NextAt = now + BlockedRetry;
+        return now - order.BlockedSince < Bulk(order.Vendor).BlockedTimeout;
+    }
+
+    /// <summary>Puts one paid crate on a tile, with the vendor's arrival effect, and advances the tape.</summary>
+    private bool SpawnCrate(WGCargoBulkOrder order, Vector2i tile, MapGridComponent gridComp, TimeSpan now)
+    {
         var settings = Bulk(order.Vendor);
         var coords = _map.GridTileToLocal(order.ZoneGrid, gridComp, tile);
         var crate = Spawn(order.Goods[order.Delivered], coords);
@@ -156,7 +185,6 @@ public sealed partial class WGCargoBulkOrderSystem
 
         order.Delivered++;
         order.BlockedSince = null;
-        _zones.ReleaseCell(order.Id, order.ZoneGrid, tile);
 
         if (order.Delivered >= order.Goods.Count)
             Finish(order);

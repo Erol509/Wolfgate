@@ -78,7 +78,9 @@ public sealed class BulkVendorUiTest
             Assert.That(state.Interval, Is.GreaterThan(TimeSpan.Zero));
             Assert.That(state.MaxCrates, Is.GreaterThan(0));
 
-            Assert.That(state.Zones, Has.Count.EqualTo(2));
+            Assert.That(state.Zones, Has.Count.EqualTo(3));
+            Assert.That(state.Zones.Any(entry => entry.Id == WGCargoBulkDestinations.Counter), Is.True,
+                "The counter is always a destination, even without a marked zone.");
             var screen = state.Zones.First(entry => entry.Id == zone);
             Assert.That(screen.Id, Is.EqualTo(zone));
             Assert.That(screen.Grid, Is.EqualTo(em.GetNetEntity(grid)));
